@@ -1,9 +1,25 @@
+require 'spec_helper'
+
 RSpec.describe Kiba::Extend do
   it "has a version number" do
     expect(Kiba::Extend::VERSION).not_to be nil
   end
 
-  it "does something useful" do
-    expect(false).to eq(true)
+  describe ':stripplus csv converter' do
+    test_csv = 'tmp/test.csv'
+    rows = [
+      ['id', 'val'],
+      ['1', ' a b'],
+      ['2', ' a b '],
+      ['3', ' a    b,  ']
+    ]
+    
+    before { generate_csv(test_csv, rows) }
+    it 'converts input data' do
+      result = job_csv(filename: test_csv, incsvopt: {converters: [:stripplus]})
+      compile = result.map{ |e| e[:val] }.uniq
+      expect(compile[0]).to eq('a b')
+    end
+    after { File.delete(test_csv) if File.exist?(test_csv) }
   end
 end

@@ -1,7 +1,9 @@
 require "bundler/setup"
 require "kiba/extend"
+require_relative './helpers'
 
 RSpec.configure do |config|
+  config.include Helpers
   # Enable flags like --only-failures and --next-failure
   config.example_status_persistence_file_path = ".rspec_status"
 
@@ -11,4 +13,5 @@ RSpec.configure do |config|
   config.expect_with :rspec do |c|
     c.syntax = :expect
   end
+
 end
