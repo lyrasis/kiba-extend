@@ -8,11 +8,17 @@ DELIM = ';'
 module Kiba
   module Extend
     autoload :VERSION, 'extend/version'
-
+    
     puts "kiba-extend version: #{Kiba::Extend::VERSION}"
       require 'kiba/extend/transforms/clean'
+      require 'kiba/extend/transforms/combine_values'
+      require 'kiba/extend/transforms/copy'
+      require 'kiba/extend/transforms/delete'
       require 'kiba/extend/transforms/filter_rows'
       require 'kiba/extend/transforms/merge'
+      require 'kiba/extend/transforms/rename'
+      require 'kiba/extend/transforms/replace'
+      require 'kiba/extend/transforms/reshape'
       require 'kiba/extend/utils/lookup'
 
     # strips, collapses multiple spaces, removes terminal commas, strips again
