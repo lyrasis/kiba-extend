@@ -4,12 +4,12 @@ module Kiba
       module Replace
         ::Replace = Kiba::Extend::Transforms::Replace
         class FieldValueWithStaticMapping
-          def initialize(source:, target:, mapping:, delete_sources: true)
+          def initialize(source:, target:, mapping:, delete_source: true)
             @source = source
             @target = target
             @mapping = mapping
             @mapping[nil] = nil unless @mapping.has_key?(nil)
-            @del = delete_sources
+            @del = delete_source
           end
 
           def process(row)

@@ -31,7 +31,8 @@ module Kiba
             @map.keys.each do |sourcefield|
               vals = row.fetch(sourcefield)
               unless vals.nil?
-                vals.split(@sourcesep).each do |val|
+                vals = @sourcesep.nil? ? [vals] : vals.split(@sourcesep)
+                vals.each do |val|
                   data << val
                   type << @map.fetch(sourcefield, @default_type)
                 end

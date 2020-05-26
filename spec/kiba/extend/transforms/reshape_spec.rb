@@ -34,14 +34,16 @@ RSpec.describe Kiba::Extend::Transforms::Replace do
     context 'when source field is not multivalued' do
       rows = [
         ['id', 'workphone', 'homephone', 'mobilephone', 'otherphone'],
-        [1, '123', '234', '345;456', '567']
+        [1, '123', '234', '345;456', '567'],
+        [2, '123', '234', '345 456', '567']
       ]
       before do
         generate_csv(test_csv, rows)
       end
       it 'reshapes the columns as specified' do
         expected = [
-          {:id=>'1', :phoneNumber=>'123;234;345;456;567', :phoneType=>'business;personal;mobile;'}
+          {:id=>'1', :phoneNumber=>'123;234;345;456;567', :phoneType=>'business;personal;mobile;'},
+          {:id=>'2', :phoneNumber=>'123;234;345 456;567', :phoneType=>'business;personal;mobile;'}
         ]
         result = execute_job(filename: test_csv,
                              xform: Reshape::CollapseMultipleFieldsToOneTypedFieldPair,

@@ -35,6 +35,18 @@ module Kiba
           end
         end
 
+        class FieldValueIfEqualsOtherField
+          def initialize(delete:, if_equal_to:)
+            @delete = delete
+            @compare = if_equal_to
+          end
+
+          def process(row)
+            row[@delete] = nil if row.fetch(@delete) == row.fetch(@compare)
+            row
+          end
+        end
+
         class FieldValueMatchingRegexp
           def initialize(fields:, match:, casesensitive: true)
             @fields = fields

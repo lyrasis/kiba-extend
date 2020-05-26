@@ -10,6 +10,7 @@ module Kiba
     autoload :VERSION, 'extend/version'
     
     puts "kiba-extend version: #{Kiba::Extend::VERSION}"
+      require 'kiba/extend/destinations/csv'
       require 'kiba/extend/transforms/clean'
       require 'kiba/extend/transforms/combine_values'
       require 'kiba/extend/transforms/copy'

@@ -9,11 +9,10 @@ RSpec.describe Kiba::Extend::Transforms::Delete do
       [2, 'Kernel', 'f', 'adopted']
     ]
 
-    describe '#process' do
       before do
         generate_csv(test_csv, rows)
       end
-      it 'concatenates specified field values into new column with specified separator' do
+      it 'deletes fields' do
         expected = [
           {:id=>'1', :name=>'Weddy'},
           {:id=>'2', :name=>'Kernel'}
@@ -23,7 +22,6 @@ RSpec.describe Kiba::Extend::Transforms::Delete do
                              xformopt: {fields: [:sex, :source]})
         expect(result).to eq(expected)
       end
-    end
   end
 
   describe 'FieldValueMatchingRegexp' do
@@ -76,6 +74,28 @@ RSpec.describe Kiba::Extend::Transforms::Delete do
       expected = [nil, nil, nil]
       expect(result).to eq(expected)
     end
+  end
+
+  describe 'FieldValueIfEqualsOtherField' do
+    test_csv = 'tmp/test.csv'
+    after { File.delete(test_csv) if File.exist?(test_csv) }
+    it 'deletes data in specified field if it duplicates data in other given field' do
+      rows2 = [
+        ['id', 'val', 'chk'],
+        [1, 'a', 'b'],
+        [2, 'c', 'c']
+      ]
+      generate_csv(test_csv, rows2)
+      result = execute_job(filename: test_csv,
+                           xform: Delete::FieldValueIfEqualsOtherField,
+                           xformopt: {
+                             delete: :val,
+                             if_equal_to: :chk 
+                           }).map{ |h| h[:val] }
+      expected = ['a', nil]
+      expect(result).to eq(expected)
+    end
+
   end
 
   describe 'FieldValueContainingString' do
