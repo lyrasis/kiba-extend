@@ -6,7 +6,8 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
     rows = [
         ['id', 'in_set'],
         ['1', 'a; b'],
-        ['2', ';']
+        ['2', ';'],
+        ['3', nil]
       ]
     
       before { generate_csv(test_csv, rows) }
@@ -16,6 +17,7 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
       end
       it 'leaves other fields unchanged' do
         expect(result[0][:in_set]).to eq('a; b')
+        expect(result[2][:in_set]).to be_nil
       end
       after { File.delete(test_csv) if File.exist?(test_csv) }
   end

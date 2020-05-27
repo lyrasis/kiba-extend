@@ -4,15 +4,17 @@ module Kiba
       module Deduplicate
         ::Deduplicate = Kiba::Extend::Transforms::Deduplicate
 
-        class MultiFieldValues
-          def initialize(field:, sep:)
-            @field = field
+        class FieldValues
+          def initialize(fields:, sep:)
+            @fields = fields
             @sep = sep
           end
 
           def process(row)
-            val = row.fetch(@field)
-            row[@field] = val.split(@sep).uniq.join(@sep) unless val.nil?
+            @fields.each do |field|
+              val = row.fetch(field)
+              row[field] = val.split(@sep).uniq.join(@sep) unless val.nil?
+            end
             row
           end
         end

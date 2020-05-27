@@ -10,7 +10,7 @@ module Kiba
 
           def process(row)
             row.each do |hdr, val|
-              row[hdr] = nil if delim_only?(val)
+              row[hdr] = nil if val.is_a?(String) && delim_only?(val)
             end
             row
           end
