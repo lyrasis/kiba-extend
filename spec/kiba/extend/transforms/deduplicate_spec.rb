@@ -13,7 +13,7 @@ RSpec.describe Kiba::Extend::Transforms::Deduplicate do
     before do
       generate_csv(test_csv, rows)
     end
-    it 'reshapes the columns as specified after splitting source' do
+    it 'removes duplicate values in one field (NOT safe for fieldgroups)' do
       expected = [
         {:val=>'1;2'},
         {:val=>''},

@@ -18,7 +18,6 @@ module Kiba
               row[@target] = @mapping[origval]
             else
               row[@target] = origval
-              puts "No mapping for #{@source} value: #{origval}"
             end
             row.delete(@source) if @del
             row

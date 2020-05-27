@@ -9,20 +9,18 @@ RSpec.describe Kiba::Extend::Transforms::Copy do
       [2, 'Kernel', 'f']
     ]
 
-    describe '#process' do
-      before do
-        generate_csv(test_csv, rows)
-      end
-      it 'copies value of field to specified new field' do
-        expected = [
-          {:id=>'1', :name=>'Weddy', :sex=>'m', :gender=>'m'},
-          {:id=>'2', :name=>'Kernel', :sex=>'f', :gender=>'f'}
-        ]
-        result = execute_job(filename: test_csv,
-                             xform: Copy::Field,
-                             xformopt: {from: :sex, to: :gender})
-        expect(result).to eq(expected)
-      end
+    before do
+      generate_csv(test_csv, rows)
+    end
+    it 'copies value of field to specified new field' do
+      expected = [
+        {:id=>'1', :name=>'Weddy', :sex=>'m', :gender=>'m'},
+        {:id=>'2', :name=>'Kernel', :sex=>'f', :gender=>'f'}
+      ]
+      result = execute_job(filename: test_csv,
+                           xform: Copy::Field,
+                           xformopt: {from: :sex, to: :gender})
+      expect(result).to eq(expected)
     end
   end
 end

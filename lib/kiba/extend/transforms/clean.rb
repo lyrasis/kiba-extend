@@ -23,6 +23,20 @@ module Kiba
           end
         end
 
+        class DowncaseFieldValues
+          def initialize(fields:)
+            @fields = fields
+          end
+
+          def process(row)
+            @fields.each do |field|
+              val = row.fetch(field)
+              row[field] = val.is_a?(String) ? val.downcase : val
+            end
+            row
+          end
+        end
+        
         class RegexpFindReplaceFieldVals
           def initialize(fields:, find:, replace:, casesensitive: true, debug: false)
             @fields = fields

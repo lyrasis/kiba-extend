@@ -9,23 +9,21 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
       [2, 'Kernel', 'f', 'adopted']
     ]
 
-    describe '#process' do
-      before do
-        generate_csv(test_csv, rows)
-      end
-      it 'merges specified constant data values into row' do
-        expected = [
-          {:id=>'1', :name=>'Weddy', :sex=>'m', :source=>'adopted', :species=>'guinea fowl'},
-          {:id=>'2', :name=>'Kernel', :sex=>'f', :source=>'adopted', :species=>'guinea fowl'},
-        ]
-        result = execute_job(filename: test_csv,
-                             xform: Merge::ConstantValue,
-                             xformopt: {target: :species, value: 'guinea fowl'})
-        expect(result).to eq(expected)
-      end
+    before do
+      generate_csv(test_csv, rows)
+    end
+    it 'merges specified constant data values into row' do
+      expected = [
+        {:id=>'1', :name=>'Weddy', :sex=>'m', :source=>'adopted', :species=>'guinea fowl'},
+        {:id=>'2', :name=>'Kernel', :sex=>'f', :source=>'adopted', :species=>'guinea fowl'},
+      ]
+      result = execute_job(filename: test_csv,
+                           xform: Merge::ConstantValue,
+                           xformopt: {target: :species, value: 'guinea fowl'})
+      expect(result).to eq(expected)
     end
   end
-  
+
   describe 'MultiRowLookup' do
     test_csv = 'tmp/test.csv'
     rows = [
