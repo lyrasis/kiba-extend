@@ -14,6 +14,7 @@ module Kiba
       require 'kiba/extend/transforms/clean'
       require 'kiba/extend/transforms/combine_values'
       require 'kiba/extend/transforms/copy'
+      require 'kiba/extend/transforms/deduplicate'
       require 'kiba/extend/transforms/delete'
       require 'kiba/extend/transforms/filter_rows'
       require 'kiba/extend/transforms/merge'
