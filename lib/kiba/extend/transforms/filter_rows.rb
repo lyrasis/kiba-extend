@@ -19,6 +19,23 @@ module Kiba
             end
           end
         end
+
+        class FieldPopulated
+          def initialize(action:, field:)
+            @action = action
+            @field = field
+          end
+
+          def process(row)
+            val = row.fetch(@field)
+            case @action
+            when :keep
+              val.nil? || val.empty? ? nil : row
+            when :reject
+              val.nil? || val.empty? ? row : nil
+            end
+          end
+        end
       end
     end
   end
