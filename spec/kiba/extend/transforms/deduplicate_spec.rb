@@ -26,5 +26,38 @@ RSpec.describe Kiba::Extend::Transforms::Deduplicate do
       expect(result).to eq(expected)
     end
   end
+
+  describe 'Flag' do
+    test_csv = 'tmp/test.csv'
+    rows = [
+      ['id', 'x'],
+      ['1', 'a'],
+      ['2', 'a'],
+      ['1', 'b'],
+      ['3', 'b']
+    ]
+    before do
+      generate_csv(test_csv, rows)
+      @deduper = {}
+    end
+    it 'adds column with y/n to indicate duplicate records' do
+      expected = [
+        {:id=>'1', :x=>'a', :d=>'n'},
+        {:id=>'2', :x=>'a', :d=>'n'},
+        {:id=>'1', :x=>'b', :d=>'y'},
+        {:id=>'3', :x=>'b', :d=>'n'}
+      ]
+      opt = {
+        on_field: :id,
+        in_field: :d,
+        using: @deduper
+      }
+      result = execute_job(filename: test_csv,
+                           xform: Deduplicate::Flag,
+                           xformopt: opt
+                           )
+      expect(result).to eq(expected)
+    end
+  end
 end
 

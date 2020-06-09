@@ -19,6 +19,25 @@ module Kiba
           end
         end
 
+        class Flag
+          def initialize(on_field:, in_field:, using:)
+            @on = on_field
+            @in = in_field
+            @using = using
+          end
+
+          def process(row)
+            val = row.fetch(@on)
+            if @using.has_key?(val)
+              row[@in] = 'y'
+            else
+              @using[val] = nil
+              row[@in] = 'n'
+            end
+            row
+          end
+        end
+
         class GroupedFieldValues
           def initialize(on_field:, grouped_fields: [], sep:)
             @field = on_field
