@@ -17,6 +17,12 @@ module Kiba
           end
         end
 
+        # How the conditions are applied
+        #  :fields_empty
+        #    ALL fields listed must be nil or empty
+        #  :fields_match_regexp
+        #    Multiple match values may be given to test for a single field
+        #    ALL fields listed must match at least one of its match values
         class ConstantValueConditional
           def initialize(target:, value:, conditions: {})
             @target = target
@@ -56,15 +62,17 @@ module Kiba
           def check_regexp_matches(row, config)
             results = []
             config.each do |field, matches|
+              field_results = []
               val = row.fetch(field)
               if val.nil? || val.empty?
                 results << false
               else
                 matches.each do |match|
                   re = Regexp.new(match)
-                  val.match?(re) ? results << true : results << false
+                  val.match?(re) ? field_results << true : field_results << false
                 end
               end
+              field_results.any?(true) ? results << true : results << false
             end
             results.any?(false) ? false : true
           end

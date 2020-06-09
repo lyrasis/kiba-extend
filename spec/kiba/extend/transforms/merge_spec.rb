@@ -47,7 +47,8 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
           :fields_empty => [:reason],
           :fields_match_regexp => {
             :note => [
-              '^[Gg]ift$'
+              '^[Gg]ift$',
+              '^[Dd]onation$'
             ]
           }
         }
