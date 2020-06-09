@@ -1,6 +1,33 @@
 require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Delete do
+  describe 'EmptyFieldValues' do
+    test_csv = 'tmp/test.csv'
+    rows = [
+      ['id', 'data'],
+      [1, 'abc;;;d e f'],
+      [2, ';;abc'],
+      [3, 'def;;;;'],
+      [4, ';;;;;']
+    ]
+
+    before do
+      generate_csv(test_csv, rows)
+    end
+    it 'deletes empty field values from multivalued field' do
+      expected = [
+        {:id=>'1', :data=>'abc;d e f'},
+        {:id=>'2', :data=>'abc'},
+        {:id=>'3', :data=>'def'},
+        {:id=>'4', :data=>''}
+      ]
+      result = execute_job(filename: test_csv,
+                           xform: Delete::EmptyFieldValues,
+                           xformopt: {fields: [:data], sep: ';'})
+      expect(result).to eq(expected)
+    end
+  end
+  
   describe 'Fields' do
     test_csv = 'tmp/test.csv'
     rows = [
@@ -9,19 +36,19 @@ RSpec.describe Kiba::Extend::Transforms::Delete do
       [2, 'Kernel', 'f', 'adopted']
     ]
 
-      before do
-        generate_csv(test_csv, rows)
-      end
-      it 'deletes fields' do
-        expected = [
-          {:id=>'1', :name=>'Weddy'},
-          {:id=>'2', :name=>'Kernel'}
-        ]
-        result = execute_job(filename: test_csv,
-                             xform: Delete::Fields,
-                             xformopt: {fields: [:sex, :source]})
-        expect(result).to eq(expected)
-      end
+    before do
+      generate_csv(test_csv, rows)
+    end
+    it 'deletes fields' do
+      expected = [
+        {:id=>'1', :name=>'Weddy'},
+        {:id=>'2', :name=>'Kernel'}
+      ]
+      result = execute_job(filename: test_csv,
+                           xform: Delete::Fields,
+                           xformopt: {fields: [:sex, :source]})
+      expect(result).to eq(expected)
+    end
   end
 
   describe 'FieldValueMatchingRegexp' do
@@ -92,8 +119,55 @@ RSpec.describe Kiba::Extend::Transforms::Delete do
                              delete: :val,
                              if_equal_to: :chk 
                            }).map{ |h| h[:val] }
-      expected = ['a', nil]
+      expected = ['a', '']
       expect(result).to eq(expected)
+    end
+
+    context 'when `multival` = true and `sep` given' do
+      it 'deletes individual value matching `if_equal_to` field' do
+        rows2 = [
+          ['id', 'val', 'chk'],
+          [1, 'a', 'b'],
+          [2, 'a;c', 'c']
+        ]
+        generate_csv(test_csv, rows2)
+        result = execute_job(filename: test_csv,
+                             xform: Delete::FieldValueIfEqualsOtherField,
+                             xformopt: {
+                               delete: :val,
+                               if_equal_to: :chk,
+                               multival: true,
+                               sep: ';'
+                             }).map{ |h| h[:val] }
+        expected = ['a', 'a']
+        expect(result).to eq(expected)
+      end
+    end
+    
+    context 'when `grouped_fields` given' do
+      it 'deletes corresponding values from grouped fields' do
+        rows2 = [
+          ['id', 'val', 'chk', 'valgrp', 'valgrp2'],
+          [2, 'a;C;d;c;e', 'c', 'y;x;w;u;v', 'e;f;g;h;i'],
+          [1, 'a', 'b', 'z', 'q']
+        ]
+        generate_csv(test_csv, rows2)
+        result = execute_job(filename: test_csv,
+                             xform: Delete::FieldValueIfEqualsOtherField,
+                             xformopt: {
+                               delete: :val,
+                               if_equal_to: :chk,
+                               multival: true,
+                               sep: ';',
+                               grouped_fields: [:valgrp, :valgrp2],
+                               case_sensitive: false
+                             })
+        expected = [
+          {:id=>'2', :val=>'a;d;e', :chk=>'c', :valgrp=>'y;w;v', :valgrp2=>'e;g;i'},
+          {:id=>'1', :val=>'a', :chk=>'b', :valgrp=>'z', :valgrp2=>'q'}
+          ]
+        expect(result).to eq(expected)
+      end
     end
 
   end

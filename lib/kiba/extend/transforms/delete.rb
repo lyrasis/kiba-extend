@@ -3,6 +3,23 @@ module Kiba
     module Transforms
       module Delete
         ::Delete = Kiba::Extend::Transforms::Delete
+        class EmptyFieldValues
+          def initialize(fields:, sep:)
+            @fields = fields
+            @sep = sep
+          end
+
+          def process(row)
+            @fields.each do |field|
+              val = row.fetch(field)
+              unless val.nil?
+                row[field] = val.split(@sep).compact.reject{ |e| e.empty? }.join(@sep)
+              end
+            end
+            row
+          end
+        end
+        
         class Fields
           def initialize(fields:)
             @fields = fields
@@ -36,13 +53,41 @@ module Kiba
         end
 
         class FieldValueIfEqualsOtherField
-          def initialize(delete:, if_equal_to:)
+          def initialize(delete:, if_equal_to:, multival: false, sep: nil, grouped_fields: [], case_sensitive: true)
             @delete = delete
             @compare = if_equal_to
+            @multival = multival
+            @sep = sep
+            @group = grouped_fields
+            @case_sensitive = case_sensitive
           end
 
           def process(row)
-            row[@delete] = nil if row.fetch(@delete) == row.fetch(@compare)
+            comparefield = @case_sensitive ? row.fetch(@compare) : row.fetch(@compare).downcase
+            fv = row.fetch(@delete)
+            unless fv.nil?
+              fv = @multival ? fv.split(@sep) : [fv]
+              fvcompare = @case_sensitive ? fv : fv.map{ |e| e.downcase}
+              result = []
+              deleted = []
+              fvcompare.each_with_index do |val, i|
+                if val == comparefield
+                  result << nil
+                  deleted << i
+                else
+                  result << fv[i]
+                end
+                row[@delete] = result.compact.join(@sep)
+              end
+              @group.each do |gf|
+                gfval = row.fetch(gf)
+                unless gfval.nil?
+                  gfvals = gfval.split(@sep)
+                  deleted.sort.reverse.each{ |i| gfvals.delete_at(i) }
+                  row[gf] = gfvals.join(@sep)
+                end
+              end
+            end
             row
           end
         end

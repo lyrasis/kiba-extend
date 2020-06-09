@@ -4,6 +4,7 @@ module Kiba
       module Merge
         ::Merge = Kiba::Extend::Transforms::Merge
 
+
         class ConstantValue
           def initialize(target:, value:)
             @target = target
@@ -12,6 +13,84 @@ module Kiba
 
           def process(row)
             row[@target] = @value
+            row
+          end
+        end
+
+        class ConstantValueConditional
+          def initialize(target:, value:, conditions: {})
+            @target = target
+            @value = value
+            @conditions = conditions
+          end
+
+          def process(row)
+            row[@target] = @value if conditions_met?(row)
+            row
+          end
+
+          private
+
+          def conditions_met?(row)
+            results = []
+            @conditions.each do |type, config|
+              case type
+              when :fields_empty
+                results << check_emptiness(row, config)
+              when :fields_match_regexp
+                results << check_regexp_matches(row, config)
+              end
+            end
+            results.any?(false) ? false : true
+          end
+
+          def check_emptiness(row, config)
+            results = []
+            config.each do |field|
+              val = row.fetch(field)
+              ( val.nil? || val.empty? ) ? results << true : results << false
+            end
+            results.any?(false) ? false : true
+          end
+
+          def check_regexp_matches(row, config)
+            results = []
+            config.each do |field, matches|
+              val = row.fetch(field)
+              if val.nil? || val.empty?
+                results << false
+              else
+                matches.each do |match|
+                  re = Regexp.new(match)
+                  val.match?(re) ? results << true : results << false
+                end
+              end
+            end
+            results.any?(false) ? false : true
+          end
+        end
+        
+        class CountOfMatchingRows
+          def initialize(lookup:, keycolumn:, targetfield:,
+                         exclusion_criteria: {},
+                         selection_criteria: {}
+                        )
+            @lookup = lookup
+            @keycolumn = keycolumn
+            @target = targetfield
+            @exclude = exclusion_criteria
+            @include = selection_criteria
+          end
+
+          def process(row)
+            id = row.fetch(@keycolumn)
+            merge_rows = Lookup::RowSelector.new(
+              origrow: row,
+              mergerows: @lookup.fetch(id, []),
+              exclude: @exclude,
+              include: @include
+            ).result
+            row[@target] = merge_rows.size
             row
           end
         end
@@ -32,52 +111,38 @@ module Kiba
 
           def process(row)
             id = row.fetch(@keycolumn)
-            h = {}
-            @fieldmap.each_key{ |k| h[k] = [] }
-            @constantmap.each_key{ |k| h[k] = [] }
+            fh = {}
+            ch = {}
+            @fieldmap.each_key{ |k| fh[k] = [] }
+            @constantmap.each_key{ |k| ch[k] = [] }
 
-            merge_rows = @lookup.fetch(id, [])
-            merge_rows = merge_rows.reject{ |mrow| exclude?(row, mrow) }
-            if merge_rows.size > 0 && @selection_criteria.dig(:position) == 'first'
-              merge_rows = [merge_rows.first]
-            end
-
-            merge_rows.each do |mrow|
-              @fieldmap.each{ |target, source| h[target] << mrow.fetch(source, '') }
-              @constantmap.each{ |target, value| h[target] << value }
-            end
-
-            chk = @fieldmap.map{ |target, source| h[target].size }.uniq.sort
-
-            if chk[0] == 0
-              h.each{ |target, arr| row[target] = nil }
-            else
-              h.each{ |target, arr| row[target] = arr.join(@delim) }
-            end
+            merge_rows = Lookup::RowSelector.new(
+              origrow: row,
+              mergerows: @lookup.fetch(id, []),
+              exclude: @exclusion_criteria,
+              include: @selection_criteria
+            ).result
             
+            merge_rows.each do |mrow|
+              @fieldmap.each do |target, source|
+                val = mrow.fetch(source, '')
+                fh[target] << val unless val.nil? || val.empty?
+              end
+              @constantmap.each{ |target, value| ch[target] << value }
+            end
+
+            chk = @fieldmap.map{ |target, source| fh[target].size }.uniq.sort
+
+            if chk == [0]
+              fh.each{ |target, arr| row[target] = nil }
+              ch.each{ |target, arr| row[target] = nil }
+            else
+              fh.each{ |target, arr| row[target] = arr.join(@delim) }
+              ch.each{ |target, arr| row[target] = arr.join(@delim) }
+            end
             row
           end
-
-          private
-
-          def exclude?(row, mrow)
-            bool = [false]
-            @exclusion_criteria.each do |type, hash|
-              case type
-              when :field_equal
-                bool << exclude_on_equality?(row, mrow, hash)
-              end
-            end
-            bool.flatten.any? ? true : false
-          end
-
-          def exclude_on_equality?(row, mrow, hash)
-            bool = []
-            hash.each{ |rowfield, mergefield| row.fetch(rowfield) == mrow.fetch(mergefield) ? bool << true : bool << false }
-            bool
-          end
         end
-
       end # module Merge
     end #module Transforms
   end #module Extend

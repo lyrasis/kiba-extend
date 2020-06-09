@@ -1,6 +1,42 @@
 require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::CombineValues do
+  describe 'AcrossFieldGroup' do
+    test_csv = 'tmp/test.csv'
+    rows = [
+      %w[statusperson status statusdate reqperson reqstatus reqdate aperson astatus adate],
+      ['jim;mavis', 'approved;', '20200102;20200521', 'bill', 'requested', '20191215', 'terri', 'authorized', '20200115'],
+      [nil, 'acknowledged', '20200321', 'jill', 'requested', nil, 'bill', 'followup', '20200421'],
+    ]
+
+    before do
+      generate_csv(test_csv, rows)
+    end
+    it 'concatenates specified field values, keeping field group integrity' do
+      expected = [
+        {:statusperson=>'jim;mavis;bill;terri',
+         :status=>'approved;;requested;authorized',
+         :statusdate=>'20200102;20200521;20191215;20200115'},
+        {:statusperson=>';jill;bill',
+         :status=>'acknowledged;requested;followup',
+         :statusdate=>'20200321;;20200421'}
+      ]
+      opts = {
+        fieldmap: {
+          :statusperson => %i[statusperson reqperson aperson],
+          :status => %i[status reqstatus astatus],
+          :statusdate => %i[statusdate reqdate adate]
+        },
+        sep: ';'
+      }
+      result = execute_job(filename: test_csv,
+                           xform: CombineValues::AcrossFieldGroup,
+                           xformopt: opts
+                          )
+      expect(result).to eq(expected)
+    end
+  end #describe 'AcrossFieldGroup
+
   describe 'FromFieldsWithDelimiter' do
     test_csv = 'tmp/test.csv'
     rows = [
@@ -78,5 +114,20 @@ RSpec.describe Kiba::Extend::Transforms::CombineValues do
         expect(result).to eq(expected)
       end
     end
-  end
+
+    context 'when target field is one of the source fields' do
+      it 'does not delete the target field' do
+        expected = [
+          {:id=>'1', :name => 'Weddy|m', :source => 'adopted'},
+          {:id=>'2', :name => 'Kernel|f',:source => 'adopted'}
+        ]
+        result = execute_job(filename: test_csv,
+                             xform: CombineValues::FromFieldsWithDelimiter,
+                             xformopt: {sources: [:name, :sex],
+                                        target: :name,
+                                        sep: '|'})
+        expect(result).to eq(expected)
+      end
+    end
+  end #describe 'FromFieldsWithDelimiter'
 end

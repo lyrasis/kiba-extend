@@ -44,4 +44,170 @@ RSpec.describe Kiba::Extend::Utils::Lookup do
       expect(result).to eq(lookup_hash)
     end
   end
+
+  describe Lookup::RowSelector do
+    context 'when inclusion criteria' do
+      context 'includes :position => "first"' do
+         it 'keeps only the first mergerow' do
+            origrow = {:source => 'adopted'}
+            mergerows = [
+              {:treatment => 'hatch'},
+              {:treatment => 'adopted'},
+              {:treatment => 'hatch'},
+              {:treatment => 'adopted'},
+              {:treatment => 'deworm'}
+            ]
+            include = {
+              :position => 'first'
+            }
+            result = Lookup::RowSelector.new(origrow: origrow, mergerows: mergerows, include: include).result
+            expected = [
+              {:treatment => 'hatch'}
+            ]
+            expect(result).to eq(expected)
+         end
+      end
+    end
+    context 'when exclusion criteria' do
+      context 'includes :field_equal' do
+        context 'with single pair of fields' do
+          it 'rejects expected mergerows' do
+            origrow = {:source => 'adopted'}
+            mergerows = [
+              {:treatment => 'hatch'},
+              {:treatment => 'adopted'},
+              {:treatment => 'hatch'},
+              {:treatment => 'adopted'},
+              {:treatment => 'deworm'}
+            ]
+            exclude = {
+              :field_equal => {:source => :treatment}
+            }
+            result = Lookup::RowSelector.new(origrow: origrow, mergerows: mergerows, exclude: exclude).result
+            expected = [
+              {:treatment => 'hatch'},
+              {:treatment => 'hatch'},
+              {:treatment => 'deworm'}
+            ]
+            expect(result).to eq(expected)
+          end
+        end
+        
+        context 'with multiple pairs of fields' do
+          it 'rejects expected mergerows' do
+            origrow = {:source => 'adopted', :color => 'coral blue'}
+            mergerows = [
+              {:treatment => 'hatch', :gotfrom => 'adopted', :type => 'pearl'},
+              {:treatment => 'hatch', :gotfrom => 'adopted', :type => 'coral blue'},
+              {:treatment => 'hatch', :gotfrom => 'self', :type => 'pearl'},
+              {:treatment => 'hatch', :gotfrom => 'self', :type => 'coral blue'},
+              {:treatment => 'adopted', :gotfrom => 'friend', :type => 'coral blue'},
+              {:treatment => 'adopted', :gotfrom => 'friend', :type => 'buff dundotte'},
+              {:treatment => 'purchased', :gotfrom => 'friend', :type => 'buff dundotte'},
+              {:treatment => 'purchased', :gotfrom => 'adopted', :type => 'royal purple'},
+              {:treatment => 'purchased', :gotfrom => 'friend', :type => 'coral blue'},
+            ]
+            exclude = {
+              :field_equal => [
+                {:source => :treatment},
+                {:source => :gotfrom},
+                {:color => :type}
+              ]
+            }
+            result = Lookup::RowSelector.new(origrow: origrow, mergerows: mergerows, exclude: exclude).result
+            expected = [
+              {:treatment => 'hatch', :gotfrom => 'self', :type => 'pearl'},
+              {:treatment => 'purchased', :gotfrom => 'friend', :type => 'buff dundotte'},
+            ]
+            expect(result).to eq(expected)
+          end
+        end
+      end
+
+      context 'includes :field_empty' do
+        origrow = {:source => 'adopted', :color => 'coral blue'}
+        mergerows = [
+          {:treatment => 'hatch', :gotfrom => 'adopted', :type => 'pearl'},
+          {:treatment => nil, :gotfrom => '', :type => 'coral blue'},
+          {:treatment => 'hatch', :gotfrom => 'self', :type => 'pearl'},
+          {:treatment => '', :gotfrom => nil, :type => 'coral blue'},
+          {:treatment => 'adopted', :gotfrom => nil, :type => 'coral blue'},
+          {:treatment => nil, :gotfrom => nil, :type => 'buff dundotte'},
+          {:treatment => 'purchased', :gotfrom => 'friend', :type => 'buff dundotte'},
+          {:treatment => '', :gotfrom => '', :type => 'royal purple'},
+          {:treatment => 'purchased', :gotfrom => '', :type => 'coral blue'},
+        ]
+        context 'when one field specified' do
+          it 'rejects expected mergerows' do
+            exclude = {
+              :field_empty => [
+                :treatment
+              ]
+            }
+            result = Lookup::RowSelector.new(origrow: origrow, mergerows: mergerows, exclude: exclude).result
+            expected = [
+              {:treatment => 'hatch', :gotfrom => 'adopted', :type => 'pearl'},
+              {:treatment => 'hatch', :gotfrom => 'self', :type => 'pearl'},
+              {:treatment => 'adopted', :gotfrom => nil, :type => 'coral blue'},
+              {:treatment => 'purchased', :gotfrom => 'friend', :type => 'buff dundotte'},
+              {:treatment => 'purchased', :gotfrom => '', :type => 'coral blue'},
+            ]
+            expect(result).to eq(expected)
+          end
+        end
+        context 'when multiple fields specified' do
+          it 'rejects mergerows where ANY of the fields listed are empty' do
+            exclude = {
+              :field_empty => [
+                :treatment,
+                :gotfrom
+              ]
+            }
+            result = Lookup::RowSelector.new(origrow: origrow, mergerows: mergerows, exclude: exclude).result
+            expected = [
+              {:treatment => 'hatch', :gotfrom => 'adopted', :type => 'pearl'},
+              {:treatment => 'hatch', :gotfrom => 'self', :type => 'pearl'},
+              {:treatment => 'purchased', :gotfrom => 'friend', :type => 'buff dundotte'},
+            ]
+            expect(result).to eq(expected)
+          end
+        end
+      end
+    end
+    
+    context 'when inclusion and exclusion criteria' do
+      it 'rejects excluded before selecting included' do
+        origrow = {:source => 'adopted', :color => 'coral blue'}
+        mergerows = [
+          {:treatment => nil, :gotfrom => '', :type => 'coral blue'},
+          {:treatment => 'hatch', :gotfrom => 'self', :type => 'pearl'},
+          {:treatment => '', :gotfrom => nil, :type => 'coral blue'},
+          {:treatment => 'adopted', :gotfrom => nil, :type => 'coral blue'},
+          {:treatment => nil, :gotfrom => nil, :type => 'buff dundotte'},
+          {:treatment => 'purchased', :gotfrom => 'friend', :type => 'buff dundotte'},
+          {:treatment => '', :gotfrom => '', :type => 'royal purple'},
+          {:treatment => 'purchased', :gotfrom => '', :type => 'coral blue'},
+          {:treatment => 'hatch', :gotfrom => 'adopted', :type => 'pearl'},
+        ]
+        exclude = {
+          :field_empty => [
+            :treatment,
+            :gotfrom
+          ]
+        }
+        include = {
+          :position => 'first'
+        }
+        result = Lookup::RowSelector.new(origrow: origrow,
+                                         mergerows: mergerows,
+                                         exclude: exclude,
+                                         include: include).result
+        expected = [
+          {:treatment => 'hatch', :gotfrom => 'self', :type => 'pearl'}
+        ]
+        expect(result).to eq(expected)
+      end
+    end #context 'when inclusion and exclusion criteria' do
+    
+  end #describe RowSelector
 end

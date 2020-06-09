@@ -1,6 +1,8 @@
 require 'kiba'
 require 'kiba-common/sources/csv'
 require 'kiba-common/destinations/csv'
+require 'pry'
+require 'xxhash'
 
 CSVOPT = {headers: true, header_converters: :symbol}
 DELIM = ';'
@@ -15,6 +17,7 @@ module Kiba
       require 'kiba/extend/transforms/combine_values'
       require 'kiba/extend/transforms/copy'
       require 'kiba/extend/transforms/deduplicate'
+      require 'kiba/extend/transforms/cspace'
       require 'kiba/extend/transforms/delete'
       require 'kiba/extend/transforms/filter_rows'
       require 'kiba/extend/transforms/merge'
