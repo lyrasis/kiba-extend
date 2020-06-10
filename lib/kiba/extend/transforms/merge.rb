@@ -20,6 +20,8 @@ module Kiba
         # How the conditions are applied
         #  :fields_empty
         #    ALL fields listed must be nil or empty
+        #  :fields_populated
+        #    ALL fields listed must be populated
         #  :fields_match_regexp
         #    Multiple match values may be given to test for a single field
         #    ALL fields listed must match at least one of its match values
@@ -43,6 +45,8 @@ module Kiba
               case type
               when :fields_empty
                 results << check_emptiness(row, config)
+              when :fields_populated
+                results << check_populated(row, config)
               when :fields_match_regexp
                 results << check_regexp_matches(row, config)
               end
@@ -55,6 +59,15 @@ module Kiba
             config.each do |field|
               val = row.fetch(field)
               ( val.nil? || val.empty? ) ? results << true : results << false
+            end
+            results.any?(false) ? false : true
+          end
+
+          def check_populated(row, config)
+            results = []
+            config.each do |field|
+              val = row.fetch(field)
+              ( val.nil? || val.empty? ) ? results << false : results << true
             end
             results.any?(false) ? false : true
           end

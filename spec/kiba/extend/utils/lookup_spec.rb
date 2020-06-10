@@ -67,9 +67,55 @@ RSpec.describe Kiba::Extend::Utils::Lookup do
             expect(result).to eq(expected)
          end
       end
+      context 'includes :field_equal comparing to a string value' do
+        it 'keeps only mergerows containing field equal to given value' do
+          origrow = {:source => 'adopted'}
+          mergerows = [
+            {:treatment => 'hatch'},
+            {:treatment => 'adopted'},
+            {:treatment => 'hatch'},
+            {:treatment => 'adopted'},
+            {:treatment => 'deworm'}
+          ]
+          include = {
+            :field_equal => [
+              ['mergerow::treatment', 'value::hatch']
+            ]
+          }
+          result = Lookup::RowSelector.new(origrow: origrow, mergerows: mergerows, include: include).result
+          expected = [
+            {:treatment => 'hatch'},
+            {:treatment => 'hatch'}
+          ]
+          expect(result).to eq(expected)
+        end
+      end
+      context 'includes :field_equal comparing to a regexp value' do
+        it 'keeps only mergerows containing field matching given regexp' do
+          origrow = {:source => 'adopted'}
+          mergerows = [
+            {:treatment => 'hatch'},
+            {:treatment => 'adopted'},
+            {:treatment => 'hatch'},
+            {:treatment => 'adopted'},
+            {:treatment => 'deworm'}
+          ]
+          include = {
+            :field_equal => [
+              ['mergerow::treatment', 'revalue::h$']
+            ]
+          }
+          result = Lookup::RowSelector.new(origrow: origrow, mergerows: mergerows, include: include).result
+          expected = [
+            {:treatment => 'hatch'},
+            {:treatment => 'hatch'}
+          ]
+          expect(result).to eq(expected)
+        end
+      end
     end
     context 'when exclusion criteria' do
-      context 'includes :field_equal' do
+      context 'includes :src_field_equal_merge_field' do
         context 'with single pair of fields' do
           it 'rejects expected mergerows' do
             origrow = {:source => 'adopted'}
@@ -81,7 +127,9 @@ RSpec.describe Kiba::Extend::Utils::Lookup do
               {:treatment => 'deworm'}
             ]
             exclude = {
-              :field_equal => {:source => :treatment}
+              :field_equal => [
+                ['row::source', 'mergerow::treatment']
+                ]
             }
             result = Lookup::RowSelector.new(origrow: origrow, mergerows: mergerows, exclude: exclude).result
             expected = [
@@ -109,9 +157,9 @@ RSpec.describe Kiba::Extend::Utils::Lookup do
             ]
             exclude = {
               :field_equal => [
-                {:source => :treatment},
-                {:source => :gotfrom},
-                {:color => :type}
+                ['row::source', 'mergerow::treatment'],
+                ['row::source', 'mergerow::gotfrom'],
+                ['row::color', 'mergerow::type']
               ]
             }
             result = Lookup::RowSelector.new(origrow: origrow, mergerows: mergerows, exclude: exclude).result
