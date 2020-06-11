@@ -26,26 +26,46 @@ module Kiba
 
         class SetChecker
           attr_reader :set_type, :result
-          def initialize(check_type:, set:, row:, mergerow: {})
+          def initialize(check_type:, set:, row:, mergerow: {}, sep: nil)
             @check_type = check_type
             @set_type = set.dig(:type) ? set[:type] : :any
             bool = []
             case @check_type
-              when :equality
-            set[:matches].each do |pair|
-              bool << Lookup::PairEquality.new(
-                pair: pair,
-                row: row,
-                mergerow: mergerow
-              ).result
-            end
+            when :equality
+              set[:matches].each do |pair|
+                chk = pair.select{ |e| e.start_with?('mv') }
+                if chk.empty?
+                bool << Lookup::PairEquality.new(
+                  pair: pair,
+                  row: row,
+                  mergerow: mergerow
+                ).result
+                else
+                  bool << Lookup::SetChecker.new(
+                    check_type: :equality,
+                    set: {
+                      type: :any,
+                      matches: Lookup::MultivalPairs.new(pair: pair, row: row, mergerow: mergerow, sep: sep).result
+                    },
+                    row: {}
+                    )
+                end
+              end
             when :emptiness
               set[:fields].each do |field|
                 bool << Lookup::FieldEmptiness.new(
                   field: field,
                   row: row,
                   mergerow: mergerow
-                  ).result
+                ).result
+              end
+            when :inclusion
+              set[:includes].each do |pair|
+                bool << Lookup::PairInclusion.new(
+                  pair: pair,
+                  row: row,
+                  mergerow: mergerow
+                ).result
               end
             end
             
@@ -54,6 +74,36 @@ module Kiba
               @result = bool.any? ? true : false
             when :all
               @result = bool.any?(false) ? false : true
+            end
+          end
+        end
+
+        class MultivalPairs
+          attr_reader :result
+          def initialize(pair:, row:, mergerow: {}, sep:)
+            @result = []
+            pair = pair.map{ |e| e.split('::') }
+            # convert row or mergerow fieldnames to symbols
+            pair = pair.each{ |arr| arr[1] = arr[1].to_sym if arr[0]['row'] }
+            # fetch or convert values for comparison
+            pair = pair.map do |arr|
+              case arr[0]
+              when 'row'
+                [row.fetch(arr[1], '')].map{ |e| (e.nil? || e.empty?) ? '%comparenothing%' : e }
+              when 'mvrow'
+                row.fetch(arr[1], '').split(sep).map{ |e| (e.nil? || e.empty?) ? '%comparenothing%' : e }
+              when 'mergerow'
+                [mergerow.fetch(arr[1], '')].map{ |e| (e.nil? || e.empty?) ? '%comparenothing%' : e }
+              when 'mvmergerow'
+                mergerow.fetch(arr[1], '').split(sep).map{ |e| (e.nil? || e.empty?) ? '%comparenothing%' : e }
+              when 'revalue'
+                "revalue::#{arr[1]}"
+              when 'value'
+                arr[1]
+              end
+            end
+            pair[0].product(pair[1]).each do |mvpair|
+              @result << mvpair.map{ |e| e.start_with?('revalue') ? e : "value::#{e}" }
             end
           end
         end
@@ -102,9 +152,40 @@ module Kiba
           end
         end
 
+        class PairInclusion
+          attr_reader :result
+          def initialize(pair:, row:, mergerow: {})
+            comparison_type = :include
+            pair = pair.map{ |e| e.split('::') }
+            # convert row or mergerow fieldnames to symbols
+            pair = pair.each{ |arr| arr[1] = arr[1].to_sym if arr[0]['row'] }
+            # fetch or convert values for comparison
+            pair = pair.map do |arr|
+              case arr[0]
+              when 'row'
+                row.fetch(arr[1], nil)
+              when 'mergerow'
+                mergerow.fetch(arr[1], nil)
+              when 'revalue'
+                comparison_type = :match
+                Regexp.new(arr[1])
+              when 'value'
+                arr[1]
+              end
+            end
+
+            case comparison_type
+            when :include
+              @result = pair[0].include?(pair[1])
+            when :match
+              @result = pair[0].match?(pair[1])
+            end   
+          end
+        end
+
         class CriteriaChecker
           attr_reader :result, :type
-          def initialize(check_type:, config:, row:, mergerow: {})
+          def initialize(check_type:, config:, row:, mergerow: {}, sep: nil)
             @check_type = check_type
             @config = config
             @row = row
@@ -116,7 +197,8 @@ module Kiba
               check_type: @check_type,
               set: set,
               row: @row,
-              mergerow: @mergerow
+              mergerow: @mergerow,
+              sep: sep
             ).result }
             
             case @type
@@ -142,7 +224,7 @@ module Kiba
         # It is assumed, but not enforced, that at least one of the pair will
         #   be a field
         class RowSelector
-          def initialize(origrow:, mergerows: [], conditions: {})
+          def initialize(origrow:, mergerows: [], conditions: {}, sep: nil)
             @exclude = conditions[:exclude]
             @include = conditions[:include]
 
@@ -178,6 +260,20 @@ module Kiba
                 bool << Lookup::CriteriaChecker.new(check_type: :emptiness, config: value, row: row, mergerow: mrow).result
               when :field_equal
                 bool << Lookup::CriteriaChecker.new(check_type: :equality, config: value, row: row, mergerow: mrow).result
+              when :multival_field_equal
+                bool << Lookup::CriteriaChecker.new(check_type: :mvequality,
+                                                    config: value,
+                                                    row: row,
+                                                    mergerow: mrow,
+                                                    sep: sep).result
+              when :field_include
+                bool << Lookup::CriteriaChecker.new(check_type: :inclusion, config: value, row: row, mergerow: mrow).result
+              when :multival_field_include
+                bool << Lookup::CriteriaChecker.new(check_type: :mvinclusion,
+                                                    config: value,
+                                                    row: row,
+                                                    mergerow: mrow,
+                                                    sep: sep).result
               when :position
                 #do nothing
               end

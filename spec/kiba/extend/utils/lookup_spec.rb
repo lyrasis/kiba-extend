@@ -154,14 +154,15 @@ RSpec.describe Kiba::Extend::Utils::Lookup do
             type: :all,
             matches: [
               ['row::a', 'value::def'],
-              ['row::b', 'mergerow::a']
+              ['row::b', 'mvmergerow::a']
             ]
           }
           obj = Lookup::SetChecker.new(
             check_type: :equality,
             set: set,
             row: {a: 'def', b: 'abc'},
-            mergerow: {a: 'abc'}
+            mergerow: {a: 'abc;xyz'},
+            sep: ';'
           )
           expect(obj.result).to be true
         end
@@ -187,7 +188,26 @@ RSpec.describe Kiba::Extend::Utils::Lookup do
       end
     end
   end
-  
+
+  describe Lookup::MultivalPairs do
+    it 'explodes pairs into all multivalued comparisons' do
+      obj = Lookup::MultivalPairs.new(
+        pair: ['mvrow::a', 'mvrow::b'],
+        row: {a: 'abc;def;xyz', b: 'def;nop'},
+        sep: ';'
+      )
+      expected = [
+        %w[value::abc value::def],
+        %w[value::abc value::nop],
+        %w[value::def value::def],
+        %w[value::def value::nop],
+        %w[value::xyz value::def],
+        %w[value::xyz value::nop],
+      ].sort
+      expect(obj.result.sort).to eq(expected)
+    end
+  end
+    
   describe Lookup::PairEquality do
     describe 'compares row values to basic string values' do
       context 'when row field value equals string value' do
@@ -323,7 +343,143 @@ RSpec.describe Kiba::Extend::Utils::Lookup do
       end
     end
   end
-  
+
+  describe Lookup::PairInclusion do
+    describe 'checks if row value contains basic string values' do
+      context 'when row field value contains string value' do
+        it 'returns true' do
+          obj = Lookup::PairInclusion.new(
+            pair: ['row::a', 'value::bcd'],
+            row: {a: 'abcdef'}
+          )
+          expect(obj.result).to be true
+        end
+      end
+
+      context 'when row field value does not contain string value' do
+        it 'returns false' do
+          obj = Lookup::PairInclusion.new(
+            pair: ['row::a', 'value::abc'],
+            row: {a: 'a'}
+          )
+          expect(obj.result).to be false
+        end
+      end
+    end
+
+    describe 'checks if row values match regexp values' do
+      context 'when row field value matches regexp value' do
+        it 'returns true' do
+          obj = Lookup::PairInclusion.new(
+            pair: ['row::a', 'revalue::[Aa].c'],
+            row: {a: 'zabcy'}
+          )
+          expect(obj.result).to be true
+        end
+      end
+
+      context 'when row field value does not match regexp value' do
+        it 'returns false' do
+          obj = Lookup::PairInclusion.new(
+            pair: ['row::a', 'revalue::[Aa].c'],
+            row: {a: 'abCd'}
+          )
+          expect(obj.result).to be false
+        end
+      end
+
+      context 'when regexp value explicitly includes ^ and/or $ anchors' do
+        it 'treats them as expected in a regexp' do
+          obj = Lookup::PairInclusion.new(
+            pair: ['row::a', 'revalue::^[Aa].c$'],
+            row: {a: 'abc'}
+          )
+          expect(obj.result).to be true
+        end
+      end
+    end
+
+    describe 'compares mergerow field values to basic string values' do
+      context 'when mergerow field value equals string value' do
+        it 'returns true' do
+          obj = Lookup::PairEquality.new(
+            pair: ['mergerow::a', 'value::abc'],
+            row: {b: 'def'},
+            mergerow: {a: 'abc'}
+          )
+          expect(obj.result).to be true
+        end
+      end
+      
+      context 'when mergerow field value not equal to string value' do
+        it 'returns false' do
+          obj = Lookup::PairEquality.new(
+            pair: ['mergerow::a', 'value::abc'],
+            row: {b: 'def'},
+            mergerow: {a: 'ab'}
+          )
+          expect(obj.result).to be false
+        end
+      end
+
+      context 'when mergerow is not passed to class' do
+        it 'returns false' do
+          obj = Lookup::PairEquality.new(
+            pair: ['mergerow::a', 'value::abc'],
+            row: {b: 'def'}
+          )
+          expect(obj.result).to be false
+        end
+      end
+    end
+
+    describe 'compares row field value to mergerow field value' do
+      context 'when row and mergerow field values are equal' do
+        it 'returns true' do
+          obj = Lookup::PairEquality.new(
+            pair: ['mergerow::a', 'row::b'],
+            row: {b: 'abc'},
+            mergerow: {a: 'abc'}
+          )
+          expect(obj.result).to be true
+        end
+      end
+
+      context 'when row and mergerow field values are not equal' do
+        it 'returns false' do
+          obj = Lookup::PairEquality.new(
+            pair: ['mergerow::a', 'row::b'],
+            row: {b: 'abc'},
+            mergerow: {a: 'def'}
+          )
+          expect(obj.result).to be false
+        end
+      end
+
+      context 'when neither row nor mergerow contains its specified field' do
+        it 'returns true' do
+          obj = Lookup::PairEquality.new(
+            pair: ['mergerow::a', 'row::b'],
+            row: {},
+            mergerow: {}
+          )
+          expect(obj.result).to be true
+        end
+      end
+
+      context 'when row field exists but is blank and mergerow field does not exist' do
+        it 'returns false' do
+          obj = Lookup::PairEquality.new(
+            pair: ['mergerow::a', 'row::b'],
+            row: {b: ''},
+            mergerow: {}
+          )
+          expect(obj.result).to be false
+        end
+      end
+    end
+  end
+    
   describe Lookup::RowSelector do
     context 'when inclusion criteria' do
       context 'includes :position => "first"' do
