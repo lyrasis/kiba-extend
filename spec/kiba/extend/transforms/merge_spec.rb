@@ -44,19 +44,27 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
         target: :reason,
         value: 'gift',
         conditions: {
-          :fields_empty => [:reason],
-          :fields_match_regexp => {
-            :note => [
-              '^[Gg]ift$',
-              '^[Dd]onation$'
-            ]
+          include: {
+            field_empty: { fieldsets: [
+              {
+                fields: ['row::reason']
+              }
+            ]},
+            field_equal: { fieldsets: [
+              {
+                matches: [
+                  ['row::note', 'revalue::[Gg]ift'],
+                  ['row::note', 'revalue::[Dd]onation']
+                ]
+              }
+            ]}
           }
         }
       }
       result = execute_job(filename: test_csv,
                            xform: Merge::ConstantValueConditional,
                            xformopt: opt
-                           )
+                          )
       expect(result).to eq(expected)
     end
   end
@@ -71,10 +79,10 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
     ]
     lookup_rows = [
       ['id'],
-       [1],
-       [2],
-       [2]
-      ]
+      [1],
+      [2],
+      [2]
+    ]
 
     before do
       generate_csv(test_csv, rows)

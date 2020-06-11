@@ -45,27 +45,308 @@ RSpec.describe Kiba::Extend::Utils::Lookup do
     end
   end
 
+  describe Lookup::CriteriaChecker do
+    context 'when set match type not specified' do
+      it 'defaults to set_type = :all' do
+        set = { fieldsets: [
+          {
+            matches: [
+              ['row::a', 'value:abc'],
+            ]
+          }
+        ]}
+        obj = Lookup::CriteriaChecker.new(
+          check_type: :equality,
+          config: set,
+          row: {a: 'def'}
+        )
+        expect(obj.type).to eq(:all)
+      end
+    end
+
+    context 'when type = :all' do
+      context 'and all fieldset groups return true' do
+        it 'returns true' do
+          set = { type: :all,
+                  fieldsets: [
+            {
+              matches: [
+                ['row::a', 'value::abc'],
+              ]
+            },
+            {
+              matches: [
+                ['row::b', 'value::def'],
+              ]
+            }
+          ]}
+          obj = Lookup::CriteriaChecker.new(
+            check_type: :equality,
+            config: set,
+            row: {a: 'abc', b: 'def'}
+          )
+          expect(obj.result).to be true
+        end
+      end
+    end
+  end
+
+  describe Lookup::SetChecker do
+    context 'when set match type not specified' do
+      it 'defaults to set_type = :any' do
+        set = {
+          matches: [
+            ['row::a', 'value:abc'],
+            ['row::a', 'value:def']
+          ]
+        }
+        obj = Lookup::SetChecker.new(
+          check_type: :equality,
+          set: set,
+          row: {a: 'def'}
+        )
+        expect(obj.set_type).to eq(:any)
+      end
+    end
+
+    context 'when set match type = :any' do
+      context 'and one or more of the matches = true' do
+        it 'returns true' do
+          set = {
+            type: :any,
+            matches: [
+              ['row::a', 'value::abc'],
+              ['row::a', 'value::def']
+            ]
+          }
+          obj = Lookup::SetChecker.new(
+            check_type: :equality,
+            set: set,
+            row: {a: 'def'}
+          )
+          expect(obj.result).to be true
+        end
+      end
+
+      context 'and none of the matches = true' do
+        it 'returns false' do
+          set = {
+            type: :any,
+            matches: [
+              ['row::a', 'value::abc'],
+              ['row::a', 'value::def']
+            ]
+          }
+          obj = Lookup::SetChecker.new(
+            check_type: :equality,
+            set: set,
+            row: {a: 'ghi'}
+          )
+          expect(obj.result).to be false
+        end
+      end
+    end
+
+    context 'when set match type = :all' do
+      context 'and one or more of the matches = true' do
+        it 'returns true' do
+          set = {
+            type: :all,
+            matches: [
+              ['row::a', 'value::def'],
+              ['row::b', 'mergerow::a']
+            ]
+          }
+          obj = Lookup::SetChecker.new(
+            check_type: :equality,
+            set: set,
+            row: {a: 'def', b: 'abc'},
+            mergerow: {a: 'abc'}
+          )
+          expect(obj.result).to be true
+        end
+      end
+
+      context 'and one or more matches = false' do
+        it 'returns false' do
+          set = {
+            type: :all,
+            matches: [
+              ['row::a', 'value::abc'],
+              ['row::b', 'mergerow::a']
+            ]
+          }
+          obj = Lookup::SetChecker.new(
+            check_type: :equality,
+            set: set,
+            row: {a: 'ghi', b: 'def'},
+            mergerow: {a: 'abc'}
+          )
+          expect(obj.result).to be false
+        end
+      end
+    end
+  end
+  
+  describe Lookup::PairEquality do
+    describe 'compares row values to basic string values' do
+      context 'when row field value equals string value' do
+        it 'returns true' do
+          obj = Lookup::PairEquality.new(
+            pair: ['row::a', 'value::abc'],
+            row: {a: 'abc'}
+          )
+          expect(obj.result).to be true
+        end
+      end
+
+      context 'when row field value not equal to string value' do
+        it 'returns false' do
+          obj = Lookup::PairEquality.new(
+            pair: ['row::a', 'value::abc'],
+            row: {a: 'a'}
+          )
+          expect(obj.result).to be false
+        end
+      end
+    end
+
+    describe 'compares row values to regexp values' do
+      context 'when row field value equals regexp value' do
+        it 'returns true' do
+          obj = Lookup::PairEquality.new(
+            pair: ['row::a', 'revalue::[Aa].c'],
+            row: {a: 'abc'}
+          )
+          expect(obj.result).to be true
+        end
+      end
+
+      context 'when row field value not equal to regexp value' do
+        it 'returns false' do
+          obj = Lookup::PairEquality.new(
+            pair: ['row::a', 'revalue::[Aa].c'],
+            row: {a: 'abcd'}
+          )
+          expect(obj.result).to be false
+        end
+      end
+
+      context 'when regexp value explicitly includes ^ and/or $ anchors' do
+        it 'does not re-add them' do
+          obj = Lookup::PairEquality.new(
+            pair: ['row::a', 'revalue::^[Aa].c$'],
+            row: {a: 'abc'}
+          )
+          expect(obj.result).to be true
+        end
+      end
+    end
+
+    describe 'compares mergerow field values to basic string values' do
+      context 'when mergerow field value equals string value' do
+        it 'returns true' do
+          obj = Lookup::PairEquality.new(
+            pair: ['mergerow::a', 'value::abc'],
+            row: {b: 'def'},
+            mergerow: {a: 'abc'}
+          )
+          expect(obj.result).to be true
+        end
+      end
+      
+      context 'when mergerow field value not equal to string value' do
+        it 'returns false' do
+          obj = Lookup::PairEquality.new(
+            pair: ['mergerow::a', 'value::abc'],
+            row: {b: 'def'},
+            mergerow: {a: 'ab'}
+          )
+          expect(obj.result).to be false
+        end
+      end
+
+      context 'when mergerow is not passed to class' do
+        it 'returns false' do
+          obj = Lookup::PairEquality.new(
+            pair: ['mergerow::a', 'value::abc'],
+            row: {b: 'def'}
+          )
+          expect(obj.result).to be false
+        end
+      end
+    end
+
+    describe 'compares row field value to mergerow field value' do
+      context 'when row and mergerow field values are equal' do
+        it 'returns true' do
+          obj = Lookup::PairEquality.new(
+            pair: ['mergerow::a', 'row::b'],
+            row: {b: 'abc'},
+            mergerow: {a: 'abc'}
+          )
+          expect(obj.result).to be true
+        end
+      end
+
+      context 'when row and mergerow field values are not equal' do
+        it 'returns false' do
+          obj = Lookup::PairEquality.new(
+            pair: ['mergerow::a', 'row::b'],
+            row: {b: 'abc'},
+            mergerow: {a: 'def'}
+          )
+          expect(obj.result).to be false
+        end
+      end
+
+      context 'when neither row nor mergerow contains its specified field' do
+        it 'returns true' do
+          obj = Lookup::PairEquality.new(
+            pair: ['mergerow::a', 'row::b'],
+            row: {},
+            mergerow: {}
+          )
+          expect(obj.result).to be true
+        end
+      end
+
+      context 'when row field exists but is blank and mergerow field does not exist' do
+        it 'returns false' do
+          obj = Lookup::PairEquality.new(
+            pair: ['mergerow::a', 'row::b'],
+            row: {b: ''},
+            mergerow: {}
+          )
+          expect(obj.result).to be false
+        end
+      end
+    end
+  end
+  
   describe Lookup::RowSelector do
     context 'when inclusion criteria' do
       context 'includes :position => "first"' do
-         it 'keeps only the first mergerow' do
-            origrow = {:source => 'adopted'}
-            mergerows = [
-              {:treatment => 'hatch'},
-              {:treatment => 'adopted'},
-              {:treatment => 'hatch'},
-              {:treatment => 'adopted'},
-              {:treatment => 'deworm'}
-            ]
-            include = {
-              :position => 'first'
+        it 'keeps only the first mergerow' do
+          origrow = {:source => 'adopted'}
+          mergerows = [
+            {:treatment => 'hatch'},
+            {:treatment => 'adopted'},
+            {:treatment => 'hatch'},
+            {:treatment => 'adopted'},
+            {:treatment => 'deworm'}
+          ]
+          conditions = {
+            include: {
+              position: 'first'
             }
-            result = Lookup::RowSelector.new(origrow: origrow, mergerows: mergerows, include: include).result
-            expected = [
-              {:treatment => 'hatch'}
-            ]
-            expect(result).to eq(expected)
-         end
+          }
+          result = Lookup::RowSelector.new(origrow: origrow, mergerows: mergerows, conditions: conditions).result
+          expected = [
+            {:treatment => 'hatch'}
+          ]
+          expect(result).to eq(expected)
+        end
       end
       context 'includes :field_equal comparing to a string value' do
         it 'keeps only mergerows containing field equal to given value' do
@@ -77,12 +358,19 @@ RSpec.describe Kiba::Extend::Utils::Lookup do
             {:treatment => 'adopted'},
             {:treatment => 'deworm'}
           ]
-          include = {
-            :field_equal => [
-              ['mergerow::treatment', 'value::hatch']
-            ]
+          conditions = {
+            include: {
+              field_equal: { fieldsets: [
+                {
+                  type: :any,
+                  matches: [
+                    ['mergerow::treatment', 'value::hatch']
+                  ]
+                }
+              ]}
+            }
           }
-          result = Lookup::RowSelector.new(origrow: origrow, mergerows: mergerows, include: include).result
+          result = Lookup::RowSelector.new(origrow: origrow, mergerows: mergerows, conditions: conditions).result
           expected = [
             {:treatment => 'hatch'},
             {:treatment => 'hatch'}
@@ -98,14 +386,22 @@ RSpec.describe Kiba::Extend::Utils::Lookup do
             {:treatment => 'adopted'},
             {:treatment => 'hatch'},
             {:treatment => 'adopted'},
-            {:treatment => 'deworm'}
+            {:treatment => 'deworm'},
+            {:treatment => 'hatches'}
           ]
-          include = {
-            :field_equal => [
-              ['mergerow::treatment', 'revalue::h$']
-            ]
+          conditions = {
+            include: {
+              field_equal: { fieldsets: [
+                {
+                  type: :any,
+                  matches: [
+                    ['mergerow::treatment', 'revalue::[Hh]atch']
+                  ]
+                }
+              ]}
+            }
           }
-          result = Lookup::RowSelector.new(origrow: origrow, mergerows: mergerows, include: include).result
+          result = Lookup::RowSelector.new(origrow: origrow, mergerows: mergerows, conditions: conditions).result
           expected = [
             {:treatment => 'hatch'},
             {:treatment => 'hatch'}
@@ -126,12 +422,19 @@ RSpec.describe Kiba::Extend::Utils::Lookup do
               {:treatment => 'adopted'},
               {:treatment => 'deworm'}
             ]
-            exclude = {
-              :field_equal => [
-                ['row::source', 'mergerow::treatment']
-                ]
+            conditions = {
+              exclude: {
+                field_equal: { fieldsets: [
+                  {
+                    type: :any,
+                    matches: [
+                      ['row::source', 'mergerow::treatment']
+                    ]
+                  }
+                ]}
+              }
             }
-            result = Lookup::RowSelector.new(origrow: origrow, mergerows: mergerows, exclude: exclude).result
+            result = Lookup::RowSelector.new(origrow: origrow, mergerows: mergerows, conditions: conditions).result
             expected = [
               {:treatment => 'hatch'},
               {:treatment => 'hatch'},
@@ -155,14 +458,21 @@ RSpec.describe Kiba::Extend::Utils::Lookup do
               {:treatment => 'purchased', :gotfrom => 'adopted', :type => 'royal purple'},
               {:treatment => 'purchased', :gotfrom => 'friend', :type => 'coral blue'},
             ]
-            exclude = {
-              :field_equal => [
-                ['row::source', 'mergerow::treatment'],
-                ['row::source', 'mergerow::gotfrom'],
-                ['row::color', 'mergerow::type']
-              ]
+            conditions = {
+              exclude: {
+                field_equal: { fieldsets: [
+                  {
+                    type: :any,
+                    matches: [
+                      ['row::source', 'mergerow::treatment'],
+                      ['row::source', 'mergerow::gotfrom'],
+                      ['row::color', 'mergerow::type']
+                    ]
+                  }
+                ]}
+              }
             }
-            result = Lookup::RowSelector.new(origrow: origrow, mergerows: mergerows, exclude: exclude).result
+            result = Lookup::RowSelector.new(origrow: origrow, mergerows: mergerows, conditions: conditions).result
             expected = [
               {:treatment => 'hatch', :gotfrom => 'self', :type => 'pearl'},
               {:treatment => 'purchased', :gotfrom => 'friend', :type => 'buff dundotte'},
@@ -187,12 +497,16 @@ RSpec.describe Kiba::Extend::Utils::Lookup do
         ]
         context 'when one field specified' do
           it 'rejects expected mergerows' do
-            exclude = {
-              :field_empty => [
-                :treatment
-              ]
+            conditions = {
+              exclude: {
+                field_empty: {
+                  fieldsets: [
+                    {fields: %w[mergerow::treatment]}
+                  ]
+                }
+              }
             }
-            result = Lookup::RowSelector.new(origrow: origrow, mergerows: mergerows, exclude: exclude).result
+            result = Lookup::RowSelector.new(origrow: origrow, mergerows: mergerows, conditions: conditions).result
             expected = [
               {:treatment => 'hatch', :gotfrom => 'adopted', :type => 'pearl'},
               {:treatment => 'hatch', :gotfrom => 'self', :type => 'pearl'},
@@ -205,13 +519,16 @@ RSpec.describe Kiba::Extend::Utils::Lookup do
         end
         context 'when multiple fields specified' do
           it 'rejects mergerows where ANY of the fields listed are empty' do
-            exclude = {
-              :field_empty => [
-                :treatment,
-                :gotfrom
-              ]
+            conditions = {
+              exclude: {
+                field_empty: {
+                  fieldsets: [
+                    {type: :any, fields: %w[mergerow::treatment mergerow::gotfrom]}
+                  ]
+                }
+              }
             }
-            result = Lookup::RowSelector.new(origrow: origrow, mergerows: mergerows, exclude: exclude).result
+            result = Lookup::RowSelector.new(origrow: origrow, mergerows: mergerows, conditions: conditions).result
             expected = [
               {:treatment => 'hatch', :gotfrom => 'adopted', :type => 'pearl'},
               {:treatment => 'hatch', :gotfrom => 'self', :type => 'pearl'},
@@ -237,19 +554,23 @@ RSpec.describe Kiba::Extend::Utils::Lookup do
           {:treatment => 'purchased', :gotfrom => '', :type => 'coral blue'},
           {:treatment => 'hatch', :gotfrom => 'adopted', :type => 'pearl'},
         ]
-        exclude = {
-          :field_empty => [
-            :treatment,
-            :gotfrom
-          ]
+        conditions = {
+          exclude: {
+            field_empty: {
+              fieldsets: [
+                { type: :all, fields: %w[mergerow::treatment mergerow::gotfrom] }
+              ]
+            }
+          },
+          include:
+          {
+            position: 'first'
+          }
         }
-        include = {
-          :position => 'first'
-        }
+
         result = Lookup::RowSelector.new(origrow: origrow,
                                          mergerows: mergerows,
-                                         exclude: exclude,
-                                         include: include).result
+                                         conditions: conditions).result
         expected = [
           {:treatment => 'hatch', :gotfrom => 'self', :type => 'pearl'}
         ]

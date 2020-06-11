@@ -40,93 +40,52 @@ module Kiba
           private
 
           def conditions_met?(row)
-            results = []
-            @conditions.each do |type, config|
-              case type
-              when :fields_empty
-                results << check_emptiness(row, config)
-              when :fields_populated
-                results << check_populated(row, config)
-              when :fields_match_regexp
-                results << check_regexp_matches(row, config)
-              end
-            end
-            results.any?(false) ? false : true
+            chk = Lookup::RowSelector.new(
+              origrow: row,
+              conditions: @conditions
+            ).result
+            chk.empty? ? false : true
           end
 
-          def check_emptiness(row, config)
-            results = []
-            config.each do |field|
-              val = row.fetch(field)
-              ( val.nil? || val.empty? ) ? results << true : results << false
-            end
-            results.any?(false) ? false : true
-          end
-
-          def check_populated(row, config)
-            results = []
-            config.each do |field|
-              val = row.fetch(field)
-              ( val.nil? || val.empty? ) ? results << false : results << true
-            end
-            results.any?(false) ? false : true
-          end
-
-          def check_regexp_matches(row, config)
-            results = []
-            config.each do |field, matches|
-              field_results = []
-              val = row.fetch(field)
-              if val.nil? || val.empty?
-                results << false
-              else
-                matches.each do |match|
-                  re = Regexp.new(match)
-                  val.match?(re) ? field_results << true : field_results << false
-                end
-              end
-              field_results.any?(true) ? results << true : results << false
-            end
-            results.any?(false) ? false : true
-          end
         end
         
         class CountOfMatchingRows
           def initialize(lookup:, keycolumn:, targetfield:,
-                         exclusion_criteria: {},
-                         selection_criteria: {}
+                         conditions: {}
                         )
             @lookup = lookup
             @keycolumn = keycolumn
             @target = targetfield
-            @exclude = exclusion_criteria
-            @include = selection_criteria
+            @conditions = conditions
           end
 
           def process(row)
             id = row.fetch(@keycolumn)
-            merge_rows = Lookup::RowSelector.new(
-              origrow: row,
-              mergerows: @lookup.fetch(id, []),
-              exclude: @exclude,
-              include: @include
-            ).result
-            row[@target] = merge_rows.size
+            matches = @lookup.fetch(id, [])
+            if matches.size == 0
+              row[@target] = 0
+            else
+              merge_rows = Lookup::RowSelector.new(
+                origrow: row,
+                mergerows: @lookup.fetch(id, nil),
+                conditions: @conditions
+              ).result
+              row[@target] = merge_rows.size
+            end
             row
           end
-        end
+        end	
         
         # used when lookup may return an array of rows from which values should be merged
         #  into the target, AND THE TARGET IS MULTIVALUED
         class MultiRowLookup
           def initialize(fieldmap:, constantmap: {}, lookup:, keycolumn:,
-                         exclusion_criteria: {}, selection_criteria: {}, delim: DELIM)
+                         conditions: {}, delim: DELIM)
             @fieldmap = fieldmap # hash of looked-up values to merge in for each merged-in row
             @constantmap = constantmap #hash of constants to add for each merged-in row
             @lookup = lookup #lookuphash; should be created with csv_to_multi_hash
             @keycolumn = keycolumn #column in main table containing value expected to be lookup key
-            @exclusion_criteria = exclusion_criteria #hash of constraints a row must NOT meet in order to be merged
-            @selection_criteria = selection_criteria #hash of contraints a rom must meet in order to be merged
+            @conditions = conditions
             @delim = delim
           end
 
@@ -140,8 +99,7 @@ module Kiba
             merge_rows = Lookup::RowSelector.new(
               origrow: row,
               mergerows: @lookup.fetch(id, []),
-              exclude: @exclusion_criteria,
-              include: @selection_criteria
+              conditions: @conditions
             ).result
             
             merge_rows.each do |mrow|

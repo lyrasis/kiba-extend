@@ -24,17 +24,134 @@ module Kiba
           end
         end
 
-        class RowSelector
-          def initialize(origrow:, mergerows:, exclude: {}, include: {})
-            @exclude = exclude
-            @include = include
+        class SetChecker
+          attr_reader :set_type, :result
+          def initialize(check_type:, set:, row:, mergerow: {})
+            @check_type = check_type
+            @set_type = set.dig(:type) ? set[:type] : :any
+            bool = []
+            case @check_type
+              when :equality
+            set[:matches].each do |pair|
+              bool << Lookup::PairEquality.new(
+                pair: pair,
+                row: row,
+                mergerow: mergerow
+              ).result
+            end
+            when :emptiness
+              set[:fields].each do |field|
+                bool << Lookup::FieldEmptiness.new(
+                  field: field,
+                  row: row,
+                  mergerow: mergerow
+                  ).result
+              end
+            end
+            
+            case @set_type
+            when :any
+              @result = bool.any? ? true : false
+            when :all
+              @result = bool.any?(false) ? false : true
+            end
+          end
+        end
 
-            @keeprows = mergerows
-            @keeprows = mergerows.reject{ |mrow| exclude?(origrow, mrow) }
-            if @keeprows.size > 0 && @include.dig(:position) == 'first'
+        class FieldEmptiness
+          attr_reader :result
+          def initialize(field:, row:, mergerow:)
+            h = {'row' => row, 'mergerow' => mergerow}
+            fvals = field.split('::')
+            @field = fvals[1].to_sym
+            @row = fvals[0]
+            val = h[@row].fetch(@field, '')
+            @result = (val.nil? || val.empty?) ? true : false
+          end
+        end
+
+        class PairEquality
+          attr_reader :result
+          def initialize(pair:, row:, mergerow: {})
+            comparison_type = :equals
+            pair = pair.map{ |e| e.split('::') }
+            # convert row or mergerow fieldnames to symbols
+            pair = pair.each{ |arr| arr[1] = arr[1].to_sym if arr[0]['row'] }
+            # fetch or convert values for comparison
+            pair = pair.map do |arr|
+              case arr[0]
+              when 'row'
+                row.fetch(arr[1], nil)
+              when 'mergerow'
+                mergerow.fetch(arr[1], nil)
+              when 'revalue'
+                comparison_type = :match
+                arr[1] = "^#{arr[1]}$"
+                Regexp.new(arr[1])
+              when 'value'
+                arr[1]
+              end
+            end
+
+            case comparison_type
+            when :equals
+              @result = pair[0] == pair[1]
+            when :match
+              @result = pair[0].match?(pair[1])
+            end   
+          end
+        end
+
+        class CriteriaChecker
+          attr_reader :result, :type
+          def initialize(check_type:, config:, row:, mergerow: {})
+            @check_type = check_type
+            @config = config
+            @row = row
+            @mergerow = mergerow
+            @type = @config.dig(:type) ? @config[:type] : :all
+            bool = []
+            
+            @config[:fieldsets].each{ |set| bool << Lookup::SetChecker.new(
+              check_type: @check_type,
+              set: set,
+              row: @row,
+              mergerow: @mergerow
+            ).result }
+            
+            case @type
+            when :any
+              @result = bool.any? ? true : false
+            when :all
+              @result = bool.any?(false) ? false : true
+            end  
+          end
+        end
+        
+        # :field_equal is an array of 2-element arrays to be compared.
+        # The whole value of the first field/string must match the whole
+        #   value of the second field/string
+        # The elements in the pairwise arrays follow these formats:
+        #   'row::fieldname' - field from workng row whose value
+        #      should be compared
+        #   'mergerow::fieldname' - field from merge row whose value(s)
+        #      should be compared
+        #   'value::string' - string against which to compare a field value
+        #   'revalue::string' - string to be compared as a regular expression
+        #      against a field value
+        # It is assumed, but not enforced, that at least one of the pair will
+        #   be a field
+        class RowSelector
+          def initialize(origrow:, mergerows: [], conditions: {})
+            @exclude = conditions[:exclude]
+            @include = conditions[:include]
+
+            mergerows.empty? ? @keeprows = origrow : @keeprows = mergerows
+            @keeprows = mergerows.reject{ |mrow| exclude?(origrow, mrow) } if @exclude
+            if @keeprows.size > 0 && @include && @include.dig(:position) == 'first'
               @keeprows = [@keeprows.first]
             end
-            @keeprows = @keeprows.select{ |mrow| include?(origrow, mrow) }
+            @keeprows = @keeprows.select{ |mrow| include?(origrow, mrow) } if @include
           end
 
           def result
@@ -44,58 +161,28 @@ module Kiba
           private
           
           def exclude?(row, mrow)
-            bool = [false]
-            @exclude.each do |type, value|
-              case type
-              when :field_empty
-                bool << is_empty?(mrow, value)
-              when :field_equal
-                value.each{ |pair| bool << is_equal?(row, mrow, pair) }
-              end
-            end
+            bool = do_checks(@exclude, row, mrow)
             bool.flatten.any? ? true : false
           end
-
+          
           def include?(row, mrow)
-            bool = []
-            @include.each do |type, value|
-              case type
-              when :position
-                #do nothing
-              when :field_equal
-                value.each{ |pair| bool << is_equal?(row, mrow, pair) }
-              end
-            end
+            bool = do_checks(@include, row, mrow)
             bool.include?(false) ? false : true
           end
-          
-          def is_empty?(mrow, fields)
+
+          def do_checks(config, row, mrow)
             bool = []
-            fields.each do |field|
-              val = mrow.fetch(field, '')
-              bool << true if val.nil? || val.empty?
-            end
-            bool
-          end
-          
-          def is_equal?(row, mrow, pair)
-            pair = pair.map{ |e| e.split('::') }
-            # convert row or mergerow fieldnames to symbols
-            pair = pair.each{ |arr| arr[1] = arr[1].to_sym if arr[0]['row'] }
-            # fetch or convert values for comparison
-            pair = pair.map do |arr|
-              case arr[0]
-              when 'row'
-                row.fetch(arr[1])
-              when 'mergerow'
-                mrow.fetch(arr[1])
-              when 'revalue'
-                Regexp.new(arr[1])
-              when 'value'
-                arr[1]
+            config.each do |chktype, value|
+              case chktype
+              when :field_empty
+                bool << Lookup::CriteriaChecker.new(check_type: :emptiness, config: value, row: row, mergerow: mrow).result
+              when :field_equal
+                bool << Lookup::CriteriaChecker.new(check_type: :equality, config: value, row: row, mergerow: mrow).result
+              when :position
+                #do nothing
               end
             end
-            pair[0].match?(pair[1])
+            bool
           end
         end
       end
