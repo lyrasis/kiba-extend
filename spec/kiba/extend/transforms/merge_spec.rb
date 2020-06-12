@@ -41,8 +41,7 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
         {:id=>'2', :reason=>nil, :note=>'Something else'}
       ]
       opt = {
-        target: :reason,
-        value: 'gift',
+        fieldmap: {reason: 'gift'},
         conditions: {
           include: {
             field_empty: { fieldsets: [

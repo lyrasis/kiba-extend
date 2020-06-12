@@ -26,14 +26,14 @@ module Kiba
         #    Multiple match values may be given to test for a single field
         #    ALL fields listed must match at least one of its match values
         class ConstantValueConditional
-          def initialize(target:, value:, conditions: {})
-            @target = target
-            @value = value
+          def initialize(fieldmap:, conditions: {}, sep: nil)
+            @fieldmap = fieldmap
             @conditions = conditions
+            @sep = sep
           end
 
           def process(row)
-            row[@target] = @value if conditions_met?(row)
+            @fieldmap.each{|target, value| row[target] = value } if conditions_met?(row)
             row
           end
 
@@ -42,7 +42,9 @@ module Kiba
           def conditions_met?(row)
             chk = Lookup::RowSelector.new(
               origrow: row,
-              conditions: @conditions
+              mergerows: [],
+              conditions: @conditions,
+              sep: @sep
             ).result
             chk.empty? ? false : true
           end
@@ -96,28 +98,36 @@ module Kiba
             @fieldmap.each_key{ |k| fh[k] = [] }
             @constantmap.each_key{ |k| ch[k] = [] }
 
-            merge_rows = Lookup::RowSelector.new(
-              origrow: row,
-              mergerows: @lookup.fetch(id, []),
-              conditions: @conditions
-            ).result
-            
-            merge_rows.each do |mrow|
-              @fieldmap.each do |target, source|
-                val = mrow.fetch(source, '')
-                fh[target] << val unless val.nil? || val.empty?
+            merge_rows = @lookup.fetch(id, [])
+
+            if merge_rows.size > 0
+              keep_rows = Lookup::RowSelector.new(
+                origrow: row,
+                mergerows: @lookup.fetch(id, []),
+                conditions: @conditions,
+                sep: @delim
+              ).result
+              
+              keep_rows.each do |mrow|
+                @fieldmap.each do |target, source|
+                  val = mrow.fetch(source, '')
+                  fh[target] << val unless val.nil? || val.empty?
+                end
+                @constantmap.each{ |target, value| ch[target] << value }
               end
-              @constantmap.each{ |target, value| ch[target] << value }
-            end
 
-            chk = @fieldmap.map{ |target, source| fh[target].size }.uniq.sort
+              chk = @fieldmap.map{ |target, source| fh[target].size }.uniq.sort
 
-            if chk == [0]
-              fh.each{ |target, arr| row[target] = nil }
-              ch.each{ |target, arr| row[target] = nil }
+              if chk == [0]
+                fh.each{ |target, arr| row[target] = nil }
+                ch.each{ |target, arr| row[target] = nil }
+              else
+                fh.each{ |target, arr| row[target] = arr.join(@delim) }
+                ch.each{ |target, arr| row[target] = arr.join(@delim) }
+              end
             else
-              fh.each{ |target, arr| row[target] = arr.join(@delim) }
-              ch.each{ |target, arr| row[target] = arr.join(@delim) }
+              @fieldmap.keys.each{ |f| row[f] = nil }
+              @constantmap.keys.each{ |f| row[f] = nil }
             end
             row
           end

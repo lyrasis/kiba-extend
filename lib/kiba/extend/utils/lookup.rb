@@ -131,9 +131,9 @@ module Kiba
             pair = pair.map do |arr|
               case arr[0]
               when 'row'
-                row.fetch(arr[1], nil)
+                row.fetch(arr[1], '%field does not exist%')
               when 'mergerow'
-                mergerow.fetch(arr[1], nil)
+                mergerow.fetch(arr[1], '%field does not exist%')
               when 'revalue'
                 comparison_type = :match
                 arr[1] = "^#{arr[1]}$"
@@ -143,6 +143,11 @@ module Kiba
               end
             end
 
+            unless pair.include?(nil) && pair.include?('')
+            # replace nil value with empty string for comparison
+            pair = pair.map{ |e| e = e.nil? ? '' : e}
+            end
+            
             case comparison_type
             when :equals
               @result = pair[0] == pair[1]
