@@ -22,7 +22,9 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Run `rake spec` to get a list of all the transforms currently available and brief descriptions of what they do. 
+
+For details on usage, see the corresponding module. For initialization parameter examples, see the corresponding spec file.
 
 ## Development
 
