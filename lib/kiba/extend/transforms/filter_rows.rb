@@ -13,9 +13,9 @@ module Kiba
           def process(row)
             case @action
             when :keep
-              row.fetch(@column) == @value ? row : nil
+              row.fetch(@column, nil) == @value ? row : nil
             when :reject
-              row.fetch(@column) == @value ? nil : row
+              row.fetch(@column, nil) == @value ? nil : row
             end
           end
         end
@@ -48,7 +48,7 @@ module Kiba
           end
 
           def process(row)
-            val = row.fetch(@field)
+            val = row.fetch(@field, nil)
             case @action
             when :keep
               val.nil? || val.empty? ? nil : row

@@ -55,8 +55,15 @@ RSpec.describe Kiba::Extend::Transforms::Deduplicate do
       result = execute_job(filename: test_csv,
                            xform: Deduplicate::Flag,
                            xformopt: opt
-                           )
+                          )
       expect(result).to eq(expected)
+    end
+  end
+
+  describe 'GroupedFieldValues' do
+    xit 'deduplicates specified `on_field`' do
+    end
+    xit 'deletes corresponding values in `grouped_fields`, based on their order (not that they are duplicate values)' do
     end
   end
 end

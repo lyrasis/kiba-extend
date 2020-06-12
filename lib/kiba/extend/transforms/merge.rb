@@ -33,7 +33,11 @@ module Kiba
           end
 
           def process(row)
-            @fieldmap.each{|target, value| row[target] = value } if conditions_met?(row)
+            if conditions_met?(row)
+              @fieldmap.each{|target, value| row[target] = value }
+            else
+              @fieldmap.each{|target, value| row[target] = row.dig(target) ? row.fetch(target) : nil }
+            end
             row
           end
 

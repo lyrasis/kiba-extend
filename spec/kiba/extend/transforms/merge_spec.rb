@@ -35,7 +35,8 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
     before do
       generate_csv(test_csv, rows)
     end
-    it 'merges constant data values into field if row meets criteria' do
+    context 'when row meets criteria' do
+    it 'merges constant data values into specified field' do
       expected = [
         {:id=>'1', :reason=>'gift', :note=>'Gift'},
         {:id=>'2', :reason=>nil, :note=>'Something else'}
@@ -65,6 +66,21 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
                            xformopt: opt
                           )
       expect(result).to eq(expected)
+    end
+    context 'when target field has a pre-existing value' do
+      xit 'that value is overwritten by the specified constant value' do
+      end
+    end
+    end
+    context 'when row does not meet criteria' do
+      context 'and target field already exists in row' do
+        xit 'target field value stays the same' do
+        end
+      end
+      context 'and target field does not exist in row' do
+        xit 'target field is added to row, with nil value' do
+        end
+      end
     end
   end
   
