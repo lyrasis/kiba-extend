@@ -37,17 +37,34 @@ RSpec.describe Kiba::Extend::Transforms::Replace do
       before do
         generate_csv(test_csv, rows2)
       end
-      it 'sends original value through to new column' do
-        expected = [
-          {:id=>'1', :name=>'Unnamed keet', :gender=>'n'},
-          {:id=>'2', :name=>'Kernel', :gender=>'female'}
-        ]
-        result = execute_job(filename: test_csv,
-                             xform: Replace::FieldValueWithStaticMapping,
-                             xformopt: {source: :sex,
-                                        target: :gender,
-                                        mapping: mapping})
-        expect(result).to eq(expected)
+      context 'and :fallback_val = :orig (this is the default!)' do
+        it 'sends original value through to new column' do
+          expected = [
+            {:id=>'1', :name=>'Unnamed keet', :gender=>'n'},
+            {:id=>'2', :name=>'Kernel', :gender=>'female'}
+          ]
+          result = execute_job(filename: test_csv,
+                               xform: Replace::FieldValueWithStaticMapping,
+                               xformopt: {source: :sex,
+                                          target: :gender,
+                                          mapping: mapping})
+          expect(result).to eq(expected)
+        end
+      end
+      context 'and :fallback_val = :nil' do
+        it 'sends nil through to new column' do
+          expected = [
+            {:id=>'1', :name=>'Unnamed keet', :gender=>nil},
+            {:id=>'2', :name=>'Kernel', :gender=>'female'}
+          ]
+          result = execute_job(filename: test_csv,
+                               xform: Replace::FieldValueWithStaticMapping,
+                               xformopt: {source: :sex,
+                                          target: :gender,
+                                          mapping: mapping,
+                                          fallback_val: :nil})
+          expect(result).to eq(expected)
+        end
       end
     end
   end

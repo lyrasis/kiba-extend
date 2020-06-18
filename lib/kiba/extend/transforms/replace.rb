@@ -4,11 +4,12 @@ module Kiba
       module Replace
         ::Replace = Kiba::Extend::Transforms::Replace
         class FieldValueWithStaticMapping
-          def initialize(source:, target:, mapping:, delete_source: true)
+          def initialize(source:, target:, mapping:, fallback_val: :orig, delete_source: true)
             @source = source
             @target = target
             @mapping = mapping
             @mapping[nil] = nil unless @mapping.has_key?(nil)
+            @fallback = fallback_val
             @del = delete_source
           end
 
@@ -17,7 +18,12 @@ module Kiba
             if @mapping.has_key?(origval)
               row[@target] = @mapping[origval]
             else
-              row[@target] = origval
+              case @fallback
+                when :orig
+                  row[@target] = origval
+              when :nil
+                row[@target] = nil
+              end
             end
             row.delete(@source) if @del
             row
