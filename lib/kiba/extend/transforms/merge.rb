@@ -4,7 +4,6 @@ module Kiba
       module Merge
         ::Merge = Kiba::Extend::Transforms::Merge
 
-
         class ConstantValue
           def initialize(target:, value:)
             @target = target

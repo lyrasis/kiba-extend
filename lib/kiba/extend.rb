@@ -19,6 +19,7 @@ module Kiba
       require 'kiba/extend/transforms/deduplicate'
       require 'kiba/extend/transforms/cspace'
       require 'kiba/extend/transforms/delete'
+      require 'kiba/extend/transforms/explode'
       require 'kiba/extend/transforms/filter_rows'
       require 'kiba/extend/transforms/merge'
       require 'kiba/extend/transforms/rename'

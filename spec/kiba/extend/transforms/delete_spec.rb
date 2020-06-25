@@ -51,6 +51,29 @@ RSpec.describe Kiba::Extend::Transforms::Delete do
     end
   end
 
+  describe 'FieldsExcept' do
+    test_csv = 'tmp/test.csv'
+    rows = [
+      ['id', 'name', 'sex', 'source'],
+      [1, 'Weddy', 'm', 'adopted'],
+      [2, 'Kernel', 'f', 'adopted']
+    ]
+
+    before do
+      generate_csv(test_csv, rows)
+    end
+    it 'deletes all fields except ones given as keepfields' do
+      expected = [
+        {:name=>'Weddy'},
+        {:name=>'Kernel'}
+      ]
+      result = execute_job(filename: test_csv,
+                           xform: Delete::FieldsExcept,
+                           xformopt: {keepfields: %i[name]})
+      expect(result).to eq(expected)
+    end
+  end
+
   describe 'FieldValueMatchingRegexp' do
     test_csv = 'tmp/test.csv'
     after { File.delete(test_csv) if File.exist?(test_csv) }

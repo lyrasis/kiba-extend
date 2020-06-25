@@ -35,7 +35,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency 'kiba', '>= 2.0.0'
+  spec.add_dependency 'kiba', '>= 3.0.0'
   spec.add_dependency 'kiba-common', '>= 0.9.0'
   spec.add_dependency 'xxhash'
   

@@ -31,6 +31,18 @@ module Kiba
           end
         end
 
+        class FieldsExcept
+          def initialize(keepfields:)
+            @fields = keepfields
+          end
+
+          def process(row)
+            deletefields = row.keys - @fields
+            deletefields.each{ |f| row.delete(f) }
+            row
+          end
+        end
+
         class FieldValueContainingString
           def initialize(fields:, match:, casesensitive: true)
             @fields = fields
