@@ -22,8 +22,8 @@ RSpec.describe Kiba::Extend::Utils::Lookup do
     
     it 'returns hash with key = keycolumn value and value = last occurring row w/that key ' do
       result = Lookup.csv_to_hash(file: test_csv,
-                                       csvopt: CSVOPT,
-                                       keycolumn: :id)
+                                  csvopt: CSVOPT,
+                                  keycolumn: :id)
       expect(result).to eq(lookup_hash)
     end
   end
@@ -39,8 +39,8 @@ RSpec.describe Kiba::Extend::Utils::Lookup do
     
     it 'returns hash with key = keycolumn value and value = array of all rows w/that key ' do
       result = Lookup.csv_to_multi_hash(file: test_csv,
-                                       csvopt: CSVOPT,
-                                       keycolumn: :id)
+                                        csvopt: CSVOPT,
+                                        keycolumn: :id)
       expect(result).to eq(lookup_hash)
     end
   end
@@ -68,18 +68,18 @@ RSpec.describe Kiba::Extend::Utils::Lookup do
       context 'and all fieldset groups return true' do
         it 'returns true' do
           set = { type: :all,
-                  fieldsets: [
-            {
-              matches: [
-                ['row::a', 'value::abc'],
-              ]
-            },
-            {
-              matches: [
-                ['row::b', 'value::def'],
-              ]
-            }
-          ]}
+                 fieldsets: [
+                   {
+                     matches: [
+                       ['row::a', 'value::abc'],
+                     ]
+                   },
+                   {
+                     matches: [
+                       ['row::b', 'value::def'],
+                     ]
+                   }
+                 ]}
           obj = Lookup::CriteriaChecker.new(
             check_type: :equality,
             config: set,
@@ -207,7 +207,7 @@ RSpec.describe Kiba::Extend::Utils::Lookup do
       expect(obj.result.sort).to eq(expected)
     end
   end
-    
+  
   describe Lookup::PairEquality do
     describe 'compares row values to basic string values' do
       context 'when row field value equals string value' do
@@ -395,6 +395,16 @@ RSpec.describe Kiba::Extend::Utils::Lookup do
             row: {a: 'abc'}
           )
           expect(obj.result).to be true
+        end
+      end
+
+      context 'when row value is nil' do
+        it 'returns false' do
+          obj = Lookup::PairInclusion.new(
+            pair: ['row::a', 'revalue::^[Aa].c$'],
+            row: {a: nil}
+          )
+          expect(obj.result).to be false
         end
       end
     end

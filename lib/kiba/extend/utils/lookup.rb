@@ -179,12 +179,17 @@ module Kiba
               end
             end
 
+            if pair[0].nil?
+              @result = false
+            else
+              
             case comparison_type
             when :include
               @result = pair[0].include?(pair[1])
             when :match
               @result = pair[0].match?(pair[1])
-            end   
+            end
+            end
           end
         end
 
