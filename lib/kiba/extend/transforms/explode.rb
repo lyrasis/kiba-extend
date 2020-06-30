@@ -33,6 +33,35 @@ module Kiba
             end
           end
         end
+
+        # Given a row like:
+        # | :id | :r1 | :r2     | :ra | :rb | :xq |
+        # | 001 | a;b | foo;bar | aa  | bb  | eee |
+        # And told to explode columns :ra and :rb to new row, can create:
+        # | 001 | :a1 | :b2     | :xq |
+        # | 001 | a;b | foo;bar | eee |
+        # | 001 | aa  | bb      | eee |
+        class ColumnsRemappedInNewRows
+          def initialize(remap_groups:, map_to:)
+            @groups = remap_groups
+            @map = map_to
+          end
+
+          def process(row)
+            other_fields = row.keys - @groups.flatten
+            @groups.each do |group|
+              rowcopy = row.clone
+              this = {}
+              other_fields.each{ |f| this[f] = rowcopy.fetch(f, nil) }
+              group.each_with_index do |f, i|
+                this[@map[i]] = rowcopy.fetch(f, nil)
+              end
+              yield(this)
+            end
+            nil
+          end
+        end
+
       end # module Explode
     end #module Transforms
   end #module Extend
