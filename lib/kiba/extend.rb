@@ -25,6 +25,7 @@ module Kiba
       require 'kiba/extend/transforms/rename'
       require 'kiba/extend/transforms/replace'
       require 'kiba/extend/transforms/reshape'
+      require 'kiba/extend/transforms/split'
       require 'kiba/extend/utils/lookup'
 
     # strips, collapses multiple spaces, removes terminal commas, strips again
