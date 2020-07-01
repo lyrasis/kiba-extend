@@ -61,9 +61,30 @@ RSpec.describe Kiba::Extend::Transforms::Deduplicate do
   end
 
   describe 'GroupedFieldValues' do
-    xit 'deduplicates specified `on_field`' do
+    test_csv = 'tmp/test.csv'
+    rows = [
+      ['name', 'role'],
+      ['Fred;Freda;Fred;James', 'author;photographer;editor;illustrator'],
+      [';', ';'],
+      ['1', '2']
+    ]
+    before do
+      generate_csv(test_csv, rows)
     end
-    xit 'deletes corresponding values in `grouped_fields`, based on their order (not that they are duplicate values)' do
+    it 'removes duplicate values in one field, and removes corresponding fieldgroup values' do
+      expected = [
+        {name: 'Fred;Freda;James', role: 'author;photographer;illustrator'},
+        {name: nil, role: nil},
+        {name: '1', role: '2'}
+      ]
+      result = execute_job(filename: test_csv,
+                           xform: Deduplicate::GroupedFieldValues,
+                           xformopt: {
+                             on_field: :name,
+                             grouped_fields: %i[role],
+                             sep: ';'
+                           })
+      expect(result).to eq(expected)
     end
   end
 end

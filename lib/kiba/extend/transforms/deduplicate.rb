@@ -75,6 +75,15 @@ module Kiba
                 end
               end
             end
+
+            fv = row.fetch(@field, nil)
+            unless fv.nil?
+              if fv.empty?
+                row[@field] = nil
+                @other.each{ |f| row[f] = nil }
+              end
+            end
+            
             row
           end
 
