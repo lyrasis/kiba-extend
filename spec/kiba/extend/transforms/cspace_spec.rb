@@ -21,5 +21,28 @@ RSpec.describe Kiba::Extend::Transforms::Cspace do
       expect(result).to eq(expected)
     end
   end
+
+  describe 'NormalizeForID' do
+    test_csv = 'tmp/test.csv'
+    rows = [
+      ['id', 'subject'],
+      [1, 'Oświęcim (Poland)'],
+      [2, 'Oswiecim, Poland']
+    ]
+
+    before do
+      generate_csv(test_csv, rows)
+    end
+    it 'Oświęcim (Poland) => OswiecimPoland' do
+      expected = [
+        {:id=>'1', :subject=>'Oświęcim (Poland)', :norm=>'OswiecimPoland'},
+        {:id=>'2', :subject=>'Oswiecim, Poland', :norm=>'OswiecimPoland'}
+       ]
+      result = execute_job(filename: test_csv,
+                           xform: Cspace::NormalizeForID,
+                           xformopt: {source: :subject, target: :norm})
+      expect(result).to eq(expected)
+    end
+  end
 end
 

@@ -113,6 +113,24 @@ module Kiba
             val.gsub(@find, @replace)
           end
         end
+
+        class StripFields
+          def initialize(fields:)
+            @fields = fields
+          end
+
+          def process(row)
+            @fields.each do |field|
+              val = row.fetch(field, nil)
+              if val.nil? || val.empty?
+                row[field] = nil
+              else
+                row[field] = val.strip
+              end
+            end
+            row
+          end
+        end
       end
     end
   end
