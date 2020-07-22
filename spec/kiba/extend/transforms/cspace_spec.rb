@@ -33,10 +33,10 @@ RSpec.describe Kiba::Extend::Transforms::Cspace do
     before do
       generate_csv(test_csv, rows)
     end
-    it 'Oświęcim (Poland) => OswiecimPoland' do
+    it 'normalizes as expected' do
       expected = [
-        {:id=>'1', :subject=>'Oświęcim (Poland)', :norm=>'OswiecimPoland'},
-        {:id=>'2', :subject=>'Oswiecim, Poland', :norm=>'OswiecimPoland'}
+        {:id=>'1', :subject=>'Oświęcim (Poland)', :norm=>'oswiecimpoland'},
+        {:id=>'2', :subject=>'Oswiecim, Poland', :norm=>'oswiecimpoland'}
        ]
       result = execute_job(filename: test_csv,
                            xform: Cspace::NormalizeForID,

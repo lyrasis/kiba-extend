@@ -30,7 +30,7 @@ module Kiba
             else
               norm = ActiveSupport::Inflector.transliterate(val)
               norm = norm.gsub(/\W/, '')
-              row[@target] = norm
+              row[@target] = norm.downcase
             end
             row
           end
