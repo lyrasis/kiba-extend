@@ -25,60 +25,96 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
   end
 
   describe 'ConstantValueConditional' do
-    test_csv = 'tmp/test.csv'
-    rows = [
-      ['id', 'reason', 'note'],
-      [1, nil, 'Gift'],
-      [2, nil, 'Something else']
-    ]
-
-    before do
-      generate_csv(test_csv, rows)
-    end
-    context 'when row meets criteria' do
-    it 'merges constant data values into specified field' do
-      expected = [
-        {:id=>'1', :reason=>'gift', :note=>'Gift'},
-        {:id=>'2', :reason=>nil, :note=>'Something else'}
-      ]
-      opt = {
-        fieldmap: {reason: 'gift'},
-        conditions: {
-          include: {
-            field_empty: { fieldsets: [
-              {
-                fields: ['row::reason']
+    let(:opt) {
+      {
+            fieldmap: {reason: 'gift'},
+            conditions: {
+              include: {
+                field_equal: { fieldsets: [
+                  {
+                    matches: [
+                      ['row::note', 'revalue::[Gg]ift'],
+                      ['row::note', 'revalue::[Dd]onation']
+                    ]
+                  }
+                ]}
               }
-            ]},
-            field_equal: { fieldsets: [
-              {
-                matches: [
-                  ['row::note', 'revalue::[Gg]ift'],
-                  ['row::note', 'revalue::[Dd]onation']
-                ]
-              }
-            ]}
+            }
           }
-        }
-      }
-      result = execute_job(filename: test_csv,
-                           xform: Merge::ConstantValueConditional,
-                           xformopt: opt
-                          )
-      expect(result).to eq(expected)
-    end
-    context 'when target field has a pre-existing value' do
-      xit 'that value is overwritten by the specified constant value' do
+    }
+    context 'when row meets criteria' do
+      it 'merges constant data values into specified field' do
+        test_csv = 'tmp/test.csv'
+        rows = [
+          ['id', 'reason', 'note'],
+          [1, nil, 'Gift'],
+          [2, nil, 'donation']
+        ]
+        generate_csv(test_csv, rows)
+        expected = [
+          {:id=>'1', :reason=>'gift', :note=>'Gift'},
+          {:id=>'2', :reason=>'gift', :note=>'donation'}
+        ]
+        result = execute_job(filename: test_csv,
+                             xform: Merge::ConstantValueConditional,
+                             xformopt: opt
+                            )
+        expect(result).to eq(expected)
       end
-    end
+      context 'when target field has a pre-existing value' do
+        it 'that value is overwritten by the specified constant value' do
+          test_csv = 'tmp/test.csv'
+          rows = [
+            ['id', 'reason', 'note'],
+            [1, 'donation', 'Gift'],
+          ]
+          generate_csv(test_csv, rows)
+          expected = [
+            {:id=>'1', :reason=>'gift', :note=>'Gift'}
+          ]
+          result = execute_job(filename: test_csv,
+                               xform: Merge::ConstantValueConditional,
+                               xformopt: opt
+                              )
+          expect(result).to eq(expected)
+        end
+      end
     end
     context 'when row does not meet criteria' do
       context 'and target field already exists in row' do
-        xit 'target field value stays the same' do
+        it 'target field value stays the same' do
+          test_csv = 'tmp/test.csv'
+          rows = [
+            ['id', 'reason', 'note'],
+            [2, 'misc', 'Something else']
+          ]
+          generate_csv(test_csv, rows)
+          expected = [
+            {:id=>'2', :reason=>'misc', :note=>'Something else'}
+          ]
+          result = execute_job(filename: test_csv,
+                               xform: Merge::ConstantValueConditional,
+                               xformopt: opt
+                              )
+          expect(result).to eq(expected)
         end
       end
       context 'and target field does not exist in row' do
-        xit 'target field is added to row, with nil value' do
+        it 'target field is added to row, with nil value' do
+          test_csv = 'tmp/test.csv'
+          rows = [
+            ['id', 'note'],
+            [2, 'Something else']
+          ]
+          generate_csv(test_csv, rows)
+          expected = [
+            {:id=>'2', :reason=>nil, :note=>'Something else'}
+          ]
+          result = execute_job(filename: test_csv,
+                               xform: Merge::ConstantValueConditional,
+                               xformopt: opt
+                              )
+          expect(result).to eq(expected)
         end
       end
     end
