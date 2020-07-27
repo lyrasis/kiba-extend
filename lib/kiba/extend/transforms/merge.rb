@@ -113,8 +113,8 @@ module Kiba
               
               keep_rows.each do |mrow|
                 @fieldmap.each do |target, source|
-                  val = mrow.fetch(source, '')
-                  fh[target] << val unless val.nil? || val.empty?
+                  val = mrow.fetch(source, nil)
+                  val.blank? ? fh[target] << nil : fh[target] << val
                 end
                 @constantmap.each{ |target, value| ch[target] << value }
               end

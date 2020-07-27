@@ -7,7 +7,7 @@ module Kiba
         # creates hash with keycolumn value as key and csv-row-as-hash as the value
         def self.csv_to_hash(file:, csvopt: {}, keycolumn:)
           CSV.foreach(File.expand_path(file), csvopt).each_with_object({}) do |r, memo|
-            memo[r.fetch(keycolumn)] = r.to_h
+            memo[r.fetch(keycolumn, nil)] = r.to_h
           end
         end
 
@@ -15,7 +15,7 @@ module Kiba
         # creates hash with keycolumn value as key and array of csv-rows-as-hashes as the value
         def self.csv_to_multi_hash(file:, csvopt: {}, keycolumn:)
           CSV.foreach(File.expand_path(file), csvopt).each_with_object({}) do |r, memo|
-            k = r.fetch(keycolumn)
+            k = r.fetch(keycolumn, nil)
             if memo.has_key?(k)
               memo[k] << r.to_h
             else

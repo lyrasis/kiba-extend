@@ -4,6 +4,7 @@ require 'kiba-common/destinations/csv'
 require 'pry'
 require 'active_support/inflector'
 require 'xxhash'
+require 'facets/kernel/blank'
 
 CSVOPT = {headers: true, header_converters: :symbol}
 DELIM = ';'

@@ -94,11 +94,13 @@ module Kiba
           def process(row)
             @fields.each do |field|
               oldval = row.fetch(field)
-              unless oldval.nil?
+              if oldval.nil?
+                newval = nil
+              else
                 newval = @mv ? mv_find_replace(oldval) : sv_find_replace(oldval)
-                target = @debug ? "#{field}_repl".to_sym : field
-                row[target] = newval.empty? ? nil : newval
               end
+              target = @debug ? "#{field}_repl".to_sym : field
+              row[target] = newval.nil? ? nil : newval.empty? ? nil : newval
             end
             row
           end
