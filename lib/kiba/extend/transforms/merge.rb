@@ -112,14 +112,21 @@ module Kiba
               ).result
               
               keep_rows.each do |mrow|
+                mergevals = []
                 @fieldmap.each do |target, source|
                   val = mrow.fetch(source, nil)
-                  val.blank? ? fh[target] << nil : fh[target] << val
+                  result = val.blank? ? nil : val
+                  fh[target] << result
+                  mergevals << result
                 end
-                @constantmap.each{ |target, value| ch[target] << value }
+                if mergevals.compact.empty?
+                  @constantmap.each{ |target, value| ch[target] << nil }
+                else
+                  @constantmap.each{ |target, value| ch[target] << value }
+                end
               end
 
-              chk = @fieldmap.map{ |target, source| fh[target].size }.uniq.sort
+              chk = @fieldmap.map{ |target, source| fh[target].compact.size }.uniq.sort
 
               if chk == [0]
                 fh.each{ |target, arr| row[target] = nil }

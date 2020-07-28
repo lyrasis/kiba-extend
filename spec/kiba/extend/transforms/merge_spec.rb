@@ -163,7 +163,8 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
       ['id', 'name', 'sex', 'source'],
       [1, 'Weddy', 'm', 'adopted'],
       [2, 'Kernel', 'f', 'adopted'],
-      [3, 'Boris', 'm', 'adopted']
+      [3, 'Boris', 'm', 'adopted'],
+      [4, 'Earlybird', 'f', 'hatched']
     ]
     lookup_rows = [
       ['id', 'date', 'treatment'],
@@ -173,6 +174,7 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
       [2, '2019-09-15', 'adopted'],
       [1, '2020-04-15', 'deworm'],
       [2, '2020-04-15', 'deworm'],
+      [4, '', '']
     ]
 
     before do
@@ -200,6 +202,9 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
         {:id=>'3', :name=>'Boris', :sex=>'m', :source=>'adopted',
          :date=>nil,
          :event=>nil},
+        {:id=>'4', :name=>'Earlybird', :sex=>'f', :source=>'hatched',
+         :date=>nil,
+         :event=>nil},
       ]
       result = execute_job(filename: test_csv, xform: Merge::MultiRowLookup, xformopt: xformopt)
       expect(result).to eq(expected)
@@ -219,6 +224,10 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
          :by=>'kms;kms;kms',
          :loc=>'The Thicket;The Thicket;The Thicket'},
         {:id=>'3', :name=>'Boris', :sex=>'m', :source=>'adopted',
+         :date=>nil,
+         :event=>nil,
+         :by=>nil, :loc=>nil},
+        {:id=>'4', :name=>'Earlybird', :sex=>'f', :source=>'hatched',
          :date=>nil,
          :event=>nil,
          :by=>nil, :loc=>nil},
