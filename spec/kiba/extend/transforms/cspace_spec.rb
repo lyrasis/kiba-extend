@@ -27,7 +27,8 @@ RSpec.describe Kiba::Extend::Transforms::Cspace do
     rows = [
       ['id', 'subject'],
       [1, 'Oświęcim (Poland)'],
-      [2, 'Oswiecim, Poland']
+      [2, 'Oswiecim, Poland'],
+      [3, 'Iași, Romania']
     ]
 
     before do
@@ -35,8 +36,9 @@ RSpec.describe Kiba::Extend::Transforms::Cspace do
     end
     it 'normalizes as expected' do
       expected = [
-        {:id=>'1', :subject=>'Oświęcim (Poland)', :norm=>'oswiecimpoland'},
-        {:id=>'2', :subject=>'Oswiecim, Poland', :norm=>'oswiecimpoland'}
+        {id: '1', subject: 'Oświęcim (Poland)', norm: 'oswiecimpoland'},
+        {id: '2', subject: 'Oswiecim, Poland',  norm: 'oswiecimpoland'},
+        {id: '3', subject: 'Iași, Romania',     norm: 'iasiromania'}
        ]
       result = execute_job(filename: test_csv,
                            xform: Cspace::NormalizeForID,
