@@ -32,10 +32,15 @@ RSpec.describe Kiba::Extend::Transforms::Cspace do
 
     before do
       generate_csv(test_csv, rows)
+      @old = Cspace.const_get('BRUTEFORCE')
+      Cspace.const_set('BRUTEFORCE', {})
+    end
+    after do
+      Cspace.const_set('BRUTEFORCE', @old)
     end
     it 'adds column containing field value with invalid chars replaced with ?' do
       expected = [
-        {subject: 'Iași, Romania', flag: 'IasINVALIDCHARINVALIDCHARi, Romania'},
+        {subject: 'Iași, Romania', flag: 'Ia%INVCHAR%i, Romania'},
         {subject: 'Iasi, Romania', flag: nil},
        ]
       result = execute_job(filename: test_csv,

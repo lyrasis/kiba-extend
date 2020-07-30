@@ -3,6 +3,11 @@ module Kiba
     module Transforms
       module Cspace
         ::Cspace = Kiba::Extend::Transforms::Cspace
+        BRUTEFORCE = {
+          'ș' => 's',
+          't̕a' => 'ta'
+        }
+
         class ConvertToID
           def initialize(source:, target:)
             @source = source
@@ -28,9 +33,10 @@ module Kiba
             if val.blank?
               row[@flag] = nil
             else
-              nval = val.encode('ASCII', 'binary', invalid: :replace,
-                                undef: :replace, replace: 'INVALIDCHAR')
-              row[@flag] = nval.include?('INVALIDCHAR') ? nval : nil
+              val = val.unicode_normalized?(:nfkc) ? val : val.unicode_normalize(:nfkc)
+              BRUTEFORCE.each{ |k, v| val = val.gsub(k, v) }
+              norm = ActiveSupport::Inflector.transliterate(val, '%INVCHAR%')
+              row[@flag] = norm.include?('%INVCHAR%') ? norm : nil
             end
             row
           end
@@ -47,11 +53,8 @@ module Kiba
             if val.blank?
               row[@target] = nil
             else
-              brute_force = {
-                'ș' => 's'
-              }
               val = val.unicode_normalized?(:nfkc) ? val : val.unicode_normalize(:nfkc)
-              brute_force.each{ |k, v| val = val.gsub(k, v) }
+              BRUTEFORCE.each{ |k, v| val = val.gsub(k, v) }
               norm = ActiveSupport::Inflector.transliterate(val)
               norm = norm.gsub(/\W/, '')
               row[@target] = norm.downcase
