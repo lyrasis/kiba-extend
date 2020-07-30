@@ -2,7 +2,7 @@ require 'kiba'
 require 'kiba-common/sources/csv'
 require 'kiba-common/destinations/csv'
 require 'pry'
-require 'active_support/inflector'
+require 'active_support/all'
 require 'xxhash'
 require 'facets/kernel/blank'
 

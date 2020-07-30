@@ -22,6 +22,29 @@ RSpec.describe Kiba::Extend::Transforms::Cspace do
     end
   end
 
+  describe 'FlagInvalidCharacters' do
+    test_csv = 'tmp/test.csv'
+    rows = [
+      ['subject'],
+      ['Iași, Romania'],
+      ['Iasi, Romania']
+    ]
+
+    before do
+      generate_csv(test_csv, rows)
+    end
+    it 'adds column containing field value with invalid chars replaced with ?' do
+      expected = [
+        {subject: 'Iași, Romania', flag: 'IasINVALIDCHARINVALIDCHARi, Romania'},
+        {subject: 'Iasi, Romania', flag: nil},
+       ]
+      result = execute_job(filename: test_csv,
+                           xform: Cspace::FlagInvalidCharacters,
+                           xformopt: {check: :subject, flag: :flag})
+      expect(result).to eq(expected)
+    end
+  end
+
   describe 'NormalizeForID' do
     test_csv = 'tmp/test.csv'
     rows = [
