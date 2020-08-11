@@ -52,6 +52,24 @@ module Kiba
             row
           end
         end
+
+        class FullRecord
+          def initialize(target:, sep: ' ')
+            @target = target
+            @sep = sep
+          end
+
+          def process(row)
+            vals = row.keys.map{ |k| row.fetch(k, nil) }
+            vals = vals.compact
+            if vals.empty?
+              row[@target] = nil
+            else
+              row[@target] = vals.join(@sep)
+            end
+            row
+          end
+        end
       end
     end
   end

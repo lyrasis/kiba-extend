@@ -130,4 +130,26 @@ RSpec.describe Kiba::Extend::Transforms::CombineValues do
       end
     end
   end #describe 'FromFieldsWithDelimiter'
+
+  describe 'FullRecord' do
+    test_csv = 'tmp/test.csv'
+    rows = [
+      ['id', 'name', 'sex', 'source'],
+      [1, 'Weddy', 'm', 'adopted']
+    ]
+
+    before do
+      generate_csv(test_csv, rows)
+    end
+    it 'concatenates all fields (with given delimiter) into given field' do
+      expected = [
+        {id: '1', name: 'Weddy', sex: 'm', source: 'adopted',
+         search: '1 Weddy m adopted' },
+      ]
+      result = execute_job(filename: test_csv,
+                           xform: CombineValues::FullRecord,
+                           xformopt: {target: :search} )
+      expect(result).to eq(expected)
+    end
+  end
 end
