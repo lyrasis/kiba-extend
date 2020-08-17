@@ -1,6 +1,34 @@
 require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Clean do
+  describe 'AlphabetizeFieldValues' do
+    test_csv = 'tmp/test.csv'
+    rows = [
+        ['id', 'type'],
+        ['1', 'Person;unmapped;Organization'],
+        ['2', ';'],
+        ['3', nil],
+        ['4', '']
+      ]
+    
+      before { generate_csv(test_csv, rows) }
+      let(:result) { execute_job(filename: test_csv,
+                                 xform: Clean::AlphabetizeFieldValues,
+                                 xformopt: {fields: %i[type], delim: ';'}) }
+      it 'sorts field values alphabetically' do
+        expect(result[0][:type]).to eq('Organization;Person;unmapped')
+      end
+      it 'leaves delimiter-only fields alone' do
+        expect(result[1][:type]).to eq(';')
+      end
+      it 'leaves nil fields alone' do
+        expect(result[2][:type]).to be_nil
+      end
+      it 'leaves empty string fields alone' do
+        expect(result[3][:type]).to eq('')
+      end
+  end
+
   describe 'DelimiterOnlyFields' do
     test_csv = 'tmp/test.csv'
     rows = [

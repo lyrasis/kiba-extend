@@ -3,23 +3,47 @@ module Kiba
     module Transforms
       module Clean
         ::Clean = Kiba::Extend::Transforms::Clean
+
+        module Helpers
+          ::Clean::Helpers = Kiba::Extend::Transforms::Clean::Helpers
+        def delim_only?(val, delim)
+          chk = val.gsub(delim, '').strip
+          chk.empty? ? true : false
+        end
+        end
+
+        
+        class AlphabetizeFieldValues
+          include Clean::Helpers
+          def initialize(fields:, delim:)
+            @fields = fields
+            @delim = delim
+          end
+
+          def process(row)
+            @fields.each do |field|
+              vals = row.fetch(field, nil)
+              next if vals.blank?
+              next if delim_only?(vals, @delim)
+              vals = vals.split(@delim)
+              next if vals.size == 1
+              row[field] = vals.sort.join(@delim)
+            end
+            row
+          end
+        end
+
         class DelimiterOnlyFields
+          include Clean::Helpers
           def initialize(delim:)
             @delim = delim
           end
 
           def process(row)
             row.each do |hdr, val|
-              row[hdr] = nil if val.is_a?(String) && delim_only?(val)
+              row[hdr] = nil if val.is_a?(String) && delim_only?(val, @delim)
             end
             row
-          end
-
-          private
-
-          def delim_only?(val)
-            chk = val.gsub(@delim, '').strip
-            chk.empty? ? true : false
           end
         end
 
