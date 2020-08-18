@@ -27,7 +27,7 @@ module Kiba
               next if delim_only?(vals, @delim)
               vals = vals.split(@delim)
               next if vals.size == 1
-              row[field] = vals.sort.join(@delim)
+              row[field] = vals.sort_by(&:downcase).join(@delim)
             end
             row
           end

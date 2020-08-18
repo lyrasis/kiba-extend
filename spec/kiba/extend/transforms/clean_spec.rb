@@ -8,7 +8,8 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
         ['1', 'Person;unmapped;Organization'],
         ['2', ';'],
         ['3', nil],
-        ['4', '']
+        ['4', ''],
+        ['5', 'Person;notmapped']
       ]
     
       before { generate_csv(test_csv, rows) }
@@ -17,6 +18,7 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
                                  xformopt: {fields: %i[type], delim: ';'}) }
       it 'sorts field values alphabetically' do
         expect(result[0][:type]).to eq('Organization;Person;unmapped')
+        expect(result[4][:type]).to eq('notmapped;Person')
       end
       it 'leaves delimiter-only fields alone' do
         expect(result[1][:type]).to eq(';')
