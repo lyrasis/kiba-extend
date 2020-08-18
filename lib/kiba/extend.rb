@@ -24,6 +24,7 @@ module Kiba
       require 'kiba/extend/transforms/explode'
       require 'kiba/extend/transforms/filter_rows'
       require 'kiba/extend/transforms/merge'
+      require 'kiba/extend/transforms/prepend'
       require 'kiba/extend/transforms/rename'
       require 'kiba/extend/transforms/replace'
       require 'kiba/extend/transforms/reshape'

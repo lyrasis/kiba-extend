@@ -6,10 +6,10 @@ module Kiba
 
         module Helpers
           ::Clean::Helpers = Kiba::Extend::Transforms::Clean::Helpers
-        def delim_only?(val, delim)
-          chk = val.gsub(delim, '').strip
-          chk.empty? ? true : false
-        end
+          def delim_only?(val, delim)
+            chk = val.gsub(delim, '').strip
+            chk.empty? ? true : false
+          end
         end
 
         
