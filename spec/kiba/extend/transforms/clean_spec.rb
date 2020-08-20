@@ -31,6 +31,26 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
       end
   end
 
+  describe 'ClearFields' do
+    test_csv = 'tmp/test.csv'
+    rows = [
+        ['id', 'type'],
+        ['1', 'Person;unmapped;Organization'],
+        ['2', ';'],
+        ['3', nil],
+        ['4', ''],
+        ['5', 'Person;notmapped']
+      ]
+    
+      before { generate_csv(test_csv, rows) }
+      let(:result) { execute_job(filename: test_csv,
+                                 xform: Clean::ClearFields,
+                                 xformopt: {fields: %i[type]}) }
+      it 'sets the value of the field in all rows to nil' do
+        expect(result.map{ |e| e[1]}.uniq[0]).to be_nil
+      end
+  end
+
   describe 'DelimiterOnlyFields' do
     test_csv = 'tmp/test.csv'
     rows = [

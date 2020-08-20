@@ -33,6 +33,17 @@ module Kiba
           end
         end
 
+        class ClearFields
+          def initialize(fields:)
+            @fields = fields
+          end
+
+          def process(row)
+            @fields.each{ |field| row[field] = nil }
+            row
+          end
+        end
+        
         class DelimiterOnlyFields
           include Clean::Helpers
           def initialize(delim:)
