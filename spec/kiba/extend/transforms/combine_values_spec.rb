@@ -42,7 +42,8 @@ RSpec.describe Kiba::Extend::Transforms::CombineValues do
     rows = [
       ['id', 'name', 'sex', 'source'],
       [1, 'Weddy', 'm', 'adopted'],
-      [2, 'Kernel', 'f', 'adopted']
+      [2, 'Kernel', 'f', 'adopted'],
+      [3, 'Earlybird', nil, 'hatched']
     ]
 
     before do
@@ -52,6 +53,7 @@ RSpec.describe Kiba::Extend::Transforms::CombineValues do
       expected = [
         {:id=>'1', :newcol=>'Weddy --- m --- adopted',},
         {:id=>'2', :newcol=>'Kernel --- f --- adopted'},
+        {:id=>'3', :newcol=>'Earlybird --- hatched'},
       ]
       result = execute_job(filename: test_csv,
                            xform: CombineValues::FromFieldsWithDelimiter,
@@ -66,6 +68,7 @@ RSpec.describe Kiba::Extend::Transforms::CombineValues do
         expected = [
           {:id=>'1', :newcol=>'name: Weddy --- sex: m --- source: adopted',},
           {:id=>'2', :newcol=>'name: Kernel --- sex: f --- source: adopted'},
+          {:id=>'3', :newcol=>'name: Earlybird --- source: hatched'}
         ]
         result = execute_job(filename: test_csv,
                              xform: CombineValues::FromFieldsWithDelimiter,
@@ -104,6 +107,7 @@ RSpec.describe Kiba::Extend::Transforms::CombineValues do
         expected = [
           {:id=>'1', :name => 'Weddy', :sex => 'm', :source => 'adopted', :newcol=>'Weddy|m|adopted',},
           {:id=>'2', :name => 'Kernel', :sex => 'f', :source => 'adopted', :newcol=>'Kernel|f|adopted'},
+          {:id=>'3', :name => 'Earlybird', :sex => nil, :source => 'hatched', :newcol=>'Earlybird|hatched'}
         ]
         result = execute_job(filename: test_csv,
                              xform: CombineValues::FromFieldsWithDelimiter,
@@ -119,7 +123,8 @@ RSpec.describe Kiba::Extend::Transforms::CombineValues do
       it 'does not delete the target field' do
         expected = [
           {:id=>'1', :name => 'Weddy|m', :source => 'adopted'},
-          {:id=>'2', :name => 'Kernel|f',:source => 'adopted'}
+          {:id=>'2', :name => 'Kernel|f',:source => 'adopted'},
+          {:id=>'3', :name => 'Earlybird',:source => 'hatched'}
         ]
         result = execute_job(filename: test_csv,
                              xform: CombineValues::FromFieldsWithDelimiter,
