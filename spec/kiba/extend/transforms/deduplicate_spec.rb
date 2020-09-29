@@ -1,7 +1,41 @@
 require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Deduplicate do
-  describe 'FieldValues' do
+  describe 'Fields' do
+    test_csv = 'tmp/test.csv'
+    rows = [
+      ['x', 'y', 'z'],
+      ['a', 'a', 'b'],
+      ['a', 'a ', 'a'],
+      ['a', 'b;a', 'a;c'],
+      ['a;b', 'b;a', 'a;c'],
+      ['a', 'aa', 'bat'],
+      [nil, 'a', nil],
+      ['', ' ;a', 'b;'],
+      ['a', nil, nil]
+    ]
+    before do
+      generate_csv(test_csv, rows)
+    end
+    it 'removes value(s) of source field from target field(s)' do
+      expected = [
+        {x: 'a', y: nil, z: 'b'},
+        {x: 'a', y: nil, z: nil},
+        {x: 'a', y: 'b', z: 'c'},
+        {x: 'a;b', y: nil, z: 'c'},
+        {x: 'a', y: 'aa', z: 'bat'},
+        {x: nil, y: 'a', z: nil},
+        {x: '', y: 'a', z: 'b'},
+        {x: 'a', y: nil, z: nil}
+      ]
+      result = execute_job(filename: test_csv,
+                           xform: Deduplicate::Fields,
+                           xformopt: {source: :x, targets: %i[y z], multival: true, sep: ';'})
+      expect(result).to eq(expected)
+    end
+  end
+  
+    describe 'FieldValues' do
     test_csv = 'tmp/test.csv'
     rows = [
       ['val', 'x'],

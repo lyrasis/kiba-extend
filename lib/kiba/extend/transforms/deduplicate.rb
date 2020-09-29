@@ -4,6 +4,46 @@ module Kiba
       module Deduplicate
         ::Deduplicate = Kiba::Extend::Transforms::Deduplicate
 
+        class Fields
+          def initialize(source:, targets:, multival: false, sep: DELIM)
+            @source = source
+            @targets = targets
+            @multival = multival
+            @sep = sep
+          end
+
+          def process(row)
+            sourceval = row.fetch(@source, nil)
+            return row if sourceval.nil?
+            targetvals = @targets.map{ |target| row.fetch(target, nil) }
+            return row if targetvals.compact.empty?
+
+            sourceval = @multival ? sourceval.split(@sep, -1).map{ |e| e.strip } : [sourceval.strip]
+            if @multival
+              targetvals = targetvals.map{ |val| val.split(@sep, -1).map{ |e| e.strip } }
+            else
+              targetvals = targetvals.map{ |val| val.strip }
+            end
+
+            if sourceval.blank?
+              targetvals = targetvals.map{ |vals| vals.reject{ |e| e.blank? } }
+              else
+                targetvals = targetvals.map{ |vals| vals - sourceval }
+            end
+            
+            if @multival
+              targetvals = targetvals.map{ |vals| vals.join(@sep) unless vals.nil? }
+            else
+              targetvals = targetvals.first
+            end
+            targetvals = targetvals.map{ |val| val.blank? ? nil : val  }
+
+            targetvals.each_with_index{ |val, i| row[@targets[i]] = val }
+
+            row
+          end
+        end
+        
         class FieldValues
           def initialize(fields:, sep:)
             @fields = fields
