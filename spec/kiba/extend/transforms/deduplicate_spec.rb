@@ -2,22 +2,22 @@ require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Deduplicate do
   describe 'Fields' do
-    test_csv = 'tmp/test.csv'
-    rows = [
-      ['x', 'y', 'z'],
-      ['a', 'a', 'b'],
-      ['a', 'a ', 'a'],
-      ['a', 'b;a', 'a;c'],
-      ['a;b', 'b;a', 'a;c'],
-      ['a', 'aa', 'bat'],
-      [nil, 'a', nil],
-      ['', ' ;a', 'b;'],
-      ['a', nil, nil]
-    ]
-    before do
-      generate_csv(test_csv, rows)
-    end
+    context 'when casesensitive = true' do
     it 'removes value(s) of source field from target field(s)' do
+      test_csv = 'tmp/test.csv'
+      rows = [
+        ['x', 'y', 'z'],
+        ['a', 'a', 'b'],
+        ['a', 'a ', 'a'],
+        ['a', 'b;a', 'a;c'],
+        ['a;b', 'b;a', 'a;c'],
+        ['a', 'aa', 'bat'],
+        [nil, 'a', nil],
+        ['', ' ;a', 'b;'],
+        ['a', nil, nil],
+        ['a', 'A', 'a']
+      ]
+      generate_csv(test_csv, rows)
       expected = [
         {x: 'a', y: nil, z: 'b'},
         {x: 'a', y: nil, z: nil},
@@ -26,12 +26,34 @@ RSpec.describe Kiba::Extend::Transforms::Deduplicate do
         {x: 'a', y: 'aa', z: 'bat'},
         {x: nil, y: 'a', z: nil},
         {x: '', y: 'a', z: 'b'},
-        {x: 'a', y: nil, z: nil}
+        {x: 'a', y: nil, z: nil},
+        {x: 'a', y: 'A', z: nil}
       ]
       result = execute_job(filename: test_csv,
                            xform: Deduplicate::Fields,
                            xformopt: {source: :x, targets: %i[y z], multival: true, sep: ';'})
       expect(result).to eq(expected)
+    end
+    end
+    context 'when casesensitive = false' do
+      it 'removes value(s) of source field from target field(s)' do
+        test_csv = 'tmp/test.csv'
+        rows = [
+          ['x', 'y', 'z'],
+          ['a', 'A', 'a'],
+          ['a', 'a', 'B']
+        ]
+        generate_csv(test_csv, rows)
+        expected = [
+          {x: 'a', y: nil, z: nil},
+          {x: 'a', y: nil, z: 'B'}
+        ]
+        result = execute_job(filename: test_csv,
+                             xform: Deduplicate::Fields,
+                             xformopt: {source: :x, targets: %i[y z], multival: false,
+                                        casesensitive: false})
+        expect(result).to eq(expected)
+      end
     end
   end
   

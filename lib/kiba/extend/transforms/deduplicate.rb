@@ -5,9 +5,10 @@ module Kiba
         ::Deduplicate = Kiba::Extend::Transforms::Deduplicate
 
         class Fields
-          def initialize(source:, targets:, multival: false, sep: DELIM)
+          def initialize(source:, targets:, casesensitive: true, multival: false, sep: DELIM)
             @source = source
             @targets = targets
+            @casesensitive = casesensitive
             @multival = multival
             @sep = sep
           end
@@ -22,20 +23,26 @@ module Kiba
             if @multival
               targetvals = targetvals.map{ |val| val.split(@sep, -1).map{ |e| e.strip } }
             else
-              targetvals = targetvals.map{ |val| val.strip }
+              targetvals = targetvals.map{ |val| [val.strip] }
             end
 
             if sourceval.blank?
               targetvals = targetvals.map{ |vals| vals.reject{ |e| e.blank? } }
-              else
+            else
+              if @casesensitive
                 targetvals = targetvals.map{ |vals| vals - sourceval }
+              else
+                sourceval = sourceval.map{ |e| e.downcase }
+                targetvals = targetvals.map{ |vals| vals.reject{ |val| sourceval.include?(val.downcase) } }
+              end
             end
             
             if @multival
               targetvals = targetvals.map{ |vals| vals.join(@sep) unless vals.nil? }
             else
-              targetvals = targetvals.first
+              targetvals = targetvals.map{ |vals| vals.first }
             end
+#                binding.pry
             targetvals = targetvals.map{ |val| val.blank? ? nil : val  }
 
             targetvals.each_with_index{ |val, i| row[@targets[i]] = val }
