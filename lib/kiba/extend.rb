@@ -47,5 +47,17 @@ module Kiba
       end
     }
 
+    CSV::Converters[:nulltonil] = lambda{ |s|
+      begin
+        if s == 'NULL'
+          nil
+        else
+          s
+        end
+      rescue ArgumentError
+        s
+      end
+    }
+
   end
 end
