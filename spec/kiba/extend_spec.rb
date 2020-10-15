@@ -22,4 +22,26 @@ RSpec.describe Kiba::Extend do
     end
     after { File.delete(test_csv) if File.exist?(test_csv) }
   end
+
+  describe ':nulltonil csv converter' do
+    test_csv = 'tmp/test.csv'
+    rows = [
+      ['id', 'val'],
+      ['1', 'NULL'],
+      ['2', 'a NULL value'],
+      ['3', ' NULL']
+    ]
+    
+    before { generate_csv(test_csv, rows) }
+    it 'converts input data' do
+      expected = [
+        { id: '1', val: nil },
+        { id: '2', val: 'a NULL value' },
+        { id: '3', val: nil }
+      ]
+      result = job_csv(filename: test_csv, incsvopt: {converters: [:stripplus, :nulltonil]})
+      expect(result).to eq(expected)
+    end
+    after { File.delete(test_csv) if File.exist?(test_csv) }
+  end
 end
