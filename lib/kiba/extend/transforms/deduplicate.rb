@@ -42,7 +42,6 @@ module Kiba
             else
               targetvals = targetvals.map{ |vals| vals.first }
             end
-#                binding.pry
             targetvals = targetvals.map{ |val| val.blank? ? nil : val  }
 
             targetvals.each_with_index{ |val, i| row[@targets[i]] = val }
