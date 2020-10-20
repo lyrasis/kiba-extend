@@ -43,7 +43,8 @@ RSpec.describe Kiba::Extend::Transforms::CombineValues do
       ['id', 'name', 'sex', 'source'],
       [1, 'Weddy', 'm', 'adopted'],
       [2, 'Kernel', 'f', 'adopted'],
-      [3, 'Earlybird', nil, 'hatched']
+      [3, 'Earlybird', nil, 'hatched'],
+      [4, '', '', '']
     ]
 
     before do
@@ -51,9 +52,10 @@ RSpec.describe Kiba::Extend::Transforms::CombineValues do
     end
     it 'concatenates specified field values into new column with specified separator' do
       expected = [
-        {:id=>'1', :newcol=>'Weddy --- m --- adopted',},
-        {:id=>'2', :newcol=>'Kernel --- f --- adopted'},
-        {:id=>'3', :newcol=>'Earlybird --- hatched'},
+        {id: '1', newcol: 'Weddy --- m --- adopted',},
+        {id: '2', newcol: 'Kernel --- f --- adopted'},
+        {id: '3', newcol: 'Earlybird --- hatched'},
+        {id: '4', newcol: nil}
       ]
       result = execute_job(filename: test_csv,
                            xform: CombineValues::FromFieldsWithDelimiter,
@@ -66,9 +68,10 @@ RSpec.describe Kiba::Extend::Transforms::CombineValues do
     context 'when `prepend_source_field_name` set to true' do
       it 'concatenates specified field values into new column with specified separator' do
         expected = [
-          {:id=>'1', :newcol=>'name: Weddy --- sex: m --- source: adopted',},
-          {:id=>'2', :newcol=>'name: Kernel --- sex: f --- source: adopted'},
-          {:id=>'3', :newcol=>'name: Earlybird --- source: hatched'}
+          {id: '1', newcol: 'name: Weddy --- sex: m --- source: adopted',},
+          {id: '2', newcol: 'name: Kernel --- sex: f --- source: adopted'},
+          {id: '3', newcol: 'name: Earlybird --- source: hatched'},
+          {id: '4', newcol: nil}
         ]
         result = execute_job(filename: test_csv,
                              xform: CombineValues::FromFieldsWithDelimiter,
@@ -105,9 +108,10 @@ RSpec.describe Kiba::Extend::Transforms::CombineValues do
     context 'when `delete_sources` set to false' do
       it 'adds the new column but does not remove original columns' do
         expected = [
-          {:id=>'1', :name => 'Weddy', :sex => 'm', :source => 'adopted', :newcol=>'Weddy|m|adopted',},
-          {:id=>'2', :name => 'Kernel', :sex => 'f', :source => 'adopted', :newcol=>'Kernel|f|adopted'},
-          {:id=>'3', :name => 'Earlybird', :sex => nil, :source => 'hatched', :newcol=>'Earlybird|hatched'}
+          {id: '1', name: 'Weddy', sex: 'm', source: 'adopted', newcol: 'Weddy|m|adopted',},
+          {id: '2', name: 'Kernel', sex: 'f', source: 'adopted', newcol: 'Kernel|f|adopted'},
+          {id: '3', name: 'Earlybird', sex: nil, source: 'hatched', newcol: 'Earlybird|hatched'},
+          {id: '4', name: '', sex: '', source: '', newcol: nil}
         ]
         result = execute_job(filename: test_csv,
                              xform: CombineValues::FromFieldsWithDelimiter,
@@ -122,9 +126,10 @@ RSpec.describe Kiba::Extend::Transforms::CombineValues do
     context 'when target field is one of the source fields' do
       it 'does not delete the target field' do
         expected = [
-          {:id=>'1', :name => 'Weddy|m', :source => 'adopted'},
-          {:id=>'2', :name => 'Kernel|f',:source => 'adopted'},
-          {:id=>'3', :name => 'Earlybird',:source => 'hatched'}
+          {id: '1', name: 'Weddy|m', source: 'adopted'},
+          {id: '2', name: 'Kernel|f', source: 'adopted'},
+          {id: '3', name: 'Earlybird', source: 'hatched'},
+          {id: '4', name: nil, source: ''}
         ]
         result = execute_job(filename: test_csv,
                              xform: CombineValues::FromFieldsWithDelimiter,

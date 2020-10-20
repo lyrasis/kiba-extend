@@ -36,18 +36,20 @@ module Kiba
           end
 
           def process(row)
-            if @prepend
-              vals = []
-              @sources.each do |src|
-                val = row.fetch(src)
-                vals << "#{src}: #{val}" unless val.nil? || val.empty?
-              end
-              val = vals.compact.join(@sep)
-            else
-              val = @sources.map{ |src| row.fetch(src) }.compact.join(@sep)
-            end
+            vals = @sources.map{ |src| row.fetch(src, nil) }
+              .map{ |v| v.blank? ? nil : v }
             
+            if @prepend
+              pvals = []
+              vals.each_with_index do |val, i|
+                val = "#{@sources[i]}: #{val}" unless val.nil?
+                pvals << val
+              end
+              vals = pvals
+            end
+            val = vals.compact.join(@sep)
             val.empty? ? row[@target] = nil : row[@target] = val
+            
             @sources.each{ |src| row.delete(src) unless src == @target } if @del
             row
           end
