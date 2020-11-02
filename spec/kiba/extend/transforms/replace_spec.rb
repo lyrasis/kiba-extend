@@ -10,7 +10,8 @@ RSpec.describe Kiba::Extend::Transforms::Replace do
     rows = [
       ['id', 'name', 'sex'],
       [1, 'Weddy', 'm'],
-      [2, 'Kernel', 'f']
+      [2, 'Kernel', 'f'],
+      [3, 'Earlybird;Earhart', 'f;f']
     ]
 
     before do
@@ -18,14 +19,17 @@ RSpec.describe Kiba::Extend::Transforms::Replace do
     end
     it 'adds field value from static mapping' do
       expected = [
-        {:id=>'1', :name=>'Weddy', :gender=>'male'},
-        {:id=>'2', :name=>'Kernel', :gender=>'female'}
+        {id: '1', name: 'Weddy', gender: 'male'},
+        {id: '2', name: 'Kernel', gender: 'female'},
+        {id: '3', name: 'Earlybird;Earhart', gender: 'female;female'}
       ]
       result = execute_job(filename: test_csv,
                            xform: Replace::FieldValueWithStaticMapping,
                            xformopt: {source: :sex,
                                       target: :gender,
-                                      mapping: mapping})
+                                      mapping: mapping,
+                                      multival: true,
+                                      sep: ';'})
       expect(result).to eq(expected)
     end
     context 'When mapping does not contain matching key' do

@@ -127,6 +127,7 @@ module Kiba
           end
 
           def process(row)
+            @fields = @fields == :all ? row.keys : @fields
             @fields.each do |field|
               oldval = row.fetch(field)
               if oldval.nil?
