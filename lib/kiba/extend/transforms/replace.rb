@@ -33,7 +33,12 @@ module Kiba
           end
 
           def process(row)
-            origval = @multival ? row.fetch(@source).split(@sep) : [row.fetch(@source)]
+            rowval = row.fetch(@source, nil)
+            if rowval.nil?
+              origval = [rowval]
+            else
+              origval = @multival ? row.fetch(@source).split(@sep) : [row.fetch(@source)]
+            end
             newvals = []
             
             origval.each do |oval|
