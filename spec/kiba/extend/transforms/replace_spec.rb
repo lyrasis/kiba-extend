@@ -1,7 +1,30 @@
 require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Replace do
-  describe 'FieldValueWithStaticMapping' do
+  
+  describe 'EmptyFieldValues' do
+    test_csv = 'tmp/test.csv'
+    rows = [
+      ['id', 'species', 'name', 'sex'],
+      [1, 'guineafowl', nil, ''],
+    ]
+
+    before do
+      generate_csv(test_csv, rows)
+    end
+    it 'replaces empty field values in specified field(s) with given string' do
+      expected = [
+        {id: '1', species: 'guineafowl', name: 'NULL', sex: 'NULL'}
+      ]
+      result = execute_job(filename: test_csv,
+                           xform: Replace::EmptyFieldValues,
+                           xformopt: {fields: %i[name sex],
+                                      value: 'NULL'})
+      expect(result).to eq(expected)
+    end
+  end
+
+    describe 'FieldValueWithStaticMapping' do
     test_csv = 'tmp/test.csv'
     mapping = {
       'm' => 'male',
