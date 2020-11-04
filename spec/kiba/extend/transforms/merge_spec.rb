@@ -157,6 +157,44 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
     end
   end
 
+  describe 'MultivalueConstant' do
+    test_csv = 'tmp/test.csv'
+    rows = [
+      ['name'],
+      ['Weddy'],
+      ['NULL'],
+      [''],
+      [nil],
+      ['Earlybird;Divebomber'],
+      [';Niblet'],
+      ['Hunter;'],
+      ['NULL;Earhart']
+    ]
+    before do
+      generate_csv(test_csv, rows)
+    end
+    it 'adds specified value to new field once per value in specified field' do
+      expected = [
+        { name: 'Weddy', species: 'guinea fowl' },
+        { name: 'NULL', species: 'NULL' },
+        { name: '', species: 'NULL' },
+        { name: nil, species: 'NULL' },
+        { name: 'Earlybird;Divebomber', species: 'guinea fowl;guinea fowl' },
+        { name: ';Niblet', species: 'NULL;guinea fowl' },
+        { name: 'Hunter;', species: 'guinea fowl;NULL' },
+        { name: 'NULL;Earhart', species: 'NULL;guinea fowl' }
+      ]
+      result = execute_job(filename: test_csv,
+                           xform: Merge::MultivalueConstant,
+                           xformopt: { on_field: :name,
+                                      target: :species,
+                                      value: 'guinea fowl',
+                                      sep: ';',
+                                      placeholder: 'NULL'})
+    expect(result).to eq(expected)
+    end
+  end
+
   describe 'MultiRowLookup' do
     test_csv = 'tmp/test.csv'
     rows = [
