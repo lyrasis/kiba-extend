@@ -79,7 +79,37 @@ module Kiba
             end
             row
           end
-        end	
+        end
+
+        class FieldGroupConstant
+          def initialize(on_field:, target:, value:, sep:, placeholder:)
+            @on_field = on_field
+            @target = target
+            @value = value
+            @sep = sep
+            @placeholder = placeholder
+          end
+
+          def process(row)
+            field_val = row.fetch(@on_field, nil)
+            if field_val.blank?
+              row[@target] = @placeholder
+              return row
+            end
+
+            merge_vals = []
+            field_val.split(@sep, -1).each do |field_val|
+              if field_val == @placeholder || field_val.blank?
+                merge_vals << @placeholder
+              else
+                merge_vals << @value
+              end
+            end
+
+            row[@target] = merge_vals.join(@sep)
+            row
+          end
+        end
         
         # used when lookup may return an array of rows from which values should be merged
         #  into the target, AND THE TARGET IS MULTIVALUED
