@@ -81,7 +81,7 @@ module Kiba
           end
         end
 
-        class FieldGroupConstant
+        class MultivalueConstant
           def initialize(on_field:, target:, value:, sep:, placeholder:)
             @on_field = on_field
             @target = target

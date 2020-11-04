@@ -157,7 +157,7 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
     end
   end
 
-  describe 'FieldGroupConstant' do
+  describe 'MultivalueConstant' do
     test_csv = 'tmp/test.csv'
     rows = [
       ['name'],
@@ -185,7 +185,7 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
         { name: 'NULL;Earhart', species: 'NULL;guinea fowl' }
       ]
       result = execute_job(filename: test_csv,
-                           xform: Merge::FieldGroupConstant,
+                           xform: Merge::MultivalueConstant,
                            xformopt: { on_field: :name,
                                       target: :species,
                                       value: 'guinea fowl',
