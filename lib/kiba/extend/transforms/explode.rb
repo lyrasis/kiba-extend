@@ -62,6 +62,47 @@ module Kiba
           end
         end
 
+        class FieldValuesToNewRows
+          def initialize(fields: [], target:, multival: false, sep: ' ', keep_nil: false, keep_empty: false)
+            @fields = fields
+            @target = target
+            @multival = multival
+            @sep = sep
+            @keep_nil = keep_nil
+            @keep_empty = keep_empty
+          end
+
+          def process(row)
+            rows = []
+            other_fields = row.keys - @fields
+            other_data = {}
+            other_fields.each{ |f| other_data[f] = row.fetch(f, nil) }
+
+            @fields.each do |field|
+              val = row.fetch(field, nil)
+              if val.nil?
+                vals = [nil]
+              elsif val.empty?
+                vals = ['']
+              elsif @multival
+                vals = val.split(@sep, -1)
+              else
+                vals = [val]
+              end
+
+              vals.each do |val|
+                next if val.nil? unless @keep_nil
+                next if val.empty? unless val.nil? || @keep_empty
+                new_row = other_data.clone
+                new_row[@target] = val
+                rows << new_row
+              end
+            end
+            rows.each{ |r| yield(r) }
+            nil
+          end
+        end
+
       end # module Explode
     end #module Transforms
   end #module Extend
