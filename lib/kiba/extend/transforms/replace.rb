@@ -50,6 +50,8 @@ module Kiba
                   newvals << oval
                 when :nil
                   newvals << nil
+                else
+                  newvals << @fallback
                 end
               end
             end
