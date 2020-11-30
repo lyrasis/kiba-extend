@@ -93,6 +93,22 @@ RSpec.describe Kiba::Extend::Transforms::Replace do
           expect(result).to eq(expected)
         end
       end
+
+      context 'and :fallback_val = a string' do
+        it 'sends the string through to new column' do
+          expected = [
+            {:id=>'1', :name=>'Unnamed keet', :gender=>'unknown'},
+            {:id=>'2', :name=>'Kernel', :gender=>'female'}
+          ]
+          result = execute_job(filename: test_csv,
+                               xform: Replace::FieldValueWithStaticMapping,
+                               xformopt: {source: :sex,
+                                          target: :gender,
+                                          mapping: mapping,
+                                          fallback_val: 'unknown'})
+          expect(result).to eq(expected)
+        end
+      end
     end
   end
 end
