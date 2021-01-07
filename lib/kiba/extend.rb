@@ -41,6 +41,8 @@ module Kiba
           s.strip
             .gsub(/  +/, ' ')
             .sub(/,$/, '')
+            .sub(/^%(LINEBREAK|CRLF)%/, '')
+            .sub(/%(LINEBREAK|CRLF)%$/, '')
             .strip
         end
       rescue ArgumentError
