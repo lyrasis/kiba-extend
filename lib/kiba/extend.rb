@@ -37,6 +37,8 @@ module Kiba
       begin
         if s.nil?
           nil
+        elsif s == 'NULL'
+          nil
         else
           s.strip
             .gsub(/  +/, ' ')
