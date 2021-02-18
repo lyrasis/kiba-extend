@@ -42,13 +42,30 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
         ['5', 'Person;notmapped']
       ]
     
-      before { generate_csv(test_csv, rows) }
-      let(:result) { execute_job(filename: test_csv,
-                                 xform: Clean::ClearFields,
-                                 xformopt: {fields: %i[type]}) }
+    before { generate_csv(test_csv, rows) }
+    context 'without additional arguments' do
       it 'sets the value of the field in all rows to nil' do
+        result = execute_job(filename: test_csv,
+                                   xform: Clean::ClearFields,
+                                   xformopt: {fields: %i[type]})
         expect(result.map{ |e| e[1]}.uniq[0]).to be_nil
       end
+    end
+    context 'with if_equals argument' do
+      it 'sets the value of the field to nil if it matches `if_equals`' do
+        result = execute_job(filename: test_csv,
+                             xform: Clean::ClearFields,
+                             xformopt: {fields: %i[type], if_equals: ';'})
+        expected = [
+          {:id=>'1', :type=>'Person;unmapped;Organization'},
+          {:id=>'2', :type=>nil},
+          {:id=>'3', :type=>nil},
+          {:id=>'4', :type=>''},
+          {:id=>'5', :type=>'Person;notmapped'},
+        ]
+        expect(result.map{ |e| e[1]}.uniq[0]).to be_nil
+      end
+    end
   end
 
   describe 'DelimiterOnlyFields' do

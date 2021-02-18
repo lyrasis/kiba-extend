@@ -34,12 +34,19 @@ module Kiba
         end
 
         class ClearFields
-          def initialize(fields:)
+          def initialize(fields:, if_equals: nil)
             @fields = fields
+            @if_equals = if_equals
           end
 
           def process(row)
-            @fields.each{ |field| row[field] = nil }
+            @fields.each do |field|
+              if @if_equals.nil?
+                row[field] = nil
+              else
+                row[field] = nil if row[field] == @if_equals
+              end
+            end
             row
           end
         end
