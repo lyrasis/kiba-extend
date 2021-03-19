@@ -37,10 +37,14 @@ module Kiba
       begin
         if s.nil?
           nil
+        elsif s == 'NULL'
+          nil
         else
           s.strip
             .gsub(/  +/, ' ')
             .sub(/,$/, '')
+            .sub(/^%(LINEBREAK|CRLF)%/, '')
+            .sub(/%(LINEBREAK|CRLF)%$/, '')
             .strip
         end
       rescue ArgumentError
