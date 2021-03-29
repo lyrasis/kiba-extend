@@ -1,41 +1,15 @@
 # Kiba::Extend
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/kiba/extend`. To experiment with that code, run `bin/console` for an interactive prompt.
+Kiba is a [Data processing & ETL framework for Ruby](https://github.com/thbar/kiba).
 
-TODO: Delete this and the text above, and describe your gem
+kiba-extend is a suite of extensions useful in transformations and reshaping data in migrations. 
 
-## Installation
+[mimsy-to-cspace](https://github.com/lyrasis/mimsy-to-cspace) is a publicly available example of kiba-extend usage.
 
-Add this line to your application's Gemfile:
+Current projects in the Lyrasis `migrations-private` repo will reflect my preferred practices for structuring Kiba jobs, which may have changed since the project that resulted in the current iteration of `mimsy-to-cspace`.
 
-```ruby
-gem 'kiba-extend'
-```
+There's no time to write up nice documentation for this, so the easiest way to get a sense of the available extensions is to run `rake spec` from the repo base directory. 
 
-And then execute:
+That will give you the names of all the transformations in `kiba-extend` and hopefully a vague sense of what they do. 
 
-    $ bundle
-
-Or install it yourself as:
-
-    $ gem install kiba-extend
-
-## Usage
-
-Run `rake spec` to get a list of all the transforms currently available and brief descriptions of what they do. 
-
-For details on usage, see the corresponding module. For initialization parameter examples, see the corresponding spec file.
-
-## Development
-
-After checking out the repo, run `bin/setup` to install dependencies. Then, run `rake spec` to run the tests. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/kiba-extend.
-
-## License
-
-The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+For more clarity about what each transformation does, check the actual test files in `/spec`. I try to write the tests so that I can go back later and look at them to remind myself of what each thing does. 
