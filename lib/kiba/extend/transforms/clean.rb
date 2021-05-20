@@ -6,8 +6,9 @@ module Kiba
 
         module Helpers
           ::Clean::Helpers = Kiba::Extend::Transforms::Clean::Helpers
-          def delim_only?(val, delim)
+          def delim_only?(val, delim, usenull = false)
             chk = val.gsub(delim, '').strip
+            chk = chk.gsub('%NULLVALUE%', '').strip if usenull
             chk.empty? ? true : false
           end
         end
@@ -53,13 +54,14 @@ module Kiba
         
         class DelimiterOnlyFields
           include Clean::Helpers
-          def initialize(delim:)
+          def initialize(delim:, use_nullvalue: false)
             @delim = delim
+            @use_nullvalue = use_nullvalue
           end
 
           def process(row)
             row.each do |hdr, val|
-              row[hdr] = nil if val.is_a?(String) && delim_only?(val, @delim)
+              row[hdr] = nil if val.is_a?(String) && delim_only?(val, @delim, @use_nullvalue)
             end
             row
           end
@@ -80,9 +82,16 @@ module Kiba
         end
 
         class EmptyFieldGroups
-          def initialize(groups:, sep:)
+          # groups is an array of arrays. Each of the arrays inside groups should list all fields that are part
+          #   of a repeating field group or field subgroup
+          # sep is the repeating delimiter
+          # use_nullvalue - if true, will insert %NULLVALUE% before any sep at beginning of string, after any sep
+          #   end of string, and between any two sep with nothing in between. It considers %NULLVALUE% as a blank
+          #   value, so if all values in a field are %NULLVALUE%, the field will be nil-ed out. 
+          def initialize(groups:, sep:, use_nullvalue: false)
             @groups = groups
             @sep = sep
+            @use_nullvalue = use_nullvalue
           end
 
           def process(row)
@@ -94,10 +103,14 @@ module Kiba
 
           def process_group(row, group)
             thisgroup = group.map{ |field| row.fetch(field, '')}
-              .map{ |val| val.nil? ? [] : " #{val} ".split(@sep) }
-              .map{ |arr| arr.map{ |e| e.strip } }
 
-            cts = thisgroup.map{ |arr| arr.size }.uniq
+            thisgroup.map!{ |val| add_null_values(val) } if @use_nullvalue
+
+            thisgroup.map!{ |val| val.nil? ? [] : " #{val} ".split(@sep) }
+              .map!{ |arr| arr.map{ |e| e.strip } }
+
+            cts = thisgroup.map{ |arr| arr.size }.uniq.reject{ |ct| ct == 0 }
+            
             to_delete = []
 
             if cts.size > 1
@@ -113,9 +126,23 @@ module Kiba
             end
           end
 
+          def empty_val(str)
+            return true if str.blank?
+            return true if str == '%NULLVALUE%' && @use_nullvalue
+            false
+          end
+          
+          def add_null_values(str)
+            return str if str.nil?
+            
+            str.sub(/^#{@sep}/, "%NULLVALUE%#{@sep}")
+              .sub(/#{@sep}$/, "#{@sep}%NULLVALUE%")
+              .gsub(/#{@sep}#{@sep}/, "#{@sep}%NULLVALUE%#{@sep}")
+          end
+          
           def all_empty?(group, index)
             thesevals = group.map{ |arr| arr[index] }
-              .map{ |val| val.empty? ? nil : val }
+              .map{ |val| empty_val(val) ? nil : val }
               .uniq
               .compact
             thesevals.empty? ? true : false

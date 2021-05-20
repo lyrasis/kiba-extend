@@ -69,24 +69,42 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
   end
 
   describe 'DelimiterOnlyFields' do
-    test_csv = 'tmp/test.csv'
-    rows = [
-        ['id', 'in_set'],
-        ['1', 'a; b'],
-        ['2', ';'],
-        ['3', nil]
-      ]
+    let(:test_csv) { 'tmp/test.csv' }
+    let(:rows) { [
+      ['id', 'in_set'],
+      ['1', 'a; b'],
+      ['2', ';'],
+      ['3', nil],
+      ['4', '%NULLVALUE%;%NULLVALUE%;%NULLVALUE%']
+    ] }
+    let(:result) { execute_job(filename: test_csv, xform: Clean::DelimiterOnlyFields, xformopt: options) }
+
+    before { generate_csv(test_csv, rows) }
+    after { File.delete(test_csv) if File.exist?(test_csv) }
     
-      before { generate_csv(test_csv, rows) }
-      let(:result) { execute_job(filename: test_csv, xform: Clean::DelimiterOnlyFields, xformopt: {delim: ';'}) }
+    context 'when use_nullvalue = false (the default)' do
+      let(:options) { {delim: ';'} }
       it 'changes delimiter only fields to nil' do
         expect(result[1][:in_set]).to be_nil
       end
       it 'leaves other fields unchanged' do
         expect(result[0][:in_set]).to eq('a; b')
         expect(result[2][:in_set]).to be_nil
+        expect(result[3][:in_set]).to eq('%NULLVALUE%;%NULLVALUE%;%NULLVALUE%')
       end
-      after { File.delete(test_csv) if File.exist?(test_csv) }
+    end
+
+    context 'when use_nullvalue = true' do
+      let(:options) { {delim: ';', use_nullvalue: true} }
+      it 'changes delimiter only fields to nil' do
+        expect(result[1][:in_set]).to be_nil
+        expect(result[3][:in_set]).to be_nil
+      end
+      it 'leaves other fields unchanged' do
+        expect(result[0][:in_set]).to eq('a; b')
+        expect(result[2][:in_set]).to be_nil
+      end
+    end
   end
 
   describe 'DowncaseFieldValues' do
@@ -114,17 +132,20 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
   end
 
   describe 'EmptyFieldGroups' do
-    test_csv = 'tmp/test.csv'
-    
-    after { File.delete(test_csv) if File.exist?(test_csv) }
-    it 'Removes field groups where all fields in group are empty' do
-      rows = [
+    let(:test_csv) { 'tmp/test.csv' }
+    let(:rows) { [
         ['id', 'a1', 'a2', 'b1', 'b2', 'b3'],
         ['4', 'not;', nil, ';empty', ';empty', ';empty'],
         ['1', 'not;empty', 'not;empty', 'not;empty', 'not;empty', 'not;empty'],
         ['2', 'not;', 'not;', ';empty', 'not;empty', ';empty'],
-        ['3', ';', ';', ';empty', ';empty', ';empty']
-      ]
+        ['3', ';', ';', ';empty', ';empty', ';empty'],
+        ['5', '%NULLVALUE%;%NULLVALUE%', '%NULLVALUE%;%NULLVALUE%', 'not;empty', '%NULLVALUE%;empty', 'empty;%NULLVALUE%'],
+        ['6', ';', ';', '%NULLVALUE%;empty', '%NULLVALUE%;empty', '%NULLVALUE%;empty'],
+      ] }
+    after { File.delete(test_csv) if File.exist?(test_csv) }
+
+    context 'When use_nullvalue = false (the default)' do
+    it 'Removes field groups where all fields in group are empty' do
       generate_csv(test_csv, rows)
       result = execute_job(filename: test_csv,
                            xform: Clean::EmptyFieldGroups,
@@ -133,11 +154,12 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
                                %i[a1 a2],
                                %i[b1 b2 b3]
                              ],
-                             sep: ';'
+                             sep: ';',
+                             use_nullvalue: false
                            })
       expected = [
         {:id=>'4',
-         :a1=>'not;',
+         :a1=>'not',
          :a2=>nil,
          :b1=>'empty',
          :b2=>'empty',
@@ -164,8 +186,83 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
          :b2=>'empty',
          :b3=>'empty'
         },
+        {:id=>'5',
+         :a1=>'%NULLVALUE%;%NULLVALUE%',
+         :a2=>'%NULLVALUE%;%NULLVALUE%',
+         :b1=>'not;empty',
+         :b2=>'%NULLVALUE%;empty',
+         :b3=>'empty;%NULLVALUE%'
+        },
+        {:id=>'6',
+         :a1=>nil,
+         :a2=>nil,
+         :b1=>'%NULLVALUE%;empty',
+         :b2=>'%NULLVALUE%;empty',
+         :b3=>'%NULLVALUE%;empty'
+        }
       ]
       expect(result).to eq(expected)
+    end
+    end
+    context 'When use_nullvalue = true' do
+      it 'Removes field groups where all fields in group are empty' do
+        generate_csv(test_csv, rows)
+        result = execute_job(filename: test_csv,
+                             xform: Clean::EmptyFieldGroups,
+                             xformopt: {
+                               groups: [
+                                 %i[a1 a2],
+                                 %i[b1 b2 b3]
+                               ],
+                               sep: ';',
+                               use_nullvalue: true
+                             })
+      expected = [
+        {:id=>'4',
+         :a1=>'not',
+         :a2=>nil,
+         :b1=>'empty',
+         :b2=>'empty',
+         :b3=>'empty'
+        },
+        {:id=>'1',
+         :a1=>'not;empty',
+         :a2=>'not;empty',
+         :b1=>'not;empty',
+         :b2=>'not;empty',
+         :b3=>'not;empty'
+        },
+        {:id=>'2',
+         :a1=>'not',
+         :a2=>'not',
+         :b1=>'%NULLVALUE%;empty',
+         :b2=>'not;empty',
+         :b3=>'%NULLVALUE%;empty'
+        },
+        {:id=>'3',
+         :a1=>nil,
+         :a2=>nil,
+         :b1=>'empty',
+         :b2=>'empty',
+         :b3=>'empty'
+        },
+        {:id=>'5',
+         :a1=>nil,
+         :a2=>nil,
+         :b1=>'not;empty',
+         :b2=>'%NULLVALUE%;empty',
+         :b3=>'empty;%NULLVALUE%'
+        },
+        {:id=>'6',
+         :a1=>nil,
+         :a2=>nil,
+         :b1=>'empty',
+         :b2=>'empty',
+         :b3=>'empty'
+        }
+      ]
+        expect(result).to eq(expected)
+      end
     end
   end
   
