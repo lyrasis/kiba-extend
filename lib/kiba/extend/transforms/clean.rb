@@ -6,8 +6,9 @@ module Kiba
 
         module Helpers
           ::Clean::Helpers = Kiba::Extend::Transforms::Clean::Helpers
-          def delim_only?(val, delim)
+          def delim_only?(val, delim, usenull = false)
             chk = val.gsub(delim, '').strip
+            chk = chk.gsub('%NULLVALUE%', '').strip if usenull
             chk.empty? ? true : false
           end
         end
@@ -53,13 +54,14 @@ module Kiba
         
         class DelimiterOnlyFields
           include Clean::Helpers
-          def initialize(delim:)
+          def initialize(delim:, use_nullvalue: false)
             @delim = delim
+            @use_nullvalue = use_nullvalue
           end
 
           def process(row)
             row.each do |hdr, val|
-              row[hdr] = nil if val.is_a?(String) && delim_only?(val, @delim)
+              row[hdr] = nil if val.is_a?(String) && delim_only?(val, @delim, @use_nullvalue)
             end
             row
           end
