@@ -126,9 +126,11 @@ module Kiba
           end
 
           def process(row)
-            id_data = row.fetch(@keycolumn)
-            ids = @multikey ? id_data.split(@delim) : [id_data]
             field_data = Kiba::Extend::Fieldset.new(@fieldmap.values)
+
+            id_data = row.fetch(@keycolumn, '')
+            id_data = id_data.nil? ? '' : id_data
+            ids = @multikey ? id_data.split(@delim) : [id_data]
 
 
             ids.each do |id|
