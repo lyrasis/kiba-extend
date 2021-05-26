@@ -196,7 +196,8 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
         [2, 'Kernel', 'f', 'adopted'],
         [3, 'Boris', 'm', 'adopted'],
         [4, 'Earlybird', 'f', 'hatched'],
-        [5, 'Lazarus', 'm', 'adopted']
+        [5, 'Lazarus', 'm', 'adopted'],
+        [nil, 'Null', '', '']
       ] }
       lookup_rows = [
         ['id', 'date', 'treatment'],
@@ -237,8 +238,11 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
            :event=>nil},
           {:id=>'5', :name=>'Lazarus', :sex=>'m', :source=>'adopted',
            :date=>nil,
+           :event=>nil} ,
+          {:id=>nil, :name=>'Null', :sex=>'', :source=>'',
+           :date=>nil,
            :event=>nil}
-        ]
+       ]
         result = execute_job(filename: test_csv, xform: Merge::MultiRowLookup, xformopt: xformopt)
         expect(result).to eq(expected)
       end
@@ -267,6 +271,10 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
           {:id=>'5', :name=>'Lazarus', :sex=>'m', :source=>'adopted',
            :date=>nil,
            :event=>nil,
+           :by=>nil, :loc=>nil},
+          {:id=>nil, :name=>'Null', :sex=>'', :source=>'',
+           :date=>nil,
+           :event=>nil,
            :by=>nil, :loc=>nil}
         ]
         result = execute_job(filename: test_csv, xform: Merge::MultiRowLookup, xformopt: opt)
@@ -284,7 +292,8 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
         ['a|b|c'],
         ['d'],
         ['e|f|g'],
-        ['h']
+        ['h'],
+        [nil]
       ] }
       lookup_rows = [
         ['single', 'double', 'triple'],
@@ -316,7 +325,8 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
           {single: 'a|b|c', doubles: 'aa|bb|beebee|cc', triples: 'aaa|bbb||ccc'},
           {single: 'd', doubles: 'dd', triples: 'ddd'},
           {single: 'e|f|g', doubles: 'ee|', triples: 'eee|ggg'},
-          {single: 'h', doubles: nil, triples: nil}
+          {single: 'h', doubles: nil, triples: nil},
+          {single: nil, doubles: nil, triples: nil}
         ]
         result = execute_job(filename: test_csv, xform: Merge::MultiRowLookup, xformopt: xformopt)
         expect(result).to eq(expected)
@@ -328,7 +338,8 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
           {single: 'a|b|c', doubles: 'aa|bb|beebee|cc', triples: 'aaa|bbb||ccc', quad: '4|4|4|4', pent: '5|5|5|5'},
           {single: 'd', doubles: 'dd', triples: 'ddd', quad: '4', pent: '5'},
           {single: 'e|f|g', doubles: 'ee|', triples: 'eee|ggg', quad: '4|4', pent: '5|5'},
-          {single: 'h', doubles: nil, triples: nil, quad: nil, pent: nil}
+          {single: 'h', doubles: nil, triples: nil, quad: nil, pent: nil},
+          {single: nil, doubles: nil, triples: nil, quad: nil, pent: nil}
         ]
         result = execute_job(filename: test_csv, xform: Merge::MultiRowLookup, xformopt: opt)
         expect(result).to eq(expected)
