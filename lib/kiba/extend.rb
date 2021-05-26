@@ -15,7 +15,7 @@ module Kiba
     
     puts "kiba-extend version: #{Kiba::Extend::VERSION}"
 
-    
+    require 'kiba/extend/fieldset'
     require 'kiba/extend/destinations/csv'
     require 'kiba/extend/transforms/append'
     require 'kiba/extend/transforms/clean'

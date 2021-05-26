@@ -115,61 +115,58 @@ module Kiba
         #  into the target, AND THE TARGET IS MULTIVALUED
         class MultiRowLookup
           def initialize(fieldmap:, constantmap: {}, lookup:, keycolumn:,
-                         conditions: {}, delim: DELIM)
+                         conditions: {}, multikey: false, delim: DELIM)
             @fieldmap = fieldmap # hash of looked-up values to merge in for each merged-in row
-            @constantmap = constantmap #hash of constants to add for each merged-in row
-            @lookup = lookup #lookuphash; should be created with csv_to_multi_hash
-            @keycolumn = keycolumn #column in main table containing value expected to be lookup key
+            @constantmap = constantmap # hash of constants to add for each merged-in row
+            @lookup = lookup # lookuphash; should be created with csv_to_multi_hash
+            @keycolumn = keycolumn # column in main table containing value expected to be lookup key
+            @multikey = multikey # should the key be treated as multivalued
             @conditions = conditions
             @delim = delim
           end
 
           def process(row)
-            id = row.fetch(@keycolumn)
-            fh = {}
-            ch = {}
-            @fieldmap.each_key{ |k| fh[k] = [] }
-            @constantmap.each_key{ |k| ch[k] = [] }
+            id_data = row.fetch(@keycolumn)
+            ids = @multikey ? id_data.split(@delim) : [id_data]
+            field_data = Kiba::Extend::Fieldset.new(@fieldmap.values)
 
-            merge_rows = @lookup.fetch(id, [])
 
-            if merge_rows.size > 0
-              keep_rows = Lookup::RowSelector.new(
-                origrow: row,
-                mergerows: @lookup.fetch(id, []),
-                conditions: @conditions,
-                sep: @delim
-              ).result
-              
-              keep_rows.each do |mrow|
-                mergevals = []
-                @fieldmap.each do |target, source|
-                  val = mrow.fetch(source, nil)
-                  result = val.blank? ? nil : val
-                  fh[target] << result
-                  mergevals << result
-                end
-                if mergevals.compact.empty?
-                  @constantmap.each{ |target, value| ch[target] << nil }
-                else
-                  @constantmap.each{ |target, value| ch[target] << value }
-                end
-              end
-
-              chk = @fieldmap.map{ |target, source| fh[target].compact.size }.uniq.sort
-
-              if chk == [0]
-                fh.each{ |target, arr| row[target] = nil }
-                ch.each{ |target, arr| row[target] = nil }
-              else
-                fh.each{ |target, arr| row[target] = arr.join(@delim) }
-                ch.each{ |target, arr| row[target] = arr.join(@delim) }
-              end
-            else
-              @fieldmap.keys.each{ |f| row[f] = nil }
-              @constantmap.keys.each{ |f| row[f] = nil }
+            ids.each do |id|
+              field_data.populate(rows_to_merge(id, row))
             end
+
+            @constantmap.each do |field, value|
+              field_data.add_constant_values(field, value)
+            end
+
+            field_data.join_values(@delim)
+
+            field_data.hash.each do |field, value|
+              row[target_field(field)] = value.blank? ? nil : value
+            end
+            
             row
+          end
+
+          private
+
+          def target_field(field)
+            target = @fieldmap.key(field)
+            return target unless target.nil?
+
+            field
+          end
+
+          def rows_to_merge(id, sourcerow)
+            matches = @lookup.fetch(id, [])
+            return matches if matches.empty?
+
+            Lookup::RowSelector.new(
+              origrow: sourcerow,
+              mergerows: @lookup.fetch(id, []),
+              conditions: @conditions,
+              sep: @delim
+            ).result
           end
         end
       end # module Merge
