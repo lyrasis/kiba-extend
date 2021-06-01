@@ -4,6 +4,31 @@ module Kiba
       module Merge
         ::Merge = Kiba::Extend::Transforms::Merge
 
+        class CompareFieldsFlag
+          def initialize(fields:, target:, downcase: true, strip: true, ignore_blank: false)
+            @fields = fields
+            @target = target
+            @strip = strip
+            @downcase = downcase
+            @ignore_blank = ignore_blank
+          end
+
+          def process(row)
+            row[@target] = 'diff'
+            values = []
+            @fields.each do |field|
+              value = row.fetch(field, '').dup
+              value = '' if value.nil?
+              value.downcase! if @downcase
+              value.strip! if @strip
+              values << value
+            end
+            values.reject!{ |val| val.blank? } if @ignore_blank
+            row[@target] = 'same' if values.uniq.length == 1 || values.empty?
+            row
+          end
+        end
+
         class ConstantValue
           def initialize(target:, value:)
             @target = target

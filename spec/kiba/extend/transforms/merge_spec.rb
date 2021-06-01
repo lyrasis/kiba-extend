@@ -8,6 +8,87 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
   after do
     File.delete(test_csv) if File.exist?(test_csv)
   end
+
+  describe 'CompareFieldsFlag' do
+    let(:rows) { [
+      ['id', 'pid', 'zid'],
+      [1, 1, 1],
+      [2, nil, 2],
+      ['three', 'Three', 'three'],
+      ['three', ' three', 'three'],
+      [4, 4, 3],
+      ['', nil, '']
+    ] }
+
+    context 'with defaults (downcase and strip = true, ignore_blank = false)' do
+      it 'merges "same" or "diff" into target field after comparing values in row fields' do
+        expected = [
+          {id: '1', pid: '1', zid: '1', comp: 'same'},
+          {id: '2', pid: nil, zid: '2', comp: 'diff'},
+          {id: 'three', pid: 'Three', zid: 'three', comp: 'same'},
+          {id: 'three', pid: ' three', zid: 'three', comp: 'same'},
+          {id: '4', pid: '4', zid: '3', comp: 'diff'},
+          {id: '', pid: nil, zid: '', comp: 'same'}
+        ]
+        result = execute_job(filename: test_csv,
+                             xform: Merge::CompareFieldsFlag,
+                             xformopt: {fields: %i[id pid zid], target: :comp})
+        expect(result).to eq(expected)
+      end
+    end
+
+    context 'with downcase false' do
+      it 'merges "same" or "diff" into target field after comparing values in row fields' do
+        expected = [
+          {id: '1', pid: '1', zid: '1', comp: 'same'},
+          {id: '2', pid: nil, zid: '2', comp: 'diff'},
+          {id: 'three', pid: 'Three', zid: 'three', comp: 'diff'},
+          {id: 'three', pid: ' three', zid: 'three', comp: 'same'},
+          {id: '4', pid: '4', zid: '3', comp: 'diff'},
+          {id: '', pid: nil, zid: '', comp: 'same'}
+        ]
+        result = execute_job(filename: test_csv,
+                             xform: Merge::CompareFieldsFlag,
+                             xformopt: {fields: %i[id pid zid], target: :comp, downcase: false})
+        expect(result).to eq(expected)
+      end
+    end
+
+    context 'with strip false' do
+      it 'merges "same" or "diff" into target field after comparing values in row fields' do
+        expected = [
+          {id: '1', pid: '1', zid: '1', comp: 'same'},
+          {id: '2', pid: nil, zid: '2', comp: 'diff'},
+          {id: 'three', pid: 'Three', zid: 'three', comp: 'same'},
+          {id: 'three', pid: ' three', zid: 'three', comp: 'diff'},
+          {id: '4', pid: '4', zid: '3', comp: 'diff'},
+          {id: '', pid: nil, zid: '', comp: 'same'}
+        ]
+        result = execute_job(filename: test_csv,
+                             xform: Merge::CompareFieldsFlag,
+                             xformopt: {fields: %i[id pid zid], target: :comp, strip: false})
+        expect(result).to eq(expected)
+      end
+    end
+
+    context 'with ignore_blank = true' do
+      it 'merges "same" or "diff" into target field after comparing values in row fields' do
+        expected = [
+          {id: '1', pid: '1', zid: '1', comp: 'same'},
+          {id: '2', pid: nil, zid: '2', comp: 'same'},
+          {id: 'three', pid: 'Three', zid: 'three', comp: 'same'},
+          {id: 'three', pid: ' three', zid: 'three', comp: 'same'},
+          {id: '4', pid: '4', zid: '3', comp: 'diff'},
+          {id: '', pid: nil, zid: '', comp: 'same'}
+        ]
+        result = execute_job(filename: test_csv,
+                             xform: Merge::CompareFieldsFlag,
+                             xformopt: {fields: %i[id pid zid], target: :comp, ignore_blank: true})
+        expect(result).to eq(expected)
+      end
+    end
+  end
+
   describe 'ConstantValue' do
     let(:rows) { [
       ['id', 'name', 'sex', 'source'],
