@@ -5,11 +5,12 @@ module Kiba
         ::Merge = Kiba::Extend::Transforms::Merge
 
         class CompareFieldsFlag
-          def initialize(fields:, target:, downcase: true, strip: true)
+          def initialize(fields:, target:, downcase: true, strip: true, ignore_blank: false)
             @fields = fields
             @target = target
             @strip = strip
             @downcase = downcase
+            @ignore_blank = ignore_blank
           end
 
           def process(row)
@@ -22,7 +23,8 @@ module Kiba
               value.strip! if @strip
               values << value
             end
-            row[@target] = 'same' if values.uniq.length == 1
+            values.reject!{ |val| val.blank? } if @ignore_blank
+            row[@target] = 'same' if values.uniq.length == 1 || values.empty?
             row
           end
         end
