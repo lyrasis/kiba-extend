@@ -26,7 +26,7 @@ module Kiba
         #  | a      | b |
         #  --------------
         #  | d: c   | d |
-        #  | d: e;f | g |
+        #  | g: e;f | g |
         #  |        | h |
         #  | i      |   |
         #
@@ -39,7 +39,7 @@ module Kiba
         #  | a         |
         #  -------------
         #  | d: c      |
-        #  | d: e;d: f |
+        #  | g: e;g: f |
         #  |           |
         #  | i         |
         class FieldToFieldValue
