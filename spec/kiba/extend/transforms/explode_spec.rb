@@ -34,8 +34,11 @@ RSpec.describe Kiba::Extend::Transforms::Explode do
   describe 'ColumnsRemappedInNewRows' do
     test_csv = 'tmp/test.csv'
     rows = [
-      ['id',  'r1',  'r2',      'ra', 'rb', 'xq'],
-      ['001', 'a;b', 'foo;bar', 'aa', 'bb', 'eee']
+      ['f1',  'c1', 'f2', 'c2', 'season', 'f3'],
+      ['strawberry', 'red', 'blueberry', 'blue', 'spring', 'cherry'],
+      ['fig;honeydew', 'brown;green', 'watermelon', 'green', 'summer', nil],
+      [nil, nil, nil, nil, 'winter', 'grapefruit'],
+      [nil, nil, nil, nil, 'autumn', nil]
     ]
 
     before do
@@ -46,23 +49,27 @@ RSpec.describe Kiba::Extend::Transforms::Explode do
       File.delete('tmp/lkp.csv') if File.exist?('tmp/lkp.csv')
     end
 
-    context 'when given field :r1 and delim \';\'' do
-      it 'creates 2 rows with same :id and :r2 fields' do
-        expected = [
-          { id: '001', a1: 'a;b', a2: 'foo;bar', xq: 'eee' },
-          { id: '001', a1: 'aa', a2: 'bb', xq: 'eee' },
-        ]
-        result = execute_job(filename: test_csv,
-                             xform: Explode::ColumnsRemappedInNewRows,
-                             xformopt: { remap_groups: [
-                               %i[r1 r2],
-                               %i[ra rb]
-                             ],
-                                        map_to: %i[a1 a2]
-                                       }
-                            )
-        expect(result).to eq(expected)
-      end
+    it 'creates expected result' do
+      expected = [
+        { fruit: 'strawberry', color: 'red', season: 'spring' },
+        { fruit: 'blueberry', color: 'blue', season: 'spring' },
+        { fruit: 'cherry', color: nil, season: 'spring'},
+        { fruit: 'fig;honeydew', color: 'brown;green', season: 'summer' },
+        { fruit: 'watermelon', color: 'green', season: 'summer' },
+        { fruit: 'grapefruit', color: nil, season: 'winter' },
+        { fruit: nil, color: nil, season: 'autumn'}
+      ]
+      result = execute_job(filename: test_csv,
+                           xform: Explode::ColumnsRemappedInNewRows,
+                           xformopt: { remap_groups: [
+                             %i[f1 c1],
+                             %i[f2 c2],
+                             %i[f3]
+                           ],
+                                      map_to: %i[fruit color]
+                                     }
+                          )
+      expect(result).to eq(expected)
     end
   end
 
@@ -110,7 +117,7 @@ RSpec.describe Kiba::Extend::Transforms::Explode do
           expect(result).to eq(expected)
         end
       end
-     context 'when keep_nil = true' do
+      context 'when keep_nil = true' do
         it 'reshapes the columns as specified' do
           expected = [
             { id: '1', val: 'a' },
@@ -139,41 +146,41 @@ RSpec.describe Kiba::Extend::Transforms::Explode do
                                          })
           expect(result).to eq(expected)
         end
-     end
+      end
 
-     context 'when keep_empty = true' do
-       it 'reshapes the columns as specified' do
-         expected = [
-           { id: '1', val: 'a' },
-           { id: '1', val: 'b' },
-           { id: '1', val: 'c' },
-           { id: '1', val: 'd' },
-           { id: '2', val: 'a' },
-           { id: '2', val: 'b' },
-           { id: '3', val: '' },
-           { id: '3', val: 'q' },
-           { id: '4', val: 'n' },
-           { id: '5', val: '' },
-           { id: '6', val: 'p' },
-           { id: '6', val: '' },
-           { id: '6', val: '' },
-           { id: '6', val: 'z' },
-           { id: '7', val: 'm' },
-           { id: '7', val: '' },
-           { id: '7', val: 'n' },
-           { id: '7', val: 's' },
-         ]
-         result = execute_job(filename: test_csv,
-                              xform: Explode::FieldValuesToNewRows,
-                              xformopt: {fields: %i[child parent],
-                                         target: :val,
-                                         multival: true,
-                                         sep: ';',
-                                         keep_empty: true
-                                        })
-         expect(result).to eq(expected)
-       end
-     end
+      context 'when keep_empty = true' do
+        it 'reshapes the columns as specified' do
+          expected = [
+            { id: '1', val: 'a' },
+            { id: '1', val: 'b' },
+            { id: '1', val: 'c' },
+            { id: '1', val: 'd' },
+            { id: '2', val: 'a' },
+            { id: '2', val: 'b' },
+            { id: '3', val: '' },
+            { id: '3', val: 'q' },
+            { id: '4', val: 'n' },
+            { id: '5', val: '' },
+            { id: '6', val: 'p' },
+            { id: '6', val: '' },
+            { id: '6', val: '' },
+            { id: '6', val: 'z' },
+            { id: '7', val: 'm' },
+            { id: '7', val: '' },
+            { id: '7', val: 'n' },
+            { id: '7', val: 's' },
+          ]
+          result = execute_job(filename: test_csv,
+                               xform: Explode::FieldValuesToNewRows,
+                               xformopt: {fields: %i[child parent],
+                                          target: :val,
+                                          multival: true,
+                                          sep: ';',
+                                          keep_empty: true
+                                         })
+          expect(result).to eq(expected)
+        end
+      end
     end
 
     context 'when multival = false' do
