@@ -1,2 +1,8 @@
+-o docs
+--readme README.md
+--title 'Kiba-Extend Documentation'
+--charset utf-8
 --no-private
 --markup markdown
+-
+LICENSE.txt
