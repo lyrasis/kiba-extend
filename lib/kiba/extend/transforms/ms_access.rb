@@ -3,6 +3,7 @@ require 'bigdecimal'
 module Kiba
   module Extend
     module Transforms
+      # Transformations that handle data formats/issues seen when exporting from Microsoft Access
       module MsAccess
         ::MsAccess = Kiba::Extend::Transforms::MsAccess
         class ScientificNotationToNumberString
@@ -10,13 +11,14 @@ module Kiba
             @fields = fields
           end
 
+          # @private
           def process(row)
             @fields.each{ |field| process_field(row, field) }
             row
           end
 
           private
-          
+
           def process_field(row, field)
             value = row[field]
             return if value.blank?
