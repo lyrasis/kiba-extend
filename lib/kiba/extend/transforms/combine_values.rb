@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Kiba
   module Extend
     module Transforms
@@ -81,7 +83,7 @@ module Kiba
           # * Each value is an Array of Symbols. Each element of the array is a source field that will be mapped into the target field given as key. Order of source fields in this array controls the order in which the source fields are combined.
           # * There must be an equal number of source fields given in each source field Array
           #
-          # @todo Raise error if unequal number of source fields given 
+          # @todo Raise error if unequal number of source fields given
           def initialize(fieldmap:, sep:, delete_sources: true)
             @fieldmap = fieldmap
             @sep = sep
@@ -96,8 +98,8 @@ module Kiba
                 srcval = row.fetch(source)
                 vals << '' if srcval.nil? || srcval.empty? || srcval.match?(Regexp.new("^#{@sep}"))
                 vals << srcval.split(@sep) unless srcval.nil? || srcval.empty?
-                vals << '' if srcval.match?(Regexp.new("#{@sep}$")) unless srcval.nil? || srcval.empty?
-                row.delete(source) unless source == target if @del
+                vals << '' if !(srcval.nil? || srcval.empty?) && srcval.match?(Regexp.new("#{@sep}$"))
+                row.delete(source) if @del && source != target
               end
               row[target] = vals.join(@sep)
             end
@@ -162,7 +164,7 @@ module Kiba
           # @param target [Symbol] Field into which the combined value will be written. May be one of the source fields
           # @param sep [String] Value inserted between combined field values
           # @param prepend_source_field_name [Boolean] Whether to insert the source field name before its value in the combined value.
-          # @param delete_sources [Boolean] Whether to delete the source fields after combining their values into the target field. If target field name is the same as one of the source fields, the target field is not deleted. 
+          # @param delete_sources [Boolean] Whether to delete the source fields after combining their values into the target field. If target field name is the same as one of the source fields, the target field is not deleted.
           def initialize(sources:, target:, sep:, prepend_source_field_name: false, delete_sources: true)
             @sources = sources
             @target = target
@@ -173,9 +175,9 @@ module Kiba
 
           # @private
           def process(row)
-            vals = @sources.map{ |src| row.fetch(src, nil) }
-              .map{ |v| v.blank? ? nil : v }
-            
+            vals = @sources.map { |src| row.fetch(src, nil) }
+                           .map { |v| v.blank? ? nil : v }
+
             if @prepend
               pvals = []
               vals.each_with_index do |val, i|
@@ -185,9 +187,9 @@ module Kiba
               vals = pvals
             end
             val = vals.compact.join(@sep)
-            val.empty? ? row[@target] = nil : row[@target] = val
-            
-            @sources.each{ |src| row.delete(src) unless src == @target } if @del
+            row[@target] = val.empty? ? nil : val
+
+            @sources.each { |src| row.delete(src) unless src == @target } if @del
             row
           end
         end
@@ -231,13 +233,13 @@ module Kiba
 
           # @private
           def process(row)
-            vals = row.keys.map{ |k| row.fetch(k, nil) }
+            vals = row.keys.map { |k| row.fetch(k, nil) }
             vals = vals.compact
-            if vals.empty?
-              row[@target] = nil
-            else
-              row[@target] = vals.join(@sep)
-            end
+            row[@target] = if vals.empty?
+                             nil
+                           else
+                             vals.join(@sep)
+                           end
             row
           end
         end

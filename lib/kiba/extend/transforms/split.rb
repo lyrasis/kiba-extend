@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module Kiba
   module Extend
     module Transforms
       # Transformations that split data
-      module Split 
+      module Split
         ::Split = Kiba::Extend::Transforms::Split
 
         # Splits field into multiple fields, based on sep
@@ -72,10 +74,14 @@ module Kiba
           # @param field [Symbol] Name of field to split
           # @param sep [String] Character(s) on which to split the field value
           # @param delete_source [Boolean] Whether to delete `field` after splitting it into new columns
-          # @param max_segments [Integer] Optional specification of the maximum number of segments to split `field` value into (i.e. max number of columns to create from this one column).
-          # @param collapse_on [:right, :left] Which end of the split array to join remaining split values if there are more than max_segments
+          # @param max_segments [Integer] Optional specification of the maximum number of segments to split
+          #   `field` value into (i.e. max number of columns to create from this one column).
+          # @param collapse_on [:right, :left] Which end of the split array to join remaining split values
+          #   if there are more than max_segments
           # @param warnfield [Symbol] Name of field in which to put any warning/error(s) for a row
-          def initialize(field:, sep:, delete_source: true, max_segments: 9999, collapse_on: :right, warnfield: nil)
+          # rubocop:disable Metrics/ParameterLists
+          def initialize(field:, sep:, delete_source: true, max_segments: 9999, collapse_on: :right,
+                         warnfield: nil)
             @field = field
             @sep = sep
             @del = delete_source
@@ -83,6 +89,7 @@ module Kiba
             @collapse_on = collapse_on
             @warnfield = warnfield
           end
+          # rubocop:enable Metrics/ParameterLists
 
           # @private
           def process(row)
@@ -124,7 +131,7 @@ module Kiba
               row["#{@field}#{i + 1}".to_sym] = v
             end
           end
-          
+
           def process_splits(valsplit, row)
             segments_remaining = []
             final_index = 0
@@ -146,7 +153,6 @@ module Kiba
                 row["#{@field}#{final_index + 1}".to_sym] = val.strip
               end
             end
-
           end
         end
       end

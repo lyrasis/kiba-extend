@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'bigdecimal'
 
 module Kiba
@@ -13,7 +15,7 @@ module Kiba
 
           # @private
           def process(row)
-            @fields.each{ |field| process_field(row, field) }
+            @fields.each { |field| process_field(row, field) }
             row
           end
 
@@ -23,8 +25,9 @@ module Kiba
             value = row[field]
             return if value.blank?
             return unless value.match?(/[Ee][-+]/)
+
             row[field] = BigDecimal(value).to_s.sub(/\.0+$/, '')
-              #"%f" % value
+            # "%f" % value
           end
         end
       end

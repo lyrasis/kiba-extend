@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Kiba
   module Extend
     module Transforms
@@ -14,14 +16,12 @@ module Kiba
           def process(row)
             @fields.each do |field|
               val = row.fetch(field)
-              unless val.nil?
-                row[field] = val.split(@sep).compact.reject{ |e| e.empty? }.join(@sep)
-              end
+              row[field] = val.split(@sep).compact.reject(&:empty?).join(@sep) unless val.nil?
             end
             row
           end
         end
-        
+
         class Fields
           def initialize(fields:)
             @fields = fields
@@ -29,7 +29,7 @@ module Kiba
 
           # @private
           def process(row)
-            @fields.each{ |name| row.delete(name) }
+            @fields.each { |name| row.delete(name) }
             row
           end
         end
@@ -42,7 +42,7 @@ module Kiba
           # @private
           def process(row)
             deletefields = row.keys - @fields
-            deletefields.each{ |f| row.delete(f) }
+            deletefields.each { |f| row.delete(f) }
             row
           end
         end
@@ -85,7 +85,7 @@ module Kiba
             fv = row.fetch(@delete)
             unless fv.nil?
               fv = @multival ? fv.split(@sep) : [fv]
-              fvcompare = @case_sensitive ? fv : fv.map{ |e| e.downcase}
+              fvcompare = @case_sensitive ? fv : fv.map(&:downcase)
               result = []
               deleted = []
               fvcompare.each_with_index do |val, i|
@@ -99,11 +99,11 @@ module Kiba
               end
               @group.each do |gf|
                 gfval = row.fetch(gf)
-                unless gfval.nil?
-                  gfvals = gfval.split(@sep)
-                  deleted.sort.reverse.each{ |i| gfvals.delete_at(i) }
-                  row[gf] = gfvals.join(@sep)
-                end
+                next if gfval.nil?
+
+                gfvals = gfval.split(@sep)
+                deleted.sort.reverse.each { |i| gfvals.delete_at(i) }
+                row[gf] = gfvals.join(@sep)
               end
             end
             row
@@ -115,15 +115,15 @@ module Kiba
             @fields = fields
             @match = casesensitive ? Regexp.new(match) : Regexp.new(match, Regexp::IGNORECASE)
           end
-          
+
           # @private
           def process(row)
             @fields.each do |field|
               exval = row.fetch(field)
               if exval.nil?
-                #do nothing
-              else
-                row[field] = nil if exval.match?(@match)
+                # do nothing
+              elsif exval.match?(@match)
+                row[field] = nil
               end
             end
             row

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'kiba'
 require 'kiba-common/sources/csv'
 require 'kiba-common/destinations/csv'
@@ -6,7 +8,7 @@ require 'active_support/all'
 require 'xxhash'
 require 'facets/kernel/blank'
 
-CSVOPT = {headers: true, header_converters: :symbol}
+CSVOPT = { headers: true, header_converters: :symbol }.freeze
 DELIM = ';'
 
 # The Kiba ETL framework for Ruby.
@@ -18,7 +20,7 @@ module Kiba
   # Provides a suite of abstract, reusable, well-tested data transformations for use in Kiba ETL pipelines
   module Extend
     autoload :VERSION, 'extend/version'
-    
+
     puts "kiba-extend version: #{Kiba::Extend::VERSION}"
 
     require 'kiba/extend/fieldset'
@@ -42,7 +44,7 @@ module Kiba
     require 'kiba/extend/utils/lookup'
 
     # strips, collapses multiple spaces, removes terminal commas, strips again
-    CSV::Converters[:stripplus] = lambda{ |s|
+    CSV::Converters[:stripplus] = lambda { |s|
       begin
         if s.nil?
           nil
@@ -50,18 +52,18 @@ module Kiba
           nil
         else
           s.strip
-            .gsub(/  +/, ' ')
-            .sub(/,$/, '')
-            .sub(/^%(LINEBREAK|CRLF)%/, '')
-            .sub(/%(LINEBREAK|CRLF)%$/, '')
-            .strip
+           .gsub(/  +/, ' ')
+           .sub(/,$/, '')
+           .sub(/^%(LINEBREAK|CRLF)%/, '')
+           .sub(/%(LINEBREAK|CRLF)%$/, '')
+           .strip
         end
       rescue ArgumentError
         s
       end
     }
 
-    CSV::Converters[:nulltonil] = lambda{ |s|
+    CSV::Converters[:nulltonil] = lambda { |s|
       begin
         if s == 'NULL'
           nil
@@ -72,6 +74,5 @@ module Kiba
         s
       end
     }
-
   end
 end

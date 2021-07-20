@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Explode do
   describe 'RowsFromMultivalField' do
     test_csv = 'tmp/test.csv'
     rows = [
-      ['id', 'r1', 'r2'],
+      %w[id r1 r2],
       ['001', 'a;b', 'foo;bar']
     ]
 
@@ -20,12 +22,11 @@ RSpec.describe Kiba::Extend::Transforms::Explode do
       it 'creates 2 rows with same :id and :r2 fields' do
         expected = [
           { id: '001', r1: 'a', r2: 'foo;bar' },
-          { id: '001', r1: 'b', r2: 'foo;bar' },
+          { id: '001', r1: 'b', r2: 'foo;bar' }
         ]
         result = execute_job(filename: test_csv,
                              xform: Explode::RowsFromMultivalField,
-                             xformopt: {field: :r1, delim: ';'}
-                            )
+                             xformopt: { field: :r1, delim: ';' })
         expect(result).to eq(expected)
       end
     end
@@ -34,8 +35,8 @@ RSpec.describe Kiba::Extend::Transforms::Explode do
   describe 'ColumnsRemappedInNewRows' do
     test_csv = 'tmp/test.csv'
     rows = [
-      ['f1',  'c1', 'f2', 'c2', 'season', 'f3'],
-      ['strawberry', 'red', 'blueberry', 'blue', 'spring', 'cherry'],
+      %w[f1 c1 f2 c2 season f3],
+      %w[strawberry red blueberry blue spring cherry],
       ['fig;honeydew', 'brown;green', 'watermelon', 'green', 'summer', nil],
       [nil, nil, nil, nil, 'winter', 'grapefruit'],
       [nil, nil, nil, nil, 'autumn', nil]
@@ -53,11 +54,11 @@ RSpec.describe Kiba::Extend::Transforms::Explode do
       expected = [
         { fruit: 'strawberry', color: 'red', season: 'spring' },
         { fruit: 'blueberry', color: 'blue', season: 'spring' },
-        { fruit: 'cherry', color: nil, season: 'spring'},
+        { fruit: 'cherry', color: nil, season: 'spring' },
         { fruit: 'fig;honeydew', color: 'brown;green', season: 'summer' },
         { fruit: 'watermelon', color: 'green', season: 'summer' },
         { fruit: 'grapefruit', color: nil, season: 'winter' },
-        { fruit: nil, color: nil, season: 'autumn'}
+        { fruit: nil, color: nil, season: 'autumn' }
       ]
       result = execute_job(filename: test_csv,
                            xform: Explode::ColumnsRemappedInNewRows,
@@ -66,9 +67,7 @@ RSpec.describe Kiba::Extend::Transforms::Explode do
                              %i[f2 c2],
                              %i[f3]
                            ],
-                                      map_to: %i[fruit color]
-                                     }
-                          )
+                                       map_to: %i[fruit color] })
       expect(result).to eq(expected)
     end
   end
@@ -76,7 +75,7 @@ RSpec.describe Kiba::Extend::Transforms::Explode do
   describe 'FieldValuesToNewRows' do
     test_csv = 'tmp/test.csv'
     rows = [
-      ['id', 'child', 'parent'],
+      %w[id child parent],
       [1, 'a;b', 'c;d'],
       [2, 'a', 'b'],
       [3, '', 'q'],
@@ -109,11 +108,10 @@ RSpec.describe Kiba::Extend::Transforms::Explode do
           ]
           result = execute_job(filename: test_csv,
                                xform: Explode::FieldValuesToNewRows,
-                               xformopt: {fields: %i[child parent],
-                                          target: :val,
-                                          multival: true,
-                                          sep: ';'
-                                         })
+                               xformopt: { fields: %i[child parent],
+                                           target: :val,
+                                           multival: true,
+                                           sep: ';' })
           expect(result).to eq(expected)
         end
       end
@@ -134,16 +132,15 @@ RSpec.describe Kiba::Extend::Transforms::Explode do
             { id: '6', val: 'z' },
             { id: '7', val: 'm' },
             { id: '7', val: 'n' },
-            { id: '7', val: 's' },
+            { id: '7', val: 's' }
           ]
           result = execute_job(filename: test_csv,
                                xform: Explode::FieldValuesToNewRows,
-                               xformopt: {fields: %i[child parent],
-                                          target: :val,
-                                          multival: true,
-                                          sep: ';',
-                                          keep_nil: true
-                                         })
+                               xformopt: { fields: %i[child parent],
+                                           target: :val,
+                                           multival: true,
+                                           sep: ';',
+                                           keep_nil: true })
           expect(result).to eq(expected)
         end
       end
@@ -168,16 +165,15 @@ RSpec.describe Kiba::Extend::Transforms::Explode do
             { id: '7', val: 'm' },
             { id: '7', val: '' },
             { id: '7', val: 'n' },
-            { id: '7', val: 's' },
+            { id: '7', val: 's' }
           ]
           result = execute_job(filename: test_csv,
                                xform: Explode::FieldValuesToNewRows,
-                               xformopt: {fields: %i[child parent],
-                                          target: :val,
-                                          multival: true,
-                                          sep: ';',
-                                          keep_empty: true
-                                         })
+                               xformopt: { fields: %i[child parent],
+                                           target: :val,
+                                           multival: true,
+                                           sep: ';',
+                                           keep_empty: true })
           expect(result).to eq(expected)
         end
       end
@@ -196,13 +192,12 @@ RSpec.describe Kiba::Extend::Transforms::Explode do
             { id: '6', val: 'p;' },
             { id: '6', val: ';z' },
             { id: '7', val: 'm;;n' },
-            { id: '7', val: 's' },
+            { id: '7', val: 's' }
           ]
           result = execute_job(filename: test_csv,
                                xform: Explode::FieldValuesToNewRows,
-                               xformopt: {fields: %i[child parent],
-                                          target: :val
-                                         })
+                               xformopt: { fields: %i[child parent],
+                                           target: :val })
           expect(result).to eq(expected)
         end
       end
@@ -214,7 +209,7 @@ RSpec.describe Kiba::Extend::Transforms::Explode do
             { id: '1', val: 'c;d' },
             { id: '2', val: 'a' },
             { id: '2', val: 'b' },
-            { id: '3', val: '' },            
+            { id: '3', val: '' },
             { id: '3', val: 'q' },
             { id: '4', val: 'n' },
             { id: '4', val: nil },
@@ -223,19 +218,17 @@ RSpec.describe Kiba::Extend::Transforms::Explode do
             { id: '6', val: 'p;' },
             { id: '6', val: ';z' },
             { id: '7', val: 'm;;n' },
-            { id: '7', val: 's' },
+            { id: '7', val: 's' }
           ]
           result = execute_job(filename: test_csv,
                                xform: Explode::FieldValuesToNewRows,
-                               xformopt: {fields: %i[child parent],
-                                          target: :val,
-                                          keep_nil: true,
-                                          keep_empty: true
-                                         })
+                               xformopt: { fields: %i[child parent],
+                                           target: :val,
+                                           keep_nil: true,
+                                           keep_empty: true })
           expect(result).to eq(expected)
         end
       end
     end
   end
 end
-

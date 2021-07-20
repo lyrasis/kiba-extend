@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Kiba
   module Extend
     module Transforms
@@ -43,7 +45,7 @@ module Kiba
             end
           end
         end
-        
+
         class FieldPopulated
           def initialize(action:, field:)
             @action = action
@@ -80,7 +82,6 @@ module Kiba
             end
           end
         end
-        
       end
     end
   end

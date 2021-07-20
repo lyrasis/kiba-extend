@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Kiba
   module Extend
     module Transforms
@@ -21,11 +23,11 @@ module Kiba
             @fields.each do |field|
               value = row.fetch(field, '').dup
               value = '' if value.nil?
-              value.downcase! if @downcase
-              value.strip! if @strip
+              value = value.downcase if @downcase
+              value = value.strip if @strip
               values << value
             end
-            values.reject!{ |val| val.blank? } if @ignore_blank
+            values.reject!(&:blank?) if @ignore_blank
             row[@target] = 'same' if values.uniq.length == 1 || values.empty?
             row
           end
@@ -62,9 +64,9 @@ module Kiba
           # @private
           def process(row)
             if conditions_met?(row)
-              @fieldmap.each{|target, value| row[target] = value }
+              @fieldmap.each { |target, value| row[target] = value }
             else
-              @fieldmap.each{|target, value| row[target] = row.dig(target) ? row.fetch(target) : nil }
+              @fieldmap.each { |target, _value| row[target] = row[target] ? row.fetch(target) : nil }
             end
             row
           end
@@ -80,13 +82,11 @@ module Kiba
             ).result
             chk.empty? ? false : true
           end
-
         end
-        
+
         class CountOfMatchingRows
           def initialize(lookup:, keycolumn:, targetfield:,
-                         conditions: {}
-                        )
+                         conditions: {})
             @lookup = lookup
             @keycolumn = keycolumn
             @target = targetfield
@@ -97,7 +97,7 @@ module Kiba
           def process(row)
             id = row.fetch(@keycolumn)
             matches = @lookup.fetch(id, [])
-            if matches.size == 0
+            if matches.size.zero?
               row[@target] = 0
             else
               merge_rows = Lookup::RowSelector.new(
@@ -130,22 +130,22 @@ module Kiba
 
             merge_vals = []
             field_val.split(@sep, -1).each do |field_val|
-              if field_val == @placeholder || field_val.blank?
-                merge_vals << @placeholder
-              else
-                merge_vals << @value
-              end
+              merge_vals << if field_val == @placeholder || field_val.blank?
+                              @placeholder
+                            else
+                              @value
+                            end
             end
 
             row[@target] = merge_vals.join(@sep)
             row
           end
         end
-        
+
         # used when lookup may return an array of rows from which values should be merged
         #  into the target, AND THE TARGET IS MULTIVALUED
         class MultiRowLookup
-          def initialize(fieldmap:, constantmap: {}, lookup:, keycolumn:,
+          def initialize(fieldmap:, lookup:, keycolumn:, constantmap: {},
                          conditions: {}, multikey: false, delim: DELIM)
             @fieldmap = fieldmap # hash of looked-up values to merge in for each merged-in row
             @constantmap = constantmap # hash of constants to add for each merged-in row
@@ -164,7 +164,6 @@ module Kiba
             id_data = id_data.nil? ? '' : id_data
             ids = @multikey ? id_data.split(@delim) : [id_data]
 
-
             ids.each do |id|
               field_data.populate(rows_to_merge(id, row))
             end
@@ -178,7 +177,7 @@ module Kiba
             field_data.hash.each do |field, value|
               row[target_field(field)] = value.blank? ? nil : value
             end
-            
+
             row
           end
 
@@ -203,7 +202,7 @@ module Kiba
             ).result
           end
         end
-      end # module Merge
-    end #module Transforms
-  end #module Extend
-end #module Kiba
+      end
+    end
+  end
+end

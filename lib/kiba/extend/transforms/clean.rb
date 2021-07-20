@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Kiba
   module Extend
     module Transforms
@@ -11,7 +13,7 @@ module Kiba
             chk.empty? ? true : false
           end
         end
-        
+
         class AlphabetizeFieldValues
           include Clean::Helpers
           def initialize(fields:, delim:)
@@ -25,8 +27,10 @@ module Kiba
               vals = row.fetch(field, nil)
               next if vals.blank?
               next if delim_only?(vals, @delim)
+
               vals = vals.split(@delim)
               next if vals.size == 1
+
               row[field] = vals.sort_by(&:downcase).join(@delim)
             end
             row
@@ -44,14 +48,14 @@ module Kiba
             @fields.each do |field|
               if @if_equals.nil?
                 row[field] = nil
-              else
-                row[field] = nil if row[field] == @if_equals
+              elsif row[field] == @if_equals
+                row[field] = nil
               end
             end
             row
           end
         end
-        
+
         class DelimiterOnlyFields
           include Clean::Helpers
           def initialize(delim:, use_nullvalue: false)
@@ -89,7 +93,7 @@ module Kiba
           # sep is the repeating delimiter
           # use_nullvalue - if true, will insert %NULLVALUE% before any sep at beginning of string, after any sep
           #   end of string, and between any two sep with nothing in between. It considers %NULLVALUE% as a blank
-          #   value, so if all values in a field are %NULLVALUE%, the field will be nil-ed out. 
+          #   value, so if all values in a field are %NULLVALUE%, the field will be nil-ed out.
           def initialize(groups:, sep:, use_nullvalue: false)
             @groups = groups
             @sep = sep
@@ -98,60 +102,61 @@ module Kiba
 
           # @private
           def process(row)
-            @groups.each{ |group| process_group(row, group) }
+            @groups.each { |group| process_group(row, group) }
             row
           end
 
           private
 
           def process_group(row, group)
-            thisgroup = group.map{ |field| row.fetch(field, '')}
+            thisgroup = group.map { |field| row.fetch(field, '') }
 
-            thisgroup.map!{ |val| add_null_values(val) } if @use_nullvalue
+            thisgroup.map! { |val| add_null_values(val) } if @use_nullvalue
 
-            thisgroup.map!{ |val| val.nil? ? [] : " #{val} ".split(@sep) }
-              .map!{ |arr| arr.map{ |e| e.strip } }
+            thisgroup.map! { |val| val.nil? ? [] : " #{val} ".split(@sep) }
+                     .map! { |arr| arr.map(&:strip) }
 
-            cts = thisgroup.map{ |arr| arr.size }.uniq.reject{ |ct| ct == 0 }
-            
+            cts = thisgroup.map(&:size).uniq.reject(&:zero?)
+
             to_delete = []
 
             if cts.size > 1
               # do nothing - different numbers of elements, not safe to edit
-            elsif cts.size == 0
+            elsif cts.size.zero?
               # do nothing - all fields already blank
             else
-              thisgroup.first.each_with_index{ |element, i| to_delete << i if all_empty?(thisgroup, i) }
+              thisgroup.first.each_with_index { |_element, i| to_delete << i if all_empty?(thisgroup, i) }
               to_delete.sort.reverse.each do |i|
-                thisgroup.each{ |arr| arr.delete_at(i) }
+                thisgroup.each { |arr| arr.delete_at(i) }
               end
-              thisgroup.each_with_index{ |arr, i| row[group[i]] = arr.empty? ? nil : arr.join(@sep) }
+              thisgroup.each_with_index { |arr, i| row[group[i]] = arr.empty? ? nil : arr.join(@sep) }
             end
           end
 
           def empty_val(str)
             return true if str.blank?
             return true if str == '%NULLVALUE%' && @use_nullvalue
+
             false
           end
-          
+
           def add_null_values(str)
             return str if str.nil?
-            
+
             str.sub(/^#{@sep}/, "%NULLVALUE%#{@sep}")
-              .sub(/#{@sep}$/, "#{@sep}%NULLVALUE%")
-              .gsub(/#{@sep}#{@sep}/, "#{@sep}%NULLVALUE%#{@sep}")
+               .sub(/#{@sep}$/, "#{@sep}%NULLVALUE%")
+               .gsub(/#{@sep}#{@sep}/, "#{@sep}%NULLVALUE%#{@sep}")
           end
-          
+
           def all_empty?(group, index)
-            thesevals = group.map{ |arr| arr[index] }
-              .map{ |val| empty_val(val) ? nil : val }
-              .uniq
-              .compact
+            thesevals = group.map { |arr| arr[index] }
+                             .map { |val| empty_val(val) ? nil : val }
+                             .uniq
+                             .compact
             thesevals.empty? ? true : false
           end
         end
-        
+
         class RegexpFindReplaceFieldVals
           def initialize(fields:, find:, replace:, casesensitive: true, multival: false, sep: nil, debug: false)
             @fields = fields
@@ -168,13 +173,17 @@ module Kiba
             @fields = @fields == :all ? row.keys : @fields
             @fields.each do |field|
               oldval = row.fetch(field)
-              if oldval.nil?
-                newval = nil
-              else
-                newval = @mv ? mv_find_replace(oldval) : sv_find_replace(oldval)
-              end
+              newval = if oldval.nil?
+                         nil
+                       else
+                         @mv ? mv_find_replace(oldval) : sv_find_replace(oldval)
+                       end
               target = @debug ? "#{field}_repl".to_sym : field
-              row[target] = newval.nil? ? nil : newval.empty? ? nil : newval
+              row[target] = if newval.nil?
+                              nil
+                            else
+                              newval.empty? ? nil : newval
+                            end
             end
             row
           end
@@ -182,7 +191,7 @@ module Kiba
           private
 
           def mv_find_replace(val)
-            val.split(@sep).map{ |v| v.gsub(@find, @replace) }.join(@sep)
+            val.split(@sep).map { |v| v.gsub(@find, @replace) }.join(@sep)
           end
 
           def sv_find_replace(val)
@@ -199,11 +208,11 @@ module Kiba
           def process(row)
             @fields.each do |field|
               val = row.fetch(field, nil)
-              if val.nil? || val.empty?
-                row[field] = nil
-              else
-                row[field] = val.strip
-              end
+              row[field] = if val.nil? || val.empty?
+                             nil
+                           else
+                             val.strip
+                           end
             end
             row
           end

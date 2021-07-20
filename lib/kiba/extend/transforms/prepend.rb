@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Kiba
   module Extend
     module Transforms
@@ -22,7 +24,7 @@ module Kiba
         # | j;k   | l;m |
         # | o;p;q | r;s |
         # ```
-        # 
+        #
         # Used in pipeline as:
         #
         # ```
@@ -62,7 +64,7 @@ module Kiba
         # | r;s: o;r;s: p;r;s: q |
         # ```
         #
-        # **This probably introduces extra unexpected `mvdelim` strings in the result.** If `prepended_field` contains the `mvdelim` character, you probably want to set `multivalue_prepended_field: true`. 
+        # **This probably introduces extra unexpected `mvdelim` strings in the result.** If `prepended_field` contains the `mvdelim` character, you probably want to set `multivalue_prepended_field: true`.
         #
         # Used in pipeline as:
         #
@@ -116,15 +118,15 @@ module Kiba
               result = []
               prefixes = @mvdelim.blank? ? [prepend_val] : prepend_val.split(@mvdelim)
               values.each_with_index do |val, i|
-                prefix = prefixes[i] ? prefixes[i] : prefixes[-1]
+                prefix = prefixes[i] || prefixes[-1]
                 result << "#{prefix}#{@sep}#{val}"
               end
               row[@field] = result.join(@mvdelim)
             else
-              row[@field] = values.map{ |val| "#{prepend_val}#{@sep}#{val}"}
-                .join(@mvdelim)
+              row[@field] = values.map { |val| "#{prepend_val}#{@sep}#{val}" }
+                                  .join(@mvdelim)
             end
-            
+
             row.delete(@prepend) if @delete
             row
           end
@@ -144,7 +146,7 @@ module Kiba
         #  |     | h |
         #  | i   |   |
         #
-        # Used in pipeline as: 
+        # Used in pipeline as:
         #  transform Prepend::ToFieldValue, field: :a, value: 'pre: '
         #
         # Results in:
@@ -156,7 +158,7 @@ module Kiba
         #  |          | h |
         #  | pre: i   |   |
         #
-        # Used in pipeline as: 
+        # Used in pipeline as:
         #  transform Prepend::ToFieldValue, field: :a, value: 'pre: ', mvdelim: ';'
         #
         # Results in:
@@ -183,7 +185,7 @@ module Kiba
             return row if fv.blank?
 
             fieldvals = @mvdelim.blank? ? [fv] : fv.split(@mvdelim)
-            row[@field] = fieldvals.map{ |fv| "#{@value}#{fv}" }.join(@mvdelim)
+            row[@field] = fieldvals.map { |fv| "#{@value}#{fv}" }.join(@mvdelim)
             row
           end
         end
