@@ -5,14 +5,12 @@ module Kiba
         ::Clean = Kiba::Extend::Transforms::Clean
 
         module Helpers
-          ::Clean::Helpers = Kiba::Extend::Transforms::Clean::Helpers
           def delim_only?(val, delim, usenull = false)
             chk = val.gsub(delim, '').strip
             chk = chk.gsub('%NULLVALUE%', '').strip if usenull
             chk.empty? ? true : false
           end
         end
-
         
         class AlphabetizeFieldValues
           include Clean::Helpers
