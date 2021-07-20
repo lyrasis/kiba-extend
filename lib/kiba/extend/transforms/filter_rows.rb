@@ -1,6 +1,7 @@
 module Kiba
   module Extend
     module Transforms
+      # Transformations that remove rows based on different types of conditions
       module FilterRows
         ::FilterRows = Kiba::Extend::Transforms::FilterRows
         class FieldEqualTo
@@ -10,6 +11,7 @@ module Kiba
             @action = action
           end
 
+          # @private
           def process(row)
             case @action
             when :keep
@@ -29,6 +31,7 @@ module Kiba
             @match = Regexp.new(match)
           end
 
+          # @private
           def process(row)
             val = row.fetch(@field)
             test = val ? val.match?(@match) : false
@@ -47,6 +50,7 @@ module Kiba
             @field = field
           end
 
+          # @private
           def process(row)
             val = row.fetch(@field, nil)
             case @action
@@ -65,6 +69,7 @@ module Kiba
             @value = value
           end
 
+          # @private
           def process(row)
             val = row.fetch(@field)
             case @action

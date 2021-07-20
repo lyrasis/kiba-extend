@@ -1,6 +1,7 @@
 module Kiba
   module Extend
     module Transforms
+      # Transformations that add data from outside the data source
       module Merge
         ::Merge = Kiba::Extend::Transforms::Merge
 
@@ -13,6 +14,7 @@ module Kiba
             @ignore_blank = ignore_blank
           end
 
+          # @private
           def process(row)
             row[@target] = 'diff'
             values = []
@@ -35,6 +37,7 @@ module Kiba
             @value = value
           end
 
+          # @private
           def process(row)
             row[@target] = @value
             row
@@ -56,6 +59,7 @@ module Kiba
             @sep = sep
           end
 
+          # @private
           def process(row)
             if conditions_met?(row)
               @fieldmap.each{|target, value| row[target] = value }
@@ -89,6 +93,7 @@ module Kiba
             @conditions = conditions
           end
 
+          # @private
           def process(row)
             id = row.fetch(@keycolumn)
             matches = @lookup.fetch(id, [])
@@ -115,6 +120,7 @@ module Kiba
             @placeholder = placeholder
           end
 
+          # @private
           def process(row)
             field_val = row.fetch(@on_field, nil)
             if field_val.blank?
@@ -150,6 +156,7 @@ module Kiba
             @delim = delim
           end
 
+          # @private
           def process(row)
             field_data = Kiba::Extend::Fieldset.new(@fieldmap.values)
 

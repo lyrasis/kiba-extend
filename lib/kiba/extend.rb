@@ -9,7 +9,13 @@ require 'facets/kernel/blank'
 CSVOPT = {headers: true, header_converters: :symbol}
 DELIM = ';'
 
+# The Kiba ETL framework for Ruby.
+# `kiba-extend` extends only Kiba OSS. Kiba Pro features are not used.
+#
+# * [Main website](https://www.kiba-etl.org/)
+# * [Github repo](https://github.com/thbar/kiba)
 module Kiba
+  # Provides a suite of abstract, reusable, well-tested data transformations for use in Kiba ETL pipelines
   module Extend
     autoload :VERSION, 'extend/version'
     

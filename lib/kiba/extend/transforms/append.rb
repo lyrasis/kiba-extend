@@ -1,6 +1,7 @@
 module Kiba
   module Extend
     module Transforms
+      # Adds values to the end of fields or rows
       module Append
         ::Append = Kiba::Extend::Transforms::Append
         class NilFields
@@ -8,6 +9,7 @@ module Kiba
             @fields = fields
           end
 
+          # @private
           def process(row)
             @fields.each do |field|
               row[field] = nil unless row.key?(field)
@@ -22,6 +24,7 @@ module Kiba
             @value = value
           end
 
+          # @private
           def process(row)
             fv = row.fetch(@field, nil)
             return row if fv.blank?

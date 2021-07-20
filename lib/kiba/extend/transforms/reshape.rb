@@ -1,21 +1,82 @@
 module Kiba
   module Extend
     module Transforms
+      # Transformations which significantly change the shape of the data without adding new rows.
+      #
+      # See {Kiba::Extend::Transforms::Explode} for transformations that change the shape and add new rows.
       module Reshape
         ::Reshape = Kiba::Extend::Transforms::Reshape
 
-        # Takes multiple fields like :workphone, :homephone, :mobilephone
-        #   and produces two new fields like :phone and :phonetype
-        #   where :phonetype depends on the original field taken from
-
-        # sourcefieldmap = hash where key is source field and value is the type to
-        #  be assigned
-        # datafield = target field for original values
-        # typefield = target field for original value types
-        # sourcesep = string, multivalued delimiter of source data
-        # targetsep = string, multivalued delimiter of target data
-        # delete_sources = boolean, defaults to true
+        # Takes multiple fields like :workphone, :homephone, :mobilephone and produces two new fields like :phone and :phonetype where :phonetype depends on the original field taken from
+        #
+        # # Examples
+        #
+        # Input table:
+        #
+        # ```
+        # | work | home     | mobile | other | name |
+        # |------+----------+--------+-------+------|
+        # | 123  | 456      | 789    | 897   | Sue  |
+        # |      | 987;555  |        | 253   | Bob  |
+        # | nil  |          |        | nil   | Mae  |
+        # | 654  | 321      | 257    |       | Sid  |
+        # ```
+        #
+        # Used in pipeline as:
+        #
+        # ```
+        #  transform Reshape::CollapseMultipleFieldsToOneTypedFieldPair,
+        #    sourcefieldmap: { home: 'h', work: 'b', mobile: 'm', other: '' },
+        #    datafield: :phone,
+        #    typefield: :phonetype,
+        #    sourcesep: ';',
+        #    targetsep: '^',
+        #    delete_sources: false
+        # ```
+        #
+        # Results in:
+        #
+        # ```
+        # | work | home     | mobile | other | phone           | phonetype | name |
+        # |------+----------+--------+-------|-----------------+-----------+------|
+        # | 123  | 456      | 789    | 897   | 456^123^789^897 | h^b^m^    | Sue  |
+        # |      | 987;555  |        | 253   | 987^555^253     | h^h^      | Bob  |
+        # | nil  |          |        | nil   | nil             | nil       | Mae  |
+        # | 654  | 321      | 257    |       | 321^654^257     | h^b^m     | Sid  |
+        # ```
+        #
+        # Used in pipeline as:
+        #
+        # ```
+        #  transform Reshape::CollapseMultipleFieldsToOneTypedFieldPair,
+        #    sourcefieldmap: { home: 'h', work: 'b', mobile: '', other: 'o' },
+        #    datafield: :phone,
+        #    typefield: :phonetype,
+        #    targetsep: '^'
+        # ```
+        #
+        # Results in:
+        #
+        # ```
+        # | phone           | phonetype | name |
+        # |-----------------+-----------+------|
+        # | 456^123^789^897 | h^b^m^    | Sue  |
+        # | 987;555^253     | h^        | Bob  |
+        # | nil             | nil       | Mae  |
+        # | 321^654^257     | h^b^m     | Sid  |
+        # ```
+        #
+        # ## Notice
+        #
+        # * The number of values in `phone` and `phonetype` are kept even
+        # * The data in the target fields is in the order of the keys in the `sourcefieldmap`: home, work, mobile, other. 
         class CollapseMultipleFieldsToOneTypedFieldPair
+          # @param sourcefieldmap [Hash{Symbol => String}] Keys are the names of the source fields. Each key's value is the type that should be assigned in `typefield`
+          # @param datafield [Symbol] Target field into which the original data value(s) from source fields will be mapped
+          # @param typefield [Symbol] Target field into which the type values will be mapped
+          # @param sourcesep [String] Delimiter used to split source data into multiple values
+          # @param targetsep [String] Delimiter used to join multiple values in target fields
+          # @param delete_sources [Boolean] Whether to delete source fields after mapping them to target fields
           def initialize(sourcefieldmap:, datafield:, typefield:, sourcesep: nil, targetsep:, delete_sources: true)
             @map = sourcefieldmap
             @df = datafield
@@ -25,6 +86,7 @@ module Kiba
             @del = delete_sources
           end
 
+          # @private
           def process(row)
             data = []
             type = []

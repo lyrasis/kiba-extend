@@ -4,9 +4,11 @@ RSpec.describe Kiba::Extend::Transforms::CombineValues do
   describe 'AcrossFieldGroup' do
     test_csv = 'tmp/test.csv'
     rows = [
-      %w[statusperson status statusdate reqperson reqstatus reqdate aperson astatus adate],
-      ['jim;mavis', 'approved;', '20200102;20200521', 'bill', 'requested', '20191215', 'terri', 'authorized', '20200115'],
-      [nil, 'acknowledged', '20200321', 'jill', 'requested', nil, 'bill', 'followup', '20200421'],
+      %w[person statusa date personb statusb date2 personc statusc date3],
+      ['jim', 'approved', '2020', 'bill', 'requested', '2019', 'terri', 'authorized', '2018'],
+      ['jim;mavis', 'approved;', '2020;2021', 'bill', 'requested', '2019', 'terri', 'authorized', '2018'],
+      [nil, 'acknowledged', '2020', 'jill', 'requested', nil, 'bill', 'followup', '2021'],
+      ['%NULLVALUE%;%NULLVALUE%', 'acknowledged;approved', '2020;%NULLVALUE%', 'jill', 'requested', nil, 'bill', 'followup', '2019']
     ]
 
     before do
@@ -14,18 +16,24 @@ RSpec.describe Kiba::Extend::Transforms::CombineValues do
     end
     it 'concatenates specified field values, keeping field group integrity' do
       expected = [
-        {:statusperson=>'jim;mavis;bill;terri',
-         :status=>'approved;;requested;authorized',
-         :statusdate=>'20200102;20200521;20191215;20200115'},
-        {:statusperson=>';jill;bill',
-         :status=>'acknowledged;requested;followup',
-         :statusdate=>'20200321;;20200421'}
+        {:person=>'jim;bill;terri',
+         :status=>'authorized;approved;requested',
+         :statusdate=>'2020;2019;2018'},
+        {:person=>'jim;mavis;bill;terri',
+         :status=>'authorized;approved;;requested',
+         :statusdate=>'2020;2021;2019;2018'},
+        {:person=>';jill;bill',
+         :status=>'followup;acknowledged;requested',
+         :statusdate=>'2020;;2021'},
+        {:person=>'%NULLVALUE%;%NULLVALUE%;jill;bill',
+         :status=>'followup;acknowledged;approved;requested',
+         :statusdate=>'2020;%NULLVALUE%;;2019'}
       ]
       opts = {
         fieldmap: {
-          :statusperson => %i[statusperson reqperson aperson],
-          :status => %i[status reqstatus astatus],
-          :statusdate => %i[statusdate reqdate adate]
+          :person => %i[person personb personc],
+          :status => %i[statusc statusa statusb],
+          :statusdate => %i[date date2 date3]
         },
         sep: ';'
       }
@@ -144,8 +152,10 @@ RSpec.describe Kiba::Extend::Transforms::CombineValues do
   describe 'FullRecord' do
     test_csv = 'tmp/test.csv'
     rows = [
-      ['id', 'name', 'sex', 'source'],
-      [1, 'Weddy', 'm', 'adopted']
+      ['name', 'sex', 'source'],
+      ['Weddy', 'm', 'adopted'],
+      ['Niblet', 'f', 'hatched'],
+      ['Keet', nil, 'hatched']
     ]
 
     before do
@@ -153,8 +163,12 @@ RSpec.describe Kiba::Extend::Transforms::CombineValues do
     end
     it 'concatenates all fields (with given delimiter) into given field' do
       expected = [
-        {id: '1', name: 'Weddy', sex: 'm', source: 'adopted',
-         search: '1 Weddy m adopted' },
+        {name: 'Weddy', sex: 'm', source: 'adopted',
+         search: 'Weddy m adopted' },
+        {name: 'Niblet', sex: 'f', source: 'hatched',
+         search: 'Niblet f hatched' },
+        {name: 'Keet', sex: nil, source: 'hatched',
+         search: 'Keet hatched' },
       ]
       result = execute_job(filename: test_csv,
                            xform: CombineValues::FullRecord,

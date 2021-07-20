@@ -9,6 +9,8 @@ RSpec.describe Kiba::Extend::Transforms::Prepend do
       [nil, 'u'],
       ['', 'u'],
       ['Kernel', nil],
+      ['Divebomber|Hunter', 'm'],
+      ['Divebomber|Niblet|Keet', 'm|f'],
       ['Divebomber|Hunter', 'm']
     ]
 
@@ -46,7 +48,8 @@ RSpec.describe Kiba::Extend::Transforms::Prepend do
         generate_csv(test_csv, rows)
         @result = execute_job(filename: test_csv,
                               xform: Prepend::FieldToFieldValue,
-                              xformopt: {target_field: :name, prepended_field: :prependval, sep: ': ', delete_prepended: true,
+                              xformopt: {target_field: :name, prepended_field: :prependval, sep: ': ',
+                                         delete_prepended: true,
                                          mvdelim: '|'})
       end
       it 'prepends value of given field to existing field values' do
@@ -68,6 +71,41 @@ RSpec.describe Kiba::Extend::Transforms::Prepend do
       it 'prepends to each multivalue in target field' do
         expected = {name: 'm: Divebomber|m: Hunter'}
         expect(@result[4]).to eq(expected)
+      end
+    end
+
+    context 'when multivalue_prepended_field = false' do
+      before do
+        generate_csv(test_csv, rows)
+        @result = execute_job(filename: test_csv,
+                              xform: Prepend::FieldToFieldValue,
+                              xformopt: {target_field: :name, prepended_field: :prependval, sep: ': ',
+                                         delete_prepended: true,
+                                         mvdelim: '|'})
+      end
+      it 'prepends multivalue value to each multivalue in target field' do
+        expected = {name: 'm|f: Divebomber|m|f: Niblet|m|f: Keet'}
+        expect(@result[5]).to eq(expected)
+      end
+    end
+
+    context 'when multivalue_prepended_field = true' do
+      before do
+        generate_csv(test_csv, rows)
+        @result = execute_job(filename: test_csv,
+                              xform: Prepend::FieldToFieldValue,
+                              xformopt: {target_field: :name, prepended_field: :prependval, sep: ': ',
+                                         delete_prepended: true,
+                                         mvdelim: '|',
+                                         multivalue_prepended_field: true})
+      end
+      it 'prepends multivalue value to each multivalue in target field' do
+        expected = {name: 'm: Divebomber|f: Niblet|f: Keet'}
+        expect(@result[5]).to eq(expected)
+      end
+      it 'prepends multivalue value to each multivalue in target field' do
+        expected = {name: 'm: Divebomber|m: Hunter'}
+        expect(@result[6]).to eq(expected)
       end
     end
   end

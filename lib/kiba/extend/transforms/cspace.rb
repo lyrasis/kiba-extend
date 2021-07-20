@@ -1,8 +1,10 @@
 module Kiba
   module Extend
     module Transforms
+      # Transformations specific to preparing data for import into CollectionSpace
       module Cspace
         ::Cspace = Kiba::Extend::Transforms::Cspace
+        # Characters or character combinations known to be treated strangely by CollectionSpace when creating IDs. Used as a lookup to force the substitution we need
         BRUTEFORCE = {
           'ș' => 's',
           't̕a' => 'ta'
@@ -14,6 +16,7 @@ module Kiba
             @target = target
           end
 
+          # @private
           def process(row)
             val = row.fetch(@source, '')
             idval = val.gsub(/\W/, '')
@@ -28,6 +31,7 @@ module Kiba
             @flag = flag
           end
 
+          # @private
           def process(row)
             val = row.fetch(@check, nil)
             if val.blank?
@@ -47,7 +51,8 @@ module Kiba
             @source = source
             @target = target
           end
-
+          
+          # @private
           def process(row)
             val = row.fetch(@source, nil)
             if val.blank?
