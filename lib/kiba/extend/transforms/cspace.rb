@@ -38,20 +38,20 @@ module Kiba
               row[@flag] = nil
             else
               val = val.unicode_normalized?(:nfkc) ? val : val.unicode_normalize(:nfkc)
-              BRUTEFORCE.each{ |k, v| val = val.gsub(k, v) }
+              BRUTEFORCE.each { |k, v| val = val.gsub(k, v) }
               norm = ActiveSupport::Inflector.transliterate(val, '%INVCHAR%')
               row[@flag] = norm.include?('%INVCHAR%') ? norm : nil
             end
             row
           end
         end
-        
+
         class NormalizeForID
           def initialize(source:, target:)
             @source = source
             @target = target
           end
-          
+
           # @private
           def process(row)
             val = row.fetch(@source, nil)
@@ -59,7 +59,7 @@ module Kiba
               row[@target] = nil
             else
               val = val.unicode_normalized?(:nfkc) ? val : val.unicode_normalize(:nfkc)
-              BRUTEFORCE.each{ |k, v| val = val.gsub(k, v) }
+              BRUTEFORCE.each { |k, v| val = val.gsub(k, v) }
               norm = ActiveSupport::Inflector.transliterate(val)
               norm = norm.gsub(/\W/, '')
               row[@target] = norm.downcase

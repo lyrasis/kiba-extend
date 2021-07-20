@@ -2,7 +2,7 @@ module Kiba
   module Extend
     module Transforms
       # Transformations that split data
-      module Split 
+      module Split
         ::Split = Kiba::Extend::Transforms::Split
 
         # Splits field into multiple fields, based on sep
@@ -124,7 +124,7 @@ module Kiba
               row["#{@field}#{i + 1}".to_sym] = v
             end
           end
-          
+
           def process_splits(valsplit, row)
             segments_remaining = []
             final_index = 0
@@ -146,7 +146,6 @@ module Kiba
                 row["#{@field}#{final_index + 1}".to_sym] = val.strip
               end
             end
-
           end
         end
       end

@@ -69,7 +69,7 @@ module Kiba
         # ## Notice
         #
         # * The number of values in `phone` and `phonetype` are kept even
-        # * The data in the target fields is in the order of the keys in the `sourcefieldmap`: home, work, mobile, other. 
+        # * The data in the target fields is in the order of the keys in the `sourcefieldmap`: home, work, mobile, other.
         class CollapseMultipleFieldsToOneTypedFieldPair
           # @param sourcefieldmap [Hash{Symbol => String}] Keys are the names of the source fields. Each key's value is the type that should be assigned in `typefield`
           # @param datafield [Symbol] Target field into which the original data value(s) from source fields will be mapped
@@ -77,7 +77,7 @@ module Kiba
           # @param sourcesep [String] Delimiter used to split source data into multiple values
           # @param targetsep [String] Delimiter used to join multiple values in target fields
           # @param delete_sources [Boolean] Whether to delete source fields after mapping them to target fields
-          def initialize(sourcefieldmap:, datafield:, typefield:, sourcesep: nil, targetsep:, delete_sources: true)
+          def initialize(sourcefieldmap:, datafield:, typefield:, targetsep:, sourcesep: nil, delete_sources: true)
             @map = sourcefieldmap
             @df = datafield
             @tf = typefield

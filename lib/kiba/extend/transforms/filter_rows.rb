@@ -43,7 +43,7 @@ module Kiba
             end
           end
         end
-        
+
         class FieldPopulated
           def initialize(action:, field:)
             @action = action
@@ -80,7 +80,6 @@ module Kiba
             end
           end
         end
-        
       end
     end
   end

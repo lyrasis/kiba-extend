@@ -4,7 +4,7 @@ RSpec.describe Kiba::Extend::Transforms::Cspace do
   describe 'ConvertToID' do
     test_csv = 'tmp/test.csv'
     rows = [
-      ['id', 'name'],
+      %w[id name],
       [1, 'Weddy1']
     ]
 
@@ -13,11 +13,11 @@ RSpec.describe Kiba::Extend::Transforms::Cspace do
     end
     it 'inserts CS shortID of given source into target' do
       expected = [
-        {:id=>'1', :name=>'Weddy1', :sid=>'Weddy13761760099'}
-       ]
+        { id: '1', name: 'Weddy1', sid: 'Weddy13761760099' }
+      ]
       result = execute_job(filename: test_csv,
                            xform: Cspace::ConvertToID,
-                           xformopt: {source: :name, target: :sid})
+                           xformopt: { source: :name, target: :sid })
       expect(result).to eq(expected)
     end
   end
@@ -40,12 +40,12 @@ RSpec.describe Kiba::Extend::Transforms::Cspace do
     end
     it 'adds column containing field value with invalid chars replaced with ?' do
       expected = [
-        {subject: 'Iași, Romania', flag: 'Ia%INVCHAR%i, Romania'},
-        {subject: 'Iasi, Romania', flag: nil},
-       ]
+        { subject: 'Iași, Romania', flag: 'Ia%INVCHAR%i, Romania' },
+        { subject: 'Iasi, Romania', flag: nil }
+      ]
       result = execute_job(filename: test_csv,
                            xform: Cspace::FlagInvalidCharacters,
-                           xformopt: {check: :subject, flag: :flag})
+                           xformopt: { check: :subject, flag: :flag })
       expect(result).to eq(expected)
     end
   end
@@ -53,7 +53,7 @@ RSpec.describe Kiba::Extend::Transforms::Cspace do
   describe 'NormalizeForID' do
     test_csv = 'tmp/test.csv'
     rows = [
-      ['id', 'subject'],
+      %w[id subject],
       [1, 'Oświęcim (Poland)'],
       [2, 'Oswiecim, Poland'],
       [3, 'Iași, Romania'],
@@ -65,16 +65,15 @@ RSpec.describe Kiba::Extend::Transforms::Cspace do
     end
     it 'normalizes as expected' do
       expected = [
-        {id: '1', subject: 'Oświęcim (Poland)', norm: 'oswiecimpoland'},
-        {id: '2', subject: 'Oswiecim, Poland',  norm: 'oswiecimpoland'},
-        {id: '3', subject: 'Iași, Romania',     norm: 'iasiromania'},
-        {id: '4', subject: 'Iasi, Romania',     norm: 'iasiromania'},
-       ]
+        { id: '1', subject: 'Oświęcim (Poland)', norm: 'oswiecimpoland' },
+        { id: '2', subject: 'Oswiecim, Poland', norm: 'oswiecimpoland' },
+        { id: '3', subject: 'Iași, Romania', norm: 'iasiromania' },
+        { id: '4', subject: 'Iasi, Romania', norm: 'iasiromania' }
+      ]
       result = execute_job(filename: test_csv,
                            xform: Cspace::NormalizeForID,
-                           xformopt: {source: :subject, target: :norm})
+                           xformopt: { source: :subject, target: :norm })
       expect(result).to eq(expected)
     end
   end
 end
-

@@ -18,40 +18,39 @@ module Kiba
           def process(row)
             sourceval = row.fetch(@source, nil)
             return row if sourceval.nil?
-            targetvals = @targets.map{ |target| row.fetch(target, nil) }
+
+            targetvals = @targets.map { |target| row.fetch(target, nil) }
             return row if targetvals.compact.empty?
 
-            sourceval = @multival ? sourceval.split(@sep, -1).map{ |e| e.strip } : [sourceval.strip]
-            if @multival
-              targetvals = targetvals.map{ |val| val.split(@sep, -1).map{ |e| e.strip } }
-            else
-              targetvals = targetvals.map{ |val| [val.strip] }
-            end
+            sourceval = @multival ? sourceval.split(@sep, -1).map { |e| e.strip } : [sourceval.strip]
+            targetvals = if @multival
+                           targetvals.map { |val| val.split(@sep, -1).map { |e| e.strip } }
+                         else
+                           targetvals.map { |val| [val.strip] }
+                         end
 
             if sourceval.blank?
-              targetvals = targetvals.map{ |vals| vals.reject{ |e| e.blank? } }
+              targetvals = targetvals.map { |vals| vals.reject { |e| e.blank? } }
+            elsif @casesensitive
+              targetvals = targetvals.map { |vals| vals - sourceval }
             else
-              if @casesensitive
-                targetvals = targetvals.map{ |vals| vals - sourceval }
-              else
-                sourceval = sourceval.map{ |e| e.downcase }
-                targetvals = targetvals.map{ |vals| vals.reject{ |val| sourceval.include?(val.downcase) } }
-              end
+              sourceval = sourceval.map { |e| e.downcase }
+              targetvals = targetvals.map { |vals| vals.reject { |val| sourceval.include?(val.downcase) } }
             end
-            
-            if @multival
-              targetvals = targetvals.map{ |vals| vals.join(@sep) unless vals.nil? }
-            else
-              targetvals = targetvals.map{ |vals| vals.first }
-            end
-            targetvals = targetvals.map{ |val| val.blank? ? nil : val  }
 
-            targetvals.each_with_index{ |val, i| row[@targets[i]] = val }
+            targetvals = if @multival
+                           targetvals.map { |vals| vals.join(@sep) unless vals.nil? }
+                         else
+                           targetvals.map { |vals| vals.first }
+                         end
+            targetvals = targetvals.map { |val| val.blank? ? nil : val }
+
+            targetvals.each_with_index { |val, i| row[@targets[i]] = val }
 
             row
           end
         end
-        
+
         class FieldValues
           def initialize(fields:, sep:)
             @fields = fields
@@ -89,7 +88,7 @@ module Kiba
         end
 
         class GroupedFieldValues
-          def initialize(on_field:, grouped_fields: [], sep:)
+          def initialize(on_field:, sep:, grouped_fields: [])
             @field = on_field
             @other = grouped_fields
             @sep = sep
@@ -117,24 +116,22 @@ module Kiba
               if delete.size > 0
                 delete = delete.sort.reverse
                 h = {}
-                @other.each{ |of| h[of] = row.fetch(of) }
-                h = h.reject{ |f, val| val.nil? }.to_h
-                h.each{ |f, val| h[f] = val.split(@sep) }
+                @other.each { |of| h[of] = row.fetch(of) }
+                h = h.reject { |_f, val| val.nil? }.to_h
+                h.each { |f, val| h[f] = val.split(@sep) }
                 h.each do |f, val|
-                  delete.each{ |i| val.delete_at(i) }
-                  val.size > 0 ? row[f] = val.join(@sep) : row[f] = nil
+                  delete.each { |i| val.delete_at(i) }
+                  row[f] = val.size > 0 ? val.join(@sep) : nil
                 end
               end
             end
 
             fv = row.fetch(@field, nil)
-            unless fv.nil?
-              if fv.empty?
-                row[@field] = nil
-                @other.each{ |f| row[f] = nil }
-              end
+            if !fv.nil? && fv.empty?
+              row[@field] = nil
+              @other.each { |f| row[f] = nil }
             end
-            
+
             row
           end
 
@@ -142,12 +139,11 @@ module Kiba
 
           def get_value_frequency(fv)
             h = {}
-            fv.uniq.each{ |v| h[v] = 0 }
-            fv.uniq{ |v| h[v] += 1 }
+            fv.uniq.each { |v| h[v] = 0 }
+            fv.uniq { |v| h[v] += 1 }
             h
           end
         end
-        
       end
     end
   end

@@ -14,15 +14,16 @@ module Kiba
 
           # @private
           def process(row)
-            blankfields = @fields.map{ |field| [field, row.fetch(field, nil)] }
-              .select{ |pair| pair[1].blank? }
-              .map{ |pair| pair[0] }
+            blankfields = @fields.map { |field| [field, row.fetch(field, nil)] }
+                                 .select { |pair| pair[1].blank? }
+                                 .map { |pair| pair[0] }
             return row if blankfields.empty?
-            blankfields.each{ |field| row[field] = @value }
+
+            blankfields.each { |field| row[field] = @value }
             row
           end
         end
-        
+
         class FieldValueWithStaticMapping
           def initialize(source:, target:, mapping:, fallback_val: :orig, delete_source: true,
                          multival: false, sep: '')
@@ -39,30 +40,30 @@ module Kiba
           # @private
           def process(row)
             rowval = row.fetch(@source, nil)
-            if rowval.nil?
-              origval = [rowval]
-            else
-              origval = @multival ? row.fetch(@source).split(@sep) : [row.fetch(@source)]
-            end
+            origval = if rowval.nil?
+                        [rowval]
+                      else
+                        @multival ? row.fetch(@source).split(@sep) : [row.fetch(@source)]
+                      end
             newvals = []
-            
+
             origval.each do |oval|
-              if @mapping.has_key?(oval)
-                newvals << @mapping[oval]
-              else
-                case @fallback
-                when :orig
-                  newvals << oval
-                when :nil
-                  newvals << nil
-                else
-                  newvals << @fallback
-                end
-              end
+              newvals << if @mapping.has_key?(oval)
+                           @mapping[oval]
+                         else
+                           case @fallback
+                           when :orig
+                             oval
+                           when :nil
+                             nil
+                           else
+                             @fallback
+                           end
+                         end
             end
 
-            row[@target] =  newvals.length > 1 ? newvals.join(@sep) : newvals.first
-            row.delete(@source) if @del unless @source == @target
+            row[@target] = newvals.length > 1 ? newvals.join(@sep) : newvals.first
+            row.delete(@source) if !(@source == @target) && @del
             row
           end
         end

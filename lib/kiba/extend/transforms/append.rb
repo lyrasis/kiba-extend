@@ -28,6 +28,7 @@ module Kiba
           def process(row)
             fv = row.fetch(@field, nil)
             return row if fv.blank?
+
             row[@field] = "#{fv}#{@value}"
             row
           end

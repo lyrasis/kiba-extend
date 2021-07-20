@@ -1,0 +1,3 @@
+AllCops:
+  SuggestExtensions:
+    rubocop-rake: false
