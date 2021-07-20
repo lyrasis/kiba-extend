@@ -1,6 +1,7 @@
 module Kiba
   module Extend
     module Transforms
+      # Tranformations to delete fields and field values
       module Delete
         ::Delete = Kiba::Extend::Transforms::Delete
         class EmptyFieldValues
@@ -9,6 +10,7 @@ module Kiba
             @sep = sep
           end
 
+          # @private
           def process(row)
             @fields.each do |field|
               val = row.fetch(field)
@@ -25,6 +27,7 @@ module Kiba
             @fields = fields
           end
 
+          # @private
           def process(row)
             @fields.each{ |name| row.delete(name) }
             row
@@ -36,6 +39,7 @@ module Kiba
             @fields = keepfields
           end
 
+          # @private
           def process(row)
             deletefields = row.keys - @fields
             deletefields.each{ |f| row.delete(f) }
@@ -50,6 +54,7 @@ module Kiba
             @casesensitive = casesensitive
           end
 
+          # @private
           def process(row)
             @fields.each do |field|
               exval = row.fetch(field)
@@ -74,6 +79,7 @@ module Kiba
             @case_sensitive = case_sensitive
           end
 
+          # @private
           def process(row)
             comparefield = @case_sensitive ? row.fetch(@compare) : row.fetch(@compare).downcase
             fv = row.fetch(@delete)
@@ -109,7 +115,8 @@ module Kiba
             @fields = fields
             @match = casesensitive ? Regexp.new(match) : Regexp.new(match, Regexp::IGNORECASE)
           end
-
+          
+          # @private
           def process(row)
             @fields.each do |field|
               exval = row.fetch(field)

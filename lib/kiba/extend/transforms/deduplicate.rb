@@ -1,6 +1,7 @@
 module Kiba
   module Extend
     module Transforms
+      # Tranformations that do some sort of data deduplication
       module Deduplicate
         ::Deduplicate = Kiba::Extend::Transforms::Deduplicate
 
@@ -13,6 +14,7 @@ module Kiba
             @sep = sep
           end
 
+          # @private
           def process(row)
             sourceval = row.fetch(@source, nil)
             return row if sourceval.nil?
@@ -56,6 +58,7 @@ module Kiba
             @sep = sep
           end
 
+          # @private
           def process(row)
             @fields.each do |field|
               val = row.fetch(field)
@@ -72,6 +75,7 @@ module Kiba
             @using = using
           end
 
+          # @private
           def process(row)
             val = row.fetch(@on)
             if @using.has_key?(val)
@@ -91,6 +95,7 @@ module Kiba
             @sep = sep
           end
 
+          # @private
           def process(row)
             fv = row.fetch(@field)
             seen = []

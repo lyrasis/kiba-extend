@@ -19,6 +19,7 @@ module Kiba
             @delim = delim
           end
 
+          # @private
           def process(row)
             @fields.each do |field|
               vals = row.fetch(field, nil)
@@ -38,6 +39,7 @@ module Kiba
             @if_equals = if_equals
           end
 
+          # @private
           def process(row)
             @fields.each do |field|
               if @if_equals.nil?
@@ -57,6 +59,7 @@ module Kiba
             @use_nullvalue = use_nullvalue
           end
 
+          # @private
           def process(row)
             row.each do |hdr, val|
               row[hdr] = nil if val.is_a?(String) && delim_only?(val, @delim, @use_nullvalue)
@@ -70,6 +73,7 @@ module Kiba
             @fields = fields
           end
 
+          # @private
           def process(row)
             @fields.each do |field|
               val = row.fetch(field)
@@ -92,6 +96,7 @@ module Kiba
             @use_nullvalue = use_nullvalue
           end
 
+          # @private
           def process(row)
             @groups.each{ |group| process_group(row, group) }
             row
@@ -158,6 +163,7 @@ module Kiba
             @sep = sep
           end
 
+          # @private
           def process(row)
             @fields = @fields == :all ? row.keys : @fields
             @fields.each do |field|
@@ -189,6 +195,7 @@ module Kiba
             @fields = fields
           end
 
+          # @private
           def process(row)
             @fields.each do |field|
               val = row.fetch(field, nil)
