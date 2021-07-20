@@ -128,7 +128,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(fieldmap:, constantmap: {}, lookup:, keycolumn:, conditions: {}, multikey: false, delim: DELIM)  &#x21d2; MultiRowLookup </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(fieldmap:, lookup:, keycolumn:, constantmap: {}, conditions: {}, multikey: false, delim: DELIM)  &#x21d2; MultiRowLookup </a>
     
 
     
@@ -160,7 +160,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(fieldmap:, constantmap: {}, lookup:, keycolumn:, conditions: {}, multikey: false, delim: DELIM)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Merge::MultiRowLookup (class)">MultiRowLookup</a></span></tt> 
+    #<strong>initialize</strong>(fieldmap:, lookup:, keycolumn:, constantmap: {}, conditions: {}, multikey: false, delim: DELIM)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Merge::MultiRowLookup (class)">MultiRowLookup</a></span></tt> 
   
 
   
@@ -197,7 +197,7 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/merge.rb', line 148</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fieldmap:</span><span class='comma'>,</span> <span class='label'>constantmap:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>lookup:</span><span class='comma'>,</span> <span class='label'>keycolumn:</span><span class='comma'>,</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fieldmap:</span><span class='comma'>,</span> <span class='label'>lookup:</span><span class='comma'>,</span> <span class='label'>keycolumn:</span><span class='comma'>,</span> <span class='label'>constantmap:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span>
                <span class='label'>conditions:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>multikey:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='const'><span class='object_link'><a href="../../../../top-level-namespace.html#DELIM-constant" title="DELIM (constant)">DELIM</a></span></span><span class='rparen'>)</span>
   <span class='ivar'>@fieldmap</span> <span class='op'>=</span> <span class='id identifier rubyid_fieldmap'>fieldmap</span> <span class='comment'># hash of looked-up values to merge in for each merged-in row
 </span>  <span class='ivar'>@constantmap</span> <span class='op'>=</span> <span class='id identifier rubyid_constantmap'>constantmap</span> <span class='comment'># hash of constants to add for each merged-in row
@@ -218,7 +218,7 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Jul 20 12:08:37 2021 by
+  Generated on Tue Jul 20 18:37:26 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-2.7.3).
 </div>

@@ -205,13 +205,13 @@
       <pre class="lines">
 
 
-17
-18
 19
-20</pre>
+20
+21
+22</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/explode.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/explode.rb', line 19</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>field:</span><span class='comma'>,</span> <span class='label'>delim:</span><span class='rparen'>)</span>
   <span class='ivar'>@field</span> <span class='op'>=</span> <span class='id identifier rubyid_field'>field</span>
@@ -244,8 +244,6 @@
       <pre class="lines">
 
 
-22
-23
 24
 25
 26
@@ -259,19 +257,21 @@
 34
 35
 36
-37</pre>
+37
+38
+39</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/explode.rb', line 22</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/explode.rb', line 24</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_other_fields'>other_fields</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='op'>|</span> <span class='id identifier rubyid_k'>k</span> <span class='op'>==</span> <span class='ivar'>@field</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_other_fields'>other_fields</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_k'>k</span><span class='op'>|</span> <span class='id identifier rubyid_k'>k</span> <span class='op'>==</span> <span class='ivar'>@field</span> <span class='rbrace'>}</span>
   <span class='id identifier rubyid_fieldval'>fieldval</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='ivar'>@field</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_fieldval'>fieldval</span> <span class='op'>=</span> <span class='id identifier rubyid_fieldval'>fieldval</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>?</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='op'>:</span> <span class='id identifier rubyid_fieldval'>fieldval</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='ivar'>@delim</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_fieldval'>fieldval</span><span class='period'>.</span><span class='id identifier rubyid_size'>size</span> <span class='op'>&gt;</span> <span class='int'>1</span>
     <span class='id identifier rubyid_fieldval'>fieldval</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_val'>val</span><span class='op'>|</span>
       <span class='id identifier rubyid_rowcopy'>rowcopy</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_clone'>clone</span>
-      <span class='id identifier rubyid_other_fields'>other_fields</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='id identifier rubyid_rowcopy'>rowcopy</span><span class='lbracket'>[</span><span class='id identifier rubyid_f'>f</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_rowcopy'>rowcopy</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+      <span class='id identifier rubyid_other_fields'>other_fields</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='id identifier rubyid_rowcopy'>rowcopy</span><span class='lbracket'>[</span><span class='id identifier rubyid_f'>f</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_rowcopy'>rowcopy</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_f'>f</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
       <span class='id identifier rubyid_rowcopy'>rowcopy</span><span class='lbracket'>[</span><span class='ivar'>@field</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_val'>val</span>
       <span class='kw'>yield</span><span class='lparen'>(</span><span class='id identifier rubyid_rowcopy'>rowcopy</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
@@ -290,7 +290,7 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Jul 20 12:08:38 2021 by
+  Generated on Tue Jul 20 18:37:26 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-2.7.3).
 </div>

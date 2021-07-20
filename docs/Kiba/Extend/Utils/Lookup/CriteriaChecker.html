@@ -235,14 +235,6 @@
       <pre class="lines">
 
 
-198
-199
-200
-201
-202
-203
-204
-205
 206
 207
 208
@@ -257,33 +249,45 @@
 217
 218
 219
-220</pre>
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/lookup.rb', line 198</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/lookup.rb', line 206</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>check_type:</span><span class='comma'>,</span> <span class='label'>config:</span><span class='comma'>,</span> <span class='label'>row:</span><span class='comma'>,</span> <span class='label'>mergerow:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@check_type</span> <span class='op'>=</span> <span class='id identifier rubyid_check_type'>check_type</span>
   <span class='ivar'>@config</span> <span class='op'>=</span> <span class='id identifier rubyid_config'>config</span>
   <span class='ivar'>@row</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span>
   <span class='ivar'>@mergerow</span> <span class='op'>=</span> <span class='id identifier rubyid_mergerow'>mergerow</span>
-  <span class='ivar'>@type</span> <span class='op'>=</span> <span class='ivar'>@config</span><span class='period'>.</span><span class='id identifier rubyid_dig'>dig</span><span class='lparen'>(</span><span class='symbol'>:type</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='ivar'>@config</span><span class='lbracket'>[</span><span class='symbol'>:type</span><span class='rbracket'>]</span> <span class='op'>:</span> <span class='symbol'>:all</span>
+  <span class='ivar'>@type</span> <span class='op'>=</span> <span class='ivar'>@config</span><span class='lbracket'>[</span><span class='symbol'>:type</span><span class='rbracket'>]</span> <span class='op'>||</span> <span class='symbol'>:all</span>
   <span class='id identifier rubyid_bool'>bool</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-  
-  <span class='ivar'>@config</span><span class='lbracket'>[</span><span class='symbol'>:fieldsets</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_set'>set</span><span class='op'>|</span> <span class='id identifier rubyid_bool'>bool</span> <span class='op'>&lt;&lt;</span> <span class='const'><span class='object_link'><a href="../Lookup.html" title="Kiba::Extend::Utils::Lookup (module)">Lookup</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="SetChecker.html" title="Kiba::Extend::Utils::Lookup::SetChecker (class)">SetChecker</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="SetChecker.html#initialize-instance_method" title="Kiba::Extend::Utils::Lookup::SetChecker#initialize (method)">new</a></span></span><span class='lparen'>(</span>
-    <span class='label'>check_type:</span> <span class='ivar'>@check_type</span><span class='comma'>,</span>
-    <span class='label'>set:</span> <span class='id identifier rubyid_set'>set</span><span class='comma'>,</span>
-    <span class='label'>row:</span> <span class='ivar'>@row</span><span class='comma'>,</span>
-    <span class='label'>mergerow:</span> <span class='ivar'>@mergerow</span><span class='comma'>,</span>
-    <span class='label'>sep:</span> <span class='id identifier rubyid_sep'>sep</span>
-  <span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_result'><span class='object_link'><a href="SetChecker.html#result-instance_method" title="Kiba::Extend::Utils::Lookup::SetChecker#result (method)">result</a></span></span> <span class='rbrace'>}</span>
-  
+
+  <span class='ivar'>@config</span><span class='lbracket'>[</span><span class='symbol'>:fieldsets</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_set'>set</span><span class='op'>|</span>
+    <span class='id identifier rubyid_bool'>bool</span> <span class='op'>&lt;&lt;</span> <span class='const'><span class='object_link'><a href="../Lookup.html" title="Kiba::Extend::Utils::Lookup (module)">Lookup</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="SetChecker.html" title="Kiba::Extend::Utils::Lookup::SetChecker (class)">SetChecker</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="SetChecker.html#initialize-instance_method" title="Kiba::Extend::Utils::Lookup::SetChecker#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+      <span class='label'>check_type:</span> <span class='ivar'>@check_type</span><span class='comma'>,</span>
+      <span class='label'>set:</span> <span class='id identifier rubyid_set'>set</span><span class='comma'>,</span>
+      <span class='label'>row:</span> <span class='ivar'>@row</span><span class='comma'>,</span>
+      <span class='label'>mergerow:</span> <span class='ivar'>@mergerow</span><span class='comma'>,</span>
+      <span class='label'>sep:</span> <span class='id identifier rubyid_sep'>sep</span>
+    <span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_result'><span class='object_link'><a href="SetChecker.html#result-instance_method" title="Kiba::Extend::Utils::Lookup::SetChecker#result (method)">result</a></span></span>
+  <span class='kw'>end</span>
+
   <span class='kw'>case</span> <span class='ivar'>@type</span>
   <span class='kw'>when</span> <span class='symbol'>:any</span>
     <span class='ivar'>@result</span> <span class='op'>=</span> <span class='id identifier rubyid_bool'>bool</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='op'>?</span> <span class='kw'>true</span> <span class='op'>:</span> <span class='kw'>false</span>
   <span class='kw'>when</span> <span class='symbol'>:all</span>
     <span class='ivar'>@result</span> <span class='op'>=</span> <span class='id identifier rubyid_bool'>bool</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span><span class='lparen'>(</span><span class='kw'>false</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='kw'>false</span> <span class='op'>:</span> <span class='kw'>true</span>
-  <span class='kw'>end</span>  
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -323,12 +327,12 @@
       <pre class="lines">
 
 
-197
-198
-199</pre>
+204
+205
+206</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/lookup.rb', line 197</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/lookup.rb', line 204</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_result'>result</span>
   <span class='ivar'>@result</span>
@@ -366,12 +370,12 @@
       <pre class="lines">
 
 
-197
-198
-199</pre>
+204
+205
+206</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/lookup.rb', line 197</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/lookup.rb', line 204</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_type'>type</span>
   <span class='ivar'>@type</span>
@@ -387,7 +391,7 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Jul 20 12:08:37 2021 by
+  Generated on Tue Jul 20 18:37:25 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-2.7.3).
 </div>

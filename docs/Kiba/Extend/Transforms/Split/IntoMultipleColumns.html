@@ -199,7 +199,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>A new instance of IntoMultipleColumns.</p>
+<p>rubocop:disable Metrics/ParameterLists.</p>
 </div></span>
   
 </li>
@@ -223,7 +223,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns a new instance of IntoMultipleColumns.</p>
+<p>rubocop:disable Metrics/ParameterLists</p>
 
 
   </div>
@@ -345,19 +345,21 @@
       <pre class="lines">
 
 
-78
-79
-80
-81
-82
 83
 84
-85</pre>
+85
+86
+87
+88
+89
+90
+91</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/split.rb', line 78</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/split.rb', line 83</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>field:</span><span class='comma'>,</span> <span class='label'>sep:</span><span class='comma'>,</span> <span class='label'>delete_source:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>max_segments:</span> <span class='int'>9999</span><span class='comma'>,</span> <span class='label'>collapse_on:</span> <span class='symbol'>:right</span><span class='comma'>,</span> <span class='label'>warnfield:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>field:</span><span class='comma'>,</span> <span class='label'>sep:</span><span class='comma'>,</span> <span class='label'>delete_source:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>max_segments:</span> <span class='int'>9999</span><span class='comma'>,</span> <span class='label'>collapse_on:</span> <span class='symbol'>:right</span><span class='comma'>,</span>
+               <span class='label'>warnfield:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@field</span> <span class='op'>=</span> <span class='id identifier rubyid_field'>field</span>
   <span class='ivar'>@sep</span> <span class='op'>=</span> <span class='id identifier rubyid_sep'>sep</span>
   <span class='ivar'>@del</span> <span class='op'>=</span> <span class='id identifier rubyid_delete_source'>delete_source</span>
@@ -376,7 +378,7 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Jul 20 12:08:38 2021 by
+  Generated on Tue Jul 20 18:37:26 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-2.7.3).
 </div>

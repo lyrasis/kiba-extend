@@ -103,6 +103,40 @@
 
 
 
+  <h2>Instance Attribute Summary <small><a href="#" class="summary_toggle">collapse</a></small></h2>
+  <ul class="summary">
+    
+      <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#hash-instance_method" title="#hash (instance method)">#<strong>hash</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+    
+      <span class="note title readonly">readonly</span>
+    
+    
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>Returns the value of attribute hash.</p>
+</div></span>
+  
+</li>
+
+    
+  </ul>
+
 
 
 
@@ -140,28 +174,6 @@
   <span class="summary_signature">
     
       <a href="#fields-instance_method" title="#fields (instance method)">#<strong>fields</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#hash-instance_method" title="#hash (instance method)">#<strong>hash</strong>  &#x21d2; Object </a>
     
 
     
@@ -304,17 +316,17 @@
       <pre class="lines">
 
 
-4
-5
 6
-7</pre>
+7
+8
+9</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/fieldset.rb', line 4</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/fieldset.rb', line 6</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_fields'>fields</span><span class='rparen'>)</span>
   <span class='ivar'>@hash</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
-  <span class='id identifier rubyid_fields'>fields</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span> <span class='ivar'>@hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_fields'>fields</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span> <span class='ivar'>@hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -322,6 +334,54 @@
 </div>
   
 </div>
+
+  <div id="instance_attr_details" class="attr_details">
+    <h2>Instance Attribute Details</h2>
+    
+      
+      <span id=""></span>
+      <div class="method_details first">
+  <h3 class="signature first" id="hash-instance_method">
+  
+    #<strong>hash</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns the value of attribute hash.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+20
+21
+22</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/fieldset.rb', line 20</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_hash'>hash</span>
+  <span class='ivar'>@hash</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
 
 
   <div id="instance_method_details" class="method_details_list">
@@ -343,17 +403,17 @@
       <pre class="lines">
 
 
-9
-10
 11
-12</pre>
+12
+13
+14</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/fieldset.rb', line 9</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/fieldset.rb', line 11</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_constant_values'>add_constant_values</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
   <span class='ivar'>@hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-  <span class='id identifier rubyid_value_ct'>value_ct</span><span class='period'>.</span><span class='id identifier rubyid_times'>times</span><span class='lbrace'>{</span> <span class='ivar'>@hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_value'>value</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_value_ct'>value_ct</span><span class='period'>.</span><span class='id identifier rubyid_times'>times</span> <span class='lbrace'>{</span> <span class='ivar'>@hash</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_value'>value</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -375,45 +435,15 @@
       <pre class="lines">
 
 
-14
-15
-16</pre>
+16
+17
+18</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/fieldset.rb', line 14</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/fieldset.rb', line 16</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fields'>fields</span>
   <span class='ivar'>@hash</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="hash-instance_method">
-  
-    #<strong>hash</strong>  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-18
-19
-20</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/fieldset.rb', line 18</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_hash'>hash</span>
-  <span class='ivar'>@hash</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -443,7 +473,7 @@
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/fieldset.rb', line 22</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_join_values'>join_values</span><span class='lparen'>(</span><span class='id identifier rubyid_delim'>delim</span><span class='rparen'>)</span>
-  <span class='ivar'>@hash</span><span class='period'>.</span><span class='id identifier rubyid_transform_values!'>transform_values!</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_vals'>vals</span><span class='op'>|</span> <span class='id identifier rubyid_vals'>vals</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='id identifier rubyid_delim'>delim</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+  <span class='ivar'>@hash</span><span class='period'>.</span><span class='id identifier rubyid_transform_values!'>transform_values!</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_vals'>vals</span><span class='op'>|</span> <span class='id identifier rubyid_vals'>vals</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='id identifier rubyid_delim'>delim</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -478,7 +508,7 @@
 <span class='kw'>def</span> <span class='id identifier rubyid_populate'>populate</span><span class='lparen'>(</span><span class='id identifier rubyid_rows'>rows</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_rows'>rows</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
 
-  <span class='id identifier rubyid_rows'>rows</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_get_field_values'>get_field_values</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_rows'>rows</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_get_field_values'>get_field_values</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
   <span class='id identifier rubyid_remove_valueless_rows'>remove_valueless_rows</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -521,7 +551,7 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Jul 20 12:08:37 2021 by
+  Generated on Tue Jul 20 18:37:25 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-2.7.3).
 </div>

@@ -117,7 +117,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(on_field:, grouped_fields: [], sep:)  &#x21d2; GroupedFieldValues </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(on_field:, sep:, grouped_fields: [])  &#x21d2; GroupedFieldValues </a>
     
 
     
@@ -149,7 +149,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(on_field:, grouped_fields: [], sep:)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Deduplicate::GroupedFieldValues (class)">GroupedFieldValues</a></span></tt> 
+    #<strong>initialize</strong>(on_field:, sep:, grouped_fields: [])  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Deduplicate::GroupedFieldValues (class)">GroupedFieldValues</a></span></tt> 
   
 
   
@@ -172,16 +172,16 @@
       <pre class="lines">
 
 
-92
 93
 94
 95
-96</pre>
+96
+97</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate.rb', line 92</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate.rb', line 93</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>on_field:</span><span class='comma'>,</span> <span class='label'>grouped_fields:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>sep:</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>on_field:</span><span class='comma'>,</span> <span class='label'>sep:</span><span class='comma'>,</span> <span class='label'>grouped_fields:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='ivar'>@field</span> <span class='op'>=</span> <span class='id identifier rubyid_on_field'>on_field</span>
   <span class='ivar'>@other</span> <span class='op'>=</span> <span class='id identifier rubyid_grouped_fields'>grouped_fields</span>
   <span class='ivar'>@sep</span> <span class='op'>=</span> <span class='id identifier rubyid_sep'>sep</span>
@@ -197,7 +197,7 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Jul 20 12:08:38 2021 by
+  Generated on Tue Jul 20 18:37:26 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-2.7.3).
 </div>
