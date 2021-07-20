@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    kiba-extend (1.15.1)
+    kiba-extend (1.15.2)
       activesupport
       kiba (>= 4.0.0)
       kiba-common (>= 1.5.0)

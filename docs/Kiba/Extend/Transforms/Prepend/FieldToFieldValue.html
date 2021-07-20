@@ -104,7 +104,7 @@
     
 <p>Adds the value of prepended_field to the beginning of the value(s) of the target_field</p>
 
-<p>If target field value is blank, it is left blank, even if there is a prepended field value. If there is no value in prepended field, target field is left as-is</p>
+<p>If target field value is blank, it is left blank, even if there is a prepended field value.  If there is no value in prepended field, target field is left as-is</p>
 
 <h1 id="label-Examples">Examples</h1>
 
@@ -118,6 +118,7 @@
 | i     |     |
 | j;k   | l;m |
 | o;p;q | r;s |
+| ;t    | u;v
 </code></pre>
 
 <p>Used in pipeline as:</p>
@@ -135,6 +136,7 @@
 | i          |     |
 | l;m: j;k   | l;m |
 | r;s: o;p;q | r;s |
+| u;v: ;t    | u;v |
 </code></pre>
 
 <p>Used in pipeline as:</p>
@@ -153,9 +155,10 @@
 | i                    |
 | l;m: j;l;m: k        |
 | r;s: o;r;s: p;r;s: q |
+| ;u;v: t              |
 </code></pre>
 
-<p><strong>This probably introduces extra unexpected <code>mvdelim</code> strings in the result.</strong> If <code>prepended_field</code> contains the <code>mvdelim</code> character, you probably want to set <code>multivalue_prepended_field: true</code>.</p>
+<p><strong>This probably introduces extra unexpected <code>mvdelim</code> strings in the result.</strong>  If <code>prepended_field</code> contains the <code>mvdelim</code> character, you probably want to set  <code>multivalue_prepended_field: true</code>.</p>
 
 <p>Used in pipeline as:</p>
 
@@ -169,14 +172,15 @@
 <pre class="code ruby"><code class="ruby">| a              |
 |----------------|
 | d: c           |
-| g: e;g: f      |
+| g: e;f         |
 |                |
 | i              |
 | l: j;m: k      |
-| r: o;s: p;s: q |
+| r: o;s: p;q    |
+| ;v: t          |
 </code></pre>
 
-<p>If there are more <code>target_field</code> values than <code>prepend_field</code> values after they are split, the final <code>prepend_field</code> value is prepended to remaining <code>target_field</code> values.</p>
+<p>If there are more <code>target_field</code> values than <code>prepend_field</code> values after they are split,  nothing is prepended to remaining <code>target_field</code> values.</p>
 
 
   </div>
@@ -184,7 +188,17 @@
 <div class="tags">
   
 
-</div>
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="FieldToFieldValue/MissingDelimiterError.html" title="Kiba::Extend::Transforms::Prepend::FieldToFieldValue::MissingDelimiterError (class)">MissingDelimiterError</a></span>
+    
+  
+</p>
+
 
 
 
@@ -219,7 +233,7 @@
 
   
     <span class="summary_desc"><div class='inline'>
-<p>A new instance of FieldToFieldValue.</p>
+<p>rubocop:disable Metrics/ParameterLists.</p>
 </div></span>
   
 </li>
@@ -243,7 +257,7 @@
 </h3><div class="docstring">
   <div class="discussion">
     
-<p>Returns a new instance of FieldToFieldValue.</p>
+<p>rubocop:disable Metrics/ParameterLists</p>
 
 
   </div>
@@ -358,6 +372,24 @@
   
 </ul>
 
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="FieldToFieldValue/MissingDelimiterError.html" title="Kiba::Extend::Transforms::Prepend::FieldToFieldValue::MissingDelimiterError (class)">MissingDelimiterError</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>if constructed with multivalue_prepended_field true and no mvdelim value</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -365,18 +397,19 @@
       <pre class="lines">
 
 
-96
-97
-98
-99
-100
-101
-102
-103
-104</pre>
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/prepend.rb', line 96</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/prepend.rb', line 121</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>target_field:</span><span class='comma'>,</span> <span class='label'>prepended_field:</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>delete_prepended:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>mvdelim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
                <span class='label'>multivalue_prepended_field:</span> <span class='kw'>false</span><span class='rparen'>)</span>
@@ -386,6 +419,7 @@
   <span class='ivar'>@delete</span> <span class='op'>=</span> <span class='id identifier rubyid_delete_prepended'>delete_prepended</span>
   <span class='ivar'>@mvdelim</span> <span class='op'>=</span> <span class='id identifier rubyid_mvdelim'>mvdelim</span>
   <span class='ivar'>@multival_prepend</span> <span class='op'>=</span> <span class='id identifier rubyid_multivalue_prepended_field'>multivalue_prepended_field</span>
+  <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="FieldToFieldValue/MissingDelimiterError.html" title="Kiba::Extend::Transforms::Prepend::FieldToFieldValue::MissingDelimiterError (class)">MissingDelimiterError</a></span></span> <span class='kw'>if</span> <span class='ivar'>@multival_prepend</span> <span class='op'>&amp;&amp;</span> <span class='ivar'>@mvdelim</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -398,7 +432,7 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Jul 20 12:08:38 2021 by
+  Generated on Tue Jul 20 15:57:30 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-2.7.3).
 </div>
