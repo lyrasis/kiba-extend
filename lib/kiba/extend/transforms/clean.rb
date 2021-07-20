@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Kiba
   module Extend
     module Transforms
@@ -112,15 +114,15 @@ module Kiba
             thisgroup.map! { |val| add_null_values(val) } if @use_nullvalue
 
             thisgroup.map! { |val| val.nil? ? [] : " #{val} ".split(@sep) }
-                     .map! { |arr| arr.map { |e| e.strip } }
+                     .map! { |arr| arr.map(&:strip) }
 
-            cts = thisgroup.map { |arr| arr.size }.uniq.reject { |ct| ct == 0 }
+            cts = thisgroup.map(&:size).uniq.reject(&:zero?)
 
             to_delete = []
 
             if cts.size > 1
               # do nothing - different numbers of elements, not safe to edit
-            elsif cts.size == 0
+            elsif cts.size.zero?
               # do nothing - all fields already blank
             else
               thisgroup.first.each_with_index { |_element, i| to_delete << i if all_empty?(thisgroup, i) }

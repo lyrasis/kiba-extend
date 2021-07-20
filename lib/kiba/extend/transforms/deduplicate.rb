@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Kiba
   module Extend
     module Transforms
@@ -22,26 +24,26 @@ module Kiba
             targetvals = @targets.map { |target| row.fetch(target, nil) }
             return row if targetvals.compact.empty?
 
-            sourceval = @multival ? sourceval.split(@sep, -1).map { |e| e.strip } : [sourceval.strip]
+            sourceval = @multival ? sourceval.split(@sep, -1).map(&:strip) : [sourceval.strip]
             targetvals = if @multival
-                           targetvals.map { |val| val.split(@sep, -1).map { |e| e.strip } }
+                           targetvals.map { |val| val.split(@sep, -1).map(&:strip) }
                          else
                            targetvals.map { |val| [val.strip] }
                          end
 
             if sourceval.blank?
-              targetvals = targetvals.map { |vals| vals.reject { |e| e.blank? } }
+              targetvals = targetvals.map { |vals| vals.reject(&:blank?) }
             elsif @casesensitive
               targetvals = targetvals.map { |vals| vals - sourceval }
             else
-              sourceval = sourceval.map { |e| e.downcase }
+              sourceval = sourceval.map(&:downcase)
               targetvals = targetvals.map { |vals| vals.reject { |val| sourceval.include?(val.downcase) } }
             end
 
             targetvals = if @multival
-                           targetvals.map { |vals| vals.join(@sep) unless vals.nil? }
+                           targetvals.map { |vals| vals&.join(@sep) }
                          else
-                           targetvals.map { |vals| vals.first }
+                           targetvals.map(&:first)
                          end
             targetvals = targetvals.map { |val| val.blank? ? nil : val }
 
@@ -77,7 +79,7 @@ module Kiba
           # @private
           def process(row)
             val = row.fetch(@on)
-            if @using.has_key?(val)
+            if @using.key?(val)
               row[@in] = 'y'
             else
               @using[val] = nil
@@ -113,7 +115,7 @@ module Kiba
               end
               row[@field] = fv.uniq.join(@sep)
 
-              if delete.size > 0
+              if delete.size.positive?
                 delete = delete.sort.reverse
                 h = {}
                 @other.each { |of| h[of] = row.fetch(of) }
@@ -121,7 +123,7 @@ module Kiba
                 h.each { |f, val| h[f] = val.split(@sep) }
                 h.each do |f, val|
                   delete.each { |i| val.delete_at(i) }
-                  row[f] = val.size > 0 ? val.join(@sep) : nil
+                  row[f] = val.size.positive? ? val.join(@sep) : nil
                 end
               end
             end

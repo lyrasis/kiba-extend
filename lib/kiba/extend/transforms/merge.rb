@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Kiba
   module Extend
     module Transforms
@@ -21,11 +23,11 @@ module Kiba
             @fields.each do |field|
               value = row.fetch(field, '').dup
               value = '' if value.nil?
-              value.downcase! if @downcase
-              value.strip! if @strip
+              value = value.downcase if @downcase
+              value = value.strip if @strip
               values << value
             end
-            values.reject! { |val| val.blank? } if @ignore_blank
+            values.reject!(&:blank?) if @ignore_blank
             row[@target] = 'same' if values.uniq.length == 1 || values.empty?
             row
           end
@@ -64,7 +66,7 @@ module Kiba
             if conditions_met?(row)
               @fieldmap.each { |target, value| row[target] = value }
             else
-              @fieldmap.each { |target, _value| row[target] = row.dig(target) ? row.fetch(target) : nil }
+              @fieldmap.each { |target, _value| row[target] = row[target] ? row.fetch(target) : nil }
             end
             row
           end
@@ -95,7 +97,7 @@ module Kiba
           def process(row)
             id = row.fetch(@keycolumn)
             matches = @lookup.fetch(id, [])
-            if matches.size == 0
+            if matches.size.zero?
               row[@target] = 0
             else
               merge_rows = Lookup::RowSelector.new(

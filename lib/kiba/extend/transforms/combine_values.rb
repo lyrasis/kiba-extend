@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Kiba
   module Extend
     module Transforms
@@ -97,7 +99,7 @@ module Kiba
                 vals << '' if srcval.nil? || srcval.empty? || srcval.match?(Regexp.new("^#{@sep}"))
                 vals << srcval.split(@sep) unless srcval.nil? || srcval.empty?
                 vals << '' if !(srcval.nil? || srcval.empty?) && srcval.match?(Regexp.new("#{@sep}$"))
-                row.delete(source) if @del && !(source == target)
+                row.delete(source) if @del && source != target
               end
               row[target] = vals.join(@sep)
             end

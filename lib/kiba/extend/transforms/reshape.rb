@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Kiba
   module Extend
     module Transforms
@@ -90,7 +92,7 @@ module Kiba
           def process(row)
             data = []
             type = []
-            @map.keys.each do |sourcefield|
+            @map.each_key do |sourcefield|
               vals = row.fetch(sourcefield)
               unless vals.nil?
                 vals = @sourcesep.nil? ? [vals] : vals.split(@sourcesep)
@@ -101,8 +103,8 @@ module Kiba
               end
               row.delete(sourcefield) if @del
             end
-            row[@df] = data.size > 0 ? data.join(@targetsep) : nil
-            row[@tf] = type.size > 0 ? type.join(@targetsep) : nil
+            row[@df] = data.size.positive? ? data.join(@targetsep) : nil
+            row[@tf] = type.size.positive? ? type.join(@targetsep) : nil
             row
           end
         end

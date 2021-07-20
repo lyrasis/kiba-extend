@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Kiba
   module Extend
     module Transforms
@@ -14,7 +16,7 @@ module Kiba
           def process(row)
             @fields.each do |field|
               val = row.fetch(field)
-              row[field] = val.split(@sep).compact.reject { |e| e.empty? }.join(@sep) unless val.nil?
+              row[field] = val.split(@sep).compact.reject(&:empty?).join(@sep) unless val.nil?
             end
             row
           end
@@ -83,7 +85,7 @@ module Kiba
             fv = row.fetch(@delete)
             unless fv.nil?
               fv = @multival ? fv.split(@sep) : [fv]
-              fvcompare = @case_sensitive ? fv : fv.map { |e| e.downcase }
+              fvcompare = @case_sensitive ? fv : fv.map(&:downcase)
               result = []
               deleted = []
               fvcompare.each_with_index do |val, i|

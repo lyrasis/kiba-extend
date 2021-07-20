@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Kiba
   module Extend
     module Transforms
@@ -30,7 +32,7 @@ module Kiba
             @source = source
             @target = target
             @mapping = mapping
-            @mapping[nil] = nil unless @mapping.has_key?(nil)
+            @mapping[nil] = nil unless @mapping.key?(nil)
             @fallback = fallback_val
             @del = delete_source
             @multival = multival
@@ -48,7 +50,7 @@ module Kiba
             newvals = []
 
             origval.each do |oval|
-              newvals << if @mapping.has_key?(oval)
+              newvals << if @mapping.key?(oval)
                            @mapping[oval]
                          else
                            case @fallback
@@ -63,7 +65,7 @@ module Kiba
             end
 
             row[@target] = newvals.length > 1 ? newvals.join(@sep) : newvals.first
-            row.delete(@source) if !(@source == @target) && @del
+            row.delete(@source) if @source != @target && @del
             row
           end
         end

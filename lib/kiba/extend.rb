@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'kiba'
 require 'kiba-common/sources/csv'
 require 'kiba-common/destinations/csv'
@@ -6,7 +8,7 @@ require 'active_support/all'
 require 'xxhash'
 require 'facets/kernel/blank'
 
-CSVOPT = { headers: true, header_converters: :symbol }
+CSVOPT = { headers: true, header_converters: :symbol }.freeze
 DELIM = ';'
 
 # The Kiba ETL framework for Ruby.

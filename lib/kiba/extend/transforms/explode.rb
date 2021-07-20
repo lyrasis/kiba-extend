@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Kiba
   module Extend
     module Transforms
@@ -110,11 +112,11 @@ module Kiba
           private
 
           def new_row_groups(row)
-            @groups.map { |group| group_vals(row, group) }.reject { |arr| arr.empty? }
+            @groups.map { |group| group_vals(row, group) }.reject(&:empty?)
           end
 
           def group_vals(row, group)
-            group.map { |field| row.fetch(field, nil) }.reject { |val| val.blank? }
+            group.map { |field| row.fetch(field, nil) }.reject(&:blank?)
           end
 
           def other_fields(row)

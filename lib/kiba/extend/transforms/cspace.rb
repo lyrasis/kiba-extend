@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Kiba
   module Extend
     module Transforms
@@ -8,7 +10,7 @@ module Kiba
         BRUTEFORCE = {
           'ș' => 's',
           't̕a' => 'ta'
-        }
+        }.freeze
 
         class ConvertToID
           def initialize(source:, target:)

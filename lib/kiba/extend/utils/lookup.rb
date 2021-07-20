@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Kiba
   module Extend
     module Utils
@@ -16,7 +18,7 @@ module Kiba
         def self.csv_to_multi_hash(file:, keycolumn:, csvopt: {})
           CSV.foreach(File.expand_path(file), csvopt).each_with_object({}) do |r, memo|
             k = r.fetch(keycolumn, nil)
-            if memo.has_key?(k)
+            if memo.key?(k)
               memo[k] << r.to_h
             else
               memo[k] = [r.to_h]
@@ -29,7 +31,7 @@ module Kiba
 
           def initialize(check_type:, set:, row:, mergerow: {}, sep: nil)
             @check_type = check_type
-            @set_type = set.dig(:type) ? set[:type] : :any
+            @set_type = set[:type] || :any
             bool = []
             case @check_type
             when :equality
@@ -206,7 +208,7 @@ module Kiba
             @config = config
             @row = row
             @mergerow = mergerow
-            @type = @config.dig(:type) ? @config[:type] : :all
+            @type = @config[:type] || :all
             bool = []
 
             @config[:fieldsets].each do |set|
@@ -248,7 +250,7 @@ module Kiba
 
             @keeprows = mergerows.empty? ? origrow : mergerows
             @keeprows = mergerows.reject { |mrow| exclude?(origrow, mrow) } if @exclude
-            @keeprows = [@keeprows.first] if @keeprows.size > 0 && @include && @include.dig(:position) == 'first'
+            @keeprows = [@keeprows.first] if @keeprows.size.positive? && @include && @include[:position] == 'first'
             @keeprows = @keeprows.select { |mrow| include?(origrow, mrow) } if @include
           end
 
