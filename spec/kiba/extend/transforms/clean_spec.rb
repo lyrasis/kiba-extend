@@ -3,95 +3,17 @@
 require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Clean do
-  describe 'Helpers' do
-    describe '#delim_only?' do
-      context 'when delim = |' do
-        let(:delim) { '|' }
-        let(:usenull) { false }
-        let(:result) { Clean::Helpers.delim_only?(value, delim, usenull) }
-        context 'when value = foo|bar' do
-          let(:value) { 'foo|bar' }
-          it 'returns false' do
-            expect(result).to be false
-          end
-        end
-        context 'when value = |' do
-          let(:value) { '|' }
-          it 'returns true' do
-            expect(result).to be true
-          end
-        end
-        context 'when value = %NULLVALUE%|%NULLVALUE%' do
-          let(:value) { '%NULLVALUE%|%NULLVALUE%' }
-          it 'returns false' do
-            expect(result).to be false
-          end
-        end
-        context 'when value = %NULLVALUE%' do
-          let(:value) { '%NULLVALUE%' }
-          it 'returns false' do
-            expect(result).to be false
-          end
-        end
-        context 'when value = %NULLVALUE%|blah' do
-          let(:value) { '%NULLVALUE%|blah' }
-          it 'returns false' do
-            expect(result).to be false
-          end
-        end
-        context 'when value = blank' do
-          let(:value) { '' }
-          it 'returns false' do
-            expect(result).to be false
-          end
-        end
-        context 'when value = nil' do
-          let(:value) { nil }
-          it 'returns false' do
-            expect(result).to be false
-          end
-        end
-        context 'when value = " "' do
-          let(:value) { ' ' }
-          it 'returns false' do
-            expect(result).to be false
-          end
-        end
-
-        context 'when usenull = true' do
-          let(:usenull) { true }
-          context 'when value = %NULLVALUE%|%NULLVALUE%' do
-            let(:value) { '%NULLVALUE%|%NULLVALUE%' }
-            it 'returns true' do
-              expect(result).to be true
-            end
-          end
-          context 'when value = %NULLVALUE%' do
-            let(:value) { '%NULLVALUE%' }
-            it 'returns true' do
-              expect(result).to be true
-            end
-          end
-          context 'when value = %NULLVALUE%|blah' do
-            let(:value) { '%NULLVALUE%|blah' }
-            it 'returns false' do
-              expect(result).to be false
-            end
-          end
-        end
-      end
-    end
-  end
-
   describe 'AlphabetizeFieldValues' do
     test_csv = 'tmp/test.csv'
     rows = [
-      %w[id type],
-      ['1', 'Person;unmapped;Organization'],
-      ['2', ';'],
-      ['3', nil],
-      ['4', ''],
-      ['5', 'Person;notmapped']
+      %w[type],
+      ['Person;unmapped;Organization'],
+      [';'],
+      [nil],
+      [''],
+      ['Person;notmapped'],
+      ['%NULLVALUE%;apple'],
+      ['oatmeal;%NULLVALUE%']
     ]
 
     before { generate_csv(test_csv, rows) }
@@ -100,18 +22,19 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
                   xform: Clean::AlphabetizeFieldValues,
                   xformopt: { fields: %i[type], delim: ';' })
     end
-    it 'sorts field values alphabetically' do
-      expect(result[0][:type]).to eq('Organization;Person;unmapped')
-      expect(result[4][:type]).to eq('notmapped;Person')
-    end
-    it 'leaves delimiter-only fields alone' do
-      expect(result[1][:type]).to eq(';')
-    end
-    it 'leaves nil fields alone' do
-      expect(result[2][:type]).to be_nil
-    end
-    it 'leaves empty string fields alone' do
-      expect(result[3][:type]).to eq('')
+    context 'when usenull = false' do
+      it 'sorts as expected' do
+        expected = [
+          'Organization;Person;unmapped',
+          ';',
+          nil,
+          '',
+          'notmapped;Person',
+          'apple;%NULLVALUE%',
+          '%NULLVALUE%;oatmeal'
+        ]
+        expect(result.map{ |res| res[:type] }).to eq(expected)
+      end
     end
   end
 

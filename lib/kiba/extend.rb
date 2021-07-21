@@ -25,6 +25,7 @@ module Kiba
 
     require 'kiba/extend/fieldset'
     require 'kiba/extend/destinations/csv'
+    require 'kiba/extend/transforms/helpers'
     require 'kiba/extend/transforms/append'
     require 'kiba/extend/transforms/clean'
     require 'kiba/extend/transforms/combine_values'
