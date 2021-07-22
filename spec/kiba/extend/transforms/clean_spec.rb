@@ -54,6 +54,38 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
         end
       end
     end
+
+    context 'when usenull = true' do
+      let(:usenull) { true }
+      it 'sorts as expected' do
+        expected = [
+          'Organization;Person;unmapped',
+          ';',
+          nil,
+          '',
+          'notmapped;Person',
+          'apple;%NULLVALUE%',
+          'oatmeal;%NULLVALUE%'
+        ]
+        expect(result.map{ |res| res[:type] }).to eq(expected)
+      end
+
+      context 'when direction = :desc' do
+        let(:direction) { :desc }
+        it 'sorts as expected' do
+          expected = [
+            'unmapped;Person;Organization',
+            ';',
+            nil,
+            '',
+            'Person;notmapped',
+            '%NULLVALUE%;apple',
+            '%NULLVALUE%;oatmeal'
+          ]
+          expect(result.map{ |res| res[:type] }).to eq(expected)
+        end
+      end
+    end
   end
 
   describe 'ClearFields' do

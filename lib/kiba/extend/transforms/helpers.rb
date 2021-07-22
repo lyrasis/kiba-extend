@@ -45,7 +45,7 @@ module Kiba
         # @return [Array(Symbol)] of names of fields that should be kept, based on given discard
         #   and usenull param values and the field values
         private_class_method def keep_fields(field_vals, discard, delim, usenull)
-          field_vals.transform_values!{ |val| val.gsub('%NULLVALUE%', '') } if usenull
+          field_vals = field_vals.transform_values{ |val| val.gsub('%NULLVALUE%', '') } if usenull
           field_vals = field_vals.reject{ |field, val| val.empty? } if discard.any?(:empty)
           field_vals = field_vals.reject{ |field, val| delim_only?(val, delim) } if discard.any?(:delim)
           field_vals.keys

@@ -36,6 +36,8 @@ module Kiba
           private
 
           def process_for_sort(val)
+            return val.gsub('%NULLVALUE%', 'zzzzzzzzzzzzzz').downcase.gsub(/[^[:alnum:][:space:]]/, '') if @usenull
+
             val.downcase.gsub(/[^[:alnum:][:space:]]/, '')
           end
 
