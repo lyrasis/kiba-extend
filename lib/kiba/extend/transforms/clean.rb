@@ -6,8 +6,14 @@ module Kiba
       # Transformations to clean up data
       module Clean
         ::Clean = Kiba::Extend::Transforms::Clean
-        
+
+        # @note This transformation does **NOT** sort the **ROWS** in a dataset. It sorts values within
+        #   individual fields of a row
         # Sorts the multiple values within a field alphabetically
+        # @param fields [Array(Symbol)] names of fields to sort
+        # @param delim [String] Character(s) on which to split field values
+        # @param usenull [Boolean] Whether to treat %NULLVALUE% as a blank in processing
+        # @param direction [:asc, :desc] Direction in which to sort field values
         class AlphabetizeFieldValues
           include Kiba::Extend::Transforms::Helpers
           def initialize(fields:, delim:, usenull: false, direction: :asc)
@@ -19,17 +25,24 @@ module Kiba
 
           # @private
           def process(row)
-            @fields.each do |field|
-              vals = row.fetch(field, nil)
-              next if vals.blank?
-              next if delim_only?(vals, @delim)
+            field_values(row: row, fields: @fields, delim: @delim, usenull: @usenull).each do |field, val|
+              next unless val[@delim]
 
-              vals = vals.split(@delim)
-              next if vals.size == 1
-
-              row[field] = vals.sort_by(&:downcase).join(@delim)
+              row[field] = sort_values(val.split(@delim)).join(@delim)
             end
             row
+          end
+
+          private
+
+          def process_for_sort(val)
+            val.downcase.gsub(/[^[:alnum:][:space:]]/, '')
+          end
+
+          def sort_values(vals)
+            return vals.sort_by { |v| process_for_sort(v) } if @direction == :asc
+
+            vals.sort_by { |v| process_for_sort(v) }.reverse
           end
         end
 

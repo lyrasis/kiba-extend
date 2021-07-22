@@ -17,10 +17,12 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
     ]
 
     before { generate_csv(test_csv, rows) }
+    let(:usenull) { false }
+    let(:direction) { :asc }
     let(:result) do
       execute_job(filename: test_csv,
                   xform: Clean::AlphabetizeFieldValues,
-                  xformopt: { fields: %i[type], delim: ';' })
+                  xformopt: { fields: %i[type], delim: ';', usenull: usenull, direction: direction })
     end
     context 'when usenull = false' do
       it 'sorts as expected' do
@@ -34,6 +36,22 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
           '%NULLVALUE%;oatmeal'
         ]
         expect(result.map{ |res| res[:type] }).to eq(expected)
+      end
+
+      context 'when direction = :desc' do
+        let(:direction) { :desc }
+        it 'sorts as expected' do
+          expected = [
+            'unmapped;Person;Organization',
+            ';',
+            nil,
+            '',
+            'Person;notmapped',
+            '%NULLVALUE%;apple',
+            'oatmeal;%NULLVALUE%'
+          ]
+          expect(result.map{ |res| res[:type] }).to eq(expected)
+        end
       end
     end
   end
