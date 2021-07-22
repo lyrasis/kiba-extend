@@ -6,32 +6,85 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
   describe 'AlphabetizeFieldValues' do
     test_csv = 'tmp/test.csv'
     rows = [
-      %w[id type],
-      ['1', 'Person;unmapped;Organization'],
-      ['2', ';'],
-      ['3', nil],
-      ['4', ''],
-      ['5', 'Person;notmapped']
+      %w[type],
+      ['Person;unmapped;Organization'],
+      [';'],
+      [nil],
+      [''],
+      ['Person;notmapped'],
+      ['%NULLVALUE%;apple'],
+      ['oatmeal;%NULLVALUE%']
     ]
 
     before { generate_csv(test_csv, rows) }
+    let(:usenull) { false }
+    let(:direction) { :asc }
     let(:result) do
       execute_job(filename: test_csv,
                   xform: Clean::AlphabetizeFieldValues,
-                  xformopt: { fields: %i[type], delim: ';' })
+                  xformopt: { fields: %i[type], delim: ';', usenull: usenull, direction: direction })
     end
-    it 'sorts field values alphabetically' do
-      expect(result[0][:type]).to eq('Organization;Person;unmapped')
-      expect(result[4][:type]).to eq('notmapped;Person')
+    context 'when usenull = false' do
+      it 'sorts as expected' do
+        expected = [
+          'Organization;Person;unmapped',
+          ';',
+          nil,
+          '',
+          'notmapped;Person',
+          'apple;%NULLVALUE%',
+          '%NULLVALUE%;oatmeal'
+        ]
+        expect(result.map{ |res| res[:type] }).to eq(expected)
+      end
+
+      context 'when direction = :desc' do
+        let(:direction) { :desc }
+        it 'sorts as expected' do
+          expected = [
+            'unmapped;Person;Organization',
+            ';',
+            nil,
+            '',
+            'Person;notmapped',
+            '%NULLVALUE%;apple',
+            'oatmeal;%NULLVALUE%'
+          ]
+          expect(result.map{ |res| res[:type] }).to eq(expected)
+        end
+      end
     end
-    it 'leaves delimiter-only fields alone' do
-      expect(result[1][:type]).to eq(';')
-    end
-    it 'leaves nil fields alone' do
-      expect(result[2][:type]).to be_nil
-    end
-    it 'leaves empty string fields alone' do
-      expect(result[3][:type]).to eq('')
+
+    context 'when usenull = true' do
+      let(:usenull) { true }
+      it 'sorts as expected' do
+        expected = [
+          'Organization;Person;unmapped',
+          ';',
+          nil,
+          '',
+          'notmapped;Person',
+          'apple;%NULLVALUE%',
+          'oatmeal;%NULLVALUE%'
+        ]
+        expect(result.map{ |res| res[:type] }).to eq(expected)
+      end
+
+      context 'when direction = :desc' do
+        let(:direction) { :desc }
+        it 'sorts as expected' do
+          expected = [
+            'unmapped;Person;Organization',
+            ';',
+            nil,
+            '',
+            'Person;notmapped',
+            '%NULLVALUE%;apple',
+            '%NULLVALUE%;oatmeal'
+          ]
+          expect(result.map{ |res| res[:type] }).to eq(expected)
+        end
+      end
     end
   end
 
@@ -60,13 +113,6 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
         result = execute_job(filename: test_csv,
                              xform: Clean::ClearFields,
                              xformopt: { fields: %i[type], if_equals: ';' })
-        expected = [
-          { id: '1', type: 'Person;unmapped;Organization' },
-          { id: '2', type: nil },
-          { id: '3', type: nil },
-          { id: '4', type: '' },
-          { id: '5', type: 'Person;notmapped' }
-        ]
         expect(result.map { |e| e[1] }.uniq[0]).to be_nil
       end
     end

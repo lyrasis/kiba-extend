@@ -8,7 +8,10 @@ require 'active_support/all'
 require 'xxhash'
 require 'facets/kernel/blank'
 
+# Default CSV options
 CSVOPT = { headers: true, header_converters: :symbol }.freeze
+
+# Default multivalue delimter for splitting and joining multiple values in a field
 DELIM = ';'
 
 # The Kiba ETL framework for Ruby.
@@ -25,6 +28,7 @@ module Kiba
 
     require 'kiba/extend/fieldset'
     require 'kiba/extend/destinations/csv'
+    require 'kiba/extend/transforms/helpers'
     require 'kiba/extend/transforms/append'
     require 'kiba/extend/transforms/clean'
     require 'kiba/extend/transforms/combine_values'

@@ -2,5 +2,10 @@ AllCops:
   TargetRubyVersion: 2.7.3
   SuggestExtensions:
     rubocop-rake: false
+Metrics/BlockLength:
+  Exclude:
+    - kiba-extend.gemspec
+    - spec/kiba/extend_spec.rb
+    - spec/kiba/extend/**/*
 Naming/MethodParameterName:
   AllowedNames: i, v
