@@ -82,4 +82,58 @@ RSpec.describe Kiba::Extend::Transforms::Helpers do
       end
     end
   end
+
+  describe '#field_values' do
+    let(:row) { {
+      a: nil,
+      b: '',
+      c: ';',
+      d: 'foo',
+      e: '%NULLVALUE%',
+      f: '%NULLVALUE%;%NULLVALUE%'
+    } }
+    let(:fields) { %i[a b c d e f] }
+    let(:discard) { %i[nil empty delim] }
+    let(:delim) { ';' }
+    let(:usenull) { false }
+    let(:result) { field_values(row: row, fields: fields, discard: discard, delim: delim, usenull: usenull) }
+    context 'with all fields and no discard values' do
+      let(:discard) { %i[] }
+      it 'returns all field values' do
+        expect(result).to eq(row)
+      end
+    end
+
+    context 'with all fields and default discard and usenull values' do
+      it 'returns expected field values' do
+        expected = {
+          d: 'foo',
+          e: '%NULLVALUE%',
+          f: '%NULLVALUE%;%NULLVALUE%'
+        }
+        expect(result).to eq(expected)
+      end
+    end
+
+    context 'with all fields, default discard, and usenull true' do
+      let(:usenull) { true }
+      it 'returns expected field values' do
+        expected = {
+          d: 'foo'
+        }
+        expect(result).to eq(expected)
+      end
+    end
+
+    context 'with non-existent field, default discard, and usenull true' do
+      let(:usenull) { true }
+      let(:fields) { %i[d q] }
+      it 'returns expected field values' do
+        expected = {
+          d: 'foo'
+        }
+        expect(result).to eq(expected)
+      end
+    end
+  end
 end

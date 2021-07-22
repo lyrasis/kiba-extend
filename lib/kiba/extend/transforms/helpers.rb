@@ -5,6 +5,7 @@ module Kiba
     module Transforms
       # utility functions across Transforms
       module Helpers
+        extend self
         # Indicates whether a field value is delimiter-only. If `usenull` is set to true, the
         #   %NULLVALUE% string is treated as empty in detecting delimiter-only-ness
         # @param val [String] The field value to check
@@ -21,9 +22,33 @@ module Kiba
           chk = chk.gsub('%NULLVALUE%', '').strip if usenull
           chk.empty?
         end
-        
-        def hash_field_values(row:, fields:, discard: %i[nil empty delim], usenull: false)
+
+        # @param row [Hash{Symbol=>String,Nil}l] A row of data
+        # @param fields [Array(Symbol)] Names of fields to process
+        # @param discard [:nil, :empty, :delim] Types of field values to remove from returned hash
+        # @param delim [String] Multivalue delimiter used to split fields
+        # @param usenull [Boolean] If true, replaces '%NULLVALUE%' with '' to make determination
+        # @return [Hash{Symbol=>String,Nil}l] of field data for fields that meet keep criteria
+        def field_values(row:, fields:, discard: %i[nil empty delim], delim: DELIM, usenull: false)
+          field_vals = fields.map{ |field| [field, row.fetch(field, nil)] }.to_h
+          return field_vals if discard.blank?
           
+          field_vals = field_vals.reject{ |field, val| val.nil? } if discard.any?(:nil)
+          keep = keep_fields(field_vals, discard, delim, usenull)
+          field_vals.select{ |field, val| keep.any?(field) }
+        end
+
+        # @param field_vals [Hash{Symbol=>String,Nil}l] A subset of a row
+        # @param discard [:nil, :empty, :delim] Types of field values to remove from returned hash
+        # @param delim [String] Multivalue delimiter used to split fields
+        # @param usenull [Boolean] If true, replaces '%NULLVALUE%' with '' to make determination
+        # @return [Array(Symbol)] of names of fields that should be kept, based on given discard
+        #   and usenull param values and the field values
+        private_class_method def keep_fields(field_vals, discard, delim, usenull)
+          field_vals.transform_values!{ |val| val.gsub('%NULLVALUE%', '') } if usenull
+          field_vals = field_vals.reject{ |field, val| val.empty? } if discard.any?(:empty)
+          field_vals = field_vals.reject{ |field, val| delim_only?(val, delim) } if discard.any?(:delim)
+          field_vals.keys
         end
       end
     end
