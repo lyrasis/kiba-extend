@@ -1,12 +1,15 @@
 # frozen_string_literal: true
 
+require "active_support"
+require "active_support/core_ext/object"
 require 'kiba'
 require 'kiba-common/sources/csv'
 require 'kiba-common/destinations/csv'
 require 'pry'
-require 'active_support/all'
 require 'xxhash'
-require 'facets/kernel/blank'
+
+require 'kiba/extend/version'
+
 
 # Default CSV options
 CSVOPT = { headers: true, header_converters: :symbol }.freeze
@@ -22,30 +25,12 @@ DELIM = ';'
 module Kiba
   # Provides a suite of abstract, reusable, well-tested data transformations for use in Kiba ETL pipelines
   module Extend
-    autoload :VERSION, 'extend/version'
-
     puts "kiba-extend version: #{Kiba::Extend::VERSION}"
 
-    require 'kiba/extend/fieldset'
-    require 'kiba/extend/destinations/csv'
-    require 'kiba/extend/transforms/helpers'
-    require 'kiba/extend/transforms/append'
-    require 'kiba/extend/transforms/clean'
-    require 'kiba/extend/transforms/combine_values'
-    require 'kiba/extend/transforms/copy'
-    require 'kiba/extend/transforms/deduplicate'
-    require 'kiba/extend/transforms/cspace'
-    require 'kiba/extend/transforms/delete'
-    require 'kiba/extend/transforms/explode'
-    require 'kiba/extend/transforms/filter_rows'
-    require 'kiba/extend/transforms/merge'
-    require 'kiba/extend/transforms/ms_access'
-    require 'kiba/extend/transforms/prepend'
-    require 'kiba/extend/transforms/rename'
-    require 'kiba/extend/transforms/replace'
-    require 'kiba/extend/transforms/reshape'
-    require 'kiba/extend/transforms/split'
-    require 'kiba/extend/utils/lookup'
+    # Require application files
+    Dir.glob("#{__dir__}/**/*").sort.select{ |path| path.match?(/\.rb$/) }.each do |rbfile|
+      require rbfile.delete_prefix("#{File.expand_path(__dir__)}/lib/")
+    end
 
     # strips, collapses multiple spaces, removes terminal commas, strips again
     CSV::Converters[:stripplus] = lambda { |s|

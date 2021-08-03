@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'kiba/extend/transforms/helpers'
+
 module Kiba
   module Extend
     module Transforms
