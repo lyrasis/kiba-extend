@@ -1,12 +1,13 @@
 # frozen_string_literal: true
 
+require "active_support"
+require "active_support/core_ext/object"
 require 'kiba'
 require 'kiba-common/sources/csv'
 require 'kiba-common/destinations/csv'
 require 'pry'
-require 'active_support/all'
 require 'xxhash'
-require 'facets/kernel/blank'
+
 
 # Default CSV options
 CSVOPT = { headers: true, header_converters: :symbol }.freeze
