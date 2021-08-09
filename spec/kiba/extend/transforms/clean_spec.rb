@@ -35,7 +35,7 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
           'apple;%NULLVALUE%',
           '%NULLVALUE%;oatmeal'
         ]
-        expect(result.map{ |res| res[:type] }).to eq(expected)
+        expect(result.map { |res| res[:type] }).to eq(expected)
       end
 
       context 'when direction = :desc' do
@@ -50,7 +50,7 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
             '%NULLVALUE%;apple',
             'oatmeal;%NULLVALUE%'
           ]
-          expect(result.map{ |res| res[:type] }).to eq(expected)
+          expect(result.map { |res| res[:type] }).to eq(expected)
         end
       end
     end
@@ -67,7 +67,7 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
           'apple;%NULLVALUE%',
           'oatmeal;%NULLVALUE%'
         ]
-        expect(result.map{ |res| res[:type] }).to eq(expected)
+        expect(result.map { |res| res[:type] }).to eq(expected)
       end
 
       context 'when direction = :desc' do
@@ -82,7 +82,7 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
             '%NULLVALUE%;apple',
             '%NULLVALUE%;oatmeal'
           ]
-          expect(result.map{ |res| res[:type] }).to eq(expected)
+          expect(result.map { |res| res[:type] }).to eq(expected)
         end
       end
     end

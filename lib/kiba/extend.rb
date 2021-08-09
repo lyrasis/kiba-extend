@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require "active_support"
-require "active_support/core_ext/object"
+require 'active_support'
+require 'active_support/core_ext/object'
 require 'kiba'
 require 'kiba-common/sources/csv'
 require 'kiba-common/destinations/csv'
@@ -9,7 +9,6 @@ require 'pry'
 require 'xxhash'
 
 require 'kiba/extend/version'
-
 
 # Default CSV options
 CSVOPT = { headers: true, header_converters: :symbol }.freeze
@@ -28,7 +27,7 @@ module Kiba
     puts "kiba-extend version: #{Kiba::Extend::VERSION}"
 
     # Require application files
-    Dir.glob("#{__dir__}/**/*").sort.select{ |path| path.match?(/\.rb$/) }.each do |rbfile|
+    Dir.glob("#{__dir__}/**/*").sort.select { |path| path.match?(/\.rb$/) }.each do |rbfile|
       require rbfile.delete_prefix("#{File.expand_path(__dir__)}/lib/")
     end
 
@@ -52,6 +51,7 @@ module Kiba
       end
     }
 
+    # replaces any values that are a literal string NULL with a nil value
     CSV::Converters[:nulltonil] = lambda { |s|
       begin
         if s == 'NULL'
