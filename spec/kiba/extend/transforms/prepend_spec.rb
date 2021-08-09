@@ -7,13 +7,13 @@ RSpec.describe Kiba::Extend::Transforms::Prepend do
     test_csv = 'tmp/test.csv'
     rows = [
       %w[name prependval],
-      ['Weddy', 'm'], #0
-      [nil, 'u'], 
-      ['', 'u'], #2
+      ['Weddy', 'm'], # 0
+      [nil, 'u'],
+      ['', 'u'], # 2
       ['Kernel', nil],
-      ['Divebomber|Hunter', 'm'], #4
+      ['Divebomber|Hunter', 'm'], # 4
       ['Divebomber|Niblet|Keet', 'm|f'],
-      ['|Niblet', 'm|f'] #6
+      ['|Niblet', 'm|f'] # 6
     ]
 
     context 'when called with multival prepend field and no mvdelim' do
@@ -24,21 +24,21 @@ RSpec.describe Kiba::Extend::Transforms::Prepend do
       it 'raises MissingDelimiterError' do
         msg = 'You must provide an mvdelim string if multivalue_prepended_field is true'
         opts = { target_field: :name, prepended_field: :prependval, sep: ':',
-                multivalue_prepended_field: true }
-        
-        expect{execute_job(filename: test_csv,
-                              xform: Prepend::FieldToFieldValue,
-                              xformopt: opts)}.to raise_error(msg)
+                 multivalue_prepended_field: true }
+
+        expect {execute_job(filename: test_csv,
+                            xform: Prepend::FieldToFieldValue,
+                            xformopt: opts)}.to raise_error(msg)
       end
     end
-    
+
     context 'when delete_prepended = false' do
       before do
         generate_csv(test_csv, rows)
         @result = execute_job(filename: test_csv,
                               xform: Prepend::FieldToFieldValue,
                               xformopt: { target_field: :name, prepended_field: :prependval, sep: ': ',
-                                         mvdelim: '|' })
+                                          mvdelim: '|' })
       end
       it 'prepends value of given field to existing field values' do
         expected = { name: 'm: Weddy', prependval: 'm' }
@@ -75,8 +75,8 @@ RSpec.describe Kiba::Extend::Transforms::Prepend do
         @result = execute_job(filename: test_csv,
                               xform: Prepend::FieldToFieldValue,
                               xformopt: { target_field: :name, prepended_field: :prependval, sep: ': ',
-                                         delete_prepended: true,
-                                         mvdelim: '|' })
+                                          delete_prepended: true,
+                                          mvdelim: '|' })
       end
       it 'deletes prepended field after prepending' do
         expected = { name: 'm: Weddy' }
@@ -90,8 +90,8 @@ RSpec.describe Kiba::Extend::Transforms::Prepend do
         @result = execute_job(filename: test_csv,
                               xform: Prepend::FieldToFieldValue,
                               xformopt: { target_field: :name, prepended_field: :prependval, sep: ': ',
-                                         delete_prepended: true,
-                                         mvdelim: '|' })
+                                          delete_prepended: true,
+                                          mvdelim: '|' })
       end
       context 'when one prepend value and two target values' do
         it 'adds prepend value to each target field' do
@@ -121,9 +121,9 @@ RSpec.describe Kiba::Extend::Transforms::Prepend do
         @result = execute_job(filename: test_csv,
                               xform: Prepend::FieldToFieldValue,
                               xformopt: { target_field: :name, prepended_field: :prependval, sep: ': ',
-                                         delete_prepended: true,
-                                         mvdelim: '|',
-                                         multivalue_prepended_field: true })
+                                          delete_prepended: true,
+                                          mvdelim: '|',
+                                          multivalue_prepended_field: true })
       end
       context 'when one prepend value and two target values' do
         it 'adds prepend value to first target field value' do

@@ -17,7 +17,7 @@ module Kiba
         def delim_only?(val, delim, usenull = false)
           return false if val.nil?
           return false if val.strip.empty?
-          
+
           chk = val.gsub(delim, '').strip
           chk = chk.gsub('%NULLVALUE%', '').strip if usenull
           chk.empty?
@@ -30,12 +30,12 @@ module Kiba
         # @param usenull [Boolean] If true, replaces '%NULLVALUE%' with '' to make determination
         # @return [Hash{Symbol=>String,Nil}l] of field data for fields that meet keep criteria
         def field_values(row:, fields:, discard: %i[nil empty delim], delim: DELIM, usenull: false)
-          field_vals = fields.map{ |field| [field, row.fetch(field, nil)] }.to_h
+          field_vals = fields.map { |field| [field, row.fetch(field, nil)] }.to_h
           return field_vals if discard.blank?
-          
-          field_vals = field_vals.reject{ |field, val| val.nil? } if discard.any?(:nil)
+
+          field_vals = field_vals.reject { |field, val| val.nil? } if discard.any?(:nil)
           keep = keep_fields(field_vals, discard, delim, usenull)
-          field_vals.select{ |field, val| keep.any?(field) }
+          field_vals.select { |field, val| keep.any?(field) }
         end
 
         # @param field_vals [Hash{Symbol=>String,Nil}l] A subset of a row
@@ -45,9 +45,9 @@ module Kiba
         # @return [Array(Symbol)] of names of fields that should be kept, based on given discard
         #   and usenull param values and the field values
         private_class_method def keep_fields(field_vals, discard, delim, usenull)
-          field_vals = field_vals.transform_values{ |val| val.gsub('%NULLVALUE%', '') } if usenull
-          field_vals = field_vals.reject{ |field, val| val.empty? } if discard.any?(:empty)
-          field_vals = field_vals.reject{ |field, val| delim_only?(val, delim) } if discard.any?(:delim)
+          field_vals = field_vals.transform_values { |val| val.gsub('%NULLVALUE%', '') } if usenull
+          field_vals = field_vals.reject { |field, val| val.empty? } if discard.any?(:empty)
+          field_vals = field_vals.reject { |field, val| delim_only?(val, delim) } if discard.any?(:delim)
           field_vals.keys
         end
       end

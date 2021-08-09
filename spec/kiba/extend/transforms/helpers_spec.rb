@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Helpers do
   include Kiba::Extend::Transforms::Helpers
-  
+
   describe '#delim_only?' do
     context 'when delim = |' do
       let(:delim) { '|' }
