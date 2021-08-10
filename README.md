@@ -18,4 +18,4 @@ For more clarity about exactly what each transformation does, if it is not descr
 
 If the links below do not work, look for the same path in the archived projects folder.
 
-- [Use plain-old Ruby to loop through all files in a directory, process them the same way, and then merge them.](https://github.com/lyrasis/migrations-private/blob/main/fabric_workshop/lib/fwm/authority_export.rb)
+- Use plain-old Ruby to [iterate through all files in a directory, process them the same way](https://github.com/lyrasis/fwm-cspace-migration/blob/e05e632545fbfe772d37afa7e230cacf1ebd9fd8/lib/fwm/authority_export.rb#L28-L34), and then [merge them](https://github.com/lyrasis/fwm-cspace-migration/blob/e05e632545fbfe772d37afa7e230cacf1ebd9fd8/lib/fwm/authority_export.rb#L73-L77).
