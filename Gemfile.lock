@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    kiba-extend (1.15.4)
+    kiba-extend (2.0.0)
       activesupport (~> 6.1.4)
       csv (~> 3.0)
       kiba (~> 4.0.0)
