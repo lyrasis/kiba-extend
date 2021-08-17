@@ -3,7 +3,6 @@
 require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Utils::Lookup do
-  test_csv = 'tmp/test.csv'
   rows = [
     %w[id val],
     %w[1 a],

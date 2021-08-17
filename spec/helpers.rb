@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 module Helpers
+  def test_csv
+    File.join(File.expand_path(__dir__), 'tmp', 'test.csv')
+  end
+
   def generate_csv(path, rows)
     CSV.open(path, 'w') do |csv|
       rows.each { |row| csv << row }

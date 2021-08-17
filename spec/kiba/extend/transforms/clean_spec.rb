@@ -4,7 +4,9 @@ require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Clean do
   describe 'AlphabetizeFieldValues' do
-    test_csv = 'tmp/test.csv'
+#    test_csv = File.join(__dir__, 'tmp', 'test.csv')
+#    binding.pry
+#
     rows = [
       %w[type],
       ['Person;unmapped;Organization'],
@@ -89,7 +91,6 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
   end
 
   describe 'ClearFields' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[id type],
       ['1', 'Person;unmapped;Organization'],
@@ -160,7 +161,6 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
   end
 
   describe 'DowncaseFieldValues' do
-    test_csv = 'tmp/test.csv'
     after { File.delete(test_csv) if File.exist?(test_csv) }
 
     it 'downcases value(s) of specified field(s)' do
@@ -310,8 +310,6 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
   end
 
   describe 'RegexpFindReplaceFieldVals' do
-    test_csv = 'tmp/test.csv'
-
     after { File.delete(test_csv) if File.exist?(test_csv) }
     it 'Does specified regexp find/replace in field values' do
       rows = [
@@ -448,7 +446,6 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
   end
 
   describe 'StripFields' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[id val],
       ['1', ' blah '],

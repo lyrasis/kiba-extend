@@ -9,7 +9,7 @@ name: Ruby
 
 on:
   push:
-    branches: [ main ]
+    branches: [ gh-action-tests ]
   pull_request:
     branches: [ main ]
 

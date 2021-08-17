@@ -4,7 +4,6 @@ require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Rename do
   describe 'Field' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[id name sex],
       [1, 'Weddy', 'm'],

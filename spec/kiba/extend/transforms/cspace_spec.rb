@@ -4,7 +4,6 @@ require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Cspace do
   describe 'ConvertToID' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[id name],
       [1, 'Weddy1']
@@ -25,7 +24,6 @@ RSpec.describe Kiba::Extend::Transforms::Cspace do
   end
 
   describe 'FlagInvalidCharacters' do
-    test_csv = 'tmp/test.csv'
     rows = [
       ['subject'],
       ['Iași, Romania'],
@@ -53,7 +51,6 @@ RSpec.describe Kiba::Extend::Transforms::Cspace do
   end
 
   describe 'NormalizeForID' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[id subject],
       [1, 'Oświęcim (Poland)'],

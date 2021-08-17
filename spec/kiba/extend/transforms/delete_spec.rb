@@ -4,7 +4,6 @@ require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Delete do
   describe 'EmptyFieldValues' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[id data],
       [1, 'abc;;;d e f'],
@@ -31,7 +30,6 @@ RSpec.describe Kiba::Extend::Transforms::Delete do
   end
 
   describe 'Fields' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[id name sex source],
       [1, 'Weddy', 'm', 'adopted'],
@@ -54,7 +52,6 @@ RSpec.describe Kiba::Extend::Transforms::Delete do
   end
 
   describe 'FieldsExcept' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[id name sex source],
       [1, 'Weddy', 'm', 'adopted'],
@@ -77,7 +74,6 @@ RSpec.describe Kiba::Extend::Transforms::Delete do
   end
 
   describe 'FieldValueMatchingRegexp' do
-    test_csv = 'tmp/test.csv'
     after { File.delete(test_csv) if File.exist?(test_csv) }
     it 'Deletes whole field value if it matches given regexp' do
       rows = [
@@ -129,7 +125,6 @@ RSpec.describe Kiba::Extend::Transforms::Delete do
   end
 
   describe 'FieldValueIfEqualsOtherField' do
-    test_csv = 'tmp/test.csv'
     after { File.delete(test_csv) if File.exist?(test_csv) }
     it 'deletes data in specified field if it duplicates data in other given field' do
       rows2 = [
@@ -197,7 +192,6 @@ RSpec.describe Kiba::Extend::Transforms::Delete do
   end
 
   describe 'FieldValueContainingString' do
-    test_csv = 'tmp/test.csv'
     after { File.delete(test_csv) if File.exist?(test_csv) }
     it 'Deletes whole field value if it contains given string' do
       rows = [

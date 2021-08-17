@@ -4,7 +4,6 @@ require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Reshape do
   describe 'CollapseMultipleFieldsToOneTypedFieldPair' do
-    test_csv = 'tmp/test.csv'
     context 'when source field may be multivalued' do
       rows = [
         %w[homephone workphone mobilephone otherphone unrelated],

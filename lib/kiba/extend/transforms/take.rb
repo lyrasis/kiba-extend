@@ -70,10 +70,10 @@ module Kiba
           # ensures targets has the same number of elements as fields
           def build_targets
             if @targets.empty?
-              @targets = @fields 
+              @targets = @fields
               return
             end
-            
+
             until equal_length? do
               @targets << @fields[index]
             end
@@ -88,11 +88,11 @@ module Kiba
           def equal_length?
             fields_len == targets_len
           end
-          
+
           def index
             fields_len - targets_len
           end
-          
+
           def fields_len
             @fields.length
           end
@@ -102,7 +102,7 @@ module Kiba
 
             val.split(@delim).first.strip
           end
-          
+
           def targets_len
             @targets.length
           end

@@ -4,7 +4,6 @@ require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Replace do
   describe 'EmptyFieldValues' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[id species name sex],
       [1, 'guineafowl', nil, '']
@@ -26,7 +25,6 @@ RSpec.describe Kiba::Extend::Transforms::Replace do
   end
 
   describe 'FieldValueWithStaticMapping' do
-    test_csv = 'tmp/test.csv'
     mapping = {
       'm' => 'male',
       'f' => 'female'

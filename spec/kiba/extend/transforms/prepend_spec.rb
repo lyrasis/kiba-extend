@@ -4,7 +4,6 @@ require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Prepend do
   describe 'FieldToFieldValue' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[name prependval],
       ['Weddy', 'm'], # 0
@@ -149,7 +148,6 @@ RSpec.describe Kiba::Extend::Transforms::Prepend do
   end
 
   describe 'ToFieldValue' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[id name],
       [1, 'Weddy'],

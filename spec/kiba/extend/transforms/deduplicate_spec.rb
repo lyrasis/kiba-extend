@@ -6,7 +6,6 @@ RSpec.describe Kiba::Extend::Transforms::Deduplicate do
   describe 'Fields' do
     context 'when casesensitive = true' do
       it 'removes value(s) of source field from target field(s)' do
-        test_csv = 'tmp/test.csv'
         rows = [
           %w[x y z],
           %w[a a b],
@@ -39,7 +38,6 @@ RSpec.describe Kiba::Extend::Transforms::Deduplicate do
     end
     context 'when casesensitive = false' do
       it 'removes value(s) of source field from target field(s)' do
-        test_csv = 'tmp/test.csv'
         rows = [
           %w[x y z],
           %w[a A a],
@@ -60,7 +58,6 @@ RSpec.describe Kiba::Extend::Transforms::Deduplicate do
   end
 
   describe 'FieldValues' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[val x],
       ['1;1;1;2;2;2', 'a;A;b;b;b'],
@@ -86,7 +83,6 @@ RSpec.describe Kiba::Extend::Transforms::Deduplicate do
   end
 
   describe 'Flag' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[id x],
       %w[1 a],
@@ -118,7 +114,6 @@ RSpec.describe Kiba::Extend::Transforms::Deduplicate do
   end
 
   describe 'GroupedFieldValues' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[name role],
       ['Fred;Freda;Fred;James', 'author;photographer;editor;illustrator'],

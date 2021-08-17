@@ -8,7 +8,6 @@ RSpec.describe Kiba::Extend do
   end
 
   describe ':stripplus csv converter' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[id val],
       ['1', ' a b'],
@@ -26,7 +25,6 @@ RSpec.describe Kiba::Extend do
   end
 
   describe ':nulltonil csv converter' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[id val],
       %w[1 NULL],

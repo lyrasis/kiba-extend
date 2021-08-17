@@ -3,8 +3,8 @@
 require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Take do
-  let(:test_csv){ 'tmp/test.csv' }
-  let(:result){ execute_job(filename: test_csv, xform: transform, xformopt: opts) }
+  let(:test_csv) { 'tmp/test.csv' }
+  let(:result) { execute_job(filename: test_csv, xform: transform, xformopt: opts) }
   before do
     generate_csv(test_csv, rows)
   end
@@ -14,7 +14,7 @@ RSpec.describe Kiba::Extend::Transforms::Take do
 
   describe 'First' do
     let(:transform) { Take::First }
-    let(:rows){ [
+    let(:rows) { [
       %w[a b],
       ['c|d', 'e|j'],
       ['', nil],
@@ -23,7 +23,7 @@ RSpec.describe Kiba::Extend::Transforms::Take do
     ] }
 
     context 'when a, b -> y, z' do
-      let(:opts){ { fields: %i[a b], targets: %i[y z], delim: '|' } }
+      let(:opts) { { fields: %i[a b], targets: %i[y z], delim: '|' } }
       it 'outputs as expected' do
         expected = [
           { a: 'c|d', b: 'e|j', y: 'c', z: 'e' },
@@ -36,46 +36,46 @@ RSpec.describe Kiba::Extend::Transforms::Take do
     end
 
     context 'when a, b -> y' do
-      let(:opts){ { fields: %i[a b], targets: %i[y], delim: '|' } }
+      let(:opts) { { fields: %i[a b], targets: %i[y], delim: '|' } }
       it 'outputs as expected' do
         expected = [
-          { a: 'c|d', b: 'e', y: 'c'},
-          { a: '', b: nil, y: ''},
-          { a: '|f', b: 'g', y: ''},
-          { a: 'h', b: 'i', y: 'h'}
+          { a: 'c|d', b: 'e', y: 'c' },
+          { a: '', b: nil, y: '' },
+          { a: '|f', b: 'g', y: '' },
+          { a: 'h', b: 'i', y: 'h' }
         ]
         expect(result).to eq(expected)
       end
     end
 
     context 'when a, b -> nil, y' do
-      let(:opts){ { fields: %i[a b], targets: [nil, :y], delim: '|' } }
+      let(:opts) { { fields: %i[a b], targets: [nil, :y], delim: '|' } }
       it 'outputs as expected' do
         expected = [
-          { a: 'c', b: 'e|j', y: 'e'},
-          { a: '', b: nil, y: nil},
-          { a: '', b: 'g|', y: 'g'},
-          { a: 'h', b: 'i', y: 'i'}
+          { a: 'c', b: 'e|j', y: 'e' },
+          { a: '', b: nil, y: nil },
+          { a: '', b: 'g|', y: 'g' },
+          { a: 'h', b: 'i', y: 'i' }
         ]
         expect(result).to eq(expected)
       end
     end
 
     context 'when a, b -> blankstring, z' do
-      let(:opts){ { fields: %i[a b], targets: ['', :y], delim: '|' } }
+      let(:opts) { { fields: %i[a b], targets: ['', :y], delim: '|' } }
       it 'outputs as expected' do
         expected = [
-          { a: 'c', b: 'e|j', y: 'e'},
-          { a: '', b: nil, y: nil},
-          { a: '', b: 'g|', y: 'g'},
-          { a: 'h', b: 'i', y: 'i'}
+          { a: 'c', b: 'e|j', y: 'e' },
+          { a: '', b: nil, y: nil },
+          { a: '', b: 'g|', y: 'g' },
+          { a: 'h', b: 'i', y: 'i' }
         ]
         expect(result).to eq(expected)
       end
     end
 
     context 'when a, b -> no targets' do
-      let(:opts){ { fields: %i[a b], delim: '|' } }
+      let(:opts) { { fields: %i[a b], delim: '|' } }
       it 'outputs as expected' do
         expected = [
           { a: 'c', b: 'e' },

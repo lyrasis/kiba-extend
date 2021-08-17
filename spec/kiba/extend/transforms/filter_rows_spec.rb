@@ -4,7 +4,6 @@ require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::FilterRows do
   describe 'FieldEqualTo' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[id in_set],
       %w[1 N],
@@ -30,7 +29,6 @@ RSpec.describe Kiba::Extend::Transforms::FilterRows do
   end
 
   describe 'FieldMatchRegexp' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[id occ],
       ['1', 'farmer;'],
@@ -57,7 +55,6 @@ RSpec.describe Kiba::Extend::Transforms::FilterRows do
   end
 
   describe 'FieldPopulated' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[id val],
       ['1', ''],

@@ -4,7 +4,6 @@ require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Explode do
   describe 'RowsFromMultivalField' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[id r1 r2],
       ['001', 'a;b', 'foo;bar']
@@ -33,7 +32,6 @@ RSpec.describe Kiba::Extend::Transforms::Explode do
   end
 
   describe 'ColumnsRemappedInNewRows' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[f1 c1 f2 c2 season f3],
       %w[strawberry red blueberry blue spring cherry],
@@ -73,7 +71,6 @@ RSpec.describe Kiba::Extend::Transforms::Explode do
   end
 
   describe 'FieldValuesToNewRows' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[id child parent],
       [1, 'a;b', 'c;d'],
