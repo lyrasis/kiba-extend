@@ -3,9 +3,9 @@
 require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Merge do
-  let(:test_csv) { 'tmp/test.csv' }
+  
   before do
-    generate_csv(test_csv, rows)
+    generate_csv(rows)
   end
   after do
     File.delete(test_csv) if File.exist?(test_csv)
@@ -227,7 +227,7 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
         [2]
       ]
     end
-    let(:lookup) { Lookup.csv_to_multi_hash(file: 'tmp/lkp.csv', csvopt: CSVOPT, keycolumn: :id) }
+    let(:lookup) { Lookup.csv_to_multi_hash(file: lookup_csv, csvopt: CSVOPT, keycolumn: :id) }
     let(:xformopt) do
       {
         lookup: lookup,
@@ -236,7 +236,7 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
       }
     end
     before do
-      generate_csv('tmp/lkp.csv', lookup_rows)
+      generate_lookup_csv(lookup_rows)
     end
 
     it 'merges count of lookup rows to be merged into specified field' do
@@ -310,7 +310,7 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
         [2, '2020-04-15', 'deworm'],
         [4, '', '']
       ]
-      let(:lookup) { Lookup.csv_to_multi_hash(file: 'tmp/lkp.csv', csvopt: CSVOPT, keycolumn: :id) }
+      let(:lookup) { Lookup.csv_to_multi_hash(file: lookup_csv, csvopt: CSVOPT, keycolumn: :id) }
       let(:xformopt) do
         {
           fieldmap: {
@@ -322,7 +322,7 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
         }
       end
       before do
-        generate_csv('tmp/lkp.csv', lookup_rows)
+        generate_lookup_csv(lookup_rows)
       end
 
       it 'merges values from specified fields into multivalued fields' do
@@ -385,7 +385,7 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
       end
 
       after do
-        File.delete('tmp/lkp.csv') if File.exist?('tmp/lkp.csv')
+        File.delete(lookup_csv) if File.exist?(lookup_csv)
       end
     end
 
@@ -410,7 +410,7 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
         %w[e ee eee],
         ['g', '', 'ggg']
       ]
-      let(:lookup) { Lookup.csv_to_multi_hash(file: 'tmp/lkp.csv', csvopt: CSVOPT, keycolumn: :single) }
+      let(:lookup) { Lookup.csv_to_multi_hash(file: lookup_csv, csvopt: CSVOPT, keycolumn: :single) }
       let(:xformopt) do
         {
           fieldmap: {
@@ -424,7 +424,7 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
         }
       end
       before do
-        generate_csv('tmp/lkp.csv', lookup_rows)
+        generate_lookup_csv(lookup_rows)
       end
 
       it 'merges values from specified fields into multivalued fields' do
@@ -453,7 +453,7 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
       end
 
       after do
-        File.delete('tmp/lkp.csv') if File.exist?('tmp/lkp.csv')
+        File.delete(lookup_csv) if File.exist?(lookup_csv)
       end
     end
   end

@@ -4,7 +4,6 @@ require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Delete do
   describe 'EmptyFieldValues' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[id data],
       [1, 'abc;;;d e f'],
@@ -14,7 +13,7 @@ RSpec.describe Kiba::Extend::Transforms::Delete do
     ]
 
     before do
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
     end
     it 'deletes empty field values from multivalued field' do
       expected = [
@@ -31,7 +30,6 @@ RSpec.describe Kiba::Extend::Transforms::Delete do
   end
 
   describe 'Fields' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[id name sex source],
       [1, 'Weddy', 'm', 'adopted'],
@@ -39,7 +37,7 @@ RSpec.describe Kiba::Extend::Transforms::Delete do
     ]
 
     before do
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
     end
     it 'deletes fields' do
       expected = [
@@ -54,7 +52,6 @@ RSpec.describe Kiba::Extend::Transforms::Delete do
   end
 
   describe 'FieldsExcept' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[id name sex source],
       [1, 'Weddy', 'm', 'adopted'],
@@ -62,7 +59,7 @@ RSpec.describe Kiba::Extend::Transforms::Delete do
     ]
 
     before do
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
     end
     it 'deletes all fields except ones given as keepfields' do
       expected = [
@@ -77,7 +74,6 @@ RSpec.describe Kiba::Extend::Transforms::Delete do
   end
 
   describe 'FieldValueMatchingRegexp' do
-    test_csv = 'tmp/test.csv'
     after { File.delete(test_csv) if File.exist?(test_csv) }
     it 'Deletes whole field value if it matches given regexp' do
       rows = [
@@ -86,7 +82,7 @@ RSpec.describe Kiba::Extend::Transforms::Delete do
         ['2', 'thing xxxx 123'],
         ['3', 'x files']
       ]
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
       result = execute_job(filename: test_csv,
                            xform: Delete::FieldValueMatchingRegexp,
                            xformopt: { fields: [:val],
@@ -101,7 +97,7 @@ RSpec.describe Kiba::Extend::Transforms::Delete do
         ['2', 'thing xxxx 123'],
         ['3', 'x files']
       ]
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
       result = execute_job(filename: test_csv,
                            xform: Delete::FieldValueMatchingRegexp,
                            xformopt: { fields: [:val],
@@ -117,7 +113,7 @@ RSpec.describe Kiba::Extend::Transforms::Delete do
         ['2', 'thing xxxx 123'],
         ['3', nil]
       ]
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
       result = execute_job(filename: test_csv,
                            xform: Delete::FieldValueMatchingRegexp,
                            xformopt: { fields: [:val],
@@ -129,7 +125,6 @@ RSpec.describe Kiba::Extend::Transforms::Delete do
   end
 
   describe 'FieldValueIfEqualsOtherField' do
-    test_csv = 'tmp/test.csv'
     after { File.delete(test_csv) if File.exist?(test_csv) }
     it 'deletes data in specified field if it duplicates data in other given field' do
       rows2 = [
@@ -137,7 +132,7 @@ RSpec.describe Kiba::Extend::Transforms::Delete do
         [1, 'a', 'b'],
         [2, 'c', 'c']
       ]
-      generate_csv(test_csv, rows2)
+      generate_csv(rows2)
       result = execute_job(filename: test_csv,
                            xform: Delete::FieldValueIfEqualsOtherField,
                            xformopt: {
@@ -155,7 +150,7 @@ RSpec.describe Kiba::Extend::Transforms::Delete do
           [1, 'a', 'b'],
           [2, 'a;c', 'c']
         ]
-        generate_csv(test_csv, rows2)
+        generate_csv(rows2)
         result = execute_job(filename: test_csv,
                              xform: Delete::FieldValueIfEqualsOtherField,
                              xformopt: {
@@ -176,7 +171,7 @@ RSpec.describe Kiba::Extend::Transforms::Delete do
           [2, 'a;C;d;c;e', 'c', 'y;x;w;u;v', 'e;f;g;h;i'],
           [1, 'a', 'b', 'z', 'q']
         ]
-        generate_csv(test_csv, rows2)
+        generate_csv(rows2)
         result = execute_job(filename: test_csv,
                              xform: Delete::FieldValueIfEqualsOtherField,
                              xformopt: {
@@ -197,7 +192,6 @@ RSpec.describe Kiba::Extend::Transforms::Delete do
   end
 
   describe 'FieldValueContainingString' do
-    test_csv = 'tmp/test.csv'
     after { File.delete(test_csv) if File.exist?(test_csv) }
     it 'Deletes whole field value if it contains given string' do
       rows = [
@@ -206,7 +200,7 @@ RSpec.describe Kiba::Extend::Transforms::Delete do
         ['2', 'thing xxxx 123'],
         ['3', 'x files']
       ]
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
       result = execute_job(filename: test_csv,
                            xform: Delete::FieldValueContainingString,
                            xformopt: { fields: [:val],
@@ -221,7 +215,7 @@ RSpec.describe Kiba::Extend::Transforms::Delete do
         ['2', 'thing xxxx 123'],
         ['3', 'x files']
       ]
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
       result = execute_job(filename: test_csv,
                            xform: Delete::FieldValueContainingString,
                            xformopt: { fields: [:val],
@@ -237,7 +231,7 @@ RSpec.describe Kiba::Extend::Transforms::Delete do
         ['2', 'thing xxxx 123'],
         ['3', nil]
       ]
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
       result = execute_job(filename: test_csv,
                            xform: Delete::FieldValueContainingString,
                            xformopt: { fields: [:val],

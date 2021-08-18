@@ -4,7 +4,6 @@ require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Copy do
   describe 'Field' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[id name sex],
       [1, 'Weddy', 'm'],
@@ -12,7 +11,7 @@ RSpec.describe Kiba::Extend::Transforms::Copy do
     ]
 
     before do
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
     end
     it 'copies value of field to specified new field' do
       expected = [

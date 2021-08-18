@@ -4,18 +4,17 @@ require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Explode do
   describe 'RowsFromMultivalField' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[id r1 r2],
       ['001', 'a;b', 'foo;bar']
     ]
 
     before do
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
     end
     after do
       File.delete(test_csv) if File.exist?(test_csv)
-      File.delete('tmp/lkp.csv') if File.exist?('tmp/lkp.csv')
+      File.delete(lookup_csv) if File.exist?(lookup_csv)
     end
 
     context 'when given field :r1 and delim \';\'' do
@@ -33,7 +32,6 @@ RSpec.describe Kiba::Extend::Transforms::Explode do
   end
 
   describe 'ColumnsRemappedInNewRows' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[f1 c1 f2 c2 season f3],
       %w[strawberry red blueberry blue spring cherry],
@@ -43,11 +41,11 @@ RSpec.describe Kiba::Extend::Transforms::Explode do
     ]
 
     before do
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
     end
     after do
       File.delete(test_csv) if File.exist?(test_csv)
-      File.delete('tmp/lkp.csv') if File.exist?('tmp/lkp.csv')
+      File.delete(lookup_csv) if File.exist?(lookup_csv)
     end
 
     it 'creates expected result' do
@@ -73,7 +71,6 @@ RSpec.describe Kiba::Extend::Transforms::Explode do
   end
 
   describe 'FieldValuesToNewRows' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[id child parent],
       [1, 'a;b', 'c;d'],
@@ -85,7 +82,7 @@ RSpec.describe Kiba::Extend::Transforms::Explode do
       [7, 'm;;n', 's']
     ]
     before do
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
     end
 
     context 'when multival = true' do

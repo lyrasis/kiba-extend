@@ -4,14 +4,13 @@ require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Replace do
   describe 'EmptyFieldValues' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[id species name sex],
       [1, 'guineafowl', nil, '']
     ]
 
     before do
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
     end
     it 'replaces empty field values in specified field(s) with given string' do
       expected = [
@@ -26,7 +25,6 @@ RSpec.describe Kiba::Extend::Transforms::Replace do
   end
 
   describe 'FieldValueWithStaticMapping' do
-    test_csv = 'tmp/test.csv'
     mapping = {
       'm' => 'male',
       'f' => 'female'
@@ -39,7 +37,7 @@ RSpec.describe Kiba::Extend::Transforms::Replace do
     ]
 
     before do
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
     end
     it 'adds field value from static mapping' do
       expected = [
@@ -63,7 +61,7 @@ RSpec.describe Kiba::Extend::Transforms::Replace do
         [2, 'Kernel', 'f']
       ]
       before do
-        generate_csv(test_csv, rows2)
+        generate_csv(rows2)
       end
       context 'and :fallback_val = :orig (this is the default!)' do
         it 'sends original value through to new column' do

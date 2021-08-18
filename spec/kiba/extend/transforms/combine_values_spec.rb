@@ -4,7 +4,6 @@ require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::CombineValues do
   describe 'AcrossFieldGroup' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[person statusa date personb statusb date2 personc statusc date3],
       %w[jim approved 2020 bill requested 2019 terri authorized 2018],
@@ -15,7 +14,7 @@ RSpec.describe Kiba::Extend::Transforms::CombineValues do
     ]
 
     before do
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
     end
     it 'concatenates specified field values, keeping field group integrity' do
       expected = [
@@ -48,7 +47,6 @@ RSpec.describe Kiba::Extend::Transforms::CombineValues do
   end
 
   describe 'FromFieldsWithDelimiter' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[id name sex source],
       [1, 'Weddy', 'm', 'adopted'],
@@ -58,7 +56,7 @@ RSpec.describe Kiba::Extend::Transforms::CombineValues do
     ]
 
     before do
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
     end
     it 'concatenates specified field values into new column with specified separator' do
       expected = [
@@ -97,7 +95,7 @@ RSpec.describe Kiba::Extend::Transforms::CombineValues do
           [1, 'Weddy', '', 'adopted'],
           [2, 'Kernel', 'f', 'adopted']
         ]
-        before { generate_csv(test_csv, rows2) }
+        before { generate_csv(rows2) }
 
         it 'does not include blank or nil fields' do
           expected = [
@@ -152,7 +150,6 @@ RSpec.describe Kiba::Extend::Transforms::CombineValues do
   end
 
   describe 'FullRecord' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[name sex source],
       %w[Weddy m adopted],
@@ -161,7 +158,7 @@ RSpec.describe Kiba::Extend::Transforms::CombineValues do
     ]
 
     before do
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
     end
     it 'concatenates all fields (with given delimiter) into given field' do
       expected = [

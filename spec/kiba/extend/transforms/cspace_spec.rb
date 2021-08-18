@@ -4,14 +4,13 @@ require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Cspace do
   describe 'ConvertToID' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[id name],
       [1, 'Weddy1']
     ]
 
     before do
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
     end
     it 'inserts CS shortID of given source into target' do
       expected = [
@@ -25,7 +24,6 @@ RSpec.describe Kiba::Extend::Transforms::Cspace do
   end
 
   describe 'FlagInvalidCharacters' do
-    test_csv = 'tmp/test.csv'
     rows = [
       ['subject'],
       ['Iași, Romania'],
@@ -33,7 +31,7 @@ RSpec.describe Kiba::Extend::Transforms::Cspace do
     ]
 
     before do
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
       @old = Cspace.const_get('BRUTEFORCE')
       Cspace.const_set('BRUTEFORCE', {})
     end
@@ -53,7 +51,6 @@ RSpec.describe Kiba::Extend::Transforms::Cspace do
   end
 
   describe 'NormalizeForID' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[id subject],
       [1, 'Oświęcim (Poland)'],
@@ -63,7 +60,7 @@ RSpec.describe Kiba::Extend::Transforms::Cspace do
     ]
 
     before do
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
     end
     it 'normalizes as expected' do
       expected = [

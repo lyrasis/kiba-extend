@@ -4,14 +4,13 @@ require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::FilterRows do
   describe 'FieldEqualTo' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[id in_set],
       %w[1 N],
       %w[2 Y]
     ]
 
-    before { generate_csv(test_csv, rows) }
+    before { generate_csv(rows) }
     it 'keeps row based on given field value match' do
       result = execute_job(filename: test_csv, xform: FilterRows::FieldEqualTo,
                            xformopt: { action: :keep, field: :id, value: '1' })
@@ -30,14 +29,13 @@ RSpec.describe Kiba::Extend::Transforms::FilterRows do
   end
 
   describe 'FieldMatchRegexp' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[id occ],
       ['1', 'farmer;'],
       %w[2 farmer]
     ]
 
-    before { generate_csv(test_csv, rows) }
+    before { generate_csv(rows) }
     after { File.delete(test_csv) if File.exist?(test_csv) }
 
     it 'keeps row based on given field value match' do
@@ -57,14 +55,13 @@ RSpec.describe Kiba::Extend::Transforms::FilterRows do
   end
 
   describe 'FieldPopulated' do
-    test_csv = 'tmp/test.csv'
     rows = [
       %w[id val],
       ['1', ''],
       %w[2 Y]
     ]
 
-    before { generate_csv(test_csv, rows) }
+    before { generate_csv(rows) }
     context 'when action: keep' do
       it 'keeps row if given field is populated' do
         result = execute_job(filename: test_csv,

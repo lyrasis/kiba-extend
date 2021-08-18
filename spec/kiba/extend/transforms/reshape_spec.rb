@@ -4,14 +4,13 @@ require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Reshape do
   describe 'CollapseMultipleFieldsToOneTypedFieldPair' do
-    test_csv = 'tmp/test.csv'
     context 'when source field may be multivalued' do
       rows = [
         %w[homephone workphone mobilephone otherphone unrelated],
         ['2', '1', '3;4', '5', 'foo']
       ]
       before do
-        generate_csv(test_csv, rows)
+        generate_csv(rows)
       end
       it 'reshapes the columns as specified after splitting source' do
         expected = [
@@ -39,7 +38,7 @@ RSpec.describe Kiba::Extend::Transforms::Reshape do
         ['123', '234', '345 456', '567', 'bar']
       ]
       before do
-        generate_csv(test_csv, rows)
+        generate_csv(rows)
       end
       it 'reshapes the columns as specified' do
         expected = [

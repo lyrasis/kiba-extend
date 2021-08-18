@@ -1,8 +1,23 @@
 # frozen_string_literal: true
 
 module Helpers
-  def generate_csv(path, rows)
-    CSV.open(path, 'w') do |csv|
+  def test_csv
+    File.join(File.expand_path(__dir__), 'tmp', 'test.csv')
+  end
+  def lookup_csv
+    File.join(File.expand_path(__dir__), 'tmp', 'lkup.csv')
+  end
+
+  
+
+  def generate_csv(rows)
+    CSV.open(test_csv, 'w') do |csv|
+      rows.each { |row| csv << row }
+    end
+  end
+
+  def generate_lookup_csv(rows)
+    CSV.open(lookup_csv, 'w') do |csv|
       rows.each { |row| csv << row }
     end
   end
