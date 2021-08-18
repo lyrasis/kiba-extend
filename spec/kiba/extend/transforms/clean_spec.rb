@@ -18,7 +18,7 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
       ['oatmeal;%NULLVALUE%']
     ]
 
-    before { generate_csv(test_csv, rows) }
+    before { generate_csv(rows) }
     let(:usenull) { false }
     let(:direction) { :asc }
     let(:result) do
@@ -100,7 +100,7 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
       ['5', 'Person;notmapped']
     ]
 
-    before { generate_csv(test_csv, rows) }
+    before { generate_csv(rows) }
     context 'without additional arguments' do
       it 'sets the value of the field in all rows to nil' do
         result = execute_job(filename: test_csv,
@@ -120,7 +120,7 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
   end
 
   describe 'DelimiterOnlyFields' do
-    let(:test_csv) { 'tmp/test.csv' }
+    
     let(:rows) do
       [
         %w[id in_set],
@@ -132,7 +132,7 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
     end
     let(:result) { execute_job(filename: test_csv, xform: Clean::DelimiterOnlyFields, xformopt: options) }
 
-    before { generate_csv(test_csv, rows) }
+    before { generate_csv(rows) }
     after { File.delete(test_csv) if File.exist?(test_csv) }
 
     context 'when use_nullvalue = false (the default)' do
@@ -169,7 +169,7 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
         %w[Aaa 123],
         ['Bbb', '']
       ]
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
       result = execute_job(filename: test_csv,
                            xform: Clean::DowncaseFieldValues,
                            xformopt: {
@@ -184,7 +184,7 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
   end
 
   describe 'EmptyFieldGroups' do
-    let(:test_csv) { 'tmp/test.csv' }
+    
     let(:rows) do
       [
         %w[id a1 a2 b1 b2 b3],
@@ -201,7 +201,7 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
 
     context 'When use_nullvalue = false (the default)' do
       it 'Removes field groups where all fields in group are empty' do
-        generate_csv(test_csv, rows)
+        generate_csv(rows)
         result = execute_job(filename: test_csv,
                              xform: Clean::EmptyFieldGroups,
                              xformopt: {
@@ -255,7 +255,7 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
     end
     context 'When use_nullvalue = true' do
       it 'Removes field groups where all fields in group are empty' do
-        generate_csv(test_csv, rows)
+        generate_csv(rows)
         result = execute_job(filename: test_csv,
                              xform: Clean::EmptyFieldGroups,
                              xformopt: {
@@ -318,7 +318,7 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
         ['2', 'thing xxxx 123'],
         ['3', 'x files']
       ]
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
       result = execute_job(filename: test_csv,
                            xform: Clean::RegexpFindReplaceFieldVals,
                            xformopt: { fields: [:val],
@@ -335,7 +335,7 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
         ['2', 'thing xxxx 123'],
         ['3', 'x files']
       ]
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
       result = execute_job(filename: test_csv,
                            xform: Clean::RegexpFindReplaceFieldVals,
                            xformopt: { fields: [:val],
@@ -351,7 +351,7 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
         ['1', 'the thing'],
         ['2', 'The Thing']
       ]
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
       result = execute_job(filename: test_csv,
                            xform: Clean::RegexpFindReplaceFieldVals,
                            xformopt: { fields: [:val],
@@ -367,7 +367,7 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
         %w[id val],
         ['1', 'a thing']
       ]
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
       result = execute_job(filename: test_csv,
                            xform: Clean::RegexpFindReplaceFieldVals,
                            xformopt: { fields: [:val],
@@ -382,7 +382,7 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
         %w[id val],
         %w[1 xxxxxx]
       ]
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
       result = execute_job(filename: test_csv,
                            xform: Clean::RegexpFindReplaceFieldVals,
                            xformopt: { fields: [:val],
@@ -397,7 +397,7 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
         %w[id val another],
         %w[1 xxxxxx1 xxx2xxxxx]
       ]
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
       result = execute_job(filename: test_csv,
                            xform: Clean::RegexpFindReplaceFieldVals,
                            xformopt: { fields: %i[val another],
@@ -413,7 +413,7 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
           %w[id val],
           %w[1 xxxx1]
         ]
-        generate_csv(test_csv, rows)
+        generate_csv(rows)
         result = execute_job(filename: test_csv,
                              xform: Clean::RegexpFindReplaceFieldVals,
                              xformopt: { fields: [:val],
@@ -431,7 +431,7 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
           %w[id val],
           ['1', 'bats;bats']
         ]
-        generate_csv(test_csv, rows)
+        generate_csv(rows)
         result = execute_job(filename: test_csv,
                              xform: Clean::RegexpFindReplaceFieldVals,
                              xformopt: { fields: [:val],
@@ -454,7 +454,7 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
       ['4', '']
     ]
 
-    before { generate_csv(test_csv, rows) }
+    before { generate_csv(rows) }
     let(:result) { execute_job(filename: test_csv, xform: Clean::StripFields, xformopt: { fields: %i[val] }) }
     it 'strips field value' do
       expected = [

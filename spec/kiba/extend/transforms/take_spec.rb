@@ -3,10 +3,10 @@
 require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Take do
-  let(:test_csv) { 'tmp/test.csv' }
+  
   let(:result) { execute_job(filename: test_csv, xform: transform, xformopt: opts) }
   before do
-    generate_csv(test_csv, rows)
+    generate_csv(rows)
   end
   after do
     File.delete(test_csv) if File.exist?(test_csv)

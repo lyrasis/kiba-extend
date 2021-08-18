@@ -10,7 +10,7 @@ RSpec.describe Kiba::Extend::Transforms::Cspace do
     ]
 
     before do
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
     end
     it 'inserts CS shortID of given source into target' do
       expected = [
@@ -31,7 +31,7 @@ RSpec.describe Kiba::Extend::Transforms::Cspace do
     ]
 
     before do
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
       @old = Cspace.const_get('BRUTEFORCE')
       Cspace.const_set('BRUTEFORCE', {})
     end
@@ -60,7 +60,7 @@ RSpec.describe Kiba::Extend::Transforms::Cspace do
     ]
 
     before do
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
     end
     it 'normalizes as expected' do
       expected = [

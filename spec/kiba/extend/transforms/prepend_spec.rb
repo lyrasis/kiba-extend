@@ -17,7 +17,7 @@ RSpec.describe Kiba::Extend::Transforms::Prepend do
 
     context 'when called with multival prepend field and no mvdelim' do
       before do
-        generate_csv(test_csv, rows)
+        generate_csv(rows)
       end
 
       it 'raises MissingDelimiterError' do
@@ -33,7 +33,7 @@ RSpec.describe Kiba::Extend::Transforms::Prepend do
 
     context 'when delete_prepended = false' do
       before do
-        generate_csv(test_csv, rows)
+        generate_csv(rows)
         @result = execute_job(filename: test_csv,
                               xform: Prepend::FieldToFieldValue,
                               xformopt: { target_field: :name, prepended_field: :prependval, sep: ': ',
@@ -70,7 +70,7 @@ RSpec.describe Kiba::Extend::Transforms::Prepend do
     end
     context 'when delete_prepended = true' do
       before do
-        generate_csv(test_csv, rows)
+        generate_csv(rows)
         @result = execute_job(filename: test_csv,
                               xform: Prepend::FieldToFieldValue,
                               xformopt: { target_field: :name, prepended_field: :prependval, sep: ': ',
@@ -85,7 +85,7 @@ RSpec.describe Kiba::Extend::Transforms::Prepend do
 
     context 'when multivalue_prepended_field = false' do
       before do
-        generate_csv(test_csv, rows)
+        generate_csv(rows)
         @result = execute_job(filename: test_csv,
                               xform: Prepend::FieldToFieldValue,
                               xformopt: { target_field: :name, prepended_field: :prependval, sep: ': ',
@@ -116,7 +116,7 @@ RSpec.describe Kiba::Extend::Transforms::Prepend do
 
     context 'when multivalue_prepended_field = true' do
       before do
-        generate_csv(test_csv, rows)
+        generate_csv(rows)
         @result = execute_job(filename: test_csv,
                               xform: Prepend::FieldToFieldValue,
                               xformopt: { target_field: :name, prepended_field: :prependval, sep: ': ',
@@ -156,7 +156,7 @@ RSpec.describe Kiba::Extend::Transforms::Prepend do
     ]
 
     before do
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
       @result = execute_job(filename: test_csv,
                             xform: Prepend::ToFieldValue,
                             xformopt: { field: :name, value: 'name: ' })

@@ -11,7 +11,7 @@ RSpec.describe Kiba::Extend::Transforms::Rename do
     ]
 
     before do
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
     end
     it 'renames field' do
       expected = [

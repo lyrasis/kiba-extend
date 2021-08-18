@@ -15,7 +15,7 @@ RSpec.describe Kiba::Extend do
       ['3', ' a    b,  ']
     ]
 
-    before { generate_csv(test_csv, rows) }
+    before { generate_csv(rows) }
     it 'converts input data' do
       result = job_csv(filename: test_csv, incsvopt: { converters: [:stripplus] })
       compile = result.map { |e| e[:val] }.uniq
@@ -32,7 +32,7 @@ RSpec.describe Kiba::Extend do
       ['3', ' NULL']
     ]
 
-    before { generate_csv(test_csv, rows) }
+    before { generate_csv(rows) }
     it 'converts input data' do
       expected = [
         { id: '1', val: nil },

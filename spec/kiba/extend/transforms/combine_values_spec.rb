@@ -14,7 +14,7 @@ RSpec.describe Kiba::Extend::Transforms::CombineValues do
     ]
 
     before do
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
     end
     it 'concatenates specified field values, keeping field group integrity' do
       expected = [
@@ -56,7 +56,7 @@ RSpec.describe Kiba::Extend::Transforms::CombineValues do
     ]
 
     before do
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
     end
     it 'concatenates specified field values into new column with specified separator' do
       expected = [
@@ -95,7 +95,7 @@ RSpec.describe Kiba::Extend::Transforms::CombineValues do
           [1, 'Weddy', '', 'adopted'],
           [2, 'Kernel', 'f', 'adopted']
         ]
-        before { generate_csv(test_csv, rows2) }
+        before { generate_csv(rows2) }
 
         it 'does not include blank or nil fields' do
           expected = [
@@ -158,7 +158,7 @@ RSpec.describe Kiba::Extend::Transforms::CombineValues do
     ]
 
     before do
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
     end
     it 'concatenates all fields (with given delimiter) into given field' do
       expected = [

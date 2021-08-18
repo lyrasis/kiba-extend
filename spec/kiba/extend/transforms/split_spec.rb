@@ -4,9 +4,9 @@ require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Split do
   describe 'IntoMultipleColumns' do
-    let(:test_csv) { 'tmp/test.csv' }
+    
     before(:each) do
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
     end
     context 'without max_segments param' do
       let(:rows) { [

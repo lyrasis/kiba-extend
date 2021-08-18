@@ -14,7 +14,7 @@ RSpec.describe Kiba::Extend::Transforms::MsAccess do
     ]
 
     before do
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
     end
     it 'converts scientific notation value to number string' do
       expected = [

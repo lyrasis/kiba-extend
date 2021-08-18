@@ -10,11 +10,11 @@ RSpec.describe Kiba::Extend::Transforms::Explode do
     ]
 
     before do
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
     end
     after do
       File.delete(test_csv) if File.exist?(test_csv)
-      File.delete('tmp/lkp.csv') if File.exist?('tmp/lkp.csv')
+      File.delete(lookup_csv) if File.exist?(lookup_csv)
     end
 
     context 'when given field :r1 and delim \';\'' do
@@ -41,11 +41,11 @@ RSpec.describe Kiba::Extend::Transforms::Explode do
     ]
 
     before do
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
     end
     after do
       File.delete(test_csv) if File.exist?(test_csv)
-      File.delete('tmp/lkp.csv') if File.exist?('tmp/lkp.csv')
+      File.delete(lookup_csv) if File.exist?(lookup_csv)
     end
 
     it 'creates expected result' do
@@ -82,7 +82,7 @@ RSpec.describe Kiba::Extend::Transforms::Explode do
       [7, 'm;;n', 's']
     ]
     before do
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
     end
 
     context 'when multival = true' do

@@ -10,7 +10,7 @@ RSpec.describe Kiba::Extend::Transforms::FilterRows do
       %w[2 Y]
     ]
 
-    before { generate_csv(test_csv, rows) }
+    before { generate_csv(rows) }
     it 'keeps row based on given field value match' do
       result = execute_job(filename: test_csv, xform: FilterRows::FieldEqualTo,
                            xformopt: { action: :keep, field: :id, value: '1' })
@@ -35,7 +35,7 @@ RSpec.describe Kiba::Extend::Transforms::FilterRows do
       %w[2 farmer]
     ]
 
-    before { generate_csv(test_csv, rows) }
+    before { generate_csv(rows) }
     after { File.delete(test_csv) if File.exist?(test_csv) }
 
     it 'keeps row based on given field value match' do
@@ -61,7 +61,7 @@ RSpec.describe Kiba::Extend::Transforms::FilterRows do
       %w[2 Y]
     ]
 
-    before { generate_csv(test_csv, rows) }
+    before { generate_csv(rows) }
     context 'when action: keep' do
       it 'keeps row if given field is populated' do
         result = execute_job(filename: test_csv,

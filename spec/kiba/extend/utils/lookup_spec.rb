@@ -10,7 +10,7 @@ RSpec.describe Kiba::Extend::Utils::Lookup do
     %w[3 c],
     %w[3 d]
   ]
-  before { generate_csv(test_csv, rows) }
+  before { generate_csv(rows) }
   after { File.delete(test_csv) if File.exist?(test_csv) }
 
   describe '#csv_to_hash' do

@@ -18,7 +18,7 @@ RSpec.describe Kiba::Extend::Transforms::Deduplicate do
           ['a', nil, nil],
           %w[a A a]
         ]
-        generate_csv(test_csv, rows)
+        generate_csv(rows)
         expected = [
           { x: 'a', y: nil, z: 'b' },
           { x: 'a', y: nil, z: nil },
@@ -43,7 +43,7 @@ RSpec.describe Kiba::Extend::Transforms::Deduplicate do
           %w[a A a],
           %w[a a B]
         ]
-        generate_csv(test_csv, rows)
+        generate_csv(rows)
         expected = [
           { x: 'a', y: nil, z: nil },
           { x: 'a', y: nil, z: 'B' }
@@ -66,7 +66,7 @@ RSpec.describe Kiba::Extend::Transforms::Deduplicate do
       [1, 2]
     ]
     before do
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
     end
     it 'removes duplicate values in one field (NOT safe for fieldgroups)' do
       expected = [
@@ -91,7 +91,7 @@ RSpec.describe Kiba::Extend::Transforms::Deduplicate do
       %w[3 b]
     ]
     before do
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
       @deduper = {}
     end
     it 'adds column with y/n to indicate duplicate records' do
@@ -121,7 +121,7 @@ RSpec.describe Kiba::Extend::Transforms::Deduplicate do
       %w[1 2]
     ]
     before do
-      generate_csv(test_csv, rows)
+      generate_csv(rows)
     end
     it 'removes duplicate values in one field, and removes corresponding fieldgroup values' do
       expected = [
