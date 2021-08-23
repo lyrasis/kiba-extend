@@ -41,7 +41,7 @@ module Kiba
     setting :delim, ';', reader: true
 
     # Default source class for jobs
-    setting :source, Kiba::Common::Sources::CSV
+    setting :source, Kiba::Common::Sources::CSV, reader: true
     
     # Default destination class for jobs
     setting :destination, Kiba::Extend::Destinations::CSV, reader: true
