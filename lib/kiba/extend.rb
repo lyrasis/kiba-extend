@@ -2,13 +2,14 @@
 
 require 'active_support'
 require 'active_support/core_ext/object'
+require 'dry-configurable'
 require 'kiba'
 require 'kiba-common/sources/csv'
 require 'kiba-common/destinations/csv'
 require 'pry'
 require 'xxhash'
 
-require 'kiba/extend/version'
+#require 'kiba/extend/version'
 
 # Default CSV options
 CSVOPT = { headers: true, header_converters: :symbol }.freeze
@@ -24,12 +25,26 @@ DELIM = ';'
 module Kiba
   # Provides a suite of abstract, reusable, well-tested data transformations for use in Kiba ETL pipelines
   module Extend
-    puts "kiba-extend version: #{Kiba::Extend::VERSION}"
+    extend Dry::Configurable
 
     # Require application files
     Dir.glob("#{__dir__}/**/*").sort.select { |path| path.match?(/\.rb$/) }.each do |rbfile|
       require rbfile.delete_prefix("#{File.expand_path(__dir__)}/lib/")
     end
+    puts "kiba-extend version: #{Kiba::Extend::VERSION}"
+
+    # Default options for reading/writing CSVs
+    setting :csvopts, { headers: true, header_converters: :symbol }, reader: true
+
+    # Default delimiter for splitting/joining values in multi-valued fields
+    setting :delim, ';', reader: true
+
+    # Default source class for jobs
+    setting :source, Kiba::Common::Sources::CSV
+    
+    # Default destination class for jobs
+    setting :destination, Kiba::Extend::Destinations::CSV, reader: true
+    
 
     # strips, collapses multiple spaces, removes terminal commas, strips again
     CSV::Converters[:stripplus] = lambda { |s|

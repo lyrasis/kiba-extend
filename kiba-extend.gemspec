@@ -37,6 +37,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'activesupport', '~> 6.1.4'
   spec.add_dependency 'csv', '~> 3.0'
+  spec.add_dependency 'dry-configurable', '~> 0.11'
   spec.add_dependency 'kiba', '~> 4.0.0'
   spec.add_dependency 'kiba-common', '~> 1.5.0'
   spec.add_dependency 'xxhash', '~> 0.4'
