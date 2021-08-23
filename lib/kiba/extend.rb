@@ -26,6 +26,7 @@ module Kiba
   # Provides a suite of abstract, reusable, well-tested data transformations for use in Kiba ETL pipelines
   module Extend
     extend Dry::Configurable
+    extend self
 
     # Require application files
     Dir.glob("#{__dir__}/**/*").sort.select { |path| path.match?(/\.rb$/) }.each do |rbfile|
