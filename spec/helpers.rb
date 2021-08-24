@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 module Helpers
+  extend self
   def test_csv
     File.join(File.expand_path(__dir__), 'tmp', 'test.csv')
   end

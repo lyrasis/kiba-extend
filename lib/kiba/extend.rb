@@ -25,8 +25,8 @@ DELIM = ';'
 module Kiba
   # Provides a suite of abstract, reusable, well-tested data transformations for use in Kiba ETL pipelines
   module Extend
-    extend Dry::Configurable
     extend self
+    extend Dry::Configurable
 
     # Require application files
     Dir.glob("#{__dir__}/**/*").sort.select { |path| path.match?(/\.rb$/) }.each do |rbfile|
@@ -45,7 +45,9 @@ module Kiba
     
     # Default destination class for jobs
     setting :destination, Kiba::Extend::Destinations::CSV, reader: true
-    
+
+    # Prefix for warnings from the ETL
+    setting :warning_label, 'KIBA WARNING', reader: true
 
     # strips, collapses multiple spaces, removes terminal commas, strips again
     CSV::Converters[:stripplus] = lambda { |s|
