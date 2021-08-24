@@ -1,4 +1,4 @@
-#require_relative 'registered_source'
+require_relative 'registered_source'
 require_relative 'registered_lookup'
 require_relative 'registered_destination'
 
@@ -9,9 +9,6 @@ module Kiba
     class FileRegistry      
       def initialize(registry_hash)
         @reghash = registry_hash
- #       @source = Kiba::Extend::RegisteredSource.new
-
-  #      @lookup = 
       end
 
       def as_destination(filekey)
@@ -23,14 +20,7 @@ module Kiba
       end
       
       def as_source(filekey)
-        file = lookup(filekey)
-        path = file[:path]
-        result = {
-          klass: file[:src_class],
-          args: {filename: path, csv_options: file[:src_opt]},
-          info: {filekey: filekey, desc: file[:desc]},
-        }
-        add_require(result, file)
+        Kiba::Extend::RegisteredSource.new(key: filekey, data: @reghash[filekey])
       end
 
       private

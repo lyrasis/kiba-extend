@@ -29,34 +29,8 @@ RSpec.describe 'Kiba::Extend::FileRegistry' do
     context 'when file does not exist' do
       let(:filekey){ :fkey }
       let(:result){ registry.as_source(filekey) }
-      let(:expected) do
-        {
-          klass: Kiba::Common::Sources::CSV,
-          args: {filename: fkeypath, csv_options: Kiba::Extend.csvopts},
-          info: {filekey: :fkey, desc: 'description'},
-          require: { module: Kiba::Extend, method: :config }
-        }
-      end
-      
-      it 'returns source file config with require key' do
-        expect(result).to eq(expected)
-      end
-    end
-
-    context 'when file exists' do
-      let(:fkeypath){ File.join('spec', 'fixtures', 'existing.csv') }
-      let(:filekey){ :fkey }
-      let(:result){ registry.as_source(filekey) }
-      let(:expected) do
-        {
-          klass: Kiba::Common::Sources::CSV,
-          args: {filename: fkeypath, csv_options: Kiba::Extend.csvopts},
-          info: {filekey: :fkey, desc: 'description'}
-        }
-      end
-      
-      it 'returns source file config without require key' do
-        expect(result).to eq(expected)
+      it 'returns source file config' do
+        expect(result).to be_a(Kiba::Extend::RegisteredSource)
       end
     end
   end
