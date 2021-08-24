@@ -8,10 +8,10 @@ RSpec.describe 'Kiba::Extend::FileRegistry' do
   let(:reghash) do
     { 
       fkey: { path: fkeypath,
-              dest_class: Kiba::Extend.destination, dest_opt: Kiba::Extend.csvopts,
-              src_class: Kiba::Extend.source, src_opt: Kiba::Extend.csvopts,
-              creator_module: Kiba::Extend, creator_method: :config,
-              key: :objectnumber, desc: 'description' }
+             dest_class: Kiba::Extend.destination, dest_opt: Kiba::Extend.csvopts,
+             src_class: Kiba::Extend.source, src_opt: Kiba::Extend.csvopts,
+             creator_module: Kiba::Extend, creator_method: :config,
+             key: :objectnumber, desc: 'description' }
     }
   end
   let(:registry){ Kiba::Extend::FileRegistry.new(reghash) }
@@ -19,16 +19,9 @@ RSpec.describe 'Kiba::Extend::FileRegistry' do
   describe 'as destination' do
     let(:filekey){ :fkey }
     let(:result){ registry.as_destination(filekey) }
-    let(:expected) do
-      {
-        klass: Kiba::Extend::Destinations::CSV,
-        args: {filename: fkeypath, csv_options: Kiba::Extend.csvopts},
-        info: {filekey: :fkey, desc: 'description'}
-      }
-    end
-    
+
     it 'returns destination file config' do
-      expect(result).to eq(expected)
+      expect(result).to be_a(Kiba::Extend::RegisteredDestination)
     end
   end
 
@@ -72,16 +65,8 @@ RSpec.describe 'Kiba::Extend::FileRegistry' do
     context 'when file does not exist' do
       let(:filekey){ :fkey }
       let(:result){ registry.as_lookup(filekey) }
-      let(:expected) do
-        {
-          args: {file: fkeypath, csvopt: Kiba::Extend.csvopts, keycolumn: :objectnumber},
-          info: {filekey: :fkey, desc: 'description'},
-          require: { module: Kiba::Extend, method: :config }
-        }
-      end
-      
-      it 'returns destination file config' do
-        expect(result).to eq(expected)
+      it 'returns lookup file config' do
+        expect(result).to be_a(Kiba::Extend::RegisteredLookup)
       end
     end
   end

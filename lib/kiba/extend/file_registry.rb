@@ -1,35 +1,25 @@
+#require_relative 'registered_source'
+require_relative 'registered_lookup'
+require_relative 'registered_destination'
+
 module Kiba
   module Extend
     # Transforms a file_registry hash (like {Fwm#registry}) into an object that can return
     #   source, lookup, or destination config for that file, for passing to jobs
-    class FileRegistry
-      class FileNotFoundError < StandardError
-        def initialize(filekey)
-          msg = ":#{filekey} not found as key in file registry hash"
-          super(msg)
-        end
-      end
-      
+    class FileRegistry      
       def initialize(registry_hash)
         @reghash = registry_hash
+ #       @source = Kiba::Extend::RegisteredSource.new
+
+  #      @lookup = 
       end
 
       def as_destination(filekey)
-        file = lookup(filekey)
-        {
-          klass: file[:dest_class],
-          args: {filename: file[:path], csv_options: file[:dest_opt]},
-          info: {filekey: filekey, desc: file[:desc]}
-        }
+        Kiba::Extend::RegisteredDestination.new(key: filekey, data: @reghash[filekey])
       end
 
       def as_lookup(filekey)
-        file = lookup(filekey)
-        result = {
-          args: {file: file[:path], csvopt: file[:src_opt], keycolumn: file[:key]},
-          info: {filekey: filekey, desc: file[:desc]},
-        }
-        add_require(result, file)
+        Kiba::Extend::RegisteredLookup.new(key: filekey, data: @reghash[filekey])
       end
       
       def as_source(filekey)
