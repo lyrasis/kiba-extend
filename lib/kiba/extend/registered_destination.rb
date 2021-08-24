@@ -7,7 +7,13 @@ module Kiba
 
       # Arguments for calling Kiba Destination class
       def args
-        {filename: @data[:path], options: file_options}
+        return simple_args unless @data.key?(:dest_special_opts)
+
+        opts = supported_special_opts
+        warn_about_opts if opts.length < @data[:dest_special_opts].length
+        return simple_args if opts.empty?
+        
+        simple_args.merge(supported_special_opts)
       end
 
       # Description of file
@@ -39,6 +45,28 @@ module Kiba
         return Kiba::Extend.csvopts unless @data.key?(:dest_opt)
 
         @data[:dest_opt]
+      end
+
+      def klass_opts
+        klass.instance_method(:initialize).parameters.map{ |arr| arr[1] }
+      end
+
+      def simple_args
+        {filename: @data[:path], options: file_options}
+      end
+
+      def supported_special_opts
+        @data[:dest_special_opts].select{ |key, _| klass_opts.any?(key) }
+      end
+
+      def unsupported_special_opts
+        @data[:dest_special_opts].reject{ |key, _| klass_opts.any?(key) }
+      end
+
+      def warn_about_opts
+        unsupported_special_opts.each do |opt, _|
+          puts "WARNING: Destination file :#{key} is called with special option :#{opt}, which is unsupported by #{klass}"
+        end
       end
     end
   end
