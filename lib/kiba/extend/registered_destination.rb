@@ -26,7 +26,7 @@ module Kiba
         {filekey: @key, desc: description}
       end
       
-      # Kiba Destination class
+      # Kiba Destination class to call
       def klass
         return Kiba::Extend.destination unless @data.key?(:dest_class)
 

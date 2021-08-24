@@ -17,7 +17,7 @@ RSpec.describe 'Kiba::Extend::RegisteredDestination' do
       let(:expected) do
         {filename: path, options: Kiba::Extend.csvopts}
       end
-      it 'returns Kiba::Extend default destination class' do
+      it 'returns with Kiba::Extend csvopts' do
         expect(result).to eq(expected)
       end
     end
@@ -28,7 +28,7 @@ RSpec.describe 'Kiba::Extend::RegisteredDestination' do
       let(:expected) do
         {filename: path, options: override_opts}
       end
-      it 'returns Kiba::Extend default destination class' do
+      it 'returns with given opts' do
         expect(result).to eq(expected)
       end
     end
@@ -63,7 +63,7 @@ RSpec.describe 'Kiba::Extend::RegisteredDestination' do
     context 'with a given class' do    
       let(:override_klass){ Kiba::Common::Sources::CSV }
       let(:data){ { path: path, dest_class: override_klass  } }
-      it 'returns Kiba::Extend default destination class' do
+      it 'returns given class' do
         expect(result).to eq(override_klass)
       end
     end

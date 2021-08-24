@@ -18,6 +18,12 @@ module Kiba
 
         @data[:creator]
       end
+
+      def file_options
+        return Kiba::Extend.csvopts unless @data.key?(:src_opt)
+
+        @data[:src_opt]
+      end
     end
   end
 end

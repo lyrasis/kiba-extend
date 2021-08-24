@@ -3,7 +3,8 @@ require_relative 'requirable_file'
 
 module Kiba
   module Extend
-    # Value object representing a destination file registered in a {Kiba::Extend::FileRegistry}
+    # Value object representing a file registered in a {Kiba::Extend::FileRegistry} that is being
+    #   called into another job as a lookup table
     class RegisteredLookup < RegisteredFile
       include RequirableFile
       # Exception raised if {Kiba::Extend::FileRegistry} contains no lookup key for file
@@ -15,29 +16,17 @@ module Kiba
         end
       end
 
+      # @param key [Symbol] file key from {FileRegistry} data hash
+      # @param data [Hash] file data from {FileRegistry}
       def initialize(key:, data:)
         super
         raise NoLookupKeyError, @key unless @data.key?(:key)
       end
       
       # Arguments for calling {Kiba::Extend::Lookup} with this file
+      # @return [Hash]
       def args
         {file: @data[:path], csvopt: file_options, keycolumn: @data[:key]}
-      end
-
-      # Kiba Destination class
-      def klass
-        return Kiba::Extend.destination unless @data.key?(:dest_class)
-
-        @data[:dest_class]
-      end
-
-      private
-
-      def file_options
-        return Kiba::Extend.csvopts unless @data.key?(:src_opt)
-
-        @data[:src_opt]
       end
     end
   end
