@@ -12,15 +12,15 @@ module Kiba
       end
 
       def as_destination(filekey)
-        Kiba::Extend::RegisteredDestination.new(key: filekey, data: @reghash[filekey])
+        Kiba::Extend::RegisteredDestination.new(key: built_key(filekey), data: lookup(filekey))
       end
 
       def as_lookup(filekey)
-        Kiba::Extend::RegisteredLookup.new(key: filekey, data: @reghash[filekey])
+        Kiba::Extend::RegisteredLookup.new(key: built_key(filekey), data: lookup(filekey))
       end
       
       def as_source(filekey)
-        Kiba::Extend::RegisteredSource.new(key: filekey, data: @reghash[filekey])
+        Kiba::Extend::RegisteredSource.new(key: built_key(filekey), data: lookup(filekey))
       end
 
       private
@@ -32,11 +32,12 @@ module Kiba
         result
       end
 
-      def lookup(filekey)
-        file = @reghash[filekey]
-        raise FileNotFoundError, filekey if file.nil?
+      def built_key(filekey)
+        filekey.map(&:to_s).join('/').to_sym
+      end
 
-        file
+      def lookup(filekey)
+        @reghash.dig(*filekey)
       end
     end
   end
