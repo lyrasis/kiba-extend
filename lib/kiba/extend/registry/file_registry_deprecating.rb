@@ -6,7 +6,7 @@ module Kiba
   module Extend
     # Transforms a file_registry hash (like {Fwm#registry}) into an object that can return
     #   source, lookup, or destination config for that file, for passing to jobs
-    class FileRegistry      
+    class FileRegistryDeprecating
       def initialize(registry_hash)
         @reghash = registry_hash
       end
@@ -23,21 +23,40 @@ module Kiba
         Kiba::Extend::RegisteredSource.new(key: built_key(filekey), data: lookup(filekey))
       end
 
-      private
-
-      def add_require(result, file)
-        return result if File.exist?(file[:path])
-
-        result[:require] = { module: file[:creator_module], method: file[:creator_method] }
-        result
+      def files
+        @files ||= traverse_files
+      end
+      
+      def generated_files
+        
       end
 
+      private
+
       def built_key(filekey)
-        filekey.map(&:to_s).join('/').to_sym
+        key = filekey.is_a?(Symbol) ? [filekey] : filekey
+        key.map(&:to_s).join('/').to_sym
       end
 
       def lookup(filekey)
         @reghash.dig(*filekey)
+      end
+
+      def traverse_files
+      end
+
+      def convert_to_ostruct_recursive(obj, options)
+        result = obj
+        if result.is_a? Hash
+          result = result.dup.with_sym_keys
+          result.each  do |key, val| 
+            result[key] = convert_to_ostruct_recursive(val, options) unless options[:exclude].try(:include?, key)
+          end
+          result = OpenStruct.new result       
+        elsif result.is_a? Array
+          result = result.map { |r| convert_to_ostruct_recursive(r, options) }
+        end
+        return result
       end
     end
   end

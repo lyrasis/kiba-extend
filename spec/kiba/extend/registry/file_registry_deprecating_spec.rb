@@ -3,23 +3,28 @@
 require 'spec_helper'
 
 # rubocop:disable Metrics/BlockLength
-RSpec.describe 'Kiba::Extend::FileRegistry' do
+RSpec.describe 'Kiba::Extend::FileRegistryDeprecating' do
   let(:filekey){ [:fkey] }
   let(:fkeypath){ File.join('spec', 'fixtures', 'fkey.csv') }
   let(:reghash) do
     { 
       fkey: {path: fkeypath, key: :foo },
+      foo: {path: fkeypath, creator: Helpers.method(:test_csv), tags: %i[test] },
+      bar: {path: fkeypath, creator: Helpers.method(:lookup_csv), tags: %i[test report]},
+      baz: {path: fkeypath, creator: Kiba::Extend::Utils::Lookup.method(:csv_to_hash), tags: %i[report]},
       namespace: {
-        subnamespace: {
-          fkey: {path: fkeypath}
+        foo: {path: fkeypath, creator: Helpers.method(:test_csv), tags: %i[test] },
+        sub: {
+          fkey: {path: fkeypath},
+          baz: {path: fkeypath, creator: Helpers.method(:test_csv), tags: %i[report]},
         }
       }
     }
   end
-  let(:registry){ Kiba::Extend::FileRegistry.new(reghash) }
+  let(:registry){ Kiba::Extend::FileRegistryDeprecating.new(reghash) }
 
   context 'with namespaced key' do
-    let(:filekey){ [:namespace, :subnamespace, :fkey] }
+    let(:filekey){ [:namespace, :sub, :fkey] }
     let(:result){ registry.as_source(filekey) }
     
     it 'can lookup namespaced file hash' do
@@ -27,7 +32,7 @@ RSpec.describe 'Kiba::Extend::FileRegistry' do
     end
 
     it 'sends key built as expected' do
-      expect(result.key).to eq(:"namespace/subnamespace/fkey")
+      expect(result.key).to eq(:"namespace/sub/fkey")
     end
   end
 

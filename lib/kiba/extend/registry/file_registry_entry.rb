@@ -52,6 +52,7 @@ module Kiba
         @src_opt = Kiba::Extend.csvopts
         @valid = false
         @errors = {}
+        @warnings = []
       end
 
       def validate
