@@ -11,14 +11,12 @@ module Kiba
       # Arguments for calling Kiba Source class
       # @return [Hash]
       def args
-        {filename: @data[:path], options: file_options}
+        {filename: @data.path, options: file_options}
       end
 
       # Kiba Source class to call
       def klass
-        return Kiba::Extend.source unless @data.key?(:src_class)
-
-        @data[:src_class]
+        @data.src_class
       end
     end
   end

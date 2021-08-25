@@ -2,9 +2,34 @@ require 'kiba/extend'
 
 module Kiba
   module Extend
+    # Value object capturing the data about an entry in the file registry
+    #
+    # This is the underlying data that can be used to derive a registered source,
+    #   destination, or lookup file object.
+    #
+    # Used instead of just passing around a Hash so that it can validate itself and
+    #   carry its own errors/warnings
     class FileRegistryEntry
-      attr_reader :creator, :desc, :dest_class, :dest_opt, :dest_special_opts, :lookup_on,
-        :path, :src_class, :src_opt, :tags, :valid, :errors, :warnings
+
+      # Registry of known source/destination classes and whether they require a path
+      #
+      # Enumerable and Lambda are 'in-memory' and useful for testing and possibly
+      #   virtual transforms on the fly. See an example of use at:
+      #   https://github.com/thbar/kiba-common/blob/master/test/test_lambda_destination.rb
+      PATH_REQ = {
+        nil => false,
+        Kiba::Extend::Destinations::CSV => true,
+        Kiba::Common::Destinations::CSV => true,
+        Kiba::Common::Destinations::Lambda => false,
+        Kiba::Common::Sources::CSV => true,
+        Kiba::Common::Sources::Enumerable => false
+      }
+      attr_reader :path,
+        :creator, :supplied, :dest_special_opts, :desc, :lookup_on, :tags, 
+        :dest_class, :dest_opt, :src_class, :src_opt,
+        :valid, :errors, :warnings
+
+      # @param reghash [Hash] File data. See {file:doc/file_registry_entry.md} for details
       def initialize(reghash)
         set_defaults
         assign_values_from(reghash)
@@ -43,13 +68,14 @@ module Kiba
       def set_defaults
         @creator = nil
         @desc = ''
-        @dest_class = nil
+        @dest_class = Kiba::Extend.destination
         @dest_opt = Kiba::Extend.csvopts
         @dest_special_opts = nil
         @lookup_on = nil
         @path = nil
-        @src_class = nil
+        @src_class = Kiba::Extend.source
         @src_opt = Kiba::Extend.csvopts
+        @supplied = false
         @tags = []
         @valid = false
         @errors = {}
@@ -57,18 +83,39 @@ module Kiba
       end
 
       def validate
-        @errors[:missing_path] = nil unless path
+        validate_path
         validate_creator
         @valid = true if errors.empty?
       end
 
       def validate_creator
-        return unless creator
+        return if supplied
+
+        unless creator
+          @errors[:missing_creator_for_non_supplied_file] = nil
+          return
+        end
         
         unless creator.is_a?(Method)
           @errors[:creator_not_a_method] = creator.dup
           @creator = nil
         end
+      end
+
+      def validate_path
+        if path_required? && !path
+          @errors[:missing_path] = nil
+          return
+        end
+        
+        @path = Pathname.new(path) if path
+      end
+
+      def path_required?
+        chk = [dest_class, src_class].map{ |klass| PATH_REQ[klass] }
+        return false if chk.uniq == [false]
+
+        true
       end
     end
   end

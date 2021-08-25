@@ -25,17 +25,47 @@ RSpec.describe 'Kiba::Extend::FileRegistryEntry' do
   context 'with valid data' do
     let(:data){ {path: path, creator: Helpers.method(:test_csv)} }
     it 'valid as expected' do
-      expect(entry.path).to eq(path)
+      expect(entry.path).to eq(Pathname.new(path))
       expect(entry.valid?).to be true
     end
   end
 
   context 'without path' do
-    let(:data){ {pat: path} }
-    it 'invalid as expected' do
-      expect(entry.path).to be_nil
-      expect(entry.valid?).to be false
-      expect(entry.errors.key?(:missing_path)).to be true
+    context 'when CSV source/dest' do
+      let(:data){ {pat: path, supplied: true} }
+      it 'invalid as expected' do
+        expect(entry.path).to be_nil
+        expect(entry.valid?).to be false
+        expect(entry.errors.key?(:missing_path)).to be true
+      end
+    end
+
+    context 'when un-written source/dest' do
+      let(:data){ {src_class: Kiba::Common::Sources::Enumerable,
+                   dest_class: Kiba::Common::Destinations::Lambda,
+                   supplied: true} }
+      it 'valid as expected' do
+        expect(entry.path).to be_nil
+        expect(entry.valid?).to be true
+      end
+    end
+
+  end
+
+  context 'without creator' do
+    context 'when supplied file' do
+      let(:data){ {path: path, supplied: true} }
+      it 'valid' do
+        expect(entry.valid?).to be true
+      end
+    end
+
+    context 'when not a supplied file' do
+      let(:data){ {path: path} }
+      it 'invalid as expected' do
+        expect(entry.valid?).to be false
+        expect(entry.errors[:missing_creator_for_non_supplied_file]).to be_nil
+      end
     end
   end
 

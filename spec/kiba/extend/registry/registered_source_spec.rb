@@ -6,15 +6,16 @@ require 'spec_helper'
 RSpec.describe 'Kiba::Extend::RegisteredSource' do
   let(:filekey){ :fkey }
   let(:path){ File.join('spec', 'fixtures', 'fkey.csv') }
+  let(:res_path){ Pathname.new(path) }
   let(:default){ { path: path, creator: lambda{Helpers.test_csv} } }
-  let(:source){ Kiba::Extend::RegisteredSource.new(key: filekey, data: data) }
+  let(:source){ Kiba::Extend::RegisteredSource.new(key: filekey, data: Kiba::Extend::FileRegistryEntry.new(data)) }
 
   describe '#args' do
     let(:result){ source.args }
     context 'with basic defaults' do
       let(:data){ default }
       let(:expected) do
-        {filename: path, options: Kiba::Extend.csvopts}
+        {filename: res_path, options: Kiba::Extend.csvopts}
       end
       it 'returns with Kiba::Extend default csvopts' do
         expect(result).to eq(expected)
@@ -25,7 +26,7 @@ RSpec.describe 'Kiba::Extend::RegisteredSource' do
       let(:override_opts){ {foo: :bar} }
       let(:data){ { path: path, src_opt: override_opts  } }
       let(:expected) do
-        {filename: path, options: override_opts}
+        {filename: res_path, options: override_opts}
       end
       it 'returns with given opts' do
         expect(result).to eq(expected)

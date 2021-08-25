@@ -7,10 +7,10 @@ module Kiba
 
       # Arguments for calling Kiba Destination class
       def args
-        return simple_args unless @data.key?(:dest_special_opts)
+        return simple_args unless @data.dest_special_opts
 
         opts = supported_special_opts
-        warn_about_opts if opts.length < @data[:dest_special_opts].length
+        warn_about_opts if opts.length < @data.dest_special_opts.length
         return simple_args if opts.empty?
         
         simple_args.merge(supported_special_opts)
@@ -20,9 +20,7 @@ module Kiba
       #
       # Used in post-processing STDOUT
       def description
-        return '' unless @data.key?(:desc)
-        
-        @data[:desc]
+        @data.desc
       end
 
       # Info hash for file
@@ -34,17 +32,13 @@ module Kiba
       
       # Kiba Destination class to call
       def klass
-        return Kiba::Extend.destination unless @data.key?(:dest_class)
-
-        @data[:dest_class]
+        @data.dest_class
       end
 
       private
 
       def file_options
-        return Kiba::Extend.csvopts unless @data.key?(:dest_opt)
-
-        @data[:dest_opt]
+        @data.dest_opt
       end
 
       def klass_opts
@@ -52,15 +46,15 @@ module Kiba
       end
 
       def simple_args
-        {filename: @data[:path], options: file_options}
+        {filename: @data.path, options: file_options}
       end
 
       def supported_special_opts
-        @data[:dest_special_opts].select{ |key, _| klass_opts.any?(key) }
+        @data.dest_special_opts.select{ |key, _| klass_opts.any?(key) }
       end
 
       def unsupported_special_opts
-        @data[:dest_special_opts].reject{ |key, _| klass_opts.any?(key) }
+        @data.dest_special_opts.reject{ |key, _| klass_opts.any?(key) }
       end
 
       def warn_about_opts

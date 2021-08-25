@@ -7,22 +7,23 @@ module Kiba
       class NoDependencyCreatorError < StandardError
         # @param filekey [Symbol] key for file lacking creator in {Kiba::Extend::FileRegistry}
         def initialize(filekey)
-          msg = "No creator method found for :#{filekey} in file registry hash"
+          msg = "No creator method found for :#{filekey} in file registry"
           super(msg)
         end
       end
 
       def required
-        return if File.exist?(@data[:path])
-        raise NoDependencyCreatorError, @key unless @data.key?(:creator)
+        return if File.exist?(@data.path)
+        
+        [:missing_creator_for_non_supplied_file, :creator_not_a_method].each do |err|
+          raise NoDependencyCreatorError, @key if @data.errors.keys.any?(err)
+        end
 
-        @data[:creator]
+        @data.creator
       end
 
       def file_options
-        return Kiba::Extend.csvopts unless @data.key?(:src_opt)
-
-        @data[:src_opt]
+        @data.src_opt
       end
     end
   end
