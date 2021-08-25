@@ -49,6 +49,8 @@ module Kiba
     # Prefix for warnings from the ETL
     setting :warning_label, 'KIBA WARNING', reader: true
 
+    setting :registry, Kiba::Extend::FileRegistry.new, reader: true
+
     # strips, collapses multiple spaces, removes terminal commas, strips again
     CSV::Converters[:stripplus] = lambda { |s|
       begin

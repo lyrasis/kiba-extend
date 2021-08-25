@@ -4,7 +4,7 @@ module Kiba
   module Extend
     class FileRegistryEntry
       attr_reader :creator, :desc, :dest_class, :dest_opt, :dest_special_opts, :lookup_on,
-        :path, :src_class, :src_opt, :valid, :errors, :warnings
+        :path, :src_class, :src_opt, :tags, :valid, :errors, :warnings
       def initialize(reghash)
         set_defaults
         assign_values_from(reghash)
@@ -50,6 +50,7 @@ module Kiba
         @path = nil
         @src_class = nil
         @src_opt = Kiba::Extend.csvopts
+        @tags = []
         @valid = false
         @errors = {}
         @warnings = []
