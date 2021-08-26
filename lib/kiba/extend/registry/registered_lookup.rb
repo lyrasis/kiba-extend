@@ -5,13 +5,15 @@ module Kiba
   module Extend
     # Value object representing a file registered in a {Kiba::Extend::FileRegistry} that is being
     #   called into another job as a lookup table
+    #
+    # Assumes this file will be used to build a {Kiba::Extend::Lookup}
     class RegisteredLookup < RegisteredFile
       include RequirableFile
       # Exception raised if {Kiba::Extend::FileRegistry} contains no lookup key for file
       class NoLookupKeyError < StandardError
         # @param filekey [Symbol] key not found in {Kiba::Extend::FileRegistry}
         def initialize(filekey)
-          msg = "No lookup key found for :#{filekey} in file registry hash"
+          msg = "No lookup key column found for :#{filekey} in file registry hash"
           super(msg)
         end
       end
@@ -35,7 +37,7 @@ module Kiba
       # Arguments for calling {Kiba::Extend::Lookup} with this file
       # @return [Hash]
       def args
-        {file: @data.path, csvopt: file_options, keycolumn: @data.lookup_on}
+        {file: path, csvopt: file_options(@data.src_class), keycolumn: @data.lookup_on}
       end
     end
   end

@@ -66,17 +66,24 @@
 
 <p><a href="https://github.com/lyrasis/mimsy-to-cspace">mimsy-to-cspace</a> is a publicly available example of <code>kiba-extend</code> usage.</p>
 
-<p>Current projects in the Lyrasis <code>migrations-private</code> repo reflect my preferred practices for structuring Kiba-based projects, which have changed since the project that resulted in the current iteration of <code>mimsy-to-cspace</code>.</p>
+<p>Current projects in the Lyrasis <code>migrations-private</code> repo reflect my preferred practices for structuring Kiba-based projects, which have changed since the project that resulted in the current iteration of <code>mimsy-to-cspace</code>. See list below for some links to specific interesting/relatively unusual examples of use.</p>
 
 <p>I am working on better documentation for the transformations included in <code>kiba-extend</code>, which is available at <a href="https://lyrasis.github.io/kiba-extend">lyrasis.github.io/kiba-extend</a>/</p>
 
 <p>To get a full overview of available transformations and what they do, run <code>rake spec</code> from the repo base directory. This will give you the names of all the transformations in <code>kiba-extend</code> and brief descriptions of what they do.</p>
 
 <p>For more clarity about exactly what each transformation does, if it is not described in the documentation yet, check the actual test files in <code>/spec/kiba/extend/transforms</code>.</p>
+
+<h2 id="label-Examples">Examples</h2>
+
+<p>If the links below do not work, look for the same path in the archived projects folder.</p>
+<ul><li>
+<p>Use plain-old Ruby to <a href="https://github.com/lyrasis/fwm-cspace-migration/blob/e05e632545fbfe772d37afa7e230cacf1ebd9fd8/lib/fwm/authority_export.rb#L28-L34">iterate through all files in a directory, process them the same way</a>, and then <a href="https://github.com/lyrasis/fwm-cspace-migration/blob/e05e632545fbfe772d37afa7e230cacf1ebd9fd8/lib/fwm/authority_export.rb#L73-L77">merge them</a>.</p>
+</li></ul>
 </div></div>
 
       <div id="footer">
-  Generated on Mon Aug  9 16:21:12 2021 by
+  Generated on Wed Aug 25 11:48:41 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-2.7.3).
 </div>

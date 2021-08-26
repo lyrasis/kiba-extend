@@ -11,7 +11,7 @@ module Kiba
       # Arguments for calling Kiba Source class
       # @return [Hash]
       def args
-        {filename: @data.path, options: file_options}
+        [{filename: path}.merge(labeled_options(klass))]
       end
 
       # Kiba Source class to call

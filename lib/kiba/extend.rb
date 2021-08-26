@@ -9,6 +9,7 @@ require 'kiba-common/sources/enumerable'
 require 'kiba-common/destinations/csv'
 require 'kiba-common/destinations/lambda'
 require 'pry'
+require 'byebug'
 require 'xxhash'
 
 #require 'kiba/extend/version'
@@ -34,10 +35,15 @@ module Kiba
     Dir.glob("#{__dir__}/**/*").sort.select { |path| path.match?(/\.rb$/) }.each do |rbfile|
       require rbfile.delete_prefix("#{File.expand_path(__dir__)}/lib/")
     end
-    puts "kiba-extend version: #{Kiba::Extend::VERSION}"
+
+    # So we can call Kiba.job_segment
+    Kiba.extend(Kiba::Extend::Jobs::JobSegmenter)
 
     # Default options for reading/writing CSVs
     setting :csvopts, { headers: true, header_converters: :symbol }, reader: true
+
+    # Default settings for Lambda destination
+    setting :lambdaopts, { on_write: ->(r) { accumulator << r } }, reader: true
 
     # Default delimiter for splitting/joining values in multi-valued fields
     setting :delim, ';', reader: true

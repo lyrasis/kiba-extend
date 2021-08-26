@@ -1,8 +1,11 @@
+require_relative 'source_dest_registry'
+
 module Kiba
   module Extend
     # Abstract base class defining interface for destination files, lookup files, and source files
     #   returned by {Kiba::Extend::FileRegistry}
     class RegisteredFile
+      include SourceDestRegistry
       # Exception raised if no path is given in {FileRegistry} hash
       class NoFilePathError < StandardError
         # @param filekey [Symbol] key for which a file path was not found in {Kiba::Extend::FileRegistry}
@@ -23,6 +26,12 @@ module Kiba
         raise NoFilePathError, key if data.errors.keys.any?(:missing_path)
 
         @key, @data = key, data
+      end
+
+      private
+
+      def path
+        @data.path.to_s
       end
     end
   end

@@ -4,6 +4,7 @@ require_relative 'registered_source'
 require_relative 'registered_lookup'
 require_relative 'registered_destination'
 require_relative 'file_registry_entry'
+require_relative 'registry_validator'
 
 module Kiba
   module Extend
@@ -21,28 +22,6 @@ module Kiba
         end
       end
 
-      def created_by_class(cstr)
-        entries.select{ |_, val| val.creator && val.creator.owner.to_s[cstr] }
-      end
-      
-      def created_by_method(mstr)
-        matcher = "#<Method: #{mstr}("
-        entries.select{ |_, val| val.creator && val.creator.to_s[matcher] }
-      end
-      
-      def invalid
-        entries.reject{ |_, val| val.valid? }
-      end
-
-      def tagged(tag)
-        entries.select{ |_, val| val.tags.any?(tag) }
-      end
-      
-      def transform
-        entries.each{ |key, val| self.decorate(key){ FileRegistryEntry.new(val) } }
-        @entries = populate_entries
-      end
-      
       def as_destination(filekey)
         Kiba::Extend::RegisteredDestination.new(key: filekey, data: lookup(filekey))
       end
@@ -55,11 +34,25 @@ module Kiba
         Kiba::Extend::RegisteredSource.new(key: filekey, data: lookup(filekey))
       end
 
-      private
-
       def entries
         @entries ||= populate_entries
       end
+      
+      def transform
+        self.each { |key, val| self.decorate(key){ FileRegistryEntry.new(val) } }
+        @entries = populate_entries
+        self.each{ |key, val| val.set_key(key) }
+      end
+
+      def valid?
+        validator.valid?
+      end
+
+      def warnings?
+        validator.warnings?
+      end
+      
+      private
 
       def lookup(key)
         self.resolve(key)
@@ -68,9 +61,13 @@ module Kiba
       end
       
       def populate_entries
-        hash = {}
-        self.each{ |entry| hash[entry[0]] = entry[1] }
-        hash
+        arr = []
+        self.each{ |entry| arr << entry[1] }
+        arr
+      end
+
+      def validator
+        @validator ||= RegistryValidator.new
       end
     end
   end

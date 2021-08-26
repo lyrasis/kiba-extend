@@ -2,6 +2,55 @@
 
 module Helpers
   extend self
+
+  def fixtures_dir
+    app_dir = File.realpath(File.join(File.dirname(__FILE__), '..'))
+    File.join(app_dir, 'spec', 'fixtures')
+  end
+
+  def base_job
+    Kiba::Extend::Jobs::BaseJob.new(files: base_job_config, transformer: base_job_transforms)
+  end
+
+  def base_job_config
+    { source: [:base_src], destination: ['base_dest'], lookup: [:base_lookup] }
+  end
+
+  def base_job_transforms
+    Kiba.job_segment do
+      transform Kiba::Extend::Transforms::Rename::Field, from: :letter, to: :alpha
+    end
+  end
+  
+  def populate_registry
+    fkeypath = File.join(fixtures_dir, 'fkey.csv')
+    entries = { fkey: {path: fkeypath, supplied: true, lookup_on: :id},
+               invalid: {},
+               fee: {path: fkeypath, lookup_on: :foo, supplied: true},
+               foo: {path: fkeypath, creator: Helpers.method(:test_csv), tags: %i[test] },
+               bar: {path: fkeypath, creator: Helpers.method(:lookup_csv), tags: %i[test report]},
+               baz: {path: fkeypath, creator: Kiba::Extend::Utils::Lookup.method(:csv_to_hash), tags: %i[report]},
+               warn: {path: fkeypath, dest_class: Kiba::Common::Destinations::CSV,
+                      creator: Kiba::Extend.method(:csvopts),
+                      dest_special_opts: { initial_headers: %i[objectnumber briefdescription] }}
+              }
+    entries.each{ |key, data| Kiba::Extend.registry.register(key, data) }
+    Kiba::Extend.registry.namespace(:ns) do
+      namespace(:sub) do
+        register(:fkey, {path: 'data', supplied: true})
+      end
+    end
+  end
+
+  def transform_registry
+    Kiba::Extend.registry.transform
+  end
+  
+  def prepare_registry
+    populate_registry
+    transform_registry
+  end
+  
   def test_csv
     File.join(File.expand_path(__dir__), 'tmp', 'test.csv')
   end

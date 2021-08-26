@@ -1,4 +1,4 @@
-require 'kiba/extend'
+require_relative 'source_dest_registry'
 
 module Kiba
   module Extend
@@ -10,21 +10,9 @@ module Kiba
     # Used instead of just passing around a Hash so that it can validate itself and
     #   carry its own errors/warnings
     class FileRegistryEntry
+      include SourceDestRegistry
 
-      # Registry of known source/destination classes and whether they require a path
-      #
-      # Enumerable and Lambda are 'in-memory' and useful for testing and possibly
-      #   virtual transforms on the fly. See an example of use at:
-      #   https://github.com/thbar/kiba-common/blob/master/test/test_lambda_destination.rb
-      PATH_REQ = {
-        nil => false,
-        Kiba::Extend::Destinations::CSV => true,
-        Kiba::Common::Destinations::CSV => true,
-        Kiba::Common::Destinations::Lambda => false,
-        Kiba::Common::Sources::CSV => true,
-        Kiba::Common::Sources::Enumerable => false
-      }
-      attr_reader :path,
+      attr_reader :path, :key,
         :creator, :supplied, :dest_special_opts, :desc, :lookup_on, :tags, 
         :dest_class, :dest_opt, :src_class, :src_opt,
         :valid, :errors, :warnings
@@ -36,6 +24,14 @@ module Kiba
         validate
       end
 
+      def set_key(key)
+        @key = key
+      end
+      
+      def summary
+        "#{key} -- #{tags.join(', ')}\n  #{path}\n  #{desc}"
+      end
+
       def valid?
         valid
       end
@@ -43,7 +39,7 @@ module Kiba
       private
 
       def allowed_settings
-        @allowed_settings ||= self.instance_variables
+        self.instance_variables
           .map(&:to_s)
           .map{ |str| str.delete_prefix('@') }
           .map(&:to_sym)
@@ -63,6 +59,13 @@ module Kiba
       
       def assign_values_from(reghash)
         reghash.each{ |key, val| assign_value(key, val) }
+      end
+
+      def path_required?
+        chk = [dest_class, src_class].map{ |klass| requires_path?(klass) }
+        return false if chk.uniq == [false]
+
+        true
       end
       
       def set_defaults
@@ -109,13 +112,6 @@ module Kiba
         end
         
         @path = Pathname.new(path) if path
-      end
-
-      def path_required?
-        chk = [dest_class, src_class].map{ |klass| PATH_REQ[klass] }
-        return false if chk.uniq == [false]
-
-        true
       end
     end
   end

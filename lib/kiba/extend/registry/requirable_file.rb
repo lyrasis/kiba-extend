@@ -21,10 +21,6 @@ module Kiba
 
         @data.creator
       end
-
-      def file_options
-        @data.src_opt
-      end
     end
   end
 end

@@ -7,13 +7,13 @@ module Kiba
 
       # Arguments for calling Kiba Destination class
       def args
-        return simple_args unless @data.dest_special_opts
+        return [simple_args] unless @data.dest_special_opts
 
         opts = supported_special_opts
         warn_about_opts if opts.length < @data.dest_special_opts.length
-        return simple_args if opts.empty?
+        return [simple_args] if opts.empty?
         
-        simple_args.merge(supported_special_opts)
+        [simple_args.merge(supported_special_opts)]
       end
 
       # Description of file
@@ -37,16 +37,12 @@ module Kiba
 
       private
 
-      def file_options
-        @data.dest_opt
-      end
-
       def klass_opts
         klass.instance_method(:initialize).parameters.map{ |arr| arr[1] }
       end
 
       def simple_args
-        {filename: @data.path, options: file_options}
+        {filename: path}.merge(labeled_options(klass))
       end
 
       def supported_special_opts
