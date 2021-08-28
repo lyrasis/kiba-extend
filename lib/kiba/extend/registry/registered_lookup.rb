@@ -37,7 +37,8 @@ module Kiba
       # Arguments for calling {Kiba::Extend::Lookup} with this file
       # @return [Hash]
       def args
-        {file: path, csvopt: file_options(@data.src_class), keycolumn: @data.lookup_on}
+        opts = @data.src_opt ? @data.src_opt : file_options(@data.src_class)
+        {file: path, csvopt: opts, keycolumn: @data.lookup_on}
       end
     end
   end

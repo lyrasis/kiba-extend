@@ -17,7 +17,7 @@ module Kiba
 
       # @!attribute [r] key
       #   @return [Symbol] The file's key in {FileRegistry} hash
-      attr_reader :key
+      attr_reader :key, :data
 
       # @param key [Symbol] the {Kiba::Extend::FileRegistry} lookup key
       # @param data [Hash] the hash of data for the file from {Kiba::Extend::FileRegistry}
@@ -27,8 +27,6 @@ module Kiba
 
         @key, @data = key, data
       end
-
-      private
 
       def path
         @data.path.to_s

@@ -7,11 +7,12 @@ module Kiba
     #   called into another job as a source table
     class RegisteredSource < RegisteredFile
       include RequirableFile
-      
+
       # Arguments for calling Kiba Source class
       # @return [Hash]
       def args
-        [{filename: path}.merge(labeled_options(klass))]
+        opts = @data.src_opt ? {options_label(klass) => @data.src_opt} : labeled_options(klass)
+        [{filename: path}.merge(opts)]
       end
 
       # Kiba Source class to call

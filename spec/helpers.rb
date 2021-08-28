@@ -7,20 +7,6 @@ module Helpers
     app_dir = File.realpath(File.join(File.dirname(__FILE__), '..'))
     File.join(app_dir, 'spec', 'fixtures')
   end
-
-  def base_job
-    Kiba::Extend::Jobs::BaseJob.new(files: base_job_config, transformer: base_job_transforms)
-  end
-
-  def base_job_config
-    { source: [:base_src], destination: ['base_dest'], lookup: [:base_lookup] }
-  end
-
-  def base_job_transforms
-    Kiba.job_segment do
-      transform Kiba::Extend::Transforms::Rename::Field, from: :letter, to: :alpha
-    end
-  end
   
   def populate_registry
     fkeypath = File.join(fixtures_dir, 'fkey.csv')
@@ -50,7 +36,30 @@ module Helpers
     populate_registry
     transform_registry
   end
+
+  def fake_creator_method
+    FileUtils.touch(File.join(fixtures_dir, 'base_job_missing.csv'))
+  end
+
+  # for test in Kiba::Extend::Jobs::BaseJobsSpec that I can't get working
+  # class BaseJob
+  #   include Kiba::Extend::Jobs::Runner
+    
+  #   attr_reader :files
+  #   def initialize(files:)
+  #     @files = setup_files(files)
+  #   end
+
+  #   def creator=(arg)
+  #     @creator = arg
+  #   end
+
+  #   def creator
+  #     @creator
+  #   end
+  # end
   
+
   def test_csv
     File.join(File.expand_path(__dir__), 'tmp', 'test.csv')
   end

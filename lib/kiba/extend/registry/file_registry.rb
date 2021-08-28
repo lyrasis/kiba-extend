@@ -13,6 +13,8 @@ module Kiba
     class FileRegistry
       include Dry::Container::Mixin
 
+      self.config.namespace_separator = '__'
+      
       # Exception raised if the file key is not registered
       class KeyNotRegisteredError < StandardError
         # @param filekey [Symbol]

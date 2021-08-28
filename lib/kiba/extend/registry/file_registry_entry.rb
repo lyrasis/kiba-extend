@@ -13,7 +13,7 @@ module Kiba
       include SourceDestRegistry
 
       attr_reader :path, :key,
-        :creator, :supplied, :dest_special_opts, :desc, :lookup_on, :tags, 
+        :creator, :supplied, :dest_special_opts, :desc, :lookup_on, :tags, :message,
         :dest_class, :dest_opt, :src_class, :src_opt,
         :valid, :errors, :warnings
 

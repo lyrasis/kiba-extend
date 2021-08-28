@@ -14,7 +14,7 @@ RSpec.describe 'Kiba::Extend::RegisteredSource' do
     context 'with basic defaults' do
       let(:data){ default }
       let(:expected) do
-        {filename: path, options: Kiba::Extend.csvopts}
+        [{filename: path, csv_options: Kiba::Extend.csvopts}]
       end
       it 'returns with Kiba::Extend default csvopts' do
         expect(result).to eq(expected)
@@ -25,7 +25,7 @@ RSpec.describe 'Kiba::Extend::RegisteredSource' do
       let(:override_opts){ {foo: :bar} }
       let(:data){ { path: path, src_opt: override_opts  } }
       let(:expected) do
-        {filename: path, options: override_opts}
+        [{filename: path, csv_options: override_opts}]
       end
       it 'returns with given opts' do
         expect(result).to eq(expected)

@@ -31,7 +31,7 @@ RSpec.describe 'Kiba::Extend::FileRegistry' do
 
     context 'with namespace' do
       it 'registers and resolves' do
-        expect(registry.resolve('ns.sub.fkey')).to eq({path: 'data', supplied: true})
+        expect(registry.resolve('ns__sub__fkey')).to eq({path: 'data', supplied: true})
       end
     end
   end

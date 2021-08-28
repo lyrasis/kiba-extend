@@ -1,4 +1,8 @@
+require_relative 'runner'
 require_relative 'parser'
+require_relative 'show_me_job'
+require_relative 'tell_me_job'
+require_relative 'dependency_job'
 
 module Kiba
   module Extend
@@ -49,17 +53,27 @@ module Kiba
       # @abstract
       # @return [Kiba::Control]
       class BaseJob
+        include Runner
         include Parser
-        attr_reader :control, :files, :transformer
+        
+        attr_reader :control, :context, :files, :transformer, :job_data
         # @param files [Hash]
         # @param transformer [Kiba::Control]
         # @param show [Boolean]
-        def initialize(files:, transformer:, show: false)
-          @srcrows = 0
-          @outrows = 0
+        def initialize(files:, transformer:)
+          @caller = caller(2, 5)          
+          @dependency = true if @caller.join(' ')['block in handle_requirements']
+          extend DependencyJob if @dependency
           @files = setup_files(files)
+          @job_data = @files[:destination].first.data
+          report_run_start
+          @control = Kiba::Control.new
+          @context = Kiba::Context.new(control)
           @transformer = transformer
+          handle_requirements
           assemble_control
+          run
+          report_run_end
         end
 
         def run
@@ -68,45 +82,6 @@ module Kiba
 
         #private
 
-        # Must not be the same as any of the core components/methods of {Kiba::Control}, such as
-        #  `:sources` or `:transforms`
-        def job_instance_variables_deprecate
-          { srcrows: 0, outrows: 0 }
-        end
-
-        def assemble_control
-          @control = parse_job([pre_process, transform, post_process])
-          %i[config sources destinations].each do |method_name|
-            populate_control(method(method_name))
-          end
-        end
-        
-        def assemble_control_deprecate
-          set_instance_variables_deprecate
-          %i[pre_processes config sources transforms destinations post_processes].each do |method_name|
-            puts method_name
-            populate_control(method(method_name))
-          end
-        end
-
-        # @todo raise error if job_instance_variables names conflict with {Kiba::Control} instance variables
-        def set_instance_variables
-          job_instance_variables.each do |var, val|
-            control.instance_variable_set("@#{var}".to_sym, val)
-          end
-        end
-        
-        def populate_control(method)
-          elements = method.call
-          control_method = control.method(method.name)
-          target = control_method.call
-          if method.name == :config
-            target.merge(elements)
-          else
-            elements.each{ |element| target << element }
-          end
-        end
-        
         def initial_transforms
           Kiba.job_segment do
             transform{ |r| r.to_h }
@@ -134,40 +109,20 @@ module Kiba
           end.config
         end
 
-        def file_config(config)
-          {klass: config.klass, args: config.args }
-        end
-        
-        def sources
-          @files[:source].map{ |config| file_config(config) }
-        end
-        
-        def destinations
-          @files[:destination].map{ |config| file_config(config) }
-        end
-
         def post_process
-          Kiba.job_segment do
-            post_process do
-              puts "#{@outrows} (of #{@srcrows})"
+          if @dependency
+            Kiba.job_segment do
+              post_process do
+              end
+            end
+          else
+            Kiba.job_segment do
+              post_process do
+                puts ''
+                puts "#{@outrows} (of #{@srcrows}) rows"
+              end
             end
           end
-        end
-        
-        def lookups
-        end
-        
-        def transform
-          [initial_transforms, @transformer, final_transforms].flatten
-        end
-
-        def setup_files(files)
-          tmp = {}
-          files.each do |type, arr|
-            method = Kiba::Extend.registry.method("as_#{type}")
-            tmp[type] = arr.map{ |key| method.call(key) }
-          end
-          tmp
         end
       end
     end

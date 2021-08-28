@@ -10,7 +10,7 @@ end
 RSpec.describe 'Kiba::Extend::RequirableFile' do
   let(:filekey){ :fkey }
   let(:path){ File.join('spec', 'fixtures', 'fkey.csv') }
-  let(:default){ { path: path, creator: Helpers.method(:test_csv) } }
+  let(:default){ { path: path, creator: Helpers.method(:fake_creator_method) } }
   let(:klass){ TestClass.new(key: filekey, data: Kiba::Extend::FileRegistryEntry.new(data)) }
 
   context 'when called without creator' do
@@ -23,10 +23,17 @@ RSpec.describe 'Kiba::Extend::RequirableFile' do
   
   describe '#required' do
     let(:result){ klass.required }
-    context 'with basic defaults' do
-      let(:data){ default }
+    let(:data){ default }
+    context 'when file does not exist at path' do
       it 'returns creator Method' do
-        expect(result).to be_a(Method)
+        expect(result).to eq(Helpers.method(:fake_creator_method))
+      end
+    end
+
+    context 'when file exists at path' do
+      let(:path){ File.join(fixtures_dir, 'base_job_base.csv') }
+      it 'returns nil' do
+        expect(result).to be nil
       end
     end
   end

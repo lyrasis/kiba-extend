@@ -6,17 +6,16 @@ require 'spec_helper'
 RSpec.describe 'Kiba::Extend::RegisteredDestination' do
   let(:filekey){ :fkey }
   let(:path){ File.join('spec', 'fixtures', 'fkey.csv') }
-  let(:res_path){ Pathname.new(path) }
   let(:default){ { path: path } }
   let(:default_desc){ { path: path, desc: 'description' } }
   let(:dest){ Kiba::Extend::RegisteredDestination.new(key: filekey, data: Kiba::Extend::FileRegistryEntry.new(data)) }
-
+  let(:optres){ {csv_options: Kiba::Extend.csvopts} }
   describe '#args' do
     let(:result){ dest.args }
     context 'with basic defaults' do
       let(:data){ default }
       let(:expected) do
-        {filename: res_path, options: Kiba::Extend.csvopts}
+        [{filename: path}.merge(optres)]
       end
       it 'returns with Kiba::Extend csvopts' do
         expect(result).to eq(expected)
@@ -27,7 +26,7 @@ RSpec.describe 'Kiba::Extend::RegisteredDestination' do
       let(:override_opts){ {foo: :bar} }
       let(:data){ { path: path, dest_opt: override_opts  } }
       let(:expected) do
-        {filename: res_path, options: override_opts}
+        [{filename: path, csv_options: override_opts}]
       end
       it 'returns with given opts' do
         expect(result).to eq(expected)
@@ -39,7 +38,7 @@ RSpec.describe 'Kiba::Extend::RegisteredDestination' do
         let(:extra){ {initial_headers: %i[a b]} }
         let(:data){ {path: path, dest_class: Kiba::Extend::Destinations::CSV, dest_special_opts: extra}  }
         let(:expected) do
-          {filename: res_path, options: Kiba::Extend.csvopts, initial_headers: %i[a b]}
+          [{filename: path, csv_options: Kiba::Extend.csvopts, initial_headers: %i[a b]}]
         end
         it 'returns with extra options' do
           expect(result).to eq(expected)
@@ -50,7 +49,7 @@ RSpec.describe 'Kiba::Extend::RegisteredDestination' do
         let(:extra){ {blah: %i[a b]} }
         let(:data){ {path: path, dest_class: Kiba::Extend::Destinations::CSV, dest_special_opts: extra}  }
         let(:expected) do
-          {filename: res_path, options: Kiba::Extend.csvopts}
+          [{filename: path, csv_options: Kiba::Extend.csvopts}]
         end
         it 'returns without extra options' do
           expect(result).to eq(expected)
