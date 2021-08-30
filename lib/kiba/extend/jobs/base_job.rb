@@ -61,26 +61,26 @@ module Kiba
         # @param transformer [Kiba::Control]
         # @param show [Boolean]
         def initialize(files:, transformer:)
-          @caller = caller(2, 5)          
-          @dependency = true if @caller.join(' ')['block in handle_requirements']
+          @dependency = true if caller(2, 5).join(' ')['block in handle_requirements']
           extend DependencyJob if @dependency
+
           @files = setup_files(files)
           @job_data = @files[:destination].first.data
-          report_run_start
+          report_run_start # defined in Reporter
           @control = Kiba::Control.new
           @context = Kiba::Context.new(control)
           @transformer = transformer
-          handle_requirements
-          assemble_control
+          handle_requirements # defined in Runner
+          assemble_control # defined in Runner
           run
-          report_run_end
+          report_run_end # defined in Reporter
         end
 
         def run
           Kiba.run(control)
         end
 
-        #private
+        private
 
         def initial_transforms
           Kiba.job_segment do
@@ -110,17 +110,8 @@ module Kiba
         end
 
         def post_process
-          if @dependency
-            Kiba.job_segment do
-              post_process do
-              end
-            end
-          else
-            Kiba.job_segment do
-              post_process do
-                puts ''
-                puts "#{@outrows} (of #{@srcrows}) rows"
-              end
+          Kiba.job_segment do
+            post_process do
             end
           end
         end

@@ -14,8 +14,11 @@ module Kiba
 
       attr_reader :path, :key,
         :creator, :supplied, :dest_special_opts, :desc, :lookup_on, :tags, :message,
-        :dest_class, :dest_opt, :src_class, :src_opt,
+        :dest_class, :dest_opt, :src_class, :src_opt, :type,
         :valid, :errors, :warnings
+
+      # allowed types
+      TYPES = :file, :fileset, :enum, :lambda
 
       # @param reghash [Hash] File data. See {file:doc/file_registry_entry.md} for details
       def initialize(reghash)
@@ -69,6 +72,7 @@ module Kiba
       end
       
       def set_defaults
+        @type = :file
         @creator = nil
         @desc = ''
         @dest_class = Kiba::Extend.destination
@@ -88,6 +92,7 @@ module Kiba
       def validate
         validate_path
         validate_creator
+        validate_type
         @valid = true if errors.empty?
       end
 
@@ -112,6 +117,12 @@ module Kiba
         end
         
         @path = Pathname.new(path) if path
+      end
+
+      def validate_type
+        return if TYPES.any?(@type)
+
+        @errors[:unknown_type] = @type
       end
     end
   end

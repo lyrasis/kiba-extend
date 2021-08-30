@@ -11,12 +11,9 @@ module Kiba
           when :minimal
             minimal_start
             return
+          else
+            normal_start
           end
-
-          puts "\n-=-=-=-=-=-=-=-=-=-=-=-"
-          puts start_and_def
-          puts desc_and_tags
-          puts ''
         end
 
         def report_run_end
@@ -27,11 +24,9 @@ module Kiba
           when :minimal
             minimal_end
             return
+          else
+            normal_end
           end
-
-          puts "written to #{job_data.path}"
-          puts "NOTE: #{job_data.message.upcase}" if job_data.message
-          puts ''
         end
 
         def verbose_start
@@ -41,16 +36,39 @@ module Kiba
           puts ''
           put_file_details
         end
+
+        def normal_start
+          puts "\n-=-=-=-=-=-=-=-=-=-=-=-"
+          puts start_and_def
+          puts desc_and_tags
+          puts ''
+        end
         
         def minimal_start
+          puts "\n-=-=-=-=-=-=-=-=-=-=-=-"
           puts start_and_def
         end
 
         def verbose_end
+          puts "\n#{job_data.key} complete"
+          puts "#{row_report} written to #{job_data.path}"
+          puts "NOTE: #{job_data.message.upcase}" if job_data.message
+          puts "-=-=-=-=-=-=-=-=-=-=-=-"
+          puts ''
         end
 
-        # minimal = silent for dependency jobs        
+        def normal_end
+          puts "\n#{row_report} written to #{job_data.path}"
+          puts "NOTE: #{job_data.message.upcase}" if job_data.message
+          puts "-=-=-=-=-=-=-=-=-=-=-=-"
+          puts ''
+        end
+
+        # silent
         def minimal_end
+          puts row_report
+          puts "-=-=-=-=-=-=-=-=-=-=-=-"
+          puts ''
         end
 
         def start_label
@@ -81,6 +99,10 @@ module Kiba
           end
           puts ''
         end
+
+        def row_report
+          "#{context.instance_variable_get(:@outrows)} of #{context.instance_variable_get(:@srcrows)} rows"
+        end
         
         def start_label
           'Starting job'
@@ -96,7 +118,6 @@ module Kiba
 
           "tags: [#{tags.join(', ')}]"
         end
-        
       end
     end
   end

@@ -5,55 +5,42 @@ module Kiba
       module DependencyJob
         extend Kiba::Extend::Jobs::Reporter
 
+        # overrides Runner
         # Don't decorate dependency jobs
         def add_decoration
         end
-        
-        def report_run_start
-          case Kiba::Extend.job.verbosity
-          when :verbose
-            verbose_start
-            return
-          when :minimal
-            minimal_start
-            return
-          end
 
-          puts start_and_def
-        end
-
-        def report_run_end
-          case Kiba::Extend.job.verbosity
-          when :verbose
-            verbose_end
-            return
-          when :minimal
-            minimal_end
-            return
-          end
-        end
-
+        # the rest overrides Reporter
         def verbose_start
           puts start_and_def
           puts "  #{desc_and_tags}"
         end
 
-        # minimal = silent for dependency jobs
+        def normal_start
+          puts start_and_def
+        end
+
+        # silent for dependency jobs
         def minimal_start
         end
 
+        
         def verbose_end
+          puts "    #{row_report} written to #{job_data.path}"
+          puts "    NOTE: #{job_data.message.upcase}" if job_data.message
         end
 
-        # minimal = silent for dependency jobs        
+        # silent for dependency jobs
+        def normal_end
+        end
+
+        # silent for dependency jobs        
         def minimal_end
         end
 
         def start_label
           '->Starting dependency job'
         end
-        
-        
       end
     end
   end
