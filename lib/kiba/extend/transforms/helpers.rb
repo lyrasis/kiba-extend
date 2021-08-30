@@ -5,7 +5,7 @@ module Kiba
     module Transforms
       # utility functions across Transforms
       module Helpers
-        extend self
+        module_function
         # Indicates whether a field value is delimiter-only. If `usenull` is set to true, the
         #   %NULLVALUE% string is treated as empty in detecting delimiter-only-ness
         # @param val [String] The field value to check
@@ -33,9 +33,9 @@ module Kiba
           field_vals = fields.map { |field| [field, row.fetch(field, nil)] }.to_h
           return field_vals if discard.blank?
 
-          field_vals = field_vals.reject { |field, val| val.nil? } if discard.any?(:nil)
+          field_vals = field_vals.reject { |_field, val| val.nil? } if discard.any?(:nil)
           keep = keep_fields(field_vals, discard, delim, usenull)
-          field_vals.select { |field, val| keep.any?(field) }
+          field_vals.select { |field, _val| keep.any?(field) }
         end
 
         # @param field_vals [Hash{Symbol=>String,Nil}l] A subset of a row
@@ -46,8 +46,8 @@ module Kiba
         #   and usenull param values and the field values
         private_class_method def keep_fields(field_vals, discard, delim, usenull)
           field_vals = field_vals.transform_values { |val| val.gsub('%NULLVALUE%', '') } if usenull
-          field_vals = field_vals.reject { |field, val| val.empty? } if discard.any?(:empty)
-          field_vals = field_vals.reject { |field, val| delim_only?(val, delim) } if discard.any?(:delim)
+          field_vals = field_vals.reject { |_field, val| val.empty? } if discard.any?(:empty)
+          field_vals = field_vals.reject { |_field, val| delim_only?(val, delim) } if discard.any?(:delim)
           field_vals.keys
         end
       end

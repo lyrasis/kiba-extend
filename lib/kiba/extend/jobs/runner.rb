@@ -21,16 +21,24 @@ module Kiba
         end
 
         def add_decoration
-          if Kiba::Extend.job.show_me
-            extend ShowMeJob
-            decorate
-          end
-          if Kiba::Extend.job.tell_me
-            extend TellMeJob
-            decorate
-          end
+          show_me_decoration
+          tell_me_decoration
         end
 
+        def show_me_decoration
+          return unless Kiba::Extend.job.show_me
+          
+          extend ShowMeJob
+          decorate
+        end
+
+        def tell_me_decoration
+          return unless Kiba::Extend.job.tell_me
+          
+          extend TellMeJob
+          decorate
+        end
+        
         # Add lookup tables to the context as methods memoized to instance variables
         def add_lookup(config)
           key_as_iv = "@#{config.key}".to_sym

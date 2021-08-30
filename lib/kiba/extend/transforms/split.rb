@@ -156,9 +156,9 @@ module Kiba
           end
 
           def process_exceeding(valsplit, row)
-            if @collapse_on == :right
-              process_right_split(valsplit, row)
-            end
+            return unless @collapse_on == :right
+            
+            process_right_split(valsplit, row)
           end
 
           def process_right_collapse(valsplit, row)

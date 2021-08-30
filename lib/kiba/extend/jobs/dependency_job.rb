@@ -8,8 +8,8 @@ module Kiba
         extend Kiba::Extend::Jobs::Reporter
 
         # overrides Runner
-        # Don't decorate dependency jobs
         def add_decoration
+          # Don't decorate dependency jobs
         end
 
         # the rest overrides Reporter
@@ -22,8 +22,8 @@ module Kiba
           puts start_and_def
         end
 
-        # silent for dependency jobs
         def minimal_start
+          # silent for dependency jobs
         end
 
         def verbose_end
@@ -31,12 +31,12 @@ module Kiba
           puts "    NOTE: #{job_data.message.upcase}" if job_data.message
         end
 
-        # silent for dependency jobs
         def normal_end
+          # silent for dependency jobs
         end
 
-        # silent for dependency jobs
         def minimal_end
+          # silent for dependency jobs
         end
 
         def start_label

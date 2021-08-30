@@ -3,7 +3,7 @@
 module Kiba
   module Extend
     module SourceDestRegistry
-      extend self
+      module_function
 
       # Registry of known source/destination classes and whether they require a path
       #

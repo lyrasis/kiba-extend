@@ -6,7 +6,7 @@ require 'spec_helper'
 RSpec.describe 'Kiba::Extend::RegisteredSource' do
   let(:filekey) { :fkey }
   let(:path) { File.join('spec', 'fixtures', 'fkey.csv') }
-  let(:default) { { path: path, creator: lambda { Helpers.test_csv } } }
+  let(:default) { { path: path, creator: -> { Helpers.test_csv } } }
   let(:source) { Kiba::Extend::RegisteredSource.new(key: filekey, data: Kiba::Extend::FileRegistryEntry.new(data)) }
 
   describe '#args' do

@@ -28,7 +28,7 @@ DELIM = ';'
 module Kiba
   # Provides a suite of abstract, reusable, well-tested data transformations for use in Kiba ETL pipelines
   module Extend
-    extend self
+    module_function
     extend Dry::Configurable
 
     # Require application files

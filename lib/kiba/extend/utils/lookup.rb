@@ -27,7 +27,7 @@ module Kiba
           end
         end
 
-        alias_method :csv_to_multi_hash, :csv_to_hash
+        alias csv_to_multi_hash csv_to_hash
 
         class SetChecker
           attr_reader :set_type, :result

@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Helpers
-  extend self
+  module_function
 
   def fixtures_dir
     app_dir = File.realpath(File.join(File.dirname(__FILE__), '..'))

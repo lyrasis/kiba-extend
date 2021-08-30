@@ -43,7 +43,7 @@ module Kiba
       end
 
       def transform
-        each { |key, val| self.decorate(key) { FileRegistryEntry.new(val) } }
+        each { |key, val| decorate(key) { FileRegistryEntry.new(val) } }
         @entries = populate_entries
         each { |key, val| val.set_key(key) }
       end

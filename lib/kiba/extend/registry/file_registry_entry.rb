@@ -44,7 +44,7 @@ module Kiba
       private
 
       def allowed_settings
-        self.instance_variables
+        instance_variables
             .map(&:to_s)
             .map { |str| str.delete_prefix('@') }
             .map(&:to_sym)
@@ -56,7 +56,7 @@ module Kiba
 
       def assign_value(key, val)
         if allowed_setting?(key)
-          self.instance_variable_set("@#{key}".to_sym, val)
+          instance_variable_set("@#{key}".to_sym, val)
         else
           @warnings << ":#{key} is not an allowed FileRegistryEntry setting"
         end
@@ -101,17 +101,23 @@ module Kiba
       def validate_creator
         return if supplied
 
-        unless creator
-          @errors[:missing_creator_for_non_supplied_file] = nil
-          return
-        end
-
-        unless creator.is_a?(Method)
-          @errors[:creator_not_a_method] = creator.dup
-          @creator = nil
-        end
+        validate_creator_present
+        validate_creator_is_method
       end
 
+      def validate_creator_is_method
+        return if creator.is_a?(Method)
+        
+        @errors[:creator_not_a_method] = creator.dup
+        @creator = nil
+      end
+
+      def validate_creator_present
+        return if creator
+        
+        @errors[:missing_creator_for_non_supplied_file] = nil
+      end
+      
       def validate_path
         if path_required? && !path
           @errors[:missing_path] = nil
