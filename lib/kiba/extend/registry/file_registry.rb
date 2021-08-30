@@ -15,7 +15,7 @@ module Kiba
     class FileRegistry
       include Dry::Container::Mixin
 
-      self.config.namespace_separator = '__'
+      config.namespace_separator = '__'
 
       # Exception raised if the file key is not registered
       class KeyNotRegisteredError < StandardError
@@ -43,9 +43,9 @@ module Kiba
       end
 
       def transform
-        self.each { |key, val| self.decorate(key) { FileRegistryEntry.new(val) } }
+        each { |key, val| self.decorate(key) { FileRegistryEntry.new(val) } }
         @entries = populate_entries
-        self.each { |key, val| val.set_key(key) }
+        each { |key, val| val.set_key(key) }
       end
 
       def valid?
@@ -59,14 +59,14 @@ module Kiba
       private
 
       def lookup(key)
-        self.resolve(key)
+        resolve(key)
       rescue Dry::Container::Error
         raise KeyNotRegisteredError, key
       end
 
       def populate_entries
         arr = []
-        self.each { |entry| arr << entry[1] }
+        each { |entry| arr << entry[1] }
         arr
       end
 
