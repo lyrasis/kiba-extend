@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Kiba
   module Extend
     module SourceDestRegistry
@@ -32,19 +34,19 @@ module Kiba
         data[klass]
       end
 
-       def labeled_options(klass)
+      def labeled_options(klass)
         data = {
           nil => nil,
-          Kiba::Extend::Destinations::CSV => { options_label(klass) => file_options(klass)},
-          Kiba::Common::Destinations::CSV => { options_label(klass) => file_options(klass)},
-          Kiba::Common::Destinations::Lambda => { options_label(klass) => file_options(klass)},
-          Kiba::Common::Sources::CSV => { options_label(klass) => file_options(klass)},
+          Kiba::Extend::Destinations::CSV => { options_label(klass) => file_options(klass) },
+          Kiba::Common::Destinations::CSV => { options_label(klass) => file_options(klass) },
+          Kiba::Common::Destinations::Lambda => { options_label(klass) => file_options(klass) },
+          Kiba::Common::Sources::CSV => { options_label(klass) => file_options(klass) },
           Kiba::Common::Sources::Enumerable => nil
         }
         data[klass]
       end
 
-      # The Symbol used for the options in the Kiba Source/Destination file configuration hash 
+      # The Symbol used for the options in the Kiba Source/Destination file configuration hash
       def options_label(klass)
         data = {
           nil => nil,
@@ -59,4 +61,3 @@ module Kiba
     end
   end
 end
-

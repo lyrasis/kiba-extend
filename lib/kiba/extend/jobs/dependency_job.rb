@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Kiba
   module Extend
     module Jobs
@@ -24,7 +26,6 @@ module Kiba
         def minimal_start
         end
 
-        
         def verbose_end
           puts "    #{row_report} written to #{job_data.path}"
           puts "    NOTE: #{job_data.message.upcase}" if job_data.message
@@ -34,7 +35,7 @@ module Kiba
         def normal_end
         end
 
-        # silent for dependency jobs        
+        # silent for dependency jobs
         def minimal_end
         end
 

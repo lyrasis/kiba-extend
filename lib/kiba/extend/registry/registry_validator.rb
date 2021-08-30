@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Kiba
   module Extend
     class RegistryValidator
@@ -18,15 +20,15 @@ module Kiba
 
         true
       end
-      
+
       private
 
       def errs_to_str(errs)
-        errs.map{ |key, val| "#{key} #{val}" }.join('; ')
+        errs.map { |key, val| "#{key} #{val}" }.join('; ')
       end
-      
+
       def invalid
-        Kiba::Extend.registry.entries.reject{ |entry| entry.valid? }
+        Kiba::Extend.registry.entries.reject { |entry| entry.valid? }
       end
 
       def report_invalid
@@ -58,7 +60,7 @@ module Kiba
       end
 
       def warnings
-        Kiba::Extend.registry.entries.reject{ |entry| entry.warnings.empty? }
+        Kiba::Extend.registry.entries.reject { |entry| entry.warnings.empty? }
       end
     end
   end

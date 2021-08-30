@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'source_dest_registry'
 
 module Kiba
@@ -13,9 +15,9 @@ module Kiba
       include SourceDestRegistry
 
       attr_reader :path, :key,
-        :creator, :supplied, :dest_special_opts, :desc, :lookup_on, :tags, :message,
-        :dest_class, :dest_opt, :src_class, :src_opt, :type,
-        :valid, :errors, :warnings
+                  :creator, :supplied, :dest_special_opts, :desc, :lookup_on, :tags, :message,
+                  :dest_class, :dest_opt, :src_class, :src_opt, :type,
+                  :valid, :errors, :warnings
 
       # allowed types
       TYPES = :file, :fileset, :enum, :lambda
@@ -30,7 +32,7 @@ module Kiba
       def set_key(key)
         @key = key
       end
-      
+
       def summary
         "#{key} -- #{tags.join(', ')}\n  #{path}\n  #{desc}"
       end
@@ -43,15 +45,15 @@ module Kiba
 
       def allowed_settings
         self.instance_variables
-          .map(&:to_s)
-          .map{ |str| str.delete_prefix('@') }
-          .map(&:to_sym)
+            .map(&:to_s)
+            .map { |str| str.delete_prefix('@') }
+            .map(&:to_sym)
       end
 
       def allowed_setting?(key)
         allowed_settings.any?(key)
       end
-      
+
       def assign_value(key, val)
         if allowed_setting?(key)
           self.instance_variable_set("@#{key}".to_sym, val)
@@ -59,18 +61,18 @@ module Kiba
           @warnings << ":#{key} is not an allowed FileRegistryEntry setting"
         end
       end
-      
+
       def assign_values_from(reghash)
-        reghash.each{ |key, val| assign_value(key, val) }
+        reghash.each { |key, val| assign_value(key, val) }
       end
 
       def path_required?
-        chk = [dest_class, src_class].map{ |klass| requires_path?(klass) }
+        chk = [dest_class, src_class].map { |klass| requires_path?(klass) }
         return false if chk.uniq == [false]
 
         true
       end
-      
+
       def set_defaults
         @type = :file
         @creator = nil
@@ -103,7 +105,7 @@ module Kiba
           @errors[:missing_creator_for_non_supplied_file] = nil
           return
         end
-        
+
         unless creator.is_a?(Method)
           @errors[:creator_not_a_method] = creator.dup
           @creator = nil
@@ -115,7 +117,7 @@ module Kiba
           @errors[:missing_path] = nil
           return
         end
-        
+
         @path = Pathname.new(path) if path
       end
 

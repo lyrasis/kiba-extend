@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'registered_file'
 require_relative 'requirable_file'
 
@@ -33,12 +35,12 @@ module Kiba
         raise NoLookupKeyError, @key unless @data.lookup_on
         raise NonSymbolLookupKeyError, @key unless @data.lookup_on.is_a?(Symbol)
       end
-      
+
       # Arguments for calling {Kiba::Extend::Lookup} with this file
       # @return [Hash]
       def args
         opts = @data.src_opt ? @data.src_opt : file_options(@data.src_class)
-        {file: path, csvopt: opts, keycolumn: @data.lookup_on}
+        { file: path, csvopt: opts, keycolumn: @data.lookup_on }
       end
     end
   end

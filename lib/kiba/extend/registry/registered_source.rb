@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'registered_file'
 require_relative 'requirable_file'
 
@@ -11,8 +13,8 @@ module Kiba
       # Arguments for calling Kiba Source class
       # @return [Hash]
       def args
-        opts = @data.src_opt ? {options_label(klass) => @data.src_opt} : labeled_options(klass)
-        [{filename: path}.merge(opts)]
+        opts = @data.src_opt ? { options_label(klass) => @data.src_opt } : labeled_options(klass)
+        [{ filename: path }.merge(opts)]
       end
 
       # Kiba Source class to call

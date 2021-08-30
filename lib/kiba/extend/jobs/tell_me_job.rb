@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'kiba/extend'
 module Kiba
   module Extend
@@ -12,10 +14,10 @@ module Kiba
         end
 
         def tell
-            Kiba.job_segment do
-              post_process do
-                `say #{@job_key} job is complete`
-              end
+          Kiba.job_segment do
+            post_process do
+              `say #{@job_key} job is complete`
+            end
           end
         end
       end

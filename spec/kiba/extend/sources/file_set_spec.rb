@@ -10,14 +10,14 @@ RSpec.describe 'Kiba::Extend::Sources::FileSet' do
     FileUtils.touch(File.join(@path, 'a.csv'))
     FileUtils.touch(File.join(@path, 'b.csv'))
     FileUtils.touch(File.join(@path, 't.txt'))
-    FileUtils.touch(File.join(@path, '.~lock.a.csv'))    
+    FileUtils.touch(File.join(@path, '.~lock.a.csv'))
   end
-  after(:context){ FileUtils.rm_rf(@path) }
-  
-  let(:args){ {path: @path} }
-  let(:set){ Kiba::Extend::Sources::FileSet.new(args) }
+  after(:context) { FileUtils.rm_rf(@path) }
+
+  let(:args) { { path: @path } }
+  let(:set) { Kiba::Extend::Sources::FileSet.new(args) }
   describe '#files' do
-    let(:result){ set.files }
+    let(:result) { set.files }
     context 'with defaults' do
       it 'returns expected files' do
         expect(result.length).to eq(4)
@@ -25,21 +25,21 @@ RSpec.describe 'Kiba::Extend::Sources::FileSet' do
     end
 
     context 'with include' do
-      let(:args){ {path: @path, include: '.*\.csv$'} }
+      let(:args) { { path: @path, include: '.*\.csv$' } }
       it 'returns expected files' do
         expect(result.length).to eq(3)
       end
     end
 
     context 'with exclude' do
-      let(:args){ {path: @path, exclude: '^\.~lock'} }
+      let(:args) { { path: @path, exclude: '^\.~lock' } }
       it 'returns expected files' do
         expect(result.length).to eq(3)
       end
     end
 
     context 'with include and exclude' do
-      let(:args){ {path: @path, include: '.*\.csv$', exclude: '^\.~lock'} }
+      let(:args) { { path: @path, include: '.*\.csv$', exclude: '^\.~lock' } }
       it 'returns expected files' do
         expect(result.length).to eq(2)
       end
@@ -55,7 +55,7 @@ RSpec.describe 'Kiba::Extend::Sources::FileSet' do
         FileUtils.touch(File.join(subdir, '.~lock.d.csv'))
       end
       context 'with include and exclude' do
-        let(:args){ {path: @path, recursive: true, include: '.*\.csv$', exclude: '^\.~lock'} }
+        let(:args) { { path: @path, recursive: true, include: '.*\.csv$', exclude: '^\.~lock' } }
         it 'returns expected files' do
           expect(result.length).to eq(4)
         end

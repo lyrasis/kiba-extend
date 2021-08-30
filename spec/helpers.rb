@@ -7,23 +7,22 @@ module Helpers
     app_dir = File.realpath(File.join(File.dirname(__FILE__), '..'))
     File.join(app_dir, 'spec', 'fixtures')
   end
-  
+
   def populate_registry
     fkeypath = File.join(fixtures_dir, 'fkey.csv')
-    entries = { fkey: {path: fkeypath, supplied: true, lookup_on: :id},
-               invalid: {},
-               fee: {path: fkeypath, lookup_on: :foo, supplied: true},
-               foo: {path: fkeypath, creator: Helpers.method(:test_csv), tags: %i[test] },
-               bar: {path: fkeypath, creator: Helpers.method(:lookup_csv), tags: %i[test report]},
-               baz: {path: fkeypath, creator: Kiba::Extend::Utils::Lookup.method(:csv_to_hash), tags: %i[report]},
-               warn: {path: fkeypath, dest_class: Kiba::Common::Destinations::CSV,
-                      creator: Kiba::Extend.method(:csvopts),
-                      dest_special_opts: { initial_headers: %i[objectnumber briefdescription] }}
-              }
-    entries.each{ |key, data| Kiba::Extend.registry.register(key, data) }
+    entries = { fkey: { path: fkeypath, supplied: true, lookup_on: :id },
+                invalid: {},
+                fee: { path: fkeypath, lookup_on: :foo, supplied: true },
+                foo: { path: fkeypath, creator: Helpers.method(:test_csv), tags: %i[test] },
+                bar: { path: fkeypath, creator: Helpers.method(:lookup_csv), tags: %i[test report] },
+                baz: { path: fkeypath, creator: Kiba::Extend::Utils::Lookup.method(:csv_to_hash), tags: %i[report] },
+                warn: { path: fkeypath, dest_class: Kiba::Common::Destinations::CSV,
+                        creator: Kiba::Extend.method(:csvopts),
+                        dest_special_opts: { initial_headers: %i[objectnumber briefdescription] } } }
+    entries.each { |key, data| Kiba::Extend.registry.register(key, data) }
     Kiba::Extend.registry.namespace(:ns) do
       namespace(:sub) do
-        register(:fkey, {path: 'data', supplied: true})
+        register(:fkey, { path: 'data', supplied: true })
       end
     end
   end
@@ -31,7 +30,7 @@ module Helpers
   def transform_registry
     Kiba::Extend.registry.transform
   end
-  
+
   def prepare_registry
     populate_registry
     transform_registry
@@ -44,7 +43,7 @@ module Helpers
   # for test in Kiba::Extend::Jobs::BaseJobsSpec that I can't get working
   # class BaseJob
   #   include Kiba::Extend::Jobs::Runner
-    
+
   #   attr_reader :files
   #   def initialize(files:)
   #     @files = setup_files(files)
@@ -58,16 +57,14 @@ module Helpers
   #     @creator
   #   end
   # end
-  
 
   def test_csv
     File.join(File.expand_path(__dir__), 'tmp', 'test.csv')
   end
+
   def lookup_csv
     File.join(File.expand_path(__dir__), 'tmp', 'lkup.csv')
   end
-
-  
 
   def generate_csv(rows)
     CSV.open(test_csv, 'w') do |csv|

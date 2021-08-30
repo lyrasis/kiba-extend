@@ -12,7 +12,7 @@ require 'pry'
 require 'byebug'
 require 'xxhash'
 
-#require 'kiba/extend/version'
+# require 'kiba/extend/version'
 
 # Default CSV options
 CSVOPT = { headers: true, header_converters: :symbol }.freeze
@@ -40,7 +40,7 @@ module Kiba
     Kiba.extend(Kiba::Extend::Jobs::JobSegmenter)
 
     # Default options for reading/writing CSVs
-    setting :csvopts, { headers: true, header_converters: [:symbol, :downcase] }, reader: true
+    setting :csvopts, { headers: true, header_converters: %i[symbol downcase] }, reader: true
 
     # Default settings for Lambda destination
     setting :lambdaopts, { on_write: ->(r) { accumulator << r } }, reader: true
@@ -50,7 +50,7 @@ module Kiba
 
     # Default source class for jobs
     setting :source, Kiba::Common::Sources::CSV, reader: true
-    
+
     # Default destination class for jobs
     setting :destination, Kiba::Extend::Destinations::CSV, reader: true
 

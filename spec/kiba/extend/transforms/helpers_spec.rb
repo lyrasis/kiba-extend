@@ -84,14 +84,16 @@ RSpec.describe Kiba::Extend::Transforms::Helpers do
   end
 
   describe '#field_values' do
-    let(:row) { {
-      a: nil,
-      b: '',
-      c: ';',
-      d: 'foo',
-      e: '%NULLVALUE%',
-      f: '%NULLVALUE%;%NULLVALUE%'
-    } }
+    let(:row) {
+      {
+        a: nil,
+        b: '',
+        c: ';',
+        d: 'foo',
+        e: '%NULLVALUE%',
+        f: '%NULLVALUE%;%NULLVALUE%'
+      }
+    }
     let(:fields) { %i[a b c d e f] }
     let(:discard) { %i[nil empty delim] }
     let(:delim) { ';' }

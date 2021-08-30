@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'reporter'
 
 module Kiba
@@ -20,7 +22,7 @@ module Kiba
 
         def add_decoration
           if Kiba::Extend.job.show_me
-            extend ShowMeJob 
+            extend ShowMeJob
             decorate
           end
           if Kiba::Extend.job.tell_me
@@ -28,12 +30,12 @@ module Kiba
             decorate
           end
         end
-        
+
         # Add lookup tables to the context as methods memoized to instance variables
         def add_lookup(config)
           key_as_iv = "@#{config.key}".to_sym
 
-          context.define_singleton_method(config.key){
+          context.define_singleton_method(config.key) {
             if instance_variable_defined?(key_as_iv)
               instance_variable_get(key_as_iv)
             else
@@ -48,7 +50,7 @@ module Kiba
             populate_control(method(method_name))
           end
         end
-        
+
         def assemble_control
           lookups_to_memoized_methods if @files[:lookup]
           parse_job_segments
@@ -65,9 +67,9 @@ module Kiba
             raise MissingDependencyError.new(data.key, data.path)
           end
         end
-        
+
         def handle_requirements
-          [@files[:source], @files[:lookup]].compact.flatten.map(&:required).compact.each{ |method| method.call }
+          [@files[:source], @files[:lookup]].compact.flatten.map(&:required).compact.each { |method| method.call }
 
           check_requirements
         end
@@ -93,20 +95,20 @@ module Kiba
           if method.name == :config
             target.merge(elements)
           else
-            elements.each{ |element| target << element }
+            elements.each { |element| target << element }
           end
         end
-        
+
         def file_config(config)
-          {klass: config.klass, args: config.args }
+          { klass: config.klass, args: config.args }
         end
-        
+
         def sources
-          @files[:source].map{ |config| file_config(config) }
+          @files[:source].map { |config| file_config(config) }
         end
-        
+
         def destinations
-          @files[:destination].map{ |config| file_config(config) }
+          @files[:destination].map { |config| file_config(config) }
         end
 
         def transform
@@ -118,7 +120,7 @@ module Kiba
           tmp = {}
           files.each do |type, arr|
             method = Kiba::Extend.registry.method("as_#{type}")
-            tmp[type] = arr.map{ |key| method.call(key) }
+            tmp[type] = arr.map { |key| method.call(key) }
           end
           tmp
         end

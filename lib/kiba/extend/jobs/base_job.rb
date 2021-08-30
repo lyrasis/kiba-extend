@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'runner'
 require_relative 'parser'
 require_relative 'show_me_job'
@@ -37,15 +39,15 @@ module Kiba
     #
     #  { source: [registry_key, registry_key], destination: [registry_key], lookup: [registry_key] }
     #
-    #  { source: [registry_key, registry_key], destination: [registry_key]}    
+    #  { source: [registry_key, registry_key], destination: [registry_key]}
     #
     # `source` and `destination` must each have at least one registry key. `lookup` may be omitted, or it may
     #   be included with one or more registry keys
-    #    
+    #
     # `transformer` is a sequence of data transformations that could theoretically be called with interchangable
     #   input/output settings (i.e. `materials`). In practice, a `recipe` is usually closely tied to particular tables, because
     #   fields are manipulated by name. However, this should support easier automated testing of `recipes`.
-    # 
+    #
     # @since 2.2.0
     module Jobs
       # Abstract definition of Job and job interface
@@ -55,8 +57,9 @@ module Kiba
       class BaseJob
         include Runner
         include Parser
-        
+
         attr_reader :control, :context, :files, :transformer, :job_data
+
         # @param files [Hash]
         # @param transformer [Kiba::Control]
         # @param show [Boolean]
@@ -84,14 +87,14 @@ module Kiba
 
         def initial_transforms
           Kiba.job_segment do
-            transform{ |r| r.to_h }
-            transform{ |r| @srcrows += 1; r }
+            transform { |r| r.to_h }
+            transform { |r| @srcrows += 1; r }
           end
         end
 
         def final_transforms
           Kiba.job_segment do
-            transform{ |r| @outrows += 1; r }
+            transform { |r| @outrows += 1; r }
           end
         end
 

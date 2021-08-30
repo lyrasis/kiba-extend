@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'jobs/parser'
 
 Kiba::Extend::Jobs.extend(Kiba::Extend::Jobs::Parser)

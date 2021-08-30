@@ -4,9 +4,9 @@ require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Clean do
   describe 'AlphabetizeFieldValues' do
-#    test_csv = File.join(__dir__, 'tmp', 'test.csv')
-#    binding.pry
-#
+    #    test_csv = File.join(__dir__, 'tmp', 'test.csv')
+    #    binding.pry
+    #
     rows = [
       %w[type],
       ['Person;unmapped;Organization'],
@@ -120,7 +120,6 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
   end
 
   describe 'DelimiterOnlyFields' do
-    
     let(:rows) do
       [
         %w[id in_set],
@@ -184,7 +183,6 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
   end
 
   describe 'EmptyFieldGroups' do
-    
     let(:rows) do
       [
         %w[id a1 a2 b1 b2 b3],

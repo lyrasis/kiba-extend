@@ -8,14 +8,13 @@ RSpec.describe 'Kiba::Extend::RegistryValidator' do
     Kiba::Extend.config.registry = Kiba::Extend::FileRegistry.new
     prepare_registry
   end
-  let(:validator){ Kiba::Extend::RegistryValidator.new }
-  
-  describe '#valid?' do
-    let(:result){ validator.valid? }
-    it 'reports invalid entries' do
-        expect(result).to be false
-      end
-    end
+  let(:validator) { Kiba::Extend::RegistryValidator.new }
 
+  describe '#valid?' do
+    let(:result) { validator.valid? }
+    it 'reports invalid entries' do
+      expect(result).to be false
+    end
+  end
 end
 # rubocop:enable Metrics/BlockLength

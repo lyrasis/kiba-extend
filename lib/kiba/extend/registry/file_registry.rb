@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'dry-container'
 
 require_relative 'registered_source'
@@ -14,7 +16,7 @@ module Kiba
       include Dry::Container::Mixin
 
       self.config.namespace_separator = '__'
-      
+
       # Exception raised if the file key is not registered
       class KeyNotRegisteredError < StandardError
         # @param filekey [Symbol]
@@ -31,7 +33,7 @@ module Kiba
       def as_lookup(filekey)
         Kiba::Extend::RegisteredLookup.new(key: filekey, data: lookup(filekey))
       end
-      
+
       def as_source(filekey)
         Kiba::Extend::RegisteredSource.new(key: filekey, data: lookup(filekey))
       end
@@ -39,11 +41,11 @@ module Kiba
       def entries
         @entries ||= populate_entries
       end
-      
+
       def transform
-        self.each { |key, val| self.decorate(key){ FileRegistryEntry.new(val) } }
+        self.each { |key, val| self.decorate(key) { FileRegistryEntry.new(val) } }
         @entries = populate_entries
-        self.each{ |key, val| val.set_key(key) }
+        self.each { |key, val| val.set_key(key) }
       end
 
       def valid?
@@ -53,7 +55,7 @@ module Kiba
       def warnings?
         validator.warnings?
       end
-      
+
       private
 
       def lookup(key)
@@ -61,10 +63,10 @@ module Kiba
       rescue Dry::Container::Error
         raise KeyNotRegisteredError, key
       end
-      
+
       def populate_entries
         arr = []
-        self.each{ |entry| arr << entry[1] }
+        self.each { |entry| arr << entry[1] }
         arr
       end
 

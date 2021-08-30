@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Kiba
   module Extend
     module Jobs
@@ -43,7 +45,7 @@ module Kiba
           puts desc_and_tags
           puts ''
         end
-        
+
         def minimal_start
           puts "\n-=-=-=-=-=-=-=-=-=-=-=-"
           puts start_and_def
@@ -53,21 +55,21 @@ module Kiba
           puts "\n#{job_data.key} complete"
           puts "#{row_report} written to #{job_data.path}"
           puts "NOTE: #{job_data.message.upcase}" if job_data.message
-          puts "-=-=-=-=-=-=-=-=-=-=-=-"
+          puts '-=-=-=-=-=-=-=-=-=-=-=-'
           puts ''
         end
 
         def normal_end
           puts "\n#{row_report} written to #{job_data.path}"
           puts "NOTE: #{job_data.message.upcase}" if job_data.message
-          puts "-=-=-=-=-=-=-=-=-=-=-=-"
+          puts '-=-=-=-=-=-=-=-=-=-=-=-'
           puts ''
         end
 
         # silent
         def minimal_end
           puts row_report
-          puts "-=-=-=-=-=-=-=-=-=-=-=-"
+          puts '-=-=-=-=-=-=-=-=-=-=-=-'
           puts ''
         end
 
@@ -77,10 +79,10 @@ module Kiba
 
         def creator_method_to_s
           job_data.creator.to_s
-            .delete_prefix('#<Method: ')
-            .sub(/\(\) .*$/, '')          
+                  .delete_prefix('#<Method: ')
+                  .sub(/\(\) .*$/, '')
         end
-        
+
         def desc_and_tags
           parts = [job_data.desc, tags].compact
           return if parts.empty?
@@ -89,13 +91,13 @@ module Kiba
         end
 
         def put_file_details
-          puts "SOURCES"
-          @files[:source].each{ |src| puts "source #{src.klass} #{src.args}" }
+          puts 'SOURCES'
+          @files[:source].each { |src| puts "source #{src.klass} #{src.args}" }
           puts 'DESTINATIONS'
-          @files[:destination].each{ |dest| puts "destination #{dest.klass} #{dest.args}" }
+          @files[:destination].each { |dest| puts "destination #{dest.klass} #{dest.args}" }
           if @files[:lookup]
             puts 'LOOKUPS'
-            @files[:lookup].each{ |lkup| puts "lookup #{lkup.args}" }
+            @files[:lookup].each { |lkup| puts "lookup #{lkup.args}" }
           end
           puts ''
         end
@@ -103,7 +105,7 @@ module Kiba
         def row_report
           "#{context.instance_variable_get(:@outrows)} of #{context.instance_variable_get(:@srcrows)} rows"
         end
-        
+
         def start_label
           'Starting job'
         end
