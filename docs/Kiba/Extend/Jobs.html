@@ -78,7 +78,9 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/kiba/extend/jobs/base_job.rb</dd>
+    <dd>lib/kiba/extend/jobs/base_job.rb<span class="defines">,<br />
+  lib/kiba/extend/jobs.rb,<br /> lib/kiba/extend/jobs/job.rb,<br /> lib/kiba/extend/jobs/parser.rb,<br /> lib/kiba/extend/jobs/runner.rb,<br /> lib/kiba/extend/jobs/reporter.rb,<br /> lib/kiba/extend/jobs/job_segment.rb,<br /> lib/kiba/extend/jobs/show_me_job.rb,<br /> lib/kiba/extend/jobs/tell_me_job.rb,<br /> lib/kiba/extend/jobs/testing_job.rb,<br /> lib/kiba/extend/jobs/dependency_job.rb</span>
+</dd>
   </dl>
   
 </div>
@@ -107,7 +109,17 @@
 
 <p>As described <a href="https://github.com/thbar/kiba/wiki/Implementing-pre-and-post-processors" target="_parent" title="here">here</a>, pre_ and post_  processors get called once per ETL run—either before or after the ETL starts working through the source  rows</p>
 
-<p><code>recipe</code> is a sequence of data transformations that could theoretically be called with interchangable  input/output settings (i.e. <code>materials</code>). In practice, a <code>recipe</code> is usually closely tied to particular tables, because  fields are manipulated by name. However, this should support easier automated testing of <code>recipes</code>.</p>
+<p>What Kiba::Extend::Jobs add is the ability to set up reusable initial_transformers and final_transformers.  Basically, job templates where just the meat of the transformations change.</p>
+
+<p><code>files</code> is the configuration of destination, source, and lookup files the job will use. It is a Hash, with  the following format:</p>
+
+<p>{ source: [registry_key, registry_key], destination: [registry_key], lookup: [registry_key] }</p>
+
+<p>{ source: [registry_key, registry_key], destination: [registry_key]}</p>
+
+<p><code>source</code> and <code>destination</code> must each have at least one registry key. <code>lookup</code> may be omitted, or it may  be included with one or more registry keys</p>
+
+<p><code>transformer</code> is a sequence of data transformations that could theoretically be called with interchangable  input/output settings (i.e. <code>materials</code>). In practice, a <code>recipe</code> is usually closely tied to particular tables, because  fields are manipulated by name. However, this should support easier automated testing of <code>recipes</code>.</p>
 
 
   </div>
@@ -135,9 +147,11 @@
 <p class="children">
   
     
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Jobs/DependencyJob.html" title="Kiba::Extend::Jobs::DependencyJob (module)">DependencyJob</a></span>, <span class='object_link'><a href="Jobs/JobSegmenter.html" title="Kiba::Extend::Jobs::JobSegmenter (module)">JobSegmenter</a></span>, <span class='object_link'><a href="Jobs/Parser.html" title="Kiba::Extend::Jobs::Parser (module)">Parser</a></span>, <span class='object_link'><a href="Jobs/Reporter.html" title="Kiba::Extend::Jobs::Reporter (module)">Reporter</a></span>, <span class='object_link'><a href="Jobs/Runner.html" title="Kiba::Extend::Jobs::Runner (module)">Runner</a></span>, <span class='object_link'><a href="Jobs/ShowMeJob.html" title="Kiba::Extend::Jobs::ShowMeJob (module)">ShowMeJob</a></span>, <span class='object_link'><a href="Jobs/TellMeJob.html" title="Kiba::Extend::Jobs::TellMeJob (module)">TellMeJob</a></span>
+    
   
     
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Jobs/BaseJob.html" title="Kiba::Extend::Jobs::BaseJob (class)">BaseJob</a></span>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Jobs/BaseJob.html" title="Kiba::Extend::Jobs::BaseJob (class)">BaseJob</a></span>, <span class='object_link'><a href="Jobs/Job.html" title="Kiba::Extend::Jobs::Job (class)">Job</a></span>, <span class='object_link'><a href="Jobs/TestingJob.html" title="Kiba::Extend::Jobs::TestingJob (class)">TestingJob</a></span>
     
   
 </p>
@@ -153,7 +167,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Aug 25 11:48:41 2021 by
+  Generated on Tue Aug 31 15:47:53 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-2.7.3).
 </div>

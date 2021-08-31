@@ -10,8 +10,11 @@ require_relative 'registry_validator'
 
 module Kiba
   module Extend
-    # Transforms a file_registry hash (like {Fwm#registry}) into an object that can return
-    #   source, lookup, or destination config for that file, for passing to jobs
+    # Transforms a file_registry hash into an object that can return source, lookup, or destination
+    #   config for that file, for passing to jobs
+    #
+    # An example of a file registry setup in a project can be found at:
+    #   https://github.com/lyrasis/fwm-cspace-migration/blob/main/lib/fwm/registry_data.rb
     class FileRegistry
       include Dry::Container::Mixin
 

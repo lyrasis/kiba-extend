@@ -99,7 +99,49 @@
   
 </div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Adds a field (<code>in_field</code>) containing &#39;y&#39; or &#39;n&#39;, indicating whether value of <code>on_field</code> is a duplicate</p>
 
+<p>The first instance of a value in <code>on_field</code> is always marked <code>n</code>. Subsequent rows containing the same  value will be marked &#39;y&#39;</p>
+
+<p>Use this transform if you need to retain/report on what will be treated as a duplicate. Use  <span class='object_link'><a href="../FilterRows/FieldEqualTo.html" title="Kiba::Extend::Transforms::FilterRows::FieldEqualTo (class)">FilterRows::FieldEqualTo</a></span> to extract only the duplicate rows and/or to keep only the  non-duplicate rows</p>
+
+<p>To delete duplicates all in one step, use <span class='object_link'><a href="Table.html" title="Kiba::Extend::Transforms::Deduplicate::Table (class)">Table</a></span></p>
+
+<p>Input table:</p>
+
+<pre class="code ruby"><code class="ruby">| foo | bar | combined  |
+|-----------------------|
+| a   | b   | a b       |
+| c   | d   | c d       |
+| c   | e   | c e       |
+| c   | d   | c d       |
+</code></pre>
+
+<p>Used in pipeline as:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Deduplicate.html" title="Kiba::Extend::Transforms::Deduplicate (module)">Deduplicate</a></span></span><span class='op'>::</span><span class='const'>Flag</span><span class='comma'>,</span> <span class='label'>on_field:</span> <span class='symbol'>:combined</span><span class='comma'>,</span> <span class='label'>in_field:</span> <span class='symbol'>:duplicate</span><span class='comma'>,</span> <span class='label'>using:</span> <span class='ivar'>@deduper</span>
+</code></pre>
+
+<p>Results in:</p>
+
+<pre class="code ruby"><code class="ruby">| foo | bar | combined | duplicate |
+|----------------------------------|
+| a   | b   | a b      | n         |
+| c   | d   | c d      | n         |
+| c   | e   | c e      | n         |
+| c   | d   | c d      | y         |
+</code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
 
 
 
@@ -164,7 +206,59 @@
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>on_field</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>Field on which to deduplicate</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>in_field</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>New field in which to add &#39;y&#39; or &#39;n&#39;</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>using</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>An empty Hash, set as an instance variable in your job definition before you use this transform</p>
+</div>
+      
+    </li>
+  
+</ul>
+
 
 </div><table class="source_code">
   <tr>
@@ -172,14 +266,14 @@
       <pre class="lines">
 
 
-73
-74
-75
-76
-77</pre>
+229
+230
+231
+232
+233</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate.rb', line 229</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>on_field:</span><span class='comma'>,</span> <span class='label'>in_field:</span><span class='comma'>,</span> <span class='label'>using:</span><span class='rparen'>)</span>
   <span class='ivar'>@on</span> <span class='op'>=</span> <span class='id identifier rubyid_on_field'>on_field</span>
@@ -197,7 +291,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Aug 25 11:48:43 2021 by
+  Generated on Tue Aug 31 15:47:55 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-2.7.3).
 </div>

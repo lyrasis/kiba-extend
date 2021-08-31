@@ -126,7 +126,7 @@
   <h2>Instance Attribute Summary</h2>
   
   <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="RegisteredFile.html" title="Kiba::Extend::RegisteredFile (class)">RegisteredFile</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="RegisteredFile.html#key-instance_method" title="Kiba::Extend::RegisteredFile#key (method)">#key</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="RegisteredFile.html#data-instance_method" title="Kiba::Extend::RegisteredFile#data (method)">#data</a></span>, <span class='object_link'><a href="RegisteredFile.html#key-instance_method" title="Kiba::Extend::RegisteredFile#key (method)">#key</a></span></p>
 
 
   
@@ -198,7 +198,7 @@
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="RequirableFile.html" title="Kiba::Extend::RequirableFile (module)">RequirableFile</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="RequirableFile.html#file_options-instance_method" title="Kiba::Extend::RequirableFile#file_options (method)">#file_options</a></span>, <span class='object_link'><a href="RequirableFile.html#required-instance_method" title="Kiba::Extend::RequirableFile#required (method)">#required</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="RequirableFile.html#required-instance_method" title="Kiba::Extend::RequirableFile#required (method)">#required</a></span></p>
 
   
   
@@ -209,7 +209,18 @@
   
   
   <h3 class="inherited">Methods inherited from <span class='object_link'><a href="RegisteredFile.html" title="Kiba::Extend::RegisteredFile (class)">RegisteredFile</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="RegisteredFile.html#initialize-instance_method" title="Kiba::Extend::RegisteredFile#initialize (method)">#initialize</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="RegisteredFile.html#initialize-instance_method" title="Kiba::Extend::RegisteredFile#initialize (method)">#initialize</a></span>, <span class='object_link'><a href="RegisteredFile.html#path-instance_method" title="Kiba::Extend::RegisteredFile#path (method)">#path</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="SourceDestRegistry.html" title="Kiba::Extend::SourceDestRegistry (module)">SourceDestRegistry</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="SourceDestRegistry.html#file_options-class_method" title="Kiba::Extend::SourceDestRegistry.file_options (method)">file_options</a></span>, <span class='object_link'><a href="SourceDestRegistry.html#labeled_options-class_method" title="Kiba::Extend::SourceDestRegistry.labeled_options (method)">labeled_options</a></span>, <span class='object_link'><a href="SourceDestRegistry.html#options_label-class_method" title="Kiba::Extend::SourceDestRegistry.options_label (method)">options_label</a></span>, <span class='object_link'><a href="SourceDestRegistry.html#requires_path%3F-class_method" title="Kiba::Extend::SourceDestRegistry.requires_path? (method)">requires_path?</a></span></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
@@ -261,15 +272,17 @@
       <pre class="lines">
 
 
-13
-14
-15</pre>
+15
+16
+17
+18</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/registered_source.rb', line 13</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/registered_source.rb', line 15</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_args'>args</span>
-  <span class='lbrace'>{</span><span class='label'>filename:</span> <span class='ivar'>@data</span><span class='lbracket'>[</span><span class='symbol'>:path</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>options:</span> <span class='id identifier rubyid_file_options'>file_options</span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_opts'>opts</span> <span class='op'>=</span> <span class='ivar'>@data</span><span class='period'>.</span><span class='id identifier rubyid_src_opt'>src_opt</span> <span class='op'>?</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_options_label'>options_label</span><span class='lparen'>(</span><span class='id identifier rubyid_klass'>klass</span><span class='rparen'>)</span> <span class='op'>=&gt;</span> <span class='ivar'>@data</span><span class='period'>.</span><span class='id identifier rubyid_src_opt'>src_opt</span> <span class='rbrace'>}</span> <span class='op'>:</span> <span class='id identifier rubyid_labeled_options'>labeled_options</span><span class='lparen'>(</span><span class='id identifier rubyid_klass'>klass</span><span class='rparen'>)</span>
+  <span class='lbracket'>[</span><span class='lbrace'>{</span> <span class='label'>filename:</span> <span class='id identifier rubyid_path'>path</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_opts'>opts</span><span class='rparen'>)</span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -302,19 +315,15 @@
       <pre class="lines">
 
 
-18
-19
-20
 21
-22</pre>
+22
+23</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/registered_source.rb', line 18</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/registered_source.rb', line 21</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_klass'>klass</span>
-  <span class='kw'>return</span> <span class='const'><span class='object_link'><a href="../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_source'>source</span> <span class='kw'>unless</span> <span class='ivar'>@data</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='symbol'>:src_class</span><span class='rparen'>)</span>
-
-  <span class='ivar'>@data</span><span class='lbracket'>[</span><span class='symbol'>:src_class</span><span class='rbracket'>]</span>
+  <span class='ivar'>@data</span><span class='period'>.</span><span class='id identifier rubyid_src_class'>src_class</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -326,7 +335,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Aug 25 11:48:43 2021 by
+  Generated on Tue Aug 31 15:47:56 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-2.7.3).
 </div>

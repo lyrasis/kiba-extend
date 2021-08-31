@@ -142,29 +142,35 @@ RSpec.describe Kiba::Extend::Transforms::Deduplicate do
   end
 
   describe 'GroupedFieldValues' do
-    rows = [
-      %w[name role],
-      ['Fred;Freda;Fred;James', 'author;photographer;editor;illustrator'],
-      [';', ';'],
-      %w[1 2]
-    ]
-    before do
-      generate_csv(rows)
+    let(:test_job_transforms) do
+      Kiba.job_segment do
+        transform Deduplicate::GroupedFieldValues,
+          on_field: :name,
+          grouped_fields: %i[work role],
+          sep: ';'
+      end
     end
-    it 'removes duplicate values in one field, and removes corresponding fieldgroup values' do
-      expected = [
-        { name: 'Fred;Freda;James', role: 'author;photographer;illustrator' },
-        { name: nil, role: nil },
-        { name: '1', role: '2' }
+    
+    let(:input) do
+      [
+        {name: 'Fred;Freda;Fred;James', work: 'Report;Book;Paper;Book', role: 'author;photographer;editor;illustrator'},
+        {name: ';', work: ';', role: ';'},
+        {name: 'Martha', work: 'Book', role: 'contributor'}
       ]
-      result = execute_job(filename: test_csv,
-                           xform: Deduplicate::GroupedFieldValues,
-                           xformopt: {
-                             on_field: :name,
-                             grouped_fields: %i[role],
-                             sep: ';'
-                           })
-      expect(result).to eq(expected)
+    end
+
+    let(:expected) do
+      [
+        { name: 'Fred;Freda;James', work: 'Report;Book;Book', role: 'author;photographer;illustrator' },
+        { name: nil, work: nil, role: nil },
+        {name: 'Martha', work: 'Book', role: 'contributor'}
+      ]
+    end
+
+    it 'removes duplicate values in one field, and removes corresponding fieldgroup values' do
+      # Helpers::ExampleFormatter.new(input, expected)
+      test_job
+      expect(output).to eq(expected)
     end
   end
 
