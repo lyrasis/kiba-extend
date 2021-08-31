@@ -78,8 +78,8 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/kiba/extend/jobs/base_job.rb<span class="defines">,<br />
-  lib/kiba/extend/jobs.rb,<br /> lib/kiba/extend/jobs/job.rb,<br /> lib/kiba/extend/jobs/parser.rb,<br /> lib/kiba/extend/jobs/runner.rb,<br /> lib/kiba/extend/jobs/reporter.rb,<br /> lib/kiba/extend/jobs/job_segment.rb,<br /> lib/kiba/extend/jobs/show_me_job.rb,<br /> lib/kiba/extend/jobs/tell_me_job.rb,<br /> lib/kiba/extend/jobs/testing_job.rb,<br /> lib/kiba/extend/jobs/dependency_job.rb</span>
+    <dd>lib/kiba/extend/jobs.rb<span class="defines">,<br />
+  lib/kiba/extend/jobs/job.rb,<br /> lib/kiba/extend/jobs/parser.rb,<br /> lib/kiba/extend/jobs/runner.rb,<br /> lib/kiba/extend/jobs/base_job.rb,<br /> lib/kiba/extend/jobs/reporter.rb,<br /> lib/kiba/extend/jobs/job_segment.rb,<br /> lib/kiba/extend/jobs/show_me_job.rb,<br /> lib/kiba/extend/jobs/tell_me_job.rb,<br /> lib/kiba/extend/jobs/testing_job.rb,<br /> lib/kiba/extend/jobs/dependency_job.rb</span>
 </dd>
   </dl>
   
@@ -103,13 +103,15 @@
 
 <p>Most of this never changes, and when it does there is way too much tedious work in a given migration  to make it consistent across all jobs.</p>
 
-<p>This is an attempt to dry up calling jobs and make it possible to test them automatically with stubbed-in  enumerable sources/destinations</p>
+<p>This is an attempt to dry up calling jobs and make it possible to test them via RSpec</p>
 
-<p>Running <code>Kiba.parse</code> to define a job generates a <a href="https://github.com/thbar/kiba/blob/master/lib/kiba/control.rb" target="_parent" title="Kiba::Control">Kiba::Control</a>  object, which is a wrapper bundling together: pre_processes, config, sources, transforms, destinations, and  post_processes.</p>
+<p>Running <code>Kiba.parse</code> to define a job generates a  <a href="https://github.com/thbar/kiba/blob/master/lib/kiba/control.rb" target="_parent" title="Kiba::Control">Kiba::Control</a>  object, which is a wrapper bundling together: pre_processes, config, sources, transforms, destinations, and  post_processes.</p>
 
 <p>As described <a href="https://github.com/thbar/kiba/wiki/Implementing-pre-and-post-processors" target="_parent" title="here">here</a>, pre_ and post_  processors get called once per ETL run—either before or after the ETL starts working through the source  rows</p>
 
-<p>What Kiba::Extend::Jobs add is the ability to set up reusable initial_transformers and final_transformers.  Basically, job templates where just the meat of the transformations change.</p>
+<p>This Kiba::Control object created by Kiba.parse is generated with a particular Kiba::Context, and  once created, you cannot get access to or manipulate variables or configuration that the entire  job needs to know about.</p>
+
+<p>What Kiba::Extend::Jobs adds is the ability to set up reusable initial_transformers and final_transformers.  Basically, job templates where just the meat of the transformations change.</p>
 
 <p><code>files</code> is the configuration of destination, source, and lookup files the job will use. It is a Hash, with  the following format:</p>
 
@@ -119,7 +121,9 @@
 
 <p><code>source</code> and <code>destination</code> must each have at least one registry key. <code>lookup</code> may be omitted, or it may  be included with one or more registry keys</p>
 
-<p><code>transformer</code> is a sequence of data transformations that could theoretically be called with interchangable  input/output settings (i.e. <code>materials</code>). In practice, a <code>recipe</code> is usually closely tied to particular tables, because  fields are manipulated by name. However, this should support easier automated testing of <code>recipes</code>.</p>
+<p><code>transformer</code> is a sequence of data transformations that could theoretically be called with interchangable  input/output settings (i.e. <code>materials</code>).</p>
+
+<p>In project code, instead of defining an entire job in a <code>Kiba.parse</code> block, you will define a  <code>Kiba.job_segment</code> block containing just the transforms unique to that job.</p>
 
 
   </div>
@@ -167,7 +171,7 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Aug 31 21:20:00 2021 by
+  Generated on Tue Aug 31 23:24:33 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-2.7.4).
 </div>

@@ -144,7 +144,7 @@
 </li>
 
       
-        <li class="public ">
+        <li class="public deprecated">
   <span class="summary_signature">
     
       <a href="#csv_to_hash_deprecated-instance_method" title="#csv_to_hash_deprecated (instance method)">#<strong>csv_to_hash_deprecated</strong>(file:, keycolumn:, csvopt: {})  &#x21d2; Object </a>
@@ -157,12 +157,12 @@
   
   
   
-  
+  <span class="deprecated note title">deprecated</span>
   
 
   
-    <span class="summary_desc"><div class='inline'>
-<p>use when keycolumn values are unique creates hash with keycolumn value as key and csv-row-as-hash as the value.</p>
+    <span class="summary_desc"><strong>Deprecated.</strong> <div class='inline'>
+<p>in 2.2.0. The original <code>csv_to_multi_hash</code> now has the name <code>csv_to_hash</code>. <code>csv_to_multi_hash</code> is now aliased to <code>csv_to_hash</code>. Since creating these methods, I never once needed to use the original <code>csv_to_hash</code> method. Any need for it can be met by the multi-hash implementation</p>
 </div></span>
   
 </li>
@@ -207,19 +207,19 @@
       <pre class="lines">
 
 
-19
-20
-21
-22
 23
 24
 25
 26
 27
-28</pre>
+28
+29
+30
+31
+32</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/lookup.rb', line 19</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/lookup.rb', line 23</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_csv_to_hash'>csv_to_hash</span><span class='lparen'>(</span><span class='op'>**</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='const'>CSV</span><span class='period'>.</span><span class='id identifier rubyid_foreach'>foreach</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='lbracket'>[</span><span class='symbol'>:file</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_args'>args</span><span class='lbracket'>[</span><span class='symbol'>:csvopt</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each_with_object'>each_with_object</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='comma'>,</span> <span class='id identifier rubyid_memo'>memo</span><span class='op'>|</span>
@@ -247,8 +247,17 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-<p>use when keycolumn values are unique creates hash with keycolumn value as key and csv-row-as-hash as the value</p>
+    <div class="note deprecated"><strong>Deprecated.</strong> <div class='inline'>
+<p>in 2.2.0. The original <code>csv_to_multi_hash</code> now has the name <code>csv_to_hash</code>. <code>csv_to_multi_hash</code> is now aliased to <code>csv_to_hash</code>. Since creating these methods, I never once needed to use the original <code>csv_to_hash</code> method. Any need for it can be met by the multi-hash implementation</p>
+</div></div>
+
+  <div class="note todo">
+    <strong>TODO:</strong>
+    <div class='inline'>
+<p>remove this entirely at some point</p>
+</div>
+  </div>
+
 
 
   </div>
@@ -262,14 +271,14 @@
       <pre class="lines">
 
 
-11
-12
-13
-14
-15</pre>
+15
+16
+17
+18
+19</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/lookup.rb', line 11</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/lookup.rb', line 15</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_csv_to_hash_deprecated'>csv_to_hash_deprecated</span><span class='lparen'>(</span><span class='label'>file:</span><span class='comma'>,</span> <span class='label'>keycolumn:</span><span class='comma'>,</span> <span class='label'>csvopt:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
   <span class='const'>CSV</span><span class='period'>.</span><span class='id identifier rubyid_foreach'>foreach</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_csvopt'>csvopt</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each_with_object'>each_with_object</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='comma'>,</span> <span class='id identifier rubyid_memo'>memo</span><span class='op'>|</span>
@@ -286,7 +295,7 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Aug 31 21:20:00 2021 by
+  Generated on Tue Aug 31 23:24:33 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-2.7.4).
 </div>
