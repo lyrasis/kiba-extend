@@ -3,18 +3,23 @@
 require 'spec_helper'
 
 # rubocop:disable Metrics/BlockLength
-RSpec.describe 'Kiba::Extend::RegisteredLookup' do
+RSpec.describe 'Kiba::Extend::Registry::RegisteredLookup' do
   let(:filekey) { :fkey }
   let(:path) { File.join('spec', 'fixtures', 'fkey.csv') }
   let(:key) { :foo }
   let(:default) { { path: path, lookup_on: key, creator: Helpers.method(:test_csv) } }
-  let(:lookup) { Kiba::Extend::RegisteredLookup.new(key: filekey, data: Kiba::Extend::FileRegistryEntry.new(data)) }
+  let(:lookup) do
+    Kiba::Extend::Registry::RegisteredLookup.new(
+      key: filekey,
+      data: Kiba::Extend::Registry::FileRegistryEntry.new(data)
+    )
+  end
 
   context 'when called without lookup key' do
     let(:data) { { path: path } }
     it 'raises NoLookupKeyError' do
       msg = "No lookup key column found for :#{filekey} in file registry hash"
-      expect { lookup }.to raise_error(Kiba::Extend::RegisteredLookup::NoLookupKeyError, msg)
+      expect { lookup }.to raise_error(Kiba::Extend::Registry::RegisteredLookup::NoLookupKeyError, msg)
     end
   end
 

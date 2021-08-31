@@ -3,12 +3,17 @@
 require 'spec_helper'
 
 # rubocop:disable Metrics/BlockLength
-RSpec.describe 'Kiba::Extend::RegisteredDestination' do
+RSpec.describe 'Kiba::Extend::Registry::RegisteredDestination' do
   let(:filekey) { :fkey }
   let(:path) { File.join('spec', 'fixtures', 'fkey.csv') }
   let(:default) { { path: path } }
   let(:default_desc) { { path: path, desc: 'description' } }
-  let(:dest) { Kiba::Extend::RegisteredDestination.new(key: filekey, data: Kiba::Extend::FileRegistryEntry.new(data)) }
+  let(:dest) do
+    Kiba::Extend::Registry::RegisteredDestination.new(
+      key: filekey,
+      data: Kiba::Extend::Registry::FileRegistryEntry.new(data)
+    )
+  end
   let(:optres) { { csv_options: Kiba::Extend.csvopts } }
   describe '#args' do
     let(:result) { dest.args }

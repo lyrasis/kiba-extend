@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Kiba::Extend::Fieldset do
+RSpec.describe Kiba::Extend::Utils::Fieldset do
   let(:rows) do
     [
       { a: 'aa', b: 'bb', c: 'cc', d: 'dd' },
@@ -11,7 +11,7 @@ RSpec.describe Kiba::Extend::Fieldset do
     ]
   end
   let(:fields) { %i[b c] }
-  let(:fieldset) { Kiba::Extend::Fieldset.new(fields) }
+  let(:fieldset) { Kiba::Extend::Utils::Fieldset.new(fields) }
   describe '#fields' do
     it 'returns an Array of fields collated by the Fieldset' do
       expect(fieldset.fields).to eq(fields)

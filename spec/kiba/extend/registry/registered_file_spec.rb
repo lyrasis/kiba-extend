@@ -3,21 +3,28 @@
 require 'spec_helper'
 
 # rubocop:disable Metrics/BlockLength
-RSpec.describe 'Kiba::Extend::RegisteredFile' do
+RSpec.describe 'Kiba::Extend::Registry::RegisteredFile' do
   let(:filekey) { :fkey }
   let(:path) { File.join('spec', 'fixtures', 'fkey.csv') }
   let(:default) { { path: path } }
-  let(:dest) { Kiba::Extend::RegisteredFile.new(key: filekey, data: Kiba::Extend::FileRegistryEntry.new(data)) }
+  let(:dest) do
+    Kiba::Extend::Registry::RegisteredFile.new(
+      key: filekey,
+      data: Kiba::Extend::Registry::FileRegistryEntry.new(data)
+    )
+  end
 
   context 'when called with no path' do
     let(:data) { { description: 'blah' } }
     it 'raises FileNotRegisteredError' do
       msg = "No file path for :#{filekey} is recorded in file registry hash"
       expect {
-        Kiba::Extend::RegisteredFile.new(key: filekey,
-                                         data: Kiba::Extend::FileRegistryEntry.new(data))
+        Kiba::Extend::Registry::RegisteredFile.new(
+          key: filekey,
+          data: Kiba::Extend::Registry::FileRegistryEntry.new(data)
+        )
       }.to raise_error(
-        Kiba::Extend::RegisteredFile::NoFilePathError, msg
+        Kiba::Extend::Registry::RegisteredFile::NoFilePathError, msg
       )
     end
   end

@@ -4,6 +4,7 @@ module Kiba
   module Extend
     module Transforms
       # Transformations that extract specified data from a source
+      # @since 2.2.0
       module Extract
         ::Extract = Kiba::Extend::Transforms::Extract
 

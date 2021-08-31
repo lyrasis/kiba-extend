@@ -57,7 +57,7 @@ module Kiba
     # Prefix for warnings from the ETL
     setting :warning_label, 'KIBA WARNING', reader: true
 
-    setting :registry, Kiba::Extend::FileRegistry.new, reader: true
+    setting :registry, Kiba::Extend::Registry::FileRegistry.new, reader: true
 
     setting :job, reader: true do
       # Whether to output results to STDOUT for debugging

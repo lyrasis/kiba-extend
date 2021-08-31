@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require_relative '../utils/fieldset'
+
 module Kiba
   module Extend
     module Transforms
@@ -158,7 +160,7 @@ module Kiba
 
           # @private
           def process(row)
-            field_data = Kiba::Extend::Fieldset.new(@fieldmap.values)
+            field_data = Kiba::Extend::Utils::Fieldset.new(@fieldmap.values)
 
             id_data = row.fetch(@keycolumn, '')
             id_data = id_data.nil? ? '' : id_data
