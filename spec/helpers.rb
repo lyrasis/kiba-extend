@@ -3,6 +3,118 @@
 module Helpers
   module_function
 
+  # Format examples for Yard documentation
+  #
+  # Use: Helpers::ExampleFormatter.new(input, expected)
+  class ExampleFormatter
+    def initialize(*args)
+      args.each do |arg|
+        @clean = nil
+        @norm = nil
+        @table = nil
+        @headers = nil
+        @maxes = {}
+        @data = arg
+        build_table
+        put_table
+      end
+    end
+
+    private
+
+    def build_table
+      clean_data
+      populate_maxes
+      normalize
+      format_table
+    end
+
+    def clean_data
+      @clean = []
+      @data.each do |row|
+        @clean << row.transform_values{ |val| val.nil? ? 'nil' : val  }
+      end
+    end
+
+    def format_table
+      @table = []
+      @table << headers
+      @table << grab_divider
+      grab_rows
+    end
+
+    def headers
+      @headers ||= @norm.first.keys
+    end
+
+    def grab_divider
+      div = []
+      headers.each do |header|
+        segment = '-' * header.length
+        div << segment
+      end
+      div
+    end
+
+    def grab_row(row)
+      t_row = []
+      headers.each do |header|
+        t_row << row[header]
+      end
+      t_row
+    end
+    
+    def grab_rows
+      @norm.each{ |row| @table << grab_row(row) }
+    end
+    
+    def max_val_length_for_header(header)
+      @clean.map{ |row| row[header].length }.max
+    end
+    
+    def normalize
+      @norm = []
+      @clean.each{ |row| @norm << normalize_row(row) }
+    end
+
+    def normalize_row(row)
+      norm = {}
+      row.each do |header, val|
+        max = @maxes[header]
+        norm[header.to_s.ljust(max)] = val.ljust(max)
+      end
+      norm
+    end
+    
+    def populate_maxes
+      @maxes = @clean.first.map{ |e| [e[0], e[0].length] }.to_h
+      headers = @maxes.keys
+      headers.each do |hdr|
+        val_max = max_val_length_for_header(hdr)
+        @maxes[hdr] = val_max if val_max > @maxes[hdr]
+      end
+    end
+
+    def put_row(row)
+      puts "# | #{row.join(' | ')} |"
+    end  
+
+    def put_table
+      table = @table.dup
+      puts ''
+      puts '#'
+      puts '# ```'
+      put_row(table.shift)
+      div = table.shift
+      puts "# |-#{div.join('-+-')}-|"
+      table.each{ |row| put_row(row) }
+      puts '# ```'
+      puts '#'
+    end
+  end
+
+  
+  
   def fixtures_dir
     app_dir = File.realpath(File.join(File.dirname(__FILE__), '..'))
     File.join(app_dir, 'spec', 'fixtures')
@@ -11,14 +123,14 @@ module Helpers
   def populate_registry
     fkeypath = File.join(fixtures_dir, 'fkey.csv')
     entries = { fkey: { path: fkeypath, supplied: true, lookup_on: :id },
-                invalid: {},
-                fee: { path: fkeypath, lookup_on: :foo, supplied: true },
-                foo: { path: fkeypath, creator: Helpers.method(:test_csv), tags: %i[test] },
-                bar: { path: fkeypath, creator: Helpers.method(:lookup_csv), tags: %i[test report] },
-                baz: { path: fkeypath, creator: Kiba::Extend::Utils::Lookup.method(:csv_to_hash), tags: %i[report] },
-                warn: { path: fkeypath, dest_class: Kiba::Common::Destinations::CSV,
-                        creator: Kiba::Extend.method(:csvopts),
-                        dest_special_opts: { initial_headers: %i[objectnumber briefdescription] } } }
+               invalid: {},
+               fee: { path: fkeypath, lookup_on: :foo, supplied: true },
+               foo: { path: fkeypath, creator: Helpers.method(:test_csv), tags: %i[test] },
+               bar: { path: fkeypath, creator: Helpers.method(:lookup_csv), tags: %i[test report] },
+               baz: { path: fkeypath, creator: Kiba::Extend::Utils::Lookup.method(:csv_to_hash), tags: %i[report] },
+               warn: { path: fkeypath, dest_class: Kiba::Common::Destinations::CSV,
+                      creator: Kiba::Extend.method(:csvopts),
+                      dest_special_opts: { initial_headers: %i[objectnumber briefdescription] } } }
     entries.each { |key, data| Kiba::Extend.registry.register(key, data) }
     Kiba::Extend.registry.namespace(:ns) do
       namespace(:sub) do
