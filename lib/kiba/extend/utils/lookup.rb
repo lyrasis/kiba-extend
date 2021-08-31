@@ -5,9 +5,10 @@ module Kiba
     module Utils
       module Lookup
         ::Lookup = Kiba::Extend::Utils::Lookup
+        extend self
         # use when keycolumn values are unique
         # creates hash with keycolumn value as key and csv-row-as-hash as the value
-        def self.csv_to_hash(file:, keycolumn:, csvopt: {})
+        def csv_to_hash_deprecated(file:, keycolumn:, csvopt: {})
           CSV.foreach(File.expand_path(file), csvopt).each_with_object({}) do |r, memo|
             memo[r.fetch(keycolumn, nil)] = r.to_h
           end
@@ -15,9 +16,9 @@ module Kiba
 
         # use when keycolumn values are not unique
         # creates hash with keycolumn value as key and array of csv-rows-as-hashes as the value
-        def self.csv_to_multi_hash(file:, keycolumn:, csvopt: {})
-          CSV.foreach(File.expand_path(file), csvopt).each_with_object({}) do |r, memo|
-            k = r.fetch(keycolumn, nil)
+        def csv_to_hash(**args)
+          CSV.foreach(File.expand_path(args[:file]), args[:csvopt]).each_with_object({}) do |r, memo|
+            k = r.fetch(args[:keycolumn], nil)
             if memo.key?(k)
               memo[k] << r.to_h
             else
@@ -25,6 +26,8 @@ module Kiba
             end
           end
         end
+
+        alias csv_to_multi_hash csv_to_hash
 
         class SetChecker
           attr_reader :set_type, :result

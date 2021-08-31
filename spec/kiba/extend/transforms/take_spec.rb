@@ -3,7 +3,6 @@
 require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Take do
-  
   let(:result) { execute_job(filename: test_csv, xform: transform, xformopt: opts) }
   before do
     generate_csv(rows)
@@ -14,13 +13,15 @@ RSpec.describe Kiba::Extend::Transforms::Take do
 
   describe 'First' do
     let(:transform) { Take::First }
-    let(:rows) { [
-      %w[a b],
-      ['c|d', 'e|j'],
-      ['', nil],
-      ['|f', 'g|'],
-      ['h', 'i']
-    ] }
+    let(:rows) {
+      [
+        %w[a b],
+        ['c|d', 'e|j'],
+        ['', nil],
+        ['|f', 'g|'],
+        ['h', 'i']
+      ]
+    }
 
     context 'when a, b -> y, z' do
       let(:opts) { { fields: %i[a b], targets: %i[y z], delim: '|' } }

@@ -3,7 +3,6 @@
 require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Append do
-  
   before { generate_csv(rows) }
 
   describe 'NilFields' do

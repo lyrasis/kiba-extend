@@ -3,7 +3,6 @@
 require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Merge do
-  
   before do
     generate_csv(rows)
   end

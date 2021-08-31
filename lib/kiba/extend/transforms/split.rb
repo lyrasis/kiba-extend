@@ -106,7 +106,7 @@ module Kiba
             @collapse_on = collapse_on
             @warn = !warnfield.blank?
             @warnfield = warnfield ||= :warning
-            @new_fields = ( 0..( @max - 1 ) ).entries.map { |entry| "#{field}#{entry}".to_sym }
+            @new_fields = (0..(@max - 1)).entries.map { |entry| "#{field}#{entry}".to_sym }
           end
           # rubocop:enable Metrics/ParameterLists
 
@@ -156,13 +156,13 @@ module Kiba
           end
 
           def process_exceeding(valsplit, row)
-            if @collapse_on == :right
-              process_right_split(valsplit, row)
-            end
+            return unless @collapse_on == :right
+            
+            process_right_split(valsplit, row)
           end
 
           def process_right_collapse(valsplit, row)
-            valsplit.slice!(0..( diff(valsplit) - 1 )).each_with_index do |val, i|
+            valsplit.slice!(0..(diff(valsplit) - 1)).each_with_index do |val, i|
               row["#{@field}#{i}".to_sym] = val
             end
             row["#{@field}#{@max - 1}".to_sym] = valsplit.join(@sep)

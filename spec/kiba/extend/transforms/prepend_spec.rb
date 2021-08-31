@@ -25,9 +25,11 @@ RSpec.describe Kiba::Extend::Transforms::Prepend do
         opts = { target_field: :name, prepended_field: :prependval, sep: ':',
                  multivalue_prepended_field: true }
 
-        expect {execute_job(filename: test_csv,
-                            xform: Prepend::FieldToFieldValue,
-                            xformopt: opts)}.to raise_error(msg)
+        expect {
+          execute_job(filename: test_csv,
+                      xform: Prepend::FieldToFieldValue,
+                      xformopt: opts)
+        }.to raise_error(msg)
       end
     end
 

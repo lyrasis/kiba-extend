@@ -4,21 +4,23 @@ require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Split do
   describe 'IntoMultipleColumns' do
-    
     before(:each) do
       generate_csv(rows)
     end
     context 'without max_segments param' do
-      let(:rows) { [
-        %w[summary],
-        ['']
-      ] }
-      let(:result) { execute_job(filename: test_csv,
-                                 xform: Split::IntoMultipleColumns,
-                                 xformopt: {
-                                   field: :summary,
-                                   sep: ':'
-                                 })
+      let(:rows) {
+        [
+          %w[summary],
+          ['']
+        ]
+      }
+      let(:result) {
+        execute_job(filename: test_csv,
+                    xform: Split::IntoMultipleColumns,
+                    xformopt: {
+                      field: :summary,
+                      sep: ':'
+                    })
       }
       it 'raises ArgumentError with expected message' do
         expect { result }.to raise_error(ArgumentError, 'missing keyword: :max_segments')
@@ -26,12 +28,14 @@ RSpec.describe Kiba::Extend::Transforms::Split do
     end
 
     context 'when sep = : and value = a:b and c' do
-      let(:rows) { [
-        %w[summary],
-        ['a:b'],
-        ['c'],
-        [':d']
-      ] }
+      let(:rows) {
+        [
+          %w[summary],
+          ['a:b'],
+          ['c'],
+          [':d']
+        ]
+      }
 
       context 'with max_segments = 2' do
         it 'fills in blank field before @sep with empty string and empty extra columns to the right with nil' do
@@ -54,13 +58,15 @@ RSpec.describe Kiba::Extend::Transforms::Split do
 
     context 'and max_segments = 3' do
       context 'and value = a:b:c:d:e' do
-        let(:rows) { [
-          %w[summary],
-          ['a:b:c:d:e'],
-          ['f:g'],
-          [''],
-          [nil]
-        ] }
+        let(:rows) {
+          [
+            %w[summary],
+            ['a:b:c:d:e'],
+            ['f:g'],
+            [''],
+            [nil]
+          ]
+        }
         context 'and collapse_on = :right' do
           context 'and no warnfield given' do
             it 'collapses on right' do

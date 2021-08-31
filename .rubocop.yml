@@ -9,3 +9,7 @@ Metrics/BlockLength:
     - spec/kiba/extend/**/*
 Naming/MethodParameterName:
   AllowedNames: i, v
+Style/ModuleFunction:
+  Exclude:
+    # alias_method doesn't work if extend self is changed to module_function
+    - lib/kiba/extend/utils/lookup.rb

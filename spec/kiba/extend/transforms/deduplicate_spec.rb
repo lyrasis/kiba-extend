@@ -3,23 +3,28 @@
 require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Deduplicate do
+  let(:test_job_config){ { source: input, destination: output } }
+  let(:test_job) { Kiba::Extend::Jobs::TestingJob.new(files: test_job_config, transformer: test_job_transforms) }
+  let(:output){ [] }
+
   describe 'Fields' do
     context 'when casesensitive = true' do
-      it 'removes value(s) of source field from target field(s)' do
-        rows = [
-          %w[x y z],
-          %w[a a b],
-          ['a', 'a ', 'a'],
-          ['a', 'b;a', 'a;c'],
-          ['a;b', 'b;a', 'a;c'],
-          %w[a aa bat],
-          [nil, 'a', nil],
-          ['', ' ;a', 'b;'],
-          ['a', nil, nil],
-          %w[a A a]
+      let(:input) do
+        [
+          {x: 'a', y: 'a', z: 'b'},
+          {x: 'a', y: 'a', z: 'a'},
+          {x: 'a', y: 'b;a', z: 'a;c'},
+          {x: 'a;b', y: 'b;a', z: 'a;c'},
+          {x: 'a', y: 'aa', z: 'bat'},
+          {x: nil, y: 'a', z: nil},
+          {x: '', y: ';a', z: 'b;'},
+          {x: 'a', y: nil, z: nil},
+          {x: 'a', y: 'A', z: 'a'},
         ]
-        generate_csv(rows)
-        expected = [
+      end
+
+      let(:expected) do
+        [
           { x: 'a', y: nil, z: 'b' },
           { x: 'a', y: nil, z: nil },
           { x: 'a', y: 'b', z: 'c' },
@@ -30,113 +35,186 @@ RSpec.describe Kiba::Extend::Transforms::Deduplicate do
           { x: 'a', y: nil, z: nil },
           { x: 'a', y: 'A', z: nil }
         ]
-        result = execute_job(filename: test_csv,
-                             xform: Deduplicate::Fields,
-                             xformopt: { source: :x, targets: %i[y z], multival: true, sep: ';' })
-        expect(result).to eq(expected)
+      end
+      
+      let(:test_job_transforms) do
+        Kiba.job_segment do
+          transform Deduplicate::Fields, source: :x, targets: %i[y z], multival: true, sep: ';'
+        end
+      end
+      
+      it 'removes value(s) of source field from target field(s)' do
+        test_job
+        expect(output).to eq(expected)
       end
     end
+
     context 'when casesensitive = false' do
-      it 'removes value(s) of source field from target field(s)' do
-        rows = [
-          %w[x y z],
-          %w[a A a],
-          %w[a a B]
+      let(:input) do
+        [
+          { x: 'a', y: 'A', z: 'a' },
+          { x: 'a', y: 'a', z: 'B' },
         ]
-        generate_csv(rows)
-        expected = [
+      end
+      
+      let(:expected) do
+        [
           { x: 'a', y: nil, z: nil },
           { x: 'a', y: nil, z: 'B' }
         ]
-        result = execute_job(filename: test_csv,
-                             xform: Deduplicate::Fields,
-                             xformopt: { source: :x, targets: %i[y z], multival: false,
-                                         casesensitive: false })
-        expect(result).to eq(expected)
+      end
+
+      let(:test_job_transforms) do
+        Kiba.job_segment do
+          transform Deduplicate::Fields,
+            source: :x,
+            targets: %i[y z],
+            multival: true,
+            sep: ';',
+            casesensitive: false
+        end
+      end
+      it 'removes value(s) of source field from target field(s)' do
+        test_job
+        expect(output).to eq(expected)
       end
     end
   end
 
   describe 'FieldValues' do
-    rows = [
-      %w[val x],
-      ['1;1;1;2;2;2', 'a;A;b;b;b'],
-      ['', 'q;r;r'],
-      %w[1 2],
-      [1, 2]
-    ]
-    before do
-      generate_csv(rows)
-    end
-    it 'removes duplicate values in one field (NOT safe for fieldgroups)' do
-      expected = [
-        { val: '1;2', x: 'a;A;b' },
-        { val: '', x: 'q;r' },
-        { val: '1', x: '2' },
-        { val: '1', x: '2' }
+    let(:input) do
+      [
+        {foo: '1;1;1;2;2;2', bar: 'a;A;b;b;b'},
+        {foo: '', bar: 'q;r;r'},
+        {foo: '1', bar: '2'},
+        {foo: 1, bar: 2}
       ]
-      result = execute_job(filename: test_csv,
-                           xform: Deduplicate::FieldValues,
-                           xformopt: { fields: %i[val x], sep: ';' })
-      expect(result).to eq(expected)
+    end
+
+    context 'when deleting deduplication field' do
+      let(:test_job_transforms) do
+        Kiba.job_segment do
+          transform Deduplicate::FieldValues, fields: %i[foo bar], sep: ';'
+        end
+      end
+      
+      it 'deduplicates values in each field' do
+        expected = [
+          {foo: '1;2', bar: 'a;A;b'},
+          {foo: '', bar: 'q;r'},
+          {foo: '1', bar: '2'},
+          {foo: '1', bar: '2'}
+        ]
+        test_job
+        expect(output).to eq(expected)
+      end
     end
   end
 
   describe 'Flag' do
-    rows = [
-      %w[id x],
-      %w[1 a],
-      %w[2 a],
-      %w[1 b],
-      %w[3 b]
-    ]
-    before do
-      generate_csv(rows)
-      @deduper = {}
-    end
-    it 'adds column with y/n to indicate duplicate records' do
-      expected = [
-        { id: '1', x: 'a', d: 'n' },
-        { id: '2', x: 'a', d: 'n' },
-        { id: '1', x: 'b', d: 'y' },
-        { id: '3', x: 'b', d: 'n' }
+    let(:input) do
+      [
+        {id: '1', x: 'a'},
+        {id: '2', x: 'a'},
+        {id: '1', x: 'b'},
+        {id: '3', x: 'b'},
       ]
-      opt = {
-        on_field: :id,
-        in_field: :d,
-        using: @deduper
-      }
-      result = execute_job(filename: test_csv,
-                           xform: Deduplicate::Flag,
-                           xformopt: opt)
-      expect(result).to eq(expected)
+    end
+
+    context 'when deleting deduplication field' do
+      let(:test_job_transforms) do
+        Kiba.job_segment do
+          @deduper = {}
+          transform Deduplicate::Flag, on_field: :id, in_field: :d, using: @deduper
+        end
+      end
+      it 'deduplicates and removes field' do
+        expected = [
+          { id: '1', x: 'a', d: 'n' },
+          { id: '2', x: 'a', d: 'n' },
+          { id: '1', x: 'b', d: 'y' },
+          { id: '3', x: 'b', d: 'n' }
+        ]
+        test_job
+        expect(output).to eq(expected)
+      end
     end
   end
 
   describe 'GroupedFieldValues' do
-    rows = [
-      %w[name role],
-      ['Fred;Freda;Fred;James', 'author;photographer;editor;illustrator'],
-      [';', ';'],
-      %w[1 2]
-    ]
-    before do
-      generate_csv(rows)
+    let(:test_job_transforms) do
+      Kiba.job_segment do
+        transform Deduplicate::GroupedFieldValues,
+          on_field: :name,
+          grouped_fields: %i[work role],
+          sep: ';'
+      end
     end
-    it 'removes duplicate values in one field, and removes corresponding fieldgroup values' do
-      expected = [
-        { name: 'Fred;Freda;James', role: 'author;photographer;illustrator' },
-        { name: nil, role: nil },
-        { name: '1', role: '2' }
+    
+    let(:input) do
+      [
+        {name: 'Fred;Freda;Fred;James', work: 'Report;Book;Paper;Book', role: 'author;photographer;editor;illustrator'},
+        {name: ';', work: ';', role: ';'},
+        {name: 'Martha', work: 'Book', role: 'contributor'}
       ]
-      result = execute_job(filename: test_csv,
-                           xform: Deduplicate::GroupedFieldValues,
-                           xformopt: {
-                             on_field: :name,
-                             grouped_fields: %i[role],
-                             sep: ';'
-                           })
-      expect(result).to eq(expected)
+    end
+
+    let(:expected) do
+      [
+        { name: 'Fred;Freda;James', work: 'Report;Book;Book', role: 'author;photographer;illustrator' },
+        { name: nil, work: nil, role: nil },
+        {name: 'Martha', work: 'Book', role: 'contributor'}
+      ]
+    end
+
+    it 'removes duplicate values in one field, and removes corresponding fieldgroup values' do
+      # Helpers::ExampleFormatter.new(input, expected)
+      test_job
+      expect(output).to eq(expected)
+    end
+  end
+
+  describe 'Table' do
+    let(:input) do
+      [
+        {foo: 'a', bar: 'b', baz: 'f', combined: 'a b'},
+        {foo: 'c', bar: 'd', baz: 'g', combined: 'c d'},
+        {foo: 'c', bar: 'e', baz: 'h', combined: 'c e'},
+        {foo: 'c', bar: 'd', baz: 'i', combined: 'c d'},
+      ]
+    end
+
+    context 'when deleting deduplication field' do
+      let(:test_job_transforms) do
+        Kiba.job_segment do
+          transform Deduplicate::Table, field: :combined, delete_field: true
+        end
+      end
+      it 'deduplicates and removes field' do
+        expected = [
+          {foo: 'a', bar: 'b', baz: 'f'},
+          {foo: 'c', bar: 'd', baz: 'g'},
+          {foo: 'c', bar: 'e', baz: 'h'}
+        ]
+        test_job
+        expect(output).to eq(expected)
+      end
+    end
+
+    context 'when keeping deduplication field' do
+      let(:test_job_transforms) do
+        Kiba.job_segment do
+          transform Deduplicate::Table, field: :foo
+        end
+      end
+      it 'deduplicates and retains all fields' do
+        expected = [
+          {foo: 'a', bar: 'b', baz: 'f', combined: 'a b'},
+          {foo: 'c', bar: 'd', baz: 'g', combined: 'c d'}
+        ]
+        test_job
+        expect(output).to eq(expected)
+      end
     end
   end
 end
