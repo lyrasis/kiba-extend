@@ -139,4 +139,51 @@ RSpec.describe Kiba::Extend::Transforms::Deduplicate do
       expect(result).to eq(expected)
     end
   end
+
+  describe 'Table' do
+    let(:input) do
+      [
+        {foo: 'a', bar: 'b', baz: 'f', combined: 'a b'},
+        {foo: 'c', bar: 'd', baz: 'g', combined: 'c d'},
+        {foo: 'c', bar: 'e', baz: 'h', combined: 'c e'},
+        {foo: 'c', bar: 'd', baz: 'i', combined: 'c d'},
+      ]
+    end
+    let(:output){ [] }
+    let(:test_job_config){ { source: input, destination: output } }
+    let(:test_job) { Kiba::Extend::Jobs::TestingJob.new(files: test_job_config, transformer: test_job_transforms) }
+
+    context 'when deleting deduplication field' do
+      let(:test_job_transforms) do
+        Kiba.job_segment do
+          transform Deduplicate::Table, field: :combined, delete_field: true
+        end
+      end
+      it 'deduplicates and removes field' do
+        expected = [
+          {foo: 'a', bar: 'b', baz: 'f'},
+          {foo: 'c', bar: 'd', baz: 'g'},
+          {foo: 'c', bar: 'e', baz: 'h'}
+        ]
+        test_job
+        expect(output).to eq(expected)
+      end
+    end
+
+    context 'when keeping deduplication field' do
+      let(:test_job_transforms) do
+        Kiba.job_segment do
+          transform Deduplicate::Table, field: :foo
+        end
+      end
+      it 'deduplicates and retains all fields' do
+        expected = [
+          {foo: 'a', bar: 'b', baz: 'f', combined: 'a b'},
+          {foo: 'c', bar: 'd', baz: 'g', combined: 'c d'}
+        ]
+        test_job
+        expect(output).to eq(expected)
+      end
+    end
+  end
 end
