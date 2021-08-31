@@ -7,6 +7,46 @@ module Kiba
       module Deduplicate
         ::Deduplicate = Kiba::Extend::Transforms::Deduplicate
 
+        # Removes the value(s) of `source` from `targets`
+        #
+        # Input table:
+        #
+        # ```
+        # | x   | y   | z   |
+        # |-----+-----+-----|
+        # | a   | a   | b   |
+        # | a   | a   | a   |
+        # | a   | b;a | a;c |
+        # | a;b | b;a | a;c |
+        # | a   | aa  | bat |
+        # | nil | a   | nil |
+        # |     | ;a  | b;  |
+        # | a   | nil | nil |
+        # | a   | A   | a   |
+        # ```
+        #
+        # Used in pipeline as:
+        #
+        # ```
+        # transform Deduplicate::Fields, source: :x, targets: %i[y z], multival: true, sep: ';'
+        # ```
+        #
+        # Results in:
+        #
+        # ```
+        # | x   | y   | z   |
+        # |-----+-----+-----|
+        # | a   | nil | b   |
+        # | a   | nil | nil |
+        # | a   | b   | c   |
+        # | a;b | nil | c   |
+        # | a   | aa  | bat |
+        # | nil | a   | nil |
+        # |     | a   | b   |
+        # | a   | nil | nil |
+        # | a   | A   | nil |
+        # ```
+        #
         class Fields
           def initialize(source:, targets:, casesensitive: true, multival: false, sep: DELIM)
             @source = source
@@ -53,6 +93,41 @@ module Kiba
           end
         end
 
+        # Removes duplicate values within the given field(s)
+        #
+        # Processes one field at a time. Splits value on sep, and keeps only the unique values
+        # @note This is NOT safe for use with groupings of fields whose multi-values are expected
+        #   to be the same length
+        #
+        # Input table:
+        #
+        # ```
+        # | foo         | bar       |
+        # |-------------------------|
+        # | 1;1;1;2;2;2 | a;A;b;b;b |
+        # |             | q;r;r     |
+        # | 1           | 2         |
+        # | 1           | 2         |
+        # ```
+        #
+        # Used in pipeline as:
+        #
+        # ```
+        # @deduper = {}
+        # transform Deduplicate::FieldValues, fields: %i[foo bar], sep: ';'
+        # ```
+        #
+        # Results in:
+        #
+        # ```
+        # | foo   | bar     |
+        # |-----------------|
+        # | 1;2   | a;A;b   |
+        # |       | q;r     |
+        # | 1     | 2       |
+        # | 1     | 2       |
+        # ```
+        #
         class FieldValues
           def initialize(fields:, sep:)
             @fields = fields
@@ -63,13 +138,57 @@ module Kiba
           def process(row)
             @fields.each do |field|
               val = row.fetch(field)
-              row[field] = val.split(@sep).uniq.join(@sep) unless val.nil?
+              row[field] = val.to_s.split(@sep).uniq.join(@sep) unless val.nil?
             end
             row
           end
         end
 
+        # Adds a field (`in_field`) containing 'y' or 'n', indicating whether value of `on_field` is a duplicate
+        #
+        # The first instance of a value in `on_field` is always marked `n`. Subsequent rows containing the same
+        #   value will be marked 'y'
+        #
+        # Use this transform if you need to retain/report on what will be treated as a duplicate. Use
+        #   {FilterRows::FieldEqualTo} to extract only the duplicate rows and/or to keep only the
+        #   non-duplicate rows
+        #
+        # To delete duplicates all in one step, use {Deduplicate::Table}
+        #
+        # Input table:
+        #
+        # ```
+        # | foo | bar | combined  |
+        # |-----------------------|
+        # | a   | b   | a b       |
+        # | c   | d   | c d       |
+        # | c   | e   | c e       |
+        # | c   | d   | c d       |
+        # ```
+        #
+        # Used in pipeline as:
+        #
+        # ```
+        # @deduper = {}
+        # transform Deduplicate::Flag, on_field: :combined, in_field: :duplicate, using: @deduper
+        # ```
+        #
+        # Results in:
+        #
+        # ```
+        # | foo | bar | combined | duplicate |
+        # |----------------------------------|
+        # | a   | b   | a b      | n         |
+        # | c   | d   | c d      | n         |
+        # | c   | e   | c e      | n         |
+        # | c   | d   | c d      | y         |
+        # ```
+        #
         class Flag
+          # @param on_field [Symbol] Field on which to deduplicate
+          # @param in_field [Symbol] New field in which to add 'y' or 'n'
+          # @param using [Hash] An empty Hash, set as an instance variable in your job definition before you
+          #   use this transform
           def initialize(on_field:, in_field:, using:)
             @on = on_field
             @in = in_field
