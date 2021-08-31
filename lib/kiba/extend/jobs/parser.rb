@@ -6,7 +6,7 @@ module Kiba
       module Parser
         def parse_job(control, context, *job_segments)
           job_segments = job_segments.flatten
-          job_segments.each { |segment|
+          job_segments.compact.each { |segment|
             context.instance_eval(&segment)
           }
           control

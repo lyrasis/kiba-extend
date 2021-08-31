@@ -3,7 +3,7 @@
 require 'spec_helper'
 
 # rubocop:disable Metrics/BlockLength
-RSpec.describe 'Kiba::Extend::Jobs::BaseJob' do
+RSpec.describe 'Kiba::Extend::Jobs::Job' do
   before(:context) do
     @dest_file = File.join(fixtures_dir, 'base_job_dest.csv')
     Kiba::Extend.config.registry = Kiba::Extend::FileRegistry.new
@@ -21,7 +21,7 @@ RSpec.describe 'Kiba::Extend::Jobs::BaseJob' do
     FileUtils.rm(@dest_file) if File.exist?(@dest_file)
   end
 
-  let(:base_job) { Kiba::Extend::Jobs::BaseJob.new(files: base_job_config, transformer: base_job_transforms) }
+  let(:base_job) { Kiba::Extend::Jobs::Job.new(files: base_job_config, transformer: base_job_transforms) }
   let(:base_job_config) { { source: [:base_src], destination: ['base_dest'], lookup: [:base_lookup] } }
   let(:base_job_transforms) do
     Kiba.job_segment do

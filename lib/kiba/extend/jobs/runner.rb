@@ -24,20 +24,6 @@ module Kiba
           show_me_decoration
           tell_me_decoration
         end
-
-        def show_me_decoration
-          return unless Kiba::Extend.job.show_me
-          
-          extend ShowMeJob
-          decorate
-        end
-
-        def tell_me_decoration
-          return unless Kiba::Extend.job.tell_me
-          
-          extend TellMeJob
-          decorate
-        end
         
         # Add lookup tables to the context as methods memoized to instance variables
         def add_lookup(config)
@@ -54,7 +40,7 @@ module Kiba
 
         # This stuff does not get handled by parsing source code
         def add_source_and_destination
-          %i[config sources destinations].each do |method_name|
+          %i[config sources destinations].compact.each do |method_name|
             populate_control(method(method_name))
           end
         end
@@ -74,6 +60,14 @@ module Kiba
 
             raise MissingDependencyError.new(data.key, data.path)
           end
+        end
+
+        def destinations
+          @files[:destination].map { |config| file_config(config) }
+        end
+
+        def file_config(config)
+          { klass: config.klass, args: config.args }
         end
 
         def handle_requirements
@@ -107,30 +101,26 @@ module Kiba
           end
         end
 
-        def file_config(config)
-          { klass: config.klass, args: config.args }
+        def show_me_decoration
+          return unless Kiba::Extend.job.show_me
+          
+          extend ShowMeJob
+          decorate
         end
 
         def sources
           @files[:source].map { |config| file_config(config) }
         end
 
-        def destinations
-          @files[:destination].map { |config| file_config(config) }
+        def tell_me_decoration
+          return unless Kiba::Extend.job.tell_me
+          
+          extend TellMeJob
+          decorate
         end
 
         def transform
           [initial_transforms, @transformer, final_transforms].flatten
-        end
-
-        # Replace file key names with registered_source/lookup/destination objects dynamically
-        def setup_files(files)
-          tmp = {}
-          files.each do |type, arr|
-            method = Kiba::Extend.registry.method("as_#{type}")
-            tmp[type] = arr.map { |key| method.call(key) }
-          end
-          tmp
         end
       end
     end

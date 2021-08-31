@@ -58,7 +58,7 @@ module Kiba
         include Runner
         include Parser
 
-        attr_reader :control, :context, :files, :transformer, :job_data
+        attr_reader :control, :context, :files, :transformer
 
         # @param files [Hash]
         # @param transformer [Kiba::Control]
@@ -68,7 +68,6 @@ module Kiba
           extend DependencyJob if @dependency
 
           @files = setup_files(files)
-          @job_data = @files[:destination].first.data
           report_run_start # defined in Reporter
           @control = Kiba::Control.new
           @context = Kiba::Context.new(control)
@@ -85,25 +84,32 @@ module Kiba
 
         private
 
+        def job_data
+          @files[:destination].first.data
+        end
+
+        # Replace file key names with registered_source/lookup/destination objects dynamically
+        def setup_files(files)
+          tmp = {}
+          files.each do |type, arr|
+            method = Kiba::Extend.registry.method("as_#{type}")
+            tmp[type] = [arr].flatten.map { |key| method.call(key) }
+          end
+          tmp
+        end
+
         def initial_transforms
           Kiba.job_segment do
-            transform { |r| r.to_h }
-            transform { |r| @srcrows += 1; r }
           end
         end
 
         def final_transforms
           Kiba.job_segment do
-            transform { |r| @outrows += 1; r }
           end
         end
 
         def pre_process
           Kiba.job_segment do
-            pre_process do
-              @srcrows = 0
-              @outrows = 0
-            end
           end
         end
 

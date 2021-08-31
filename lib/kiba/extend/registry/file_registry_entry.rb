@@ -34,7 +34,11 @@ module Kiba
       end
 
       def summary
-        "#{key} -- #{tags.join(', ')}\n  #{path}\n  #{desc}"
+        lines = ["#{key} -- #{tags.join(', ')}"]
+        lines << "  #{path}" if path
+        lines << "  #{desc}" if desc
+        lines << "  #{creator}" if creator
+        lines.join("\n")
       end
 
       def valid?
