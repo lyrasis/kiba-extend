@@ -6,8 +6,12 @@ module Kiba
       module Lookup
         ::Lookup = Kiba::Extend::Utils::Lookup
         extend self
-        # use when keycolumn values are unique
-        # creates hash with keycolumn value as key and csv-row-as-hash as the value
+
+        # @deprecated in 2.2.0. The original `csv_to_multi_hash` now has the name
+        #   `csv_to_hash`. `csv_to_multi_hash` is now aliased to `csv_to_hash`. Since
+        #   creating these methods, I never once needed to use the original `csv_to_hash`
+        #   method. Any need for it can be met by the multi-hash implementation
+        # @todo remove this entirely at some point
         def csv_to_hash_deprecated(file:, keycolumn:, csvopt: {})
           CSV.foreach(File.expand_path(file), csvopt).each_with_object({}) do |r, memo|
             memo[r.fetch(keycolumn, nil)] = r.to_h

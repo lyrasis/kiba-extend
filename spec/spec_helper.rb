@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+# This needs to be the very first thing in this file
+require 'simplecov'
+SimpleCov.start
+
 require 'bundler/setup'
 require 'kiba/extend'
 require_relative './helpers'

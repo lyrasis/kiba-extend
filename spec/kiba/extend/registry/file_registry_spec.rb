@@ -3,9 +3,9 @@
 require 'spec_helper'
 
 # rubocop:disable Metrics/BlockLength
-RSpec.describe 'Kiba::Extend::FileRegistry' do
+RSpec.describe 'Kiba::Extend::Registry::FileRegistry' do
   before(:context) do
-    Kiba::Extend.config.registry = Kiba::Extend::FileRegistry.new
+    Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry.new
     populate_registry
   end
   let(:filekey) { :fkey }
@@ -45,21 +45,21 @@ RSpec.describe 'Kiba::Extend::FileRegistry' do
         registry.each { |item| chk << item[1].class }
         chk.uniq!
         expect(chk.length).to eq(1)
-        expect(chk.first).to eq(Kiba::Extend::FileRegistryEntry)
+        expect(chk.first).to eq(Kiba::Extend::Registry::FileRegistryEntry)
       end
     end
 
     describe 'as destination' do
       let(:result) { registry.as_destination(filekey) }
       it 'returns destination file config' do
-        expect(result).to be_a(Kiba::Extend::RegisteredDestination)
+        expect(result).to be_a(Kiba::Extend::Registry::RegisteredDestination)
       end
 
       context 'when called with nonexistent key' do
         let(:filekey) { :cats }
         it 'raises error' do
           msg = "No file registered under the key: :#{filekey}"
-          expect { result }.to raise_error(Kiba::Extend::FileRegistry::KeyNotRegisteredError, msg)
+          expect { result }.to raise_error(Kiba::Extend::Registry::FileRegistry::KeyNotRegisteredError, msg)
         end
       end
     end
@@ -67,14 +67,22 @@ RSpec.describe 'Kiba::Extend::FileRegistry' do
     describe 'as lookup' do
       let(:result) { registry.as_lookup(filekey) }
       it 'returns lookup file config' do
-        expect(result).to be_a(Kiba::Extend::RegisteredLookup)
+        expect(result).to be_a(Kiba::Extend::Registry::RegisteredLookup)
       end
     end
 
     describe 'as source' do
       let(:result) { registry.as_source(filekey) }
       it 'returns source file config' do
-        expect(result).to be_a(Kiba::Extend::RegisteredSource)
+        expect(result).to be_a(Kiba::Extend::Registry::RegisteredSource)
+      end
+    end
+
+    describe 'entries' do
+      let(:result) { registry.entries }
+      it 'returns Array of FileRegistryEntries' do
+        expect(result).to be_a(Array)
+        expect(result.first).to be_a(Kiba::Extend::Registry::FileRegistryEntry)
       end
     end
   end

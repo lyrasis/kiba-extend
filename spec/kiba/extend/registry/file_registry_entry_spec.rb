@@ -3,9 +3,9 @@
 require 'spec_helper'
 
 # rubocop:disable Metrics/BlockLength
-RSpec.describe 'Kiba::Extend::FileRegistryEntry' do
+RSpec.describe 'Kiba::Extend::Registry::FileRegistryEntry' do
   let(:path) { File.join('spec', 'fixtures', 'fkey.csv') }
-  let(:entry) { Kiba::Extend::FileRegistryEntry.new(data) }
+  let(:entry) { Kiba::Extend::Registry::FileRegistryEntry.new(data) }
   let(:reghash) do
     {
       fkey: { path: path, key: :foo },

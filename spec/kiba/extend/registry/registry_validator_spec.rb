@@ -3,12 +3,12 @@
 require 'spec_helper'
 
 # rubocop:disable Metrics/BlockLength
-RSpec.describe 'Kiba::Extend::RegistryValidator' do
+RSpec.describe 'Kiba::Extend::Registry::RegistryValidator' do
   before(:context) do
-    Kiba::Extend.config.registry = Kiba::Extend::FileRegistry.new
+    Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry.new
     prepare_registry
   end
-  let(:validator) { Kiba::Extend::RegistryValidator.new }
+  let(:validator) { Kiba::Extend::Registry::RegistryValidator.new }
 
   describe '#valid?' do
     let(:result) { validator.valid? }

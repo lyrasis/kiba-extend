@@ -2,44 +2,56 @@
 
 module Kiba
   module Extend
-    class RegistryEntrySelector
-      # @param cstr [String] stringified class name
-      def created_by_class(cstr)
-        with_creator.select { |entry| entry.creator.owner.to_s[cstr] }
-      end
-
-      # @param mstr [String] stringified method name
-      def created_by_method(mstr)
-        matcher = "#<Method: #{mstr}("
-        with_creator.select { |entry| entry.creator.to_s[matcher] }
-      end
-
-      # Selects entries whose tags include all given tags
-      def tagged_all(*args)
-        tags = args.flatten.map(&:to_sym)
-        tags.inject(Kiba::Extend.registry.entries) do |arr, tag|
-          arr.select { |entry| entry.tags.any?(tag) }
+    module Registry
+      # Used in Rake tasks in project application to identify particular files/jobs
+      #   to run or display information about
+      class RegistryEntrySelector
+        # Registry entries created by a given class
+        # @param cstr [String] stringified class name
+        # @return [Array<FileRegistryEntry>]
+        def created_by_class(cstr)
+          with_creator.select { |entry| entry.creator.owner.to_s[cstr] }
         end
-      end
 
-      # Selects entries whose tags include one or more of the given tags
-      def tagged_any(*args)
-        tags = args.flatten.map(&:to_sym)
-        results = tags.inject([]) do |arr, arg|
-          arr << tagged(arg)
-          arr
+        # Registry entry or entries created by a given method
+        # @param mstr [String] stringified method name
+        # @return [Array<FileRegistryEntry>]
+        def created_by_method(mstr)
+          matcher = "#<Method: #{mstr}("
+          with_creator.select { |entry| entry.creator.to_s[matcher] }
         end
-        results.flatten.uniq
-      end
 
-      private
+        # Selects entries whose tags include all given tags
+        # @param args [Array<Symbol>]
+        # @return [Array<FileRegistryEntry>]
+        def tagged_all(*args)
+          tags = args.flatten.map(&:to_sym)
+          tags.inject(Kiba::Extend.registry.entries) do |arr, tag|
+            arr.select { |entry| entry.tags.any?(tag) }
+          end
+        end
 
-      def tagged(tag)
-        Kiba::Extend.registry.entries.select { |entry| entry.tags.any?(tag) }
-      end
+        # Selects entries whose tags include one or more of the given tags
+        # @param args [Array<Symbol>]
+        # @return [Array<FileRegistryEntry>]
+        def tagged_any(*args)
+          tags = args.flatten.map(&:to_sym)
+          results = tags.inject([]) do |arr, arg|
+            arr << tagged(arg)
+            arr
+          end
+          results.flatten.uniq
+        end
 
-      def with_creator
-        Kiba::Extend.registry.entries.select { |entry| entry.creator }
+        private
+
+        def tagged(tag)
+          Kiba::Extend.registry.entries.select { |entry| entry.tags.any?(tag) }
+        end
+
+        def with_creator
+          Kiba::Extend.registry.entries.select { |entry| entry.creator }
+        end
       end
     end
   end

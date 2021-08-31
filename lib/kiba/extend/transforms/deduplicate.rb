@@ -379,6 +379,7 @@ module Kiba
         # | c   | e   | h   |
         # ```
         #
+        # @since 2.2.0
         class Table
           # @param field [Symbol] name of field on which to deduplicate
           # @param delete_field [Boolean] whether to delete the deduplication field after doing deduplication

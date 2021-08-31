@@ -3,11 +3,16 @@
 require 'spec_helper'
 
 # rubocop:disable Metrics/BlockLength
-RSpec.describe 'Kiba::Extend::RegisteredSource' do
+RSpec.describe 'Kiba::Extend::Registry::RegisteredSource' do
   let(:filekey) { :fkey }
   let(:path) { File.join('spec', 'fixtures', 'fkey.csv') }
   let(:default) { { path: path, creator: -> { Helpers.test_csv } } }
-  let(:source) { Kiba::Extend::RegisteredSource.new(key: filekey, data: Kiba::Extend::FileRegistryEntry.new(data)) }
+  let(:source) do
+    Kiba::Extend::Registry::RegisteredSource.new(
+      key: filekey,
+      data: Kiba::Extend::Registry::FileRegistryEntry.new(data)
+    )
+  end
 
   describe '#args' do
     let(:result) { source.args }

@@ -2,16 +2,16 @@
 
 require 'spec_helper'
 
-class TestClass < Kiba::Extend::RegisteredFile
-  include Kiba::Extend::RequirableFile
+class TestClass < Kiba::Extend::Registry::RegisteredFile
+  include Kiba::Extend::Registry::RequirableFile
 end
 
 # rubocop:disable Metrics/BlockLength
-RSpec.describe 'Kiba::Extend::RequirableFile' do
+RSpec.describe 'Kiba::Extend::Registry::RequirableFile' do
   let(:filekey) { :fkey }
   let(:path) { File.join('spec', 'fixtures', 'fkey.csv') }
   let(:default) { { path: path, creator: Helpers.method(:fake_creator_method) } }
-  let(:klass) { TestClass.new(key: filekey, data: Kiba::Extend::FileRegistryEntry.new(data)) }
+  let(:klass) { TestClass.new(key: filekey, data: Kiba::Extend::Registry::FileRegistryEntry.new(data)) }
 
   context 'when called without creator' do
     let(:data) { { path: path } }
@@ -19,9 +19,9 @@ RSpec.describe 'Kiba::Extend::RequirableFile' do
       msg = "No creator method found for :#{filekey} in file registry"
       expect {
         TestClass.new(key: filekey,
-                      data: Kiba::Extend::FileRegistryEntry.new(data)).required
+                      data: Kiba::Extend::Registry::FileRegistryEntry.new(data)).required
       }.to raise_error(
-        Kiba::Extend::RequirableFile::NoDependencyCreatorError, msg
+        Kiba::Extend::Registry::RequirableFile::NoDependencyCreatorError, msg
       )
     end
   end
