@@ -2,20 +2,32 @@
 
 Kiba is a [Data processing & ETL framework for Ruby](https://github.com/thbar/kiba).
 
-kiba-extend is a suite of extensions useful in transformations and reshaping data in migrations. 
+kiba-extend is a suite of Kiba extensions useful in transforming and reshaping data. It includes the following: 
 
-[mimsy-to-cspace](https://github.com/lyrasis/mimsy-to-cspace) is a publicly available example of `kiba-extend` usage.
+- An extensive library of abstract, reusable transformations
+- Some custom source and destination types
+- File/job registry support for use in migration projects. This handles repetitive aspects of configuring source, lookup, and destination files, as well as ensures dependency jobs are called to create files created for a given job. Files/jobs may be tagged and run from a project application via Rake tasks 
+- Job templating and decoration. No need to repeat the same source/destination setup, requirements running, pre-processing, post-processing, and initial/final transforms over and over again in your code.
+  - You can turn on "show me!" when you run a job via Rake task, without doing anything in your code.
+  - You can similarly turn on "tell me" from the command line, which will have your computer say something when a job is complete---useful for long running jobs.
+  - There is a TestingJob that allows you to easily write automated tests for any transformation or set of transformations
 
-Current projects in the Lyrasis `migrations-private` repo reflect my preferred practices for structuring Kiba-based projects, which have changed since the project that resulted in the current iteration of `mimsy-to-cspace`. See list below for some links to specific interesting/relatively unusual examples of use. 
+**The transformations and source/destination types may be used completely independently of the registry/job templating.** The registry and job templating functionality are highly dependent on one another.
 
-To get a full overview of available transformations and what they do, run `rake spec` from the repo base directory. This will give you the names of all the transformations in `kiba-extend` and brief descriptions of what they do. 
+On the to-do list: 
 
-For more clarity about exactly what each transformation does, if it is not described in the documentation yet, check the actual test files in `/spec/kiba/extend/transforms`.
+- Wiki documentation for how to use the registry and job templating
+- Auto-generation of a project application scaffold (or at least a template repo with setup examples --- this might work in place of wiki documentation)
 
-## Examples
+## Documentation
+- https://lyrasis.github.io/kiba-extend/ - reference for available transformations (I'm working to develop this more fully. If there is no documentation for a given transformation here, please refer to the relevant `spec` file for that transformation to see exactly what it does)
+- specs
+  - To get a full overview of available transformations and what they do, run `rake spec` from the repo base directory. This will give you the names of all the transformations in `kiba-extend` and brief descriptions of what they do. 
+  - For more clarity about exactly what each transformation does, if it is not described in the documentation yet, check the actual test files in `/spec/kiba/extend/transforms`, which include sample input rows, transformation calls, and the resulting output
 
-If the links below do not work, look for the same path in the archived projects folder.
+## Example project applications
 
-- Use plain-old Ruby to [iterate through all files in a directory, process them the same way](https://github.com/lyrasis/fwm-cspace-migration/blob/e05e632545fbfe772d37afa7e230cacf1ebd9fd8/lib/fwm/authority_export.rb#L28-L34), and then [merge them](https://github.com/lyrasis/fwm-cspace-migration/blob/e05e632545fbfe772d37afa7e230cacf1ebd9fd8/lib/fwm/authority_export.rb#L73-L77).
+[mimsy-to-cspace](https://github.com/lyrasis/mimsy-to-cspace) is a publicly available example of `kiba-extend` usage. It was completed before the registry/job templating functions were added, so it only shows how transformations get used. (And it is a good example of how repetitive the code gets without templating)
 
-I am working on better documentation for the transformations included in `kiba-extend`, which will be available at https://lyrasis.github.io/kiba-extend/
+[fwm-cspace-migration](https://github.com/lyrasis/fwm-cspace-migration) is the first project in which I'm using the new registry/job templating functions. Unfortunately it is a private repo because it contains client-specific information. 
+
