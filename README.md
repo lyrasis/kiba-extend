@@ -10,6 +10,7 @@ kiba-extend is a suite of Kiba extensions useful in transforming and reshaping d
 - Job templating and decoration. No need to repeat the same source/destination setup, requirements running, pre-processing, post-processing, and initial/final transforms over and over again in your ETL code.
 
 Some current possibilities with job templating/decoration:
+
 - You can turn on "show me!" when you run a job via Rake task, without doing anything in your code.
 - You can similarly turn on "tell me" from the command line, which will have your computer say something when a job is complete---useful for long running jobs.
 - There is a TestingJob that allows you to easily write automated tests for any transformation or set of transformations
