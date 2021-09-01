@@ -70,14 +70,10 @@
 </li><li>
 <p>File/job registry support for use in migration projects. This handles repetitive aspects of configuring source, lookup, and destination files, as well as ensures dependency jobs are called to create files created for a given job. Files/jobs may be tagged and run from a project application via Rake tasks</p>
 </li><li>
-<p>Job templating and decoration. No need to repeat the same source/destination setup, requirements running, pre-processing, post-processing, and initial/final transforms over and over again in your code.</p>
-</li><li>
-<p>You can turn on “show me!” when you run a job via Rake task, without doing anything in your code.</p>
-</li><li>
-<p>You can similarly turn on “tell me” from the command line, which will have your computer say something when a job is complete—useful for long running jobs.</p>
-</li><li>
-<p>There is a TestingJob that allows you to easily write automated tests for any transformation or set of transformations</p>
+<p>Job templating and decoration. No need to repeat the same source/destination setup, requirements running, pre-processing, post-processing, and initial/final transforms over and over again in your ETL code.</p>
 </li></ul>
+
+<p>Some current possibilities with job templating/decoration: - You can turn on “show me!” when you run a job via Rake task, without doing anything in your code. - You can similarly turn on “tell me” from the command line, which will have your computer say something when a job is complete—useful for long running jobs. - There is a TestingJob that allows you to easily write automated tests for any transformation or set of transformations</p>
 
 <p><strong>The transformations and source/destination types may be used completely independently of the registry/job templating.</strong> The registry and job templating functionality are highly dependent on one another.</p>
 
@@ -89,15 +85,18 @@
 </li></ul>
 
 <h2 id="label-Documentation">Documentation</h2>
-<ul><li>
-<p><a href="https://lyrasis.github.io/kiba-extend">lyrasis.github.io/kiba-extend</a>/ - reference for available transformations (I&#39;m working to develop this more fully. If there is no documentation for a given transformation here, please refer to the relevant <code>spec</code> file for that transformation to see exactly what it does)</p>
-</li><li>
-<p>specs</p>
-</li><li>
+
+<h3 id="label-https-3A-2F-2Flyrasis.github.io-2Fkiba-extend-2F"><a href="https://lyrasis.github.io/kiba-extend">lyrasis.github.io/kiba-extend</a>/</h3>
+
+<p>Browseable reference for available transformations.</p>
+
+<p>I&#39;m working to develop this more fully. If there is no documentation for a given transformation here, please refer to the relevant <code>spec</code> file for that transformation to see exactly what it does.</p>
+
+<h3 id="label-Specs">Specs</h3>
+
 <p>To get a full overview of available transformations and what they do, run <code>rake spec</code> from the repo base directory. This will give you the names of all the transformations in <code>kiba-extend</code> and brief descriptions of what they do.</p>
-</li><li>
+
 <p>For more clarity about exactly what each transformation does, if it is not described in the documentation yet, check the actual test files in <code>/spec/kiba/extend/transforms</code>, which include sample input rows, transformation calls, and the resulting output</p>
-</li></ul>
 
 <h2 id="label-Example+project+applications">Example project applications</h2>
 
@@ -107,7 +106,7 @@
 </div></div>
 
       <div id="footer">
-  Generated on Wed Sep  1 00:10:03 2021 by
+  Generated on Wed Sep  1 00:19:45 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-2.7.4).
 </div>
