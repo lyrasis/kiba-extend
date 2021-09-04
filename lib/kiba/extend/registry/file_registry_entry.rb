@@ -39,13 +39,32 @@ module Kiba
         #
         # Called by project applications
         def summary
-          lines = ["#{key} -- #{tags.join(', ')}"]
-          lines << "  #{path}" if path
-          lines << "  #{desc}" if desc
-          lines << "  #{creator}" if creator
+          lines = [summary_first_line]
+          lines << "#{summary_padding}#{desc}" unless desc.blank?
+          lines << "#{summary_padding}File path: #{path}" if path
+          lines << summary_creator if creator
+          lines << "\n"
           lines.join("\n")
         end
 
+        def summary_first_line
+          return key.to_s if tags.blank?
+
+          "#{key} -- tags: #{tags.join(', ')}"
+        end
+
+        def summary_creator
+          lines = []
+          arr = creator.to_s.delete_prefix('#<Method: ').delete_suffix('>').split(' ')
+          lines << "Job method: #{arr[0]}"
+          lines << "Job defined at: #{arr[1]}"
+          lines.map{ |line| "#{summary_padding}#{line}" }.join("\n")
+        end
+
+        def summary_padding
+          '    '
+        end
+        
         # Whether the Entry is valid
         # @return [Boolean]
         def valid?
