@@ -4,7 +4,10 @@ require 'spec_helper'
 load 'lib/tasks/reg.thor'
 
 RSpec.describe Reg do
-  before(:context){ prepare_registry }
+  before(:context) do
+    Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry.new
+    prepare_registry
+  end
 
   context 'with tags' do
     it 'lists tags' do
