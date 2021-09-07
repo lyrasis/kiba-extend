@@ -10,7 +10,7 @@ class Run < Thor
     opts.delete(:keys)
 
     options[:keys].each do |key|
-      job = resolve_job(key)
+      job = resolve_job(key.to_sym)
       next if job == :failure
 
       creator = resolve_creator(job)

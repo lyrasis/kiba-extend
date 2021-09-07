@@ -18,7 +18,7 @@ class Run < Thor
   end
 
   def resolve_job(key)
-    Kiba::Extend.registry.resolve(options[:key])
+    Kiba::Extend.registry.resolve(key)
   rescue Dry::Container::Error
     puts "No job with key: #{key}"
     :failure
