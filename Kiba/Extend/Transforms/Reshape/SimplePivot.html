@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: Kiba::Extend::Transforms::Reshape::SimplePivot
+  
+    &mdash; Kiba-Extend Documentation
+  
+</title>
+
+  <link rel="stylesheet" href="../../../../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../../../../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "Kiba::Extend::Transforms::Reshape::SimplePivot";
+  relpath = '../../../../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../../../../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../../../../_index.html">Index (S)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../Transforms.html" title="Kiba::Extend::Transforms (module)">Transforms</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Reshape.html" title="Kiba::Extend::Transforms::Reshape (module)">Reshape</a></span></span>
+     &raquo; 
+    <span class="title">SimplePivot</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../../../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: Kiba::Extend::Transforms::Reshape::SimplePivot
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Kiba::Extend::Transforms::Reshape::SimplePivot</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/kiba/extend/transforms/reshape.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'>
+<p>This transformation runs in memory, so it may bog down or crash on extremely large data sources</p>
+</div>
+  </div>
+
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'>
+<p>This transformation has some pretty strong assumptions and limitations that can be quite destructive, so examine the example below carefully.</p>
+</div>
+  </div>
+
+
+<h1 id="label-Examples">Examples</h1>
+
+<p>Input table:</p>
+
+<pre class="code ruby"><code class="ruby">| authority | norm    | term        | unrelated |
+|-----------+---------+-------------+-----------|
+| person    | fred    | Fred Q.     | foo       |
+| org       | fred    | Fred, Inc.  | bar       |
+| location  | unknown | Unknown     | baz       |
+| person    | unknown | Unknown     | fuz       |
+| org       | unknown | Unknown     | aaa       |
+| work      | book    | Book        | eee       |
+| location  | book    |             | zee       |
+|           | book    | Book        | squeee    |
+| nil       | ghost   | Ghost       | boo       |
+| location  |         | Ghost       | zoo       |
+| location  | ghost   | nil         | poo       |
+| org       | fred    | Fred, Corp. | bar       |
+| issues    | nil     | nil         | bah       |
+</code></pre>
+
+<p>Used in pipeline as:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Reshape.html" title="Kiba::Extend::Transforms::Reshape (module)">Reshape</a></span></span><span class='op'>::</span><span class='const'>SimplePivot</span><span class='comma'>,</span>
+  <span class='label'>field_to_columns:</span> <span class='symbol'>:authority</span><span class='comma'>,</span>
+  <span class='label'>field_to_rows:</span> <span class='symbol'>:norm</span><span class='comma'>,</span>
+  <span class='label'>field_to_col_vals:</span> <span class='symbol'>:term</span>
+</code></pre>
+
+<p>Results in:</p>
+
+<pre class="code ruby"><code class="ruby">| norm    | person  | org         | location | work | issues |
+|---------+---------+-------------+----------+------+--------|
+| fred    | Fred Q. | Fred, Corp. | nil      | nil  | nil    |
+| unknown | Unknown | Unknown     | Unknown  | nil  | nil    |
+| book    | nil     | nil         | nil      | Book | nil    |
+</code></pre>
+
+<p><strong>NOTE</strong></p>
+<ul><li>
+<p>A new column has been created for each unique value in the <code>field_to_columns</code> field</p>
+</li><li>
+<p>A single row has been generated for each unique value in the <code>field_to_rows</code> field</p>
+</li><li>
+<p>The value from the <code>field_to_col_vals</code> field is in the appropriate column</p>
+</li><li>
+<p>When more than one row has the same values for <code>field_to_columns</code> and <code>field_to_rows</code>,  the value of the last row processed&#39;s <code>field_to_col_vals</code> will be used (we get Fred, Corp.  instead of Fred, Inc.</p>
+</li><li>
+<p>Only data from the three involved fields is kept! Note that the <code>unrelated</code> field from  the input has been lost</p>
+</li><li>
+<p>Rows lacking a value for any of the three fields will be skipped, in terms of populating  the dynamically created column (see the Ghost examples)</p>
+</li><li>
+<p>However, a dynamically created column will still be created even if it is given no data  (See issues example)</p>
+</li></ul>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(field_to_columns:, field_to_rows:, field_to_col_vals:)  &#x21d2; SimplePivot </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+<p>A new instance of SimplePivot.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>(field_to_columns:, field_to_rows:, field_to_col_vals:)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Reshape::SimplePivot (class)">SimplePivot</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+<p>Returns a new instance of SimplePivot.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+175
+176
+177
+178
+179
+180
+181</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/reshape.rb', line 175</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>field_to_columns:</span><span class='comma'>,</span> <span class='label'>field_to_rows:</span><span class='comma'>,</span> <span class='label'>field_to_col_vals:</span><span class='rparen'>)</span>
+  <span class='ivar'>@col_field</span> <span class='op'>=</span> <span class='id identifier rubyid_field_to_columns'>field_to_columns</span>
+  <span class='ivar'>@row_field</span> <span class='op'>=</span> <span class='id identifier rubyid_field_to_rows'>field_to_rows</span>
+  <span class='ivar'>@col_val_field</span> <span class='op'>=</span> <span class='id identifier rubyid_field_to_col_vals'>field_to_col_vals</span>
+  <span class='ivar'>@rows</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='ivar'>@columns</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+</div>
+
+      <div id="footer">
+  Generated on Tue Sep  7 23:06:55 2021 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.26 (ruby-2.7.4).
+</div>
+
+    </div>
+  </body>
+</html>
