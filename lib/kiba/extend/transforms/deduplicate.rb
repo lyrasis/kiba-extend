@@ -366,7 +366,7 @@ module Kiba
         # Used in pipeline as:
         #
         # ```
-        # transform Deduplicate::Table, fields: :combined, delete_field: true
+        # transform Deduplicate::Table, field: :combined, delete_field: true
         # ```
         #
         # Results in:
