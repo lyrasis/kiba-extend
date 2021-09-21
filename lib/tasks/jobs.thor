@@ -2,11 +2,11 @@ require 'thor'
 
 class Jobs < Thor
   class_option :run, required: false, type: :boolean, default: false, aliases: :r,
-               desc: 'Whether to run the matching jobs'
+               desc: 'Whether to run the matching jobs. Default: false'
   class_option :show, required: false, type: :boolean, default: false, aliases: :s,
-               desc: 'Only relevant if run=true. Whether to print job results to STDOUT'
+               desc: 'Only relevant if run=true. Whether to print job results to STDOUT. Default: false'
   class_option :tell, required: false, type: :boolean, default: false, aliases: :t,
-               desc: 'Only relevant if run=true. Whether to SAY job is complete. Useful for long running jobs'
+               desc: 'Only relevant if run=true. Whether to SAY job is complete. Useful for long running jobs. Default: false'
   class_option :verbosity, required: false, type: :string, default: 'normal', aliases: :v,
                desc: 'Only relevant if run=true. How much info to print to screen',
                enum: ['minimal', 'normal', 'verbose']

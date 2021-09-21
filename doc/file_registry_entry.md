@@ -1,12 +1,14 @@
 # File Registry Entry
 
-## PATH_REQ
+## Note: SourceDestRegistry
 
-Constant registering the known source/destination classes and whether each requires a file path for read/write.
+`Kiba::Extend::Registry::FileRegistryEntry` mixes in the `Kiba::Extend::Registry::SourceDestRegistry` module, which provides certain information about source and destination types necessary for validating them and preparing entries using them for use in jobs. 
 
-If you create or incorporate a new source/destination class, you will get a warning if you use it and do not register it here. 
+If you create/use a new source or destination type in your File Registry, it will need to be added to `SourceDestRegistryConstant` or you will get errors.
 
-## reghash
+(This is one of the signs I made a poor design choice around FileRegistryEntry modeling, which I now thing needs to be re-implemented using the Strategy pattern or something else. But here it is for now.)
+
+## File Registry Data hashes in your ETL application
 
 A file registry entry is initialized with a Hash of data about the file. This Hash will be sent from your ETL application. 
 
