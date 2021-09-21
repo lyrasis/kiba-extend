@@ -13,7 +13,6 @@ module Kiba
         def setup_files(files)
           tmp = {}
           files.each do |type, val|
-            binding.pry
             if type == :source
               tmp[type] = source_entry(val)
             elsif type == :destination

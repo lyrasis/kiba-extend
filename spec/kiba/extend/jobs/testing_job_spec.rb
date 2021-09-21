@@ -33,7 +33,7 @@ RSpec.describe 'Kiba::Extend::Jobs::TestingJob' do
   context 'with defaults' do
     let(:job) { test_job }
     context 'when dependency files exist' do
-      it 'runs and produces expected result' do
+      it 'runs and produces expected result', skip: 'testing job does not yet support lookups' do
          job
          expected = [{foo: 1, baz: 2, letter: 'a', animal: 'alpaca'},
                      {foo: 3, baz: 4, letter: 'c', animal: 'cat'}]
