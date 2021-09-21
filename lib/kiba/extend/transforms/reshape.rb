@@ -172,6 +172,10 @@ module Kiba
         # - However, a dynamically created column will still be created even if it is given no data
         #   (See issues example)
         class SimplePivot
+          # @param field_to_columns [Symbol] field whose values will generate new columns
+          # @param field_to_rows [Symbol] field whose values will generate the result rows (data is collapsed on
+          #   values in this field)
+          # @param field_to_col_vals [Symbol] field whose values get put in the new columns per row
           def initialize(field_to_columns:, field_to_rows:, field_to_col_vals:)
             @col_field = field_to_columns
             @row_field = field_to_rows

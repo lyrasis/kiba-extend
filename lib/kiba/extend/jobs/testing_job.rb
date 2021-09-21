@@ -18,6 +18,7 @@ module Kiba
             elsif type == :destination
               tmp[type] = destination_entry(val)
             end
+            
           end
           tmp
         end

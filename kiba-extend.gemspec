@@ -41,6 +41,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'dry-container', '~> 0.8'
   spec.add_dependency 'kiba', '~> 4.0.0'
   spec.add_dependency 'kiba-common', '~> 1.5.0'
+  spec.add_dependency 'thor', '~> 1.1.0'
   spec.add_dependency 'xxhash', '~> 0.4'
 
   # spec.add_development_dependency 'bundler', '>= 1.17'
