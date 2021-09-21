@@ -12,7 +12,7 @@ require 'pry'
 require 'byebug'
 require 'xxhash'
 
-# require 'kiba/extend/version'
+require 'kiba/extend/registry/file_registry'
 
 # Default CSV options
 CSVOPT = { headers: true, header_converters: :symbol }.freeze
@@ -36,6 +36,8 @@ module Kiba
       require rbfile.delete_prefix("#{File.expand_path(__dir__)}/lib/")
     end
 
+    registry = Kiba::Extend::Registry::FileRegistry.new
+    
     # So we can call Kiba.job_segment
     Kiba.extend(Kiba::Extend::Jobs::JobSegmenter)
 
@@ -57,7 +59,7 @@ module Kiba
     # Prefix for warnings from the ETL
     setting :warning_label, default: 'KIBA WARNING', reader: true
 
-    setting :registry, default: Kiba::Extend::Registry::FileRegistry.new, reader: true
+    setting :registry, default: registry, reader: true
 
     setting :job, reader: true do
       # Whether to output results to STDOUT for debugging
