@@ -243,7 +243,59 @@
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>field_to_columns</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>field whose values will generate new columns</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>field_to_rows</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>field whose values will generate the result rows (data is collapsed on values in this field)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>field_to_col_vals</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'>
+<p>field whose values get put in the new columns per row</p>
+</div>
+      
+    </li>
+  
+</ul>
+
 
 </div><table class="source_code">
   <tr>
@@ -251,16 +303,16 @@
       <pre class="lines">
 
 
-175
-176
-177
-178
 179
 180
-181</pre>
+181
+182
+183
+184
+185</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/reshape.rb', line 175</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/reshape.rb', line 179</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>field_to_columns:</span><span class='comma'>,</span> <span class='label'>field_to_rows:</span><span class='comma'>,</span> <span class='label'>field_to_col_vals:</span><span class='rparen'>)</span>
   <span class='ivar'>@col_field</span> <span class='op'>=</span> <span class='id identifier rubyid_field_to_columns'>field_to_columns</span>
@@ -280,7 +332,7 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Sep  7 23:06:55 2021 by
+  Generated on Tue Sep 21 20:33:37 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-2.7.4).
 </div>
