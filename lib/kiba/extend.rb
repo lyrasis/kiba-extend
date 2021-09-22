@@ -12,7 +12,7 @@ require 'pry'
 require 'byebug'
 require 'xxhash'
 
-# require 'kiba/extend/version'
+require 'kiba/extend/registry/file_registry'
 
 # Default CSV options
 CSVOPT = { headers: true, header_converters: :symbol }.freeze
@@ -36,39 +36,41 @@ module Kiba
       require rbfile.delete_prefix("#{File.expand_path(__dir__)}/lib/")
     end
 
+    registry = Kiba::Extend::Registry::FileRegistry.new
+    
     # So we can call Kiba.job_segment
     Kiba.extend(Kiba::Extend::Jobs::JobSegmenter)
 
     # Default options for reading/writing CSVs
-    setting :csvopts, { headers: true, header_converters: %i[symbol downcase] }, reader: true
+    setting :csvopts, default: { headers: true, header_converters: %i[symbol downcase] }, reader: true
 
     # Default settings for Lambda destination
-    setting :lambdaopts, { on_write: ->(r) { accumulator << r } }, reader: true
+    setting :lambdaopts, default: { on_write: ->(r) { accumulator << r } }, reader: true
 
     # Default delimiter for splitting/joining values in multi-valued fields
-    setting :delim, ';', reader: true
+    setting :delim, default: ';', reader: true
 
     # Default source class for jobs
-    setting :source, Kiba::Common::Sources::CSV, reader: true
+    setting :source, default: Kiba::Common::Sources::CSV, reader: true
 
     # Default destination class for jobs
-    setting :destination, Kiba::Extend::Destinations::CSV, reader: true
+    setting :destination, default: Kiba::Extend::Destinations::CSV, reader: true
 
     # Prefix for warnings from the ETL
-    setting :warning_label, 'KIBA WARNING', reader: true
+    setting :warning_label, default: 'KIBA WARNING', reader: true
 
-    setting :registry, Kiba::Extend::Registry::FileRegistry.new, reader: true
+    setting :registry, default: registry, reader: true
 
     setting :job, reader: true do
       # Whether to output results to STDOUT for debugging
-      setting :show_me, false, reader: true
+      setting :show_me, default: false, reader: true
       # Whether to have computer say something when job is complete
-      setting :tell_me, false, reader: true
+      setting :tell_me, default: false, reader: true
       # How much output about jobs to output to STDOUT
       # :debug - tells you A LOT - helpful when developing pipelines and debugging
       # :normal - reports what is running, from where, and the results
       # :minimal - bare minimum
-      setting :verbosity, :normal, reader: true
+      setting :verbosity, default: :normal, reader: true
     end
 
     # strips, collapses multiple spaces, removes terminal commas, strips again

@@ -4,6 +4,7 @@
 --charset utf-8
 --no-private
 --markup markdown
+--markup-provider redcarpet
 -
 LICENSE.txt
 doc/file_registry_entry.md
