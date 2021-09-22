@@ -14,8 +14,10 @@ jobs:
         uses: actions/setup-ruby@v1
         with:
           ruby-version: "2.7"
-      - name: Install required gem dependencies
+      - name: Install yard
         run: gem install yard --no-document
+      - name: Install redcarpet (markdown parser gem)
+        run: gem install redcarpet
       - name: Build YARD Ruby Documentation
         run: yardoc
       - name: Deploy
