@@ -5,9 +5,10 @@ require 'json'
 module Kiba
   module Extend
     module Destinations
-      # Writes rows to a JSON Lines (aka newline-delimited JSON) file
-      # See https://jsonlines.org/
-      class JsonLines
+      # Writes each row as a valid JSON object that is an element in a JSON array
+      #
+      # This is simliar to the idea of, but not technically compliant with, [JSON Lines](https://jsonlines.org/)
+      class JsonArray
         # @param filename [String] path for writing JSON file
         def initialize(filename:)
           @json = []
