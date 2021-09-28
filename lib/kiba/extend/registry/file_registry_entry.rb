@@ -108,12 +108,12 @@ module Kiba
           @creator = nil
           @desc = ''
           @dest_class = Kiba::Extend.destination
-          @dest_opt = Kiba::Extend.csvopts
+          @dest_opt = nil
           @dest_special_opts = nil
           @lookup_on = nil
           @path = nil
           @src_class = Kiba::Extend.source
-          @src_opt = Kiba::Extend.csvopts
+          @src_opt = nil
           @supplied = false
           @tags = []
           @valid = false

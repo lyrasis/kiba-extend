@@ -41,8 +41,17 @@ module Kiba
         # Arguments for calling {Kiba::Extend::Lookup} with this file
         # @return [Hash]
         def args
-          opts = @data.src_opt ? @data.src_opt : file_options(@data.src_class)
-          { file: path, csvopt: opts, keycolumn: @data.lookup_on }
+          { file: path, keycolumn: @data.lookup_on }.merge(options)
+        end
+
+        private
+
+        def options
+          klass = @data.src_class
+          label = lookup_options_label(klass)
+          return {label=>@data.src_opt} if @data.src_opt
+
+          {label=>default_file_options(klass)}
         end
       end
     end

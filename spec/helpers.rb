@@ -148,7 +148,9 @@ module Helpers
                baz: { path: fkeypath, creator: Kiba::Extend::Utils::Lookup.method(:csv_to_hash), tags: %i[report] },
                warn: { path: fkeypath, dest_class: Kiba::Common::Destinations::CSV,
                       creator: Kiba::Extend.method(:csvopts),
-                      dest_special_opts: { initial_headers: %i[objectnumber briefdescription] } } }
+                      dest_special_opts: { initial_headers: %i[objectnumber briefdescription] } },
+               json_arr: {path: fkeypath, dest_class: Kiba::Extend::Destinations::JsonArray,
+                          creator: Helpers.method(:fake_creator_method)} }
     entries.each { |key, data| Kiba::Extend.registry.register(key, data) }
     Kiba::Extend.registry.namespace(:ns) do
       namespace(:sub) do

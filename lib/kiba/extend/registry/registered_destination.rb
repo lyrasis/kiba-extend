@@ -46,7 +46,7 @@ module Kiba
         def simple_args
           return { filename: path }.merge(options_label(klass) => @data.dest_opt) if @data.dest_opt
 
-          { filename: path }.merge(labeled_options(klass))
+          default_args(klass)
         end
 
         def supported_special_opts
