@@ -3,9 +3,8 @@
 require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Reshape do
-  let(:test_job_config){ { source: input, destination: output } }
-  let(:test_job) { Kiba::Extend::Jobs::TestingJob.new(files: test_job_config, transformer: test_job_transforms) }
-  let(:output){ [] }
+  let(:accumulator){ [] }
+  let(:test_job){ Helpers::TestJob.new(input: input, accumulator: accumulator, transforms: transforms) }
 
   describe 'CollapseMultipleFieldsToOneTypedFieldPair' do
     context 'when source field may be multivalued' do
@@ -27,7 +26,7 @@ RSpec.describe Kiba::Extend::Transforms::Reshape do
          }]
       end
 
-      let(:test_job_transforms) do
+      let(:transforms) do
         Kiba.job_segment do
           transform Reshape::CollapseMultipleFieldsToOneTypedFieldPair,
             sourcefieldmap: {
@@ -45,7 +44,7 @@ RSpec.describe Kiba::Extend::Transforms::Reshape do
 
       it 'reshapes the columns as specified after splitting source' do
         test_job
-        expect(output).to eq(expected)
+        expect(test_job.accumulator).to eq(expected)
       end
     end
     
@@ -74,7 +73,7 @@ RSpec.describe Kiba::Extend::Transforms::Reshape do
         ]
       end
 
-      let(:test_job_transforms) do
+      let(:transforms) do
         Kiba.job_segment do
           transform Reshape::CollapseMultipleFieldsToOneTypedFieldPair,
             sourcefieldmap: {
@@ -92,7 +91,7 @@ RSpec.describe Kiba::Extend::Transforms::Reshape do
       
       it 'reshapes the columns as specified' do
         test_job
-        expect(output).to eq(expected)
+        expect(test_job.accumulator).to eq(expected)
       end
     end
   end
@@ -124,7 +123,7 @@ RSpec.describe Kiba::Extend::Transforms::Reshape do
       ]
     end
 
-    let(:test_job_transforms) do
+    let(:transforms) do
       Kiba.job_segment do
         transform Reshape::SimplePivot,
           field_to_columns: :authority,
@@ -136,7 +135,7 @@ RSpec.describe Kiba::Extend::Transforms::Reshape do
     it 'reshapes the columns as specified after splitting source' do
       Helpers::ExampleFormatter.new(input, expected)
       test_job
-      expect(output).to eq(expected)
+      expect(test_job.accumulator).to eq(expected)
     end
   end
 end

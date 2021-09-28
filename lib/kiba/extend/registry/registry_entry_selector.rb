@@ -18,7 +18,9 @@ module Kiba
         # @return [Array<FileRegistryEntry>]
         def created_by_method(mstr)
           matcher = "#<Method: #{mstr}("
-          with_creator.select { |entry| entry.creator.to_s[matcher] }
+          with_creator.select { |entry|
+          binding.pry if mstr.end_with?('.csv_to_hash')
+            entry.creator.to_s[matcher] }
         end
 
         # Selects entries whose tags include all given tags

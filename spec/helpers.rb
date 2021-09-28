@@ -3,6 +3,24 @@
 module Helpers
   module_function
 
+
+  class TestJob
+    include Kiba::Extend::Jobs::Parser
+
+    attr_reader :control, :context, :accumulator
+    def initialize(input:, accumulator:, transforms:)
+      @accumulator = accumulator
+      @control = Kiba.parse do
+        source Kiba::Common::Sources::Enumerable, input
+        destination Kiba::Common::Destinations::Lambda,
+          on_write: ->(r) { accumulator << r }
+      end
+      @context = Kiba::Context.new(control)
+      parse_job(control, context, [transforms])
+      Kiba.run(control)
+    end
+  end
+  
   # Format examples for Yard documentation
   #
   # Use: Helpers::ExampleFormatter.new(input, expected)
@@ -194,9 +212,9 @@ module Helpers
     output_rows = []
     settings = { filename: filename, csv_options: CSVOPT.merge(csvopt) }
     job = Kiba.parse do
-      source Kiba::Common::Sources::CSV, settings
+      source Kiba::Common::Sources::CSV, **settings
       transform(&:to_h)
-      transform xform, xformopt
+      transform xform, **xformopt
       transform { |row| output_rows << row }
     end
 
@@ -208,15 +226,15 @@ module Helpers
     insettings = { filename: filename, csv_options: CSVOPT.merge(incsvopt) }
     outsettings = { filename: filename, csv_options: CSVOPT.merge(outcsvopt) }
     job = Kiba.parse do
-      source Kiba::Common::Sources::CSV, insettings
+      source Kiba::Common::Sources::CSV, **insettings
       transform(&:to_h)
-      destination Kiba::Common::Destinations::CSV, outsettings
+      destination Kiba::Common::Destinations::CSV, **outsettings
     end
     Kiba.run(job)
 
     output_rows = []
     job2 = Kiba.parse do
-      source Kiba::Common::Sources::CSV, insettings
+      source Kiba::Common::Sources::CSV, **insettings
       transform(&:to_h)
       transform { |row| output_rows << row }
     end

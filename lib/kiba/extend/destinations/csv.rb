@@ -25,7 +25,7 @@ module Kiba
 
         # @private
         def write(row)
-          @csv ||= ::CSV.open(filename, 'wb', csv_options)
+          @csv ||= ::CSV.open(filename, 'wb', **csv_options)
           @headers ||= row.keys
           order_headers
           @headers_written ||= (csv << headers; true)

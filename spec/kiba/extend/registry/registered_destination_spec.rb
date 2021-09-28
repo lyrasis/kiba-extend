@@ -20,7 +20,7 @@ RSpec.describe 'Kiba::Extend::Registry::RegisteredDestination' do
     context 'with basic defaults' do
       let(:data) { default }
       let(:expected) do
-        [{ filename: path }.merge(optres)]
+        { filename: path }.merge(optres)
       end
       it 'returns with Kiba::Extend csvopts' do
         expect(result).to eq(expected)
@@ -31,7 +31,7 @@ RSpec.describe 'Kiba::Extend::Registry::RegisteredDestination' do
       let(:override_opts) { { foo: :bar } }
       let(:data) { { path: path, dest_opt: override_opts } }
       let(:expected) do
-        [{ filename: path, csv_options: override_opts }]
+        { filename: path, csv_options: override_opts }
       end
       it 'returns with given opts' do
         expect(result).to eq(expected)
@@ -43,7 +43,7 @@ RSpec.describe 'Kiba::Extend::Registry::RegisteredDestination' do
         let(:extra) { { initial_headers: %i[a b] } }
         let(:data) { { path: path, dest_class: Kiba::Extend::Destinations::CSV, dest_special_opts: extra } }
         let(:expected) do
-          [{ filename: path, csv_options: Kiba::Extend.csvopts, initial_headers: %i[a b] }]
+          { filename: path, csv_options: Kiba::Extend.csvopts, initial_headers: %i[a b] }
         end
         it 'returns with extra options' do
           expect(result).to eq(expected)
@@ -54,7 +54,7 @@ RSpec.describe 'Kiba::Extend::Registry::RegisteredDestination' do
         let(:extra) { { blah: %i[a b] } }
         let(:data) { { path: path, dest_class: Kiba::Extend::Destinations::CSV, dest_special_opts: extra } }
         let(:expected) do
-          [{ filename: path, csv_options: Kiba::Extend.csvopts }]
+          { filename: path, csv_options: Kiba::Extend.csvopts }
         end
         it 'returns without extra options' do
           expect(result).to eq(expected)

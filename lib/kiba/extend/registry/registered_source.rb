@@ -15,7 +15,7 @@ module Kiba
         # @return [Hash]
         def args
           opts = @data.src_opt ? { options_label(klass) => @data.src_opt } : labeled_options(klass)
-          [{ filename: path }.merge(opts)]
+          { filename: path }.merge(opts)
         end
 
         # Kiba Source class to call
