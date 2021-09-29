@@ -14,6 +14,9 @@ require 'xxhash'
 
 require 'kiba/extend/registry/file_registry'
 
+# These are still here to support legacy projects/unconverted tests.
+# Do not call these constants in new code.
+# Use Kiba::Extend.csvopts and Kiba::Extend.delim instead
 # Default CSV options
 CSVOPT = { headers: true, header_converters: :symbol }.freeze
 

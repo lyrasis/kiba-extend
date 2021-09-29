@@ -49,8 +49,9 @@ RSpec.describe 'Kiba::Extend::Jobs::Job' do
 
     context 'when dependency files do not exist' do
       let(:base_job_config) { { source: [:missing_src], destination: [:base_dest], lookup: [:base_lookup] } }
-      # cannot figure out how to test this in a timely manner. Will test manually for now.
-      xit 'calls dependency creators' do
+      
+      it 'calls dependency creators',
+        skip: 'cannot figure out how to test this in a timely manner. Will test manually for now.' do
         missing_file = File.join(fixtures_dir, 'base_job_missing.csv')
         creator = double()
         Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry.new

@@ -20,8 +20,8 @@ module Kiba
 
         # use when keycolumn values are not unique
         # creates hash with keycolumn value as key and array of csv-rows-as-hashes as the value
-        def csv_to_hash(**args)
-          CSV.foreach(File.expand_path(args[:file]), args[:csvopt]).each_with_object({}) do |r, memo|
+        def csv_to_hash(args)
+          CSV.foreach(File.expand_path(args[:file]), **args[:csvopt]).each_with_object({}) do |r, memo|
             k = r.fetch(args[:keycolumn], nil)
             if memo.key?(k)
               memo[k] << r.to_h

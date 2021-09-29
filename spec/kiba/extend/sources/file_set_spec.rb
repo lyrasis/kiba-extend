@@ -15,7 +15,7 @@ RSpec.describe 'Kiba::Extend::Sources::FileSet' do
   after(:context) { FileUtils.rm_rf(@path) }
 
   let(:args) { { path: @path } }
-  let(:set) { Kiba::Extend::Sources::FileSet.new(args) }
+  let(:set) { Kiba::Extend::Sources::FileSet.new(**args) }
   describe '#files' do
     let(:result) { set.files }
     context 'with defaults' do

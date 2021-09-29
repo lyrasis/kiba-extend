@@ -33,22 +33,32 @@ module Kiba
             if instance_variable_defined?(key_as_iv)
               instance_variable_get(key_as_iv)
             else
-              instance_variable_set(key_as_iv, Lookup.csv_to_hash(config.args))
+              instance_variable_set(key_as_iv, Lookup.csv_to_hash(**config.args))
             end
           }
         end
 
         # This stuff does not get handled by parsing source code
-        def add_source_and_destination
-          %i[config sources destinations].compact.each do |method_name|
-            populate_control(method(method_name))
-          end
+        def add_config
+          return if config.empty?
+
+          control.config.merge(config)
+        end
+
+        def add_destinations
+          context.instance_eval(destinations)
+        end
+
+        def add_sources
+          context.instance_eval(sources)
         end
 
         def assemble_control
           lookups_to_memoized_methods if @files[:lookup]
           parse_job_segments
-          add_source_and_destination
+          add_config
+          add_sources
+          add_destinations
           add_decoration
           control
         end
@@ -64,6 +74,8 @@ module Kiba
 
         def destinations
           @files[:destination].map { |config| file_config(config) }
+            .map{ |src| "destination #{src[:klass]}, **#{src[:args]}" }
+            .join("\n")
         end
 
         def file_config(config)
@@ -87,20 +99,6 @@ module Kiba
           parse_job(control, context, [pre_process, transform, post_process])
         end
 
-        # @todo I think this may not need to be so opaque and metamagicky now that this module has
-        #   direct access to one instance of context and control for all the processes, but it works
-        #   now. Test/simplify later.
-        def populate_control(method)
-          elements = method.call
-          control_method = control.method(method.name)
-          target = control_method.call
-          if method.name == :config
-            target.merge(elements)
-          else
-            elements.each { |element| target << element }
-          end
-        end
-
         def show_me_decoration
           return unless Kiba::Extend.job.show_me
           
@@ -110,6 +108,8 @@ module Kiba
 
         def sources
           @files[:source].map { |config| file_config(config) }
+            .map{ |src| "source #{src[:klass]}, **#{src[:args]}" }
+            .join("\n")
         end
 
         def tell_me_decoration

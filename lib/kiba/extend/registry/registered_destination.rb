@@ -9,13 +9,13 @@ module Kiba
       class RegisteredDestination < RegisteredFile
         # Arguments for calling Kiba Destination class
         def args
-          return [simple_args] unless @data.dest_special_opts
+          return simple_args unless @data.dest_special_opts
 
           opts = supported_special_opts
           warn_about_opts if opts.length < @data.dest_special_opts.length
-          return [simple_args] if opts.empty?
+          return simple_args if opts.empty?
 
-          [simple_args.merge(supported_special_opts)]
+          simple_args.merge(supported_special_opts)
         end
 
         # Description of file
@@ -46,7 +46,7 @@ module Kiba
         def simple_args
           return { filename: path }.merge(options_label(klass) => @data.dest_opt) if @data.dest_opt
 
-          { filename: path }.merge(labeled_options(klass))
+          default_args(klass)
         end
 
         def supported_special_opts

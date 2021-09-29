@@ -3,9 +3,8 @@
 require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Deduplicate do
-  let(:test_job_config){ { source: input, destination: output } }
-  let(:test_job) { Kiba::Extend::Jobs::TestingJob.new(files: test_job_config, transformer: test_job_transforms) }
-  let(:output){ [] }
+  let(:accumulator){ [] }
+  let(:testjob){ Helpers::TestJob.new(input: input, accumulator: accumulator, transforms: transforms) }
 
   describe 'Fields' do
     context 'when casesensitive = true' do
@@ -37,15 +36,15 @@ RSpec.describe Kiba::Extend::Transforms::Deduplicate do
         ]
       end
       
-      let(:test_job_transforms) do
+      let(:transforms) do
         Kiba.job_segment do
           transform Deduplicate::Fields, source: :x, targets: %i[y z], multival: true, sep: ';'
         end
       end
       
       it 'removes value(s) of source field from target field(s)' do
-        test_job
-        expect(output).to eq(expected)
+        testjob
+        expect(testjob.accumulator).to eq(expected)
       end
     end
 
@@ -64,7 +63,7 @@ RSpec.describe Kiba::Extend::Transforms::Deduplicate do
         ]
       end
 
-      let(:test_job_transforms) do
+      let(:transforms) do
         Kiba.job_segment do
           transform Deduplicate::Fields,
             source: :x,
@@ -75,8 +74,8 @@ RSpec.describe Kiba::Extend::Transforms::Deduplicate do
         end
       end
       it 'removes value(s) of source field from target field(s)' do
-        test_job
-        expect(output).to eq(expected)
+        testjob
+        expect(testjob.accumulator).to eq(expected)
       end
     end
   end
@@ -92,7 +91,7 @@ RSpec.describe Kiba::Extend::Transforms::Deduplicate do
     end
 
     context 'when deleting deduplication field' do
-      let(:test_job_transforms) do
+      let(:transforms) do
         Kiba.job_segment do
           transform Deduplicate::FieldValues, fields: %i[foo bar], sep: ';'
         end
@@ -105,8 +104,8 @@ RSpec.describe Kiba::Extend::Transforms::Deduplicate do
           {foo: '1', bar: '2'},
           {foo: '1', bar: '2'}
         ]
-        test_job
-        expect(output).to eq(expected)
+        testjob
+        expect(testjob.accumulator).to eq(expected)
       end
     end
   end
@@ -122,7 +121,7 @@ RSpec.describe Kiba::Extend::Transforms::Deduplicate do
     end
 
     context 'when deleting deduplication field' do
-      let(:test_job_transforms) do
+      let(:transforms) do
         Kiba.job_segment do
           @deduper = {}
           transform Deduplicate::Flag, on_field: :id, in_field: :d, using: @deduper
@@ -135,14 +134,14 @@ RSpec.describe Kiba::Extend::Transforms::Deduplicate do
           { id: '1', x: 'b', d: 'y' },
           { id: '3', x: 'b', d: 'n' }
         ]
-        test_job
-        expect(output).to eq(expected)
+        testjob
+        expect(testjob.accumulator).to eq(expected)
       end
     end
   end
 
   describe 'GroupedFieldValues' do
-    let(:test_job_transforms) do
+    let(:transforms) do
       Kiba.job_segment do
         transform Deduplicate::GroupedFieldValues,
           on_field: :name,
@@ -169,8 +168,8 @@ RSpec.describe Kiba::Extend::Transforms::Deduplicate do
 
     it 'removes duplicate values in one field, and removes corresponding fieldgroup values' do
       # Helpers::ExampleFormatter.new(input, expected)
-      test_job
-      expect(output).to eq(expected)
+      testjob
+      expect(testjob.accumulator).to eq(expected)
     end
   end
 
@@ -185,7 +184,7 @@ RSpec.describe Kiba::Extend::Transforms::Deduplicate do
     end
 
     context 'when deleting deduplication field' do
-      let(:test_job_transforms) do
+      let(:transforms) do
         Kiba.job_segment do
           transform Deduplicate::Table, field: :combined, delete_field: true
         end
@@ -196,13 +195,13 @@ RSpec.describe Kiba::Extend::Transforms::Deduplicate do
           {foo: 'c', bar: 'd', baz: 'g'},
           {foo: 'c', bar: 'e', baz: 'h'}
         ]
-        test_job
-        expect(output).to eq(expected)
+        testjob
+        expect(testjob.accumulator).to eq(expected)
       end
     end
 
     context 'when keeping deduplication field' do
-      let(:test_job_transforms) do
+      let(:transforms) do
         Kiba.job_segment do
           transform Deduplicate::Table, field: :foo
         end
@@ -212,8 +211,8 @@ RSpec.describe Kiba::Extend::Transforms::Deduplicate do
           {foo: 'a', bar: 'b', baz: 'f', combined: 'a b'},
           {foo: 'c', bar: 'd', baz: 'g', combined: 'c d'}
         ]
-        test_job
-        expect(output).to eq(expected)
+        testjob
+        expect(testjob.accumulator).to eq(expected)
       end
     end
   end
