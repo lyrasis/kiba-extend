@@ -167,7 +167,7 @@ module Kiba
           # @param fields [Array<Symbol>] names of fields in which to deduplicate values
           # @param sep [String] used to split/join multivalued field values
           def initialize(fields:, sep:)
-            @fields = fields
+            @fields = [fields].flatten
             @sep = sep
           end
 

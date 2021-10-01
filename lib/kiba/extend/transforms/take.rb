@@ -49,7 +49,7 @@ module Kiba
 
         class First
           def initialize(fields:, targets: [], delim:)
-            @fields = fields
+            @fields = [fields].flatten
             @targets = targets
             @delim = delim
             build_targets

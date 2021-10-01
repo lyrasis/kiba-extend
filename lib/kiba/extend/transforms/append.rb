@@ -8,7 +8,7 @@ module Kiba
         ::Append = Kiba::Extend::Transforms::Append
         class NilFields
           def initialize(fields:)
-            @fields = fields
+            @fields = [fields].flatten
           end
 
           # @private

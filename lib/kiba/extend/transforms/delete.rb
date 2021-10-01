@@ -8,7 +8,7 @@ module Kiba
         ::Delete = Kiba::Extend::Transforms::Delete
         class EmptyFieldValues
           def initialize(fields:, sep:)
-            @fields = fields
+            @fields = [fields].flatten
             @sep = sep
           end
 
@@ -24,7 +24,7 @@ module Kiba
 
         class Fields
           def initialize(fields:)
-            @fields = fields
+            @fields = [fields].flatten
           end
 
           # @private
@@ -49,7 +49,7 @@ module Kiba
 
         class FieldValueContainingString
           def initialize(fields:, match:, casesensitive: true)
-            @fields = fields
+            @fields = [fields].flatten
             @match = casesensitive ? match : match.downcase
             @casesensitive = casesensitive
           end
@@ -112,7 +112,7 @@ module Kiba
 
         class FieldValueMatchingRegexp
           def initialize(fields:, match:, casesensitive: true)
-            @fields = fields
+            @fields = [fields].flatten
             @match = casesensitive ? Regexp.new(match) : Regexp.new(match, Regexp::IGNORECASE)
           end
 

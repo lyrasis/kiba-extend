@@ -10,7 +10,7 @@ module Kiba
         ::MsAccess = Kiba::Extend::Transforms::MsAccess
         class ScientificNotationToNumberString
           def initialize(fields:)
-            @fields = fields
+            @fields = [fields].flatten
           end
 
           # @private

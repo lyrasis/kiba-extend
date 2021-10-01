@@ -129,7 +129,7 @@ module Kiba
 
         class FieldValuesToNewRows
           def initialize(target:, fields: [], multival: false, sep: ' ', keep_nil: false, keep_empty: false)
-            @fields = fields
+            @fields = [fields].flatten
             @target = target
             @multival = multival
             @sep = sep
