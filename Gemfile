@@ -4,6 +4,10 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
+group :development do
+  gem 'redcarpet', '~>3.5' # markdown parser for generating documentation
+end
+
 group :development, :test do
   gem 'bundler', '>= 1.17'
   gem 'byebug', '~>11.0'
