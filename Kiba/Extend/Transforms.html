@@ -78,14 +78,39 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/kiba/extend/transforms/copy.rb<span class="defines">,<br />
-  lib/kiba/extend/transforms/take.rb,<br /> lib/kiba/extend/transforms/clean.rb,<br /> lib/kiba/extend/transforms/merge.rb,<br /> lib/kiba/extend/transforms/split.rb,<br /> lib/kiba/extend/transforms/append.rb,<br /> lib/kiba/extend/transforms/cspace.rb,<br /> lib/kiba/extend/transforms/delete.rb,<br /> lib/kiba/extend/transforms/rename.rb,<br /> lib/kiba/extend/transforms/explode.rb,<br /> lib/kiba/extend/transforms/extract.rb,<br /> lib/kiba/extend/transforms/helpers.rb,<br /> lib/kiba/extend/transforms/prepend.rb,<br /> lib/kiba/extend/transforms/replace.rb,<br /> lib/kiba/extend/transforms/reshape.rb,<br /> lib/kiba/extend/transforms/ms_access.rb,<br /> lib/kiba/extend/transforms/deduplicate.rb,<br /> lib/kiba/extend/transforms/filter_rows.rb,<br /> lib/kiba/extend/transforms/combine_values.rb</span>
+    <dd>lib/kiba/extend/transforms.rb<span class="defines">,<br />
+  lib/kiba/extend/transforms/copy.rb,<br /> lib/kiba/extend/transforms/take.rb,<br /> lib/kiba/extend/transforms/clean.rb,<br /> lib/kiba/extend/transforms/merge.rb,<br /> lib/kiba/extend/transforms/split.rb,<br /> lib/kiba/extend/transforms/append.rb,<br /> lib/kiba/extend/transforms/cspace.rb,<br /> lib/kiba/extend/transforms/delete.rb,<br /> lib/kiba/extend/transforms/rename.rb,<br /> lib/kiba/extend/transforms/explode.rb,<br /> lib/kiba/extend/transforms/extract.rb,<br /> lib/kiba/extend/transforms/helpers.rb,<br /> lib/kiba/extend/transforms/prepend.rb,<br /> lib/kiba/extend/transforms/replace.rb,<br /> lib/kiba/extend/transforms/reshape.rb,<br /> lib/kiba/extend/transforms/ms_access.rb,<br /> lib/kiba/extend/transforms/deduplicate.rb,<br /> lib/kiba/extend/transforms/filter_rows.rb,<br /> lib/kiba/extend/transforms/combine_values.rb</span>
 </dd>
   </dl>
   
 </div>
 
-<h2>Defined Under Namespace</h2>
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>Namespace for modules that organize Kiba transforms.</p>
+
+<p>Note that a Kiba transform is just a class that implements a public <code>process</code> method that
+  takes a row as its parameter and returns the transformed row.</p>
+
+<p>Because all Kiba transforms require this, that method is
+  commented as &quot;private&quot; for the sake of creating non-repetitive documentation.</p>
+
+<p>== Notes on commonly used paramters in tranforms</p>
+
+<p>=== fields
+Expects an Array of field names. The field names should be Symbols unless you have
+  overridden the default CSV converter which symbolizes header values.</p>
+
+<p>Since 2.5.2, you may also pass a single Symbol and it will be wrapped in an Array for you
+  automagically.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><h2>Defined Under Namespace</h2>
 <p class="children">
   
     
@@ -107,7 +132,7 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Oct  1 22:30:33 2021 by
+  Generated on Fri Oct  1 23:35:44 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-2.7.4).
 </div>
