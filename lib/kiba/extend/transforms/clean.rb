@@ -19,7 +19,7 @@ module Kiba
         class AlphabetizeFieldValues
           include Kiba::Extend::Transforms::Helpers
           def initialize(fields:, delim:, usenull: false, direction: :asc)
-            @fields = fields
+            @fields = [fields].flatten
             @delim = delim
             @usenull = usenull
             @direction = direction
@@ -52,7 +52,7 @@ module Kiba
 
         class ClearFields
           def initialize(fields:, if_equals: nil)
-            @fields = fields
+            @fields = [fields].flatten
             @if_equals = if_equals
           end
 
@@ -87,7 +87,7 @@ module Kiba
 
         class DowncaseFieldValues
           def initialize(fields:)
-            @fields = fields
+            @fields = [fields].flatten
           end
 
           # @private
@@ -172,7 +172,7 @@ module Kiba
 
         class RegexpFindReplaceFieldVals
           def initialize(fields:, find:, replace:, casesensitive: true, multival: false, sep: nil, debug: false)
-            @fields = fields
+            @fields = [fields].flatten
             @find = Regexp.new(find) if casesensitive == true
             @find = Regexp.new(find, Regexp::IGNORECASE) if casesensitive == false
             @replace = replace
@@ -214,7 +214,7 @@ module Kiba
 
         class StripFields
           def initialize(fields:)
-            @fields = fields
+            @fields = [fields].flatten
           end
 
           # @private

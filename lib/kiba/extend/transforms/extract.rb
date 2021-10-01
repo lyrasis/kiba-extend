@@ -66,7 +66,7 @@ module Kiba
         # ```
         class Fields
           def initialize(fields:, sep: nil, source_field_track: true)
-            @fields = fields
+            @fields = [fields].flatten
             @sep = sep
             @track = source_field_track
             @rows = []

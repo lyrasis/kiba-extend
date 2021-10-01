@@ -11,7 +11,7 @@ module Kiba
 
         class CompareFieldsFlag
           def initialize(fields:, target:, downcase: true, strip: true, ignore_blank: false)
-            @fields = fields
+            @fields = [fields].flatten
             @target = target
             @strip = strip
             @downcase = downcase

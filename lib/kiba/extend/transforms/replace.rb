@@ -10,7 +10,7 @@ module Kiba
         ::Replace = Kiba::Extend::Transforms::Replace
         class EmptyFieldValues
           def initialize(fields:, value:)
-            @fields = fields
+            @fields = [fields].flatten
             @value = value
           end
 

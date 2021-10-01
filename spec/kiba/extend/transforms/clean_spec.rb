@@ -319,7 +319,7 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
       generate_csv(rows)
       result = execute_job(filename: test_csv,
                            xform: Clean::RegexpFindReplaceFieldVals,
-                           xformopt: { fields: [:val],
+                           xformopt: { fields: :val,
                                        find: 'xx+',
                                        replace: 'exes' }).map { |h| h[:val] }.join('; ')
       expected = 'exes a thing; thing exes 123; x files'
