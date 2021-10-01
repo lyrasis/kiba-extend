@@ -27,6 +27,7 @@ module Kiba
         def write(row)
           @csv ||= ::CSV.open(filename, 'wb', **csv_options)
           @headers ||= row.keys
+          verify_initial_headers
           order_headers
           @headers_written ||= (csv << headers; true)
           csv << row.fetch_values(*@headers)
@@ -39,9 +40,33 @@ module Kiba
 
         private
 
+        def header_check_hash
+          @initial_headers.map{ |hdr| [hdr, headers.any?(hdr)] }.to_h
+        end
+
+        def initial_headers_present?
+          header_check_hash.values.all?(true)
+        end
+
+        def missing_initial_headers
+          header_check_hash.reject{ |hdr, present| present }.keys
+        end
+        
         def order_headers
           remainder = @headers - @initial_headers
           @headers = [@initial_headers, remainder].flatten
+        end
+
+        def verify_initial_headers
+          return if @initial_headers.empty?
+          return if initial_headers_present?
+
+          missing = missing_initial_headers
+
+          missing.each do |hdr|
+            puts "WARNING: Output data does not contain specified initial header: #{hdr}"
+          end
+          @initial_headers = @initial_headers - missing
         end
       end
     end

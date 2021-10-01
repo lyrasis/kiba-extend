@@ -2,20 +2,20 @@
 
 require 'spec_helper'
 
-TEST_FILENAME = 'output.json'
+RSpec.describe Kiba::Extend::Destinations::JsonArray do
+  TEST_FILENAME = 'output.json'
 
-def run_job(input)
-  job = Kiba.parse do
-    source Kiba::Common::Sources::Enumerable, input
-    destination Kiba::Extend::Destinations::JsonArray, filename: TEST_FILENAME
+  def run_job(input)
+    job = Kiba.parse do
+      source Kiba::Common::Sources::Enumerable, input
+      destination Kiba::Extend::Destinations::JsonArray, filename: TEST_FILENAME
+    end
+
+    Kiba.run(job)
+
+    IO.read(TEST_FILENAME)
   end
 
-  Kiba.run(job)
-
-  IO.read(TEST_FILENAME)
-end
-
-RSpec.describe Kiba::Extend::Destinations::JsonArray do
   after(:each){ File.delete(TEST_FILENAME) if File.exist?(TEST_FILENAME) }
 
   context 'when simplest data ever' do
