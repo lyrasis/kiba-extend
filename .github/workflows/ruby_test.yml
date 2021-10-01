@@ -5,11 +5,12 @@
 # This workflow will download a prebuilt Ruby version, install dependencies and run tests with Rake
 # For more information see: https://github.com/marketplace/actions/setup-ruby-jruby-and-truffleruby
 
+# This runs only on pull requests because (1) no one should be pushing anything that can break tests
+#   to main!; and (2) I want to be able to push documentation-only changes to main without waiting for
+#   tests to run
 name: Run Rspec Tests
 
 on:
-  push:
-    branches: [ main ]
   pull_request:
     branches: [ main ]
 
