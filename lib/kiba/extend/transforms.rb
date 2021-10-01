@@ -10,9 +10,9 @@ module Kiba
     # Because all Kiba transforms require this, that method is
     #   commented as "private" for the sake of creating non-repetitive documentation.
     #
-    # == Notes on commonly used paramters in tranforms
+    # ## Notes on commonly used paramters in tranforms
     #
-    # === fields
+    # ### fields
     # Expects an Array of field names. The field names should be Symbols unless you have
     #   overridden the default CSV converter which symbolizes header values.
     #
