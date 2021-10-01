@@ -2,20 +2,19 @@
 
 require 'spec_helper'
 
-TEST_FILENAME = 'output.csv'
+RSpec.describe Kiba::Extend::Destinations::CSV do
+  TEST_FILENAME = 'output.csv'
+  def run_job(input)
+    job = Kiba.parse do
+      source Kiba::Common::Sources::Enumerable, input
+      destination Kiba::Extend::Destinations::CSV, filename: TEST_FILENAME, initial_headers: %i[y z]
+    end
 
-def run_job(input)
-  job = Kiba.parse do
-    source Kiba::Common::Sources::Enumerable, input
-    destination Kiba::Extend::Destinations::CSV, filename: TEST_FILENAME, initial_headers: %i[y z]
+    Kiba.run(job)
+
+    IO.read(TEST_FILENAME)
   end
 
-  Kiba.run(job)
-
-  IO.read(TEST_FILENAME)
-end
-
-RSpec.describe Kiba::Extend::Destinations::CSV do
   after(:each){ File.delete(TEST_FILENAME) if File.exist?(TEST_FILENAME) }
 
   context 'when intial headers present' do
