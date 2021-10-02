@@ -99,7 +99,69 @@
   
 </div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>Adds the given value to the end of value of the given field. Does not affect nil/empty field values</p>
 
+<h1 id="examples">Examples</h1>
+
+<p>Input table:</p>
+
+<pre class="code ruby"><code class="ruby">&lt;/code&gt;</code></pre>
+
+<table><thead>
+<tr>
+<th>name</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Weddy</td>
+</tr>
+<tr>
+<td>nil</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody></table>
+
+<pre class="code ruby"><code class="ruby">
+Used in pipeline as:
+
+</code></pre>
+
+<p>transform Append::ToFieldValue, field: :name, value: &#39; (name)&#39;</p>
+
+<pre class="code ruby"><code class="ruby">
+Results in:
+
+</code></pre>
+
+<table><thead>
+<tr>
+<th>name</th>
+</tr>
+</thead><tbody>
+<tr>
+<td>Weddy (name)</td>
+</tr>
+<tr>
+<td>nil</td>
+</tr>
+<tr>
+<td></td>
+</tr>
+</tbody></table>
+
+<pre class="code ruby"><code class="ruby">&lt;/code&gt;</code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
 
 
 
@@ -170,13 +232,13 @@
       <pre class="lines">
 
 
-24
-25
-26
-27</pre>
+80
+81
+82
+83</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/append.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/append.rb', line 80</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>field:</span><span class='comma'>,</span> <span class='label'>value:</span><span class='rparen'>)</span>
   <span class='ivar'>@field</span> <span class='op'>=</span> <span class='id identifier rubyid_field'>field</span>
@@ -193,7 +255,7 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Oct  1 23:54:19 2021 by
+  Generated on Sat Oct  2 00:49:10 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-2.7.4).
 </div>

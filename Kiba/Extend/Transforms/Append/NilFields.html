@@ -99,7 +99,38 @@
   
 </div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>Adds the given field(s) to the row with nil value if they do not already exist in row</p>
 
+<h1 id="examples">Examples</h1>
+
+<p>Input table:</p>
+
+<pre class="code ruby"><code class="ruby">| z  |
+|----|
+| zz |
+</code></pre>
+
+<p>Used in pipeline as:</p>
+
+<pre class="code ruby"><code class="ruby"> <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Append.html" title="Kiba::Extend::Transforms::Append (module)">Append</a></span></span><span class='op'>::</span><span class='const'>NilFields</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>a</span><span class='words_sep'> </span><span class='tstring_content'>b</span><span class='words_sep'> </span><span class='tstring_content'>c</span><span class='words_sep'> </span><span class='tstring_content'>z</span><span class='tstring_end'>]</span></span>
+</code></pre>
+
+<p>Results in:</p>
+
+<pre class="code ruby"><code class="ruby">| z  | a   | b   | c   |
+|----+-----+-----+-----|
+| zz | nil | nil | nil |
+</code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
 
 
 
@@ -170,12 +201,12 @@
       <pre class="lines">
 
 
-10
-11
-12</pre>
+36
+37
+38</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/append.rb', line 10</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/append.rb', line 36</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span><span class='rparen'>)</span>
   <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fields'>fields</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
@@ -191,7 +222,7 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Oct  1 23:54:19 2021 by
+  Generated on Sat Oct  2 00:49:10 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-2.7.4).
 </div>
