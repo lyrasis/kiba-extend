@@ -3,51 +3,51 @@
 require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Append do
-  before { generate_csv(rows) }
+  let(:accumulator){ [] }
+  let(:test_job){ Helpers::TestJob.new(input: input, accumulator: accumulator, transforms: transforms) }
+  let(:result){ test_job.accumulator }
 
   describe 'NilFields' do
-    let(:rows) do
-      [
-        %w[id z],
-        [1, 'zz']
-      ]
+    let(:input) { [{ z: 'zz' }] }
+
+    let(:transforms) do
+      Kiba.job_segment do
+        transform Append::NilFields, fields: %i[a b c z]
+      end
     end
-    let(:result) do
-      execute_job(filename: test_csv,
-                  xform: Append::NilFields,
-                  xformopt: { fields: %i[a b c z] })
-    end
+
+    let(:expected) { [{ z: 'zz', a: nil, b: nil, c: nil }] }
+    
     it 'adds non-existing fields, populating with nil, while leaving existing fields alone' do
-      expected = { id: '1', z: 'zz', a: nil, b: nil, c: nil }
-      expect(result[0]).to eq(expected)
+      expect(result).to eq(expected)
     end
   end
 
   describe 'ToFieldValue' do
-    let(:rows) do
+    let(:input) do
       [
-        %w[id name],
-        [1, 'Weddy'],
-        [2, nil],
-        [3, '']
+        { name: 'Weddy' },
+        { name: nil },
+        { name: '' }
       ]
     end
-    let(:result) do
-      execute_job(filename: test_csv,
-                  xform: Append::ToFieldValue,
-                  xformopt: { field: :name, value: ' (name)' })
+
+    let(:transforms) do
+      Kiba.job_segment do
+        transform Append::ToFieldValue, field: :name, value: ' (name)'
+      end
     end
-    it 'prepends given value to existing field values' do
-      expected = { id: '1', name: 'Weddy (name)' }
-      expect(result[0]).to eq(expected)
+
+    let(:expected) do
+      [
+        { name: 'Weddy (name)' },
+        { name: nil },
+        { name: '' }
+      ]
     end
-    it 'leaves nil values alone' do
-      expected = { id: '2', name: nil }
-      expect(result[1]).to eq(expected)
-    end
-    it 'leaves blank values alone' do
-      expected = { id: '3', name: '' }
-      expect(result[2]).to eq(expected)
+
+    it 'prepends given value to existing field values, leaving blank values alone' do
+      expect(result).to eq(expected)
     end
   end
 end

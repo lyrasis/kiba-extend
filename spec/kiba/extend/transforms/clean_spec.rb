@@ -3,88 +3,112 @@
 require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Clean do
+  let(:accumulator){ [] }
+  let(:test_job){ Helpers::TestJob.new(input: input, accumulator: accumulator, transforms: transforms) }
+  let(:result){ test_job.accumulator }
+
   describe 'AlphabetizeFieldValues' do
-    #    test_csv = File.join(__dir__, 'tmp', 'test.csv')
-    #    binding.pry
-    #
-    rows = [
-      %w[type],
-      ['Person;unmapped;Organization'],
-      [';'],
-      [nil],
-      [''],
-      ['Person;notmapped'],
-      ['%NULLVALUE%;apple'],
-      ['oatmeal;%NULLVALUE%']
-    ]
-
-    before { generate_csv(rows) }
-    let(:usenull) { false }
-    let(:direction) { :asc }
-    let(:result) do
-      execute_job(filename: test_csv,
-                  xform: Clean::AlphabetizeFieldValues,
-                  xformopt: { fields: %i[type], delim: ';', usenull: usenull, direction: direction })
+    let(:input) do
+      [
+        { type: 'Person;unmapped;Organization'},
+        { type: ';'},
+        { type: nil},
+        { type: ''},
+        { type: 'Person;notmapped'},
+        { type: '%NULLVALUE%;apple'},
+        { type: 'oatmeal;%NULLVALUE%'}
+      ]
     end
-    context 'when usenull = false' do
-      it 'sorts as expected' do
-        expected = [
-          'Organization;Person;unmapped',
-          ';',
-          nil,
-          '',
-          'notmapped;Person',
-          'apple;%NULLVALUE%',
-          '%NULLVALUE%;oatmeal'
-        ]
-        expect(result.map { |res| res[:type] }).to eq(expected)
-      end
 
-      context 'when direction = :desc' do
-        let(:direction) { :desc }
+    context 'when when usenull = false' do
+      context 'when direction = :asc' do
+        let(:transforms) do
+          Kiba.job_segment do
+            transform Clean::AlphabetizeFieldValues, fields: %i[type], delim: ';', usenull: false,
+              direction: :asc
+          end
+        end
+        
         it 'sorts as expected' do
           expected = [
-            'unmapped;Person;Organization',
-            ';',
-            nil,
-            '',
-            'Person;notmapped',
-            '%NULLVALUE%;apple',
-            'oatmeal;%NULLVALUE%'
+            { type: 'Organization;Person;unmapped'},
+            { type: ';'},
+            { type: nil},
+            { type: ''},
+            { type: 'notmapped;Person'},
+            { type: 'apple;%NULLVALUE%'},
+            { type: '%NULLVALUE%;oatmeal'}
           ]
-          expect(result.map { |res| res[:type] }).to eq(expected)
+          expect(result).to eq(expected)
+        end
+
+        context 'when direction = :desc' do
+          let(:transforms) do
+            Kiba.job_segment do
+              transform Clean::AlphabetizeFieldValues, fields: %i[type], delim: ';', usenull: false,
+                direction: :desc
+            end
+          end
+          
+          it 'sorts as expected' do
+            expected = [
+              { type: 'unmapped;Person;Organization'},
+              { type: ';'},
+              { type: nil},
+              { type: ''},
+              { type: 'Person;notmapped'},
+              { type: '%NULLVALUE%;apple'},
+              { type: 'oatmeal;%NULLVALUE%'}
+            ]
+            expect(result).to eq(expected)
+          end
         end
       end
     end
 
     context 'when usenull = true' do
-      let(:usenull) { true }
-      it 'sorts as expected' do
-        expected = [
-          'Organization;Person;unmapped',
-          ';',
-          nil,
-          '',
-          'notmapped;Person',
-          'apple;%NULLVALUE%',
-          'oatmeal;%NULLVALUE%'
-        ]
-        expect(result.map { |res| res[:type] }).to eq(expected)
-      end
+      context 'when direction = :asc' do
+        let(:transforms) do
+          Kiba.job_segment do
+            transform Clean::AlphabetizeFieldValues, fields: %i[type], delim: ';', usenull: true,
+              direction: :asc
+          end
+        end
 
-      context 'when direction = :desc' do
-        let(:direction) { :desc }
         it 'sorts as expected' do
           expected = [
-            'unmapped;Person;Organization',
-            ';',
-            nil,
-            '',
-            'Person;notmapped',
-            '%NULLVALUE%;apple',
-            '%NULLVALUE%;oatmeal'
+            { type: 'Organization;Person;unmapped'},
+            { type: ';'},
+            { type: nil},
+            { type: ''},
+            { type: 'notmapped;Person'},
+            { type: 'apple;%NULLVALUE%'},
+            { type: 'oatmeal;%NULLVALUE%'}
           ]
-          expect(result.map { |res| res[:type] }).to eq(expected)
+          expect(result).to eq(expected)
+        end
+      end
+      
+
+      context 'when direction = :desc' do
+        let(:transforms) do
+          Kiba.job_segment do
+            transform Clean::AlphabetizeFieldValues, fields: %i[type], delim: ';', usenull: true,
+              direction: :desc
+          end
+        end
+
+        it 'sorts as expected' do
+          expected = [
+            { type: 'unmapped;Person;Organization'},
+            { type: ';'},
+            { type: nil},
+            { type: ''},
+            { type: 'Person;notmapped'},
+            { type: '%NULLVALUE%;apple'},
+            { type: '%NULLVALUE%;oatmeal'}
+          ]
+          expect(result).to eq(expected)
         end
       end
     end
