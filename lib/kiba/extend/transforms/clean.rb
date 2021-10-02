@@ -9,15 +9,117 @@ module Kiba
       module Clean
         ::Clean = Kiba::Extend::Transforms::Clean
 
+        # Sorts the multiple values within a field alphabetically
+        #
         # @note This transformation does **NOT** sort the **ROWS** in a dataset. It sorts values within
         #   individual fields of a row
-        # Sorts the multiple values within a field alphabetically
-        # @param fields [Array(Symbol)] names of fields to sort
-        # @param delim [String] Character(s) on which to split field values
-        # @param usenull [Boolean] Whether to treat %NULLVALUE% as a blank in processing
-        # @param direction [:asc, :desc] Direction in which to sort field values
+        #
+        # # Examples
+        #
+        # Input table:
+        #
+        # ```
+        # | type                         |
+        # |------------------------------|
+        # | Person;unmapped;Organization |
+        # | ;                            |
+        # | nil                          |
+        # |                              |
+        # | Person;notmapped             |
+        # | %NULLVALUE%;apple            |
+        # | oatmeal;%NULLVALUE%          |
+        # ```
+        #
+        # Used in pipeline as:
+        #
+        # ```
+        #  transform Clean::AlphabetizeFieldValues, fields: %i[type], delim: ';', usenull: false,
+        #      direction: :asc
+        # ```
+        #
+        # Results in:
+        #
+        # ```
+        # | type                         |
+        # |------------------------------|
+        # | Organization;Person;unmapped |
+        # | ;                            |
+        # | nil                          |
+        # |                              |
+        # | notmapped;Person             |
+        # | apple;%NULLVALUE%            |
+        # | %NULLVALUE%;oatmeal          |
+        # ```
+        #
+        # Used in pipeline as:
+        #
+        # ```
+        #  transform Clean::AlphabetizeFieldValues, fields: %i[type], delim: ';', usenull: false,
+        #      direction: :desc
+        # ```
+        #
+        # Results in:
+        #
+        # ```
+        # | type                         |
+        # |------------------------------|
+        # | unmapped;Person;Organization |
+        # | ;                            |
+        # | nil                          |
+        # |                              |
+        # | Person;notmapped             |
+        # | %NULLVALUE%;apple            |
+        # | oatmeal;%NULLVALUE%          |
+        # ```
+        #
+        # Used in pipeline as:
+        #
+        # ```
+        #  transform Clean::AlphabetizeFieldValues, fields: %i[type], delim: ';', usenull: true,
+        #      direction: :asc
+        # ```
+        #
+        # Results in:
+        #
+        # ```
+        # | type                         |
+        # |------------------------------|
+        # | Organization;Person;unmapped |
+        # | ;                            |
+        # | nil                          |
+        # |                              |
+        # | notmapped;Person             |
+        # | apple;%NULLVALUE%            |
+        # | oatmeal;%NULLVALUE%          |
+        # ```
+        #
+        # Used in pipeline as:
+        #
+        # ```
+        #  transform Clean::AlphabetizeFieldValues, fields: %i[type], delim: ';', usenull: true,
+        #      direction: :desc
+        # ```
+        #
+        # Results in:
+        #
+        # ```
+        # | type                         |
+        # |------------------------------|
+        # | unmapped;Person;Organization |
+        # | ;                            |
+        # | nil                          |
+        # |                              |
+        # | Person;notmapped             |
+        # | %NULLVALUE%;apple            |
+        # | %NULLVALUE%;oatmeal          |
+        # ```
         class AlphabetizeFieldValues
           include Kiba::Extend::Transforms::Helpers
+          
+          # @param fields [Array(Symbol)] names of fields to sort
+          # @param delim [String] Character(s) on which to split field values
+          # @param usenull [Boolean] Whether to treat %NULLVALUE% as a blank in processing
+          # @param direction [:asc, :desc] Direction in which to sort field values
           def initialize(fields:, delim:, usenull: false, direction: :asc)
             @fields = [fields].flatten
             @delim = delim
@@ -127,7 +229,7 @@ module Kiba
             thisgroup.map! { |val| add_null_values(val) } if @use_nullvalue
 
             thisgroup.map! { |val| val.nil? ? [] : " #{val} ".split(@sep) }
-                     .map! { |arr| arr.map(&:strip) }
+              .map! { |arr| arr.map(&:strip) }
 
             cts = thisgroup.map(&:size).uniq.reject(&:zero?)
 
@@ -157,15 +259,15 @@ module Kiba
             return str if str.nil?
 
             str.sub(/^#{@sep}/, "%NULLVALUE%#{@sep}")
-               .sub(/#{@sep}$/, "#{@sep}%NULLVALUE%")
-               .gsub(/#{@sep}#{@sep}/, "#{@sep}%NULLVALUE%#{@sep}")
+              .sub(/#{@sep}$/, "#{@sep}%NULLVALUE%")
+              .gsub(/#{@sep}#{@sep}/, "#{@sep}%NULLVALUE%#{@sep}")
           end
 
           def all_empty?(group, index)
             thesevals = group.map { |arr| arr[index] }
-                             .map { |val| empty_val(val) ? nil : val }
-                             .uniq
-                             .compact
+              .map { |val| empty_val(val) ? nil : val }
+              .uniq
+              .compact
             thesevals.empty? ? true : false
           end
         end
