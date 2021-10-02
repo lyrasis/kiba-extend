@@ -33,6 +33,7 @@ module Kiba
         # | zz | nil | nil | nil |
         # ```
         class NilFields
+          # @param fields [Array<Symbol>, Symbol] field name or list of field names to add
           def initialize(fields:)
             @fields = [fields].flatten
           end
@@ -77,6 +78,8 @@ module Kiba
         # |              |
         # ```
         class ToFieldValue
+          # @param field [Symbol] name of field to append to
+          # @param value [String] value to append to existing field values
           def initialize(field:, value:)
             @field = field
             @value = value
