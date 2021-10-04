@@ -3,14 +3,18 @@
 require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Merge do
-  before do
-    generate_csv(rows)
-  end
-  after do
-    File.delete(test_csv) if File.exist?(test_csv)
-  end
+  let(:accumulator){ [] }
+  let(:test_job){ Helpers::TestJob.new(input: input, accumulator: accumulator, transforms: transforms) }
+  let(:result){ test_job.accumulator }
 
   describe 'CompareFieldsFlag' do
+    before do
+      generate_csv(rows)
+    end
+    after do
+      File.delete(test_csv) if File.exist?(test_csv)
+    end
+
     let(:rows) do
       [
         %w[id pid zid],
@@ -93,6 +97,13 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
   end
 
   describe 'ConstantValue' do
+    before do
+      generate_csv(rows)
+    end
+    after do
+      File.delete(test_csv) if File.exist?(test_csv)
+    end
+
     let(:rows) do
       [
         %w[id name sex source],
@@ -114,6 +125,13 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
   end
 
   describe 'ConstantValueConditional' do
+    before do
+      generate_csv(rows)
+    end
+    after do
+      File.delete(test_csv) if File.exist?(test_csv)
+    end
+
     let(:opt) do
       {
         fieldmap: { reason: 'gift' },
@@ -210,6 +228,13 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
   end
 
   describe 'CountOfMatchingRows' do
+    before do
+      generate_csv(rows)
+    end
+    after do
+      File.delete(test_csv) if File.exist?(test_csv)
+    end
+
     let(:rows) do
       [
         ['id'],
@@ -250,22 +275,27 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
   end
 
   describe 'MultivalueConstant' do
-    let(:rows) do
+    let(:input) do
       [
-        ['name'],
-        ['Weddy'],
-        ['NULL'],
-        [''],
-        [nil],
-        ['Earlybird;Divebomber'],
-        [';Niblet'],
-        ['Hunter;'],
-        ['NULL;Earhart']
+        {name: 'Weddy'},
+        {name: 'NULL'},
+        {name: ''},
+        {name: nil},
+        {name: 'Earlybird;Divebomber'},
+        {name: ';Niblet'},
+        {name: 'Hunter;'},
+        {name: 'NULL;Earhart'}
       ]
     end
 
-    it 'adds specified value to new field once per value in specified field' do
-      expected = [
+    let(:transforms) do
+      Kiba.job_segment do
+        transform Merge::MultivalueConstant, on_field: :name, target: :species, value: 'guinea fowl', sep: ';', placeholder: 'NULL'
+      end
+    end
+    
+    let(:expected) do
+      [
         { name: 'Weddy', species: 'guinea fowl' },
         { name: 'NULL', species: 'NULL' },
         { name: '', species: 'NULL' },
@@ -275,18 +305,21 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
         { name: 'Hunter;', species: 'guinea fowl;NULL' },
         { name: 'NULL;Earhart', species: 'NULL;guinea fowl' }
       ]
-      result = execute_job(filename: test_csv,
-                           xform: Merge::MultivalueConstant,
-                           xformopt: { on_field: :name,
-                                       target: :species,
-                                       value: 'guinea fowl',
-                                       sep: ';',
-                                       placeholder: 'NULL' })
+    end
+    
+    it 'adds specified value to new field once per value in specified field' do
       expect(result).to eq(expected)
     end
   end
 
   describe 'MultiRowLookup' do
+    before do
+      generate_csv(rows)
+    end
+    after do
+      File.delete(test_csv) if File.exist?(test_csv)
+    end
+
     context 'when multikey = false (default)' do
       let(:rows) do
         [
@@ -327,23 +360,23 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
       it 'merges values from specified fields into multivalued fields' do
         expected = [
           { id: '1', name: 'Weddy', sex: 'm', source: 'adopted',
-            date: '2019-07-21;2019-09-15;2020-04-15',
-            event: 'hatch;adopted;deworm' },
+           date: '2019-07-21;2019-09-15;2020-04-15',
+           event: 'hatch;adopted;deworm' },
           { id: '2', name: 'Kernel', sex: 'f', source: 'adopted',
-            date: '2019-08-01;2019-09-15;2020-04-15',
-            event: 'hatch;adopted;deworm' },
+           date: '2019-08-01;2019-09-15;2020-04-15',
+           event: 'hatch;adopted;deworm' },
           { id: '3', name: 'Boris', sex: 'm', source: 'adopted',
-            date: nil,
-            event: nil },
+           date: nil,
+           event: nil },
           { id: '4', name: 'Earlybird', sex: 'f', source: 'hatched',
-            date: nil,
-            event: nil },
+           date: nil,
+           event: nil },
           { id: '5', name: 'Lazarus', sex: 'm', source: 'adopted',
-            date: nil,
-            event: nil },
+           date: nil,
+           event: nil },
           { id: nil, name: 'Null', sex: '', source: '',
-            date: nil,
-            event: nil }
+           date: nil,
+           event: nil }
         ]
         result = execute_job(filename: test_csv, xform: Merge::MultiRowLookup, xformopt: xformopt)
         expect(result).to eq(expected)
@@ -353,31 +386,31 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
         opt = xformopt.merge({ constantmap: { by: 'kms', loc: 'The Thicket' } })
         expected = [
           { id: '1', name: 'Weddy', sex: 'm', source: 'adopted',
-            date: '2019-07-21;2019-09-15;2020-04-15',
-            event: 'hatch;adopted;deworm',
-            by: 'kms;kms;kms',
-            loc: 'The Thicket;The Thicket;The Thicket' },
+           date: '2019-07-21;2019-09-15;2020-04-15',
+           event: 'hatch;adopted;deworm',
+           by: 'kms;kms;kms',
+           loc: 'The Thicket;The Thicket;The Thicket' },
           { id: '2', name: 'Kernel', sex: 'f', source: 'adopted',
-            date: '2019-08-01;2019-09-15;2020-04-15',
-            event: 'hatch;adopted;deworm',
-            by: 'kms;kms;kms',
-            loc: 'The Thicket;The Thicket;The Thicket' },
+           date: '2019-08-01;2019-09-15;2020-04-15',
+           event: 'hatch;adopted;deworm',
+           by: 'kms;kms;kms',
+           loc: 'The Thicket;The Thicket;The Thicket' },
           { id: '3', name: 'Boris', sex: 'm', source: 'adopted',
-            date: nil,
-            event: nil,
-            by: nil, loc: nil },
+           date: nil,
+           event: nil,
+           by: nil, loc: nil },
           { id: '4', name: 'Earlybird', sex: 'f', source: 'hatched',
-            date: nil,
-            event: nil,
-            by: nil, loc: nil },
+           date: nil,
+           event: nil,
+           by: nil, loc: nil },
           { id: '5', name: 'Lazarus', sex: 'm', source: 'adopted',
-            date: nil,
-            event: nil,
-            by: nil, loc: nil },
+           date: nil,
+           event: nil,
+           by: nil, loc: nil },
           { id: nil, name: 'Null', sex: '', source: '',
-            date: nil,
-            event: nil,
-            by: nil, loc: nil }
+           date: nil,
+           event: nil,
+           by: nil, loc: nil }
         ]
         result = execute_job(filename: test_csv, xform: Merge::MultiRowLookup, xformopt: opt)
         expect(result).to eq(expected)
