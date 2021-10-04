@@ -153,6 +153,11 @@ module Kiba
         # | NULL;Earhart         | NULL;guinea fowl        |
         # ```
         class MultivalueConstant
+          # @param on_field [Symbol] field the new field's values will be based on
+          # @param target [Symbol] name of new field
+          # @param value [String] value to add to `target` for each existing value in `on_field`
+          # @param sep [String] multivalue separator
+          # @param placeholder [String] value to add to `target` for empty/nil values in `on_field`
           def initialize(on_field:, target:, value:, sep:, placeholder:)
             @on_field = on_field
             @target = target
