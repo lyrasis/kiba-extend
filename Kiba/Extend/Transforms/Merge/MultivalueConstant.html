@@ -262,7 +262,86 @@ Results in:
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>on_field</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>field the new field&#39;s values will be based on</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>target</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>name of new field</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>value</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>value to add to <code>target</code> for each existing value in <code>on_field</code></p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>sep</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>multivalue separator</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>placeholder</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>value to add to <code>target</code> for empty/nil values in <code>on_field</code></p>
+</div>
+      
+    </li>
+  
+</ul>
+
 
 </div><table class="source_code">
   <tr>
@@ -270,16 +349,16 @@ Results in:
       <pre class="lines">
 
 
-156
-157
-158
-159
-160
 161
-162</pre>
+162
+163
+164
+165
+166
+167</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/merge.rb', line 156</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/merge.rb', line 161</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>on_field:</span><span class='comma'>,</span> <span class='label'>target:</span><span class='comma'>,</span> <span class='label'>value:</span><span class='comma'>,</span> <span class='label'>sep:</span><span class='comma'>,</span> <span class='label'>placeholder:</span><span class='rparen'>)</span>
   <span class='ivar'>@on_field</span> <span class='op'>=</span> <span class='id identifier rubyid_on_field'>on_field</span>
@@ -299,7 +378,7 @@ Results in:
 </div>
 
       <div id="footer">
-  Generated on Mon Oct  4 15:40:41 2021 by
+  Generated on Mon Oct  4 15:44:05 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-2.7.4).
 </div>
