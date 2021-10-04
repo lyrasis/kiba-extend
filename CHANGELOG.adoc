@@ -1,0 +1,37 @@
+:toc:
+:toc-placement!:
+:toclevels: 4
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+= Changelog
+All notable changes to this project from 2021-10-04 onward will be documented in this file.
+
+Changes made prior to 2021-03-09 may ever be added retrospectively, but consult https://github.com/lyrasis/kiba-extend/releases/[Github Releases for the project] in the indefinite meantime.
+
+The format is based on https://keepachangelog.com/en/1.0.0/[Keep a Changelog],
+and this project adheres to https://semver.org/spec/v2.0.0.html[Semantic Versioning].
+
+toc::[]
+
+== Unreleased
+These changes are merged into the `main` branch but have not yet been tagged as a new version/release.
+
+==== Added
+- `multival` parameter added to `Cspace::NormalizeForID` transform (in https://github.com/lyrasis/kiba-extend/pull/49[PR#49])
+
+== Releases
+=== version - date
+
+https://github.com/lyrasis/kiba-extend/compare/v2.5.0...v2.5.1[Compare]
+
+==== Added
+==== Changed
+==== Deleted
+
