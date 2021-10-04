@@ -113,6 +113,45 @@ module Kiba
           end
         end
 
+        # Adds a specified value to new target field for every value found in `on_field`
+        #
+        # # Examples
+        #
+        # Input table:
+        #
+        # | name                 |
+        # |----------------------|
+        # | Weddy                |
+        # | NULL                 |
+        # |                      |
+        # | nil                  |
+        # | Earlybird;Divebomber |
+        # | ;Niblet              |
+        # | Hunter;              |
+        # | NULL;Earhart         |
+        # ```
+        #
+        # Used in pipeline as:
+        #
+        # ```
+        #  transform Merge::MultivalueConstant, on_field: :name, target: :species, value: 'guinea fowl', sep: ';',
+        #    placeholder: 'NULL'
+        # ```
+        #
+        # Results in:
+        #
+        # ```
+        # | name                 | species                 |
+        # |----------------------+-------------------------|
+        # | Weddy                | guinea fowl             |
+        # | NULL                 | NULL                    |
+        # |                      | NULL                    |
+        # | nil                  | NULL                    |
+        # | Earlybird;Divebomber | guinea fowl;guinea fowl |
+        # | ;Niblet              | NULL;guinea fowl        |
+        # | Hunter;              | guinea fowl;NULL        |
+        # | NULL;Earhart         | NULL;guinea fowl        |
+        # ```
         class MultivalueConstant
           def initialize(on_field:, target:, value:, sep:, placeholder:)
             @on_field = on_field
