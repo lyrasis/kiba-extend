@@ -285,7 +285,7 @@ module Kiba
 
           # @private
           def process(row)
-            @fields = @fields == :all ? row.keys : @fields
+            @fields = @fields == [:all] ? row.keys : @fields
             @fields.each do |field|
               oldval = row.fetch(field)
               newval = if oldval.nil?
