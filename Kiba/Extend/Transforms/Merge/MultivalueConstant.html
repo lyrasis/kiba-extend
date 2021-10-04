@@ -107,91 +107,37 @@
 
 <p>Input table:</p>
 
-<table><thead>
-<tr>
-<th>name</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>Weddy</td>
-</tr>
-<tr>
-<td>NULL</td>
-</tr>
-<tr>
-<td></td>
-</tr>
-<tr>
-<td>nil</td>
-</tr>
-<tr>
-<td>Earlybird;Divebomber</td>
-</tr>
-<tr>
-<td>;Niblet</td>
-</tr>
-<tr>
-<td>Hunter;</td>
-</tr>
-<tr>
-<td>NULL;Earhart</td>
-</tr>
-</tbody></table>
-
-<pre class="code ruby"><code class="ruby">
-Used in pipeline as:
-
+<pre class="code ruby"><code class="ruby">| name                 |
+|----------------------|
+| Weddy                |
+| NULL                 |
+|                      |
+| nil                  |
+| Earlybird;Divebomber |
+| ;Niblet              |
+| Hunter;              |
+| NULL;Earhart         |
 </code></pre>
 
-<p>transform Merge::MultivalueConstant, on_field: :name, target: :species, value: &#39;guinea fowl&#39;, sep: &#39;;&#39;,
-   placeholder: &#39;NULL&#39;</p>
+<p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby">
-Results in:
-
+<pre class="code ruby"><code class="ruby"> <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Merge.html" title="Kiba::Extend::Transforms::Merge (module)">Merge</a></span></span><span class='op'>::</span><span class='const'>MultivalueConstant</span><span class='comma'>,</span> <span class='label'>on_field:</span> <span class='symbol'>:name</span><span class='comma'>,</span> <span class='label'>target:</span> <span class='symbol'>:species</span><span class='comma'>,</span> <span class='label'>value:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>guinea fowl</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>placeholder:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>NULL</span><span class='tstring_end'>&#39;</span></span>
 </code></pre>
 
-<table><thead>
-<tr>
-<th>name</th>
-<th>species</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>Weddy</td>
-<td>guinea fowl</td>
-</tr>
-<tr>
-<td>NULL</td>
-<td>NULL</td>
-</tr>
-<tr>
-<td></td>
-<td>NULL</td>
-</tr>
-<tr>
-<td>nil</td>
-<td>NULL</td>
-</tr>
-<tr>
-<td>Earlybird;Divebomber</td>
-<td>guinea fowl;guinea fowl</td>
-</tr>
-<tr>
-<td>;Niblet</td>
-<td>NULL;guinea fowl</td>
-</tr>
-<tr>
-<td>Hunter;</td>
-<td>guinea fowl;NULL</td>
-</tr>
-<tr>
-<td>NULL;Earhart</td>
-<td>NULL;guinea fowl</td>
-</tr>
-</tbody></table>
+<p>Results in:</p>
 
-<pre class="code ruby"><code class="ruby">&lt;/code&gt;</code></pre>
+<pre class="code ruby"><code class="ruby">| name                 | species                 |
+|----------------------+-------------------------|
+| Weddy                | guinea fowl             |
+| NULL                 | NULL                    |
+|                      | NULL                    |
+| nil                  | NULL                    |
+| Earlybird;Divebomber | guinea fowl;guinea fowl |
+| ;Niblet              | NULL;guinea fowl        |
+| Hunter;              | guinea fowl;NULL        |
+| NULL;Earhart         | NULL;guinea fowl        |
+</code></pre>
 
 
   </div>
@@ -349,16 +295,16 @@ Results in:
       <pre class="lines">
 
 
-161
 162
 163
 164
 165
 166
-167</pre>
+167
+168</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/merge.rb', line 161</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/merge.rb', line 162</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>on_field:</span><span class='comma'>,</span> <span class='label'>target:</span><span class='comma'>,</span> <span class='label'>value:</span><span class='comma'>,</span> <span class='label'>sep:</span><span class='comma'>,</span> <span class='label'>placeholder:</span><span class='rparen'>)</span>
   <span class='ivar'>@on_field</span> <span class='op'>=</span> <span class='id identifier rubyid_on_field'>on_field</span>
@@ -378,7 +324,7 @@ Results in:
 </div>
 
       <div id="footer">
-  Generated on Mon Oct  4 15:44:05 2021 by
+  Generated on Mon Oct  4 15:45:02 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-2.7.4).
 </div>
