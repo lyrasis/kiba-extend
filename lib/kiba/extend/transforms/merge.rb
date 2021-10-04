@@ -119,6 +119,7 @@ module Kiba
         #
         # Input table:
         #
+        # ```
         # | name                 |
         # |----------------------|
         # | Weddy                |
