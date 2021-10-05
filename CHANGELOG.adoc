@@ -25,6 +25,7 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 
 ==== Added
 - `multival` parameter added to `Cspace::NormalizeForID` transform (in https://github.com/lyrasis/kiba-extend/pull/49[PR#49])
+- new `Count::FieldValues` transform
 
 == Releases
 === version - date
