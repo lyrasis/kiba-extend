@@ -3,76 +3,111 @@
 require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Cspace do
-  describe 'ConvertToID' do
-    rows = [
-      %w[id name],
-      [1, 'Weddy1']
-    ]
+  let(:accumulator){ [] }
+  let(:test_job){ Helpers::TestJob.new(input: input, accumulator: accumulator, transforms: transforms) }
+  let(:result){ test_job.accumulator }
 
-    before do
-      generate_csv(rows)
+  describe 'ConvertToID' do
+    let(:input){ [{name: 'Weddy1'}] }
+    let(:expected){ [{ name: 'Weddy1', sid: 'Weddy13761760099' }] }
+    let(:transforms) do
+      Kiba.job_segment do
+        transform Cspace::ConvertToID, source: :name, target: :sid
+      end
     end
+    
     it 'inserts CS shortID of given source into target' do
-      expected = [
-        { id: '1', name: 'Weddy1', sid: 'Weddy13761760099' }
-      ]
-      result = execute_job(filename: test_csv,
-                           xform: Cspace::ConvertToID,
-                           xformopt: { source: :name, target: :sid })
       expect(result).to eq(expected)
     end
   end
 
   describe 'FlagInvalidCharacters' do
-    rows = [
-      ['subject'],
-      ['Iași, Romania'],
-      ['Iasi, Romania']
-    ]
-
     before do
-      generate_csv(rows)
       @old = Cspace.const_get('BRUTEFORCE')
       Cspace.const_set('BRUTEFORCE', {})
     end
     after do
       Cspace.const_set('BRUTEFORCE', @old)
     end
-    it 'adds column containing field value with invalid chars replaced with ?' do
-      expected = [
+
+    let(:input) do
+      [
+        {subject: 'Iași, Romania'},
+        {subject: 'Iasi, Romania'}
+      ]
+    end
+
+    let(:expected) do
+      [
         { subject: 'Iași, Romania', flag: 'Ia%INVCHAR%i, Romania' },
         { subject: 'Iasi, Romania', flag: nil }
       ]
-      result = execute_job(filename: test_csv,
-                           xform: Cspace::FlagInvalidCharacters,
-                           xformopt: { check: :subject, flag: :flag })
+    end
+    
+    let(:transforms) do
+      Kiba.job_segment do
+        transform Cspace::FlagInvalidCharacters, check: :subject, flag: :flag
+      end
+    end
+    
+    it 'adds column containing field value with invalid chars replaced with ?' do
       expect(result).to eq(expected)
     end
   end
 
   describe 'NormalizeForID' do
-    rows = [
-      %w[id subject],
-      [1, 'Oświęcim (Poland)'],
-      [2, 'Oswiecim, Poland'],
-      [3, 'Iași, Romania'],
-      [4, 'Iasi, Romania']
-    ]
-
-    before do
-      generate_csv(rows)
-    end
-    it 'normalizes as expected' do
-      expected = [
-        { id: '1', subject: 'Oświęcim (Poland)', norm: 'oswiecimpoland' },
-        { id: '2', subject: 'Oswiecim, Poland', norm: 'oswiecimpoland' },
-        { id: '3', subject: 'Iași, Romania', norm: 'iasiromania' },
-        { id: '4', subject: 'Iasi, Romania', norm: 'iasiromania' }
+    let(:input) do
+      [
+        {subject: 'Oświęcim (Poland)'},
+        {subject: 'Oswiecim, Poland'},
+        {subject: 'Iași, Romania'},
+        {subject: 'Iasi, Romania'},
+        {subject: 'a|b'}
       ]
-      result = execute_job(filename: test_csv,
-                           xform: Cspace::NormalizeForID,
-                           xformopt: { source: :subject, target: :norm })
-      expect(result).to eq(expected)
+    end
+
+    context 'when multival = false' do
+      let(:expected) do
+        [
+          { subject: 'Oświęcim (Poland)', norm: 'oswiecimpoland' },
+          { subject: 'Oswiecim, Poland', norm: 'oswiecimpoland' },
+          { subject: 'Iași, Romania', norm: 'iasiromania' },
+          { subject: 'Iasi, Romania', norm: 'iasiromania' },
+          { subject: 'a|b', norm: 'ab' }
+        ]
+      end
+
+      let(:transforms) do
+        Kiba.job_segment do
+          transform Cspace::NormalizeForID, source: :subject, target: :norm
+        end
+      end
+      
+      it 'normalizes as expected' do
+        expect(result).to eq(expected)
+      end
+    end
+
+    context 'when multival = true' do
+      let(:expected) do
+        [
+          { subject: 'Oświęcim (Poland)', norm: 'oswiecimpoland' },
+          { subject: 'Oswiecim, Poland', norm: 'oswiecimpoland' },
+          { subject: 'Iași, Romania', norm: 'iasiromania' },
+          { subject: 'Iasi, Romania', norm: 'iasiromania' },
+          { subject: 'a|b', norm: 'a|b' }
+        ]
+      end
+
+      let(:transforms) do
+        Kiba.job_segment do
+          transform Cspace::NormalizeForID, source: :subject, target: :norm, multival: true, delim: '|'
+        end
+      end
+      
+      it 'normalizes as expected' do
+        expect(result).to eq(expected)
+      end
     end
   end
 end
