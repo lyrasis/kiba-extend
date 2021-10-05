@@ -27,6 +27,9 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 - `multival` parameter added to `Cspace::NormalizeForID` transform (in https://github.com/lyrasis/kiba-extend/pull/49[PR#49])
 - new `Count::FieldValues` transform (in https://github.com/lyrasis/kiba-extend/pull/50[PR#50])
 
+==== Changed
+- move/alias `Merge::CountOfMatchingRows` to `Count::MatchingRows`(in https://github.com/lyrasis/kiba-extend/pull/50[PR#50])
+
 == Releases
 === version - date
 

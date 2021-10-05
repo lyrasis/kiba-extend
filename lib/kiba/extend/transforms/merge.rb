@@ -6,9 +6,14 @@ module Kiba
   module Extend
     module Transforms
       # Transformations that add data from outside the data source
+      #
+      # Some other groups of transforms add specific kinds of external data:
+      # @see Count
       module Merge
         ::Merge = Kiba::Extend::Transforms::Merge
 
+        CountOfMatchingRows = Count::MatchingRows
+        
         class CompareFieldsFlag
           def initialize(fields:, target:, downcase: true, strip: true, ignore_blank: false)
             @fields = [fields].flatten
@@ -83,33 +88,6 @@ module Kiba
               sep: @sep
             ).result
             chk.empty? ? false : true
-          end
-        end
-
-        class CountOfMatchingRows
-          def initialize(lookup:, keycolumn:, targetfield:,
-                         conditions: {})
-            @lookup = lookup
-            @keycolumn = keycolumn
-            @target = targetfield
-            @conditions = conditions
-          end
-
-          # @private
-          def process(row)
-            id = row.fetch(@keycolumn)
-            matches = @lookup.fetch(id, [])
-            if matches.size.zero?
-              row[@target] = 0
-            else
-              merge_rows = Lookup::RowSelector.new(
-                origrow: row,
-                mergerows: @lookup.fetch(id, nil),
-                conditions: @conditions
-              ).result
-              row[@target] = merge_rows.size
-            end
-            row
           end
         end
 

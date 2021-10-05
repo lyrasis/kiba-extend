@@ -227,53 +227,6 @@ RSpec.describe Kiba::Extend::Transforms::Merge do
     end
   end
 
-  describe 'CountOfMatchingRows' do
-    before do
-      generate_csv(rows)
-    end
-    after do
-      File.delete(test_csv) if File.exist?(test_csv)
-    end
-
-    let(:rows) do
-      [
-        ['id'],
-        [0],
-        [1],
-        [2]
-      ]
-    end
-    let(:lookup_rows) do
-      [
-        ['id'],
-        [1],
-        [2],
-        [2]
-      ]
-    end
-    let(:lookup) { Lookup.csv_to_multi_hash(file: lookup_csv, csvopt: CSVOPT, keycolumn: :id) }
-    let(:xformopt) do
-      {
-        lookup: lookup,
-        keycolumn: :id,
-        targetfield: :ct
-      }
-    end
-    before do
-      generate_lookup_csv(lookup_rows)
-    end
-
-    it 'merges count of lookup rows to be merged into specified field' do
-      expected = [
-        { id: '0', ct: 0 },
-        { id: '1', ct: 1 },
-        { id: '2', ct: 2 }
-      ]
-      result = execute_job(filename: test_csv, xform: Merge::CountOfMatchingRows, xformopt: xformopt)
-      expect(result).to eq(expected)
-    end
-  end
-
   describe 'MultivalueConstant' do
     let(:input) do
       [
