@@ -117,7 +117,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(source:, target:)  &#x21d2; NormalizeForID </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(source:, target:, multival: false, delim: nil)  &#x21d2; NormalizeForID </a>
     
 
     
@@ -148,7 +148,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(source:, target:)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Cspace::NormalizeForID (class)">NormalizeForID</a></span></tt> 
+    #<strong>initialize</strong>(source:, target:, multival: false, delim: nil)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Cspace::NormalizeForID (class)">NormalizeForID</a></span></tt> 
   
 
   
@@ -173,14 +173,18 @@
 52
 53
 54
-55</pre>
+55
+56
+57</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/cspace.rb', line 52</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>source:</span><span class='comma'>,</span> <span class='label'>target:</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>source:</span><span class='comma'>,</span> <span class='label'>target:</span><span class='comma'>,</span> <span class='label'>multival:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@source</span> <span class='op'>=</span> <span class='id identifier rubyid_source'>source</span>
   <span class='ivar'>@target</span> <span class='op'>=</span> <span class='id identifier rubyid_target'>target</span>
+  <span class='ivar'>@multival</span> <span class='op'>=</span> <span class='id identifier rubyid_multival'>multival</span>
+  <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_delim'>delim</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -193,7 +197,7 @@
 </div>
 
       <div id="footer">
-  Generated on Mon Oct  4 15:45:02 2021 by
+  Generated on Tue Oct  5 15:16:23 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-2.7.4).
 </div>
