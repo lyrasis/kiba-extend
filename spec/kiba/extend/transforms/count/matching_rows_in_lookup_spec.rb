@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Kiba::Extend::Transforms::Count::MatchingRows do
+RSpec.describe Kiba::Extend::Transforms::Count::MatchingRowsInLookup do
   before do
     generate_csv(rows)
   end
@@ -44,7 +44,7 @@ RSpec.describe Kiba::Extend::Transforms::Count::MatchingRows do
       { id: '1', ct: 1 },
       { id: '2', ct: 2 }
     ]
-    result = execute_job(filename: test_csv, xform: Count::MatchingRows, xformopt: xformopt)
+    result = execute_job(filename: test_csv, xform: Count::MatchingRowsInLookup, xformopt: xformopt)
     expect(result).to eq(expected)
   end
 end

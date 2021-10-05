@@ -12,7 +12,7 @@ module Kiba
       module Merge
         ::Merge = Kiba::Extend::Transforms::Merge
 
-        CountOfMatchingRows = Count::MatchingRows
+        CountOfMatchingRows = Count::MatchingRowsInLookup
         
         class CompareFieldsFlag
           def initialize(fields:, target:, downcase: true, strip: true, ignore_blank: false)
