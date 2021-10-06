@@ -222,7 +222,7 @@ module Kiba
             'grams' => 'ounces'
           }
 
-          # @private
+          # Used internally. You cannot override these
           UnitTypes = {
             'inches' => Measured::Length,
             'centimeters' => Measured::Length,
@@ -248,6 +248,16 @@ module Kiba
             'm' => 'meters',
             'oz' => 'ounces'
           }
+
+          # @param value [Symbol] name of field containing measurement value
+          # @param unit [Symbol] name of field containing measurement unit
+          # @param places [Integer] number of decimal places to keep in converted values
+          # @param delim [String] delimiter used when appending value to `value` and `unit` fields
+          # @param conversions [Hash] specify what new unit existing values should be converted to
+          # @param conversion_amounts [Hash] specify conversion rates for new units
+          # @param unit_names [Hash] specify the desired converted-to unit name to append to field
+          # @note See the examples for how to set the `conversions`, `conversion_amounts`, and `unit_names`
+          #   parameters
           def initialize(value:, unit:, places:, delim: Kiba::Extend.delim, conversions: {},
                          conversion_amounts: {}, unit_names: {})
             @value = value
