@@ -26,6 +26,7 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 ==== Added
 - `multival` parameter added to `Cspace::NormalizeForID` transform (in https://github.com/lyrasis/kiba-extend/pull/49[PR#49])
 - new `Count::FieldValues` transform (in https://github.com/lyrasis/kiba-extend/pull/50[PR#50])
+- new `Append::ConvertedValueAndUnit` transform (in https://github.com/lyrasis/kiba-extend/pull/51[PR#51])
 
 ==== Changed
 - move/alias `Merge::CountOfMatchingRows` to `Count::MatchingRowsInLookup`(in https://github.com/lyrasis/kiba-extend/pull/50[PR#50])
