@@ -35,12 +35,13 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_dependency 'activesupport', '~> 6.1.4'
-  spec.add_dependency 'csv', '~> 3.0'
-  spec.add_dependency 'dry-configurable', '~> 0.11'
-  spec.add_dependency 'dry-container', '~> 0.8'
-  spec.add_dependency 'kiba', '~> 4.0.0'
-  spec.add_dependency 'kiba-common', '~> 1.5.0'
-  spec.add_dependency 'thor', '~> 1.1.0'
-  spec.add_dependency 'xxhash', '~> 0.4'
+  spec.add_dependency 'activesupport', '~> 6'
+  spec.add_dependency 'csv', '~> 3'
+  spec.add_dependency 'dry-configurable', '~> 0'
+  spec.add_dependency 'dry-container', '~> 0'
+  spec.add_dependency 'kiba', '~> 4'
+  spec.add_dependency 'kiba-common', '~> 1'
+  spec.add_dependency 'measured', '~> 2'
+  spec.add_dependency 'thor', '~> 1'
+  spec.add_dependency 'xxhash', '~> 0'
 end

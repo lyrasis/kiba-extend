@@ -2,14 +2,15 @@ PATH
   remote: .
   specs:
     kiba-extend (2.5.3)
-      activesupport (~> 6.1.4)
-      csv (~> 3.0)
-      dry-configurable (~> 0.11)
-      dry-container (~> 0.8)
-      kiba (~> 4.0.0)
-      kiba-common (~> 1.5.0)
-      thor (~> 1.1.0)
-      xxhash (~> 0.4)
+      activesupport (~> 6)
+      csv (~> 3)
+      dry-configurable (~> 0)
+      dry-container (~> 0)
+      kiba (~> 4)
+      kiba-common (~> 1)
+      measured (~> 2)
+      thor (~> 1)
+      xxhash (~> 0)
 
 GEM
   remote: https://rubygems.org/
@@ -40,6 +41,8 @@ GEM
     kiba (4.0.0)
     kiba-common (1.5.0)
       kiba (>= 3.0.0, < 5)
+    measured (2.7.1)
+      activesupport (>= 5.2)
     method_source (1.0.0)
     minitest (5.14.4)
     parallel (1.20.1)
