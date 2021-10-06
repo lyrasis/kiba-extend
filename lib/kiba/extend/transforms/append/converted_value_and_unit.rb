@@ -222,6 +222,7 @@ module Kiba
             'grams' => 'ounces'
           }
 
+          # @private
           UnitTypes = {
             'inches' => Measured::Length,
             'centimeters' => Measured::Length,
