@@ -340,6 +340,30 @@ given <code>delim</code> parameter value is present in either value or unit fiel
   <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>grams</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ounces</span><span class='tstring_end'>&#39;</span></span>
 <span class='rbrace'>}</span></pre></dd>
       
+        <dt id="UnitTypes-constant" class="">UnitTypes =
+          <div class="docstring">
+  <div class="discussion">
+    <p>Used internally. You cannot override these</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='lbrace'>{</span>
+  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>inches</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='const'>Measured</span><span class='op'>::</span><span class='const'>Length</span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>centimeters</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='const'>Measured</span><span class='op'>::</span><span class='const'>Length</span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>feet</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='const'>Measured</span><span class='op'>::</span><span class='const'>Length</span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>meters</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='const'>Measured</span><span class='op'>::</span><span class='const'>Length</span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>kilograms</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='const'>Measured</span><span class='op'>::</span><span class='const'>Weight</span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>pounds</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='const'>Measured</span><span class='op'>::</span><span class='const'>Weight</span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ounces</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='const'>Measured</span><span class='op'>::</span><span class='const'>Weight</span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>grams</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='const'>Measured</span><span class='op'>::</span><span class='const'>Weight</span>
+<span class='rbrace'>}</span></pre></dd>
+      
         <dt id="UnitNames-constant" class="">UnitNames =
           <div class="docstring">
   <div class="discussion">
@@ -426,13 +450,138 @@ given <code>delim</code> parameter value is present in either value or unit fiel
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of ConvertedValueAndUnit.</p>
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>See the examples for how to set the <code>conversions</code>, <code>conversion_amounts</code>, and <code>unit_names</code>
+parameters</p>
+</div>
+  </div>
+
+<p>Returns a new instance of ConvertedValueAndUnit.</p>
 
 
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>value</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>name of field containing measurement value</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>unit</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>name of field containing measurement unit</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>places</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>number of decimal places to keep in converted values</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>delim</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>Kiba::Extend.delim</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>delimiter used when appending value to <code>value</code> and <code>unit</code> fields</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>conversions</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>specify what new unit existing values should be converted to</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>conversion_amounts</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>specify conversion rates for new units</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>unit_names</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>specify the desired converted-to unit name to append to field</p>
+</div>
+      
+    </li>
+  
+</ul>
+
 
 </div><table class="source_code">
   <tr>
@@ -440,24 +589,24 @@ given <code>delim</code> parameter value is present in either value or unit fiel
       <pre class="lines">
 
 
-251
-252
-253
-254
-255
-256
-257
-258
-259
-260
 261
 262
 263
 264
-265</pre>
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/append/converted_value_and_unit.rb', line 251</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/append/converted_value_and_unit.rb', line 261</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>value:</span><span class='comma'>,</span> <span class='label'>unit:</span><span class='comma'>,</span> <span class='label'>places:</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_delim'>delim</span><span class='comma'>,</span> <span class='label'>conversions:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span>
                <span class='label'>conversion_amounts:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>unit_names:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
@@ -465,7 +614,7 @@ given <code>delim</code> parameter value is present in either value or unit fiel
   <span class='ivar'>@unit</span> <span class='op'>=</span> <span class='id identifier rubyid_unit'>unit</span>
   <span class='ivar'>@places</span> <span class='op'>=</span> <span class='id identifier rubyid_places'>places</span>
   <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_delim'>delim</span>
-  <span class='ivar'>@types</span> <span class='op'>=</span> <span class='const'>UnitTypes</span>
+  <span class='ivar'>@types</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="#UnitTypes-constant" title="Kiba::Extend::Transforms::Append::ConvertedValueAndUnit::UnitTypes (constant)">UnitTypes</a></span></span>
   <span class='ivar'>@conversions</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="#Conversions-constant" title="Kiba::Extend::Transforms::Append::ConvertedValueAndUnit::Conversions (constant)">Conversions</a></span></span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_conversions'>conversions</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_type_conversions'>type_conversions</span><span class='lparen'>(</span><span class='id identifier rubyid_conversions'>conversions</span><span class='rparen'>)</span>
   <span class='ivar'>@unit_names</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="#UnitNames-constant" title="Kiba::Extend::Transforms::Append::ConvertedValueAndUnit::UnitNames (constant)">UnitNames</a></span></span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_unit_names'>unit_names</span><span class='rparen'>)</span>
@@ -485,7 +634,7 @@ given <code>delim</code> parameter value is present in either value or unit fiel
 </div>
 
       <div id="footer">
-  Generated on Wed Oct  6 21:13:20 2021 by
+  Generated on Wed Oct  6 21:21:42 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-2.7.4).
 </div>
