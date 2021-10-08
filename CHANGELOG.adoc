@@ -32,7 +32,7 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 - move/alias `Merge::CountOfMatchingRows` to `Count::MatchingRowsInLookup`(in https://github.com/lyrasis/kiba-extend/pull/50[PR#50])
 
 ==== Deleted
-- Removed JARD as development dependency
+- Removed JARD as development dependency (in https://github.com/lyrasis/kiba-extend/pull/52[PR#52])
 
 == Releases
 === version - date
