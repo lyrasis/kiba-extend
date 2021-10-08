@@ -16,7 +16,7 @@ group :development, :test do
   gem 'rspec', '~> 3.10'
   gem 'rubocop', '~> 1.18.4'
   gem 'rubocop-rspec', '~> 2.4.0'
-  gem 'ruby_jard'
+#  gem 'ruby_jard'
 end
 
 group :test do
