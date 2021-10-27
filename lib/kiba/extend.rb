@@ -44,14 +44,19 @@ module Kiba
     # So we can call Kiba.job_segment
     Kiba.extend(Kiba::Extend::Jobs::JobSegmenter)
 
-    # Default options for reading/writing CSVs
+    # Default options used for CSV sources/destinations
     setting :csvopts, default: { headers: true, header_converters: %i[symbol downcase] }, reader: true
 
     # Default settings for Lambda destination
     setting :lambdaopts, default: { on_write: ->(r) { accumulator << r } }, reader: true
 
     # Default delimiter for splitting/joining values in multi-valued fields
+    #   Example: 'a;b' -> ['a', 'b']
     setting :delim, default: ';', reader: true
+
+    # Default subgrouping delimiter for splitting/joining values in multi-valued fields
+    #   Example: 'a^^y;b^^z' -> [['a', 'y'], ['b', 'z']]
+    setting :sgdelim, default: '^^', reader: true
 
     # Default source class for jobs
     setting :source, default: Kiba::Common::Sources::CSV, reader: true
