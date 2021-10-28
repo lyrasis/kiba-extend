@@ -138,8 +138,8 @@ module Helpers
     File.join(app_dir, 'spec', 'fixtures')
   end
 
-  def populate_registry
-    fkeypath = File.join(fixtures_dir, 'fkey.csv')
+  def populate_registry(more_entries: {})
+    fkeypath = File.join(fixtures_dir, 'existing.csv')
     entries = { fkey: { path: fkeypath, supplied: true, lookup_on: :id },
                invalid: {},
                fee: { path: fkeypath, lookup_on: :foo, supplied: true },
@@ -150,11 +150,11 @@ module Helpers
                       creator: Kiba::Extend.method(:csvopts),
                       dest_special_opts: { initial_headers: %i[objectnumber briefdescription] } },
                json_arr: {path: fkeypath, dest_class: Kiba::Extend::Destinations::JsonArray,
-                          creator: Helpers.method(:fake_creator_method)} }
+                          creator: Helpers.method(:fake_creator_method)} }.merge(more_entries)
     entries.each { |key, data| Kiba::Extend.registry.register(key, data) }
     Kiba::Extend.registry.namespace(:ns) do
       namespace(:sub) do
-        register(:fkey, { path: 'data', supplied: true })
+        register(:fkey, { path: fkeypath, supplied: true })
       end
     end
   end
