@@ -57,6 +57,7 @@ module Kiba
           each { |key, val| decorate(key) { FileRegistryEntry.new(val) } }
           @entries = populate_entries
           each { |key, val| val.set_key(key) }
+          verify_paths
         end
 
         def valid?
@@ -75,16 +76,33 @@ module Kiba
           raise KeyNotRegisteredError, key
         end
 
+        def make_missing_directories
+          @entries.select(&:valid?).map(&:dir).uniq.each{ |dir| dir.mkdir unless dir.exist? }
+        end
+        
         def populate_entries
           arr = []
           each { |entry| arr << entry[1] }
           arr
         end
 
+        def verify_paths
+          verify_supplied_files_exist
+          make_missing_directories
+        end
+        
+        def verify_supplied_files_exist
+          @entries.select{ |entry| entry.supplied}.map(&:path).uniq.each do |file|
+            next if file.exist?
+
+            puts %Q[#{Kiba::Extend.warning_label}: Missing supplied file: #{file}]
+          end
+        end
+
         def validator
           @validator ||= RegistryValidator.new
         end
       end
-    end
   end
+    end
 end

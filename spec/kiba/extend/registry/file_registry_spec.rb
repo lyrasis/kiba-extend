@@ -8,12 +8,18 @@ RSpec.describe 'Kiba::Extend::Registry::FileRegistry' do
     Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry.new
     populate_registry
   end
+
+  
   let(:filekey) { :fkey }
-  let(:fkeypath) { File.join(fixtures_dir, 'fkey.csv') }
+  let(:fkeypath) { File.join(fixtures_dir, 'existing.csv') }
   let(:registry) { Kiba::Extend.registry }
   let(:result) { registry.resolve(filekey) }
 
   describe 'initial setup and registration' do
+    before(:context) do
+      Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry.new
+      populate_registry
+    end
     context 'when no namespace' do
       let(:data) { { path: fkeypath, supplied: true, lookup_on: :id } }
       it 'registers and resolves' do
@@ -31,14 +37,63 @@ RSpec.describe 'Kiba::Extend::Registry::FileRegistry' do
 
     context 'with namespace' do
       it 'registers and resolves' do
-        expect(registry.resolve('ns__sub__fkey')).to eq({ path: 'data', supplied: true })
+        expect(registry.resolve('ns__sub__fkey')).to eq({ path: fkeypath, supplied: true })
+      end
+    end
+  end
+
+  describe 'transformation' do
+    context 'when a supplied file does not exist' do
+      before(:context) do
+        Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry.new
+        @missing_supplied = File.join(fixtures_dir, 'supplied', 'not_there.csv')
+        extra_entry = {
+          missupp: { path: @missing_supplied, supplied: true }
+        }
+        populate_registry(more_entries: extra_entry)
+      end
+
+      after(:context) do
+        dir = Pathname.new(@missing_supplied).dirname
+        dir.delete if dir.exist?
+      end
+
+      it 'warns of missing file' do
+        msg = <<~MSG
+        #{Kiba::Extend.warning_label}: Missing supplied file: #{fixtures_dir}/supplied/not_there.csv
+      MSG
+        expect{ transform_registry }.to output(msg).to_stdout 
+      end
+    end
+
+    context 'when expected directories do not exist' do
+      before(:context) do
+        Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry.new
+        @missing_dir = File.join(fixtures_dir, 'working')
+        extra_entry = {
+          missdir: { path: File.join(@missing_dir, 'test.csv'), creator: Helpers.method(:test_csv) }
+        }
+        populate_registry(more_entries: extra_entry)
+        transform_registry
+      end
+
+      after(:context) do
+        Dir.delete(@missing_dir) if Dir.exist?(@missing_dir)
+      end
+
+      it 'creates expected directories' do
+        expect(Dir.exist?(@missing_dir)).to be true
       end
     end
   end
 
   # subsequent tests depend on the transformation having been done here
   describe 'post-transformation' do
-    before(:context) { transform_registry }
+    before(:context) do
+      Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry.new
+      populate_registry
+      transform_registry
+    end
     describe '#transform' do
       it 'converts all registered items to FileRegistryEntry objects' do
         chk = []

@@ -30,6 +30,10 @@ module Kiba
           validate
         end
 
+        def dir
+          path.dirname
+        end
+        
         # Used by FileRegistry.transform to add the key as an instance variable to each Entry
         def set_key(key)
           @key = key
