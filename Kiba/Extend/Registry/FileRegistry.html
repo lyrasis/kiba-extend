@@ -690,7 +690,8 @@
 57
 58
 59
-60</pre>
+60
+61</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 56</span>
@@ -699,6 +700,7 @@
   <span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_val'>val</span><span class='op'>|</span> <span class='id identifier rubyid_decorate'>decorate</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='const'><span class='object_link'><a href="FileRegistryEntry.html" title="Kiba::Extend::Registry::FileRegistryEntry (class)">FileRegistryEntry</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="FileRegistryEntry.html#initialize-instance_method" title="Kiba::Extend::Registry::FileRegistryEntry#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_val'>val</span><span class='rparen'>)</span> <span class='rbrace'>}</span> <span class='rbrace'>}</span>
   <span class='ivar'>@entries</span> <span class='op'>=</span> <span class='id identifier rubyid_populate_entries'>populate_entries</span>
   <span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_val'>val</span><span class='op'>|</span> <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_set_key'>set_key</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_verify_paths'>verify_paths</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -757,12 +759,12 @@
       <pre class="lines">
 
 
-62
 63
-64</pre>
+64
+65</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 62</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 63</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_valid?'>valid?</span>
   <span class='id identifier rubyid_validator'>validator</span><span class='period'>.</span><span class='id identifier rubyid_valid?'>valid?</span>
@@ -824,12 +826,12 @@
       <pre class="lines">
 
 
-66
 67
-68</pre>
+68
+69</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 66</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 67</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_warnings?'>warnings?</span>
   <span class='id identifier rubyid_validator'>validator</span><span class='period'>.</span><span class='id identifier rubyid_warnings?'>warnings?</span>
@@ -844,7 +846,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Oct 27 23:19:26 2021 by
+  Generated on Thu Oct 28 22:22:59 2021 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.26 (ruby-2.7.4).
 </div>
