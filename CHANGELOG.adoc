@@ -28,8 +28,8 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 *  new https://lyrasis.github.io/kiba-extend/Kiba/Extend/Transforms/Count/FieldValues.html[`Count::FieldValues`] transform (in https://github.com/lyrasis/kiba-extend/pull/50[PR#50])
 *  new https://lyrasis.github.io/kiba-extend/Kiba/Extend/Transforms/Append/ConvertedValueAndUnit.html[`Append::ConvertedValueAndUnit`] transform (in https://github.com/lyrasis/kiba-extend/pull/51[PR#51])
 *  preparation of the file registry:
-** warns of any supplied files that do not exist
-** creates any reference directories that do not exist
+** warns of any supplied files that do not exist (in https://github.com/lyrasis/kiba-extend/pull/54[PR#54])
+** creates any reference directories that do not exist (in https://github.com/lyrasis/kiba-extend/pull/54[PR#54])
 
 ==== Changed
 - move/alias `Merge::CountOfMatchingRows` to `Count::MatchingRowsInLookup`(in https://github.com/lyrasis/kiba-extend/pull/50[PR#50])
