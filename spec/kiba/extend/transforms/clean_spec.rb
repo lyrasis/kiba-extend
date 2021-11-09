@@ -403,6 +403,31 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
       end
     end
 
+    context 'when replacing line breaks' do
+      let(:input) do
+        [
+          {val: '\n pace/macgill'},
+          {val: 'database number\n'}
+        ]
+      end
+      
+      let(:transforms) do
+        Kiba.job_segment do
+          transform Clean::RegexpFindReplaceFieldVals, fields: :val, find: '\\\\n', replace: ''
+        end
+      end
+      
+      let(:expected) do
+        [
+          {val: ' pace/macgill'},
+          {val: 'database number'}
+        ]
+      end
+      it 'Does specified regexp find/replace in field values' do
+        expect(result).to eq(expected)
+      end
+    end
+
     context 'with capture groups' do
       let(:input) do
         [
