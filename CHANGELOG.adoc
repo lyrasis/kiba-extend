@@ -30,7 +30,7 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 *  preparation of the file registry:
 ** warns of any supplied files that do not exist (in https://github.com/lyrasis/kiba-extend/pull/54[PR#54])
 ** creates any reference directories that do not exist (in https://github.com/lyrasis/kiba-extend/pull/54[PR#54])
-* test Clean::RegexpFindReplaceFieldVals to replace `\n`
+* test Clean::RegexpFindReplaceFieldVals to replace `\n` (in https://github.com/lyrasis/kiba-extend/pull/55[PR#55])
 
 ==== Changed
 - move/alias `Merge::CountOfMatchingRows` to `Count::MatchingRowsInLookup`(in https://github.com/lyrasis/kiba-extend/pull/50[PR#50])
