@@ -37,6 +37,7 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 
 ==== Deleted
 - Removed JARD as development dependency (in https://github.com/lyrasis/kiba-extend/pull/52[PR#52])
+- Removed `-t` alias from `jobs:tagged_and` and `jobs:tagged_or` tasks, as they conflicted with the `-t/--tell` option (in https://github.com/lyrasis/kiba-extend/pull/56[PR#56])
 
 == Releases
 === version - date
