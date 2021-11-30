@@ -6,7 +6,7 @@ class Jobs < Runnable
   NOTE that the show, tell, and verbosity options are only relevant if you indicate the jobs should be run.
 LONG
 
-  option :tags, required: true, type: :array, aliases: :t, banner: 'TAG1 TAG2',
+  option :tags, required: true, type: :array, banner: 'TAG1 TAG2',
          desc: 'The tags for which to return entries'
   
   def tagged_or
