@@ -19,7 +19,7 @@ module Kiba
           return false if val.strip.empty?
 
           chk = val.gsub(delim, '').strip
-          chk = chk.gsub('%NULLVALUE%', '').strip if usenull
+          chk = chk.gsub(Kiba::Extend.nullvalue, '').strip if usenull
           chk.empty?
         end
 
@@ -58,7 +58,7 @@ module Kiba
         # @return [Array(Symbol)] of names of fields that should be kept, based on given discard
         #   and usenull param values and the field values
         private_class_method def keep_fields(field_vals, discard, delim, usenull)
-          field_vals = field_vals.transform_values { |val| val.gsub('%NULLVALUE%', '') } if usenull
+          field_vals = field_vals.transform_values { |val| val.gsub(Kiba::Extend.nullvalue, '') } if usenull
           field_vals = field_vals.reject { |_field, val| val.empty? } if discard.any?(:empty)
           field_vals = field_vals.reject { |_field, val| delim_only?(val, delim) } if discard.any?(:delim)
           field_vals.keys
