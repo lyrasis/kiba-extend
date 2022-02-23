@@ -3,32 +3,6 @@
 require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Delete do
-  describe 'EmptyFieldValues' do
-    rows = [
-      %w[id data],
-      [1, 'abc;;;d e f'],
-      [2, ';;abc'],
-      [3, 'def;;;;'],
-      [4, ';;;;;']
-    ]
-
-    before do
-      generate_csv(rows)
-    end
-    it 'deletes empty field values from multivalued field' do
-      expected = [
-        { id: '1', data: 'abc;d e f' },
-        { id: '2', data: 'abc' },
-        { id: '3', data: 'def' },
-        { id: '4', data: '' }
-      ]
-      result = execute_job(filename: test_csv,
-                           xform: Delete::EmptyFieldValues,
-                           xformopt: { fields: [:data], sep: ';' })
-      expect(result).to eq(expected)
-    end
-  end
-
   describe 'Fields' do
     rows = [
       %w[id name sex source],

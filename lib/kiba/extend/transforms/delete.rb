@@ -6,22 +6,7 @@ module Kiba
       # Tranformations to delete fields and field values
       module Delete
         ::Delete = Kiba::Extend::Transforms::Delete
-        class EmptyFieldValues
-          def initialize(fields:, sep:)
-            @fields = [fields].flatten
-            @sep = sep
-          end
-
-          # @private
-          def process(row)
-            @fields.each do |field|
-              val = row.fetch(field)
-              row[field] = val.split(@sep).compact.reject(&:empty?).join(@sep) unless val.nil?
-            end
-            row
-          end
-        end
-
+        
         class Fields
           def initialize(fields:)
             @fields = [fields].flatten
