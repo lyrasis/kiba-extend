@@ -9,7 +9,6 @@ require 'kiba-common/sources/enumerable'
 require 'kiba-common/destinations/csv'
 require 'kiba-common/destinations/lambda'
 require 'pry'
-#require 'ruby_jard'
 require 'xxhash'
 
 require 'kiba/extend/registry/file_registry'
