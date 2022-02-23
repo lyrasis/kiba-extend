@@ -23,6 +23,11 @@ toc::[]
 == Unreleased
 These changes are merged into the `main` branch but have not yet been tagged as a new version/release.
 
+==== Breaking
+* Changes to keyword argument names for `Delete::FieldValueIfEqualsOtherField`
+** `sep` becomes `delim`
+** `case_sensitive` becomes `casesensitive`
+
 ==== Added
 *  `multival` parameter added to `Cspace::NormalizeForID` transform (in https://github.com/lyrasis/kiba-extend/pull/49[PR#49])
 *  new https://lyrasis.github.io/kiba-extend/Kiba/Extend/Transforms/Count/FieldValues.html[`Count::FieldValues`] transform (in https://github.com/lyrasis/kiba-extend/pull/50[PR#50])
@@ -31,13 +36,29 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 ** warns of any supplied files that do not exist (in https://github.com/lyrasis/kiba-extend/pull/54[PR#54])
 ** creates any reference directories that do not exist (in https://github.com/lyrasis/kiba-extend/pull/54[PR#54])
 * test Clean::RegexpFindReplaceFieldVals to replace `\n` (in https://github.com/lyrasis/kiba-extend/pull/55[PR#55])
+* `Helpers.empty?` method, which returns true/false for a given string value (without treating delimiter values as special)
+* `fields` keyword argument to `Delete::FieldsExcept`, which should be used going forward instead of `keepfields`
+* `nullvalue` setting to `Kiba::Extend.config`. Default value is '%NULLVALUE%'
+* `usenull` keyword argument to `Delete::EmptyFieldValues`
+* `delim` keyword argument to `Delete::EmptyFieldValues`, which should be used going forward instead of `sep`
 
 ==== Changed
-- move/alias `Merge::CountOfMatchingRows` to `Count::MatchingRowsInLookup`(in https://github.com/lyrasis/kiba-extend/pull/50[PR#50])
+* move/alias `Merge::CountOfMatchingRows` to `Count::MatchingRowsInLookup`(in https://github.com/lyrasis/kiba-extend/pull/50[PR#50])
+* `Delete::FieldsExcept` can accept a single symbol as value for `fields` keyword argument
+* `Delete::EmptyFieldValues` will default to `Kiba::Extend.delim` as delimiter if none given explicitly
+* keyword argument names for `Delete::FieldValueIfEqualsOtherField`
+** `sep` becomes `delim`
+** `case_sensitive` becomes `casesensitive`
 
 ==== Deleted
 - Removed JARD as development dependency (in https://github.com/lyrasis/kiba-extend/pull/52[PR#52])
 - Removed `-t` alias from `jobs:tagged_and` and `jobs:tagged_or` tasks, as they conflicted with the `-t/--tell` option (in https://github.com/lyrasis/kiba-extend/pull/56[PR#56])
+
+==== To be deprecated/Will break in a future version
+These will now give warnings if used.
+
+- `Delete::FieldsExcept` `keepfields` keyword parameter. Change to `fields`
+- `Delete::EmptyFieldValues` `sep` keyword parameter. Change to `delim`
 
 == Releases
 === version - date

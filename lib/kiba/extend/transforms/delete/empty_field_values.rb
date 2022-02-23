@@ -3,13 +3,87 @@
 module Kiba
   module Extend
     module Transforms
-      # Tranformations to delete fields and field values
       module Delete
+
+        # @note Only useful for multi-valued fields
+        #
+        # Deletes any empty values from the field. Supports `usenull` = true to treat the value of
+        #   `Kiba::Extend.nullvalue` as empty
+        #
+        # # Examples
+        #
+        # Assuming `Kiba::Extend.nullvalue` = `%NULLVALUE%`, and input table:
+        #
+        # ```
+        # | data             |
+        # |------------------|
+        # | abc;;;d e f      |
+        # | ;;abc            |
+        # | def;;;;          |
+        # | ;;;;;            |
+        # | ;;;%NULLVALUE%;; |
+        # |                  |
+        # | nil              |
+        # ```
+        #
+        # Used in pipeline as:
+        #
+        # ```
+        # transform Delete::EmptyFieldValues, fields: [:data], sep: ';'
+        # ```
+        #
+        # Results in:
+        #
+        # ```
+        # | data        |
+        # |-------------|
+        # | abc;d e f   |
+        # | abc         |
+        # | def         |
+        # |             |
+        # | %NULLVALUE% |
+        # |             |
+        # | nil         |
+        # ```
+        #
+        # Used in pipeline as:
+        #
+        # ```
+        # transform Delete::EmptyFieldValues, fields: [:data], sep: ';', usenull: true
+        # ```
+        #
+        # Results in:
+        #
+        # ```
+        # | data      |
+        # |-----------|
+        # | abc;d e f |
+        # | abc       |
+        # | def       |
+        # |           |
+        # |           |
+        # |           |
+        # | nil       |
+        # ```
+        #
         class EmptyFieldValues
-          def initialize(fields:, sep:, usenull: false)
+          # @note `sep` will be removed in a future version. **DO NOT USE**
+          # @param fields [Array<Symbol>,Symbol] field(s) to delete from
+          # @param sep [String] **DEPRECATED; DO NOT USE**
+          # @param delim [String] on which to split multivalued fields. Defaults to `Kiba::Extend.delim` if not provided.
+          # @param usenull [Boolean] whether to treat `Kiba::Extend.nullvalue` string as an empty value
+          def initialize(fields:, sep: nil, delim: nil, usenull: false)
             @fields = [fields].flatten
-            @sep = sep
             @usenull = usenull
+
+            if sep && delim
+              puts %Q[#{Kiba::Extend.warning_label}: Do not use both `sep` and `delim`. Prefer `delim`]
+            elsif sep
+              puts %Q[#{Kiba::Extend.warning_label}: The `sep` keyword is being deprecated in a future version. Change it to `delim` in your ETL code.]
+              @delim = sep
+            else
+              @delim = delim ? delim : Kiba::Extend.delim
+            end
           end
 
           # @private
@@ -19,17 +93,17 @@ module Kiba
               val = row.fetch(field)
               next if val.nil?
               
-              row[field] = val.split(sep)
+              row[field] = val.split(delim)
                 .compact
                 .reject{ |str| Helpers.empty?(str, usenull) }
-                .join(sep)
+                .join(delim)
             end
             row
           end
 
           private
 
-          attr_reader :fields, :sep, :usenull
+          attr_reader :fields, :delim, :usenull
         end
       end
     end
