@@ -7,10 +7,10 @@ module Kiba
       module Helpers
         module_function
         # Indicates whether a field value is delimiter-only. If `usenull` is set to true, the
-        #   %NULLVALUE% string is treated as empty in detecting delimiter-only-ness
+        #   config.nullvalue string is treated as empty in detecting delimiter-only-ness
         # @param val [String] The field value to check
         # @param delim [String] The multivalue delimiter
-        # @param usenull [Boolean] If true, replaces '%NULLVALUE%' with '' to make determination
+        # @param usenull [Boolean] If true, replaces config.nullvalue string with '' to make determination
         # @return [false] if `value` is nil, empty, or contains characters other than delimiter(s)
         #   and leading/trailing spaces
         # @return [true] if `value` contains only delimiter(s) and leading/trailing spaces
@@ -22,6 +22,19 @@ module Kiba
           chk = chk.gsub('%NULLVALUE%', '').strip if usenull
           chk.empty?
         end
+
+        # Indicates whether a given value is empty, ignoring delimiters. If `usenull` is true,
+        #   the config.nullvalue string is treated as empty
+        # @param val [String] The field value to check
+        # @param usenull [Boolean] If true, replaces config.nullvalue string with '' to make determination
+        def empty?(val, usenull = false)
+          return true if val.nil?
+
+          chkval = usenull ? val.gsub(Kiba::Extend.nullvalue, '') : val
+
+          chkval.strip.empty?
+        end
+          
 
         # @param row [Hash{Symbol=>String,Nil}l] A row of data
         # @param fields [Array(Symbol)] Names of fields to process

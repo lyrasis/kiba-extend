@@ -57,6 +57,9 @@ module Kiba
     #   Example: 'a^^y;b^^z' -> [['a', 'y'], ['b', 'z']]
     setting :sgdelim, default: '^^', reader: true
 
+    # Default string to be treated as though it were a null/empty value.
+    setting :nullvalue, default: '%NULLVALUE%', reader: true
+    
     # Default source class for jobs
     setting :source, default: Kiba::Common::Sources::CSV, reader: true
 
