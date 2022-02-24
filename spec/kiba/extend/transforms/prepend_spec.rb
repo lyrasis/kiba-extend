@@ -3,177 +3,153 @@
 require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Prepend do
+  let(:accumulator){ [] }
+  let(:test_job){ Helpers::TestJob.new(input: input, accumulator: accumulator, transforms: transforms) }
+  let(:result){ test_job.accumulator }
+
   describe 'FieldToFieldValue' do
-    rows = [
-      %w[name prependval],
-      ['Weddy', 'm'], # 0
-      [nil, 'u'],
-      ['', 'u'], # 2
-      ['Kernel', nil],
-      ['Divebomber|Hunter', 'm'], # 4
-      ['Divebomber|Niblet|Keet', 'm|f'],
-      ['|Niblet', 'm|f'] # 6
-    ]
-
+    let(:input) do
+      [
+        {name: 'Weddy', prependval: 'm'},
+        {name: nil, prependval: 'u'},
+        {name: '', prependval: 'u'},
+        {name: 'Kernel', prependval: nil},
+        {name: 'Divebomber|Hunter', prependval: 'm'},
+        {name: 'Divebomber|Niblet|Keet', prependval: 'm|f'},
+        {name: '|Niblet', prependval: 'm|f'},
+      ]
+    end
+    
     context 'when called with multival prepend field and no mvdelim' do
-      before do
-        generate_csv(rows)
+      let(:transforms) do
+        Kiba.job_segment do
+          transform Prepend::FieldToFieldValue,
+            target_field: :name,
+            prepended_field: :prependval,
+            sep: ':',
+            multivalue_prepended_field: true
+        end
       end
-
+      
       it 'raises MissingDelimiterError' do
         msg = 'You must provide an mvdelim string if multivalue_prepended_field is true'
-        opts = { target_field: :name, prepended_field: :prependval, sep: ':',
-                 multivalue_prepended_field: true }
-
-        expect {
-          execute_job(filename: test_csv,
-                      xform: Prepend::FieldToFieldValue,
-                      xformopt: opts)
-        }.to raise_error(msg)
+        expect { result }.to raise_error(msg)
       end
     end
 
     context 'when delete_prepended = false' do
-      before do
-        generate_csv(rows)
-        @result = execute_job(filename: test_csv,
-                              xform: Prepend::FieldToFieldValue,
-                              xformopt: { target_field: :name, prepended_field: :prependval, sep: ': ',
-                                          mvdelim: '|' })
+      let(:transforms) do
+        Kiba.job_segment do
+          transform Prepend::FieldToFieldValue,
+            target_field: :name,
+            prepended_field: :prependval,
+            sep: ': ',
+            mvdelim: '|'
+        end
       end
-      it 'prepends value of given field to existing field values' do
-        expected = { name: 'm: Weddy', prependval: 'm' }
-        expect(@result[0]).to eq(expected)
+
+      let(:expected) do
+        [
+         {name: 'm: Weddy', prependval: 'm'},
+         {name: nil, prependval: 'u'},
+         {name: '', prependval: 'u'},
+         {name: 'Kernel', prependval: nil},
+         {name: 'm: Divebomber|m: Hunter', prependval: 'm'},
+         {name: 'm|f: Divebomber|m|f: Niblet|m|f: Keet', prependval: 'm|f'},
+         {name: '|m|f: Niblet', prependval: 'm|f'},
+        ]
       end
-      it 'leaves nil values alone' do
-        expected = { name: nil, prependval: 'u' }
-        expect(@result[1]).to eq(expected)
-      end
-      it 'leaves blank values alone' do
-        expected = { name: '', prependval: 'u' }
-        expect(@result[2]).to eq(expected)
-      end
-      it 'does not prepend blank field' do
-        expected = { name: 'Kernel', prependval: nil }
-        expect(@result[3]).to eq(expected)
-      end
-      it 'prepends whole prepend field value to each value in target field' do
-        expected = { name: 'm: Divebomber|m: Hunter', prependval: 'm' }
-        expect(@result[4]).to eq(expected)
-      end
-      it 'prepends whole prepend field value to each value in target field' do
-        expected = { name: 'm|f: Divebomber|m|f: Niblet|m|f: Keet', prependval: 'm|f' }
-        expect(@result[5]).to eq(expected)
-      end
-      it 'prepends whole prepend field value to each populated value in target field' do
-        expected = { name: '|m|f: Niblet', prependval: 'm|f' }
-        expect(@result[6]).to eq(expected)
+      
+      it 'transforms as expected' do
+        expect(result).to eq(expected)
       end
     end
+
     context 'when delete_prepended = true' do
-      before do
-        generate_csv(rows)
-        @result = execute_job(filename: test_csv,
-                              xform: Prepend::FieldToFieldValue,
-                              xformopt: { target_field: :name, prepended_field: :prependval, sep: ': ',
-                                          delete_prepended: true,
-                                          mvdelim: '|' })
-      end
-      it 'deletes prepended field after prepending' do
-        expected = { name: 'm: Weddy' }
-        expect(@result[0]).to eq(expected)
-      end
-    end
-
-    context 'when multivalue_prepended_field = false' do
-      before do
-        generate_csv(rows)
-        @result = execute_job(filename: test_csv,
-                              xform: Prepend::FieldToFieldValue,
-                              xformopt: { target_field: :name, prepended_field: :prependval, sep: ': ',
-                                          delete_prepended: true,
-                                          mvdelim: '|' })
-      end
-      context 'when one prepend value and two target values' do
-        it 'adds prepend value to each target field' do
-          expected = { name: 'm: Divebomber|m: Hunter' }
-          expect(@result[4]).to eq(expected)
+      let(:transforms) do
+        Kiba.job_segment do
+          transform Prepend::FieldToFieldValue,
+            target_field: :name,
+            prepended_field: :prependval,
+            sep: ': ',
+            mvdelim: '|',
+            delete_prepended: true
         end
       end
 
-      context 'when two prepend values and three target values' do
-        it 'adds full prepend value string to each target value' do
-          expected = { name: 'm|f: Divebomber|m|f: Niblet|m|f: Keet' }
-          expect(@result[5]).to eq(expected)
-        end
+      let(:expected) do
+        [
+          {name: 'm: Weddy'},
+          {name: nil},
+          {name: ''},
+          {name: 'Kernel'},
+          {name: 'm: Divebomber|m: Hunter'},
+          {name: 'm|f: Divebomber|m|f: Niblet|m|f: Keet'},
+          {name: '|m|f: Niblet'},
+        ]
       end
-
-      context 'when two prepend values and two target values (blank and populated)' do
-        it 'adds full prepend value string to populated target value' do
-          expected = { name: '|m|f: Niblet' }
-          expect(@result[6]).to eq(expected)
-        end
+      
+      it 'transforms as expected' do
+        expect(result).to eq(expected)
       end
     end
 
     context 'when multivalue_prepended_field = true' do
-      before do
-        generate_csv(rows)
-        @result = execute_job(filename: test_csv,
-                              xform: Prepend::FieldToFieldValue,
-                              xformopt: { target_field: :name, prepended_field: :prependval, sep: ': ',
-                                          delete_prepended: true,
-                                          mvdelim: '|',
-                                          multivalue_prepended_field: true })
-      end
-      context 'when one prepend value and two target values' do
-        it 'adds prepend value to first target field value' do
-          expected = { name: 'm: Divebomber|Hunter' }
-          expect(@result[4]).to eq(expected)
+      let(:transforms) do
+        Kiba.job_segment do
+          transform Prepend::FieldToFieldValue,
+            target_field: :name,
+            prepended_field: :prependval,
+            sep: ': ',
+            mvdelim: '|',
+            delete_prepended: true,
+            multivalue_prepended_field: true
         end
       end
 
-      context 'when two prepend values and three target values' do
-        it 'adds matching prepend value string to first two target values' do
-          expected = { name: 'm: Divebomber|f: Niblet|Keet' }
-          expect(@result[5]).to eq(expected)
-        end
+      let(:expected) do
+        [
+          {name: 'm: Weddy'},
+          {name: nil},
+          {name: ''},
+          {name: 'Kernel'},
+          {name: 'm: Divebomber|Hunter'},
+          {name: 'm: Divebomber|f: Niblet|Keet'},
+          {name: '|f: Niblet'},
+        ]
       end
-
-      context 'when two prepend values and two target values (blank and populated)' do
-        it 'adds matching prepend value string to populated target value' do
-          expected = { name: '|f: Niblet' }
-          expect(@result[6]).to eq(expected)
-        end
+      
+      it 'transforms as expected' do
+        expect(result).to eq(expected)
       end
     end
   end
 
   describe 'ToFieldValue' do
-    rows = [
-      %w[id name],
-      [1, 'Weddy'],
-      [2, nil],
-      [3, '']
-    ]
+    let(:input) do
+      [
+        {name: 'Weddy'},
+        {name: nil},
+        {name: ''}
+      ]
+    end
+    
+      let(:transforms) do
+        Kiba.job_segment do
+          transform Prepend::ToFieldValue, field: :name, value: 'aka: '
+        end
+      end
 
-    before do
-      generate_csv(rows)
-      @result = execute_job(filename: test_csv,
-                            xform: Prepend::ToFieldValue,
-                            xformopt: { field: :name, value: 'name: ' })
-    end
-    it 'prepends given value to existing field values' do
-      expected = { id: '1', name: 'name: Weddy' }
-      expect(@result[0]).to eq(expected)
-    end
-    it 'leaves nil values alone' do
-      expected = { id: '2', name: nil }
-      expect(@result[1]).to eq(expected)
-    end
-    it 'leaves blank values alone' do
-      expected = { id: '3', name: '' }
-      expect(@result[2]).to eq(expected)
+      let(:expected) do
+        [
+        {name: 'aka: Weddy'},
+        {name: nil},
+        {name: ''}
+        ]
+      end
+      
+    it 'transforms as expected' do
+      expect(result).to eq(expected)
     end
   end
 end
