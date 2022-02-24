@@ -34,10 +34,10 @@ module Kiba
         #
         class RowsFromMultivalField
           # @param field [Symbol] the field from which rows will be created
-          # @param delim [String] used to split `field` value
-          def initialize(field:, delim:)
+          # @param delim [String] used to split `field` value. `Kiba::Extend.delim` used if value not given
+          def initialize(field:, delim: nil)
             @field = field
-            @delim = delim
+            @delim = delim ||= Kiba::Extend.delim
           end
 
           # @private

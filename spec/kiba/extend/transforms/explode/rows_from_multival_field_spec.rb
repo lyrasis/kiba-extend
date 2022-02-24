@@ -29,4 +29,18 @@ RSpec.describe Kiba::Extend::Transforms::Explode::RowsFromMultivalField do
   it 'transforms as expected' do
     expect(result).to eq(expected)
   end
+
+  context 'when delim not given' do
+    let(:transforms) do
+      Kiba.job_segment do
+        transform Explode::RowsFromMultivalField, field: :r1
+      end
+    end
+
+    it 'uses Kiba::Extend.delim value' do
+      Kiba::Extend.config.delim = ';'
+      expect(result).to eq(expected)
+    end
+
+  end
 end
