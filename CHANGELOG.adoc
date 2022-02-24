@@ -41,6 +41,8 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 * `nullvalue` setting to `Kiba::Extend.config`. Default value is '%NULLVALUE%'
 * `usenull` keyword argument to `Delete::EmptyFieldValues`
 * `delim` keyword argument to `Delete::EmptyFieldValues`, which should be used going forward instead of `sep`
+* documentation for `Delete` transforms
+* `Delete::BlankFields` transform
 
 ==== Changed
 * move/alias `Merge::CountOfMatchingRows` to `Count::MatchingRowsInLookup`(in https://github.com/lyrasis/kiba-extend/pull/50[PR#50])
