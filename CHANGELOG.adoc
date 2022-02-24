@@ -30,7 +30,7 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 
 ==== Changed
 * `Explode::RowsFromMultivalField` defaults to using `Kiba::Extend.delim` if no `delim` keyword argument passed in (in https://github.com/lyrasis/kiba-extend/pull/58[PR#58])
-* Some documentation formatting fixed ([Issue #53](https://github.com/lyrasis/kiba-extend/issues/53)) (in https://github.com/lyrasis/kiba-extend/pull/58[PR#58])
+* Some documentation formatting fixed (https://github.com/lyrasis/kiba-extend/issues/53[Issue #53]) (in https://github.com/lyrasis/kiba-extend/pull/58[PR#58])
 
 ==== Deleted
 
