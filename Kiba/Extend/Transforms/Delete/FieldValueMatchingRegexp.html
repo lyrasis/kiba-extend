@@ -94,12 +94,73 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/kiba/extend/transforms/delete.rb</dd>
+    <dd>lib/kiba/extend/transforms/delete/field_value_matching_regexp.rb</dd>
   </dl>
   
 </div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>Deletes full field value of all given fields that match the given regular expression pattern.
+  You can control whether the regexp is case sensitive or not</p>
 
+<h1 id="examples">Examples</h1>
+
+<p>Input table:</p>
+
+<pre class="code ruby"><code class="ruby">| a              | b    |
+|----------------+------|
+| xxxx a thing   | foo  |
+| thing xxxx 123 | bar  |
+| x thing        | xxxx |
+| y thing        | xXxX |
+| xxxxxxx thing  | baz  |
+|                | nil  |
+</code></pre>
+
+<p>Used in pipeline as:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Delete.html" title="Kiba::Extend::Transforms::Delete (module)">Delete</a></span></span><span class='op'>::</span><span class='const'>FieldValueMatchingRegexp</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>a</span><span class='words_sep'> </span><span class='tstring_content'>b</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>match:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>xx+</span><span class='tstring_end'>&#39;</span></span>
+</code></pre>
+
+<p>Results in:</p>
+
+<pre class="code ruby"><code class="ruby">| a       | b    |
+|---------+------|
+| nil     | foo  |
+| nil     | bar  |
+| x thing | nil  |
+| y thing | xXxX |
+| nil     | baz  |
+|         | nil  |
+</code></pre>
+
+<p>Input table:</p>
+
+<pre class="code ruby"><code class="ruby">| a       | b       |
+|---------+---------|
+| an xxxx | xXxXxXy |
+</code></pre>
+
+<p>Used in pipeline as:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Delete.html" title="Kiba::Extend::Transforms::Delete (module)">Delete</a></span></span><span class='op'>::</span><span class='const'>FieldValueMatchingRegexp</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>a</span><span class='words_sep'> </span><span class='tstring_content'>b</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>match:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>^xx+</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>casesensitive:</span> <span class='kw'>false</span>
+</code></pre>
+
+<p>Results in:</p>
+
+<pre class="code ruby"><code class="ruby">| a       | b   |
+|---------+-----|
+| an xxxx | nil |
+</code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
 
 
 
@@ -162,7 +223,58 @@
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>fields</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>, <tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>field(s) to delete from</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>match</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>value to match. Is converted to a regular expression pattern via <code>Regexp.new(match)</code></p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>casesensitive</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>true</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>match mode</p>
+</div>
+      
+    </li>
+  
+</ul>
+
 
 </div><table class="source_code">
   <tr>
@@ -170,13 +282,13 @@
       <pre class="lines">
 
 
-114
-115
-116
-117</pre>
+71
+72
+73
+74</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete.rb', line 114</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/field_value_matching_regexp.rb', line 71</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span><span class='comma'>,</span> <span class='label'>match:</span><span class='comma'>,</span> <span class='label'>casesensitive:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fields'>fields</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
@@ -193,9 +305,9 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 19:49:29 2021 by
+  Generated on Thu Feb 24 16:20:24 2022 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.27 (ruby-2.7.4).
+  0.9.27 (ruby-2.7.5).
 </div>
 
     </div>

@@ -94,12 +94,175 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/kiba/extend/transforms/delete.rb</dd>
+    <dd>lib/kiba/extend/transforms/delete/field_value_if_equals_other_field.rb<span class="defines">,<br />
+  lib/kiba/extend/transforms/delete.rb</span>
+</dd>
   </dl>
   
 </div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>Deletes value in <code>delete</code> field if that value matches value in <code>if_equal_to</code> field. Opinionated treatment
+  of multivalued fields described below. Case sensitive or insensitive matching options. Can also delete
+  associated field values (by position) in additional grouped fields. This is useful, for example,
+  in maintaining the integrity of grouped/subgrouped multivalue fields in CollectionSpace.</p>
 
+<p><strong>Note that the value of the <code>if_equal_to</code> field is never modified by this transform.</strong></p>
+
+<h1 id="examples">Examples</h1>
+
+<h2 id="simple-example">Simple example</h2>
+
+<p>Input table:</p>
+
+<pre class="code ruby"><code class="ruby">| del | compare |
+|-----+---------|
+| a   | b       |
+| c   | c       |
+</code></pre>
+
+<p>Used in pipeline as:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Delete.html" title="Kiba::Extend::Transforms::Delete (module)">Delete</a></span></span><span class='op'>::</span><span class='const'>FieldValueIfEqualsOtherField</span><span class='comma'>,</span> <span class='label'>delete:</span> <span class='symbol'>:del</span><span class='comma'>,</span> <span class='label'>if_equal_to:</span> <span class='symbol'>:compare</span>
+</code></pre>
+
+<p>Results in:</p>
+
+<pre class="code ruby"><code class="ruby">| del | compare |
+|-----+---------|
+| a   | b       |
+| nil | c       |
+</code></pre>
+
+<h3 id="notes">Notes</h3>
+
+<p>The first row is left alone because a != b.</p>
+
+<p>In the second row, c is deleted from <code>del</code> because the value of <code>compare</code> is also c.</p>
+
+<h2 id="complex-example">Complex example</h2>
+
+<p>This introduces handling of multivalued grouped fields with case insensitive matching.</p>
+
+<p>Used in pipeline as:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Delete.html" title="Kiba::Extend::Transforms::Delete (module)">Delete</a></span></span><span class='op'>::</span><span class='const'>FieldValueIfEqualsOtherField</span><span class='comma'>,</span>
+  <span class='label'>delete:</span> <span class='symbol'>:del</span><span class='comma'>,</span>
+  <span class='label'>if_equal_to:</span> <span class='symbol'>:compare</span><span class='comma'>,</span>
+  <span class='label'>multival:</span> <span class='kw'>true</span><span class='comma'>,</span>
+  <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>grouped_fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>grpa</span><span class='words_sep'> </span><span class='tstring_content'>grpb</span><span class='tstring_end'>]</span></span><span class='comma'>,</span>
+  <span class='label'>casesensitive:</span> <span class='kw'>false</span>
+</code></pre>
+
+<p>Input table:</p>
+
+<pre class="code ruby"><code class="ruby">| row | del       | compare | grpa      | grpb      |
+|-----+-----------+---------+-----------+-----------|
+| 1   | A;C;d;c;e | c       | y;x;w;u;v | e;f;g;h;i |
+| 2   | a;b;c     | a;z;c   | d;e;f     | g;h;i     |
+| 3   | a         | a;b     | d         | g         |
+| 4   | a         | b       | z         | q         |
+| 5   | a         | a       | z         | q         |
+</code></pre>
+
+<p>Results in:</p>
+
+<pre class="code ruby"><code class="ruby">| row | del   | compare | grpa  | grpb  |
+|-----+-------+---------+-------+-------|
+| 1   | A;d;e | c       | y;w;v | e;g;i |
+| 2   | b     | a;z;c   | e     | h     |
+| 3   | nil   | a;b     | nil   | nil   |
+| 4   | a     | b       | z     | q     |
+| 5   | nil   | a       | nil   | nil   |
+</code></pre>
+
+<h3 id="notes">Notes</h3>
+
+<h4 id="row-1">Row 1</h4>
+
+<p><strong>If <code>compare</code> is a single value, all individual values in <code>del</code> are compared to the single <code>compare</code> value.</strong></p>
+
+<p>In <code>del</code> field, elements 1 (C) and 3 (c) are case-insensitive matches on the value in <code>compare</code>. Thus,
+  elements 1 and 3 are removed from <code>del</code> and both grouped fields.</p>
+
+<h4 id="row-2">Row 2</h4>
+
+<p><strong>If <code>compare</code> has multiple values, the values of <code>del</code> and <code>compare</code> are compared positionally.</strong></p>
+
+<p>Element 0 is a match (a in both). Element 1 is not (b != z). Element 2 is a match (c in both).</p>
+
+<p>Elements 0 and 2 are removed <code>del</code> and all grouped fields.</p>
+
+<h4 id="row-3">Row 3</h4>
+
+<p><code>compare</code> is multivalued, so <code>del</code> is compared positionally against <code>compare</code>, though <code>del</code> (and
+  the grouped fields) are single valued.</p>
+
+<p>When all values are removed from a field, <code>nil</code> is returned.</p>
+
+<h4 id="row-4">Row 4</h4>
+
+<p>a != b, so row is returned unmodified.</p>
+
+<h4 id="row-5">Row 5</h4>
+
+<p>a = a, so a (Element 0) is removed from <code>del</code>. Element 0 is then removed from the grouped fields.</p>
+
+<h2 id="group-length-mismatch-ragged-groups">Group length mismatch: ragged groups</h2>
+
+<p>This introduces handling of multivalued grouped fields if fields grouped together have differnt numbers of
+  values.</p>
+
+<p>Used in pipeline as:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Delete.html" title="Kiba::Extend::Transforms::Delete (module)">Delete</a></span></span><span class='op'>::</span><span class='const'>FieldValueIfEqualsOtherField</span><span class='comma'>,</span>
+  <span class='label'>delete:</span> <span class='symbol'>:del</span><span class='comma'>,</span>
+  <span class='label'>if_equal_to:</span> <span class='symbol'>:compare</span><span class='comma'>,</span>
+  <span class='label'>multival:</span> <span class='kw'>true</span><span class='comma'>,</span>
+  <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>grouped_fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>grpa</span><span class='words_sep'> </span><span class='tstring_content'>grpb</span><span class='tstring_end'>]</span></span><span class='comma'>,</span>
+  <span class='label'>casesensitive:</span> <span class='kw'>false</span>
+</code></pre>
+
+<p>Input table:</p>
+
+<pre class="code ruby"><code class="ruby">| del       | compare | grpa    | grpb      |
+|-----------+---------+---------+-----------|
+| A;C;d;e;c | c       | y;x;w;u | e;f;g;h;i |
+</code></pre>
+
+<p>Results in:</p>
+
+<pre class="code ruby"><code class="ruby">| del   | compare | grpa  | grpb  |
+|-------+---------+-------+-------|
+| A;d;e | c       | y;w;u | e;g;h |
+</code></pre>
+
+<p>And a warning printed to STDOUT, which may trigger you to examine the input data:</p>
+
+<pre class="code ruby"><code class="ruby">KIBA WARNING: One or more grouped fields (grpa, grpb) has different number of values than the others
+in {:del=&gt;&quot;A;d;e&quot;, :compare=&gt;&quot;c&quot;, :grpa=&gt;&quot;y;x;w;u&quot;, :grpb=&gt;&quot;e;f;g;h;i&quot;}
+</code></pre>
+
+<p><strong>If <code>del</code> had 4 elements and one or more of the grouped fields had a different number of elements,
+  this would be handled similarly, with a slightly different warning.</strong></p>
+
+<h3 id="notes">Notes</h3>
+
+<p><code>grpa</code> has 4 values, while <code>grpb</code> has 5.</p>
+
+<p>Elements 1 and 4 from <code>del</code> match <code>compare</code>, so they are deleted. Those elements are also deleted from
+  the grouped fields if present.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
 
 
 
@@ -117,7 +280,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(delete:, if_equal_to:, multival: false, sep: nil, grouped_fields: [], case_sensitive: true)  &#x21d2; FieldValueIfEqualsOtherField </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(delete:, if_equal_to:, multival: false, delim: nil, grouped_fields: [], casesensitive: true)  &#x21d2; FieldValueIfEqualsOtherField </a>
     
 
     
@@ -148,7 +311,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(delete:, if_equal_to:, multival: false, sep: nil, grouped_fields: [], case_sensitive: true)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Delete::FieldValueIfEqualsOtherField (class)">FieldValueIfEqualsOtherField</a></span></tt> 
+    #<strong>initialize</strong>(delete:, if_equal_to:, multival: false, delim: nil, grouped_fields: [], casesensitive: true)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Delete::FieldValueIfEqualsOtherField (class)">FieldValueIfEqualsOtherField</a></span></tt> 
   
 
   
@@ -162,7 +325,109 @@
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>delete</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>field from which values will be deleted</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>if_equal_to</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>field the <code>delete</code> values will be compared to. In other words, the &quot;other field&quot;</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>multival</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>whether to split field values for comparison</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>delim</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>on which to split if <code>multival</code>. Defaults to <code>Kiba::Extend.delim</code> if not provided.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>grouped_fields</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>[]</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>field(s) from which positionally corresponding values should also be removed</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>casesensitive</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>true</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>matching mode</p>
+</div>
+      
+    </li>
+  
+</ul>
+
 
 </div><table class="source_code">
   <tr>
@@ -170,17 +435,17 @@
       <pre class="lines">
 
 
-73
-74
-75
-76
-77
-78
-79
-80</pre>
+170
+171
+172
+173
+174
+175
+176
+177</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/field_value_if_equals_other_field.rb', line 170</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>delete:</span><span class='comma'>,</span> <span class='label'>if_equal_to:</span><span class='comma'>,</span> <span class='label'>multival:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>grouped_fields:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>case_sensitive:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='ivar'>@delete</span> <span class='op'>=</span> <span class='id identifier rubyid_delete'>delete</span>
@@ -201,9 +466,9 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 30 19:49:29 2021 by
+  Generated on Thu Feb 24 16:20:23 2022 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.27 (ruby-2.7.4).
+  0.9.27 (ruby-2.7.5).
 </div>
 
     </div>
