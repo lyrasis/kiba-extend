@@ -24,6 +24,17 @@ toc::[]
 These changes are merged into the `main` branch but have not yet been tagged as a new version/release.
 
 ==== Breaking
+==== Added
+==== Changed
+==== Deleted
+==== To be deprecated/Will break in a future version
+
+== Releases
+=== 2.6.0 - 2022-02-24
+
+https://github.com/lyrasis/kiba-extend/compare/v2.5.3...v2.6.0[Compare code changes]
+
+==== Breaking
 * Changes to keyword argument names for `Delete::FieldValueIfEqualsOtherField` (in https://github.com/lyrasis/kiba-extend/pull/57[PR#57])
 ** `sep` becomes `delim`
 ** `case_sensitive` becomes `casesensitive`
@@ -61,13 +72,4 @@ These will now give warnings if used.
 
 - `Delete::FieldsExcept` `keepfields` keyword parameter. Change to `fields`  (in https://github.com/lyrasis/kiba-extend/pull/57[PR#57])
 - `Delete::EmptyFieldValues` `sep` keyword parameter. Change to `delim`  (in https://github.com/lyrasis/kiba-extend/pull/57[PR#57])
-
-== Releases
-=== version - date
-
-https://github.com/lyrasis/kiba-extend/compare/v2.5.0...v2.5.1[Compare]
-
-==== Added
-==== Changed
-==== Deleted
 
