@@ -94,7 +94,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/kiba/extend/transforms/prepend.rb</dd>
+    <dd>lib/kiba/extend/transforms/prepend/to_field_value.rb</dd>
   </dl>
   
 </div>
@@ -105,45 +105,47 @@
 
 <p>If target field value is blank, it is left blank</p>
 
-<p>== Examples
-Input table:</p>
+<h2 id="examples">Examples</h2>
 
-<p>| a   | b |</p>
+<p>Input table:</p>
 
-<hr>
+<pre class="code ruby"><code class="ruby">| name          |
+|---------------|
+| Weddy         |
+| Kernel|Zipper |
+| nil           |
+|               |
+</code></pre>
 
-<p>| c   | d |
- | e;f | g |
- |     | h |
- | i   |   |</p>
+<p>Used in pipeline as:</p>
 
-<p>Used in pipeline as:
- transform Prepend::ToFieldValue, field: :a, value: &#39;pre: &#39;</p>
-
-<p>Results in:</p>
-
-<p>| a        | b |</p>
-
-<hr>
-
-<p>| pre: c   | d |
- | pre: e;f | g |
- |          | h |
- | pre: i   |   |</p>
-
-<p>Used in pipeline as:
- transform Prepend::ToFieldValue, field: :a, value: &#39;pre: &#39;, mvdelim: &#39;;&#39;</p>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Prepend.html" title="Kiba::Extend::Transforms::Prepend (module)">Prepend</a></span></span><span class='op'>::</span><span class='const'>ToFieldValue</span><span class='comma'>,</span> <span class='label'>field:</span> <span class='symbol'>:name</span><span class='comma'>,</span> <span class='label'>value:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>aka: </span><span class='tstring_end'>&#39;</span></span>
+</code></pre>
 
 <p>Results in:</p>
 
-<p>| a             | b |</p>
+<pre class="code ruby"><code class="ruby">| name               |
+|--------------------|
+| aka: Weddy         |
+| aka: Kernel|Zipper |
+| nil                |
+|                    |
+</code></pre>
 
-<hr>
+<p>Used in pipeline as:</p>
 
-<p>| pre: c        | d |
- | pre: e;pre: f | g |
- |               | h |
- | pre: i        |   |</p>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Prepend.html" title="Kiba::Extend::Transforms::Prepend (module)">Prepend</a></span></span><span class='op'>::</span><span class='const'>ToFieldValue</span><span class='comma'>,</span> <span class='label'>field:</span> <span class='symbol'>:name</span><span class='comma'>,</span> <span class='label'>value:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>aka: </span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>multival:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>|</span><span class='tstring_end'>&#39;</span></span>
+</code></pre>
+
+<p>Results in:</p>
+
+<pre class="code ruby"><code class="ruby">| name                    |
+|-------------------------|
+| aka: Weddy              |
+| aka: Kernel|aka: Zipper |
+| nil                     |
+|                         |
+</code></pre>
 
 
   </div>
@@ -169,7 +171,7 @@ Input table:</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(field:, value:, mvdelim: &#39;&#39;)  &#x21d2; ToFieldValue </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(field:, value:, multival: false, delim: Kiba::Extend.delim)  &#x21d2; ToFieldValue </a>
     
 
     
@@ -200,7 +202,7 @@ Input table:</p>
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(field:, value:, mvdelim: &#39;&#39;)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Prepend::ToFieldValue (class)">ToFieldValue</a></span></tt> 
+    #<strong>initialize</strong>(field:, value:, multival: false, delim: Kiba::Extend.delim)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Prepend::ToFieldValue (class)">ToFieldValue</a></span></tt> 
   
 
   
@@ -208,7 +210,14 @@ Input table:</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of ToFieldValue.</p>
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p><code>mvdelim</code> argument is deprecated and replaced by <code>multival</code> and <code>delim</code></p>
+</div>
+  </div>
+
+<p>Returns a new instance of ToFieldValue.</p>
 
 
   </div>
@@ -249,18 +258,34 @@ Input table:</p>
   
     <li>
       
-        <span class='name'>mvdelim</span>
+        <span class='name'>multival</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Whether prepend to multiple values</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>delim</span>
       
       
         <span class='type'>(<tt>String</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>&#39;&#39;</tt>)</em>
+        <em class="default">(defaults to: <tt>Kiba::Extend.delim</tt>)</em>
       
       
         &mdash;
-        <div class='inline'><p>Character(s) on which to split multiple values in field before
-prepending. If empty string, behaves as a single value field</p>
+        <div class='inline'><p>for splitting value if <code>multival</code></p>
 </div>
       
     </li>
@@ -274,19 +299,21 @@ prepending. If empty string, behaves as a single value field</p>
       <pre class="lines">
 
 
-217
-218
-219
-220
-221</pre>
+65
+66
+67
+68
+69
+70</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/prepend.rb', line 217</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/prepend/to_field_value.rb', line 65</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>field:</span><span class='comma'>,</span> <span class='label'>value:</span><span class='comma'>,</span> <span class='label'>mvdelim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>field:</span><span class='comma'>,</span> <span class='label'>value:</span><span class='comma'>,</span> <span class='label'>multival:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_delim'>delim</span><span class='rparen'>)</span>
   <span class='ivar'>@field</span> <span class='op'>=</span> <span class='id identifier rubyid_field'>field</span>
   <span class='ivar'>@value</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
-  <span class='ivar'>@mvdelim</span> <span class='op'>=</span> <span class='id identifier rubyid_mvdelim'>mvdelim</span>
+  <span class='ivar'>@multival</span> <span class='op'>=</span> <span class='id identifier rubyid_multival'>multival</span>
+  <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_delim'>delim</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -299,7 +326,7 @@ prepending. If empty string, behaves as a single value field</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Feb 24 16:24:48 2022 by
+  Generated on Thu Feb 24 18:26:13 2022 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-2.7.5).
 </div>

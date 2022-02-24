@@ -94,19 +94,24 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/kiba/extend/transforms/prepend.rb</dd>
+    <dd>lib/kiba/extend/transforms/prepend/field_to_field_value.rb</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Adds the value of prepended_field to the beginning of the value(s) of the target_field</p>
+    <p>Adds the value of <code>prepended_field</code> to the beginning of the value(s) of the <code>target_field</code></p>
 
 <p>If target field value is blank, it is left blank, even if there is a prepended field value.
   If there is no value in prepended field, target field is left as-is</p>
 
 <h1 id="examples">Examples</h1>
+
+<p>Used in pipeline as:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Prepend.html" title="Kiba::Extend::Transforms::Prepend (module)">Prepend</a></span></span><span class='op'>::</span><span class='const'>FieldToFieldValue</span><span class='comma'>,</span> <span class='label'>target_field:</span> <span class='symbol'>:a</span><span class='comma'>,</span> <span class='label'>prepended_field:</span> <span class='symbol'>:b</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>: </span><span class='tstring_end'>&#39;</span></span>
+</code></pre>
 
 <p>Input table:</p>
 
@@ -119,11 +124,6 @@
 | j;k   | l;m |
 | o;p;q | r;s |
 | ;t    | u;v
-</code></pre>
-
-<p>Used in pipeline as:</p>
-
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Prepend.html" title="Kiba::Extend::Transforms::Prepend (module)">Prepend</a></span></span><span class='op'>::</span><span class='const'>FieldToFieldValue</span><span class='comma'>,</span> <span class='label'>target_field:</span> <span class='symbol'>:a</span><span class='comma'>,</span> <span class='label'>prepended_field:</span> <span class='symbol'>:b</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>: </span><span class='tstring_end'>&#39;</span></span>
 </code></pre>
 
 <p>Results in:</p>
@@ -143,6 +143,19 @@
 
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Prepend.html" title="Kiba::Extend::Transforms::Prepend (module)">Prepend</a></span></span><span class='op'>::</span><span class='const'>FieldToFieldValue</span><span class='comma'>,</span> <span class='label'>target_field:</span> <span class='symbol'>:a</span><span class='comma'>,</span> <span class='label'>prepended_field:</span> <span class='symbol'>:b</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>: </span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
                                        <span class='label'>delete_prepended:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>mvdelim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;</span><span class='tstring_end'>&#39;</span></span>
+</code></pre>
+
+<p>Input table:</p>
+
+<pre class="code ruby"><code class="ruby">| a     | b   |
+|-------+-----|
+| c     | d   |
+| e;f   | g   |
+|       | h   |
+| i     |     |
+| j;k   | l;m |
+| o;p;q | r;s |
+| ;t    | u;v
 </code></pre>
 
 <p>Results in:</p>
@@ -395,19 +408,19 @@ no mvdelim value</p>
       <pre class="lines">
 
 
-121
-122
-123
-124
-125
-126
-127
-128
-129
-130</pre>
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/prepend.rb', line 121</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/prepend/field_to_field_value.rb', line 134</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>target_field:</span><span class='comma'>,</span> <span class='label'>prepended_field:</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>delete_prepended:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>mvdelim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
                <span class='label'>multivalue_prepended_field:</span> <span class='kw'>false</span><span class='rparen'>)</span>
@@ -430,7 +443,7 @@ no mvdelim value</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Feb 24 16:24:48 2022 by
+  Generated on Thu Feb 24 18:26:13 2022 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-2.7.5).
 </div>
