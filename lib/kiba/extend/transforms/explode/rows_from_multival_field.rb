@@ -42,14 +42,14 @@ module Kiba
 
           # @private
           def process(row)
-            other_fields = row.keys.reject { |k| k == @field }
-            fieldval = row.fetch(@field, nil)
-            fieldval = fieldval.nil? ? [] : fieldval.split(@delim)
+            other_fields = row.keys.reject { |k| k == field }
+            fieldval = row.fetch(field, nil)
+            fieldval = fieldval.nil? ? [] : fieldval.split(delim)
             if fieldval.size > 1
               fieldval.each do |val|
                 rowcopy = row.clone
                 other_fields.each { |f| rowcopy[f] = rowcopy.fetch(f, nil) }
-                rowcopy[@field] = val
+                rowcopy[field] = val
                 yield(rowcopy)
               end
               nil
@@ -57,6 +57,10 @@ module Kiba
               row
             end
           end
+
+          private
+
+          attr_reader :field, :delim
         end
       end
     end
