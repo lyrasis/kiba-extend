@@ -24,7 +24,7 @@ toc::[]
 These changes are merged into the `main` branch but have not yet been tagged as a new version/release.
 
 ==== Breaking
-* Changes to keyword argument names for `Delete::FieldValueIfEqualsOtherField`
+* Changes to keyword argument names for `Delete::FieldValueIfEqualsOtherField` (in https://github.com/lyrasis/kiba-extend/pull/57[PR#57])
 ** `sep` becomes `delim`
 ** `case_sensitive` becomes `casesensitive`
 
@@ -36,19 +36,19 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 ** warns of any supplied files that do not exist (in https://github.com/lyrasis/kiba-extend/pull/54[PR#54])
 ** creates any reference directories that do not exist (in https://github.com/lyrasis/kiba-extend/pull/54[PR#54])
 * test Clean::RegexpFindReplaceFieldVals to replace `\n` (in https://github.com/lyrasis/kiba-extend/pull/55[PR#55])
-* `Helpers.empty?` method, which returns true/false for a given string value (without treating delimiter values as special)
-* `fields` keyword argument to `Delete::FieldsExcept`, which should be used going forward instead of `keepfields`
-* `nullvalue` setting to `Kiba::Extend.config`. Default value is '%NULLVALUE%'
-* `usenull` keyword argument to `Delete::EmptyFieldValues`
-* `delim` keyword argument to `Delete::EmptyFieldValues`, which should be used going forward instead of `sep`
-* documentation for `Delete` transforms
-* `Delete::BlankFields` transform
+* `Helpers.empty?` method, which returns true/false for a given string value (without treating delimiter values as special)  (in https://github.com/lyrasis/kiba-extend/pull/57[PR#57])
+* `fields` keyword argument to `Delete::FieldsExcept`, which should be used going forward instead of `keepfields` (in https://github.com/lyrasis/kiba-extend/pull/57[PR#57])
+* `nullvalue` setting to `Kiba::Extend.config`. Default value is '%NULLVALUE%' (in https://github.com/lyrasis/kiba-extend/pull/57[PR#57])
+* `usenull` keyword argument to `Delete::EmptyFieldValues` (in https://github.com/lyrasis/kiba-extend/pull/57[PR#57])
+* `delim` keyword argument to `Delete::EmptyFieldValues`, which should be used going forward instead of `sep` (in https://github.com/lyrasis/kiba-extend/pull/57[PR#57])
+* documentation for `Delete` transforms (in https://github.com/lyrasis/kiba-extend/pull/57[PR#57])
+* `Delete::BlankFields` transform (in https://github.com/lyrasis/kiba-extend/pull/57[PR#57])
 
 ==== Changed
 * move/alias `Merge::CountOfMatchingRows` to `Count::MatchingRowsInLookup`(in https://github.com/lyrasis/kiba-extend/pull/50[PR#50])
-* `Delete::FieldsExcept` can accept a single symbol as value for `fields` keyword argument
-* `Delete::EmptyFieldValues` will default to `Kiba::Extend.delim` as delimiter if none given explicitly
-* keyword argument names for `Delete::FieldValueIfEqualsOtherField`
+* `Delete::FieldsExcept` can accept a single symbol as value for `fields` keyword argument (in https://github.com/lyrasis/kiba-extend/pull/57[PR#57])
+* `Delete::EmptyFieldValues` will default to `Kiba::Extend.delim` as delimiter if none given explicitly (in https://github.com/lyrasis/kiba-extend/pull/57[PR#57])
+* keyword argument names for `Delete::FieldValueIfEqualsOtherField` (in https://github.com/lyrasis/kiba-extend/pull/57[PR#57])
 ** `sep` becomes `delim`
 ** `case_sensitive` becomes `casesensitive`
 
@@ -59,8 +59,8 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 ==== To be deprecated/Will break in a future version
 These will now give warnings if used.
 
-- `Delete::FieldsExcept` `keepfields` keyword parameter. Change to `fields`
-- `Delete::EmptyFieldValues` `sep` keyword parameter. Change to `delim`
+- `Delete::FieldsExcept` `keepfields` keyword parameter. Change to `fields`  (in https://github.com/lyrasis/kiba-extend/pull/57[PR#57])
+- `Delete::EmptyFieldValues` `sep` keyword parameter. Change to `delim`  (in https://github.com/lyrasis/kiba-extend/pull/57[PR#57])
 
 == Releases
 === version - date
