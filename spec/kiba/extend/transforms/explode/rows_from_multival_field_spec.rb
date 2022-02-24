@@ -41,6 +41,5 @@ RSpec.describe Kiba::Extend::Transforms::Explode::RowsFromMultivalField do
       Kiba::Extend.config.delim = ';'
       expect(result).to eq(expected)
     end
-
   end
 end
