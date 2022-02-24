@@ -42,7 +42,7 @@ module Kiba
         # Used in pipeline as:
         #
         # ```
-        # transform Prepend::ToFieldValue, field: :name, value: 'aka: ', mvdelim: '|'
+        # transform Prepend::ToFieldValue, field: :name, value: 'aka: ', multival: true, delim: '|'
         # ```
         #
         # Results in:
@@ -57,25 +57,31 @@ module Kiba
         # ```
         #
         class ToFieldValue
+          # @note `mvdelim` argument is deprecated and replaced by `multival` and `delim`
           # @param field [Symbol] The field to prepend to
           # @param value [String] The value to be prepended
-          # @param mvdelim [String] Character(s) on which to split multiple values in field before
-          #   prepending. If empty string, behaves as a single value field
-          def initialize(field:, value:, mvdelim: '')
+          # @param multival [Boolean] Whether prepend to multiple values
+          # @param delim [String] for splitting value if `multival`
+          def initialize(field:, value:, multival: false, delim: Kiba::Extend.delim)
             @field = field
             @value = value
-            @mvdelim = mvdelim
+            @multival = multival
+            @delim = delim
           end
 
           # @private
           def process(row)
-            fv = row.fetch(@field, nil)
-            return row if fv.blank?
+            fieldval = row.fetch(field, nil)
+            return row if fieldval.blank?
 
-            fieldvals = @mvdelim.blank? ? [fv] : fv.split(@mvdelim)
-            row[@field] = fieldvals.map { |v| "#{@value}#{v}" }.join(@mvdelim)
+            fieldvals = multival ? fieldval.split(delim) : [fieldval]
+            row[field] = fieldvals.map { |fieldval| "#{value}#{fieldval}" }.join(delim)
             row
           end
+
+          private
+
+          attr_reader :field, :value, :multival, :delim
         end
       end
     end

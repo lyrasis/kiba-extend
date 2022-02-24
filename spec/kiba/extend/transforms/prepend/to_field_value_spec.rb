@@ -35,10 +35,10 @@ RSpec.describe Kiba::Extend::Transforms::Prepend::ToFieldValue do
     expect(result).to eq(expected)
   end
 
-  context 'with mvdelim' do    
+  context 'with multival' do    
     let(:transforms) do
       Kiba.job_segment do
-        transform Prepend::ToFieldValue, field: :name, value: 'aka: ', mvdelim: '|'
+        transform Prepend::ToFieldValue, field: :name, value: 'aka: ', multival: true, delim: '|'
       end
     end
 
