@@ -148,8 +148,8 @@ module Kiba
         # Used in pipeline as:
         #
         # ```
-        # @deduper = {}
-        # transform Deduplicate::FieldValues, fields: %i[foo bar], sep: ';'
+        #   @deduper = {}
+        #   transform Deduplicate::FieldValues, fields: %i[foo bar], sep: ';'
         # ```
         #
         # Results in:
@@ -206,8 +206,8 @@ module Kiba
         # Used in pipeline as:
         #
         # ```
-        # @deduper = {}
-        # transform Deduplicate::Flag, on_field: :combined, in_field: :duplicate, using: @deduper
+        #   @deduper = {}
+        #   transform Deduplicate::Flag, on_field: :combined, in_field: :duplicate, using: @deduper
         # ```
         #
         # Results in:
