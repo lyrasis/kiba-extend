@@ -58,7 +58,7 @@ https://github.com/lyrasis/kiba-extend/compare/v2.6.0...v2.6.1[Compare code chan
 
 === 2.6.0 - 2022-02-24
 
-https://github.com/lyrasis/kiba-extend/compare/v2.5.3...v2.6.0[Compare code changes]
+https://github.com/lyrasis/kiba-extend/compare/v2.5.3\...v2.6.0[Compare code changes]
 
 ==== Breaking
 * Changes to keyword argument names for `Delete::FieldValueIfEqualsOtherField` (in https://github.com/lyrasis/kiba-extend/pull/57[PR#57])
