@@ -24,19 +24,29 @@ toc::[]
 These changes are merged into the `main` branch but have not yet been tagged as a new version/release.
 
 ==== Breaking
-* `mvdelim` keyword argument removed from `Prepend::ToFieldValue`, and replaced by `multival` and `delim`
 
 ==== Added
 
 ==== Changed
-* `Explode::RowsFromMultivalField` defaults to using `Kiba::Extend.delim` if no `delim` keyword argument passed in (in https://github.com/lyrasis/kiba-extend/pull/58[PR#58])
-* Some documentation formatting fixed (https://github.com/lyrasis/kiba-extend/issues/53[Issue #53]) (in https://github.com/lyrasis/kiba-extend/pull/58[PR#58])
 
 ==== Deleted
 
 ==== To be deprecated/Will break in a future version
 
 == Releases
+=== 2.6.1 - 2022-03-09
+==== Breaking
+* `mvdelim` keyword argument removed from `Prepend::ToFieldValue`, and replaced by `multival` and `delim`
+
+==== Added
+* Binstub for running rspec without `bundler exec` (given that you add `kiba-extend/bin` to your PATH) (in https://github.com/lyrasis/kiba-extend/pull/59[PR#59])
+* `lookup_on` to registry entry summary (in https://github.com/lyrasis/kiba-extend/pull/59[PR#59])
+
+==== Changed
+* `Explode::RowsFromMultivalField` defaults to using `Kiba::Extend.delim` if no `delim` keyword argument passed in (in https://github.com/lyrasis/kiba-extend/pull/58[PR#58])
+* Some documentation formatting fixed (https://github.com/lyrasis/kiba-extend/issues/53[Issue #53]) (in https://github.com/lyrasis/kiba-extend/pull/58[PR#58])
+* Requires higher versions of Ruby, Bundler, and Rspec (in https://github.com/lyrasis/kiba-extend/pull/59[PR#59])
+
 === 2.6.0 - 2022-02-24
 
 https://github.com/lyrasis/kiba-extend/compare/v2.5.3...v2.6.0[Compare code changes]

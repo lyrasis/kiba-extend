@@ -96,7 +96,6 @@ RSpec.describe Kiba::Extend::Transforms::Delete::FieldValueIfEqualsOtherField do
       end
 
       it 'transforms as expected' do
-        Helpers::ExampleFormatter.new(input, expected)
         expect(result).to eq(expected)
       end
 
