@@ -225,24 +225,30 @@ module Kiba
           # @param on_field [Symbol] Field on which to deduplicate
           # @param in_field [Symbol] New field in which to add 'y' or 'n'
           # @param using [Hash] An empty Hash, set as an instance variable in your job definition before you
+          # @param explicit_no [Boolean] if false, `in_field` value for non-duplicate is left blank
           #   use this transform
-          def initialize(on_field:, in_field:, using:)
+          def initialize(on_field:, in_field:, using:, explicit_no: true)
             @on = on_field
-            @in = in_field
+            @in_field = in_field
             @using = using
+            @no_val = explicit_no ? 'n' : ''
           end
 
           # @private
           def process(row)
-            val = row.fetch(@on)
-            if @using.key?(val)
-              row[@in] = 'y'
+            val = row.fetch(on)
+            if using.key?(val)
+              row[in_field] = 'y'
             else
-              @using[val] = nil
-              row[@in] = 'n'
+              using[val] = nil
+              row[in_field] = no_val
             end
             row
           end
+
+          private
+
+          attr_reader :on, :in_field, :using, :no_val
         end
 
         # Field value deduplication that is at least semi-safe for use with grouped fields that expect the same number
