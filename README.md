@@ -20,12 +20,13 @@ Some current possibilities with job templating/decoration:
 On the to-do list: 
 
 - Wiki documentation for how to use the registry and job templating
-- Auto-generation of a project application scaffold (or at least a template repo with setup examples --- this might work in place of wiki documentation)
 
 ## Documentation
 ### https://lyrasis.github.io/kiba-extend/
 
 Browseable reference for available transformations.
+
+**Look under [Files](https://lyrasis.github.io/kiba-extend/file_list.html) for in-depth information on broader topics than can be covered in the code documentation.**
 
 I'm working to develop this more fully. If there is no documentation for a given transformation here, please refer to the relevant `spec` file for that transformation to see exactly what it does.
 
@@ -35,6 +36,8 @@ To get a full overview of available transformations and what they do, run `rake 
 For more clarity about exactly what each transformation does, if it is not described in the documentation yet, check the actual test files in `/spec/kiba/extend/transforms`, which include sample input rows, transformation calls, and the resulting output
 
 ## Example project applications
+
+[kiba-extend-project](https://github.com/lyrasis/kiba-extend-project) is a Github template repository for starting a new ETL project using `kiba-extend`. It is heavily commented in an attempt to explain how things work. 
 
 [mimsy-to-cspace](https://github.com/lyrasis/mimsy-to-cspace) is a publicly available example of `kiba-extend` usage. It was completed before the registry/job templating functions were added, so it only shows how transformations get used. (And it is a good example of how repetitive the code gets without templating)
 
