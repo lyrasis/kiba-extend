@@ -133,7 +133,6 @@ RSpec.describe Kiba::Extend::Transforms::Reshape do
     end
 
     it 'reshapes the columns as specified after splitting source' do
-      Helpers::ExampleFormatter.new(input, expected)
       test_job
       expect(test_job.accumulator).to eq(expected)
     end
