@@ -36,8 +36,8 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 == Releases
 === 2.7.0 - 2022-03-10
 ==== Added
-* `Kiba::Extend::Utils::MultiSourceNormalizer` and `Kiba::Extend::Jobs::MultiSourcePrepJob` to handle normalization of fields across multiple sources to be used in a multiple-source job with a `Kiba::Extend::Destinations::CSV` destination (in https://github.com/lyrasis/kiba-extend/pull/59[PR#60])
-* `explicit_no` argument to `Kiba::Extend::Transforms::Deduplicate::Flag`. Defaults to `true` for backward compatibility.
+* `Kiba::Extend::Utils::MultiSourceNormalizer` and `Kiba::Extend::Jobs::MultiSourcePrepJob` to handle normalization of fields across multiple sources to be used in a multiple-source job with a `Kiba::Extend::Destinations::CSV` destination (in https://github.com/lyrasis/kiba-extend/pull/60[PR#60])
+* `explicit_no` argument to `Kiba::Extend::Transforms::Deduplicate::Flag`. Defaults to `true` for backward compatibility (in https://github.com/lyrasis/kiba-extend/pull/60[PR#60])
 
 === 2.6.1 - 2022-03-09
 ==== Breaking
