@@ -47,6 +47,7 @@ module Kiba
           lines << "#{summary_padding}#{desc}" unless desc.blank?
           lines << "#{summary_padding}File path: #{path}" if path
           lines << summary_creator if creator
+          lines << "#{summary_padding}Lookup on: #{lookup_on}" if lookup_on
           lines << "\n"
           lines.join("\n")
         end
