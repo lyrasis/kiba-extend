@@ -23,6 +23,16 @@ module Kiba
           @initial_headers = initial_headers
         end
 
+        # @return [Array<Symbol>]
+        def fields
+          return [] unless File.exist?(filename)
+          
+          csv ||= ::CSV.open(filename, 'r', **csv_options)
+          hdrs = csv.shift.headers
+          close
+          hdrs
+        end
+
         # @private
         def write(row)
           @csv ||= ::CSV.open(filename, 'wb', **csv_options)

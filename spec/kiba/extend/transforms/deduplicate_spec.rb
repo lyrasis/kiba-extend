@@ -120,19 +120,38 @@ RSpec.describe Kiba::Extend::Transforms::Deduplicate do
       ]
     end
 
-    context 'when deleting deduplication field' do
+    context 'with explicit no value = true' do
       let(:transforms) do
         Kiba.job_segment do
           @deduper = {}
           transform Deduplicate::Flag, on_field: :id, in_field: :d, using: @deduper
         end
       end
-      it 'deduplicates and removes field' do
+      it 'deduplicates indicates non-duplicates with `n`' do
         expected = [
           { id: '1', x: 'a', d: 'n' },
           { id: '2', x: 'a', d: 'n' },
           { id: '1', x: 'b', d: 'y' },
           { id: '3', x: 'b', d: 'n' }
+        ]
+        testjob
+        expect(testjob.accumulator).to eq(expected)
+      end
+    end
+
+    context 'with explicit no value = false' do
+      let(:transforms) do
+        Kiba.job_segment do
+          @deduper = {}
+          transform Deduplicate::Flag, on_field: :id, in_field: :d, using: @deduper, explicit_no: false
+        end
+      end
+      it 'deduplicates indicates non-duplicates with `n`' do
+        expected = [
+          { id: '1', x: 'a', d: '' },
+          { id: '2', x: 'a', d: '' },
+          { id: '1', x: 'b', d: 'y' },
+          { id: '3', x: 'b', d: '' }
         ]
         testjob
         expect(testjob.accumulator).to eq(expected)

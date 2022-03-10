@@ -7,7 +7,7 @@ RSpec.describe Kiba::Extend::Destinations::CSV do
   def run_job(input)
     job = Kiba.parse do
       source Kiba::Common::Sources::Enumerable, input
-      destination Kiba::Extend::Destinations::CSV, filename: TEST_FILENAME, initial_headers: %i[y z]
+      destination Kiba::Extend::Destinations::CSV, filename: TEST_FILENAME, initial_headers: %i[y z a]
     end
 
     Kiba.run(job)
@@ -15,9 +15,48 @@ RSpec.describe Kiba::Extend::Destinations::CSV do
     IO.read(TEST_FILENAME)
   end
 
-  after(:each){ File.delete(TEST_FILENAME) if File.exist?(TEST_FILENAME) }
+  after{ File.delete(TEST_FILENAME) if File.exist?(TEST_FILENAME) }
 
-  context 'when intial headers present' do
+  describe '#write' do
+    context 'when intial headers present' do
+      let(:input) do
+        [
+          {a: 'and', y: 'yak', z: 'zebra'},
+          {a: 'apple', y: 'yarrow', z: 'zizia'}
+        ]
+      end
+      let(:expected) do
+        "y,z,a\nyak,zebra,and\nyarrow,zizia,apple\n"
+      end
+      it 'produces CSV as expected' do
+        expect(run_job(input)).to eq(expected)
+      end
+    end
+
+    context 'when intial headers specified but not present' do
+      let(:input) do
+        [
+          {a: 'and', z: 'zebra'},
+          {a: 'apple', z: 'zizia'}
+        ]
+      end
+
+      let(:expected) do
+        "z,a\nzebra,and\nzizia,apple\n"
+      end
+      
+      it 'produces CSV as expected' do
+        expect(run_job(input)).to eq(expected)
+      end
+
+      it 'writes warning to STDOUT' do
+        msg = 'Output data does not contain specified initial header: y'
+        expect { run_job(input) }.to output(/#{msg}/).to_stdout
+      end
+    end
+  end
+
+  describe '#fields' do
     let(:input) do
       [
         {a: 'and', y: 'yak', z: 'zebra'},
@@ -25,29 +64,15 @@ RSpec.describe Kiba::Extend::Destinations::CSV do
       ]
     end
     let(:expected) do
-      "y,z,a\nyak,zebra,and\nyarrow,zizia,apple\n"
+      %i[a y z]
     end
-    it 'produces CSV as expected' do
-      expect(run_job(input)).to eq(expected)
-    end
-  end
-
-  context 'when intial headers specified but not present' do
-    let(:input) do
-      [
-        {a: 'and', z: 'zebra'},
-        {a: 'apple', z: 'zizia'}
-      ]
-    end
-    let(:expected) do
-      "z,a\nzebra,and\nzizia,apple\n"
-    end
-    it 'produces CSV as expected' do
-      expect(run_job(input)).to eq(expected)
-    end
-    it 'writes warning to STDOUT' do
-      msg = 'Output data does not contain specified initial header: y'
-      expect { run_job(input) }.to output(/#{msg}/).to_stdout
+    it 'returns fieldnames as expected', skip: 'cannot make post-run destination load without error' do
+      run_job(input)
+      args = [{:filename=>"output.csv", :initial_headers=>[:y, :z]}]
+      dest = Kiba::StreamingRunner.to_instance(
+        Kiba::Extend::Destinations::CSV, args, nil, false, true
+      )
+      expect(dest.fields).to eq(expected)
     end
   end
 end
