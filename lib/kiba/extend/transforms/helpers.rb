@@ -38,11 +38,11 @@ module Kiba
 
         # @param row [Hash{Symbol=>String,Nil}l] A row of data
         # @param fields [Array(Symbol)] Names of fields to process
-        # @param discard [:nil, :empty, :delim] Types of field values to remove from returned hash
+        # @param discard [Array<:nil, :empty, :delim>] Types of field values to remove from returned hash
         # @param delim [String] Multivalue delimiter used to split fields
         # @param usenull [Boolean] If true, replaces '%NULLVALUE%' with '' to make determination
         # @return [Hash{Symbol=>String,Nil}l] of field data for fields that meet keep criteria
-        def field_values(row:, fields:, discard: %i[nil empty delim], delim: DELIM, usenull: false)
+        def field_values(row:, fields:, discard: %i[nil empty delim], delim: Kiba::Extend.delim, usenull: false)
           field_vals = fields.map { |field| [field, row.fetch(field, nil)] }.to_h
           return field_vals if discard.blank?
 
