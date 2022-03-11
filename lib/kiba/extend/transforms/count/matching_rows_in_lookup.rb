@@ -5,6 +5,7 @@ module Kiba
     module Transforms
       module Count
         # Merges count of lookup rows to be merged into specified field
+        # @since 2.6.0
         class MatchingRowsInLookup
           def initialize(lookup:, keycolumn:, targetfield:, conditions: {})
             @lookup = lookup
