@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'amazing_print'
 require 'active_support'
 require 'active_support/core_ext/object'
 require 'dry-configurable'

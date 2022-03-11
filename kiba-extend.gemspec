@@ -36,12 +36,20 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
 
   spec.add_dependency 'activesupport', '~> 6'
+  spec.add_dependency 'amazing_print', '~> 1.4'
   spec.add_dependency 'csv', '~> 3'
+  # @todo specify 0.14 ?
   spec.add_dependency 'dry-configurable', '~> 0'
+  # @todo 0.9.0 ?
   spec.add_dependency 'dry-container', '~> 0'
+  # @todo 4.0
   spec.add_dependency 'kiba', '~> 4'
+  # @todo 1.5
   spec.add_dependency 'kiba-common', '~> 1'
+  # @todo 2.8.2?
   spec.add_dependency 'measured', '~> 2'
+  # @todo 1.2.1?
   spec.add_dependency 'thor', '~> 1'
+  # @todo can replace with stdlib?
   spec.add_dependency 'xxhash', '~> 0'
 end
