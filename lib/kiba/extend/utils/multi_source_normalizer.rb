@@ -33,7 +33,9 @@ module Kiba
       # transform Append::NilFields, fields: Tms.config.name_compilation.multi_source_normalizer.get_fields
       # ```
       # @note This currently only works when using `Kiba::Extend::Destinations::CSV` destination. It depends on
-      #   the `fields` method added to that class to support
+      #   the `fields` method added to that class to support. This was not added to the
+      #   `Kiba::Extend::Destinations::JsonArray` class because it does not require an identical field set
+      #   in all records
       # @since 2.7.0
       class MultiSourceNormalizer
         def initialize
