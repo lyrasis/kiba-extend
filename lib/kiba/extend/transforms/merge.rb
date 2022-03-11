@@ -16,7 +16,21 @@ module Kiba
         CountOfMatchingRows = Count::MatchingRowsInLookup
         
         # @deprecated Use {Compare::FieldValues} instead.
-        CompareFieldsFlag = Compare::FieldValues
+        class CompareFieldsFlag
+          def initialize(...)
+            warn('DEPRECATED TRANSFORM. Use Compare::FieldValues instead')
+            @xform = Compare::FieldValues.new(...)
+          end
+
+          # @private
+          def process(row)
+            xform.process(row)
+          end
+
+          private
+          
+          attr_reader :xform
+        end
 
         class ConstantValue
           def initialize(target:, value:)
