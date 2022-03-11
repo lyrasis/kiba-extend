@@ -12,33 +12,11 @@ module Kiba
       module Merge
         ::Merge = Kiba::Extend::Transforms::Merge
 
+        # @deprecated Use {Count::MatchingRowsInLookup} instead.
         CountOfMatchingRows = Count::MatchingRowsInLookup
         
-        class CompareFieldsFlag
-          def initialize(fields:, target:, downcase: true, strip: true, ignore_blank: false)
-            @fields = [fields].flatten
-            @target = target
-            @strip = strip
-            @downcase = downcase
-            @ignore_blank = ignore_blank
-          end
-
-          # @private
-          def process(row)
-            row[@target] = 'diff'
-            values = []
-            @fields.each do |field|
-              value = row.fetch(field, '').dup
-              value = '' if value.nil?
-              value = value.downcase if @downcase
-              value = value.strip if @strip
-              values << value
-            end
-            values.reject!(&:blank?) if @ignore_blank
-            row[@target] = 'same' if values.uniq.length == 1 || values.empty?
-            row
-          end
-        end
+        # @deprecated Use {Compare::FieldValues} instead.
+        CompareFieldsFlag = Compare::FieldValues
 
         class ConstantValue
           def initialize(target:, value:)
