@@ -29,7 +29,6 @@ module Kiba
         # @raise WrongDestinationTypeError unless destination source is instance of {Kiba::Extend::Destinations::CSV}
         # @raise WrongHelperTypeError unless helper is instance of {Kiba::Extend::Utils::MultiSourceNormalizer}
         def initialize(files:, transformer:, helper:)
-          binding.pry
           raise WrongDestinationTypeError unless valid_destination?(files)
           raise WrongHelperTypeError unless helper.is_a?(Kiba::Extend::Utils::MultiSourceNormalizer)
          
