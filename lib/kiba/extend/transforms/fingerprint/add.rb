@@ -47,6 +47,9 @@ module Kiba
         class Add
           include Kiba::Extend::Transforms::Helpers
 
+          # @param fields [Array<Symbol>] fields whose values should be used in fingerprint
+          # @param delim [String] used to join field values into a hashable string
+          # @param target [Symbol] field in which fingerprint hash should inserted
           def initialize(fields:, delim:, target:)
             check_delim(delim)
             @fingerprinter = Kiba::Extend::Utils::FingerprintCreator.new(fields: fields, delim: delim)
