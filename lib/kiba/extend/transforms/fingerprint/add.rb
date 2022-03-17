@@ -7,7 +7,6 @@ module Kiba
 
         # Adds a base64 strict encoded hash to the target field. The value hashed is the values of
         #   the specified fields, joined into a string using the given delimiter
-        # @since 2.7.1.65
         #
         # @note The `delim` used for this transform must not conflict with your application/project delimiters.
         #   For example, if your `delim` setting (for multivalue fields) is `|`, this `delim` value should not
@@ -38,7 +37,18 @@ module Kiba
         # | ant | bee | nil | deer |   | YmVlOzs7bmlsOzs7ZGVlcjs7O2VtcHR5 |
         # ```
         #
-        # ### Notes
+        # Input table:
+        #
+        # ```
+        # | a   | b      | c   | d    | e |
+        # |-----+--------+-----+------+---|
+        # | ant | be;;;e | nil | deer |   |
+        # ```
+        #
+        # Results in an error because column b contains the fingerprint delimiter. If you tried to decode the
+        #   resulting fingerprint, you would get too many columns and loss of data integrity
+        # 
+        # ## Notes
         # Before field values are joined, the following substitutions are run on all field values:
         #
         # - `''` is converted to the string `'empty'`
@@ -50,6 +60,10 @@ module Kiba
           # @param fields [Array<Symbol>] fields whose values should be used in fingerprint
           # @param delim [String] used to join field values into a hashable string
           # @param target [Symbol] field in which fingerprint hash should inserted
+          # @raise [DelimiterCollisionError] if `delim` conflicts with
+          #   `Kiba::Extend.delim` or `Kiba::Extend.sgdelim`
+          # @raise [DelimiterInValueError] if the value of any field used to generate a fingerprint contains the
+          #   fingerprint delimiter
           def initialize(fields:, delim:, target:)
             check_delim(delim)
             @fingerprinter = Kiba::Extend::Utils::FingerprintCreator.new(fields: fields, delim: delim)
