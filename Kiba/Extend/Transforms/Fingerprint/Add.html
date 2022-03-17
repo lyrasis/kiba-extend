@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: Kiba::Extend::Transforms::Fingerprint::Add
+  
+    &mdash; Kiba-Extend Documentation
+  
+</title>
+
+  <link rel="stylesheet" href="../../../../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../../../../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "Kiba::Extend::Transforms::Fingerprint::Add";
+  relpath = '../../../../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../../../../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../../../../_index.html">Index (A)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../Transforms.html" title="Kiba::Extend::Transforms (module)">Transforms</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Fingerprint.html" title="Kiba::Extend::Transforms::Fingerprint (module)">Fingerprint</a></span></span>
+     &raquo; 
+    <span class="title">Add</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../../../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: Kiba::Extend::Transforms::Fingerprint::Add
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Kiba::Extend::Transforms::Fingerprint::Add</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  <dl>
+      <dt>Includes:</dt>
+      <dd><span class='object_link'><a href="../Helpers.html" title="Kiba::Extend::Transforms::Helpers (module)">Helpers</a></span></dd>
+  </dl>
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/kiba/extend/transforms/fingerprint/add.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>The <code>delim</code> used for this transform must not conflict with your application/project delimiters.
+For example, if your <code>delim</code> setting (for multivalue fields) is <code>|</code>, this <code>delim</code> value should not
+equal or contain that character. Otherwise, the fingerprint decoder may get confused about what is
+a separate field vs. multiple values inside one field, and things will be a mess.</p>
+</div>
+  </div>
+
+<p>Adds a base64 strict encoded hash to the target field. The value hashed is the values of
+  the specified fields, joined into a string using the given delimiter</p>
+
+<h1 id="examples">Examples</h1>
+
+<p>Used in pipeline as:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Fingerprint.html" title="Kiba::Extend::Transforms::Fingerprint (module)">Fingerprint</a></span></span><span class='op'>::</span><span class='const'>Add</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>b</span><span class='words_sep'> </span><span class='tstring_content'>c</span><span class='words_sep'> </span><span class='tstring_content'>d</span><span class='words_sep'> </span><span class='tstring_content'>e</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;;;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>target:</span> <span class='symbol'>:fp</span>
+</code></pre>
+
+<p>Input table:</p>
+
+<pre class="code ruby"><code class="ruby">| a   | b   | c   | d    | e |
+|-----+-----+-----+------+---|
+| ant | bee | nil | deer |   |
+</code></pre>
+
+<p>Results in:</p>
+
+<pre class="code ruby"><code class="ruby">| a   | b   | c   | d    | e | fp                               |
+|-----+-----+-----+------+---+----------------------------------|
+| ant | bee | nil | deer |   | YmVlOzs7bmlsOzs7ZGVlcjs7O2VtcHR5 |
+</code></pre>
+
+<p>Input table:</p>
+
+<pre class="code ruby"><code class="ruby">| a   | b      | c   | d    | e |
+|-----+--------+-----+------+---|
+| ant | be;;;e | nil | deer |   |
+</code></pre>
+
+<p>Results in an error because column b contains the fingerprint delimiter. If you tried to decode the
+  resulting fingerprint, you would get too many columns and loss of data integrity</p>
+
+<h2 id="notes">Notes</h2>
+
+<p>Before field values are joined, the following substitutions are run on all field values:</p>
+
+<ul>
+<li><code>&#39;&#39;</code> is converted to the string <code>&#39;empty&#39;</code></li>
+<li><code>nil</code> is converted to the string <code>&#39;nil&#39;</code></li>
+</ul>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>2.7.1.65</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(fields:, delim:, target:)  &#x21d2; Add </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A new instance of Add.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Helpers.html" title="Kiba::Extend::Transforms::Helpers (module)">Helpers</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Helpers.html#delim_only%3F-class_method" title="Kiba::Extend::Transforms::Helpers.delim_only? (method)">delim_only?</a></span>, <span class='object_link'><a href="../Helpers.html#empty%3F-class_method" title="Kiba::Extend::Transforms::Helpers.empty? (method)">empty?</a></span>, <span class='object_link'><a href="../Helpers.html#field_values-class_method" title="Kiba::Extend::Transforms::Helpers.field_values (method)">field_values</a></span></p>
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>(fields:, delim:, target:)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Fingerprint::Add (class)">Add</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns a new instance of Add.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>fields</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>fields whose values should be used in fingerprint</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>delim</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>used to join field values into a hashable string</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>target</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>field in which fingerprint hash should inserted</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="DelimiterCollisionError.html" title="Kiba::Extend::Transforms::Fingerprint::DelimiterCollisionError (class)">DelimiterCollisionError</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>if <code>delim</code> conflicts with
+<code>Kiba::Extend.delim</code> or <code>Kiba::Extend.sgdelim</code></p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="DelimiterInValueError.html" title="Kiba::Extend::Transforms::Fingerprint::DelimiterInValueError (class)">DelimiterInValueError</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>if the value of any field used to generate a fingerprint contains the
+fingerprint delimiter</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>2.7.1.65</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+67
+68
+69
+70
+71
+72</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/add.rb', line 67</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span><span class='comma'>,</span> <span class='label'>delim:</span><span class='comma'>,</span> <span class='label'>target:</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_check_delim'>check_delim</span><span class='lparen'>(</span><span class='id identifier rubyid_delim'>delim</span><span class='rparen'>)</span>
+  <span class='ivar'>@fingerprinter</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Utils.html" title="Kiba::Extend::Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Utils/FingerprintCreator.html" title="Kiba::Extend::Utils::FingerprintCreator (class)">FingerprintCreator</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../Utils/FingerprintCreator.html#initialize-instance_method" title="Kiba::Extend::Utils::FingerprintCreator#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='id identifier rubyid_fields'>fields</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='rparen'>)</span>
+  <span class='ivar'>@target</span> <span class='op'>=</span> <span class='id identifier rubyid_target'>target</span>
+  <span class='ivar'>@row_num</span> <span class='op'>=</span> <span class='int'>0</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+</div>
+
+      <div id="footer">
+  Generated on Thu Mar 17 20:40:04 2022 by
+  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.27 (ruby-2.7.5).
+</div>
+
+    </div>
+  </body>
+</html>
