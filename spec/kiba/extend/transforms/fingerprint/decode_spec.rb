@@ -74,4 +74,28 @@ RSpec.describe Kiba::Extend::Transforms::Fingerprint::Decode do
       expect(result).to eq(expected)
     end
   end
+
+  context 'with field value containing non-ASCII characters' do
+    let(:input) do
+      [
+        {fp: 'YTs7O0hhZ3N0csO2bTs7O25pbA=='}
+      ]
+    end
+
+    let(:transforms) do
+      Kiba.job_segment do
+        transform Fingerprint::Decode, fingerprint: :fp, source_fields: %i[b c d], delim: ';;;', prefix: 'fp', delete_fp: true
+      end
+    end
+
+    let(:expected) do
+      [
+        {fp_b: 'a', fp_c: 'Hagström', fp_d: nil}
+      ]
+    end
+
+    it 'transforms as expected' do
+      expect(result).to eq(expected)
+    end
+  end
 end
