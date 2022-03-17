@@ -26,6 +26,7 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 ==== Breaking
 
 ==== Added
+* `Fingerprint::Add` and `Fingerprint::Decode` transforms In https://github.com/lyrasis/kiba-extend/pull/65[PR#65]
 
 ==== Changed
 * Moves `Merge::CompareFieldsFlag` to `Compare::FieldValues`. Aliases the old transform to the new one for backward compatibility, but raises deprecation warning. In https://github.com/lyrasis/kiba-extend/pull/62[PR#62]
