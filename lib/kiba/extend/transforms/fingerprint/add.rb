@@ -51,11 +51,13 @@ module Kiba
             check_delim(delim)
             @fingerprinter = Kiba::Extend::Utils::FingerprintCreator.new(fields: fields, delim: delim)
             @target = target
+            @row_num = 0
           end
 
           # @private
           def process(row)
-            row[target] = fingerprinter.call(row)
+            @row_num += 1
+            row[target] = get_fingerprint(row)
             row
           end
 
@@ -69,10 +71,15 @@ module Kiba
             raise Kiba::Extend::Transforms::Fingerprint::DelimiterCollisionError if Kiba::Extend.delim[delim]
             raise Kiba::Extend::Transforms::Fingerprint::DelimiterCollisionError if Kiba::Extend.sgdelim[delim]
           end
+
+          def get_fingerprint(row)
+            fingerprinter.call(row)
+          rescue Kiba::Extend::Utils::DelimInValueFingerprintError
+            msg = "#{Kiba::Extend.warning_label}: Row #{@row_num}: A value in the fields used to create a fingerprint contains the fingerprint delimiter"
+            raise Kiba::Extend::Transforms::Fingerprint::DelimiterInValueError, msg
+          end
         end
       end
     end
   end
 end
-
-

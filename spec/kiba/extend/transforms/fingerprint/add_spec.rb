@@ -26,6 +26,24 @@ RSpec.describe Kiba::Extend::Transforms::Fingerprint::Add do
     end
   end
 
+  context 'when a field value matches the delimiter' do
+  let(:input) do
+    [
+      {a: 'ant', b: 'be;;;e', c: nil, d: 'deer', e: ''}
+    ]
+  end
+
+  let(:transforms) do
+      Kiba.job_segment do
+        transform Fingerprint::Add, fields: %i[b c d e], delim: ';;;', target: :fp
+      end
+    end
+
+    it 'raises error' do
+      expect{ result }.to raise_error(Kiba::Extend::Transforms::Fingerprint::DelimiterInValueError)
+    end
+  end
+
   context 'with allowable delimiter' do
     let(:transforms) do
       Kiba.job_segment do

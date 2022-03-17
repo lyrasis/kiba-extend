@@ -15,19 +15,22 @@ module Kiba
         end
 
         def call(row)
-          Base64.strict_encode64(values(row).join(delim))
+          values = field_values(row: row, fields: fields, discard: []).values
+          check_values(values)
+          
+          Base64.strict_encode64(hashable_values(values).join(delim))
         end
 
         private
 
         attr_reader :fields, :delim
 
-        def raw_values(row)
-          field_values(row: row, fields: fields, discard: []).values
+        def check_values(values)
+          raise Kiba::Extend::Utils::DelimInValueFingerprintError if values.compact.any?{ |val| val[delim] }
         end
 
-        def values(row)
-          raw_values(row).map do |val|
+        def hashable_values(values)
+          values.map do |val|
             case val
             when nil
               'nil'
