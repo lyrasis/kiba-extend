@@ -27,6 +27,7 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 
 ==== Added
 * `Fingerprint::Add` and `Fingerprint::Decode` transforms. In https://github.com/lyrasis/kiba-extend/pull/65[PR#65]
+* `override_app_delim_check` param to `Fingerprint::Add` for backward compatibility with a project I want to be able to use this transform. Defaults to `false`. https://github.com/lyrasis/kiba-extend/pull/66[PR#66]
 
 ==== Changed
 * Moves `Merge::CompareFieldsFlag` to `Compare::FieldValues`. Aliases the old transform to the new one for backward compatibility, but raises deprecation warning. In https://github.com/lyrasis/kiba-extend/pull/62[PR#62]

@@ -60,11 +60,15 @@ module Kiba
           # @param fields [Array<Symbol>] fields whose values should be used in fingerprint
           # @param delim [String] used to join field values into a hashable string
           # @param target [Symbol] field in which fingerprint hash should inserted
+          # @param override_app_delim_check [Boolean] if true, will let you create a fingerprint with a delim
+          #   that contains or is contained by `Kiba::Extend.delim` or `Kiba::Extend.sgdelim`. Setting this
+          #   to `true` is dangerous and could result in un-decodeable fingerprints.
           # @raise [DelimiterCollisionError] if `delim` conflicts with
           #   `Kiba::Extend.delim` or `Kiba::Extend.sgdelim`
           # @raise [DelimiterInValueError] if the value of any field used to generate a fingerprint contains the
           #   fingerprint delimiter
-          def initialize(fields:, delim:, target:)
+          def initialize(fields:, delim:, target:, override_app_delim_check: false)
+            @override_app_delim_check = override_app_delim_check
             check_delim(delim)
             @fingerprinter = Kiba::Extend::Utils::FingerprintCreator.new(fields: fields, delim: delim)
             @target = target
@@ -80,9 +84,11 @@ module Kiba
 
           private
 
-          attr_reader :fingerprinter, :target
+          attr_reader :fingerprinter, :target, :override_app_delim_check
 
           def check_delim(delim)
+            return if override_app_delim_check
+            
             raise Kiba::Extend::Transforms::Fingerprint::DelimiterCollisionError if delim[Kiba::Extend.delim]
             raise Kiba::Extend::Transforms::Fingerprint::DelimiterCollisionError if delim[Kiba::Extend.sgdelim]
             raise Kiba::Extend::Transforms::Fingerprint::DelimiterCollisionError if Kiba::Extend.delim[delim]
