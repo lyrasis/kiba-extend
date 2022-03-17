@@ -83,7 +83,7 @@ module Kiba
               .map{ |val| val == 'empty' ? '' : val }
             check_length(decoded)
 
-            target_fields.each_with_index{ |target, i| row[target] = decoded[i] }
+            target_fields.each_with_index{ |target, i| row[target] = safe_decoded_value(decoded[i]) }
             row
           end
 
@@ -97,6 +97,12 @@ module Kiba
             return if result_length == num_fields
 
             warn("#{Kiba::Extend.warning_label}: ROW #{@row_ct}: Expected #{num_fields} fields from decoded fingerprint. Got #{result_length}")
+          end
+
+          def safe_decoded_value(val)
+            return val if val.blank?
+
+            val.force_encoding('UTF-8')
           end
         end
       end
