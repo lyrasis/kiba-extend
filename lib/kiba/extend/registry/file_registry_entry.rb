@@ -143,10 +143,29 @@ module Kiba
         def validate_creator_is_method
           return if creator.is_a?(Method)
           
-          @errors[:creator_not_a_method] = creator.dup
+          if creator.is_a?(Module) && creator.private_method_defined?(:job)
+            default_method_module_creator
+          elsif creator.is_a?(Module)
+            jobless_module_creator
+          else
+            non_method_creator
+          end
+        end
+
+        def default_method_module_creator
+          @creator = creator.method(:job)
+        end
+
+        def jobless_module_creator
+          @errors[:creator_module_does_not_contain_default_job_method] = creator.to_s
           @creator = nil
         end
 
+        def non_method_creator
+          @errors[:creator_not_a_method] = creator.dup
+          @creator = nil
+        end
+        
         def validate_creator_present
           return if creator
           

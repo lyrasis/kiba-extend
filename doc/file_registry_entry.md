@@ -14,32 +14,38 @@ A file registry entry is initialized with a Hash of data about the file. This Ha
 
 The allowable Hash keys, expected Hash value formats, and expectations about them are described below.
 
-**`:path` [String] full or expandable relative path to the expected location of the file**
+### `:path` 
+[String] full or expandable relative path to the expected location of the file**
 
 * default: `nil`
 * required if either `:src_class` or `:dest_class` requires a path (in `PATH_REQ`)
   
-`:src_class` [Class] the Ruby class used to read in data
+### `:src_class`
+[Class] the Ruby class used to read in data
 
 * default: value of `Kiba::Extend.source` (`Kiba::Common::Sources::CSV` unless overridden by your ETL app)
 * required, but default supplied if not given
 
-`:src_opt` [Hash] file options used when reading in source
+### `:src_opt`
+[Hash] file options used when reading in source
 
 * default: value of `Kiba::Extend.csvopts`
 * required, but default supplied if not given
 
-`:dest_class` [Class] the Ruby class used to write out the data
+### `:dest_class`
+[Class] the Ruby class used to write out the data
 
 * default: value of `Kiba::Extend.destination` (`Kiba::Extend::Destinations::CSV` unless overridden by your ETL app)
 * required, but default supplied if not given
 
-`:dest_opt` [Hash] file options used when writing data
+### `:dest_opt`
+[Hash] file options used when writing data
 
 * default: value of `Kiba::Extend.csvopts`
 * required, but default supplied if not given
 
-`:dest_special_opts` [Hash] additional options for writing out the data
+### `:dest_special_opts`
+[Hash] additional options for writing out the data
 
 * Not all destination classes support extra options. If you provide unsupported extra options, they will not be sent through to the destination class, and you will receive a warning in STDOUT. The current most common use is to define `initial_headers` (i.e. which columns should be first in file) to `Kiba::Extend::Destinations::CSV`.
 * optional
@@ -52,12 +58,65 @@ reghash = {
   }
 ```
 
-**`:creator` [Method] Ruby method that generates this file**
+### `:creator`
+[Method, Module] Ruby method that generates this file
 
 * Used to run ETL jobs to create necessary files, if said files do not exist
-* required unless file is supplied
+* Not required at all if file is supplied
+* If the method that runs the job is a module instance method named `job`, you can just specify the module
 
-**`:supplied` [true, false] whether the file/data is supplied from outside the ETL**
+This is valid: 
+
+```ruby
+# in job definitions
+module Project
+  module Table 
+    module_function
+
+    def job
+	  Kiba::Extend::Jobs::Job.new(
+	   ...
+	  )
+	end
+  end
+end
+
+# in file registry
+reghash = {
+  path: '/project/working/objects_prep.csv',
+  creator: Project::Table
+}
+```
+
+If you have defined multiple jobs per module or your job definition is not named `job`, you need to specify the method: 
+
+```ruby
+# in job definitions
+module Project
+  module Table 
+    module_function
+
+    def prep
+	  Kiba::Extend::Jobs::Job.new(
+	   ...
+	  )
+	end
+  end
+end
+
+# in file registry
+reghash = {
+  path: '/project/working/objects_prep.csv',
+  creator: Project::Table.method(:prep)
+}
+```
+
+Note the following pattern!:
+
+    Class or Module constant name + `.method` + method name **as symbol**
+
+### `:supplied`
+[true, false] whether the file/data is supplied from outside the ETL
 
 - default: false
 - Manually set to true for:
@@ -83,16 +142,19 @@ Note the following pattern!:
 
     Class or Module constant name + `.method` + method name **as symbol**
 
-**`:lookup_on` [Symbol] column to use as keys in lookup table created from file data**
+### `:lookup_on`
+[Symbol] column to use as keys in lookup table created from file data
 
 * required if file is used as a lookup source
 * You can register the same file multiple times under different file keys with different `:lookup_on` values if you need to use the data for different lookup purposes
 
-`:desc` [String] description of what the file is/what it is used for. Used when post-processing reports results to STDOUT
+### `:desc`
+[String] description of what the file is/what it is used for. Used when post-processing reports results to STDOUT
 
 * optional
 
-`:tags` [Array<Symbol>] list of arbitrary tags useful for categorizing data/jobs in your ETL
+###`:tags`
+[Array<Symbol>] list of arbitrary tags useful for categorizing data/jobs in your ETL
 
 * optional
 * If set, you can filter to run only jobs tagged with a given tag
