@@ -77,12 +77,6 @@ module Kiba
           '->Starting dependency job'
         end
 
-        def creator_method_to_s
-          job_data.creator.to_s
-                  .delete_prefix('#<Method: ')
-                  .sub(/\(\) .*$/, '')
-        end
-
         def desc_and_tags
           parts = [job_data.desc, tags].compact
           return if parts.empty?
@@ -111,7 +105,7 @@ module Kiba
         end
 
         def start_and_def
-          "#{start_label}: #{job_data.key} -- defined in: #{creator_method_to_s}"
+          "#{start_label}: #{job_data.key} -- defined in: #{job_data.creator.to_s}"
         end
 
         def tags

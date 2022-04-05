@@ -22,6 +22,15 @@ module Kiba
             mod.send(meth)
           end
         end
+
+        def to_s
+          mod_meth = "#{mod}.#{meth}"
+          return mod_meth unless args
+
+          arg_str = args.map{ |key, val| "#{key}: #{val}" }
+            .join(', ')
+          "#{mod_meth}(#{arg_str})"
+        end
         
         private
 

@@ -151,5 +151,26 @@ RSpec.describe 'Kiba::Extend::Registry::Creator' do
       end
     end
   end
+
+  describe '#to_s' do
+    let(:result){ creator.to_s }
+    context 'without args' do
+      let(:spec){ Helpers::Project::JobbyArg }
+
+      it 'returns expected string' do
+        expect(result).to eq('Helpers::Project::JobbyArg.job')
+      end
+      
+    end
+
+    context 'with args' do
+      let(:spec){ {callee: Helpers::Project::JobbyArg, args: {shout: true, volume: 23}} }
+
+      it 'returns expected string' do
+        expect(result).to eq('Helpers::Project::JobbyArg.job(shout: true, volume: 23)')
+      end
+    end
+    
+  end
 end
 # rubocop:enable Metrics/BlockLength
