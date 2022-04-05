@@ -65,7 +65,7 @@ reghash = {
 * Not required at all if file is supplied
 * If the method that runs the job is a module instance method named `job`, creator value can just be the `Module` containing the `:job` method
 * Otherwise, the creator value must be a `Method` (Pattern: `Class::Or::Module::ConstantName.method(:name_of_method)`)
-* Sometimes you may need to call a job with arguments. This may be particularly useful if the same job logic can be reused many times with slightly different parameters. @todo: example. In this case creator may be a Hash with `callee` and `args` keys
+* Sometimes you may need to call a job with arguments. This may be particularly useful if the same job logic can be reused many times with slightly different parameters. In this case creator may be a Hash with `callee` and `args` keys
 
 NOTE: The default value for the default job method name set in `Kiba::Extend` is `:job`. You can override this in your project's base file as follows (since 2.7.2): 
 
@@ -154,7 +154,7 @@ module Project
         'Region', 'Room', 'Server Path', 'Technique', 'Treatment', 'Value'
       ]
 
-      Csws.registry.namespace('lkup') do
+      Project.registry.namespace('lkup') do
         types.each do |type|
           register Project::RegistryData.normalized_lookup_type(type).to_sym, {
             path: File.join(Project.datadir, 'working', "#{Project::RegistryData.normalized_lookup_type(type)}.csv"),
