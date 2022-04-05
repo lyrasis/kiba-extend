@@ -30,8 +30,10 @@ RSpec.describe 'Kiba::Extend::Registry::RequirableFile' do
     let(:result) { klass.required }
     let(:data) { default }
     context 'when file does not exist at path' do
-      it 'returns creator Method' do
-        expect(result).to eq(Helpers.method(:fake_creator_method))
+      it 'returns Creator', :aggregate_failures do
+        expect(result).to be_a(Kiba::Extend::Registry::Creator)
+        expect(result.mod).to eq(Helpers)
+        expect(result.meth).to eq(:fake_creator_method)
       end
     end
 
