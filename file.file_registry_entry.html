@@ -146,12 +146,12 @@
 <li>Sometimes you may need to call a job with arguments. This may be particularly useful if the same job logic can be reused many times with slightly different parameters. @todo: example. In this case creator may be a Hash with <code>callee</code> and <code>args</code> keys</li>
 </ul>
 
-<p>NOTE: The default value for the default job method name set in <code>Kiba::Extend</code> is <code>:job</code>. You can override this in your project&#39;s base file as follows: </p>
+<p>NOTE: The default value for the default job method name set in <code>Kiba::Extend</code> is <code>:job</code>. You can override this in your project&#39;s base file as follows (since 2.7.2): </p>
 
 <pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Kiba/Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_default_job_method_name'>default_job_method_name</span> <span class='op'>=</span> <span class='symbol'>:whatever</span>
 </code></pre>
 
-<h4 id="module-creator-example"><code>Module</code> creator example</h4>
+<h4 id="module-creator-example-since-2-7-2"><code>Module</code> creator example  (since 2.7.2)</h4>
 
 <p>This is valid because the default <code>:job</code> method is present in the module: </p>
 
@@ -199,7 +199,7 @@ reghash = {
 }
 </code></pre>
 
-<h4 id="hash-creator-example"><code>Hash</code> creator example</h4>
+<h4 id="hash-creator-example-since-2-7-2"><code>Hash</code> creator example (since 2.7.2)</h4>
 
 <p>Default <code>:job</code> method accepts keyword arguments, so creator is a <code>Hash</code> with a <code>Method</code> or <code>Module</code> (as described above) in as <code>callee</code>, and an arguments <code>Hash</code> passed in as <code>args</code>.</p>
 
@@ -345,7 +345,7 @@ end
 </div></div>
 
       <div id="footer">
-  Generated on Tue Apr  5 22:09:21 2022 by
+  Generated on Tue Apr  5 22:17:44 2022 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-2.7.5).
 </div>
