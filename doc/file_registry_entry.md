@@ -59,13 +59,21 @@ reghash = {
 ```
 
 ### `:creator`
-[Method, Module] Ruby method that generates this file
+[Method, Module, Hash] Ruby method that generates this file
 
 * Used to run ETL jobs to create necessary files, if said files do not exist
 * Not required at all if file is supplied
-* If the method that runs the job is a module instance method named `job`, you can just specify the module
+* If the method that runs the job is a module instance method named `job`, creator value can just be the `Module` containing the `:job` method
+* Otherwise, the creator value must be a `Method` (Pattern: `Class::Or::Module::ConstantName.method(:name_of_method)`)
+* Sometimes you may need to call a job with arguments. This may be particularly useful if the same job logic can be reused many times with slightly different parameters. @todo: example. In this case creator may be a Hash with `callee` and `args` keys
 
-This is valid: 
+NOTE: The default value for the default job method name set in `Kiba::Extend` is `:job`. You can override this in your project's base file as follows: 
+
+    Kiba::Extend.config.default_job_method_name = :whatever
+
+#### `Module` creator example
+
+This is valid because the default `:job` method is present in the module: 
 
 ```ruby
 # in job definitions
@@ -88,7 +96,9 @@ reghash = {
 }
 ```
 
-If you have defined multiple jobs per module or your job definition is not named `job`, you need to specify the method: 
+#### `Method` creator example
+
+Default `:job` method not present (or is not the method you need to call for this job).
 
 ```ruby
 # in job definitions
@@ -111,9 +121,84 @@ reghash = {
 }
 ```
 
-Note the following pattern!:
+#### `Hash` creator example
 
-    Class or Module constant name + `.method` + method name **as symbol**
+Default `:job` method accepts keyword arguments, so creator is a `Hash` with a `Method` or `Module` (as described above) in as `callee`, and an arguments `Hash` passed in as `args`.
+
+```ruby
+# in your project's registry_data.rb
+module Project
+  module RegistryData
+    module_function
+    
+    def register
+      register_lookups
+      register_files
+      Project.registry.transform
+      Project.registry.freeze
+    end
+
+    def normalized_lookup_type(type)
+      type.downcase
+        .gsub(' ', '_')
+        .gsub('/', '_')
+    end
+    
+    def register_lookups
+      types = [
+        'Accession Review Decision', 'Accession Type', 'Account Codes', 'ArchSite', 'Box', 'Budget Code',
+        'Building', 'CityState', 'Cleaning', 'Condition Picks', 'Contact Type', 'Count Unit', 'Creator Type',
+        'Cultural Affiliation', 'Department Code', 'Digitize Parameters', 'Digitizing Hardware',
+        'Digitizing Software', 'Disposal Type', 'Exhibit Type', 'Format/Type', 'Genre', 'Image Resolution',
+        'In Exhibit', 'Insured By', 'Loan Purpose', 'Material', 'Mount', 'NAGPRA Type', 'Owner Type',
+        'Region', 'Room', 'Server Path', 'Technique', 'Treatment', 'Value'
+      ]
+
+      Csws.registry.namespace('lkup') do
+        types.each do |type|
+          register Project::RegistryData.normalized_lookup_type(type).to_sym, {
+            path: File.join(Project.datadir, 'working', "#{Project::RegistryData.normalized_lookup_type(type)}.csv"),
+            creator: {callee: Project::Main::Lookups::Extract, args: {type: type}},
+            tags: %i[lkup],
+            lookup_on: :lookupvalueid
+          }
+        end
+      end
+    end
+
+    def register files
+	  ...
+	end
+  end
+end
+
+# in job definitions
+module Project
+  module Main
+    module Lookups
+      module Extract
+        module_function
+
+        def job(type:)
+          Kiba::Extend::Jobs::Job.new(
+            files: {
+              source: :lkup__prep,
+              destination: "lkup__#{Project::RegistryData.normalized_lookup_type(type).to_sym}".to_sym
+            },
+            transformer: xforms(type)
+          )
+        end
+
+        def xforms(type)
+          Kiba.job_segment do
+            transform FilterRows::FieldEqualTo, action: :keep, field: :lookup_type, value: type
+          end
+        end
+      end
+    end
+  end
+end
+```
 
 ### `:supplied`
 [true, false] whether the file/data is supplied from outside the ETL

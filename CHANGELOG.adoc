@@ -26,11 +26,13 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 ==== Breaking
 
 ==== Added
+* When setting up a file registry hash, `creator` may be a `Hash` if you need to pass keyword arguments to your job. See https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html[File registry entry reference] for more info and examples. In https://github.com/lyrasis/kiba-extend/pull/67[PR#67]
+* When setting up a file registry hash, `creator` may be a `Module` if the relevant job is a private instance method named with the configured `default_job_method_name` (The default is `:job`). See https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html[File registry entry reference] for more info and examples. In https://github.com/lyrasis/kiba-extend/pull/67[PR#67]
+* `default_job_method_name` config setting. In https://github.com/lyrasis/kiba-extend/pull/67[PR#67]
 * `Fingerprint::Add` and `Fingerprint::Decode` transforms. In https://github.com/lyrasis/kiba-extend/pull/65[PR#65]
 * `override_app_delim_check` param to `Fingerprint::Add` for backward compatibility with a project I want to be able to use this transform. Defaults to `false`. https://github.com/lyrasis/kiba-extend/pull/66[PR#66]
 
 ==== Changed
-* You can pass in file registry hashes with just the creator module if the relevant job is a private instance method named `job`. See https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html[File registry entry reference] for more info and examples. In https://github.com/lyrasis/kiba-extend/pull/67[PR#67]
 * Moves `Merge::CompareFieldsFlag` to `Compare::FieldValues`. Aliases the old transform to the new one for backward compatibility, but raises deprecation warning. In https://github.com/lyrasis/kiba-extend/pull/62[PR#62]
 * `Fingerprint::Decode` forces field values to UTF-8, preventing CSV write errors. In https://github.com/lyrasis/kiba-extend/pull/66[PR#66]
 
