@@ -143,7 +143,7 @@
 <li>Not required at all if file is supplied</li>
 <li>If the method that runs the job is a module instance method named <code>job</code>, creator value can just be the <code>Module</code> containing the <code>:job</code> method</li>
 <li>Otherwise, the creator value must be a <code>Method</code> (Pattern: <code>Class::Or::Module::ConstantName.method(:name_of_method)</code>)</li>
-<li>Sometimes you may need to call a job with arguments. This may be particularly useful if the same job logic can be reused many times with slightly different parameters. @todo: example. In this case creator may be a Hash with <code>callee</code> and <code>args</code> keys</li>
+<li>Sometimes you may need to call a job with arguments. This may be particularly useful if the same job logic can be reused many times with slightly different parameters. In this case creator may be a Hash with <code>callee</code> and <code>args</code> keys</li>
 </ul>
 
 <p>NOTE: The default value for the default job method name set in <code>Kiba::Extend</code> is <code>:job</code>. You can override this in your project&#39;s base file as follows (since 2.7.2): </p>
@@ -231,7 +231,7 @@ module Project
         &#39;Region&#39;, &#39;Room&#39;, &#39;Server Path&#39;, &#39;Technique&#39;, &#39;Treatment&#39;, &#39;Value&#39;
       ]
 
-      Csws.registry.namespace(&#39;lkup&#39;) do
+      Project.registry.namespace(&#39;lkup&#39;) do
         types.each do |type|
           register Project::RegistryData.normalized_lookup_type(type).to_sym, {
             path: File.join(Project.datadir, &#39;working&#39;, &quot;#{Project::RegistryData.normalized_lookup_type(type)}.csv&quot;),
@@ -345,7 +345,7 @@ end
 </div></div>
 
       <div id="footer">
-  Generated on Tue Apr  5 22:17:44 2022 by
+  Generated on Tue Apr  5 22:25:25 2022 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-2.7.5).
 </div>
