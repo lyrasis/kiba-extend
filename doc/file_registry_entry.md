@@ -67,11 +67,11 @@ reghash = {
 * Otherwise, the creator value must be a `Method` (Pattern: `Class::Or::Module::ConstantName.method(:name_of_method)`)
 * Sometimes you may need to call a job with arguments. This may be particularly useful if the same job logic can be reused many times with slightly different parameters. @todo: example. In this case creator may be a Hash with `callee` and `args` keys
 
-NOTE: The default value for the default job method name set in `Kiba::Extend` is `:job`. You can override this in your project's base file as follows: 
+NOTE: The default value for the default job method name set in `Kiba::Extend` is `:job`. You can override this in your project's base file as follows (since 2.7.2): 
 
     Kiba::Extend.config.default_job_method_name = :whatever
 
-#### `Module` creator example
+#### `Module` creator example  (since 2.7.2)
 
 This is valid because the default `:job` method is present in the module: 
 
@@ -121,7 +121,7 @@ reghash = {
 }
 ```
 
-#### `Hash` creator example
+#### `Hash` creator example (since 2.7.2)
 
 Default `:job` method accepts keyword arguments, so creator is a `Hash` with a `Method` or `Module` (as described above) in as `callee`, and an arguments `Hash` passed in as `args`.
 
