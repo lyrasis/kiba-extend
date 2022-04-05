@@ -73,42 +73,54 @@
 
 <p>The allowable Hash keys, expected Hash value formats, and expectations about them are described below.</p>
 
-<p><strong><code>:path</code> [String] full or expandable relative path to the expected location of the file</strong></p>
+<h3 id="path"><code>:path</code></h3>
+
+<p>[String] full or expandable relative path to the expected location of the file**</p>
 
 <ul>
 <li>default: <code>nil</code></li>
 <li>required if either <code>:src_class</code> or <code>:dest_class</code> requires a path (in <code>PATH_REQ</code>)</li>
 </ul>
 
-<p><code>:src_class</code> [Class] the Ruby class used to read in data</p>
+<h3 id="src_class"><code>:src_class</code></h3>
+
+<p>[Class] the Ruby class used to read in data</p>
 
 <ul>
 <li>default: value of <code>Kiba::Extend.source</code> (<code>Kiba::Common::Sources::CSV</code> unless overridden by your ETL app)</li>
 <li>required, but default supplied if not given</li>
 </ul>
 
-<p><code>:src_opt</code> [Hash] file options used when reading in source</p>
+<h3 id="src_opt"><code>:src_opt</code></h3>
+
+<p>[Hash] file options used when reading in source</p>
 
 <ul>
 <li>default: value of <code>Kiba::Extend.csvopts</code></li>
 <li>required, but default supplied if not given</li>
 </ul>
 
-<p><code>:dest_class</code> [Class] the Ruby class used to write out the data</p>
+<h3 id="dest_class"><code>:dest_class</code></h3>
+
+<p>[Class] the Ruby class used to write out the data</p>
 
 <ul>
 <li>default: value of <code>Kiba::Extend.destination</code> (<code>Kiba::Extend::Destinations::CSV</code> unless overridden by your ETL app)</li>
 <li>required, but default supplied if not given</li>
 </ul>
 
-<p><code>:dest_opt</code> [Hash] file options used when writing data</p>
+<h3 id="dest_opt"><code>:dest_opt</code></h3>
+
+<p>[Hash] file options used when writing data</p>
 
 <ul>
 <li>default: value of <code>Kiba::Extend.csvopts</code></li>
 <li>required, but default supplied if not given</li>
 </ul>
 
-<p><code>:dest_special_opts</code> [Hash] additional options for writing out the data</p>
+<h3 id="dest_special_opts"><code>:dest_special_opts</code></h3>
+
+<p>[Hash] additional options for writing out the data</p>
 
 <ul>
 <li>Not all destination classes support extra options. If you provide unsupported extra options, they will not be sent through to the destination class, and you will receive a warning in STDOUT. The current most common use is to define <code>initial_headers</code> (i.e. which columns should be first in file) to <code>Kiba::Extend::Destinations::CSV</code>.</li>
@@ -122,14 +134,152 @@
   <span class='rbrace'>}</span>
 </code></pre>
 
-<p><strong><code>:creator</code> [Method] Ruby method that generates this file</strong></p>
+<h3 id="creator"><code>:creator</code></h3>
+
+<p>[Method, Module, Hash] Ruby method that generates this file</p>
 
 <ul>
 <li>Used to run ETL jobs to create necessary files, if said files do not exist</li>
-<li>required unless file is supplied</li>
+<li>Not required at all if file is supplied</li>
+<li>If the method that runs the job is a module instance method named <code>job</code>, creator value can just be the <code>Module</code> containing the <code>:job</code> method</li>
+<li>Otherwise, the creator value must be a <code>Method</code> (Pattern: <code>Class::Or::Module::ConstantName.method(:name_of_method)</code>)</li>
+<li>Sometimes you may need to call a job with arguments. This may be particularly useful if the same job logic can be reused many times with slightly different parameters. @todo: example. In this case creator may be a Hash with <code>callee</code> and <code>args</code> keys</li>
 </ul>
 
-<p><strong><code>:supplied</code> [true, false] whether the file/data is supplied from outside the ETL</strong></p>
+<p>NOTE: The default value for the default job method name set in <code>Kiba::Extend</code> is <code>:job</code>. You can override this in your project&#39;s base file as follows: </p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Kiba/Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_default_job_method_name'>default_job_method_name</span> <span class='op'>=</span> <span class='symbol'>:whatever</span>
+</code></pre>
+
+<h4 id="module-creator-example"><code>Module</code> creator example</h4>
+
+<p>This is valid because the default <code>:job</code> method is present in the module: </p>
+
+<pre class="code ruby"><code class="ruby"># in job definitions
+module Project
+  module Table 
+    module_function
+
+    def job
+      Kiba::Extend::Jobs::Job.new(
+       ...
+      )
+    end
+  end
+end
+
+# in file registry
+reghash = {
+  path: &#39;/project/working/objects_prep.csv&#39;,
+  creator: Project::Table
+}
+</code></pre>
+
+<h4 id="method-creator-example"><code>Method</code> creator example</h4>
+
+<p>Default <code>:job</code> method not present (or is not the method you need to call for this job).</p>
+
+<pre class="code ruby"><code class="ruby"># in job definitions
+module Project
+  module Table 
+    module_function
+
+    def prep
+      Kiba::Extend::Jobs::Job.new(
+       ...
+      )
+    end
+  end
+end
+
+# in file registry
+reghash = {
+  path: &#39;/project/working/objects_prep.csv&#39;,
+  creator: Project::Table.method(:prep)
+}
+</code></pre>
+
+<h4 id="hash-creator-example"><code>Hash</code> creator example</h4>
+
+<p>Default <code>:job</code> method accepts keyword arguments, so creator is a <code>Hash</code> with a <code>Method</code> or <code>Module</code> (as described above) in as <code>callee</code>, and an arguments <code>Hash</code> passed in as <code>args</code>.</p>
+
+<pre class="code ruby"><code class="ruby"># in your project&#39;s registry_data.rb
+module Project
+  module RegistryData
+    module_function
+
+    def register
+      register_lookups
+      register_files
+      Project.registry.transform
+      Project.registry.freeze
+    end
+
+    def normalized_lookup_type(type)
+      type.downcase
+        .gsub(&#39; &#39;, &#39;_&#39;)
+        .gsub(&#39;/&#39;, &#39;_&#39;)
+    end
+
+    def register_lookups
+      types = [
+        &#39;Accession Review Decision&#39;, &#39;Accession Type&#39;, &#39;Account Codes&#39;, &#39;ArchSite&#39;, &#39;Box&#39;, &#39;Budget Code&#39;,
+        &#39;Building&#39;, &#39;CityState&#39;, &#39;Cleaning&#39;, &#39;Condition Picks&#39;, &#39;Contact Type&#39;, &#39;Count Unit&#39;, &#39;Creator Type&#39;,
+        &#39;Cultural Affiliation&#39;, &#39;Department Code&#39;, &#39;Digitize Parameters&#39;, &#39;Digitizing Hardware&#39;,
+        &#39;Digitizing Software&#39;, &#39;Disposal Type&#39;, &#39;Exhibit Type&#39;, &#39;Format/Type&#39;, &#39;Genre&#39;, &#39;Image Resolution&#39;,
+        &#39;In Exhibit&#39;, &#39;Insured By&#39;, &#39;Loan Purpose&#39;, &#39;Material&#39;, &#39;Mount&#39;, &#39;NAGPRA Type&#39;, &#39;Owner Type&#39;,
+        &#39;Region&#39;, &#39;Room&#39;, &#39;Server Path&#39;, &#39;Technique&#39;, &#39;Treatment&#39;, &#39;Value&#39;
+      ]
+
+      Csws.registry.namespace(&#39;lkup&#39;) do
+        types.each do |type|
+          register Project::RegistryData.normalized_lookup_type(type).to_sym, {
+            path: File.join(Project.datadir, &#39;working&#39;, &quot;#{Project::RegistryData.normalized_lookup_type(type)}.csv&quot;),
+            creator: {callee: Project::Main::Lookups::Extract, args: {type: type}},
+            tags: %i[lkup],
+            lookup_on: :lookupvalueid
+          }
+        end
+      end
+    end
+
+    def register files
+      ...
+    end
+  end
+end
+
+# in job definitions
+module Project
+  module Main
+    module Lookups
+      module Extract
+        module_function
+
+        def job(type:)
+          Kiba::Extend::Jobs::Job.new(
+            files: {
+              source: :lkup__prep,
+              destination: &quot;lkup__#{Project::RegistryData.normalized_lookup_type(type).to_sym}&quot;.to_sym
+            },
+            transformer: xforms(type)
+          )
+        end
+
+        def xforms(type)
+          Kiba.job_segment do
+            transform FilterRows::FieldEqualTo, action: :keep, field: :lookup_type, value: type
+          end
+        end
+      end
+    end
+  end
+end
+</code></pre>
+
+<h3 id="supplied"><code>:supplied</code></h3>
+
+<p>[true, false] whether the file/data is supplied from outside the ETL</p>
 
 <ul>
 <li>default: false</li>
@@ -160,20 +310,26 @@
 <pre class="code ruby"><code class="ruby">Class or Module constant name + `.method` + method name **as symbol**
 </code></pre>
 
-<p><strong><code>:lookup_on</code> [Symbol] column to use as keys in lookup table created from file data</strong></p>
+<h3 id="lookup_on"><code>:lookup_on</code></h3>
+
+<p>[Symbol] column to use as keys in lookup table created from file data</p>
 
 <ul>
 <li>required if file is used as a lookup source</li>
 <li>You can register the same file multiple times under different file keys with different <code>:lookup_on</code> values if you need to use the data for different lookup purposes</li>
 </ul>
 
-<p><code>:desc</code> [String] description of what the file is/what it is used for. Used when post-processing reports results to STDOUT</p>
+<h3 id="desc"><code>:desc</code></h3>
+
+<p>[String] description of what the file is/what it is used for. Used when post-processing reports results to STDOUT</p>
 
 <ul>
 <li>optional</li>
 </ul>
 
-<p><code>:tags</code> [Array<Symbol>] list of arbitrary tags useful for categorizing data/jobs in your ETL</p>
+<h3 id="tags"><code>:tags</code></h3>
+
+<p>[Array<Symbol>] list of arbitrary tags useful for categorizing data/jobs in your ETL</p>
 
 <ul>
 <li>optional</li>
@@ -189,7 +345,7 @@
 </div></div>
 
       <div id="footer">
-  Generated on Thu Mar 17 22:48:25 2022 by
+  Generated on Tue Apr  5 22:09:21 2022 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-2.7.5).
 </div>
