@@ -74,10 +74,11 @@ module Kiba
         end
 
         def setup_module_spec(using = spec)
-          raise JoblessModuleCreatorError.new(using) unless using.private_method_defined?(:job)
+          default_job_method = Kiba::Extend.default_job_method_name
+          raise JoblessModuleCreatorError.new(using) unless using.private_method_defined?(default_job_method)
 
           @mod = using
-          @meth = :job
+          @meth = default_job_method
         end
 
       end
