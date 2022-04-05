@@ -90,7 +90,7 @@ RSpec.describe 'Kiba::Extend::Registry::FileRegistryEntry' do
       it 'invalid as expected' do
         expect(entry.creator).to be_nil
         expect(entry.valid?).to be false
-        expect(entry.errors[:creator_not_a_method]).to eq('a string')
+        expect(entry.errors.key?('Kiba::Extend::Registry::Creator::TypeError')).to be true
       end
     end
 
@@ -99,7 +99,7 @@ RSpec.describe 'Kiba::Extend::Registry::FileRegistryEntry' do
       it 'invalid as expected' do
         expect(entry.creator).to be_nil
         expect(entry.valid?).to be false
-        expect(entry.errors[:creator_module_does_not_contain_default_job_method]).to eq('Helpers::Project::JoblessSection')
+        expect(entry.errors.key?('Kiba::Extend::Registry::Creator::JoblessModuleCreatorError')).to be true
       end
     end
 

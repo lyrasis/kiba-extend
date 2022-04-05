@@ -27,6 +27,7 @@ module Kiba
         def initialize(reghash)
           set_defaults
           assign_values_from(reghash)
+          set_up_creator(reghash[:creator]) if reghash[:creator]
           validate
         end
 
@@ -78,11 +79,18 @@ module Kiba
 
         private
 
+        def set_up_creator(creator)
+          @creator = Kiba::Extend::Registry::Creator.new(creator)
+        rescue Kiba::Extend::Error => err
+          errors[err.class.name] = err.message
+        end
+        
         def allowed_settings
           instance_variables
             .map(&:to_s)
             .map { |str| str.delete_prefix('@') }
             .map(&:to_sym)
+            .reject{ |var| var == :creator }
         end
 
         def allowed_setting?(key)
@@ -135,43 +143,11 @@ module Kiba
 
         def validate_creator
           return if supplied
-
-          validate_creator_present
-          validate_creator_is_method
-        end
-
-        def validate_creator_is_method
-          return if creator.is_a?(Method)
-          
-          if creator.is_a?(Module) && creator.private_method_defined?(:job)
-            default_method_module_creator
-          elsif creator.is_a?(Module)
-            jobless_module_creator
-          else
-            non_method_creator
-          end
-        end
-
-        def default_method_module_creator
-          @creator = creator.method(:job)
-        end
-
-        def jobless_module_creator
-          @errors[:creator_module_does_not_contain_default_job_method] = creator.to_s
-          @creator = nil
-        end
-
-        def non_method_creator
-          @errors[:creator_not_a_method] = creator.dup
-          @creator = nil
-        end
-        
-        def validate_creator_present
           return if creator
           
           @errors[:missing_creator_for_non_supplied_file] = nil
         end
-        
+
         def validate_path
           if path_required? && !path
             @errors[:missing_path] = nil
