@@ -83,8 +83,10 @@ module Kiba
         end
 
         def handle_requirements
-          [@files[:source], @files[:lookup]].compact.flatten.map(&:required).compact.each { |method| method.call }
-
+          [@files[:source], @files[:lookup]].compact.flatten.map(&:required).compact.each do |creator|
+            creator.call
+          end
+          
           check_requirements
         end
 
