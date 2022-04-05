@@ -10,7 +10,7 @@ module Kiba
         # @param cstr [String] stringified class name
         # @return [Array<FileRegistryEntry>]
         def created_by_class(cstr)
-          with_creator.select { |entry| entry.creator.owner.to_s[cstr] }
+          with_creator.select { |entry| entry.creator.mod.to_s[cstr] }
         end
 
         # Registry entry or entries created by a given method

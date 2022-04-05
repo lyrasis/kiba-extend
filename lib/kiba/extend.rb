@@ -71,6 +71,7 @@ module Kiba
     setting :warning_label, default: 'KIBA WARNING', reader: true
 
     setting :registry, default: registry, reader: true
+    setting :default_job_method_name, default: :job, reader: true
 
     setting :job, reader: true do
       # Whether to output results to STDOUT for debugging

@@ -2,6 +2,20 @@
 
 require 'spec_helper'
 
+# used to test creator validation below
+module Helpers
+  module Project
+    module Section
+      module_function
+      def job
+      end
+    end
+    module JoblessSection
+      module_function
+    end
+  end
+end
+
 # rubocop:disable Metrics/BlockLength
 RSpec.describe 'Kiba::Extend::Registry::FileRegistryEntry' do
   let(:path) { File.join('spec', 'fixtures', 'fkey.csv') }
@@ -43,8 +57,8 @@ RSpec.describe 'Kiba::Extend::Registry::FileRegistryEntry' do
     context 'when un-written source/dest' do
       let(:data) {
         { src_class: Kiba::Common::Sources::Enumerable,
-          dest_class: Kiba::Common::Destinations::Lambda,
-          supplied: true }
+         dest_class: Kiba::Common::Destinations::Lambda,
+         supplied: true }
       }
       it 'valid as expected' do
         expect(entry.path).to be_nil
@@ -71,11 +85,29 @@ RSpec.describe 'Kiba::Extend::Registry::FileRegistryEntry' do
   end
 
   context 'with non-method creator' do
-    let(:data) { { path: path, creator: 'a string' } }
-    it 'invalid as expected' do
-      expect(entry.creator).to be_nil
-      expect(entry.valid?).to be false
-      expect(entry.errors[:creator_not_a_method]).to eq('a string')
+    context 'when a String' do
+      let(:data) { { path: path, creator: 'a string' } }
+      it 'invalid as expected' do
+        expect(entry.creator).to be_nil
+        expect(entry.valid?).to be false
+        expect(entry.errors.key?('Kiba::Extend::Registry::Creator::TypeError')).to be true
+      end
+    end
+
+    context 'when a Module not containing a `job` method, and no method given' do
+      let(:data) { { path: path, creator: Helpers::Project::JoblessSection } }
+      it 'invalid as expected' do
+        expect(entry.creator).to be_nil
+        expect(entry.valid?).to be false
+        expect(entry.errors.key?('Kiba::Extend::Registry::Creator::JoblessModuleCreatorError')).to be true
+      end
+    end
+
+    context 'when a Module containing a `job` method, and no method given' do
+      let(:data) { { path: path, creator: Helpers::Project::Section } }
+      it 'valid as expected' do
+        expect(entry.valid?).to be true
+      end
     end
   end
 end

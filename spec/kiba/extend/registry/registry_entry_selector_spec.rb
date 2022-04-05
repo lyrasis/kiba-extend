@@ -44,9 +44,9 @@ RSpec.describe 'Kiba::Extend::Registry::RegistryEntrySelector' do
 
     context 'with Kiba::Extend' do
       let(:cstr) { 'Kiba::Extend' }
-      it 'does not require full string match' do
-        expect(result.length).to eq(1)
-        expect(result.map(&:key).sort).to eq(%w[baz])
+      it 'does not require full string match', :aggregate_failures do
+        expect(result.length).to eq(2)
+        expect(result.map(&:key).sort).to eq(%w[baz warn])
       end
     end
 
