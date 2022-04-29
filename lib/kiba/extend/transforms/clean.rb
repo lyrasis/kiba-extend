@@ -288,11 +288,10 @@ module Kiba
             @fields = @fields == [:all] ? row.keys : @fields
             @fields.each do |field|
               oldval = row.fetch(field)
-              newval = if oldval.nil?
-                         nil
-                       else
-                         @mv ? mv_find_replace(oldval) : sv_find_replace(oldval)
-                       end
+              next if oldval.nil?
+              next unless oldval.is_a?(String)
+
+              newval = @mv ? mv_find_replace(oldval) : sv_find_replace(oldval)
               target = @debug ? "#{field}_repl".to_sym : field
               row[target] = if newval.nil?
                               nil
