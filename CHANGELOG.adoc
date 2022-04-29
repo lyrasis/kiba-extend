@@ -24,6 +24,7 @@ toc::[]
 These changes are merged into the `main` branch but have not yet been tagged as a new version/release.
 
 ==== Breaking
+* `Count::MatchingRowsInLookup` previously returned Integers. Now it defaults to returning Strings, since many of the transforms assume all field values will be strings. If you were calling `Count::MatchingRowsInLookup` in a job and working with the integer result as an integer within that job, this will be a breaking change. In https://github.com/lyrasis/kiba-extend/pull/69[PR#69]
 
 ==== Added
 
