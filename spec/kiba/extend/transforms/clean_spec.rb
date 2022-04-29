@@ -494,7 +494,8 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
     context 'when fields = :all' do
       let(:input) do
         [
-          {val: 'xxxxxx1', another: 'xxx2xxxxx'}
+          {val: 'xxxxxx1', another: 'xxx2xxxxx'},
+          {val: 10, another: nil}
         ]
       end
 
@@ -504,7 +505,7 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
         end
       end
       
-      let(:expected){ [{val: '1', another: '2'}] }
+      let(:expected){ [{val: '1', another: '2'}, {val: 10, another: nil}] }
       it 'Does specified regexp find/replace in field values' do
         expect(result).to eq(expected)
       end

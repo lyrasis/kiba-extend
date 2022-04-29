@@ -28,6 +28,7 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 ==== Added
 
 ==== Changed
+* BUGFIX: `Clean::RegexpFindReplaceFieldVals` now skips non-string field values instead of trying to call `:gsub` on them and failing with `NoMethodError`. In https://github.com/lyrasis/kiba-extend/pull/68[PR#68]
 
 ==== Deleted
 
