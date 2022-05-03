@@ -11,7 +11,7 @@ RSpec.describe Kiba::Extend::Utils::Fieldset do
     ]
   end
   let(:fields) { %i[b c] }
-  let(:fieldset) { Kiba::Extend::Utils::Fieldset.new(fields) }
+  let(:fieldset) { described_class.new(fields: fields) }
   describe '#fields' do
     it 'returns an Array of fields collated by the Fieldset' do
       expect(fieldset.fields).to eq(fields)

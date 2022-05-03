@@ -5,7 +5,7 @@ module Kiba
     module Utils
       # Data structure class used in processing merge transforms
       class Fieldset
-        def initialize(fields)
+        def initialize(fields:, null_placeholder: nil)
           @hash = {}
           fields.each { |field| @hash[field] = [] }
         end
