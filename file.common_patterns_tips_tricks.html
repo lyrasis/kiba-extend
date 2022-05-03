@@ -72,10 +72,52 @@
 <p>See <span class='object_link'><a href="Kiba/Extend/Utils/MultiSourceNormalizer.html" title="Kiba::Extend::Utils::MultiSourceNormalizer (class)">Kiba::Extend::Utils::MultiSourceNormalizer</a></span> for full usage docs.</p>
 
 <p>See <a href="https://github.com/lyrasis/kiba-tms/blob/main/lib/kiba/tms/jobs/in_between/name_compilation.rb">name compilation jobs in Kiba::TMS</a> for working example of use.</p>
+
+<h2 id="calling-a-transform-from-within-another-transform">Calling a transform from within another transform</h2>
+
+<p>This pattern is used with argument forwarding to deprecate/rename some transforms in kiba-extend, as shown below: </p>
+
+<pre class="code ruby"><code class="ruby"><span class='kw'>class</span> <span class='const'>Transformer</span>
+  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='op'>...</span><span class='rparen'>)</span>
+    <span class='ivar'>@xform</span> <span class='op'>=</span> <span class='const'>MyOtherTransformer</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='op'>...</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='comment'># @private
+</span>  <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_private'>private</span>
+
+  <span class='id identifier rubyid_attr_reader'>attr_reader</span> <span class='symbol'>:xform</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<p>It could also useful in project-specific transforms as shown below (need to test that this actually works):</p>
+
+<pre class="code ruby"><code class="ruby"><span class='kw'>class</span> <span class='const'>Transformer</span>
+  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>param1:</span><span class='comma'>,</span> <span class='label'>param2:</span><span class='rparen'>)</span>
+    <span class='ivar'>@param1</span> <span class='op'>=</span> <span class='id identifier rubyid_param1'>param1</span>
+    <span class='ivar'>@param2</span> <span class='op'>=</span> <span class='id identifier rubyid_param2'>param2</span>
+    <span class='ivar'>@otherxform</span> <span class='op'>=</span> <span class='const'>OtherTransformer</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>opt1:</span> <span class='symbol'>:something</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='comment'># @private
+</span>  <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
+    <span class='comment'># do stuff to row
+</span>    <span class='id identifier rubyid_row'>row</span> <span class='op'>=</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
+    <span class='comment'># do more stuff to row
+</span>  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid_private'>private</span>
+
+  <span class='id identifier rubyid_attr_reader'>attr_reader</span> <span class='symbol'>:param1</span><span class='comma'>,</span> <span class='symbol'>:param2</span><span class='comma'>,</span> <span class='symbol'>:otherxform</span>
+<span class='kw'>end</span>
+</code></pre>
 </div></div>
 
       <div id="footer">
-  Generated on Fri Apr 29 16:28:40 2022 by
+  Generated on Tue May  3 23:37:06 2022 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-2.7.6).
 </div>
