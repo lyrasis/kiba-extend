@@ -6,12 +6,13 @@ RSpec.describe Kiba::Extend::Utils::Fieldset do
   let(:rows) do
     [
       { a: 'aa', b: 'bb', c: 'cc', d: 'dd' },
+      { a: 'aa', b: nil, c: 'cee', d: 'dd' },
       { a: 'aa', b: 'bee', c: 'cee', d: 'dd' },
       { a: 'aa', b: nil, c: '', d: 'dd' }
     ]
   end
   let(:fields) { %i[b c] }
-  let(:fieldset) { Kiba::Extend::Utils::Fieldset.new(fields) }
+  let(:fieldset) { described_class.new(fields: fields) }
   describe '#fields' do
     it 'returns an Array of fields collated by the Fieldset' do
       expect(fieldset.fields).to eq(fields)
@@ -20,7 +21,7 @@ RSpec.describe Kiba::Extend::Utils::Fieldset do
   describe '#populate' do
     it 'populates hash with field values from given rows' do
       fieldset.populate(rows)
-      expected = [%w[bb bee], %w[cc cee]]
+      expected = [['bb', nil, 'bee'], %w[cc cee cee]]
       expect(fieldset.hash.values).to eq(expected)
     end
   end
@@ -29,18 +30,19 @@ RSpec.describe Kiba::Extend::Utils::Fieldset do
     it 'populates hash with constant values' do
       fieldset.populate(rows)
       fieldset.add_constant_values(:f, 'ffff')
-      expected = [%w[bb bee], %w[cc cee], %w[ffff ffff]]
+      expected = [['bb', nil, 'bee'], %w[cc cee cee], %w[ffff ffff ffff]]
       expect(fieldset.hash.values).to eq(expected)
     end
 
     it 'adds field, but does not add constant values to it for empty rows' do
       rows = [
         { a: 'aa' },
+        { a: 'aa', b: 'bb', c: 'cc' },
         { a: 'aa', b: '' }
       ]
       fieldset.populate(rows)
       fieldset.add_constant_values(:f, 'ffff')
-      expected = [[], [], []]
+      expected = [['bb'], ['cc'], ['ffff']]
       expect(fieldset.hash.values).to eq(expected)
     end
   end
@@ -50,8 +52,20 @@ RSpec.describe Kiba::Extend::Utils::Fieldset do
       fieldset.populate(rows)
       fieldset.add_constant_values(:f, 'ffff')
       fieldset.join_values('|')
-      expected = ['bb|bee', 'cc|cee', 'ffff|ffff']
+      expected = ['bb||bee', 'cc|cee|cee', 'ffff|ffff|ffff']
       expect(fieldset.hash.values).to eq(expected)
+    end
+
+    context 'with null_placeholder set' do
+        let(:fieldset) { described_class.new(fields: fields, null_placeholder: 'NULL') }
+
+        it 'joins hash values' do
+          fieldset.populate(rows)
+          fieldset.add_constant_values(:f, 'ffff')
+          fieldset.join_values('|')
+          expected = ['bb|NULL|bee', 'cc|cee|cee', 'ffff|ffff|ffff']
+          expect(fieldset.hash.values).to eq(expected)
+        end
     end
   end
 end
