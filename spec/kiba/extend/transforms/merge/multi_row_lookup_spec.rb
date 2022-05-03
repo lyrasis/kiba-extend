@@ -39,7 +39,8 @@ RSpec.describe Kiba::Extend::Transforms::Merge::MultiRowLookup do
               {:id=>"2", :date=>"2020-04-15", :treatment=>"deworm"}
             ],
             "4"=>[
-              {:id=>"4", :date=>"", :treatment=>""}
+              {:id=>"4", :date=>"2022-05-03", :treatment=>""},
+              {:id=>"4", :date=>"", :treatment=>"nail trim"},
             ]
           }
       end
@@ -57,8 +58,8 @@ RSpec.describe Kiba::Extend::Transforms::Merge::MultiRowLookup do
          date: nil,
          event: nil },
         { id: '4', name: 'Earlybird', sex: 'f', source: 'hatched',
-         date: nil,
-         event: nil },
+         date: '2022-05-03;',
+         event: ';nail trim' },
         { id: '5', name: 'Lazarus', sex: 'm', source: 'adopted',
          date: nil,
          event: nil },
@@ -71,6 +72,62 @@ RSpec.describe Kiba::Extend::Transforms::Merge::MultiRowLookup do
       expect(result).to eq(expected)
     end
 
+    context 'with null_placeholder specified' do
+      let(:transforms) do
+        Kiba.job_segment do
+          transform Merge::MultiRowLookup,
+            fieldmap: {
+              date: :date,
+              event: :treatment
+            },
+            keycolumn: :id,
+            lookup: {
+              "1"=>[
+                {:id=>"1", :date=>"2019-07-21", :treatment=>"hatch"},
+                {:id=>"1", :date=>"2019-09-15", :treatment=>"adopted"},
+                {:id=>"1", :date=>"2020-04-15", :treatment=>"deworm"}
+              ],
+              "2"=>[
+                {:id=>"2", :date=>"2019-08-01", :treatment=>"hatch"},
+                {:id=>"2", :date=>"2019-09-15", :treatment=>"adopted"},
+                {:id=>"2", :date=>"2020-04-15", :treatment=>"deworm"}
+              ],
+              "4"=>[
+                {:id=>"4", :date=>"2022-05-03", :treatment=>""},
+                {:id=>"4", :date=>"", :treatment=>"nail trim"},
+              ]
+            },
+            null_placeholder: '%NULLVALUE%'
+        end
+      end
+
+      let(:expected) do
+        [
+          { id: '1', name: 'Weddy', sex: 'm', source: 'adopted',
+           date: '2019-07-21;2019-09-15;2020-04-15',
+           event: 'hatch;adopted;deworm' },
+          { id: '2', name: 'Kernel', sex: 'f', source: 'adopted',
+           date: '2019-08-01;2019-09-15;2020-04-15',
+           event: 'hatch;adopted;deworm' },
+          { id: '3', name: 'Boris', sex: 'm', source: 'adopted',
+           date: nil,
+           event: nil },
+          { id: '4', name: 'Earlybird', sex: 'f', source: 'hatched',
+           date: '2022-05-03;%NULLVALUE%',
+           event: '%NULLVALUE%;nail trim' },
+          { id: '5', name: 'Lazarus', sex: 'm', source: 'adopted',
+           date: nil,
+           event: nil },
+          { id: nil, name: 'Null', sex: '', source: '',
+           date: nil,
+           event: nil }
+        ]
+      end
+      it 'merges values from specified fields into multivalued fields' do
+        expect(result).to eq(expected)
+      end
+    end
+    
     context 'with constantmap specified' do
       let(:transforms) do
         Kiba.job_segment do
