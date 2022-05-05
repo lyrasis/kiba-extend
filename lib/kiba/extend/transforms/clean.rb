@@ -273,6 +273,8 @@ module Kiba
         end
 
         class RegexpFindReplaceFieldVals
+          include Allable
+          
           def initialize(fields:, find:, replace:, casesensitive: true, multival: false, sep: nil, debug: false)
             @fields = [fields].flatten
             @find = Regexp.new(find) if casesensitive == true
@@ -285,14 +287,15 @@ module Kiba
 
           # @private
           def process(row)
-            @fields = @fields == [:all] ? row.keys : @fields
-            @fields.each do |field|
+            finalize_fields(row)
+            
+            fields.each do |field|
               oldval = row.fetch(field)
               next if oldval.nil?
               next unless oldval.is_a?(String)
 
-              newval = @mv ? mv_find_replace(oldval) : sv_find_replace(oldval)
-              target = @debug ? "#{field}_repl".to_sym : field
+              newval = mv ? mv_find_replace(oldval) : sv_find_replace(oldval)
+              target = debug ? "#{field}_repl".to_sym : field
               row[target] = if newval.nil?
                               nil
                             else
@@ -304,12 +307,14 @@ module Kiba
 
           private
 
+          attr_reader :fields, :find, :replace, :debug, :mv, :sep
+
           def mv_find_replace(val)
-            val.split(@sep).map { |v| v.gsub(@find, @replace) }.join(@sep)
+            val.split(sep).map { |v| v.gsub(find, replace) }.join(sep)
           end
 
           def sv_find_replace(val)
-            val.gsub(@find, @replace)
+            val.gsub(find, replace)
           end
         end
 
