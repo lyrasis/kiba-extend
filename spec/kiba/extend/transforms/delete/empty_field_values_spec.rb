@@ -118,5 +118,28 @@ RSpec.describe Kiba::Extend::Transforms::Delete::EmptyFieldValues do
         expect{ result }.to output(msg).to_stdout
       end
     end
+
+    context 'when fields = :all' do
+      let(:input) do
+        [
+          {data: 'abc|||d e f', foo: 'abc|||d e f'},
+        ]
+      end
+      let(:transforms) do
+        Kiba.job_segment do
+          transform Delete::EmptyFieldValues, fields: :all
+        end
+      end
+
+      let(:expected) do
+        [
+          {data: 'abc|d e f', foo: 'abc|d e f'}
+        ]
+      end
+
+      it 'transforms as expected' do
+        expect(result).to eq(expected)
+      end
+    end
   end
 end

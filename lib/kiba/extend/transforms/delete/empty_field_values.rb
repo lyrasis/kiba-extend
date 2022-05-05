@@ -67,6 +67,7 @@ module Kiba
         # ```
         #
         class EmptyFieldValues
+          include Allable
           # @note `sep` will be removed in a future version. **DO NOT USE**
           # @param fields [Array<Symbol>,Symbol] field(s) to delete from
           # @param sep [String] **DEPRECATED; DO NOT USE**
@@ -75,7 +76,6 @@ module Kiba
           def initialize(fields:, sep: nil, delim: nil, usenull: false)
             @fields = [fields].flatten
             @usenull = usenull
-
             if sep && delim
               puts %Q[#{Kiba::Extend.warning_label}: Do not use both `sep` and `delim`. Prefer `delim`]
             elsif sep
@@ -89,6 +89,8 @@ module Kiba
           # @private
 
           def process(row)
+            finalize_fields(row) unless fields_set
+            
             fields.each do |field|
               val = row.fetch(field)
               next if val.nil?
