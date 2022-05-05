@@ -4,6 +4,8 @@ module Kiba
   module Extend
     module Transforms
       module Cspace
+        # Converts existing value of :addresscountry to required optionslist value for country. If no optionlist
+        #   code can be found for the given value, warns.
         class AddressCountry
           LOOKUP = {
             "Afghanistan" => 'AF',
@@ -73,6 +75,7 @@ module Kiba
             "Ecuador" => 'EC',
             "Egypt" => 'EG',
             "El Salvador" => 'SV',
+            "England" => 'GB',
             "Equatorial Guinea" => 'GQ',
             "Eritrea" => 'ER',
             "Estonia" => 'EE',
@@ -201,6 +204,7 @@ module Kiba
             "San Marino" => 'SM',
             "Sao Tome and Principe" => 'ST',
             "Saudi Arabia" => 'SA',
+            "Scotland" => 'GB',
             "Senegal" => 'SN',
             "Serbia" => 'RS',
             "Seychelles" => 'SC',
@@ -223,6 +227,7 @@ module Kiba
             "Sweden" => 'SE',
             "Switzerland" => 'CH',
             "Syrian Arab Republic" => 'SY',
+            "Taiwan" => 'TW',
             "Taiwan (Province of China)" => 'TW',
             "Tajikistan" => 'TJ',
             "Tanzania, United Republic of" => 'TZ',
@@ -240,10 +245,12 @@ module Kiba
             "Uganda" => 'UG',
             "Ukraine" => 'UA',
             "United Arab Emirates (the)" => 'AE',
+            "United Kingdom" => 'GB',
             "United Kingdom of Great Britain and Northern Ireland (the)" => 'GB',
             "United States of America (the)" => 'US',
             "United States Minor Outlying Islands (the)" => 'UM',
             "Uruguay" => 'UY',
+            "USA" => 'US',
             "Uzbekistan" => 'UZ',
             "Vanuatu" => 'VU',
             "Venezuela (Bolivarian Republic of)" => 'VE',
