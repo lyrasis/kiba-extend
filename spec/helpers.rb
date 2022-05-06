@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'kiba/extend'
+
 module Helpers
   module_function
 
