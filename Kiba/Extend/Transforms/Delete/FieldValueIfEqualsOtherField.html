@@ -94,9 +94,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/kiba/extend/transforms/delete/field_value_if_equals_other_field.rb<span class="defines">,<br />
-  lib/kiba/extend/transforms/delete.rb</span>
-</dd>
+    <dd>lib/kiba/extend/transforms/delete/field_value_if_equals_other_field.rb</dd>
   </dl>
   
 </div>
@@ -447,13 +445,13 @@ in {:del=&gt;&quot;A;d;e&quot;, :compare=&gt;&quot;c&quot;, :grpa=&gt;&quot;y;x;
     <td>
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/field_value_if_equals_other_field.rb', line 170</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>delete:</span><span class='comma'>,</span> <span class='label'>if_equal_to:</span><span class='comma'>,</span> <span class='label'>multival:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>grouped_fields:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>case_sensitive:</span> <span class='kw'>true</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>delete:</span><span class='comma'>,</span> <span class='label'>if_equal_to:</span><span class='comma'>,</span> <span class='label'>multival:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>grouped_fields:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>casesensitive:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='ivar'>@delete</span> <span class='op'>=</span> <span class='id identifier rubyid_delete'>delete</span>
   <span class='ivar'>@compare</span> <span class='op'>=</span> <span class='id identifier rubyid_if_equal_to'>if_equal_to</span>
   <span class='ivar'>@multival</span> <span class='op'>=</span> <span class='id identifier rubyid_multival'>multival</span>
-  <span class='ivar'>@sep</span> <span class='op'>=</span> <span class='id identifier rubyid_sep'>sep</span>
+  <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_delim'>delim</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span>
   <span class='ivar'>@group</span> <span class='op'>=</span> <span class='id identifier rubyid_grouped_fields'>grouped_fields</span>
-  <span class='ivar'>@case_sensitive</span> <span class='op'>=</span> <span class='id identifier rubyid_case_sensitive'>case_sensitive</span>
+  <span class='ivar'>@casesensitive</span> <span class='op'>=</span> <span class='id identifier rubyid_casesensitive'>casesensitive</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -466,7 +464,7 @@ in {:del=&gt;&quot;A;d;e&quot;, :compare=&gt;&quot;c&quot;, :grpa=&gt;&quot;y;x;
 </div>
 
       <div id="footer">
-  Generated on Fri May  6 21:07:36 2022 by
+  Generated on Sat May  7 01:55:46 2022 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-2.7.6).
 </div>

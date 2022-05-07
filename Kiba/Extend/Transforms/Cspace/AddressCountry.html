@@ -87,6 +87,11 @@
   
   
   
+  <dl>
+      <dt>Includes:</dt>
+      <dd><span class='object_link'><a href="../SingleWarnable.html" title="Kiba::Extend::Transforms::SingleWarnable (module)">SingleWarnable</a></span></dd>
+  </dl>
+  
   
 
   
@@ -399,7 +404,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>  &#x21d2; AddressCountry </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(source: :addresscountry, target: :addresscountry, keep_orig: true)  &#x21d2; AddressCountry </a>
     
 
     
@@ -424,13 +429,19 @@
     </ul>
   
 
-<div id="constructor_details" class="method_details_list">
+
+  
+  
+  
+  
+  
+  <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Cspace::AddressCountry (class)">AddressCountry</a></span></tt> 
+    #<strong>initialize</strong>(source: :addresscountry, target: :addresscountry, keep_orig: true)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Cspace::AddressCountry (class)">AddressCountry</a></span></tt> 
   
 
   
@@ -438,13 +449,84 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of AddressCountry.</p>
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>If <code>keep_orig = false</code> and the source value couldn&#39;t be mapped, the output will not contain
+the original value at all. You should receive warnings to STDOUT indicating which values were
+unmappable</p>
+</div>
+  </div>
+
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p><code>keep_orig</code> has no effect if you are doing an in-place transform (i.e. your <code>source</code> and
+<code>target</code> values are the same</p>
+</div>
+  </div>
+
+<p>Returns a new instance of AddressCountry.</p>
 
 
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>source</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>:addresscountry</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>field containing value to look up and map</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>target</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>:addresscountry</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>field in which to write ISO 3166 code</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>keep_orig</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>true</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>whether to delete source field after mapping</p>
+</div>
+      
+    </li>
+  
+</ul>
+
 
 </div><table class="source_code">
   <tr>
@@ -452,15 +534,21 @@
       <pre class="lines">
 
 
-267
-268
-269</pre>
+277
+278
+279
+280
+281
+282</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/cspace/address_country.rb', line 267</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/cspace/address_country.rb', line 277</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span>
-  <span class='ivar'>@field</span> <span class='op'>=</span> <span class='symbol'>:addresscountry</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>source:</span> <span class='symbol'>:addresscountry</span><span class='comma'>,</span> <span class='label'>target:</span> <span class='symbol'>:addresscountry</span><span class='comma'>,</span> <span class='label'>keep_orig:</span> <span class='kw'>true</span><span class='rparen'>)</span>
+  <span class='ivar'>@source</span> <span class='op'>=</span> <span class='id identifier rubyid_source'>source</span>
+  <span class='ivar'>@target</span> <span class='op'>=</span> <span class='id identifier rubyid_target'>target</span>
+  <span class='ivar'>@keep_orig</span> <span class='op'>=</span> <span class='id identifier rubyid_keep_orig'>keep_orig</span>
+  <span class='id identifier rubyid_setup_single_warning'>setup_single_warning</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -473,7 +561,7 @@
 </div>
 
       <div id="footer">
-  Generated on Fri May  6 21:07:37 2022 by
+  Generated on Sat May  7 01:55:46 2022 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-2.7.6).
 </div>
