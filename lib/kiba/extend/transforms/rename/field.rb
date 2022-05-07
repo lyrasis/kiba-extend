@@ -5,15 +5,18 @@ module Kiba
     module Transforms
       module Rename
         class Field
+          include SingleWarnable
+
           def initialize(from:, to:)
             @from = from
             @to = to
+            setup_single_warning
           end
 
           # @private
           def process(row)
             unless row.key?(from)
-              warn("#{Kiba::Extend.warning_label}: Field `#{from}` does not exist in row. Cannot be renamed.")
+              add_single_warning("Cannot rename field: `#{from}` does not exist in row")
               return row
             end
             

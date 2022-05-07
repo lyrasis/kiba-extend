@@ -48,7 +48,7 @@ RSpec.describe Kiba::Extend::Transforms::Rename::Field do
     
     it 'returns row unchanged and warns', :aggregate_failures do
       expect(result).to eq(expected)
-      msg = "#{Kiba::Extend.warning_label}: Field `sex` does not exist in row. Cannot be renamed."
+      msg = "#{Kiba::Extend.warning_label}: Cannot rename field: `sex` does not exist in row"
       xform = Rename::Field.new(from: :sex, to: :gender)
       expect(xform).to receive(:warn).with(msg)
       xform.process(input.first)
