@@ -28,7 +28,7 @@ module Kiba
         # {appellation: 'Kernel', gender: 'f'}
         # ```
         class Fields
-          # @param fieldmap {Symbol => Symbol} Keys are the `from` fields; values are the `to` fields
+          # @param fieldmap [Hash(Symbol => Symbol)] Keys are the `from` fields; values are the `to` fields
           def initialize(fieldmap:)
             @fieldmap = fieldmap
             @renamers = fieldmap.map{ |from, to| Rename::Field.new(from: from, to: to) }

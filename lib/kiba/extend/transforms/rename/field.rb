@@ -29,8 +29,8 @@ module Kiba
         class Field
           include SingleWarnable
 
-          # @param from Symbol current field name
-          # @param to Symbol target field name
+          # @param from [Symbol] current field name
+          # @param to [Symbol] target field name
           def initialize(from:, to:)
             @from = from
             @to = to
