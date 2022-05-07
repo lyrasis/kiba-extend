@@ -11,9 +11,14 @@ require 'kiba-common/destinations/csv'
 require 'kiba-common/destinations/lambda'
 require 'pry'
 require 'xxhash'
+require 'zeitwerk'
+
 
 require 'kiba/extend/registry/file_registry'
-
+require 'kiba/extend/jobs'
+require 'kiba/extend/jobs/job_segmenter'
+require 'kiba/extend/destinations'
+require 'kiba/extend/destinations/csv'
 # These are still here to support legacy projects/unconverted tests.
 # Do not call these constants in new code.
 # Use Kiba::Extend.csvopts and Kiba::Extend.delim instead
@@ -34,9 +39,24 @@ module Kiba
     module_function
     extend Dry::Configurable
 
-    # Require application files
-    Dir.glob("#{__dir__}/**/*").sort.select { |path| path.match?(/\.rb$/) }.each do |rbfile|
-      require rbfile.delete_prefix("#{File.expand_path(__dir__)}/lib/")
+    def loader
+      @loader ||= setup_loader
+    end
+
+    private def setup_loader
+              @loader = Zeitwerk::Loader.new
+              @loader.push_dir(File.join(Bundler.root, 'lib', 'kiba', 'extend'), namespace: Kiba::Extend)
+              @loader.inflector.inflect(
+                'normalize_for_id' => 'NormalizeForID',
+                'convert_to_id' => 'ConvertToID'
+                )
+              @loader.enable_reloading
+              @loader.setup
+              @loader
+            end
+
+    def reload!
+      @loader.reload
     end
 
     registry = Kiba::Extend::Registry::FileRegistry.new
@@ -120,3 +140,6 @@ module Kiba
     
   end
 end
+
+
+Kiba::Extend.loader

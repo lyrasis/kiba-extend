@@ -1,35 +1,103 @@
 # frozen_string_literal: true
 
 RSpec.describe Kiba::Extend::Transforms::Cspace::AddressCountry do
-  # let(:accumulator){ [] }
-  # let(:test_job){ Helpers::TestJob.new(input: input, accumulator: accumulator, transforms: transforms) }
-  # let(:result){ test_job.accumulator }
-
-  # let(:input){ [{name: 'Weddy1'}] }
-  # let(:expected){ [{ name: 'Weddy1', sid: 'Weddy13761760099' }] }
-  # let(:transforms) do
-  #   Kiba.job_segment do
-  #     transform Cspace::ConvertToID, source: :name, target: :sid
-  #   end
-  # end
-
-  let(:transform){ Cspace::AddressCountry.new }
-  let(:result){ transform.process(row) }
-
-  context 'when existing value is supported' do
-    let(:row){ {addresscountry: 'Viet Nam'} }
-    let(:expected){ {addresscountry: 'VN'} }
-    it 'inserts CS shortID of given source into target' do
-      expect(result).to eq(expected)
-    end
+  let(:source){ :country }
+  let(:transform){ Cspace::AddressCountry.new(source: source, keep_orig: false) }
+  let(:result){ rows.map{ |row| transform.process(row) } }
+  let(:rows) do
+    [
+      {country: 'Viet Nam'},
+      {country: 'Shangri-La'},
+      {country: ''},
+      {country: nil},
+      {foo: 'bar'}
+    ]
   end
 
-  context 'when existing value is supported' do
-    let(:row){ {addresscountry: 'Vietnam'} }
-    it 'inserts CS shortID of given source into target' do
-      msg = "Cannot find code for addresscountry value: Vietnam"
-      expect(transform).to receive(:warn).with(msg)
-      transform.process(row)
+  context 'with different source/target fields' do
+    context 'with keep_orig false' do
+      let(:expected) do
+        [
+          {addresscountry: 'VN'},
+          {addresscountry: nil},
+          {addresscountry: ''},
+          {addresscountry: nil},
+          {foo: 'bar', addresscountry: nil}
+        ]
+      end
+      
+      it 'transforms as expected', :aggregate_failures do
+        nomap = "KIBA WARNING: Cannot map addresscountry: No mapping for #{source} value: Shangri-La"
+        expect(transform).to receive(:warn).with(nomap)
+        nofield = "KIBA WARNING: Cannot map addresscountry: Field `#{source}` does not exist in source data"
+        expect(transform).to receive(:warn).with(nofield)
+        expect(result).to eq(expected)
+      end
+    end
+
+    context 'with keep_orig true' do
+      let(:transform){ Cspace::AddressCountry.new(source: source) }
+      let(:expected) do
+        [
+          {country: 'Viet Nam', addresscountry: 'VN'},
+          {country: 'Shangri-La', addresscountry: nil},
+          {country: '', addresscountry: ''},
+          {country: nil, addresscountry: nil},
+          {foo: 'bar', addresscountry: nil}
+        ]
+      end
+      
+      it 'transforms as expected', :aggregate_failures do
+        nomap = "KIBA WARNING: Cannot map addresscountry: No mapping for #{source} value: Shangri-La"
+        expect(transform).to receive(:warn).with(nomap)
+        nofield = "KIBA WARNING: Cannot map addresscountry: Field `#{source}` does not exist in source data"
+        expect(transform).to receive(:warn).with(nofield)
+        expect(result).to eq(expected)
+      end
+    end
+  end
+  
+  context 'with in_place mapping (same source/target)' do
+    context 'with keep_orig false' do
+      let(:transform){ Cspace::AddressCountry.new(source: source, target: :country) }
+      let(:expected) do
+        [
+          {country: 'VN'},
+          {country: nil},
+          {country: ''},
+          {country: nil},
+          {foo: 'bar', country: nil}
+        ]
+      end
+      
+      it 'transforms as expected', :aggregate_failures do
+        nomap = "KIBA WARNING: Cannot map addresscountry: No mapping for #{source} value: Shangri-La"
+        expect(transform).to receive(:warn).with(nomap)
+        nofield = "KIBA WARNING: Cannot map addresscountry: Field `#{source}` does not exist in source data"
+        expect(transform).to receive(:warn).with(nofield)
+        expect(result).to eq(expected)
+      end
+    end
+
+    context 'with keep_orig true' do
+      let(:transform){ Cspace::AddressCountry.new(source: source, target: :country, keep_orig: true) }
+      let(:expected) do
+        [
+          {country: 'VN'},
+          {country: nil},
+          {country: ''},
+          {country: nil},
+          {foo: 'bar', country: nil}
+        ]
+      end
+      
+      it 'transforms as expected', :aggregate_failures do
+        nomap = "KIBA WARNING: Cannot map addresscountry: No mapping for #{source} value: Shangri-La"
+        expect(transform).to receive(:warn).with(nomap)
+        nofield = "KIBA WARNING: Cannot map addresscountry: Field `#{source}` does not exist in source data"
+        expect(transform).to receive(:warn).with(nofield)
+        expect(result).to eq(expected)
+      end
     end
   end
 end

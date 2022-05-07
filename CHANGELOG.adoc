@@ -27,12 +27,15 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 * `Count::MatchingRowsInLookup` previously returned Integers. Now it defaults to returning Strings, since many of the transforms assume all field values will be strings. If you were calling `Count::MatchingRowsInLookup` in a job and working with the integer result as an integer within that job, this will be a breaking change. In https://github.com/lyrasis/kiba-extend/pull/69[PR#69]
 
 ==== Added
+* Add `Rename::Fields` transform. In https://github.com/lyrasis/kiba-extend/pull/75[PR#75]
 * Add `Name::SplitInverted` and `Name::ConvertInvertedToDirectForm` transforms. In https://github.com/lyrasis/kiba-extend/pull/74[PR#74]
 * Add `Allable` mixin module for transforms that accept `fields: :all`. In https://github.com/lyrasis/kiba-extend/pull/73[PR#73]
-* Add `Cspace::AddressCountry` transform. In https://github.com/lyrasis/kiba-extend/pull/72[PR#72]
+* Add `Cspace::AddressCountry` transform. In https://github.com/lyrasis/kiba-extend/pull/72[PR#72]. Made more configurable in https://github.com/lyrasis/kiba-extend/pull/75[PR#75]
 * Add `null_placeholder` parameter to `Merge::MultiRowLookup`, which will replace any blank values in merged field values with the given string. Useful for building repeating field groups in CollectionSpace migrations. In https://github.com/lyrasis/kiba-extend/pull/70[PR#70]
 
 ==== Changed
+* `Rename::Field` now warns if the `to` field already exists and will be overwritten. In https://github.com/lyrasis/kiba-extend/pull/75[PR#75]
+* Use zeitwerk for autoloading. In https://github.com/lyrasis/kiba-extend/pull/75[PR#75]
 * Make `Delete::EmptyFieldValues` `Allable`. In https://github.com/lyrasis/kiba-extend/pull/73[PR#73]
 * If given an "existing" field that does not exist, `Rename::Field` transform will warn about it, but not throw an exception. This supports building reusable jobs where the data may be slightly different from use to use. In https://github.com/lyrasis/kiba-extend/pull/71[PR#71]
 * BUGFIX: `Clean::RegexpFindReplaceFieldVals` now skips non-string field values instead of trying to call `:gsub` on them and failing with `NoMethodError`. In https://github.com/lyrasis/kiba-extend/pull/68[PR#68]

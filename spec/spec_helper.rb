@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
+require 'bundler/setup'
+Bundler.require(:tools)
+
 # This needs to be the very first thing in this file
 require 'simplecov'
 SimpleCov.start
 
-require 'bundler/setup'
-require 'kiba/extend'
 require_relative './helpers'
+require 'kiba/extend'
 
 RSpec.configure do |config|
   config.include Helpers

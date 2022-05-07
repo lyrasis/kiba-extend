@@ -264,27 +264,72 @@ module Kiba
             "Zimbabwe" => 'ZW',
           }
 
-          def initialize
-            @field = :addresscountry
+          include SingleWarnable
+
+          # @param source [Symbol] field containing value to look up and map
+          # @param target [Symbol] field in which to write ISO 3166 code
+          # @param keep_orig [Boolean] whether to delete source field after mapping
+          # @note If `keep_orig = false` and the source value couldn't be mapped, the output will not contain
+          #    the original value at all. You should receive warnings to STDOUT indicating which values were
+          #    unmappable
+          # @note `keep_orig` has no effect if you are doing an in-place transform (i.e. your `source` and
+          #   `target` values are the same
+          def initialize(source: :addresscountry, target: :addresscountry, keep_orig: true)
+            @source = source
+            @target = target
+            @keep_orig = keep_orig
+            setup_single_warning
           end
 
           # @private
           def process(row)
-            current_value = row[field]
-            return row if current_value.blank?
-
-            unless LOOKUP.key?(current_value)
-              warn("Cannot find code for addresscountry value: #{current_value}")
-              return row
-            end
-
-            row[field] = LOOKUP[current_value]
-            row
+            row[target] = nil unless in_place?
+            row.key?(source) ? handle_source(row) : handle_missing_source(row)
           end
 
           private
 
-          attr_reader :field
+          attr_reader :source, :target, :keep_orig
+
+          def delete_source(row)
+            row.delete(source) unless in_place? || keep_orig
+            row
+          end
+
+          def do_mapping(val, row)
+            row[target] = LOOKUP[val]
+            delete_source(row)
+          end
+          
+          def handle_source(row)
+            sourceval = row[source]
+            sourceval.blank? ? handle_blank_source(sourceval, row) : handle_source_value(sourceval, row)
+          end
+
+          def handle_blank_source(val, row)
+            row[target] = val
+            delete_source(row)
+          end
+          
+          def handle_missing_source(row)
+            add_single_warning("Cannot map addresscountry: Field `#{source}` does not exist in source data")
+            row[target] = nil
+            row
+          end
+
+          def handle_source_value(val, row)
+            LOOKUP.key?(val) ? do_mapping(val, row) : handle_unmapped(val, row)
+          end
+
+          def handle_unmapped(val, row)
+            add_single_warning("Cannot map addresscountry: No mapping for #{source} value: #{val}")
+            row[target] = nil
+            delete_source(row)
+          end
+          
+          def in_place?
+            source == target
+          end
         end
       end
     end

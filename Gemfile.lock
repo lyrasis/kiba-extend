@@ -12,6 +12,7 @@ PATH
       measured (~> 2)
       thor (~> 1)
       xxhash (~> 0)
+      zeitwerk (~> 2.5)
 
 GEM
   remote: https://rubygems.org/
