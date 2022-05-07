@@ -29,7 +29,7 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 ==== Added
 * Add `Name::SplitInverted` and `Name::ConvertInvertedToDirectForm` transforms. In https://github.com/lyrasis/kiba-extend/pull/74[PR#74]
 * Add `Allable` mixin module for transforms that accept `fields: :all`. In https://github.com/lyrasis/kiba-extend/pull/73[PR#73]
-* Add `Cspace::AddressCountry` transform. In https://github.com/lyrasis/kiba-extend/pull/72[PR#72]
+* Add `Cspace::AddressCountry` transform. In https://github.com/lyrasis/kiba-extend/pull/72[PR#72]. Made more configurable in https://github.com/lyrasis/kiba-extend/pull/74[PR#74]
 * Add `null_placeholder` parameter to `Merge::MultiRowLookup`, which will replace any blank values in merged field values with the given string. Useful for building repeating field groups in CollectionSpace migrations. In https://github.com/lyrasis/kiba-extend/pull/70[PR#70]
 
 ==== Changed
