@@ -19,6 +19,7 @@ require 'kiba/extend/jobs'
 require 'kiba/extend/jobs/job_segmenter'
 require 'kiba/extend/destinations'
 require 'kiba/extend/destinations/csv'
+
 # These are still here to support legacy projects/unconverted tests.
 # Do not call these constants in new code.
 # Use Kiba::Extend.csvopts and Kiba::Extend.delim instead
@@ -49,10 +50,13 @@ module Kiba
               @loader.push_dir(File.join(ke_dir, 'lib', 'kiba', 'extend'), namespace: Kiba::Extend)
               @loader.inflector.inflect(
                 'normalize_for_id' => 'NormalizeForID',
-                'convert_to_id' => 'ConvertToID'
+                'convert_to_id' => 'ConvertToID',
+                'version' => 'VERSION',
+                'csv' => 'CSV'
                 )
               @loader.enable_reloading
               @loader.setup
+              @loader.eager_load
               @loader
             end
 
