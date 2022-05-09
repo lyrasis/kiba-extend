@@ -45,7 +45,8 @@ module Kiba
 
     private def setup_loader
               @loader = Zeitwerk::Loader.new
-              @loader.push_dir(File.join(Bundler.root, 'lib', 'kiba', 'extend'), namespace: Kiba::Extend)
+              ke_dir = Gem.loaded_specs['kiba-extend'].full_gem_path
+              @loader.push_dir(File.join(ke_dir, 'lib', 'kiba', 'extend'), namespace: Kiba::Extend)
               @loader.inflector.inflect(
                 'normalize_for_id' => 'NormalizeForID',
                 'convert_to_id' => 'ConvertToID'
