@@ -4,8 +4,90 @@ module Kiba
   module Extend
     module Transforms
       module Cspace
-        # Converts existing value of :addresscountry to required optionslist value for country. If no optionlist
-        #   code can be found for the given value, warns.
+        # Converts existing value of :addresscountry to required optionslist value for country, based on ISO 3166 code.
+        #   If no optionlist code can be found for the given value, warns.
+        #
+        # It is expected that this will need to be updated per client data set. Just add required values to the
+        #   LOOKUP and make a pull request.
+        #
+        # # Examples
+        #
+        # Source data:
+        #
+        # ```
+        # {addresscountry: 'Viet Nam'},
+        # {addresscountry: 'Shangri-La'},
+        # {addresscountry: ''},
+        # {addresscountry: nil},
+        # {foo: 'bar'}
+        # ```
+        #
+        # Used in pipeline as:
+        #
+        # ```
+        # transform Cspace::AddressCountry
+        # ```
+        #
+        # Default source/target field is: `addresscountry`. Note that `keep_orig` param does not have an effect when
+        #   source and target fields are the same. The source value is always overwritten with the result.
+        #
+        # Results in:
+        #
+        # ```
+        # {addresscountry: 'VN'},
+        # {addresscountry: nil},
+        # {addresscountry: ''},
+        # {addresscountry: nil},
+        # {foo: 'bar', addresscountry: nil}
+        # ```
+        #
+        # Will print warnings:
+        #
+        # - Cannot map addresscountry: No mapping for country value: Shangri-La
+        # - Cannot map addresscountry: Field `country` does not exist in source data (triggered by last row)
+        #
+        # Source data:
+        #
+        # ```
+        # {country: 'Viet Nam'},
+        # {country: 'Shangri-La'},
+        # {country: ''},
+        # {country: nil},
+        # {foo: 'bar'}
+        # ```
+        #
+        # Used in pipeline as:
+        #
+        # ```
+        # transform Cspace::AddressCountry, source: :country
+        # ```
+        #
+        # Results in:
+        #
+        # ```
+        # {addresscountry: 'VN'},
+        # {addresscountry: nil},
+        # {addresscountry: ''},
+        # {addresscountry: nil},
+        # {foo: 'bar', addresscountry: nil}
+        # ```
+        #
+        # Used in pipeline as:
+        #
+        # ```
+        # transform Cspace::AddressCountry, source: :country, keep_orig: true
+        # ```
+        #
+        # Results in:
+        #
+        # ```
+        # {country: 'Viet Nam', addresscountry: 'VN'},
+        # {country: 'Shangri-La', addresscountry: nil},
+        # {country: '', addresscountry: ''},
+        # {country: nil, addresscountry: nil},
+        # {foo: 'bar', addresscountry: nil}
+        # ```
+
         class AddressCountry
           LOOKUP = {
             "Afghanistan" => 'AF',
