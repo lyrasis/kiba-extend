@@ -8,8 +8,8 @@ module Kiba
         # @todo Add `safe_copy` parameter that will prevent overwrite of existing data in `to`
         class Field
           class MissingFromFieldError < Kiba::Extend::Error
-            def initialize(from)
-              msg = "Cannot copy from nonexistent field `#{from}`"
+            def initialize(from, fields)
+              msg = "Cannot copy from nonexistent field `#{from}`\nExisting fields: #{fields.join(', ')}"
               super(msg)
             end
           end
@@ -23,7 +23,7 @@ module Kiba
 
           # @private
           def process(row)
-            raise MissingFromFieldError.new(from) unless row.key?(from)
+            raise MissingFromFieldError.new(from, row.keys) unless row.key?(from)
             
             row[to] = row.fetch(from)
             row

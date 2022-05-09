@@ -33,7 +33,7 @@ RSpec.describe Kiba::Extend::Transforms::Copy::Field do
     let(:transform){ described_class.new(from: :foo, to: :gender) }
 
     it 'copies value of field to specified new field' do
-      msg = 'Cannot copy from nonexistent field `foo`'
+      msg = "Cannot copy from nonexistent field `foo`\nExisting fields: name, sex"
       expect{ result }.to raise_error(Kiba::Extend::Transforms::Copy::Field::MissingFromFieldError).with_message(msg)
     end
   end
