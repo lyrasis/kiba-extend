@@ -106,8 +106,83 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Converts existing value of :addresscountry to required optionslist value for country. If no optionlist
-  code can be found for the given value, warns.</p>
+    <p>Converts existing value of :addresscountry to required optionslist value for country, based on ISO 3166 code.
+  If no optionlist code can be found for the given value, warns.</p>
+
+<p>It is expected that this will need to be updated per client data set. Just add required values to the
+  LOOKUP and make a pull request.</p>
+
+<h1 id="examples">Examples</h1>
+
+<p>Source data:</p>
+
+<pre class="code ruby"><code class="ruby">{addresscountry: &#39;Viet Nam&#39;},
+{addresscountry: &#39;Shangri-La&#39;},
+{addresscountry: &#39;&#39;},
+{addresscountry: nil},
+{foo: &#39;bar&#39;}
+</code></pre>
+
+<p>Used in pipeline as:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Cspace.html" title="Kiba::Extend::Transforms::Cspace (module)">Cspace</a></span></span><span class='op'>::</span><span class='const'>AddressCountry</span>
+</code></pre>
+
+<p>Default source/target field is: <code>addresscountry</code>. Note that <code>keep_orig</code> param does not have an effect when
+  source and target fields are the same. The source value is always overwritten with the result.</p>
+
+<p>Results in:</p>
+
+<pre class="code ruby"><code class="ruby">{addresscountry: &#39;VN&#39;},
+{addresscountry: nil},
+{addresscountry: &#39;&#39;},
+{addresscountry: nil},
+{foo: &#39;bar&#39;, addresscountry: nil}
+</code></pre>
+
+<p>Will print warnings:</p>
+
+<ul>
+<li>Cannot map addresscountry: No mapping for country value: Shangri-La</li>
+<li>Cannot map addresscountry: Field <code>country</code> does not exist in source data (triggered by last row)</li>
+</ul>
+
+<p>Source data:</p>
+
+<pre class="code ruby"><code class="ruby">{country: &#39;Viet Nam&#39;},
+{country: &#39;Shangri-La&#39;},
+{country: &#39;&#39;},
+{country: nil},
+{foo: &#39;bar&#39;}
+</code></pre>
+
+<p>Used in pipeline as:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Cspace.html" title="Kiba::Extend::Transforms::Cspace (module)">Cspace</a></span></span><span class='op'>::</span><span class='const'>AddressCountry</span><span class='comma'>,</span> <span class='label'>source:</span> <span class='symbol'>:country</span>
+</code></pre>
+
+<p>Results in:</p>
+
+<pre class="code ruby"><code class="ruby">{addresscountry: &#39;VN&#39;},
+{addresscountry: nil},
+{addresscountry: &#39;&#39;},
+{addresscountry: nil},
+{foo: &#39;bar&#39;, addresscountry: nil}
+</code></pre>
+
+<p>Used in pipeline as:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Cspace.html" title="Kiba::Extend::Transforms::Cspace (module)">Cspace</a></span></span><span class='op'>::</span><span class='const'>AddressCountry</span><span class='comma'>,</span> <span class='label'>source:</span> <span class='symbol'>:country</span><span class='comma'>,</span> <span class='label'>keep_orig:</span> <span class='kw'>true</span>
+</code></pre>
+
+<p>Results in:</p>
+
+<pre class="code ruby"><code class="ruby">{country: &#39;Viet Nam&#39;, addresscountry: &#39;VN&#39;},
+{country: &#39;Shangri-La&#39;, addresscountry: nil},
+{country: &#39;&#39;, addresscountry: &#39;&#39;},
+{country: nil, addresscountry: nil},
+{foo: &#39;bar&#39;, addresscountry: nil}
+</code></pre>
 
 
   </div>
@@ -534,15 +609,15 @@ unmappable</p>
       <pre class="lines">
 
 
-277
-278
-279
-280
-281
-282</pre>
+359
+360
+361
+362
+363
+364</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/cspace/address_country.rb', line 277</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/cspace/address_country.rb', line 359</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>source:</span> <span class='symbol'>:addresscountry</span><span class='comma'>,</span> <span class='label'>target:</span> <span class='symbol'>:addresscountry</span><span class='comma'>,</span> <span class='label'>keep_orig:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='ivar'>@source</span> <span class='op'>=</span> <span class='id identifier rubyid_source'>source</span>
@@ -561,7 +636,7 @@ unmappable</p>
 </div>
 
       <div id="footer">
-  Generated on Sat May  7 01:59:11 2022 by
+  Generated on Mon May  9 14:27:13 2022 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-2.7.6).
 </div>
