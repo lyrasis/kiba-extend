@@ -222,6 +222,8 @@ module Kiba
         # ```
         #
         class Flag
+          class NoUsingValueError < Kiba::Extend::Error; end
+          
           # @param on_field [Symbol] Field on which to deduplicate
           # @param in_field [Symbol] New field in which to add 'y' or 'n'
           # @param using [Hash] An empty Hash, set as an instance variable in your job definition before you
@@ -231,6 +233,7 @@ module Kiba
             @on = on_field
             @in_field = in_field
             @using = using
+            raise NoUsingValueError, "#{self.class.name} `using` hash does not exist" unless @using
             @no_val = explicit_no ? 'n' : ''
           end
 

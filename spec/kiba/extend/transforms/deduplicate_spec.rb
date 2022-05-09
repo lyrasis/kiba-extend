@@ -157,6 +157,18 @@ RSpec.describe Kiba::Extend::Transforms::Deduplicate do
         expect(testjob.accumulator).to eq(expected)
       end
     end
+
+    context 'without `using` hash' do
+      let(:transforms) do
+        Kiba.job_segment do
+          transform Deduplicate::Flag, on_field: :id, in_field: :d, using: @deduper
+        end
+      end
+      it 'raises error' do
+        expect{ testjob }.to raise_error(Kiba::Extend::Transforms::Deduplicate::Flag::NoUsingValueError)
+      end
+    end
+
   end
 
   describe 'GroupedFieldValues' do

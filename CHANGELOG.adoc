@@ -34,8 +34,9 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 * Add `null_placeholder` parameter to `Merge::MultiRowLookup`, which will replace any blank values in merged field values with the given string. Useful for building repeating field groups in CollectionSpace migrations. In https://github.com/lyrasis/kiba-extend/pull/70[PR#70]
 
 ==== Changed
+* More informative error message if you pass in a non-existent `using` hash when calling `Deduplicate::Flag` transform. In https://github.com/lyrasis/kiba-extend/pull/76[PR#76]
 * `Rename::Field` now warns if the `to` field already exists and will be overwritten. In https://github.com/lyrasis/kiba-extend/pull/75[PR#75]
-* Use zeitwerk for autoloading. In https://github.com/lyrasis/kiba-extend/pull/75[PR#75]
+* Use zeitwerk for autoloading. In https://github.com/lyrasis/kiba-extend/pull/75[PR#75]. Bugfix for use in projects implemented in https://github.com/lyrasis/kiba-extend/pull/76[PR#76] via eager autoload.
 * Make `Delete::EmptyFieldValues` `Allable`. In https://github.com/lyrasis/kiba-extend/pull/73[PR#73]
 * If given an "existing" field that does not exist, `Rename::Field` transform will warn about it, but not throw an exception. This supports building reusable jobs where the data may be slightly different from use to use. In https://github.com/lyrasis/kiba-extend/pull/71[PR#71]
 * BUGFIX: `Clean::RegexpFindReplaceFieldVals` now skips non-string field values instead of trying to call `:gsub` on them and failing with `NoMethodError`. In https://github.com/lyrasis/kiba-extend/pull/68[PR#68]
