@@ -1,5 +1,13 @@
 # Common patterns, tips, and tricks
 
+## Troubleshooting `MissingDependencyError` when all dependencies are set up as expected
+
+Usually the cause of a `MissingDependencyError` is that a table required in some later job unexpectedly ends up with no rows, and thus is not written out. 
+
+So the dependent job is set up properly, but the expected output doesn't exist. 
+
+I can't think of a way to handle this better, given that, when there are no rows to write out to a Destination, we don't even know what the expected headers would have been in order to write a headers-only CSV.
+
 ## Joining the rows of multiple sources that may have different fields
 
 **Works for `Kiba::Extend::Destinations::CSV` destinations only**
