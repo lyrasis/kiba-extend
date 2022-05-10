@@ -113,7 +113,7 @@ RSpec.describe 'Kiba::Extend::Registry::FileRegistry' do
       context 'when called with nonexistent key' do
         let(:filekey) { :cats }
         it 'raises error' do
-          msg = "No file registered under the key: :#{filekey}"
+          msg = "No file registered under the key: :#{filekey} (as destination)"
           expect { result }.to raise_error(Kiba::Extend::Registry::FileRegistry::KeyNotRegisteredError, msg)
         end
       end

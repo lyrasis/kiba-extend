@@ -23,7 +23,7 @@ module Kiba
 
           # @private
           def process(row)
-            raise MissingFromFieldError.new(from, row.keys) unless row.key?(from)
+            fail MissingFromFieldError.new(from, row.keys) unless row.key?(from)
             
             row[to] = row.fetch(from)
             row
