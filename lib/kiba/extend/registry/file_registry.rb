@@ -22,7 +22,7 @@ module Kiba
         config.namespace_separator = '__'
 
         # Exception raised if the file key is not registered
-        class KeyNotRegisteredError < StandardError
+        class KeyNotRegisteredError < Kiba::Extend::Error
           # @param filekey [Symbol]
           def initialize(filekey)
             msg = "No file registered under the key: :#{filekey}"
