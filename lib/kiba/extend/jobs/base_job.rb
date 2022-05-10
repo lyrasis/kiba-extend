@@ -79,15 +79,7 @@ module Kiba
         def prep_file(meth, key)
           meth.call(key)
         rescue Kiba::Extend::Registry::FileRegistry::KeyNotRegisteredError => err
-          locs = caller_locations
-          at_base_init = false
-          until at_base_init
-            loc = locs.shift
-            at_base_init = true if loc.path.end_with?('base_job.rb') && loc.label == 'initialize'
-          end
-          locs.shift
-          loc = locs.shift
-          puts "JOB FAILED: TRANSFORM ERROR IN: #{loc.path}"
+          puts "JOB FAILED: TRANSFORM ERROR IN: #{err.calling_job}"
           puts "#{err.class.name}: #{err.message}"
           exit
         end

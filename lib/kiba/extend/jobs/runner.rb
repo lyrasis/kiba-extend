@@ -12,10 +12,10 @@ module Kiba
       module Runner
         include Reporter
         # Error raised if dependency file is still missing after we tried to run dependencies
-        class MissingDependencyError < StandardError
+        class MissingDependencyError < Kiba::Extend::Error
           # @param filekey [Symbol] key for which a file path was not found in {Kiba::Extend::FileRegistry}
           def initialize(filekey, path)
-            msg = "Cannot locate dependent file: #{filekey} at #{path}"
+            msg = "Cannot locate dependent file for #{filekey} at #{path}"
             super(msg)
           end
         end
@@ -68,7 +68,7 @@ module Kiba
             next unless data.path
             next if File.exist?(data.path)
 
-            raise MissingDependencyError.new(data.key, data.path)
+            fail MissingDependencyError.new(data.key, data.path)
           end
         end
 
@@ -88,6 +88,10 @@ module Kiba
           end
           
           check_requirements
+        rescue MissingDependencyError => err
+          puts "JOB FAILED: DEPENDENCY ERROR IN: #{err.calling_job}"
+          puts "#{err.class.name}: #{err.message}"
+          exit
         end
 
         def lookups_to_memoized_methods
