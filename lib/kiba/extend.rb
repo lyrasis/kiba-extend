@@ -13,7 +13,7 @@ require 'pry'
 require 'xxhash'
 require 'zeitwerk'
 
-
+require 'kiba/extend/error'
 require 'kiba/extend/registry/file_registry'
 require 'kiba/extend/jobs'
 require 'kiba/extend/jobs/job_segmenter'
