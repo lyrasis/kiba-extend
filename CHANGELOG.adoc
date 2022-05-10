@@ -35,6 +35,7 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 * Add `null_placeholder` parameter to `Merge::MultiRowLookup`, which will replace any blank values in merged field values with the given string. Useful for building repeating field groups in CollectionSpace migrations. In https://github.com/lyrasis/kiba-extend/pull/70[PR#70]
 
 ==== Changed
+* Improves exception handling when `MissingDependencyError` is raised. In https://github.com/lyrasis/kiba-extend/pull/80[PR#80]
 * Improves exception handling when `KeyNotRegisteredError` is raised, as per https://github.com/lyrasis/kiba-extend/issues/64[GH#64]. In https://github.com/lyrasis/kiba-extend/pull/79[PR#79]
 * More informative error message if you pass in a non-existent `using` hash when calling `Deduplicate::Flag` transform. In https://github.com/lyrasis/kiba-extend/pull/76[PR#76]
 * `Rename::Field` now warns if the `to` field already exists and will be overwritten. In https://github.com/lyrasis/kiba-extend/pull/75[PR#75]
