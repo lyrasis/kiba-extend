@@ -16,7 +16,7 @@ module Kiba
         # Used in pipeline as:
         #
         # ```
-        #  transform Name::ConvertInvertedToDirectForm.new, source: :iname, target: :direct
+        #  transform Name::ConvertInvertedToDirectForm, source: :iname, target: :direct
         # ```
         #
         # Results in:
@@ -51,7 +51,7 @@ module Kiba
         # Used in pipeline as:
         #
         # ```
-        #  transform Name::ConvertInvertedToDirectForm.new, source: :iname, target: :direct, nameparts: %i[f m l s]
+        #  transform Name::ConvertInvertedToDirectForm, source: :iname, target: :direct, nameparts: %i[f m l s]
         # ```
         #
         # Results in:
@@ -63,7 +63,7 @@ module Kiba
         # Used in pipeline as:
         #
         # ```
-        #  transform Name::ConvertInvertedToDirectForm.new, source: :iname, target: :direct, keep_parts: false
+        #  transform Name::ConvertInvertedToDirectForm, source: :iname, target: :direct, keep_parts: false
         # ```
         #
         # Results in:
