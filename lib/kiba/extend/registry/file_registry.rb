@@ -23,10 +23,16 @@ module Kiba
 
         # Exception raised if the file key is not registered
         class KeyNotRegisteredError < Kiba::Extend::Error
-          # @param filekey [Symbol]
-          def initialize(filekey)
-            msg = "No file registered under the key: :#{filekey}"
-            super(msg)
+          attr_reader :key, :type
+          # @param key [Symbol]
+          # @param type [Symbol<:destination, :source, :lookup>]
+          # @param job 
+          def initialize(key, type = nil)
+            @key = key
+            @type = type
+            keymsg = "No file registered under the key: :#{key}"
+            typemsg = type ? "#{keymsg} (as #{type})" : keymsg
+            super(typemsg)
           end
         end
 
@@ -34,18 +40,24 @@ module Kiba
         # @return [Kiba::Extend::Registry::RegisteredDestination]
         def as_destination(filekey)
           RegisteredDestination.new(key: filekey, data: lookup(filekey))
+        rescue KeyNotRegisteredError => err
+          raise KeyNotRegisteredError.new(err.key, :destination)
         end
 
         # @param filekey [String, Symbol] file registry key for file to be used as a lookup source
         # @return [Kiba::Extend::Registry::RegisteredLookup]
         def as_lookup(filekey)
           RegisteredLookup.new(key: filekey, data: lookup(filekey))
+        rescue KeyNotRegisteredError => err
+          raise KeyNotRegisteredError.new(err.key, :lookup)
         end
 
         # @param filekey [String, Symbol] file registry key for file to be used as a source
         # @return [Kiba::Extend::Registry::RegisteredSource]
         def as_source(filekey)
           RegisteredSource.new(key: filekey, data: lookup(filekey))
+        rescue KeyNotRegisteredError => err
+          raise KeyNotRegisteredError.new(err.key, :source)
         end
 
         # @return
@@ -73,7 +85,7 @@ module Kiba
         def lookup(key)
           resolve(key)
         rescue Dry::Container::Error
-          raise KeyNotRegisteredError, key
+          fail KeyNotRegisteredError, key
         end
 
         def make_missing_directories

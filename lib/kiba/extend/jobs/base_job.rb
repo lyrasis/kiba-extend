@@ -55,8 +55,8 @@ module Kiba
         def setup_files(files)
           tmp = {}
           files.each do |type, arr|
-            method = Kiba::Extend.registry.method("as_#{type}")
-            tmp[type] = [arr].flatten.map { |key| method.call(key) }
+            meth = Kiba::Extend.registry.method("as_#{type}")
+            tmp[type] = [arr].flatten.map { |key| prep_file(meth, key) }
           end
           tmp
         end
@@ -74,6 +74,22 @@ module Kiba
         def pre_process
           Kiba.job_segment do
           end
+        end
+
+        def prep_file(meth, key)
+          meth.call(key)
+        rescue Kiba::Extend::Registry::FileRegistry::KeyNotRegisteredError => err
+          locs = caller_locations
+          at_base_init = false
+          until at_base_init
+            loc = locs.shift
+            at_base_init = true if loc.path.end_with?('base_job.rb') && loc.label == 'initialize'
+          end
+          locs.shift
+          loc = locs.shift
+          puts "JOB FAILED: TRANSFORM ERROR IN: #{loc.path}"
+          puts "#{err.class.name}: #{err.message}"
+          exit
         end
 
         def config
