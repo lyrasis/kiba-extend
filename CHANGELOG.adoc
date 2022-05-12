@@ -27,7 +27,6 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 * `Count::MatchingRowsInLookup` previously returned Integers. Now it defaults to returning Strings, since many of the transforms assume all field values will be strings. If you were calling `Count::MatchingRowsInLookup` in a job and working with the integer result as an integer within that job, this will be a breaking change. In https://github.com/lyrasis/kiba-extend/pull/69[PR#69]
 
 ==== Added
-* Add improved error handling in jobs when a transform raises a `Kiba::Extend::Error`. In https://github.com/lyrasis/kiba-extend/pull/77[PR#77]. Improved error message for `Copy::Field` added in https://github.com/lyrasis/kiba-extend/pull/78[PR#78]
 * Add `Rename::Fields` transform. In https://github.com/lyrasis/kiba-extend/pull/75[PR#75]
 * Add `Name::SplitInverted` and `Name::ConvertInvertedToDirectForm` transforms. In https://github.com/lyrasis/kiba-extend/pull/74[PR#74]
 * Add `Allable` mixin module for transforms that accept `fields: :all`. In https://github.com/lyrasis/kiba-extend/pull/73[PR#73]
@@ -35,8 +34,11 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 * Add `null_placeholder` parameter to `Merge::MultiRowLookup`, which will replace any blank values in merged field values with the given string. Useful for building repeating field groups in CollectionSpace migrations. In https://github.com/lyrasis/kiba-extend/pull/70[PR#70]
 
 ==== Changed
-* Improves exception handling when `MissingDependencyError` is raised. In https://github.com/lyrasis/kiba-extend/pull/80[PR#80]
-* Improves exception handling when `KeyNotRegisteredError` is raised, as per https://github.com/lyrasis/kiba-extend/issues/64[GH#64]. In https://github.com/lyrasis/kiba-extend/pull/79[PR#79]
+* Raise `LookupTypeError` when `Merge::MultiRowLookup` is called with `lookup` parameter that is not a Hash. In https://github.com/lyrasis/kiba-extend/pull/81[PR#81]
+* Improved exception handling when `MissingDependencyError` is raised. In https://github.com/lyrasis/kiba-extend/pull/80[PR#80]
+* Improved error message for `Copy::Field`. In https://github.com/lyrasis/kiba-extend/pull/78[PR#78]
+* Add improved error handling in jobs when a transform raises a `Kiba::Extend::Error`. In https://github.com/lyrasis/kiba-extend/pull/77[PR#77].
+* Improved exception handling when `KeyNotRegisteredError` is raised, as per https://github.com/lyrasis/kiba-extend/issues/64[GH#64]. In https://github.com/lyrasis/kiba-extend/pull/79[PR#79]
 * More informative error message if you pass in a non-existent `using` hash when calling `Deduplicate::Flag` transform. In https://github.com/lyrasis/kiba-extend/pull/76[PR#76]
 * `Rename::Field` now warns if the `to` field already exists and will be overwritten. In https://github.com/lyrasis/kiba-extend/pull/75[PR#75]
 * Use zeitwerk for autoloading. In https://github.com/lyrasis/kiba-extend/pull/75[PR#75]. Bugfix for use in projects implemented in https://github.com/lyrasis/kiba-extend/pull/76[PR#76] via eager autoload.
