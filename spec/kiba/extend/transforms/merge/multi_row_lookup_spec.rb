@@ -305,5 +305,30 @@ RSpec.describe Kiba::Extend::Transforms::Merge::MultiRowLookup do
       end
     end
   end
+
+  context 'when lookup is given as symbol' do
+    let(:input) do
+      [
+        {id: '1', name: 'Weddy', sex: 'm', source: 'adopted'},
+      ]
+    end
+
+    let(:transforms) do
+      Kiba.job_segment do
+        transform Merge::MultiRowLookup,
+          fieldmap: {
+            date: :date,
+            event: :treatment
+          },
+          keycolumn: :id,
+          lookup: :lookup
+      end
+    end
+
+    it 'raises error' do
+      msg = 'Lookup value `lookup (Symbol)` must be a Hash'
+      expect{ result }.to raise_error(Kiba::Extend::Transforms::Merge::MultiRowLookup::LookupTypeError).with_message(msg)
+    end
+  end
 end
 

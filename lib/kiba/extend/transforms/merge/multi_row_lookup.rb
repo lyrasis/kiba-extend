@@ -7,11 +7,24 @@ module Kiba
         # used when lookup may return an array of rows from which values should be merged
         #  into the target, AND THE TARGET IS MULTIVALUED
         class MultiRowLookup
+          class LookupTypeError < Kiba::Extend::Error
+            def initialize(lookup)
+              @lookup = lookup
+              super("Lookup value `#{lookup} (#{lookup.class})` must be a Hash")
+            end
+
+            private
+
+            attr_reader :lookup
+          end
+          
           def initialize(fieldmap:, lookup:, keycolumn:, constantmap: {},
                          conditions: {}, multikey: false, delim: DELIM, null_placeholder: nil)
             @fieldmap = fieldmap # hash of looked-up values to merge in for each merged-in row
             @constantmap = constantmap # hash of constants to add for each merged-in row
             @lookup = lookup # lookuphash; should be created with csv_to_multi_hash
+            fail LookupTypeError.new(lookup) unless lookup.is_a?(Hash)
+            
             @keycolumn = keycolumn # column in main table containing value expected to be lookup key
             @multikey = multikey # should the key be treated as multivalued
             @conditions = conditions
