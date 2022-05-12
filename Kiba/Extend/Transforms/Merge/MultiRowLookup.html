@@ -110,7 +110,17 @@
 <div class="tags">
   
 
-</div>
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="MultiRowLookup/LookupTypeError.html" title="Kiba::Extend::Transforms::Merge::MultiRowLookup::LookupTypeError (class)">LookupTypeError</a></span>
+    
+  
+</p>
+
 
 
 
@@ -181,27 +191,31 @@
       <pre class="lines">
 
 
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20</pre>
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/merge/multi_row_lookup.rb', line 10</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/merge/multi_row_lookup.rb', line 21</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fieldmap:</span><span class='comma'>,</span> <span class='label'>lookup:</span><span class='comma'>,</span> <span class='label'>keycolumn:</span><span class='comma'>,</span> <span class='label'>constantmap:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span>
                <span class='label'>conditions:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>multikey:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='const'><span class='object_link'><a href="../../../../top-level-namespace.html#DELIM-constant" title="DELIM (constant)">DELIM</a></span></span><span class='comma'>,</span> <span class='label'>null_placeholder:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@fieldmap</span> <span class='op'>=</span> <span class='id identifier rubyid_fieldmap'>fieldmap</span> <span class='comment'># hash of looked-up values to merge in for each merged-in row
 </span>  <span class='ivar'>@constantmap</span> <span class='op'>=</span> <span class='id identifier rubyid_constantmap'>constantmap</span> <span class='comment'># hash of constants to add for each merged-in row
 </span>  <span class='ivar'>@lookup</span> <span class='op'>=</span> <span class='id identifier rubyid_lookup'>lookup</span> <span class='comment'># lookuphash; should be created with csv_to_multi_hash
-</span>  <span class='ivar'>@keycolumn</span> <span class='op'>=</span> <span class='id identifier rubyid_keycolumn'>keycolumn</span> <span class='comment'># column in main table containing value expected to be lookup key
+</span>  <span class='id identifier rubyid_fail'>fail</span> <span class='const'><span class='object_link'><a href="MultiRowLookup/LookupTypeError.html" title="Kiba::Extend::Transforms::Merge::MultiRowLookup::LookupTypeError (class)">LookupTypeError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="MultiRowLookup/LookupTypeError.html#initialize-instance_method" title="Kiba::Extend::Transforms::Merge::MultiRowLookup::LookupTypeError#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_lookup'>lookup</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_lookup'>lookup</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span>
+  
+  <span class='ivar'>@keycolumn</span> <span class='op'>=</span> <span class='id identifier rubyid_keycolumn'>keycolumn</span> <span class='comment'># column in main table containing value expected to be lookup key
 </span>  <span class='ivar'>@multikey</span> <span class='op'>=</span> <span class='id identifier rubyid_multikey'>multikey</span> <span class='comment'># should the key be treated as multivalued
 </span>  <span class='ivar'>@conditions</span> <span class='op'>=</span> <span class='id identifier rubyid_conditions'>conditions</span>
   <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_delim'>delim</span>
@@ -218,7 +232,7 @@
 </div>
 
       <div id="footer">
-  Generated on Tue May 10 19:32:25 2022 by
+  Generated on Thu May 12 18:47:20 2022 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-2.7.6).
 </div>
