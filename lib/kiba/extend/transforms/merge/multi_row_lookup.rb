@@ -19,7 +19,8 @@ module Kiba
           end
           
           def initialize(fieldmap:, lookup:, keycolumn:, constantmap: {},
-                         conditions: {}, multikey: false, delim: DELIM, null_placeholder: nil)
+                         conditions: {}, multikey: false, delim: DELIM, null_placeholder: nil,
+                         sort_on: nil)
             @fieldmap = fieldmap # hash of looked-up values to merge in for each merged-in row
             @constantmap = constantmap # hash of constants to add for each merged-in row
             @lookup = lookup # lookuphash; should be created with csv_to_multi_hash
@@ -30,11 +31,19 @@ module Kiba
             @conditions = conditions
             @delim = delim
             @null_placeholder = null_placeholder
+            @sort_on = sort_on
+            @selector = Lookup::RowSelector.call(
+              conditions: conditions,
+              sep: delim
+            )
           end
 
           # @private
           def process(row)
-            field_data = Kiba::Extend::Utils::Fieldset.new(fields: fieldmap.values, null_placeholder: null_placeholder)
+            field_data = Kiba::Extend::Utils::Fieldset.new(
+              fields: fieldmap.values,
+              null_placeholder: null_placeholder
+            )
 
             id_data = row.fetch(keycolumn, '')
             id_data = id_data.nil? ? '' : id_data
@@ -59,7 +68,8 @@ module Kiba
 
           private
 
-          attr_reader :fieldmap, :constantmap, :lookup, :keycolumn, :multikey, :conditions, :delim, :null_placeholder
+          attr_reader :fieldmap, :constantmap, :lookup, :keycolumn, :multikey, :conditions,
+            :delim, :null_placeholder, :sort_on, :selector
 
           def target_field(field)
             target = fieldmap.key(field)
@@ -72,12 +82,7 @@ module Kiba
             matches = lookup.fetch(id, [])
             return matches if matches.empty?
 
-            Lookup::RowSelector.new(
-              origrow: sourcerow,
-              mergerows: lookup.fetch(id, []),
-              conditions: conditions,
-              sep: delim
-            ).result
+            selector.call(origrow: sourcerow, mergerows: matches)
           end
         end
       end

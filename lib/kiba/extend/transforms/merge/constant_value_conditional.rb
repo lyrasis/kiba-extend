@@ -17,6 +17,10 @@ module Kiba
             @fieldmap = fieldmap
             @conditions = conditions
             @sep = sep
+            @selector = Lookup::RowSelector.call(
+              conditions: conditions,
+              sep: sep
+            )
           end
 
           # @private
@@ -31,13 +35,13 @@ module Kiba
 
           private
 
+          attr_reader :fieldmap, :conditions, :sep, :selector
+          
           def conditions_met?(row)
-            chk = Lookup::RowSelector.new(
+            chk = selector.call(
               origrow: row,
-              mergerows: [],
-              conditions: @conditions,
-              sep: @sep
-            ).result
+              mergerows: []
+              )
             chk.empty? ? false : true
           end
         end
