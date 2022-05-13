@@ -11,7 +11,13 @@ module Kiba
               Kiba::Extend::Utils::Lookup::RowSelectorByHash.new(
                 conditions: conditions,
                 sep: sep
-                )
+              )
+            elsif conditions.lambda?
+              Kiba::Extend::Utils::Lookup::RowSelectorByLambda.new(
+                conditions: conditions,
+                sep: sep
+              )
+
             end
           end            
           end
