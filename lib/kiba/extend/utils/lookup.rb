@@ -18,7 +18,17 @@ module Kiba
           end
         end
 
-        # use when keycolumn values are not unique
+
+        # Turns any Enumerable where each item is a record/row hash into an expected lookup
+        #   hash via Utils::LookupHash
+        # @param enum [#each<Hash>] rows/records to turn into the lookup source
+        # @param keycolumn [Symbol] field name on which rows are grouped/looked up
+        def enum_to_hash(enum:, keycolumn:)
+          lookup = Kiba::Extend::Utils::LookupHash.new(keycolumn: keycolumn)
+          enum.each{ |row| lookup.add_record(row.to_h) }
+          lookup.hash
+        end
+        
         # creates hash with keycolumn value as key and array of csv-rows-as-hashes as the value
         # @param file [String] path to CSV file
         # @param csvopt [Hash] options for reading/parsing CSV
