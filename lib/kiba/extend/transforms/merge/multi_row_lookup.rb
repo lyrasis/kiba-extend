@@ -32,7 +32,7 @@ module Kiba
           #   in from. The Hash option is pretty horrible and not at all documented. See the
           #   [Lookup::RowSelectorByHash spec](https://github.com/lyrasis/kiba-extend/blob/main/spec/kiba/extend/utils/lookup/row_selector_by_hash_spec.rb)
           #   for some examples. The Lambda option is probably more straightforward and flexible. See
-          #   Kiba::Extend::Utils::Lookup::RowSelectorByLambda for examples.
+          #   {Kiba::Extend::Utils::Lookup::RowSelectorByLambda} for examples.
           # @param multikey [Boolean] whether the source keycolumn should be treated as multivalued. I.e.
           #   it will be split on the given `delim`, and each resulting element of the split array will
           #   be used to retrieve rows from the lookup table to merge into this row
