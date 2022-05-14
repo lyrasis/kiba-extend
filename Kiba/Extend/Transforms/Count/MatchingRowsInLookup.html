@@ -301,7 +301,10 @@ for examples on how to use</p>
 20
 21
 22
-23</pre>
+23
+24
+25
+26</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/count/matching_rows_in_lookup.rb', line 17</span>
@@ -312,6 +315,9 @@ for examples on how to use</p>
   <span class='ivar'>@target</span> <span class='op'>=</span> <span class='id identifier rubyid_targetfield'>targetfield</span>
   <span class='ivar'>@conditions</span> <span class='op'>=</span> <span class='id identifier rubyid_conditions'>conditions</span>
   <span class='ivar'>@result_type</span> <span class='op'>=</span> <span class='id identifier rubyid_result_type'>result_type</span>
+  <span class='ivar'>@selector</span> <span class='op'>=</span> <span class='const'>Lookup</span><span class='op'>::</span><span class='const'>RowSelector</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span>
+    <span class='label'>conditions:</span> <span class='id identifier rubyid_conditions'>conditions</span>
+  <span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -324,7 +330,7 @@ for examples on how to use</p>
 </div>
 
       <div id="footer">
-  Generated on Thu May 12 18:47:20 2022 by
+  Generated on Sat May 14 00:58:03 2022 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-2.7.6).
 </div>

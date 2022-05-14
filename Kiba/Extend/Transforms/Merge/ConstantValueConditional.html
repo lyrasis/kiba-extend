@@ -191,7 +191,11 @@
 17
 18
 19
-20</pre>
+20
+21
+22
+23
+24</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/merge/constant_value_conditional.rb', line 16</span>
@@ -200,6 +204,10 @@
   <span class='ivar'>@fieldmap</span> <span class='op'>=</span> <span class='id identifier rubyid_fieldmap'>fieldmap</span>
   <span class='ivar'>@conditions</span> <span class='op'>=</span> <span class='id identifier rubyid_conditions'>conditions</span>
   <span class='ivar'>@sep</span> <span class='op'>=</span> <span class='id identifier rubyid_sep'>sep</span>
+  <span class='ivar'>@selector</span> <span class='op'>=</span> <span class='const'>Lookup</span><span class='op'>::</span><span class='const'>RowSelector</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span>
+    <span class='label'>conditions:</span> <span class='id identifier rubyid_conditions'>conditions</span><span class='comma'>,</span>
+    <span class='label'>sep:</span> <span class='id identifier rubyid_sep'>sep</span>
+  <span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -212,7 +220,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu May 12 18:47:20 2022 by
+  Generated on Sat May 14 00:58:03 2022 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-2.7.6).
 </div>

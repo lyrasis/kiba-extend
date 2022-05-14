@@ -88,7 +88,9 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/kiba/extend/utils/lookup.rb</dd>
+    <dd>lib/kiba/extend/utils/lookup.rb<span class="defines">,<br />
+  lib/kiba/extend/utils/lookup/row_sorter.rb,<br /> lib/kiba/extend/utils/lookup/set_checker.rb,<br /> lib/kiba/extend/utils/lookup/row_selector.rb,<br /> lib/kiba/extend/utils/lookup/pair_equality.rb,<br /> lib/kiba/extend/utils/lookup/multival_pairs.rb,<br /> lib/kiba/extend/utils/lookup/pair_inclusion.rb,<br /> lib/kiba/extend/utils/lookup/field_emptiness.rb,<br /> lib/kiba/extend/utils/lookup/criteria_checker.rb,<br /> lib/kiba/extend/utils/lookup/row_selector_by_hash.rb,<br /> lib/kiba/extend/utils/lookup/row_selector_by_lambda.rb</span>
+</dd>
   </dl>
   
 </div>
@@ -99,7 +101,7 @@
     
   
     
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Lookup/CriteriaChecker.html" title="Kiba::Extend::Utils::Lookup::CriteriaChecker (class)">CriteriaChecker</a></span>, <span class='object_link'><a href="Lookup/FieldEmptiness.html" title="Kiba::Extend::Utils::Lookup::FieldEmptiness (class)">FieldEmptiness</a></span>, <span class='object_link'><a href="Lookup/MultivalPairs.html" title="Kiba::Extend::Utils::Lookup::MultivalPairs (class)">MultivalPairs</a></span>, <span class='object_link'><a href="Lookup/PairEquality.html" title="Kiba::Extend::Utils::Lookup::PairEquality (class)">PairEquality</a></span>, <span class='object_link'><a href="Lookup/PairInclusion.html" title="Kiba::Extend::Utils::Lookup::PairInclusion (class)">PairInclusion</a></span>, <span class='object_link'><a href="Lookup/RowSelector.html" title="Kiba::Extend::Utils::Lookup::RowSelector (class)">RowSelector</a></span>, <span class='object_link'><a href="Lookup/SetChecker.html" title="Kiba::Extend::Utils::Lookup::SetChecker (class)">SetChecker</a></span>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Lookup/CriteriaChecker.html" title="Kiba::Extend::Utils::Lookup::CriteriaChecker (class)">CriteriaChecker</a></span>, <span class='object_link'><a href="Lookup/FieldEmptiness.html" title="Kiba::Extend::Utils::Lookup::FieldEmptiness (class)">FieldEmptiness</a></span>, <span class='object_link'><a href="Lookup/MultivalPairs.html" title="Kiba::Extend::Utils::Lookup::MultivalPairs (class)">MultivalPairs</a></span>, <span class='object_link'><a href="Lookup/PairEquality.html" title="Kiba::Extend::Utils::Lookup::PairEquality (class)">PairEquality</a></span>, <span class='object_link'><a href="Lookup/PairInclusion.html" title="Kiba::Extend::Utils::Lookup::PairInclusion (class)">PairInclusion</a></span>, <span class='object_link'><a href="Lookup/RowSelector.html" title="Kiba::Extend::Utils::Lookup::RowSelector (class)">RowSelector</a></span>, <span class='object_link'><a href="Lookup/RowSelectorByHash.html" title="Kiba::Extend::Utils::Lookup::RowSelectorByHash (class)">RowSelectorByHash</a></span>, <span class='object_link'><a href="Lookup/RowSelectorByLambda.html" title="Kiba::Extend::Utils::Lookup::RowSelectorByLambda (class)">RowSelectorByLambda</a></span>, <span class='object_link'><a href="Lookup/RowSorter.html" title="Kiba::Extend::Utils::Lookup::RowSorter (class)">RowSorter</a></span>, <span class='object_link'><a href="Lookup/SetChecker.html" title="Kiba::Extend::Utils::Lookup::SetChecker (class)">SetChecker</a></span>
     
   
 </p>
@@ -121,7 +123,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#csv_to_hash-instance_method" title="#csv_to_hash (instance method)">#<strong>csv_to_hash</strong>(args)  &#x21d2; Object </a>
+      <a href="#csv_to_hash-instance_method" title="#csv_to_hash (instance method)">#<strong>csv_to_hash</strong>(file:, csvopt: Kiba::Extend.csvopts, keycolumn:)  &#x21d2; Object </a>
     
 
     
@@ -137,7 +139,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>use when keycolumn values are not unique creates hash with keycolumn value as key and array of csv-rows-as-hashes as the value.</p>
+    <span class="summary_desc"><div class='inline'><p>creates hash with keycolumn value as key and array of csv-rows-as-hashes as the value.</p>
 </div></span>
   
 </li>
@@ -169,6 +171,29 @@ method. Any need for it can be met by the multi-hash implementation</p>
 </li>
 
       
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#enum_to_hash-instance_method" title="#enum_to_hash (instance method)">#<strong>enum_to_hash</strong>(enum:, keycolumn:)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Turns any Enumerable where each item is a record/row hash into an expected lookup   hash via Utils::LookupHash.</p>
+</div></span>
+  
+</li>
+
+      
     </ul>
   
 
@@ -181,7 +206,7 @@ method. Any need for it can be met by the multi-hash implementation</p>
       <div class="method_details first">
   <h3 class="signature first" id="csv_to_hash-instance_method">
   
-    #<strong>csv_to_hash</strong>(args)  &#x21d2; <tt>Object</tt> 
+    #<strong>csv_to_hash</strong>(file:, csvopt: Kiba::Extend.csvopts, keycolumn:)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -193,14 +218,64 @@ method. Any need for it can be met by the multi-hash implementation</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>use when keycolumn values are not unique
-creates hash with keycolumn value as key and array of csv-rows-as-hashes as the value</p>
+    <p>creates hash with keycolumn value as key and array of csv-rows-as-hashes as the value</p>
 
 
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>file</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>path to CSV file</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>csvopt</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>Kiba::Extend.csvopts</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>options for reading/parsing CSV</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>keycolumn</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>field name on which rows are grouped/looked up</p>
+</div>
+      
+    </li>
+  
+</ul>
+
 
 </div><table class="source_code">
   <tr>
@@ -208,29 +283,19 @@ creates hash with keycolumn value as key and array of csv-rows-as-hashes as the 
       <pre class="lines">
 
 
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32</pre>
+36
+37
+38
+39
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/lookup.rb', line 23</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/lookup.rb', line 36</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_csv_to_hash'>csv_to_hash</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
-  <span class='const'>CSV</span><span class='period'>.</span><span class='id identifier rubyid_foreach'>foreach</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='lbracket'>[</span><span class='symbol'>:file</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_args'>args</span><span class='lbracket'>[</span><span class='symbol'>:csvopt</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each_with_object'>each_with_object</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='comma'>,</span> <span class='id identifier rubyid_memo'>memo</span><span class='op'>|</span>
-    <span class='id identifier rubyid_k'>k</span> <span class='op'>=</span> <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='lbracket'>[</span><span class='symbol'>:keycolumn</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_memo'>memo</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='id identifier rubyid_k'>k</span><span class='rparen'>)</span>
-      <span class='id identifier rubyid_memo'>memo</span><span class='lbracket'>[</span><span class='id identifier rubyid_k'>k</span><span class='rbracket'>]</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span>
-    <span class='kw'>else</span>
-      <span class='id identifier rubyid_memo'>memo</span><span class='lbracket'>[</span><span class='id identifier rubyid_k'>k</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span><span class='rbracket'>]</span>
-    <span class='kw'>end</span>
-  <span class='kw'>end</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_csv_to_hash'>csv_to_hash</span><span class='lparen'>(</span><span class='label'>file:</span><span class='comma'>,</span> <span class='label'>csvopt:</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_csvopts'>csvopts</span><span class='comma'>,</span> <span class='label'>keycolumn:</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_lookup'>lookup</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Utils.html" title="Kiba::Extend::Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="LookupHash.html" title="Kiba::Extend::Utils::LookupHash (class)">LookupHash</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="LookupHash.html#initialize-instance_method" title="Kiba::Extend::Utils::LookupHash#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>keycolumn:</span> <span class='id identifier rubyid_keycolumn'>keycolumn</span><span class='rparen'>)</span>
+  <span class='const'>CSV</span><span class='period'>.</span><span class='id identifier rubyid_foreach'>foreach</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_csvopt'>csvopt</span><span class='rparen'>)</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_lookup'>lookup</span><span class='period'>.</span><span class='id identifier rubyid_add_record'>add_record</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_lookup'>lookup</span><span class='period'>.</span><span class='id identifier rubyid_hash'>hash</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -292,12 +357,91 @@ method. Any need for it can be met by the multi-hash implementation</p>
 </table>
 </div>
     
+      <div class="method_details ">
+  <h3 class="signature " id="enum_to_hash-instance_method">
+  
+    #<strong>enum_to_hash</strong>(enum:, keycolumn:)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Turns any Enumerable where each item is a record/row hash into an expected lookup
+  hash via Utils::LookupHash</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>enum</span>
+      
+      
+        <span class='type'>(<tt>#each&lt;Hash&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>rows/records to turn into the lookup source</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>keycolumn</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>field name on which rows are grouped/looked up</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+26
+27
+28
+29
+30</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/lookup.rb', line 26</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_enum_to_hash'>enum_to_hash</span><span class='lparen'>(</span><span class='label'>enum:</span><span class='comma'>,</span> <span class='label'>keycolumn:</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_lookup'>lookup</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Utils.html" title="Kiba::Extend::Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="LookupHash.html" title="Kiba::Extend::Utils::LookupHash (class)">LookupHash</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="LookupHash.html#initialize-instance_method" title="Kiba::Extend::Utils::LookupHash#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>keycolumn:</span> <span class='id identifier rubyid_keycolumn'>keycolumn</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_enum'>enum</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_lookup'>lookup</span><span class='period'>.</span><span class='id identifier rubyid_add_record'>add_record</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_lookup'>lookup</span><span class='period'>.</span><span class='id identifier rubyid_hash'>hash</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
   </div>
 
 </div>
 
       <div id="footer">
-  Generated on Thu May 12 18:47:18 2022 by
+  Generated on Sat May 14 00:58:01 2022 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-2.7.6).
 </div>
