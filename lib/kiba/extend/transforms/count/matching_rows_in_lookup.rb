@@ -20,6 +20,9 @@ module Kiba
             @target = targetfield
             @conditions = conditions
             @result_type = result_type
+            @selector = Lookup::RowSelector.call(
+              conditions: conditions
+            )
           end
 
           # @private
@@ -29,11 +32,10 @@ module Kiba
             if matches.size.zero?
               row[target] = finalize(0)
             else
-              merge_rows = Lookup::RowSelector.new(
+              merge_rows = selector.call(
                 origrow: row,
-                mergerows: lookup.fetch(id, nil),
-                conditions: conditions
-              ).result
+                mergerows: matches
+                )
               row[target] = finalize(merge_rows.size)
             end
             row
@@ -41,7 +43,7 @@ module Kiba
 
           private
 
-          attr_reader :lookup, :keycolumn, :target, :conditions, :result_type
+          attr_reader :lookup, :keycolumn, :target, :conditions, :result_type, :selector
 
           def finalize(int)
             return int.to_s if result_type == :str

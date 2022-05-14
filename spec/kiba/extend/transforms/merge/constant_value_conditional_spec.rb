@@ -8,8 +8,17 @@ RSpec.describe Kiba::Extend::Transforms::Merge::ConstantValueConditional do
   let(:result){ test_job.accumulator }
 
 
-  let(:transforms) do
+  let(:transforms_l) do
     Kiba.job_segment do
+      condition = ->(row, _x){ [row].select{ |r| r[:note].match?(/gift|donation/i) } }
+      transform Merge::ConstantValueConditional, 
+        fieldmap: { reason: 'gift' },
+        conditions: condition
+    end
+  end
+
+  let(:transforms_h) do
+   Kiba.job_segment do
       transform Merge::ConstantValueConditional,
         fieldmap: { reason: 'gift' },
         conditions: {
@@ -24,10 +33,12 @@ RSpec.describe Kiba::Extend::Transforms::Merge::ConstantValueConditional do
             ] }
           }
         }
-    end
+   end
   end
-  
-  context 'when row meets criteria' do
+
+  let(:transforms){ transforms_l }
+
+  context 'when row meets criteria' do    
     let(:input) do
       [
         {reason: nil, note: 'Gift'},
@@ -42,8 +53,16 @@ RSpec.describe Kiba::Extend::Transforms::Merge::ConstantValueConditional do
       ]
     end
 
-    it 'merges constant data values into specified field' do
-      expect(result).to eq(expected)
+    context 'with lambda conditions' do
+      it 'merges constant data values into specified field' do
+        expect(result).to eq(expected)
+      end
+    end
+    context 'with hash conditions' do
+      let(:transforms){ transforms_h }
+      it 'merges constant data values into specified field' do
+        expect(result).to eq(expected)
+      end
     end
 
     context 'when target field has a pre-existing value' do
