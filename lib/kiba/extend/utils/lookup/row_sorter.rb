@@ -84,6 +84,9 @@ module Kiba
         #
         # @since 2.8.0
         class RowSorter
+          # @since 2.8.0.83
+          class MissingSortFieldError < Kiba::Extend::Error; end
+          
           # @param on [Symbol] field on which to sort the rows
           # @param dir [:asc, :desc] sort direction
           # @param as [Symbol] method to call in order to convert field values for sorting
@@ -97,7 +100,7 @@ module Kiba
 
           # @param arr [Array<Hash>] array of rows to sort
           def call(arr)
-            return arr unless sortfield
+            fail MissingSortFieldError.new("Cannot sort on missing field: `#{sortfield}`") unless arr.first.key?(sortfield)
 
             blanks_sep = arr.group_by{ |row| row[sortfield].blank? }
 
