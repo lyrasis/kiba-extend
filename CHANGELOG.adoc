@@ -28,6 +28,7 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 ==== Added
 
 ==== Changed
+* `Merge::ConstantValue` warns (once per transform) if `target` is an existing field containing any data. In https://github.com/lyrasis/kiba-extend/pull/84[PR#84]
 * BUGFIX: `RowSorter` checks for presence of `sortfield` and raises error if it doesn't exist, rather than trying to proceed and blowing up. In https://github.com/lyrasis/kiba-extend/pull/83[PR#83]
 
 ==== Deleted
