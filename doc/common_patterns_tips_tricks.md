@@ -43,7 +43,7 @@ class Transformer
 end
 ```
 
-It could also useful in project-specific transforms as shown below (need to test that this actually works):
+It can also be useful in other transforms as shown below:
 
 
 ```
@@ -57,8 +57,9 @@ class Transformer
   # @private
   def process(row)
     # do stuff to row
-    row = xform.process(row)
+    otherxform.process(row)
     # do more stuff to row
+	row
   end
   
   private
@@ -66,3 +67,9 @@ class Transformer
   attr_reader :param1, :param2, :otherxform
 end
 ```
+
+See the code for {Kiba::Extend::Transforms::Rename::Fields} for an example of embedding another transform to compose transformation logic.
+
+## Calling a job with parameters
+
+No need to write repetitive jobs with the exact same logic to handle variable values that differ according to a pattern. See [File registry documentation on Hash creator](https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html#hash-creator-example-since-2-7-2) for a full example of how to do this.
