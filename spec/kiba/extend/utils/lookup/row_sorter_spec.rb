@@ -52,5 +52,14 @@ RSpec.describe Kiba::Extend::Utils::Lookup::RowSorter do
         expect(result).to eq([nil, '', 'XR3', '25', '11', '100', '10', '1'])
       end
     end
+
+    context 'with missing sortfield' do
+      let(:on){ :foo }
+      
+      it 'raises error' do
+        msg = 'Cannot sort on missing field: `foo`'
+        expect{ result }.to raise_error(Kiba::Extend::Utils::Lookup::RowSorter::MissingSortFieldError).with_message(msg)
+      end
+    end
   end
 end
