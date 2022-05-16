@@ -101,7 +101,7 @@
 <span class='kw'>end</span>
 </code></pre>
 
-<p>It could also useful in project-specific transforms as shown below (need to test that this actually works):</p>
+<p>It can also be useful in other transforms as shown below:</p>
 
 <pre class="code ruby"><code class="ruby"><span class='kw'>class</span> <span class='const'>Transformer</span>
   <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>param1:</span><span class='comma'>,</span> <span class='label'>param2:</span><span class='rparen'>)</span>
@@ -113,19 +113,26 @@
   <span class='comment'># @private
 </span>  <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
     <span class='comment'># do stuff to row
-</span>    <span class='id identifier rubyid_row'>row</span> <span class='op'>=</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
+</span>    <span class='id identifier rubyid_otherxform'>otherxform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
     <span class='comment'># do more stuff to row
-</span>  <span class='kw'>end</span>
+</span>    <span class='id identifier rubyid_row'>row</span>
+  <span class='kw'>end</span>
 
   <span class='id identifier rubyid_private'>private</span>
 
   <span class='id identifier rubyid_attr_reader'>attr_reader</span> <span class='symbol'>:param1</span><span class='comma'>,</span> <span class='symbol'>:param2</span><span class='comma'>,</span> <span class='symbol'>:otherxform</span>
 <span class='kw'>end</span>
 </code></pre>
+
+<p>See the code for <span class='object_link'><a href="Kiba/Extend/Transforms/Rename/Fields.html" title="Kiba::Extend::Transforms::Rename::Fields (class)">Kiba::Extend::Transforms::Rename::Fields</a></span> for an example of embedding another transform to compose transformation logic.</p>
+
+<h2 id="calling-a-job-with-parameters">Calling a job with parameters</h2>
+
+<p>No need to write repetitive jobs with the exact same logic to handle variable values that differ according to a pattern. See <a href="https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html#hash-creator-example-since-2-7-2">File registry documentation on Hash creator</a> for a full example of how to do this.</p>
 </div></div>
 
       <div id="footer">
-  Generated on Mon May 16 14:33:27 2022 by
+  Generated on Mon May 16 14:43:48 2022 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-2.7.6).
 </div>
