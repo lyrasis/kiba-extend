@@ -76,7 +76,7 @@
   
   <dl>
     <dt>Included in:</dt>
-    <dd><span class='object_link'><a href="Cspace/AddressCountry.html" title="Kiba::Extend::Transforms::Cspace::AddressCountry (class)">Cspace::AddressCountry</a></span>, <span class='object_link'><a href="Rename/Field.html" title="Kiba::Extend::Transforms::Rename::Field (class)">Rename::Field</a></span></dd>
+    <dd><span class='object_link'><a href="Cspace/AddressCountry.html" title="Kiba::Extend::Transforms::Cspace::AddressCountry (class)">Cspace::AddressCountry</a></span>, <span class='object_link'><a href="Merge/ConstantValue.html" title="Kiba::Extend::Transforms::Merge::ConstantValue (class)">Merge::ConstantValue</a></span>, <span class='object_link'><a href="Rename/Field.html" title="Kiba::Extend::Transforms::Rename::Field (class)">Rename::Field</a></span></dd>
   </dl>
   
 
@@ -94,6 +94,11 @@
 
 <p>If you have an input with 1000 rows missing an expected field, you don&#39;t want 1000 warnings to STDOUT, so
   this handles ensuring a single warning will be sent</p>
+
+<h2 id="usage">Usage</h2>
+
+<p>The <code>initialize</code> method of a transform using this mixin should call <code>setup_single_warning</code>. Then,
+  <code>add_single_warning</code> can be used from anywhere else in the transform.</p>
 
 
   </div>
@@ -128,7 +133,7 @@
 </div>
 
       <div id="footer">
-  Generated on Mon May 16 15:35:21 2022 by
+  Generated on Mon May 16 22:07:58 2022 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-2.7.6).
 </div>
