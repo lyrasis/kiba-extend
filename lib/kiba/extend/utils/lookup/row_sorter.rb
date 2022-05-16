@@ -81,6 +81,8 @@ module Kiba
         # result.map{ |row| row[:id] } =>
         #   [nil, '', 'XR3', '25', '11', '100', '10', '1']
         # ```
+        #
+        # @since 2.8.0
         class RowSorter
           # @param on [Symbol] field on which to sort the rows
           # @param dir [:asc, :desc] sort direction

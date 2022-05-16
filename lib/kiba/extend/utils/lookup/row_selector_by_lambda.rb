@@ -66,7 +66,9 @@ module Kiba
         # ```
         #
         # This will merge the constant value `gift` into the `reason` field if the `note` field includes `gift`
-        #   or `donation` (case insensitive). 
+        #   or `donation` (case insensitive).
+        #
+        # @since 2.8.0
         class RowSelectorByLambda
           # @param conditions [Lambda] selection logic
           def initialize(conditions:, sep: nil)

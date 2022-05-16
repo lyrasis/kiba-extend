@@ -87,7 +87,8 @@ module Kiba
         # {country: nil, addresscountry: nil},
         # {foo: 'bar', addresscountry: nil}
         # ```
-
+        #
+        # @since 2.8.0
         class AddressCountry
           LOOKUP = {
             "Afghanistan" => 'AF',

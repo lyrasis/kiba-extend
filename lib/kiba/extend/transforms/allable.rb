@@ -6,6 +6,8 @@ module Kiba
       # Mixin module providing `finalize_fields` method for transforms that accept `fields: :all`.
 
       # Any transform classes mixing in this module must have `fields` as an attr_reader
+      #
+      # @since 2.8.0
       module Allable
         ::Allable = Kiba::Extend::Transforms::Allable
         module_function

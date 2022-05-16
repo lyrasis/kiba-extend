@@ -27,6 +27,8 @@ module Kiba
         # {appellation: 'Weddy', gender: 'm'},
         # {appellation: 'Kernel', gender: 'f'}
         # ```
+        #
+        # @since 2.8.0
         class Fields
           # @param fieldmap [Hash(Symbol => Symbol)] Keys are the `from` fields; values are the `to` fields
           def initialize(fieldmap:)

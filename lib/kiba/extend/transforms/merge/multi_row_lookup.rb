@@ -4,9 +4,11 @@ module Kiba
   module Extend
     module Transforms
       module Merge
-        # used when lookup may return an array of rows from which values should be merged
-        #  into the target, AND THE TARGET IS MULTIVALUED
+        # Merge one or more rows from a {Kiba::Extend::Utils::LookupHash} into source data, matching on
+        #   `keycolumn` values
         class MultiRowLookup
+
+          # @since 2.8.0
           class LookupTypeError < Kiba::Extend::Error
             def initialize(lookup)
               @lookup = lookup
@@ -43,7 +45,7 @@ module Kiba
           #   rows are found to merge in, all the target columns are left blank. This is useful mainly for
           #   situtations where you are merging in multiple fields which can each have multiple values, and
           #   you need to make sure groups of fields have the same number of values in them
-          # @param sorter [nil, {Kiba::Extend::Utils::Lookup::RowSorter}] handles sorting of lookup rows to control the order they
+          # @param sorter [nil, Kiba::Extend::Utils::Lookup::RowSorter] handles sorting of lookup rows to control the order they
           #   are merged in. Without specifying a sorter, the lookup data is merged in the order it appears
           #   in the lookup table. So, if you ensure your lookup data source is sorted as desired prior to
           #   using it in a lookup, you may not need a sorter.

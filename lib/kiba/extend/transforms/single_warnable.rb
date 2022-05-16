@@ -7,6 +7,8 @@ module Kiba
       #
       # If you have an input with 1000 rows missing an expected field, you don't want 1000 warnings to STDOUT, so
       #   this handles ensuring a single warning will be sent
+      #
+      # @since 2.8.0
       module SingleWarnable
         ::SingleWarnable = Kiba::Extend::Transforms::SingleWarnable
         module_function
