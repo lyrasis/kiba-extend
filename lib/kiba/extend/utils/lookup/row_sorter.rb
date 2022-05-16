@@ -7,7 +7,7 @@ module Kiba
         # Sorts an array of rows on a given field, according to the given parameters
         #
         # Currently this class can be used as an optional argument to
-        #   `Kiba::Extend::Transforms::Merge::MultiRowLookup`, if you need to ensure values from
+        #   {Kiba::Extend::Transforms::Merge::MultiRowLookup}, if you need to ensure values from
         #   multiple looked-up rows are merged in a particular order.
         #
         # @note This class is **not** a transform to sort the rows in a job. It was not designed
@@ -157,5 +157,3 @@ module Kiba
     end
   end
 end
-
-
