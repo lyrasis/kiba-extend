@@ -183,6 +183,21 @@ result.map{ |row| row[:id] } =&gt;
 </div>
 <div class="tags">
   
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>2.8.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div>
 
@@ -340,6 +355,21 @@ result.map{ |row| row[:id] } =&gt;
   
 </ul>
 
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>2.8.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -347,15 +377,15 @@ result.map{ |row| row[:id] } =&gt;
       <pre class="lines">
 
 
-89
-90
 91
 92
 93
-94</pre>
+94
+95
+96</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/lookup/row_sorter.rb', line 89</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/lookup/row_sorter.rb', line 91</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>on:</span><span class='comma'>,</span> <span class='label'>dir:</span> <span class='symbol'>:asc</span><span class='comma'>,</span> <span class='label'>as:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>blanks:</span> <span class='symbol'>:first</span><span class='rparen'>)</span>
   <span class='ivar'>@sortfield</span> <span class='op'>=</span> <span class='id identifier rubyid_on'>on</span>
@@ -411,6 +441,21 @@ result.map{ |row| row[:id] } =&gt;
   
 </ul>
 
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>2.8.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -418,8 +463,6 @@ result.map{ |row| row[:id] } =&gt;
       <pre class="lines">
 
 
-97
-98
 99
 100
 101
@@ -436,10 +479,12 @@ result.map{ |row| row[:id] } =&gt;
 112
 113
 114
-115</pre>
+115
+116
+117</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/lookup/row_sorter.rb', line 97</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/lookup/row_sorter.rb', line 99</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_arr'>arr</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_arr'>arr</span> <span class='kw'>unless</span> <span class='id identifier rubyid_sortfield'>sortfield</span>
@@ -470,7 +515,7 @@ result.map{ |row| row[:id] } =&gt;
 </div>
 
       <div id="footer">
-  Generated on Mon May 16 14:19:13 2022 by
+  Generated on Mon May 16 14:33:29 2022 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-2.7.6).
 </div>
