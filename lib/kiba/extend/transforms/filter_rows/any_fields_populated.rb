@@ -4,6 +4,7 @@ module Kiba
   module Extend
     module Transforms
       module FilterRows
+        # @since 2.8.0.85
         # Keep or reject rows based on whether any of the given fields is populated. Blank strings and nils count as
         #   not populated.
         #
