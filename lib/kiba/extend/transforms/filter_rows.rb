@@ -7,23 +7,6 @@ module Kiba
       module FilterRows
         ::FilterRows = Kiba::Extend::Transforms::FilterRows
 
-        class FieldPopulated
-          def initialize(action:, field:)
-            @action = action
-            @field = field
-          end
-
-          # @private
-          def process(row)
-            val = row.fetch(@field, nil)
-            case @action
-            when :keep
-              val.nil? || val.empty? ? nil : row
-            when :reject
-              val.nil? || val.empty? ? row : nil
-            end
-          end
-        end
 
         class FieldValueGreaterThan
           def initialize(action:, field:, value:)
