@@ -76,7 +76,7 @@
   
   <dl>
     <dt>Included in:</dt>
-    <dd><span class='object_link'><a href="Clean/RegexpFindReplaceFieldVals.html" title="Kiba::Extend::Transforms::Clean::RegexpFindReplaceFieldVals (class)">Clean::RegexpFindReplaceFieldVals</a></span>, <span class='object_link'><a href="Delete/EmptyFieldValues.html" title="Kiba::Extend::Transforms::Delete::EmptyFieldValues (class)">Delete::EmptyFieldValues</a></span></dd>
+    <dd><span class='object_link'><a href="Clean/RegexpFindReplaceFieldVals.html" title="Kiba::Extend::Transforms::Clean::RegexpFindReplaceFieldVals (class)">Clean::RegexpFindReplaceFieldVals</a></span>, <span class='object_link'><a href="Delete/EmptyFieldValues.html" title="Kiba::Extend::Transforms::Delete::EmptyFieldValues (class)">Delete::EmptyFieldValues</a></span>, <span class='object_link'><a href="FilterRows/AllFieldsPopulated.html" title="Kiba::Extend::Transforms::FilterRows::AllFieldsPopulated (class)">FilterRows::AllFieldsPopulated</a></span>, <span class='object_link'><a href="FilterRows/AnyFieldsPopulated.html" title="Kiba::Extend::Transforms::FilterRows::AnyFieldsPopulated (class)">FilterRows::AnyFieldsPopulated</a></span></dd>
   </dl>
   
 
@@ -90,7 +90,20 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Any transform classes mixing in this module must have <code>fields</code> as an attr_reader</p>
+    <p>Mixin module providing <code>finalize_fields</code> method for transforms that accept <code>fields: :all</code>.</p>
+
+<h2 id="usage">Usage</h2>
+
+<p>Any transform classes mixing in this module must have <code>fields</code> as an attr_reader</p>
+
+<p>Set the <code>fields</code> instance variable from user input as follows:</p>
+
+<pre class="code ruby"><code class="ruby">&lt;/code&gt;</code></pre>
+
+<p>Add the following line as the first thing in the <code>process</code> method:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_finalize_fields'>finalize_fields</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_fields_set'>fields_set</span>
+</code></pre>
 
 
   </div>
@@ -125,7 +138,7 @@
 </div>
 
       <div id="footer">
-  Generated on Mon May 16 22:07:58 2022 by
+  Generated on Wed May 18 20:42:53 2022 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-2.7.6).
 </div>

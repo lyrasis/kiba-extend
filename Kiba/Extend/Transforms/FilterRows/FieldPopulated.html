@@ -94,12 +94,59 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/kiba/extend/transforms/filter_rows.rb</dd>
+    <dd>lib/kiba/extend/transforms/filter_rows/field_populated.rb</dd>
   </dl>
   
 </div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>Keep or reject rows based on whether the given field is populated. Blank strings and nils count as
+  not populated.</p>
 
+<h2 id="examples">Examples</h2>
+
+<p>Source data:</p>
+
+<pre class="code ruby"><code class="ruby">{val:  &#39;N&#39;},
+{val:  &#39;n&#39;},
+{val:  &#39;NN&#39;},
+{val:  &#39;NY&#39;},
+{val:  &#39;&#39;},
+{val:  nil}
+</code></pre>
+
+<p>Used in pipeline as:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../FilterRows.html" title="Kiba::Extend::Transforms::FilterRows (module)">FilterRows</a></span></span><span class='op'>::</span><span class='const'>FieldPopulated</span><span class='comma'>,</span> <span class='label'>action:</span> <span class='symbol'>:keep</span><span class='comma'>,</span> <span class='label'>field:</span> <span class='symbol'>:val</span>
+</code></pre>
+
+<p>Resulting data:</p>
+
+<pre class="code ruby"><code class="ruby">{val:  &#39;N&#39;},
+{val:  &#39;n&#39;},
+{val:  &#39;NN&#39;},
+{val:  &#39;NY&#39;}
+</code></pre>
+
+<p>Used in pipeline as:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../FilterRows.html" title="Kiba::Extend::Transforms::FilterRows (module)">FilterRows</a></span></span><span class='op'>::</span><span class='const'>FieldPopulated</span><span class='comma'>,</span> <span class='label'>action:</span> <span class='symbol'>:reject</span><span class='comma'>,</span> <span class='label'>field:</span> <span class='symbol'>:val</span>
+</code></pre>
+
+<p>Resulting data:</p>
+
+<pre class="code ruby"><code class="ruby">{val:  &#39;&#39;},
+{val:  nil},
+</code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
 
 
 
@@ -162,7 +209,41 @@
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>action</span>
+      
+      
+        <span class='type'>(<tt>:keep</tt>, <tt>:reject</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>what to do with row matching criteria</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>field</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>to check populated status in</p>
+</div>
+      
+    </li>
+  
+</ul>
+
 
 </div><table class="source_code">
   <tr>
@@ -170,13 +251,13 @@
       <pre class="lines">
 
 
-50
-51
-52
-53</pre>
+53
+54
+55
+56</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/filter_rows.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/filter_rows/field_populated.rb', line 53</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>action:</span><span class='comma'>,</span> <span class='label'>field:</span><span class='rparen'>)</span>
   <span class='ivar'>@action</span> <span class='op'>=</span> <span class='id identifier rubyid_action'>action</span>
@@ -193,7 +274,7 @@
 </div>
 
       <div id="footer">
-  Generated on Mon May 16 22:07:59 2022 by
+  Generated on Wed May 18 20:42:54 2022 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-2.7.6).
 </div>

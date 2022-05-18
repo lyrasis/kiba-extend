@@ -94,15 +94,65 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/kiba/extend/transforms/filter_rows.rb</dd>
+    <dd>lib/kiba/extend/transforms/filter_rows/field_match_regexp.rb</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>matches across the entire literal content of a field.
-i.e. does not split into multivalues before matching</p>
+    <p>Keep or reject rows where the value of the specified field matches the given regular expression.
+  Matches across the entire field value. I.e. a multivalued field is not split into segments which
+  are each tested for a match.</p>
+
+<h2 id="examples">Examples</h2>
+
+<p>Source data:</p>
+
+<pre class="code ruby"><code class="ruby">{val: &#39;N&#39;},
+{val: &#39;n&#39;},
+{val: &#39;NN&#39;},
+{val: &#39;NY&#39;},
+{val: &#39;&#39;},
+{val: nil}
+</code></pre>
+
+<p>Used in pipeline as:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../FilterRows.html" title="Kiba::Extend::Transforms::FilterRows (module)">FilterRows</a></span></span><span class='op'>::</span><span class='const'>FieldMatchRegexp</span><span class='comma'>,</span> <span class='label'>action:</span> <span class='symbol'>:keep</span><span class='comma'>,</span> <span class='label'>field:</span> <span class='symbol'>:val</span><span class='comma'>,</span> <span class='label'>match:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>^N</span><span class='tstring_end'>&#39;</span></span>
+</code></pre>
+
+<p>Resulting data:</p>
+
+<pre class="code ruby"><code class="ruby">{val: &#39;N&#39;},
+{val: &#39;NN&#39;},
+{val: &#39;NY&#39;},
+</code></pre>
+
+<p>Used in pipeline as:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../FilterRows.html" title="Kiba::Extend::Transforms::FilterRows (module)">FilterRows</a></span></span><span class='op'>::</span><span class='const'>FieldMatchRegexp</span><span class='comma'>,</span> <span class='label'>action:</span> <span class='symbol'>:keep</span><span class='comma'>,</span> <span class='label'>field:</span> <span class='symbol'>:val</span><span class='comma'>,</span> <span class='label'>match:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>^N</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>ignore_case:</span> <span class='kw'>true</span>
+</code></pre>
+
+<p>Resulting data:</p>
+
+<pre class="code ruby"><code class="ruby">{val: &#39;N&#39;},
+{val: &#39;n&#39;},
+{val: &#39;NN&#39;},
+{val: &#39;NY&#39;},
+</code></pre>
+
+<p>Used in pipeline as:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../FilterRows.html" title="Kiba::Extend::Transforms::FilterRows (module)">FilterRows</a></span></span><span class='op'>::</span><span class='const'>FieldMatchRegexp</span><span class='comma'>,</span> <span class='label'>action:</span> <span class='symbol'>:reject</span><span class='comma'>,</span> <span class='label'>field:</span> <span class='symbol'>:val</span><span class='comma'>,</span> <span class='label'>match:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>^N</span><span class='tstring_end'>&#39;</span></span>
+</code></pre>
+
+<p>Resulting data:</p>
+
+<pre class="code ruby"><code class="ruby">{val: &#39;n&#39;},
+{val: &#39;&#39;},
+{val: nil},
+</code></pre>
 
 
   </div>
@@ -128,7 +178,7 @@ i.e. does not split into multivalues before matching</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(action:, field:, match:)  &#x21d2; FieldMatchRegexp </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(action:, field:, match:, ignore_case: false)  &#x21d2; FieldMatchRegexp </a>
     
 
     
@@ -159,7 +209,7 @@ i.e. does not split into multivalues before matching</p>
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(action:, field:, match:)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::FilterRows::FieldMatchRegexp (class)">FieldMatchRegexp</a></span></tt> 
+    #<strong>initialize</strong>(action:, field:, match:, ignore_case: false)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::FilterRows::FieldMatchRegexp (class)">FieldMatchRegexp</a></span></tt> 
   
 
   
@@ -173,7 +223,73 @@ i.e. does not split into multivalues before matching</p>
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>action</span>
+      
+      
+        <span class='type'>(<tt>:keep</tt>, <tt>:reject</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>what to do with row matching criteria</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>field</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>to match value in</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>match</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>value that will be turned into a <code>Regexp</code> using <code>Regexp.new(match)</code></p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>ignore_case</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>controls case sensitivity of matching</p>
+</div>
+      
+    </li>
+  
+</ul>
+
 
 </div><table class="source_code">
   <tr>
@@ -181,19 +297,19 @@ i.e. does not split into multivalues before matching</p>
       <pre class="lines">
 
 
-30
-31
-32
-33
-34</pre>
+71
+72
+73
+74
+75</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/filter_rows.rb', line 30</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/filter_rows/field_match_regexp.rb', line 71</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>action:</span><span class='comma'>,</span> <span class='label'>field:</span><span class='comma'>,</span> <span class='label'>match:</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>action:</span><span class='comma'>,</span> <span class='label'>field:</span><span class='comma'>,</span> <span class='label'>match:</span><span class='comma'>,</span> <span class='label'>ignore_case:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='ivar'>@action</span> <span class='op'>=</span> <span class='id identifier rubyid_action'>action</span>
   <span class='ivar'>@field</span> <span class='op'>=</span> <span class='id identifier rubyid_field'>field</span>
-  <span class='ivar'>@match</span> <span class='op'>=</span> <span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_match'>match</span><span class='rparen'>)</span>
+  <span class='ivar'>@match</span> <span class='op'>=</span> <span class='id identifier rubyid_ignore_case'>ignore_case</span> <span class='op'>?</span> <span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_match'>match</span><span class='comma'>,</span> <span class='const'>Regexp</span><span class='op'>::</span><span class='const'>IGNORECASE</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_match'>match</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -206,7 +322,7 @@ i.e. does not split into multivalues before matching</p>
 </div>
 
       <div id="footer">
-  Generated on Mon May 16 22:07:59 2022 by
+  Generated on Wed May 18 20:42:54 2022 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-2.7.6).
 </div>
