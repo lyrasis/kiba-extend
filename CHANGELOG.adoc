@@ -26,6 +26,7 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 ==== Breaking
 
 ==== Added
+* `ignore_case` parameter to `FilterRows::FieldMatchRegexp` transform. Defaults to `false` for backward compatibility. In https://github.com/lyrasis/kiba-extend/pull/85[PR#85]
 * `Merge::ConstantValues` transform added. In https://github.com/lyrasis/kiba-extend/pull/84[PR#84]
 
 ==== Changed
