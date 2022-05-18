@@ -6,23 +6,6 @@ module Kiba
       # Transformations that remove rows based on different types of conditions
       module FilterRows
         ::FilterRows = Kiba::Extend::Transforms::FilterRows
-        class FieldEqualTo
-          def initialize(action:, field:, value:)
-            @column = field
-            @value = value
-            @action = action
-          end
-
-          # @private
-          def process(row)
-            case @action
-            when :keep
-              row.fetch(@column, nil) == @value ? row : nil
-            when :reject
-              row.fetch(@column, nil) == @value ? nil : row
-            end
-          end
-        end
 
         # matches across the entire literal content of a field.
         # i.e. does not split into multivalues before matching

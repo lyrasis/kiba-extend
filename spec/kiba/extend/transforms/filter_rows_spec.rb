@@ -3,30 +3,6 @@
 require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::FilterRows do
-  describe 'FieldEqualTo' do
-    rows = [
-      %w[id in_set],
-      %w[1 N],
-      %w[2 Y]
-    ]
-
-    before { generate_csv(rows) }
-    it 'keeps row based on given field value match' do
-      result = execute_job(filename: test_csv, xform: FilterRows::FieldEqualTo,
-                           xformopt: { action: :keep, field: :id, value: '1' })
-      expect(result).to be_a(Array)
-      expect(result.size).to eq(1)
-      expect(result[0][:id]).to eq('1')
-    end
-    it 'rejects row based on given field value match' do
-      result = execute_job(filename: test_csv, xform: FilterRows::FieldEqualTo,
-                           xformopt: { action: :reject, field: :in_set, value: 'N' })
-      expect(result).to be_a(Array)
-      expect(result.size).to eq(1)
-      expect(result[0][:id]).to eq('2')
-    end
-    after { File.delete(test_csv) if File.exist?(test_csv) }
-  end
 
   describe 'FieldMatchRegexp' do
     rows = [
