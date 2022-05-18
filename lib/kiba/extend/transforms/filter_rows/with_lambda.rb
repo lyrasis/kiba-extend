@@ -4,6 +4,7 @@ module Kiba
   module Extend
     module Transforms
       module FilterRows
+        # @since 2.8.0.85
         # Keep or reject rows based on whether the arbitrary Lambda passed in evaluates to true/false
         #
         # ## Examples

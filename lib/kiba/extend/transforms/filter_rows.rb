@@ -7,9 +7,11 @@ module Kiba
       module FilterRows
         ::FilterRows = Kiba::Extend::Transforms::FilterRows
 
-
+        # @deprecated Convert any uses of this transform in your jobs to
+        #   {Kiba::Extend::Transforms::FilterRows::WithLambda}
         class FieldValueGreaterThan
           def initialize(action:, field:, value:)
+            warn("#{self.class.name} will be removed in a future version. Convert to `FilterRows::WithLambda`", category: :deprecated)
             @action = action
             @field = field
             @value = value
