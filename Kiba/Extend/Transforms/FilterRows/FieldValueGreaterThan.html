@@ -61,7 +61,7 @@
 
       <div id="content"><h1>Class: Kiba::Extend::Transforms::FilterRows::FieldValueGreaterThan
   
-  
+  <span class="deprecated note title">Deprecated</span>
   
 </h1>
 <div class="box_info">
@@ -99,7 +99,19 @@
   
 </div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <div class="note deprecated"><strong>Deprecated.</strong> <div class='inline'><p>Convert any uses of this transform in your jobs to
+<span class='object_link'><a href="WithLambda.html" title="Kiba::Extend::Transforms::FilterRows::WithLambda (class)">WithLambda</a></span></p>
+</div></div>
 
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
 
 
 
@@ -170,16 +182,18 @@
       <pre class="lines">
 
 
-12
 13
 14
 15
-16</pre>
+16
+17
+18</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/filter_rows.rb', line 12</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/filter_rows.rb', line 13</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>action:</span><span class='comma'>,</span> <span class='label'>field:</span><span class='comma'>,</span> <span class='label'>value:</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_warn'>warn</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'> will be removed in a future version. Convert to `FilterRows::WithLambda`</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>category:</span> <span class='symbol'>:deprecated</span><span class='rparen'>)</span>
   <span class='ivar'>@action</span> <span class='op'>=</span> <span class='id identifier rubyid_action'>action</span>
   <span class='ivar'>@field</span> <span class='op'>=</span> <span class='id identifier rubyid_field'>field</span>
   <span class='ivar'>@value</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
@@ -195,7 +209,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed May 18 20:42:53 2022 by
+  Generated on Wed May 18 21:05:51 2022 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-2.7.6).
 </div>
