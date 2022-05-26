@@ -33,6 +33,7 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 * `Merge::ConstantValues` transform added. In https://github.com/lyrasis/kiba-extend/pull/84[PR#84]
 
 ==== Changed
+* If source data is an ISO 3166 code, `Cspace::AddressCountry` passes that value through to target. Adds some more lookup keys to support client data set. In https://github.com/lyrasis/kiba-extend/pull/87[PR#87]
 * Deprecates `FilterRows::FieldValueGreaterThan`. In https://github.com/lyrasis/kiba-extend/pull/86[PR#86]
 * `Merge::ConstantValue` warns (once per transform) if `target` is an existing field containing any data. In https://github.com/lyrasis/kiba-extend/pull/84[PR#84]
 * BUGFIX: `RowSorter` checks for presence of `sortfield` and raises error if it doesn't exist, rather than trying to proceed and blowing up. In https://github.com/lyrasis/kiba-extend/pull/83[PR#83]

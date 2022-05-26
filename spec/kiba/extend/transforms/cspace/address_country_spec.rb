@@ -10,7 +10,8 @@ RSpec.describe Kiba::Extend::Transforms::Cspace::AddressCountry do
       {country: 'Shangri-La'},
       {country: ''},
       {country: nil},
-      {foo: 'bar'}
+      {foo: 'bar'},
+      {country: 'US'}
     ]
   end
 
@@ -22,7 +23,8 @@ RSpec.describe Kiba::Extend::Transforms::Cspace::AddressCountry do
           {addresscountry: nil},
           {addresscountry: ''},
           {addresscountry: nil},
-          {foo: 'bar', addresscountry: nil}
+          {foo: 'bar', addresscountry: nil},
+          {addresscountry: 'US'}
         ]
       end
       
@@ -43,7 +45,8 @@ RSpec.describe Kiba::Extend::Transforms::Cspace::AddressCountry do
           {country: 'Shangri-La', addresscountry: nil},
           {country: '', addresscountry: ''},
           {country: nil, addresscountry: nil},
-          {foo: 'bar', addresscountry: nil}
+          {foo: 'bar', addresscountry: nil},
+          {country: 'US', addresscountry: 'US'}
         ]
       end
       
@@ -66,7 +69,8 @@ RSpec.describe Kiba::Extend::Transforms::Cspace::AddressCountry do
           {country: nil},
           {country: ''},
           {country: nil},
-          {foo: 'bar', country: nil}
+          {foo: 'bar', country: nil},
+          {country: 'US'}
         ]
       end
       
@@ -87,7 +91,8 @@ RSpec.describe Kiba::Extend::Transforms::Cspace::AddressCountry do
           {country: nil},
           {country: ''},
           {country: nil},
-          {foo: 'bar', country: nil}
+          {foo: 'bar', country: nil},
+          {country: 'US'}
         ]
       end
       
