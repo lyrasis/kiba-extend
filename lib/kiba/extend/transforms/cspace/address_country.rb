@@ -330,9 +330,13 @@ module Kiba
             "United Arab Emirates (the)" => 'AE',
             "United Kingdom" => 'GB',
             "United Kingdom of Great Britain and Northern Ireland (the)" => 'GB',
+            "United States" => 'US',
+            "United States of America" => 'US',
             "United States of America (the)" => 'US',
             "United States Minor Outlying Islands (the)" => 'UM',
             "Uruguay" => 'UY',
+            "U.S." => 'US',
+            "U.S.A." => 'US',
             "USA" => 'US',
             "Uzbekistan" => 'UZ',
             "Vanuatu" => 'VU',
@@ -380,8 +384,14 @@ module Kiba
           end
 
           def do_mapping(val, row)
-            row[target] = LOOKUP[val]
+            row[target] = lookup(val)
             delete_source(row)
+          end
+
+          def lookup(val)
+            return val if LOOKUP.value?(val)
+
+            LOOKUP[val]
           end
           
           def handle_source(row)
@@ -401,7 +411,7 @@ module Kiba
           end
 
           def handle_source_value(val, row)
-            LOOKUP.key?(val) ? do_mapping(val, row) : handle_unmapped(val, row)
+            LOOKUP.key?(val) || LOOKUP.value?(val) ? do_mapping(val, row) : handle_unmapped(val, row)
           end
 
           def handle_unmapped(val, row)
