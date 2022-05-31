@@ -129,10 +129,23 @@
 <h2 id="calling-a-job-with-parameters">Calling a job with parameters</h2>
 
 <p>No need to write repetitive jobs with the exact same logic to handle variable values that differ according to a pattern. See <a href="https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html#hash-creator-example-since-2-7-2">File registry documentation on Hash creator</a> for a full example of how to do this.</p>
+
+<h2 id="automating-repetitive-file-registry">Automating repetitive file registry</h2>
+
+<p>The basic idea of this is: </p>
+
+<ul>
+<li>write code that generates <code>Project.registry</code> <code>register</code> commands with registry keys and hashes, according to the necessary pattern.</li>
+<li>call this code from within <code>Project::RegistryData.register</code> before <code>register_files</code> is called. </li>
+</ul>
+
+<p>One pattern for doing this is publicly viewable <a href="https://github.com/lyrasis/csws-update/blob/main/lib/csws/registry_data.rb#L7-L15">in the <code>kiba-tms</code> project</a>. <code>register_supplied_files</code> automates registry of the original TMS CSV files included in the project. <code>register_prep_files</code> automates the creation of entries for all original files into a <code>prep</code> namespace. If a custom prep method or module has been creating matching the name pattern, it will be used as the creator. Otherwise, the creator will be <a href="https://github.com/lyrasis/kiba-tms/blob/main/lib/kiba/tms/jobs/abstract_prep.rb"><code>Kiba::Tms::Jobs::AbstractPrep</code></a>, which removes TMS-specific fields and deletes any empty fields. </p>
+
+<p>Another example (in LYRASIS private repo) is <a href="https://github.com/lyrasis/csws-update/blob/main/lib/csws/registry_data.rb#L7-L15">here</a>.</p>
 </div></div>
 
       <div id="footer">
-  Generated on Thu May 26 21:27:29 2022 by
+  Generated on Tue May 31 16:22:44 2022 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.27 (ruby-2.7.6).
 </div>
