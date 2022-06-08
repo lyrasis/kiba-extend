@@ -101,14 +101,89 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>How the conditions are applied
- :fields_empty
-   ALL fields listed must be nil or empty
- :fields_populated
-   ALL fields listed must be populated
- :fields_match_regexp
-   Multiple match values may be given to test for a single field
-   ALL fields listed must match at least one of its match values</p>
+    <p>Merge constant value into one or more fields, based on the values of other fields in the row</p>
+
+<h2 id="examples">Examples</h2>
+
+<p>Used in job as:</p>
+
+<pre class="code ruby"><code class="ruby">condition = -&gt;(row) do
+  row[:note].is_a?(String) &amp;&amp; row[:note].match?(/gift|donation/i) &amp;&amp; row[:type] != &#39;obj&#39; }
+end
+transform Merge::ConstantValueConditional, 
+  fieldmap: { reason: &#39;gift&#39;, cost: &#39;0&#39; },
+  condition: condition
+</code></pre>
+
+<p>With input:</p>
+
+<pre class="code ruby"><code class="ruby">{note: &#39;Gift&#39;, type: &#39;acq&#39;},
+{reason: &#39;donation&#39;, note: &#39;Was a donation&#39;, type: &#39;acq&#39;},
+{note: &#39;Was a donation&#39;, type: &#39;obj&#39;},
+{reason: &#39;purchase&#39;, cost: &#39;100&#39;, note: &#39;Purchased from Someone&#39;, type: &#39;acq&#39;},
+{note: &#39;&#39;, type: &#39;acq&#39;},
+{note: nil, type: &#39;acq&#39;}
+</code></pre>
+
+<p>Results in:</p>
+
+<pre class="code ruby"><code class="ruby">{reason: &#39;gift&#39;, cost: &#39;0&#39;, note: &#39;Gift&#39;, type: &#39;acq&#39;},
+{reason: &#39;gift&#39;, cost: &#39;0&#39;, note: &#39;Was a donation&#39;, type: &#39;acq&#39;},
+{reason: nil, cost: nil, note: &#39;Was a donation&#39;, type: &#39;obj&#39;},
+{reason: &#39;purchase&#39;, cost: &#39;100&#39;, note: &#39;Purchased from Someone&#39;, type: &#39;acq&#39;},
+{reason: nil, cost: nil, note: &#39;&#39;, type: &#39;acq&#39;},
+{reason: nil, cost: nil, note: nil, type: &#39;acq&#39;}
+</code></pre>
+
+<p>Note that:</p>
+
+<ul>
+<li><code>reason</code> and <code>cost</code> constants are merged into matching first row, though no <code>reason</code> or <code>cost</code> field existed in input</li>
+<li>existing <code>reason</code> value is overwritten in matching second row, and new <code>cost</code> field + value added</li>
+<li>nil <code>reason</code> and <code>cost</code> fields added to non-matching third row (on the principle of always emitting rows with
+the same fields, so as to be writable to CSV)</li>
+<li>existing <code>reason</code> and <code>cost</code> values in non-matching fourth row returned as-is</li>
+</ul>
+
+<p>Also note that the <code>condition</code> lambda checks that the value of <code>note</code> is a String before calling <code>match?</code> on it.
+  Otherwise, the lambda will throw an error on the last row, wher the value of <code>note</code> is nil.</p>
+
+<p>Here&#39;s what that looks like:</p>
+
+<p>Used in job as:</p>
+
+<pre class="code ruby"><code class="ruby">condition = -&gt;(row) do
+  row[:note].is_a?(row[:note].match?(/gift|donation/i) &amp;&amp; row[:type] != &#39;obj&#39; }
+end
+transform Merge::ConstantValueConditional, 
+  fieldmap: { reason: &#39;gift&#39;, cost: &#39;0&#39; },
+  condition: condition
+</code></pre>
+
+<p>Will cause:</p>
+
+<pre class="code ruby"><code class="ruby">Kiba::Extend::Transforms::Merge::ConstantValueConditional::ConditionError: Condition lambda throws error with row: {:note=&gt;nil, :type=&gt;&quot;acq&quot;}
+from /Users/kristina/code/mig/kiba-extend/lib/kiba/extend/transforms/merge/constant_value_conditional.rb:77:in `rescue in condition_met?&#39;
+Caused by NoMethodError: undefined method `match?&#39; for nil:NilClass
+      let(:condition){ -&gt;(row){ row[:note].match?(/gift|donation/i) &amp;&amp; row[:type] != &#39;obj&#39; } }
+                                            ^^^^^^^
+</code></pre>
+
+<p>Finally, note that the <code>condition</code> lambda must return a true/false value, indicating whether the constant(s)
+  should be merged into the given row. If the lambda returns something else, it will throw an error:</p>
+
+<p>Used in job as:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_condition'>condition</span> <span class='op'>=</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span><span class='tlambeg'>{</span> <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='symbol'>:note</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Merge.html" title="Kiba::Extend::Transforms::Merge (module)">Merge</a></span></span><span class='op'>::</span><span class='const'>ConstantValueConditional</span><span class='comma'>,</span> 
+  <span class='label'>fieldmap:</span> <span class='lbrace'>{</span> <span class='label'>reason:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>gift</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>cost:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>0</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='label'>condition:</span> <span class='id identifier rubyid_condition'>condition</span>
+</code></pre>
+
+<p>Will cause:</p>
+
+<pre class="code ruby"><code class="ruby">Kiba::Extend::Transforms::Merge::ConstantValueConditional::NonBooleanConditionError: `condition` lambda must return true or false
+</code></pre>
 
 
   </div>
@@ -116,7 +191,17 @@
 <div class="tags">
   
 
-</div>
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="ConstantValueConditional/ConditionError.html" title="Kiba::Extend::Transforms::Merge::ConstantValueConditional::ConditionError (class)">ConditionError</a></span>, <span class='object_link'><a href="ConstantValueConditional/NonBooleanConditionError.html" title="Kiba::Extend::Transforms::Merge::ConstantValueConditional::NonBooleanConditionError (class)">NonBooleanConditionError</a></span>
+    
+  
+</p>
+
 
 
 
@@ -134,7 +219,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(fieldmap:, conditions: {}, sep: nil)  &#x21d2; ConstantValueConditional </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(fieldmap:, condition:)  &#x21d2; ConstantValueConditional </a>
     
 
     
@@ -165,7 +250,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(fieldmap:, conditions: {}, sep: nil)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Merge::ConstantValueConditional (class)">ConstantValueConditional</a></span></tt> 
+    #<strong>initialize</strong>(fieldmap:, condition:)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Merge::ConstantValueConditional (class)">ConstantValueConditional</a></span></tt> 
   
 
   
@@ -179,7 +264,40 @@
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>fieldmap</span>
+      
+      
+        <span class='type'>(<tt>Hash{Symbol =&gt; String}</tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>condition</span>
+      
+      
+        <span class='type'>(<tt>Proc</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>A lambda Proc is expected.
+The lambda function should return true or false (i.e. whether the constant should be merged into the row).
+This is purposefully named differently from the <code>conditions</code> parameter used on transforms that leverage
+<span class='object_link'><a href="../../Utils/Lookup/RowSelectorByLambda.html" title="Kiba::Extend::Utils::Lookup::RowSelectorByLambda (class)">Utils::Lookup::RowSelectorByLambda</a></span> to select from multiple rows.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
 
 </div><table class="source_code">
   <tr>
@@ -187,27 +305,17 @@
       <pre class="lines">
 
 
-16
-17
-18
-19
-20
-21
-22
-23
-24</pre>
+114
+115
+116
+117</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/merge/constant_value_conditional.rb', line 16</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/merge/constant_value_conditional.rb', line 114</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fieldmap:</span><span class='comma'>,</span> <span class='label'>conditions:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fieldmap:</span><span class='comma'>,</span> <span class='label'>condition:</span><span class='rparen'>)</span>
   <span class='ivar'>@fieldmap</span> <span class='op'>=</span> <span class='id identifier rubyid_fieldmap'>fieldmap</span>
-  <span class='ivar'>@conditions</span> <span class='op'>=</span> <span class='id identifier rubyid_conditions'>conditions</span>
-  <span class='ivar'>@sep</span> <span class='op'>=</span> <span class='id identifier rubyid_sep'>sep</span>
-  <span class='ivar'>@selector</span> <span class='op'>=</span> <span class='const'>Lookup</span><span class='op'>::</span><span class='const'>RowSelector</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span>
-    <span class='label'>conditions:</span> <span class='id identifier rubyid_conditions'>conditions</span><span class='comma'>,</span>
-    <span class='label'>sep:</span> <span class='id identifier rubyid_sep'>sep</span>
-  <span class='rparen'>)</span>
+  <span class='ivar'>@condition</span> <span class='op'>=</span> <span class='id identifier rubyid_condition'>condition</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -220,9 +328,9 @@
 </div>
 
       <div id="footer">
-  Generated on Tue May 31 16:22:46 2022 by
-  <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.27 (ruby-2.7.6).
+  Generated on Wed Jun  8 16:29:05 2022 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.28 (ruby-2.7.6).
 </div>
 
     </div>
