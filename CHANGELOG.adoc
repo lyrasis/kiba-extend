@@ -34,7 +34,7 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 * `Merge::ConstantValues` transform added. In https://github.com/lyrasis/kiba-extend/pull/84[PR#84]
 
 ==== Changed
-* BUGFIX: No longer runs the same dependency job multiple times. In https://github.com/lyrasis/kiba-extend/pull/89[PR#89]
+* BUGFIX: No longer runs the same dependency job multiple times. In https://github.com/lyrasis/kiba-extend/pull/90[PR#90]
 * In `Merge::ConstantValueConditional` transform, lambda Proc is passed in as `condition`, rather than `conditions`. In https://github.com/lyrasis/kiba-extend/pull/88[PR#88]
 * If source data is an ISO 3166 code, `Cspace::AddressCountry` passes that value through to target. Adds some more lookup keys to support client data set. In https://github.com/lyrasis/kiba-extend/pull/87[PR#87]
 * Deprecates `FilterRows::FieldValueGreaterThan`. In https://github.com/lyrasis/kiba-extend/pull/86[PR#86]
