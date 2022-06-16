@@ -111,6 +111,7 @@ module Kiba
     end
 
     # strips, collapses multiple spaces, removes terminal commas, strips again
+    # removes "NULL"/treats as nilValue
     CSV::Converters[:stripplus] = lambda { |s|
       begin
         if s.nil?
@@ -124,6 +125,24 @@ module Kiba
            .sub(/^%(LINEBREAK|CRLF)%/, '')
            .sub(/%(LINEBREAK|CRLF)%$/, '')
            .strip
+        end
+      rescue ArgumentError
+        s
+      end
+    }
+
+    # strips, collapses multiple spaces, removes terminal commas, strips again
+    CSV::Converters[:stripextra] = lambda { |s|
+      begin
+        if s.nil?
+          nil
+        else
+          s.strip
+            .gsub(/  +/, ' ')
+            .sub(/,$/, '')
+            .sub(/^%(LINEBREAK|CRLF)%/, '')
+            .sub(/%(LINEBREAK|CRLF)%$/, '')
+            .strip
         end
       rescue ArgumentError
         s
