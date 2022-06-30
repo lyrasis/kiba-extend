@@ -12,7 +12,7 @@ module Kiba
         #
         # ```
         # condition = ->(row) do
-        #   row[:note].is_a?(String) && row[:note].match?(/gift|donation/i) && row[:type] != 'obj' }
+        #   row[:note].is_a?(String) && row[:note].match?(/gift|donation/i) && row[:type] != 'obj'
         # end
         # transform Merge::ConstantValueConditional, 
         #   fieldmap: { reason: 'gift', cost: '0' },
