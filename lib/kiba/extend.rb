@@ -77,7 +77,7 @@ module Kiba
 
     # Default delimiter for splitting/joining values in multi-valued fields
     #   Example: 'a;b' -> ['a', 'b']
-    setting :delim, default: ';', reader: true
+    setting :delim, default: '|', reader: true
 
     # Default subgrouping delimiter for splitting/joining values in multi-valued fields
     #   Example: 'a^^y;b^^z' -> [['a', 'y'], ['b', 'z']]
