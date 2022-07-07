@@ -205,7 +205,9 @@ module Kiba
         class EmptyFieldGroups
           # groups is an array of arrays. Each of the arrays inside groups should list all fields that are part
           #   of a repeating field group or field subgroup
+          #
           # sep is the repeating delimiter
+          #
           # use_nullvalue - if true, will insert %NULLVALUE% before any sep at beginning of string, after any sep
           #   end of string, and between any two sep with nothing in between. It considers %NULLVALUE% as a blank
           #   value, so if all values in a field are %NULLVALUE%, the field will be nil-ed out.
@@ -225,11 +227,9 @@ module Kiba
 
           def process_group(row, group)
             thisgroup = group.map { |field| row.fetch(field, '') }
-
-            thisgroup.map! { |val| add_null_values(val) } if @use_nullvalue
-
-            thisgroup.map! { |val| val.nil? ? [] : " #{val} ".split(@sep) }
-              .map! { |arr| arr.map(&:strip) }
+              .map{ |val| @use_nullvalue ? add_null_values(val) : val  }
+              .map{ |val| val.nil? ? [] : " #{val} ".split(@sep) }
+              .map{ |arr| arr.map(&:strip) }
 
             cts = thisgroup.map(&:size).uniq.reject(&:zero?)
 
@@ -258,9 +258,10 @@ module Kiba
           def add_null_values(str)
             return str if str.nil?
 
-            str.sub(/^#{@sep}/, "%NULLVALUE%#{@sep}")
-              .sub(/#{@sep}$/, "#{@sep}%NULLVALUE%")
-              .gsub(/#{@sep}#{@sep}/, "#{@sep}%NULLVALUE%#{@sep}")
+            padfront = str.start_with?(@sep) ? "%NULLVALUE%#{str}" : str
+            padend = padfront.end_with?(@sep) ? "#{padfront}%NULLVALUE%" : padfront
+            padded = padend.gsub("#{@sep}#{@sep}", "#{@sep}%NULLVALUE%#{@sep}")
+            padded
           end
 
           def all_empty?(group, index)
