@@ -107,5 +107,15 @@ RSpec.describe Kiba::Extend::Transforms::CombineValues::AcrossFieldGroup do
       expect(result).to eq(expected)
     end
   end
+
+  context 'when source and target have the same value and deleting sources' do
+    let(:input){ [{a: 'a', b: 'b'}] }
+    let(:fieldmap){ {a: %i[a b]} }
+    let(:expected){ [{a: 'a|b'}] }
+
+    it 'deletes sources not also used as targets' do
+      expect(result).to eq(expected)
+    end
+  end
 end
 
