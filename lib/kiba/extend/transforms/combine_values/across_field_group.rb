@@ -77,6 +77,8 @@ module Kiba
         # * Each value is an Array of Symbols. Each element of the array is a source field that will be mapped into the target field given as key. Order of source fields in this array controls the order in which the source fields are combined.
         # * There must be an equal number of source fields given in each source field Array
         class AcrossFieldGroup
+          include SingleWarnable
+          
           # @param fieldmap [Hash{Symbol => Array<Symbol>}] Instructions on how to combine source fields into target fields. See above for fuller explanation of Hash format expectations
           # @param sep [String] String to use in splitting/joining the values
           # @param delete_sources [Boolean] Whether to delete source columns after values have been combined in target columns
@@ -86,22 +88,40 @@ module Kiba
             @fieldmap = fieldmap
             @sep = sep
             @del = delete_sources
+            setup_single_warning
           end
 
           # @private
           def process(row)
-            @fieldmap.each do |target, sources|
-              vals = []
-              sources.each do |source|
-                srcval = row.fetch(source)
-                vals << '' if srcval.nil? || srcval.empty? || srcval.match?(Regexp.new("^#{@sep}"))
-                vals << srcval.split(@sep) unless srcval.nil? || srcval.empty?
-                vals << '' if !(srcval.nil? || srcval.empty?) && srcval.match?(Regexp.new("#{@sep}$"))
-                row.delete(source) if @del && source != target
-              end
-              row[target] = vals.join(@sep)
-            end
+            fieldmap.each{ |target, sources| row[target] = compile_source_values(sources, row) }
+            delete_sources(row) if del
             row
+          end
+
+          private
+
+          attr_reader :fieldmap, :sep, :del
+
+          def compile_source_values(sources, row)
+            sources.map{ |source| source_value(source, row) }
+              .flatten
+              .join(sep)
+          end
+
+          def source_value(source, row)
+            if row.keys.any?(source)
+              val = row[source]
+              return '' if val.blank?
+              val.split(sep, -1)
+            else
+              add_single_warning("Source field `#{source}` missing")
+              ''
+            end
+          end
+
+          def delete_sources(row)
+            targets = fieldmap.keys
+            fieldmap.values.flatten.each{ |source| row.delete(source) unless targets.any?(source) }
           end
         end
       end
