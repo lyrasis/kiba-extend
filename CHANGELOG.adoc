@@ -27,8 +27,8 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 * Removes Hash `conditions` parameter and `sep` parameter from `Merge::ConstantValueConditional` transform, replacing with lambda Proc `condition` parameter. In https://github.com/lyrasis/kiba-extend/pull/88[PR#88]
 
 ==== Added
-* Adds `stripextra` csv converter to do aggressive stripping of csv field values, _without_ converting 'NULL' strings to ``nilValue``s. In https://github.com/lyrasis/kiba-extend/pull/91[PR#91]
 * `Deduplicate::FlagAll` transform. In https://github.com/lyrasis/kiba-extend/pull/92[PR#92]
+* `stripextra` csv converter to do aggressive stripping of csv field values, _without_ converting 'NULL' strings to ``nilValue``s. In https://github.com/lyrasis/kiba-extend/pull/91[PR#91]
 * `FilterRows::WithLambda` transform. In https://github.com/lyrasis/kiba-extend/pull/85[PR#85]
 * `FilterRows::AllFieldsPopulated` transform. In https://github.com/lyrasis/kiba-extend/pull/85[PR#85]
 * `FilterRows::AnyFieldsPopulated` transform. In https://github.com/lyrasis/kiba-extend/pull/85[PR#85]
