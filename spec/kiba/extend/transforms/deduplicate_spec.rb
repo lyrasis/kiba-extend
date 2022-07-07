@@ -171,6 +171,53 @@ RSpec.describe Kiba::Extend::Transforms::Deduplicate do
 
   end
 
+  describe 'FlagAll' do
+    let(:input) do
+      [
+        {id: '1', x: 'a'},
+        {id: '2', x: 'a'},
+        {id: '1', x: 'b'},
+        {id: '3', x: 'b'},
+      ]
+    end
+
+    context 'with explicit no value = true' do
+      let(:transforms) do
+        Kiba.job_segment do
+          transform Deduplicate::FlagAll, on_field: :id, in_field: :d
+        end
+      end
+      it 'deduplicates indicates non-duplicates with `n`' do
+        expected = [
+          { id: '1', x: 'a', d: 'y' },
+          { id: '2', x: 'a', d: 'n' },
+          { id: '1', x: 'b', d: 'y' },
+          { id: '3', x: 'b', d: 'n' }
+        ]
+        testjob
+        expect(testjob.accumulator).to eq(expected)
+      end
+    end
+
+    context 'with explicit no value = false' do
+      let(:transforms) do
+        Kiba.job_segment do
+          transform Deduplicate::FlagAll, on_field: :id, in_field: :d, explicit_no: false
+        end
+      end
+      it 'deduplicates indicates non-duplicates with `n`' do
+        expected = [
+          { id: '1', x: 'a', d: 'y' },
+          { id: '2', x: 'a', d: '' },
+          { id: '1', x: 'b', d: 'y' },
+          { id: '3', x: 'b', d: '' }
+        ]
+        testjob
+        expect(testjob.accumulator).to eq(expected)
+      end
+    end
+  end
+
   describe 'GroupedFieldValues' do
     let(:transforms) do
       Kiba.job_segment do
