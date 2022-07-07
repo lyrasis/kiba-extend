@@ -3,7 +3,7 @@
 module Kiba
   module Extend
     module Transforms
-      module Cspace
+      module Collapse
         # Combines data from multiple fields following an expected naming pattern (shown in examples below) into final
         #   fields that are part of a repeatable fieldgroup.
         #
@@ -40,7 +40,7 @@ module Kiba
         # Then we can use this transform as follows:
         #
         # ```
-        # transform Cspace::FieldGroupCombiner,
+        # transform Cspace::FieldsToRepeatableFieldGroup,
         #   sources: %i[cl idea],
         #   targets: %i[annotationtype annotationnote annotationdate],
         #   delim: '|'
@@ -73,7 +73,7 @@ module Kiba
         # And this usage:
         #
         # ```
-        # transform Cspace::FieldGroupCombiner,
+        # transform Cspace::FieldsToRepeatableFieldGroup,
         #   sources: %i[a b],
         #   targets: %i[foo bar],
         #   delim: '|'
@@ -94,7 +94,7 @@ module Kiba
         # If you do not want empty field groups removed, do:
         #
         # ```
-        # transform Cspace::FieldGroupCombiner,
+        # transform Cspace::FieldsToRepeatableFieldGroup,
         #   sources: %i[a b],
         #   targets: %i[foo bar],
         #   delim: '|',
@@ -113,7 +113,7 @@ module Kiba
         #   {foo: 'afoo|bfoo', bar: 'abar|'}
         # ]
         # ```
-        class FieldGroupCombiner
+        class FieldsToRepeatableFieldGroup
           # @param sources [Array<Symbol>] the list of original source fields that field group intermediate
           #   fields were derived from (with `source_targetfield` pattern)
           # @param targets [Array<Symbol>] the list of final field group fields that the

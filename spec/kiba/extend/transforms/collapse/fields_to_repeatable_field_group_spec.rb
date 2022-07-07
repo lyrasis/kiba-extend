@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Kiba::Extend::Transforms::Cspace::FieldGroupCombiner do
+RSpec.describe Kiba::Extend::Transforms::Collapse::FieldsToRepeatableFieldGroup do
   subject(:xform){ described_class.new(**params) }
   let(:params){ {sources: sources, targets: targets, delim: delim} }
   let(:sources){ %i[a b] }
