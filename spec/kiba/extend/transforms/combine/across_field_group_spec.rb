@@ -95,5 +95,17 @@ RSpec.describe Kiba::Extend::Transforms::CombineValues::AcrossFieldGroup do
       expect(result).to eq(expected)
     end
   end
+
+  context 'when missing source field' do
+    let(:input){ [{b: 'b', c: 'c'}] }
+    let(:fieldmap){ {z: %i[a b]} }
+    let(:expected){ [{c: 'c', z: '|b'}] }
+
+    it 'combines present source fields and warns' do
+      msg = "#{Kiba::Extend.warning_label}: Source field `a` missing; treating as nil value"
+      expect(xform).to receive(:warn).with(msg)
+      expect(result).to eq(expected)
+    end
+  end
 end
 

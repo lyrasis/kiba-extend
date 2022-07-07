@@ -181,7 +181,7 @@ module Kiba
               return '' if val.blank?
               val.split(sep, -1)
             else
-              add_single_warning("Source field `#{source}` missing")
+              add_single_warning("Source field `#{source}` missing; treating as nil value")
               ''
             end
           end
