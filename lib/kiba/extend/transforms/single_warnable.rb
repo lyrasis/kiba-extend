@@ -9,9 +9,10 @@ module Kiba
       #   this handles ensuring a single warning will be sent
       #
       # ## Usage
-      #
+      # Transform classes using this should: `include SingleWarnable`.
+      # 
       # The `initialize` method of a transform using this mixin should call `setup_single_warning`. Then,
-      #   `add_single_warning` can be used from anywhere else in the transform.
+      #   `add_single_warning("The warning message")` can be used from anywhere else in the transform.
       #
       # @since 2.8.0
       module SingleWarnable
