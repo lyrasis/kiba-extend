@@ -2,10 +2,10 @@
 
 require 'spec_helper'
 
-RSpec.describe Kiba::Extend::Transforms::CombineValues::AcrossFieldGroup do
+RSpec.describe Kiba::Extend::Transforms::Collapse::FieldsWithCustomFieldmap do
   subject(:xform){ described_class.new(**params) }
-  let(:params){ {fieldmap: fieldmap, sep: sep }}
-  let(:sep){ '|' }
+  let(:params){ {fieldmap: fieldmap, delim: delim }}
+  let(:delim){ '|' }
   let(:result){ input.map{ |row| xform.process(row) } }
 
   let(:input) do
