@@ -23,6 +23,8 @@ toc::[]
 == Planned
 === Release after 2.9.0
 * Remove `CombineValues::AcrossFieldGroup`
+* Remove `Reshape::CollapseMultipleFieldsToOneTypedFieldPair`
+* Remove `FilterRows::FieldValueGreaterThan`
 
 == Unreleased
 These changes are merged into the `main` branch but have not yet been tagged as a new version/release.
@@ -31,8 +33,7 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 * Removes Hash `conditions` parameter and `sep` parameter from `Merge::ConstantValueConditional` transform, replacing with lambda Proc `condition` parameter. In https://github.com/lyrasis/kiba-extend/pull/88[PR#88]
 
 ==== Added
-* `Collapse::FieldsWithCustomFieldmap` and `Collapse::FieldsToRepeatableFieldGroup` transform. In https://github.com/lyrasis/kiba-extend/pull/92[PR#92]
-* `Deduplicate::FlagAll` transform. In https://github.com/lyrasis/kiba-extend/pull/92[PR#92]
+* `Deduplicate::FlagAll`, `Collapse::FieldsWithCustomFieldmap`, `Collapse::FieldsToRepeatableFieldGroup`, and `Collapse::FieldsToTypedFieldPair` transforms. In https://github.com/lyrasis/kiba-extend/pull/92[PR#92]
 * `stripextra` csv converter to do aggressive stripping of csv field values, _without_ converting 'NULL' strings to ``nilValue``s. In https://github.com/lyrasis/kiba-extend/pull/91[PR#91]
 * `FilterRows::WithLambda` transform. In https://github.com/lyrasis/kiba-extend/pull/85[PR#85]
 * `FilterRows::AllFieldsPopulated` transform. In https://github.com/lyrasis/kiba-extend/pull/85[PR#85]
@@ -41,12 +42,10 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 * `Merge::ConstantValues` transform added. In https://github.com/lyrasis/kiba-extend/pull/84[PR#84]
 
 ==== Changed
-* Deprecates `CombineValues::AcrossFieldGroup`, replacing with `Collapse::FieldsWithCustomFieldmap` . In https://github.com/lyrasis/kiba-extend/pull/92[PR#92]
 * BUGFIX: `Clean::EmptyFieldGroups` was broken if `sep` = `|` and `use_nullvalue` = `true`. In https://github.com/lyrasis/kiba-extend/pull/92[PR#92]
 * BUGFIX: No longer runs the same dependency job multiple times. In https://github.com/lyrasis/kiba-extend/pull/90[PR#90]
 * In `Merge::ConstantValueConditional` transform, lambda Proc is passed in as `condition`, rather than `conditions`. In https://github.com/lyrasis/kiba-extend/pull/88[PR#88]
 * If source data is an ISO 3166 code, `Cspace::AddressCountry` passes that value through to target. Adds some more lookup keys to support client data set. In https://github.com/lyrasis/kiba-extend/pull/87[PR#87]
-* Deprecates `FilterRows::FieldValueGreaterThan`. In https://github.com/lyrasis/kiba-extend/pull/86[PR#86]
 * `Merge::ConstantValue` warns (once per transform) if `target` is an existing field containing any data. In https://github.com/lyrasis/kiba-extend/pull/84[PR#84]
 * BUGFIX: `RowSorter` checks for presence of `sortfield` and raises error if it doesn't exist, rather than trying to proceed and blowing up. In https://github.com/lyrasis/kiba-extend/pull/83[PR#83]
 
@@ -54,6 +53,9 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 * Removes Hash `conditions` parameter and `sep` parameter from `Merge::ConstantValueConditional` transform, replacing with lambda Proc `condition` parameter. In https://github.com/lyrasis/kiba-extend/pull/88[PR#88]
 
 ==== To be deprecated/Will break in a future version
+* Deprecates `Reshape::CollapseMultipleFieldsToOneTypedFieldPair`, replacing with `Collapse::FieldsToTypedFieldPair` . In https://github.com/lyrasis/kiba-extend/pull/92[PR#92]
+* Deprecates `CombineValues::AcrossFieldGroup`, replacing with `Collapse::FieldsWithCustomFieldmap` . In https://github.com/lyrasis/kiba-extend/pull/92[PR#92]
+* Deprecates `FilterRows::FieldValueGreaterThan`. In https://github.com/lyrasis/kiba-extend/pull/86[PR#86]
 
 == Releases
 === 2.8.0 - 2022-05-13
