@@ -21,7 +21,7 @@ module Kiba
           # @param treat_as_null [nil, String, Array(String)] value(s) to treat as though they are null
           def initialize(delim: Kiba::Extend.delim, treat_as_null: nil)
             @delim = delim
-            @nullvals = treat_as_null.nil? ? nil : [treat_as_null].flatten
+            @nullvals = treat_as_null.nil? ? nil : [treat_as_null].flatten.sort_by{ |val| val.length }.reverse
           end
 
           # @param value [String]
