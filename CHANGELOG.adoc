@@ -25,14 +25,18 @@ toc::[]
 * Remove `CombineValues::AcrossFieldGroup`
 * Remove `Reshape::CollapseMultipleFieldsToOneTypedFieldPair`
 * Remove `FilterRows::FieldValueGreaterThan`
+* Remove `Helpers.delim_only?`
 
 == Unreleased
 These changes are merged into the `main` branch but have not yet been tagged as a new version/release.
 
 ==== Breaking
 * Removes Hash `conditions` parameter and `sep` parameter from `Merge::ConstantValueConditional` transform, replacing with lambda Proc `condition` parameter. In https://github.com/lyrasis/kiba-extend/pull/88[PR#88]
+* **Is not breaking within `kiba-extend`, but potentially could affect direct use by ETL project code:** `Helpers.delim_only?` now returns true if the given value is `nil` or `empty?` In https://github.com/lyrasis/kiba-extend/pull/92[PR#92]
 
 ==== Added
+
+* `Helpers::DelimOnlyChecker` service class to replace `Helpers.delim_only?`. In https://github.com/lyrasis/kiba-extend/pull/92[PR#92]
 * `Deduplicate::FlagAll`, `Collapse::FieldsWithCustomFieldmap`, `Collapse::FieldsToRepeatableFieldGroup`, and `Collapse::FieldsToTypedFieldPair` transforms. In https://github.com/lyrasis/kiba-extend/pull/92[PR#92]
 * `stripextra` csv converter to do aggressive stripping of csv field values, _without_ converting 'NULL' strings to ``nilValue``s. In https://github.com/lyrasis/kiba-extend/pull/91[PR#91]
 * `FilterRows::WithLambda` transform. In https://github.com/lyrasis/kiba-extend/pull/85[PR#85]
@@ -53,6 +57,8 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 * Removes Hash `conditions` parameter and `sep` parameter from `Merge::ConstantValueConditional` transform, replacing with lambda Proc `condition` parameter. In https://github.com/lyrasis/kiba-extend/pull/88[PR#88]
 
 ==== To be deprecated/Will break in a future version
+* Deprecates `Helpers.delim_only?`, replacing with `Helpers::DelimOnlyChecker` service class. In https://github.com/lyrasis/kiba-extend/pull/92[PR#92]
+* Deprecates `Clean::DelimiterOnlyFields`, replacing with `Delete::DelimiterOnlyFieldValues` . In https://github.com/lyrasis/kiba-extend/pull/92[PR#92]
 * Deprecates `Reshape::CollapseMultipleFieldsToOneTypedFieldPair`, replacing with `Collapse::FieldsToTypedFieldPair` . In https://github.com/lyrasis/kiba-extend/pull/92[PR#92]
 * Deprecates `CombineValues::AcrossFieldGroup`, replacing with `Collapse::FieldsWithCustomFieldmap` . In https://github.com/lyrasis/kiba-extend/pull/92[PR#92]
 * Deprecates `FilterRows::FieldValueGreaterThan`. In https://github.com/lyrasis/kiba-extend/pull/86[PR#86]
