@@ -273,8 +273,8 @@ module Kiba
               sep: delim,
               use_nullvalue: true)
             @delim_only_cleaner = Clean::DelimiterOnlyFields.new(delim: delim, use_nullvalue: nullval)
-            @evenness_checker = Kiba::Extend::Transforms::Helpers::FieldEvennessChecker
-            @evener  = Kiba::Extend::Transforms::Helpers::FieldEvennessFixer
+            @evenness_checker = Kiba::Extend::Transforms::Helpers::ValhashFieldEvennessChecker
+            @evener  = Kiba::Extend::Transforms::Helpers::ValhashFieldEvennessFixer
           end
           
           def process(row)

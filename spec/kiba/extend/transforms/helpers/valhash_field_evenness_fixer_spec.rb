@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Kiba::Extend::Transforms::Helpers::FieldEvennessFixer do
+RSpec.describe Kiba::Extend::Transforms::Helpers::ValhashFieldEvennessFixer do
   subject(:fixer){ described_class.new(valhash) }
 
   describe '#call' do

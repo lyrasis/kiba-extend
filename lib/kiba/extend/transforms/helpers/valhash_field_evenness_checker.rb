@@ -4,7 +4,17 @@ module Kiba
   module Extend
     module Transforms
       module Helpers
-        # Adds %NULLVALUE%s to end of source fields to achieve evenness
+        # Checks whether fields from a given source that will be mapped into a repeatable field group, have
+        #   the same number of values
+        #
+        # Even/good:
+        #
+        # ```
+        # {
+        #   a_foo: 'afoo|aaa',
+        #   a_bar: '%NULLVALUE%|abar'
+        #   a_baz: 'a|baz'
+        # }
         #
         # Uneven/bad:
         #
@@ -14,16 +24,7 @@ module Kiba
         #   a_bar: 'abar'
         #   a_baz: 'a|baz'
         # }
-        #
-        # Becomes:
-        #
-        # ```
-        # {
-        #   a_foo: 'afoo|aaa',
-        #   a_bar: 'abar|%NULLVALUE%'
-        #   a_baz: 'a|baz'
-        # }
-        class FieldEvennessFixer
+        class ValhashFieldEvennessChecker
           class << self
             def call(valhash)
               self.new(valhash).call
@@ -56,30 +57,22 @@ module Kiba
 
           def call
             sources = valhash.first[1].keys
-            sources.each{ |source| even(source) }
-            valhash
+            checked = sources.map{ |source| is_even?(source) }
+            return :even if checked.all?(true)
+
+            checked.reject{ |result| result == true }
           end
           
           private
 
           attr_reader :valhash
 
-          def even(source)
-            max = max_for(source)
-            valhash.keys.each{ |target| pad_source_for_target(target, source, max) }
-          end
-          
-          def max_for(source)
-            valhash.map{ |_target, sources| sources[source].compact.length }
-              .max
-          end
+          def is_even?(source)
+            chk = valhash.map{ |_target, sources| sources[source].compact.length }
+              .uniq
+            return true if chk.length == 1
 
-          def pad_source_for_target(target, source, max)
-            srcval = valhash[target][source]
-            return if srcval.length == max
-            
-            diff = max - srcval.length
-            diff.times{ srcval << '%NULLVALUE%' }
+            source
           end
         end
       end

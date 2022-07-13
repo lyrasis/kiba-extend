@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Kiba::Extend::Transforms::Helpers::FieldEvennessChecker do
+RSpec.describe Kiba::Extend::Transforms::Helpers::ValhashFieldEvennessChecker do
   subject(:checker){ described_class.new(valhash) }
 
   describe '#call' do
