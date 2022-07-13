@@ -4,10 +4,12 @@ module Kiba
   module Extend
     module Transforms
       module Deduplicate
-        # Adds a field (specified as `in_field`) containing 'y' or 'n', indicating whether value of `on_field` is a duplicate
+        # Adds a field (specified as `in_field`) containing 'y' or 'n', indicating whether value of `on_field`
+        #   is a duplicate
         #
-        # In contrast with {{Deduplicate::Flag}}, where the first instance of a value in `on_field` is always marked `n`, with
-        #   {{Deduplicate::FlagAll}}, all rows containing a duplicate value in `on_field` are marked `y`.
+        # In contrast with {Deduplicate::Flag}, where the first instance of a value in `on_field` is always
+        #   marked `n`, with {Deduplicate::FlagAll}, **all rows containing a duplicate value in `on_field` are
+        #   marked `y`**.
         #
         # Input table:
         #

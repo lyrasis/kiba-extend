@@ -8,7 +8,7 @@ module Kiba
         #   final fields that are part of a repeatable fieldgroup.
         #
         # This transform can be seen as a more opinionated, structured  shorthand for
-        #   {{Collapse::FieldsWithCustomFieldmap}}, which does not make the same assumptions about the field
+        #   {Collapse::FieldsWithCustomFieldmap}, which does not make the same assumptions about the field
         #   names/patterns involved.
         #
         # ## Background and default use/behavior
@@ -105,7 +105,7 @@ module Kiba
         # 
         # ## Automatic removal of grouped field with no values in group (`empty_groups` parameter)
         #
-        # By default, `empty_groups: :delete`. This causes the {{Clean::EmptyFieldGroups}} transform (with
+        # By default, `empty_groups: :delete`. This causes the {Clean::EmptyFieldGroups} transform (with
         #   `use_nullvalue: true`) to be applied after the target fields are compiled, so that, with the
         #   following source data:
         #
@@ -239,7 +239,7 @@ module Kiba
         # Note that we did not pass in `empty_groups: retain`, but we get an empty group (the 4th
         #   value in `foo` and the final value in `bar`)
         #
-        # This is because {{Clean::EmptyFieldGroups}} avoids making any changes when it detects
+        # This is because {Clean::EmptyFieldGroups} avoids making any changes when it detects
         #   uneven fields, because how the values should actually line up (and thus what is actually
         #   empty) is ambiguous.
         class FieldsToRepeatableFieldGroup

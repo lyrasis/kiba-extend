@@ -12,7 +12,7 @@ module Kiba
       # Set the `fields` instance variable from user input as follows:
       #
       # ```
-      # @fields = [fields].flatten
+      #  @fields = [fields].flatten
       # ```
       #
       # Add the following line as the first thing in the `process` method:

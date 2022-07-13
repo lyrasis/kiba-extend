@@ -10,8 +10,10 @@ module Kiba
         #   value will be marked 'y'
         #
         # Use this transform if you need to retain/report on what will be treated as a duplicate. Use
-        #   {Kiba::Extend::Transforms::FilterRows::FieldEqualTo} to extract only the duplicate rows and/or to keep only the
-        #   non-duplicate rows
+        #   {Kiba::Extend::Transforms::FilterRows::FieldEqualTo} to extract only the duplicate rows and/or to
+        #   keep only the non-duplicate rows.
+        #
+        # Use {FlagAll} if you need all rows containing duplicate values flagged `y`.
         #
         # To delete duplicates all in one step, use {Kiba::Extend::Transforms::Deduplicate::Table}
         #

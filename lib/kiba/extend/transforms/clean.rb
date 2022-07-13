@@ -187,13 +187,12 @@ module Kiba
         end
 
         class EmptyFieldGroups
-          # groups is an array of arrays. Each of the arrays inside groups should list all fields that are part
-          #   of a repeating field group or field subgroup
-          #
-          # sep is the repeating delimiter
-          #
-          # use_nullvalue - if true, will insert %NULLVALUE% before any sep at beginning of string, after any sep
-          #   end of string, and between any two sep with nothing in between. It considers %NULLVALUE% as a blank
+          # @param groups [Array(Array(Symbol))] Each of the arrays inside groups should list all fields that are
+          #   part of a repeating field group or field subgroup
+          # @param sep [String] delimiter used to split/join field values
+          # @param use_nullvalue [String, false] if a string, will insert that string before any sep at beginning
+          #   of string, after any sep end of string, and between any two sep with nothing in between. It considers
+          #   thias a blank
           #   value, so if all values in a field are %NULLVALUE%, the field will be nil-ed out.
           def initialize(groups:, sep:, use_nullvalue: false)
             @groups = groups
