@@ -38,7 +38,7 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 ==== Added
 
 * `Helpers::DelimOnlyChecker` service class to replace `Helpers.delim_only?`. In https://github.com/lyrasis/kiba-extend/pull/92[PR#92]
-* `Delete::DelimiterOnlyFieldValues`, `Deduplicate::FlagAll`, `Collapse::FieldsWithCustomFieldmap`, `Collapse::FieldsToRepeatableFieldGroup`, and `Collapse::FieldsToTypedFieldPair` transforms. In https://github.com/lyrasis/kiba-extend/pull/92[PR#92]
+* `Warn::UnevenFields`, `Delete::DelimiterOnlyFieldValues`, `Deduplicate::FlagAll`, `Collapse::FieldsWithCustomFieldmap`, `Collapse::FieldsToRepeatableFieldGroup`, and `Collapse::FieldsToTypedFieldPair` transforms. In https://github.com/lyrasis/kiba-extend/pull/92[PR#92]
 * `stripextra` csv converter to do aggressive stripping of csv field values, _without_ converting 'NULL' strings to ``nilValue``s. In https://github.com/lyrasis/kiba-extend/pull/91[PR#91]
 * `FilterRows::WithLambda` transform. In https://github.com/lyrasis/kiba-extend/pull/85[PR#85]
 * `FilterRows::AllFieldsPopulated` transform. In https://github.com/lyrasis/kiba-extend/pull/85[PR#85]
