@@ -116,7 +116,6 @@ module Kiba
         #   {species: 'guineafowl', name: '%NULLVALUE%', sex: '%NULLVALUE%' },
         # ]
         class EmptyFieldValues
-          include Helpers
           # @param fields [Array(Symbol), Symbol] in which to perform replacements
           # @param value [String] replaces the empty value(s)
           # @param delim [String, nil] if provided, replacement of individual empty values in a multivalue
@@ -127,6 +126,8 @@ module Kiba
             @value = value
             @delim = delim
             @null_placeholder = null_placeholder
+            @initial_getter = Helpers::FieldValueGetter.new(fields: fields, discard: [])
+            @replacement_getter = Helpers::FieldValueGetter.new(fields: fields, delim: delim)
           end
 
           # @private
@@ -138,14 +139,14 @@ module Kiba
 
           private
 
-          attr_reader :fields, :value, :delim, :null_placeholder
+          attr_reader :fields, :value, :delim, :null_placeholder, :initial_getter, :replacement_getter
 
           def is_empty?(val)
             [nil, '', null_placeholder].flatten.any?(val)
           end
           
           def replace_fully_empty_fields(row)
-            field_values(row: row, fields: fields, discard: [])
+            initial_getter.call(row)
               .select{ |field, value| is_empty?(value) }
               .keys
               .each{ |field| row[field] = value }
@@ -156,7 +157,7 @@ module Kiba
           end
 
           def replace_multival_empty(row)
-            field_values(row: row, fields: fields)
+            replacement_getter.call(row)
               .select{ |field, val| val[delim] }
               .transform_values{ |val| val.split(delim, -1) }
               .select{ |field, vals| vals.any?{ |mval| is_empty?(mval) } }

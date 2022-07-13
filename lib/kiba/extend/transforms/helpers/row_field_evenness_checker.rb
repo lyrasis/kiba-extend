@@ -9,12 +9,13 @@ module Kiba
           def initialize(fields:, delim: Kiba::Extend.delim)
             @fields = fields
             @delim = delim
+            @value_getter = FieldValueGetter.new(fields: fields, delim: delim)
           end
 
           def call(row)
             return :even if fields.length == 1
 
-            vals = Helpers.field_values(row: row, fields: fields, delim: delim)
+            vals = value_getter.call(row)
             max = max_value_ct(vals)
             checked = vals.map{ |field, val| [field, val.split(delim, -1).length == max ? :even : :uneven] }
               .to_h
@@ -25,7 +26,7 @@ module Kiba
           
           private
 
-          attr_reader :fields, :delim
+          attr_reader :fields, :delim, :value_getter
 
           def max_value_ct(vals)
             vals.dup

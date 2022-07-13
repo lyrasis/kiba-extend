@@ -119,8 +119,6 @@ module Kiba
         # ]
         # ```
         class EvenFieldValues
-          include Helpers
-
           # @param fields [Array(Symbol)] fields across which to even field values
           # @param evener [String, :value] value used to even out uneven field values. If given a String, that
           #   string will be appended to even out fields. If `:value`, the **final** value in the field needing
@@ -131,6 +129,7 @@ module Kiba
             @fields = [fields].flatten
             @evener = evener
             @delim = delim
+            @value_getter = Helpers::FieldValueGetter.new(fields: fields, delim: delim)
             @checker = Helpers::RowFieldEvennessChecker.new(fields: fields, delim: delim)
             @warner = Warn::UnevenFields.new(fields: fields, delim: delim)
           end
@@ -150,10 +149,10 @@ module Kiba
 
           private
 
-          attr_reader :fields, :evener, :delim, :checker, :warner
+          attr_reader :fields, :evener, :delim, :value_getter, :checker, :warner
 
           def find_max_vals(row)
-            field_values(row: row, fields: fields, delim: delim, usenull: true)
+            value_getter.call(row)
               .values
               .map{ |val| val.split(delim, -1) }
               .map(&:length)

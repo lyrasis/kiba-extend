@@ -118,37 +118,45 @@ module Kiba
           
           # @param fields [Array(Symbol)] names of fields to sort
           # @param delim [String] Character(s) on which to split field values
-          # @param usenull [Boolean] Whether to treat %NULLVALUE% as a blank in processing
+          # @param usenull [Boolean] Whether to treat `Kiba::Extend.nullvalue` as a blank in processing
           # @param direction [:asc, :desc] Direction in which to sort field values
           def initialize(fields:, delim:, usenull: false, direction: :asc)
             @fields = [fields].flatten
             @delim = delim
             @usenull = usenull
             @direction = direction
+            nv = usenull ? Kiba::Extend.nullvalue : nil
+            @value_getter = Helpers::FieldValueGetter.new(fields: fields, delim: delim, treat_as_null: nv)
           end
 
           # @private
           def process(row)
-            field_values(row: row, fields: @fields, delim: @delim, usenull: @usenull).each do |field, val|
-              next unless val[@delim]
+            value_getter.call(row).each do |field, val|
+              next unless val[delim]
 
-              row[field] = sort_values(val.split(@delim)).join(@delim)
+              row[field] = sort_values(val.split(delim)).join(delim)
             end
             row
           end
 
           private
 
-          def process_for_sort(val)
-            return val.gsub('%NULLVALUE%', 'zzzzzzzzzzzzzz').downcase.gsub(/[^[:alnum:][:space:]]/, '') if @usenull
+          attr_reader :fields, :delim, :usenull, :direction, :value_getter
 
-            val.downcase.gsub(/[^[:alnum:][:space:]]/, '')
+          def process_for_sort(val)
+            if usenull
+              val.gsub(Kiba::Extend.nullvalue, 'zzzzzzzzzzzzzz').downcase.gsub(/[^[:alnum:][:space:]]/, '')
+            else
+              val.downcase.gsub(/[^[:alnum:][:space:]]/, '')
+            end
           end
 
           def sort_values(vals)
-            return vals.sort_by { |v| process_for_sort(v) } if @direction == :asc
-
-            vals.sort_by { |v| process_for_sort(v) }.reverse
+            if direction == :asc
+              vals.sort_by { |v| process_for_sort(v) } 
+            else
+              vals.sort_by { |v| process_for_sort(v) }.reverse
+            end
           end
         end
 

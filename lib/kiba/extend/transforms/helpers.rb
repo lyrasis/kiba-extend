@@ -40,7 +40,7 @@ module Kiba
           chkval.strip.empty?
         end
           
-
+        # @deprecated in 2.9.0. Use {FieldValueGetter} instead.
         # @param row [Hash{Symbol=>String,Nil}l] A row of data
         # @param fields [Array(Symbol)] Names of fields to process
         # @param discard [Array<:nil, :empty, :delim>] Types of field values to remove from returned hash
@@ -48,12 +48,11 @@ module Kiba
         # @param usenull [Boolean] If true, replaces '%NULLVALUE%' with '' to make determination
         # @return [Hash{Symbol=>String,Nil}l] of field data for fields that meet keep criteria
         def field_values(row:, fields:, discard: %i[nil empty delim], delim: Kiba::Extend.delim, usenull: false)
-          field_vals = fields.map { |field| [field, row.fetch(field, nil)] }.to_h
-          return field_vals if discard.blank?
-
-          field_vals = field_vals.reject { |_field, val| val.nil? } if discard.any?(:nil)
-          keep = keep_fields(field_vals, discard, delim, usenull)
-          field_vals.select { |field, _val| keep.any?(field) }
+          dep = '`Kiba::Extend::Transforms::Helpers.field_values` is deprecated and will be removed in a future release.'
+          alt = 'Use `Kiba::Extend::Transforms::Helpers::FieldValueGetter` service class instead'
+          warn("#{Kiba::Extend.warning_label}: #{dep} #{alt}")
+          nv = usenull ? Kiba::Extend.nullvalue : nil
+          FieldValueGetter.new(fields: fields, discard: discard, delim: delim, treat_as_null: nv).call(row)
         end
 
         # @param field_vals [Hash{Symbol=>String,Nil}l] A subset of a row

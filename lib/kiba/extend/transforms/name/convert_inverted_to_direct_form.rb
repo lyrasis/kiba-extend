@@ -72,7 +72,6 @@ module Kiba
         # {:iname=>"Smith, R.J., Sr.", :direct=>"R. J. Smith, Sr."}
         # ```
         class ConvertInvertedToDirectForm
-          include Kiba::Extend::Transforms::Helpers
           
           # @param source [Symbol] field containing the inverted name to split
           # @param target [Symbol] field in which to write the direct form
@@ -89,6 +88,8 @@ module Kiba
             @lastname = nameparts[2]
             @suffix = nameparts[3]
             @keep_parts = keep_parts
+            @convert_getter = Helpers::FieldValueGetter.new(fields: [firstname, middlename, lastname])
+            @convertable_getter = Helpers::FieldValueGetter.new(fields: nameparts)
             @splitter = Name::SplitInverted.new(source: source, targets: nameparts)
           end
 
@@ -106,10 +107,11 @@ module Kiba
 
           private
           
-          attr_reader :source, :target, :nameparts, :firstname, :middlename, :lastname, :suffix, :keep_parts, :splitter
+          attr_reader :source, :target, :nameparts, :firstname, :middlename, :lastname, :suffix, :keep_parts,
+            :convert_getter, :convertable_getter, :splitter
 
           def convert(row)
-            name = field_values(row: row, fields: [firstname, middlename, lastname])
+            name = convert_getter.call(row)
               .values
               .join(' ')
             sfx = row.fetch(suffix, '')
@@ -117,7 +119,7 @@ module Kiba
           end
           
           def convertable?(row)
-            vals = field_values(row: row, fields: nameparts)
+            vals = convertable_getter.call(row)
             return true unless vals.empty?
           end
 

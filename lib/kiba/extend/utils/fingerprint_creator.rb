@@ -8,20 +8,19 @@ module Kiba
       # Callable service to generate a fingerprint value from the given fields
       # @since 2.7.1.65
       class FingerprintCreator
-        include Kiba::Extend::Transforms::Helpers
-
         # @param fields [Array<Symbol>] fields used to build the fingerprint
         # @param delim [String] to separate field values when fields are joined for hashing
         def initialize(fields:, delim:)
           @fields = fields
           @delim = delim
+          @value_getter = Transforms::Helpers::FieldValueGetter.new(fields: fields, delim: delim, discard: [])
         end
 
         # @raise [DelimInValueFingerprintError] if any of the field values in the row contain the delim. This error is
         #   caught by {Kiba::Extend::Transforms::Fingerprint::Add} and triggers raising of a more informative error
         #   to the user
         def call(row)
-          values = field_values(row: row, fields: fields, discard: []).values
+          values = value_getter.call(row).values
           check_values(values)
           
           Base64.strict_encode64(hashable_values(values).join(delim))
@@ -29,7 +28,7 @@ module Kiba
 
         private
 
-        attr_reader :fields, :delim
+        attr_reader :fields, :delim, :value_getter
 
         def check_values(values)
           raise Kiba::Extend::Utils::DelimInValueFingerprintError if values.compact.any?{ |val| val[delim] }
