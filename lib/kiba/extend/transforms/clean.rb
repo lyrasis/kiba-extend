@@ -171,22 +171,6 @@ module Kiba
           end
         end
 
-        class DelimiterOnlyFields
-          include Kiba::Extend::Transforms::Helpers
-          def initialize(delim:, use_nullvalue: false)
-            @delim = delim
-            @use_nullvalue = use_nullvalue
-          end
-
-          # @private
-          def process(row)
-            row.each do |hdr, val|
-              row[hdr] = nil if val.is_a?(String) && delim_only?(val, @delim, @use_nullvalue)
-            end
-            row
-          end
-        end
-
         class DowncaseFieldValues
           def initialize(fields:)
             @fields = [fields].flatten
