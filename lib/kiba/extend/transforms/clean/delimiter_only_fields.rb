@@ -6,19 +6,23 @@ module Kiba
       module Clean
         # @deprecated in 2.9.0. Use {Delete::DelimiterOnlyFieldValues} instead
         class DelimiterOnlyFields
-          include Kiba::Extend::Transforms::Helpers
           def initialize(delim:, use_nullvalue: false)
-            @delim = delim
-            @use_nullvalue = use_nullvalue
+            nullval = use_nullvalue ? Kiba::Extend.nullvalue : nil
+            @replacement = Delete::DelimiterOnlyFieldValues.new(
+              fields: :all,
+              delim: delim,
+              treat_as_null: nullval
+            )
           end
 
           # @private
           def process(row)
-            row.each do |hdr, val|
-              row[hdr] = nil if val.is_a?(String) && delim_only?(val, @delim, @use_nullvalue)
-            end
-            row
+            replacement.process(row)
           end
+
+          private
+
+          attr_reader :replacement
         end
       end
     end
