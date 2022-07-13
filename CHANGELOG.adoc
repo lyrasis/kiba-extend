@@ -33,7 +33,6 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 
 ==== Breaking
 * Removes Hash `conditions` parameter and `sep` parameter from `Merge::ConstantValueConditional` transform, replacing with lambda Proc `condition` parameter. In https://github.com/lyrasis/kiba-extend/pull/88[PR#88]
-* **Is not breaking within `kiba-extend`, but potentially could affect direct use by ETL project code:** `Helpers.delim_only?` now returns true if the given value is `nil` or `empty?` In https://github.com/lyrasis/kiba-extend/pull/92[PR#92]
 
 ==== Added
 

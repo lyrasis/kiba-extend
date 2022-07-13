@@ -6,9 +6,9 @@ module Kiba
       # utility functions across Transforms
       module Helpers
         module_function
-        # @deprecated in 2.9.0. Use {Kiba::Extend::Transforms::Helpers::DelimOnlyChecker} instead. This service
-        #   class has slightly different behavior in that it returns true for `nil` or `empty?` values,
-        #   however, this does not appear that it has any impact on existing use of this method
+        # @deprecated in 2.9.0. Use {DelimOnlyChecker} instead. This service
+        #   class has slightly different behavior in that it returns true for `nil` or `empty?` values by default.
+        #   To replicate this exact behavior in {DelimOnlyChecker}, initialize it with `blank_result: false`.
         # 
         # Indicates whether a field value is delimiter-only. If `usenull` is set to true, the
         #   config.nullvalue string is treated as empty in detecting delimiter-only-ness
@@ -21,8 +21,11 @@ module Kiba
         #   and leading/trailing spaces
         # @return [true] if `value` contains only delimiter(s) and leading/trailing spaces
         def delim_only?(val, delim, usenull = false)
+          dep = '`Kiba::Extend::Transforms::Helpers.delim_only?` is deprecated and will be removed in a future release.'
+          alt = 'Use `Kiba::Extend::Transforms::Helpers::DelimOnlyChecker` service class instead'
+          warn("#{Kiba::Extend.warning_label}: #{dep} #{alt}")
           nv = usenull ? Kiba::Extend.nullvalue : nil
-          DelimOnlyChecker.call(delim: delim, treat_as_null: nv, value: val)
+          DelimOnlyChecker.call(delim: delim, treat_as_null: nv, value: val, blank_result: false)
         end
 
         # Indicates whether a given value is empty, ignoring delimiters. If `usenull` is true,
