@@ -8,23 +8,6 @@ module Kiba
       # For finding/replacing within field values, see {Clean::RegexpFindReplaceFieldVals}
       module Replace
         ::Replace = Kiba::Extend::Transforms::Replace
-        class EmptyFieldValues
-          def initialize(fields:, value:)
-            @fields = [fields].flatten
-            @value = value
-          end
-
-          # @private
-          def process(row)
-            blankfields = @fields.map { |field| [field, row.fetch(field, nil)] }
-                                 .select { |pair| pair[1].blank? }
-                                 .map { |pair| pair[0] }
-            return row if blankfields.empty?
-
-            blankfields.each { |field| row[field] = @value }
-            row
-          end
-        end
 
         class FieldValueWithStaticMapping
           def initialize(source:, target:, mapping:, fallback_val: :orig, delete_source: true,
