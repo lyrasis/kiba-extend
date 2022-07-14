@@ -14,7 +14,7 @@ module Kiba
           # @param treat_as_null [nil, String, Array(String)] value(s) to treat as null/empty when determining
           #   what to discard
           def initialize(fields:, delim: Kiba::Extend.delim, discard: %i[nil empty delim], treat_as_null: nil)
-            @fields = fields
+            @fields = [fields].flatten
             @delim = delim
             @discard = discard
             @null_vals = treat_as_null ? [treat_as_null].flatten.sort_by{ |v| v.length }.reverse : []

@@ -11,7 +11,7 @@ module Kiba
         # @param fields [Array<Symbol>] fields used to build the fingerprint
         # @param delim [String] to separate field values when fields are joined for hashing
         def initialize(fields:, delim:)
-          @fields = fields
+          @fields = [fields].flatten
           @delim = delim
           @value_getter = Transforms::Helpers::FieldValueGetter.new(fields: fields, delim: delim, discard: [])
         end
