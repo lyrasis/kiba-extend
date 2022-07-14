@@ -37,7 +37,7 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 ==== Added
 
 * New service object classes in `Transforms::Helpers`: `DelimOnlyChecker`, `FieldValueGetter`, `RowFieldEvennessChecker`, `ValhashFieldEvennessChecker`, and `ValhashFieldEvennessFixer`. In https://github.com/lyrasis/kiba-extend/pull/92[PR#92]
-* New transforms: `Warn::UnevenFields`, `Clean::EvenFieldValues`, `Delete::DelimiterOnlyFieldValues`, `Deduplicate::FlagAll`, `Collapse::FieldsWithCustomFieldmap`, `Collapse::FieldsToRepeatableFieldGroup`, and `Collapse::FieldsToTypedFieldPair`. In https://github.com/lyrasis/kiba-extend/pull/92[PR#92]
+* New transforms: `Warn::UnevenFields`, `Clean::EvenFieldValues`, `Delete::DelimiterOnlyFieldValues`, `Delete::EmptyFieldGroups`, `Deduplicate::FlagAll`, `Collapse::FieldsWithCustomFieldmap`, `Collapse::FieldsToRepeatableFieldGroup`, and `Collapse::FieldsToTypedFieldPair`. In https://github.com/lyrasis/kiba-extend/pull/92[PR#92]
 * `stripextra` csv converter to do aggressive stripping of csv field values, _without_ converting 'NULL' strings to ``nilValue``s. In https://github.com/lyrasis/kiba-extend/pull/91[PR#91]
 * `FilterRows::WithLambda` transform. In https://github.com/lyrasis/kiba-extend/pull/85[PR#85]
 * `FilterRows::AllFieldsPopulated` transform. In https://github.com/lyrasis/kiba-extend/pull/85[PR#85]
