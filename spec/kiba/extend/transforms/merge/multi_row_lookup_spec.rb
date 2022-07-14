@@ -264,7 +264,7 @@ RSpec.describe Kiba::Extend::Transforms::Merge::MultiRowLookup do
       ]
     end
     
-    let(:lookup) { Lookup.csv_to_multi_hash(file: lookup_csv, csvopt: CSVOPT, keycolumn: :single) }
+    let(:lookup) { Lookup.csv_to_multi_hash(file: lookup_csv, csvopt: Kiba::Extend.csvopts, keycolumn: :single) }
 
     let(:transforms) do
       Kiba.job_segment do

@@ -23,7 +23,7 @@ RSpec.describe Kiba::Extend::Utils::Lookup do
 
     it 'returns hash with key = keycolumn value and value = array of all rows w/that key ' do
       result = Lookup.csv_to_hash(file: test_csv,
-                                   csvopt: CSVOPT,
+                                   csvopt: Kiba::Extend.csvopts,
                                    keycolumn: :id)
       expect(result).to eq(lookup_hash)
     end

@@ -20,12 +20,6 @@ require 'kiba/extend/jobs/job_segmenter'
 require 'kiba/extend/destinations'
 require 'kiba/extend/destinations/csv'
 
-# These are still here to support legacy projects/unconverted tests.
-# Do not call these constants in new code.
-# Use Kiba::Extend.csvopts and Kiba::Extend.delim instead
-# Default CSV options
-CSVOPT = { headers: true, header_converters: :symbol }.freeze
-
 # The Kiba ETL framework for Ruby.
 # `kiba-extend` extends only Kiba OSS. Kiba Pro features are not used.
 #
