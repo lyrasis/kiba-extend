@@ -33,6 +33,7 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 
 ==== Breaking
 * Removes Hash `conditions` parameter and `sep` parameter from `Merge::ConstantValueConditional` transform, replacing with lambda Proc `condition` parameter. In https://github.com/lyrasis/kiba-extend/pull/88[PR#88]
+* **Only relevant if you have called global `Kiba::Extend::DELIM` from outside Kiba::Extend for some reason.** This global constant was finally removed from the final place it was being used within kiba-extend, and it has been removed from the application setup.
 
 ==== Added
 

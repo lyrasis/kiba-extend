@@ -26,9 +26,6 @@ require 'kiba/extend/destinations/csv'
 # Default CSV options
 CSVOPT = { headers: true, header_converters: :symbol }.freeze
 
-# Default multivalue delimter for splitting and joining multiple values in a field
-DELIM = ';'
-
 # The Kiba ETL framework for Ruby.
 # `kiba-extend` extends only Kiba OSS. Kiba Pro features are not used.
 #
