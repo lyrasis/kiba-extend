@@ -32,19 +32,48 @@ toc::[]
 These changes are merged into the `main` branch but have not yet been tagged as a new version/release.
 
 ==== Breaking
+
+==== Added
+
+==== Changed
+
+==== Deleted
+
+==== To be deprecated/Will break in a future version
+
+== Releases
+=== 2.9.0 - 2022-07-15
+https://github.com/lyrasis/kiba-extend/compare/v2.8.0\...v2.9.0[Compare code changes]
+
+==== Breaking
 * Removes Hash `conditions` parameter and `sep` parameter from `Merge::ConstantValueConditional` transform, replacing with lambda Proc `condition` parameter. In https://github.com/lyrasis/kiba-extend/pull/88[PR#88]
 * **Only relevant if you have called global `Kiba::Extend::DELIM` or `Kiba::Extend::CSVOPT` from outside Kiba::Extend for some reason.** These global constants were finally removed from the final few places they were being used within kiba-extend, and they have been removed from the application setup.
 
 ==== Added
+* New service object classes in `Transforms::Helpers` in https://github.com/lyrasis/kiba-extend/pull/92[PR#92]:
+** `DelimOnlyChecker`
+** `FieldValueGetter`
+** `RowFieldEvennessChecker`
+** `ValhashFieldEvennessChecker`
+** `ValhashFieldEvennessFixer`
 
-* New service object classes in `Transforms::Helpers`: `DelimOnlyChecker`, `FieldValueGetter`, `RowFieldEvennessChecker`, `ValhashFieldEvennessChecker`, and `ValhashFieldEvennessFixer`. In https://github.com/lyrasis/kiba-extend/pull/92[PR#92]
-* New transforms: `Warn::UnevenFields`, `Clean::EvenFieldValues`, `Delete::DelimiterOnlyFieldValues`, `Delete::EmptyFieldGroups`, `Deduplicate::FlagAll`, `Collapse::FieldsWithCustomFieldmap`, `Collapse::FieldsToRepeatableFieldGroup`, and `Collapse::FieldsToTypedFieldPair`. In https://github.com/lyrasis/kiba-extend/pull/92[PR#92]
+* New transforms:
+** `Clean::EvenFieldValues` (in https://github.com/lyrasis/kiba-extend/pull/92[PR#92])
+** `Collapse::FieldsToRepeatableFieldGroup` (in https://github.com/lyrasis/kiba-extend/pull/92[PR#92])
+** `Collapse::FieldsToTypedFieldPair` (in https://github.com/lyrasis/kiba-extend/pull/92[PR#92])
+** `Collapse::FieldsWithCustomFieldmap` (in https://github.com/lyrasis/kiba-extend/pull/92[PR#92])
+** `Deduplicate::FlagAll` (in https://github.com/lyrasis/kiba-extend/pull/92[PR#92])
+** `Delete::DelimiterOnlyFieldValues` (in https://github.com/lyrasis/kiba-extend/pull/92[PR#92])
+** `Delete::EmptyFieldGroups` (in https://github.com/lyrasis/kiba-extend/pull/92[PR#92])
+** `FilterRows::WithLambda` (in https://github.com/lyrasis/kiba-extend/pull/85[PR#85])
+** `FilterRows::AllFieldsPopulated` (in https://github.com/lyrasis/kiba-extend/pull/85[PR#85])
+** `FilterRows::AnyFieldsPopulated` (in https://github.com/lyrasis/kiba-extend/pull/85[PR#85])
+** `Merge::ConstantValues` (in https://github.com/lyrasis/kiba-extend/pull/84[PR#84])
+** `Replace::EmptyFieldValues` (in https://github.com/lyrasis/kiba-extend/pull/92[PR#92])
+** `Warn::UnevenFields` (in https://github.com/lyrasis/kiba-extend/pull/92[PR#92])
+
 * `stripextra` csv converter to do aggressive stripping of csv field values, _without_ converting 'NULL' strings to ``nilValue``s. In https://github.com/lyrasis/kiba-extend/pull/91[PR#91]
-* `FilterRows::WithLambda` transform. In https://github.com/lyrasis/kiba-extend/pull/85[PR#85]
-* `FilterRows::AllFieldsPopulated` transform. In https://github.com/lyrasis/kiba-extend/pull/85[PR#85]
-* `FilterRows::AnyFieldsPopulated` transform. In https://github.com/lyrasis/kiba-extend/pull/85[PR#85]
 * `ignore_case` parameter to `FilterRows::FieldMatchRegexp` transform. Defaults to `false` for backward compatibility. In https://github.com/lyrasis/kiba-extend/pull/85[PR#85]
-* `Merge::ConstantValues` transform added. In https://github.com/lyrasis/kiba-extend/pull/84[PR#84]
 
 ==== Changed
 * BUGFIX: `Clean::EmptyFieldGroups` was broken if `sep` = `|` and `use_nullvalue` = `true`. In https://github.com/lyrasis/kiba-extend/pull/92[PR#92]
@@ -64,7 +93,6 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 * Deprecates `CombineValues::AcrossFieldGroup`, replacing with `Collapse::FieldsWithCustomFieldmap` . In https://github.com/lyrasis/kiba-extend/pull/92[PR#92]
 * Deprecates `FilterRows::FieldValueGreaterThan`. In https://github.com/lyrasis/kiba-extend/pull/86[PR#86]
 
-== Releases
 === 2.8.0 - 2022-05-13
 https://github.com/lyrasis/kiba-extend/compare/v2.7.2\...v2.8.0[Compare code changes]
 
