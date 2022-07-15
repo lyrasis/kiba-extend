@@ -6,7 +6,7 @@ module Kiba
       module Replace
         # Replace empty field values the given value
         #
-        # Works on single or multivalue fields. Can be given a `null_placeholder` value to count as empty.
+        # Works on single or multivalue fields. Can be given a `treat_as_null` value to count as empty.
         #
         # ## Examples
         #
@@ -45,7 +45,7 @@ module Kiba
         #
         # ```
         # transform Replace::EmptyFieldValues, fields: %i[name sex], value: '%NULLVALUE%',
-        #   null_placeholder: '%NULL%'
+        #   treat_as_null: '%NULL%'
         # ```
         #
         # Results in:
@@ -76,13 +76,13 @@ module Kiba
         #   {species: 'guineafowl', name: '%NULLVALUE%|Weddy|Grimace|%NULLVALUE%', sex: '%NULL%|m|m|%NULLVALUE%'}
         # ]
         #
-        # ### Multivalued (given a `delim` value) with `null_placeholder`
+        # ### Multivalued (given a `delim` value) with `treat_as_null`
         #
         # Using same source data as above, and transform set up as: 
         #
         # ```
         # transform Replace::EmptyFieldValues, fields: %i[name sex], delim: '|', value: '%NULLVALUE%',
-        #   null_placeholder: '%NULL%'
+        #   treat_as_null: '%NULL%'
         # ```
         #
         # Results in:
@@ -95,7 +95,7 @@ module Kiba
         #   {species: 'guineafowl', name: '%NULLVALUE%|Weddy|Grimace|%NULLVALUE%', sex: '%NULLVALUE%|m|m|%NULLVALUE%'}
         # ]
         #
-        # ### Multiple `null_placeholder` values
+        # ### Multiple `treat_as_null` values
         #
         # Results in:
         #
@@ -106,7 +106,7 @@ module Kiba
         #
         # ```
         # transform Replace::EmptyFieldValues, fields: %i[name sex], value: '%NULLVALUE%',
-        #   null_placeholder: ['%NULL%', '%NADA%']
+        #   treat_as_null: ['%NULL%', '%NADA%']
         # ```
         #
         # Results in:
@@ -120,12 +120,12 @@ module Kiba
           # @param value [String] replaces the empty value(s)
           # @param delim [String, nil] if provided, replacement of individual empty values in a multivalue
           #   field will be performed after splitting on this string
-          # @param null_placeholder [String, Array(String)] string(s) to treat as empty values
-          def initialize(fields:, value:, delim: nil, null_placeholder: '')
+          # @param treat_as_null [String, Array(String)] string(s) to treat as empty values
+          def initialize(fields:, value:, delim: nil, treat_as_null: '')
             @fields = [fields].flatten
             @value = value
             @delim = delim
-            @null_placeholder = null_placeholder
+            @treat_as_null = treat_as_null
             @initial_getter = Helpers::FieldValueGetter.new(fields: fields, discard: [])
             @replacement_getter = Helpers::FieldValueGetter.new(fields: fields, delim: delim)
           end
@@ -139,10 +139,10 @@ module Kiba
 
           private
 
-          attr_reader :fields, :value, :delim, :null_placeholder, :initial_getter, :replacement_getter
+          attr_reader :fields, :value, :delim, :treat_as_null, :initial_getter, :replacement_getter
 
           def is_empty?(val)
-            [nil, '', null_placeholder].flatten.any?(val)
+            [nil, '', treat_as_null].flatten.any?(val)
           end
           
           def replace_fully_empty_fields(row)
