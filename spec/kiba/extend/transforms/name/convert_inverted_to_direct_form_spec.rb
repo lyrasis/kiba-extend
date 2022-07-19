@@ -79,7 +79,6 @@ RSpec.describe Kiba::Extend::Transforms::Name::ConvertInvertedToDirectForm do
     let(:expected){ {iname: 'Smith, R.J., Sr.', direct: 'R. J. Smith, Sr.', f: 'R.', l: 'Smith', m: 'J.', s: 'Sr.'} }
 
     it 'transforms as expected' do
-      puts expected
       expect(klass.process(row)).to eq(expected)
     end
   end
@@ -90,7 +89,6 @@ RSpec.describe Kiba::Extend::Transforms::Name::ConvertInvertedToDirectForm do
     let(:expected){ {iname: 'Smith, R.J., Sr.', direct: 'R. J. Smith, Sr.'} }
 
     it 'transforms as expected' do
-      puts expected
       expect(klass.process(row)).to eq(expected)
     end
   end
