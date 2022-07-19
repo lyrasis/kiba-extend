@@ -27,6 +27,7 @@ toc::[]
 * Remove `Reshape::CollapseMultipleFieldsToOneTypedFieldPair`
 * Remove `FilterRows::FieldValueGreaterThan`
 * Remove `Helpers.delim_only?`
+* Remove `Helpers.field_values`
 
 == Unreleased
 These changes are merged into the `main` branch but have not yet been tagged as a new version/release.
