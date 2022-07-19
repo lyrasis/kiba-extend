@@ -43,7 +43,7 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 ==== To be deprecated/Will break in a future version
 
 == Releases
-=== 2.9.0 - 2022-07-15
+=== 2.9.0 - 2022-07-19
 https://github.com/lyrasis/kiba-extend/compare/v2.8.0\...v2.9.0[Compare code changes]
 
 ==== Breaking
@@ -55,8 +55,6 @@ https://github.com/lyrasis/kiba-extend/compare/v2.8.0\...v2.9.0[Compare code cha
 ** `DelimOnlyChecker`
 ** `FieldValueGetter`
 ** `RowFieldEvennessChecker`
-** `ValhashFieldEvennessChecker`
-** `ValhashFieldEvennessFixer`
 
 * New transforms:
 ** `Clean::EvenFieldValues` (in https://github.com/lyrasis/kiba-extend/pull/92[PR#92])
@@ -66,9 +64,9 @@ https://github.com/lyrasis/kiba-extend/compare/v2.8.0\...v2.9.0[Compare code cha
 ** `Deduplicate::FlagAll` (in https://github.com/lyrasis/kiba-extend/pull/92[PR#92])
 ** `Delete::DelimiterOnlyFieldValues` (in https://github.com/lyrasis/kiba-extend/pull/92[PR#92])
 ** `Delete::EmptyFieldGroups` (in https://github.com/lyrasis/kiba-extend/pull/92[PR#92])
-** `FilterRows::WithLambda` (in https://github.com/lyrasis/kiba-extend/pull/85[PR#85])
 ** `FilterRows::AllFieldsPopulated` (in https://github.com/lyrasis/kiba-extend/pull/85[PR#85])
 ** `FilterRows::AnyFieldsPopulated` (in https://github.com/lyrasis/kiba-extend/pull/85[PR#85])
+** `FilterRows::WithLambda` (in https://github.com/lyrasis/kiba-extend/pull/85[PR#85])
 ** `Merge::ConstantValues` (in https://github.com/lyrasis/kiba-extend/pull/84[PR#84])
 ** `Replace::EmptyFieldValues` (in https://github.com/lyrasis/kiba-extend/pull/92[PR#92])
 ** `Reshape::FieldsToFieldGroupWithConstant` (in https://github.com/lyrasis/kiba-extend/pull/92[PR#92])
