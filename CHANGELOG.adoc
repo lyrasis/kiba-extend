@@ -70,6 +70,7 @@ https://github.com/lyrasis/kiba-extend/compare/v2.8.0\...v2.9.0[Compare code cha
 ** `FilterRows::AnyFieldsPopulated` (in https://github.com/lyrasis/kiba-extend/pull/85[PR#85])
 ** `Merge::ConstantValues` (in https://github.com/lyrasis/kiba-extend/pull/84[PR#84])
 ** `Replace::EmptyFieldValues` (in https://github.com/lyrasis/kiba-extend/pull/92[PR#92])
+** `Reshape::FieldsToFieldGroupWithConstant` (in https://github.com/lyrasis/kiba-extend/pull/92[PR#92])
 ** `Warn::UnevenFields` (in https://github.com/lyrasis/kiba-extend/pull/92[PR#92])
 
 * `stripextra` csv converter to do aggressive stripping of csv field values, _without_ converting 'NULL' strings to ``nilValue``s. In https://github.com/lyrasis/kiba-extend/pull/91[PR#91]
