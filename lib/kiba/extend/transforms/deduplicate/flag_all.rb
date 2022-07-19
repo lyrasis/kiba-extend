@@ -4,6 +4,8 @@ module Kiba
   module Extend
     module Transforms
       module Deduplicate
+        # @since 2.9.0
+        #
         # Adds a field (specified as `in_field`) containing 'y' or 'n', indicating whether value of `on_field`
         #   is a duplicate
         #

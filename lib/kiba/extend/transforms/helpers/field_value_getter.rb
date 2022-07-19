@@ -4,6 +4,8 @@ module Kiba
   module Extend
     module Transforms
       module Helpers
+        # @since 2.9.0
+        #
         # Returns values of specfied fields that meet the specified criteria
         class FieldValueGetter
           # @param fields [Array(Symbol)] from which to return values

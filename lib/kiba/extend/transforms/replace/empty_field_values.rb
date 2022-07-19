@@ -4,6 +4,8 @@ module Kiba
   module Extend
     module Transforms
       module Replace
+        # @since 2.9.0
+        #
         # Replace empty field values the given value
         #
         # Works on single or multivalue fields. Can be given a `treat_as_null` value to count as empty.

@@ -4,6 +4,8 @@ module Kiba
   module Extend
     module Transforms
       module Delete
+        # @since 2.9.0
+        #
         # Deletes empty value from each field in a field group if values in that position in each field in the
         #   field group are empty. For example, if the 3rd value in grouped fields annotationType,
         #   annotationDate, and annotationNote are all blank, then the 3rd value from each field is deleted.

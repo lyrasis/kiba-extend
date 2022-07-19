@@ -4,6 +4,8 @@ module Kiba
   module Extend
     module Transforms
       module Delete
+        # @since 2.9.0
+        #
         # Converts any value in given field(s) to nil if that value is `empty?`, or consists only
         #   of the specified delimiter, `treat_as_null` value(s), and, optionally, spaces.
         #

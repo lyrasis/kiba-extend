@@ -4,6 +4,8 @@ module Kiba
   module Extend
     module Transforms
       module Helpers
+        # @since 2.9.0
+        #
         # Service object to return whether given values are "delimiter only".
         #
         # **NOTE:** By default, "delimiter only" is `true` if a value is `nil` or `empty?`. It is also true

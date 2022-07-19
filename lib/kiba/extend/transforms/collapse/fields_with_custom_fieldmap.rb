@@ -4,6 +4,8 @@ module Kiba
   module Extend
     module Transforms
       module Collapse
+        # @since 2.9.0
+        #
         # Combines values from multiple columns together as specified in fieldmap parameter.
         #
         # If you are collapsing fields into target fields that are part of repeatable field groups,

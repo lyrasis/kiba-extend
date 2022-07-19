@@ -4,6 +4,8 @@ module Kiba
   module Extend
     module Transforms
       module Collapse
+        # @since 2.9.0
+        #
         # Takes multiple fields like :workphone, :homephone, :mobilephone and produces two new fields like :phone and :phonetype where :phonetype depends on the original field taken from
         #
         # # Examples

@@ -4,6 +4,8 @@ module Kiba
   module Extend
     module Transforms
       module Warn
+        # @since 2.9.0
+        #
         # Prints warning to STDOUT for each row having uneven values in the given fields
         #
         # ## What is meant by "Even fields"?

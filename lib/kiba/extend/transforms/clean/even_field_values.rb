@@ -4,6 +4,8 @@ module Kiba
   module Extend
     module Transforms
       module Clean
+        # @since 2.9.0
+        #
         # Ensures even field values across multiple fields (i.e. a field group) by appending some value to the end
         #   of fields containing fewer values.
         #

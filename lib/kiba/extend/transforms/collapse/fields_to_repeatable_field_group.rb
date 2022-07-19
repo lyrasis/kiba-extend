@@ -4,6 +4,8 @@ module Kiba
   module Extend
     module Transforms
       module Collapse
+        # @since 2.9.0
+        #
         # Combines data from multiple fields following an expected naming pattern (shown in examples below) into
         #   final fields that are part of a repeatable fieldgroup.
         #

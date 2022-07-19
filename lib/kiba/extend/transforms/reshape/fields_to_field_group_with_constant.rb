@@ -4,6 +4,8 @@ module Kiba
   module Extend
     module Transforms
       module Reshape
+        # @since 2.9.0
+        # 
         # Convenience transform to rename one or more fields and add a field with a constant value,
         #   by default ensuring explicit empty field values and field evenness expected in
         #   field groups. Runs the following other transforms, which you will want to understand
