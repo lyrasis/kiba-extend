@@ -138,7 +138,7 @@ module Kiba
               treat_as_null: null_vals
             )
             @evenness_checkers = groups.map do |fields|
-              Helpers::RowFieldEvennessChecker.new(fields: fields, delim: delim)
+              Helpers::FieldEvennessChecker.new(fields: fields, delim: delim)
             end
             @value_getters = groups.map do |fields|
               Helpers::FieldValueGetter.new(fields: fields, delim: delim)

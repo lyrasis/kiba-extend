@@ -39,7 +39,7 @@ module Kiba
           def initialize(fields:, delim: Kiba::Extend.delim)
             @fields = [fields].flatten
             @delim = delim
-            @checker = Helpers::RowFieldEvennessChecker.new(fields: fields, delim: delim)
+            @checker = Helpers::FieldEvennessChecker.new(fields: fields, delim: delim)
           end
           
           # @private

@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Kiba::Extend::Transforms::Helpers::RowFieldEvennessChecker do
+RSpec.describe Kiba::Extend::Transforms::Helpers::FieldEvennessChecker do
   subject(:checker){ described_class.new(fields: fields, delim: delim) }
   let(:fields){ %i[foo bar baz] }
   let(:delim){ '|' }

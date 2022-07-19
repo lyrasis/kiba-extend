@@ -141,7 +141,7 @@ module Kiba
             @warn = warn
             
             @value_getter = Helpers::FieldValueGetter.new(fields: fields, treat_as_null: treat_as_null, delim: delim)
-            @checker = Helpers::RowFieldEvennessChecker.new(fields: fields, delim: delim)
+            @checker = Helpers::FieldEvennessChecker.new(fields: fields, delim: delim)
             @warner = Warn::UnevenFields.new(fields: fields, delim: delim)
           end
           

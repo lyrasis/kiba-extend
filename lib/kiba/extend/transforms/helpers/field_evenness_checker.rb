@@ -5,7 +5,7 @@ module Kiba
     module Transforms
       module Helpers
         # Given row and array of field names, checks whether fields have the same number of values
-        class RowFieldEvennessChecker
+        class FieldEvennessChecker
           def initialize(fields:, delim: Kiba::Extend.delim)
             @fields = [fields].flatten
             @delim = delim
