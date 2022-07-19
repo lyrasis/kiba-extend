@@ -29,7 +29,7 @@ RSpec.describe Kiba::Extend::Transforms::Helpers::FieldEvennessChecker do
     context 'with uneven field values' do
       let(:row){ {foo: 'a|a|a', bar: 'b|b', baz: 'z'} }
       
-      it 'returns Hashof uneven fieldnames/values' do
+      it 'returns Hash of uneven fieldnames/values' do
         expect(result).to eq({bar: 'b|b', baz: 'z'})
       end
     end
