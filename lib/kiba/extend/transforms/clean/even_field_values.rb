@@ -120,16 +120,27 @@ module Kiba
         # ```
         class EvenFieldValues
           # @param fields [Array(Symbol)] fields across which to even field values
+          # @param treat_as_null [nil, String, Array(String)] value(s) to treat as empty when determining if
+          #   the entire field is empty or not
           # @param evener [String, :value] value used to even out uneven field values. If given a String, that
           #   string will be appended to even out fields. If `:value`, the **final** value in the field needing
           #   evening will be repeated to even out the field.
           # @param delim [String] used to split/join multiple values in a field
           # @param warn [Boolean] whether to print warning of uneven fields to STDOUT
-          def initialize(fields:, evener: Kiba::Extend.nullvalue, delim: Kiba::Extend.delim, warn: true)
+          def initialize(
+            fields:,
+            treat_as_null: Kiba::Extend.nullvalue,
+            evener: Kiba::Extend.nullvalue,
+            delim: Kiba::Extend.delim,
+            warn: true
+          )
             @fields = [fields].flatten
+            @treat_as_null = treat_as_null.nil? ? [] : [treat_as_null].flatten
             @evener = evener
             @delim = delim
-            @value_getter = Helpers::FieldValueGetter.new(fields: fields, delim: delim)
+            @warn = warn
+            
+            @value_getter = Helpers::FieldValueGetter.new(fields: fields, treat_as_null: treat_as_null, delim: delim)
             @checker = Helpers::RowFieldEvennessChecker.new(fields: fields, delim: delim)
             @warner = Warn::UnevenFields.new(fields: fields, delim: delim)
           end
@@ -141,6 +152,7 @@ module Kiba
             chk = checker.call(row)
             return row if chk == :even
 
+            warner.process(row) if warn
             max = find_max_vals(row)
             pad_uneven_values(row, chk, max)
 
@@ -149,7 +161,7 @@ module Kiba
 
           private
 
-          attr_reader :fields, :evener, :delim, :value_getter, :checker, :warner
+          attr_reader :fields, :treat_as_null, :evener, :delim, :warn, :value_getter, :checker, :warner
 
           def find_max_vals(row)
             value_getter.call(row)
