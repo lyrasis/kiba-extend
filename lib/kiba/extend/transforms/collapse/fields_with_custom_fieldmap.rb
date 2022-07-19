@@ -6,6 +6,9 @@ module Kiba
       module Collapse
         # Combines values from multiple columns together as specified in fieldmap parameter.
         #
+        # If you are collapsing fields into target fields that are part of repeatable field groups,
+        #   {Collapse::FieldsToRepeatableFieldGroup} may be more appropriate.
+        #
         # Target field name can be the same as an existing field name.
         #
         # # Examples
@@ -14,21 +17,21 @@ module Kiba
         #
         # ```
         # [
-        # {person: '', statusa: '', date: '',
-        #  personb: '', statusb: '', date2: '',
-        #  personc: '', statusc: '', date3: ''},
-        # {person: 'jim', statusa: 'approved', date: '2020',
-        #  personb: 'bill', statusb: 'requested', date2: '2019',
-        #  personc: 'terri', statusc: 'authorized', date3: '2018'},
-        # {person: 'jim|mavis', statusa: 'approved|', date: '2020|2021',
-        #  personb: 'bill', statusb: 'requested', date2: '2019',
-        #  personc: 'terri', statusc: 'authorized', date3: '2018'},
-        # {person: nil, statusa: 'acknowledged', date: '2020',
-        #  personb: 'jill', statusb: 'requested', date2: nil,
-        #  personc: 'bill', statusc: 'followup', date3: '2021'},
-        # {person: '%NULLVALUE%|%NULLVALUE%', statusa: 'acknowledged|approved', date: '2020|%NULLVALUE%',
-        #  personb: 'jill', statusb: 'requested', date2: nil,
-        #  personc: 'bill', statusc: 'followup', date3: '2019'}
+        #   {person: '', statusa: '', date: '',
+        #    personb: '', statusb: '', date2: '',
+        #    personc: '', statusc: '', date3: ''},
+        #   {person: 'jim', statusa: 'approved', date: '2020',
+        #    personb: 'bill', statusb: 'requested', date2: '2019',
+        #    personc: 'terri', statusc: 'authorized', date3: '2018'},
+        #   {person: 'jim|mavis', statusa: 'approved|', date: '2020|2021',
+        #    personb: 'bill', statusb: 'requested', date2: '2019',
+        #    personc: 'terri', statusc: 'authorized', date3: '2018'},
+        #   {person: nil, statusa: 'acknowledged', date: '2020',
+        #    personb: 'jill', statusb: 'requested', date2: nil,
+        #    personc: 'bill', statusc: 'followup', date3: '2021'},
+        #   {person: '%NULLVALUE%|%NULLVALUE%', statusa: 'acknowledged|approved', date: '2020|%NULLVALUE%',
+        #    personb: 'jill', statusb: 'requested', date2: nil,
+        #    personc: 'bill', statusc: 'followup', date3: '2019'}
         # ]
         # ```
         #

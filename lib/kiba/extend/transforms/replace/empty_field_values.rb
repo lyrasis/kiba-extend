@@ -38,6 +38,7 @@ module Kiba
         #   {species: 'guineafowl', name: 'Weddy||Grimace|', sex: '%NULLVALUE%'}
         #   {species: 'guineafowl', name: '|Weddy|Grimace|', sex: '%NULL%|m|m|'}
         # ]
+        # ```
         #
         # ### Null placeholder (single value)
         #
@@ -57,6 +58,7 @@ module Kiba
         #   {species: 'guineafowl', name: 'Weddy||Grimace|', sex: '%NULLVALUE%'}
         #   {species: 'guineafowl', name: '|Weddy|Grimace|', sex: '%NULL%|m|m|'}
         # ]
+        # ```
         #
         # ### Multivalued (given a `delim` value)
         #
@@ -75,6 +77,7 @@ module Kiba
         #   {species: 'guineafowl', name: 'Weddy|%NULLVALUE%|Grimace|%NULLVALUE%', sex: '%NULLVALUE%'},
         #   {species: 'guineafowl', name: '%NULLVALUE%|Weddy|Grimace|%NULLVALUE%', sex: '%NULL%|m|m|%NULLVALUE%'}
         # ]
+        # ```
         #
         # ### Multivalued (given a `delim` value) with `treat_as_null`
         #
@@ -94,6 +97,7 @@ module Kiba
         #   {species: 'guineafowl', name: 'Weddy|%NULLVALUE%|Grimace|%NULLVALUE%', sex: '%NULLVALUE%'},
         #   {species: 'guineafowl', name: '%NULLVALUE%|Weddy|Grimace|%NULLVALUE%', sex: '%NULLVALUE%|m|m|%NULLVALUE%'}
         # ]
+        # ```
         #
         # ### Multiple `treat_as_null` values
         #
@@ -115,6 +119,7 @@ module Kiba
         # [
         #   {species: 'guineafowl', name: '%NULLVALUE%', sex: '%NULLVALUE%' },
         # ]
+        # ```
         class EmptyFieldValues
           # @param fields [Array(Symbol), Symbol] in which to perform replacements
           # @param value [String] replaces the empty value(s)

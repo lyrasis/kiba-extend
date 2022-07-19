@@ -4,8 +4,125 @@ module Kiba
   module Extend
     module Transforms
       module Delete
+        # Deletes empty value from each field in a field group if values in that position in each field in the
+        #   field group are empty. For example, if the 3rd value in grouped fields annotationType,
+        #   annotationDate, and annotationNote are all blank, then the 3rd value from each field is deleted.
+        #
+        # Features/behaviors:
+        #
+        # - aims to keep field groups even (See {Warn::UnevenFields} for explanation of field group)
+        #   evenness
+        # - skips processing field groups found to be uneven, as it is impossible to know which
+        #   value is intended to go with which other values across the field group
+        # - converts fields considered empty to nil
+        # - considers delimiter-only fields to be empty. Runs {Delete::DelimiterOnlyFieldValues} to
+        #   clear them.
+        #
+        # ## Examples
+        #
+        # Source data for both examples below:
+        #
+        # ```
+        # [
+        #   {aa: '', ab: '', bb: '', bc: '', bd: ''},
+        #   {aa: 'n|', ab: nil, bb: '|e', bc: '|n', bd: '|e'},
+        #   {aa: 'n', ab: '', bb: 'n', bc: 'e', bd: 'p'},
+        #   {aa: 'n|e', ab: 'e|n', bb: 'n|e', bc: 'e|n', bd: 'ne|'},
+        #   {aa: 'n|', ab: 'e|', bb: '|e', bc: 'n|e', bd: '|e'},
+        #   {aa: '|', ab: '|', bb: 'e||n|', bc: 'n||e|', bd: 'e||p|'},
+        #   {aa: '%NULLVALUE%', ab: '%NULLVALUE%', bb: '%NULLVALUE%|%NULLVALUE%', bc: nil, bd: '|'},
+        #   {aa: '|', ab: '', bb: '%NULLVALUE%|', bc: '%NULLVALUE%|%NULLVALUE%', bd: '%NULLVALUE%|a'},
+        #   {aa: '|', ab: '', bb: '%NULLVALUE%|', bc: '%NULLVALUE%|NULL', bd: '%NULLVALUE%|a'}
+        # ]
+        # ```
+        #
+        # Value of `Kiba::Extend.nullvalue` is `%NULLVALUE%`.
+        #
+        # ### Default behavior
+        #
+        # By default, this transform considers the value of `Kiba::Extend.nullvalue` to represent an empty
+        #   value.
+        #
+        # Used in job as:
+        #
+        # ```
+        # transform Delete::EmptyFieldGroups, groups: [%i[aa ab], %i[bb bc bd]], delim: '|'
+        # ```
+        #
+        # Results in:
+        #
+        # ```
+        # [
+        #   {aa: nil, ab: nil, bb: nil, bc: nil, bd: nil},
+        #   {aa: 'n', ab: nil, bb: 'e', bc: 'n', bd: 'e'},
+        #   {aa: 'n', ab: nil, bb: 'n', bc: 'e', bd: 'p'},
+        #   {aa: 'n|e', ab: 'e|n', bb: 'n|e', bc: 'e|n', bd: 'ne|'},
+        #   {aa: 'n', ab: 'e', bb: '|e', bc: 'n|e', bd: '|e'},
+        #   {aa: nil, ab: nil, bb: 'e|n', bc: 'n|e', bd: 'e|p'},
+        #   {aa: nil, ab: nil, bb: nil, bc: nil, bd: nil},
+        #   {aa: nil, ab: nil, bb: nil, bc: nil, bd: 'a'},
+        #   {aa: nil, ab: nil, bb: nil, bc: 'NULL', bd: 'a'}
+        # ]
+        # ```
+        #
+        # ### Treat multiple strings as empty
+        #
+        # Note that the array given for `treat_as_null` here overrides the default value of that
+        #   parameter. If you want the value of `Kiba::Extend.nullvalue` to be one of the included
+        #   values, you must specify it in the array given.
+        #
+        # Used in job as:
+        #
+        # ```
+        # transform Delete::EmptyFieldGroups,
+        #   groups: [%i[aa ab], %i[bb bc bd]],
+        #   treat_as_null: ['NULL', Kiba::Extend.nullvalue],
+        #   delim: '|'
+        # ```
+        #
+        # Results in:
+        #
+        # ```
+        # [
+        #   {aa: nil, ab: nil, bb: nil, bc: nil, bd: nil},
+        #   {aa: 'n', ab: nil, bb: 'e', bc: 'n', bd: 'e'},
+        #   {aa: 'n', ab: nil, bb: 'n', bc: 'e', bd: 'p'},
+        #   {aa: 'n|e', ab: 'e|n', bb: 'n|e', bc: 'e|n', bd: 'ne|'},
+        #   {aa: 'n', ab: 'e', bb: '|e', bc: 'n|e', bd: '|e'},
+        #   {aa: nil, ab: nil, bb: 'e|n', bc: 'n|e', bd: 'e|p'},
+        #   {aa: nil, ab: nil, bb: nil, bc: nil, bd: nil},
+        #   {aa: nil, ab: nil, bb: nil, bc: nil, bd: 'a'},
+        #   {aa: nil, ab: nil, bb: nil, bc: nil, bd: 'a'}
+        # ]
+        # ```
+        #
+        # ### Do not treat any strings except empty string (`''`) as empty 
+        #
+        # Used in job as:
+        #
+        # ```
+        # transform Delete::EmptyFieldGroups,
+        #   groups: [%i[aa ab], %i[bb bc bd]],
+        #   treat_as_null: nil,
+        #   delim: '|'
+        # ```
+        #
+        # Results in:
+        #
+        # ```
+        # [
+        #   {aa: nil, ab: nil, bb: nil, bc: nil, bd: nil},
+        #   {aa: 'n', ab: nil, bb: 'e', bc: 'n', bd: 'e'},
+        #   {aa: 'n', ab: nil, bb: 'n', bc: 'e', bd: 'p'},
+        #   {aa: 'n|e', ab: 'e|n', bb: 'n|e', bc: 'e|n', bd: 'ne|'},
+        #   {aa: 'n', ab: 'e', bb: '|e', bc: 'n|e', bd: '|e'},
+        #   {aa: nil, ab: nil, bb: 'e|n', bc: 'n|e', bd: 'e|p'},
+        #   {aa: '%NULLVALUE%', ab: '%NULLVALUE%', bb: '%NULLVALUE%|%NULLVALUE%', bc: nil, bd: nil},
+        #   {aa: nil, ab: nil, bb: '%NULLVALUE%|', bc: '%NULLVALUE%|%NULLVALUE%', bd: '%NULLVALUE%|a'},
+        #   {aa: nil, ab: nil, bb: '%NULLVALUE%|', bc: '%NULLVALUE%|NULL', bd: '%NULLVALUE%|a'}
+        # ]
+        # ```
         class EmptyFieldGroups
-          
           # @param groups [Array(Array(Symbol))] Each of the arrays inside groups should list all fields that are
           #   part of a repeating field group or field subgroup
           # @param delim [String] delimiter used to split/join field values
@@ -113,14 +230,6 @@ module Kiba
             padded = padend.gsub("#{@sep}#{@sep}", "#{@sep}%NULLVALUE%#{@sep}")
             padded
           end
-
-          # def all_empty?(group, index)
-          #   thesevals = group.map { |arr| arr[index] }
-          #     .map { |val| empty_val?(val) ? nil : val }
-          #     .uniq
-          #     .compact
-          #   thesevals.empty? ? true : false
-          # end
         end
       end
     end
