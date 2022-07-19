@@ -79,13 +79,13 @@ RSpec.describe Kiba::Extend::Transforms::Collapse::FieldsToRepeatableFieldGroup 
       expect(result).to eq(expected)
     end
 
-    context 'with custom null_placeholder' do
-      let(:params){ {sources: sources, targets: targets, delim: delim, null_placeholder: 'BLANK'} }
+    context 'with custom null_placeholder (and custom even_val: :value)' do
+      let(:params){ {sources: sources, targets: targets, delim: delim, null_placeholder: 'BLANK', even_val: :value} }
       let(:expected) do
         [
           {
-          foo: 'a|f|bf|BLANK|d',
-          bar: 'a|BLANK|b|c|BLANK'
+            foo: 'a|f|bf|BLANK|d',
+            bar: 'a|a|b|c|BLANK'
           }
         ]
       end
@@ -94,6 +94,38 @@ RSpec.describe Kiba::Extend::Transforms::Collapse::FieldsToRepeatableFieldGroup 
         expect(result).to eq(expected)
       end
 
+    end
+
+    context 'with custom null_placeholder (and default even_val)' do
+      let(:params){ {sources: sources, targets: targets, delim: delim, null_placeholder: 'BLANK'} }
+      let(:expected) do
+        [
+          {
+          foo: 'a|f|bf|BLANK|d',
+          bar: 'a|%NULLVALUE%|b|c|BLANK'
+          }
+        ]
+      end
+
+      it 'transforms as expected' do
+        expect(result).to eq(expected)
+      end
+    end
+
+    context 'with custom null_placeholder (and custom even_val: EVENED)' do
+      let(:params){ {sources: sources, targets: targets, delim: delim, null_placeholder: 'BLANK', even_val: 'EVENED'} }
+      let(:expected) do
+        [
+          {
+            foo: 'a|f|bf|BLANK|d',
+            bar: 'a|EVENED|b|c|BLANK'
+          }
+        ]
+      end
+
+      it 'transforms as expected' do
+        expect(result).to eq(expected)
+      end
     end
   end
 
