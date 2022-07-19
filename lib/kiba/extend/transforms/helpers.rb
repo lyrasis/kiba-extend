@@ -23,7 +23,8 @@ module Kiba
         def delim_only?(val, delim, usenull = false)
           dep = '`Kiba::Extend::Transforms::Helpers.delim_only?` is deprecated and will be removed in a future release.'
           alt = 'Use `Kiba::Extend::Transforms::Helpers::DelimOnlyChecker` service class instead'
-          warn("#{Kiba::Extend.warning_label}: #{dep} #{alt}")
+          used = caller.first
+          warn("#{Kiba::Extend.warning_label}: #{dep} #{alt}\n  Used at: #{used}")
           nv = usenull ? Kiba::Extend.nullvalue : nil
           DelimOnlyChecker.call(delim: delim, treat_as_null: nv, value: val, blank_result: false)
         end
@@ -50,7 +51,8 @@ module Kiba
         def field_values(row:, fields:, discard: %i[nil empty delim], delim: Kiba::Extend.delim, usenull: false)
           dep = '`Kiba::Extend::Transforms::Helpers.field_values` is deprecated and will be removed in a future release.'
           alt = 'Use `Kiba::Extend::Transforms::Helpers::FieldValueGetter` service class instead'
-          warn("#{Kiba::Extend.warning_label}: #{dep} #{alt}")
+          used = caller.first
+          warn("#{Kiba::Extend.warning_label}: #{dep} #{alt}\n  Used at: #{used}")
           nv = usenull ? Kiba::Extend.nullvalue : nil
           FieldValueGetter.new(fields: fields, discard: discard, delim: delim, treat_as_null: nv).call(row)
         end
