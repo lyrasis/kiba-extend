@@ -55,8 +55,6 @@ module Kiba
         # - `nil` is converted to the string `'nil'`
         #
         class Add
-          include Kiba::Extend::Transforms::Helpers
-
           # @param fields [Array<Symbol>] fields whose values should be used in fingerprint
           # @param delim [String] used to join field values into a hashable string
           # @param target [Symbol] field in which fingerprint hash should inserted
