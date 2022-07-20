@@ -282,7 +282,7 @@ module Kiba
             finalize_fields(row)
             
             fields.each do |field|
-              oldval = row.fetch(field)
+              oldval = row.fetch(field, nil)
               next if oldval.nil?
               next unless oldval.is_a?(String)
 
