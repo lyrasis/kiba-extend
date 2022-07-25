@@ -107,12 +107,7 @@ module Kiba
             blank = blanks_sep[true]
             not_blank = blanks_sep[false]
 
-            sorted = not_blank.map{ |row| { sortval: convert(row[sortfield]), row: row} }
-              .group_by{ |row| row[:sortval].class }
-              .map{ |klass, rows| [klass, sort(rows)] }
-              .to_h
-              .map{ |klass, rows| [klass, rows.map{ |row| row[:row] }] }
-              .to_h
+            sorted = sorted_nonblanks(not_blank)
 
             arranged = arrange_sorted_rows(sorted)
             
@@ -134,6 +129,17 @@ module Kiba
             asc = [sorted[Integer], sorted[String]]
             ordered = sortdir == :asc ? asc : asc.reverse
             ordered.compact.flatten
+          end
+
+          def sorted_nonblanks(not_blank)
+            return {Integer => [], String => []} if not_blank.nil?
+            
+            not_blank.map{ |row| { sortval: convert(row[sortfield]), row: row} }
+              .group_by{ |row| row[:sortval].class }
+              .map{ |klass, rows| [klass, sort(rows)] }
+              .to_h
+              .map{ |klass, rows| [klass, rows.map{ |row| row[:row] }] }
+              .to_h
           end
 
           def convert(val)
