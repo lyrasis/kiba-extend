@@ -51,7 +51,7 @@ module Kiba
           #   using it in a lookup, you may not need a sorter.
           # @note Interaction of specifying a `sorter` and `multikey: true` may be unexpected. 
           def initialize(fieldmap:, lookup:, keycolumn:, constantmap: {},
-                         conditions: {}, multikey: false, delim: DELIM, null_placeholder: nil,
+                         conditions: {}, multikey: false, delim: Kiba::Extend.delim, null_placeholder: nil,
                          sorter: nil)
             @fieldmap = fieldmap # hash of looked-up values to merge in for each merged-in row
             @constantmap = constantmap # hash of constants to add for each merged-in row

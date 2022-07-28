@@ -214,7 +214,7 @@ module Helpers
 
   def execute_job(filename:, xform:, csvopt: {}, xformopt: {})
     output_rows = []
-    settings = { filename: filename, csv_options: CSVOPT.merge(csvopt) }
+    settings = { filename: filename, csv_options: Kiba::Extend.csvopts.merge(csvopt) }
     job = Kiba.parse do
       source Kiba::Common::Sources::CSV, **settings
       transform(&:to_h)
@@ -227,8 +227,8 @@ module Helpers
   end
 
   def job_csv(filename:, incsvopt: {}, outcsvopt: {})
-    insettings = { filename: filename, csv_options: CSVOPT.merge(incsvopt) }
-    outsettings = { filename: filename, csv_options: CSVOPT.merge(outcsvopt) }
+    insettings = { filename: filename, csv_options: Kiba::Extend.csvopts.merge(incsvopt) }
+    outsettings = { filename: filename, csv_options: Kiba::Extend.csvopts.merge(outcsvopt) }
     job = Kiba.parse do
       source Kiba::Common::Sources::CSV, **insettings
       transform(&:to_h)

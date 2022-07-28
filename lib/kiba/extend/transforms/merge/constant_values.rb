@@ -4,6 +4,8 @@ module Kiba
   module Extend
     module Transforms
       module Merge
+        # @since 2.9.0
+        #
         # Merges the given constant values into the given target fields.
         #
         # @note Uses {Kiba::Extend::Transforms::Merge::ConstantValue} to handle each pair in the `constantmap`, so
@@ -34,7 +36,6 @@ module Kiba
         # {name: 'Kernel', species: 'Numida meleagris', species_common: 'guinea fowl', species_binomial: 'Numida meleagris' }
         # ```
         #
-        # @since 2.8.0.84
         class ConstantValues
           def initialize(constantmap:)
             @mergers = constantmap.map{ |target, value| Merge::ConstantValue.new(target: target, value: value) }

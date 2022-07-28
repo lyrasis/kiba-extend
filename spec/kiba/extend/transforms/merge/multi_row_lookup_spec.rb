@@ -37,24 +37,25 @@ RSpec.describe Kiba::Extend::Transforms::Merge::MultiRowLookup do
             event: :treatment
           },
           keycolumn: :id,
-          lookup: Lookup.enum_to_hash(enum: lkup_table, keycolumn: :id)
+          lookup: Lookup.enum_to_hash(enum: lkup_table, keycolumn: :id),
+          delim: '|'
       end
     end
 
     let(:expected) do
       [
         { id: '1', name: 'Weddy', sex: 'm', source: 'adopted',
-         date: '2019-09-15;2020-04-15;2019-07-21',
-         event: 'adopted;deworm;hatch' },
+         date: '2019-09-15|2020-04-15|2019-07-21',
+         event: 'adopted|deworm|hatch' },
         { id: '2', name: 'Kernel', sex: 'f', source: 'adopted',
-         date: '2020-04-15;2019-09-15;2019-08-01',
-         event: 'deworm;adopted;hatch' },
+         date: '2020-04-15|2019-09-15|2019-08-01',
+         event: 'deworm|adopted|hatch' },
         { id: '3', name: 'Boris', sex: 'm', source: 'adopted',
          date: nil,
          event: nil },
         { id: '4', name: 'Earlybird', sex: 'f', source: 'hatched',
-         date: ';2022-05-03',
-         event: 'nail trim;' },
+         date: '|2022-05-03',
+         event: 'nail trim|' },
         { id: '5', name: 'Lazarus', sex: 'm', source: 'adopted',
          date: nil,
          event: nil },
@@ -88,24 +89,25 @@ RSpec.describe Kiba::Extend::Transforms::Merge::MultiRowLookup do
             },
             keycolumn: :id,
             lookup: Lookup.enum_to_hash(enum: lkup_table, keycolumn: :id),
-            sorter: sorter
+            sorter: sorter,
+            delim: '|'
         end
       end
 
       let(:expected) do
         [
           { id: '1', name: 'Weddy', sex: 'm', source: 'adopted',
-           date: '2019-07-21;2019-09-15;2020-04-15',
-           event: 'hatch;adopted;deworm' },
+           date: '2019-07-21|2019-09-15|2020-04-15',
+           event: 'hatch|adopted|deworm' },
           { id: '2', name: 'Kernel', sex: 'f', source: 'adopted',
-           date: '2019-08-01;2019-09-15;2020-04-15',
-           event: 'hatch;adopted;deworm' },
+           date: '2019-08-01|2019-09-15|2020-04-15',
+           event: 'hatch|adopted|deworm' },
           { id: '3', name: 'Boris', sex: 'm', source: 'adopted',
            date: nil,
            event: nil },
           { id: '4', name: 'Earlybird', sex: 'f', source: 'hatched',
-           date: ';2022-05-03',
-           event: 'nail trim;' },
+           date: '|2022-05-03',
+           event: 'nail trim|' },
           { id: '5', name: 'Lazarus', sex: 'm', source: 'adopted',
            date: nil,
            event: nil },
@@ -144,24 +146,25 @@ RSpec.describe Kiba::Extend::Transforms::Merge::MultiRowLookup do
                 {:id=>"4", :date=>"", :treatment=>"nail trim"},
               ]
             },
-            null_placeholder: '%NULLVALUE%'
+            null_placeholder: '%NULLVALUE%',
+            delim: '|'
         end
       end
 
       let(:expected) do
         [
           { id: '1', name: 'Weddy', sex: 'm', source: 'adopted',
-           date: '2019-07-21;2019-09-15;2020-04-15',
-           event: 'hatch;adopted;deworm' },
+           date: '2019-07-21|2019-09-15|2020-04-15',
+           event: 'hatch|adopted|deworm' },
           { id: '2', name: 'Kernel', sex: 'f', source: 'adopted',
-           date: '2019-08-01;2019-09-15;2020-04-15',
-           event: 'hatch;adopted;deworm' },
+           date: '2019-08-01|2019-09-15|2020-04-15',
+           event: 'hatch|adopted|deworm' },
           { id: '3', name: 'Boris', sex: 'm', source: 'adopted',
            date: nil,
            event: nil },
           { id: '4', name: 'Earlybird', sex: 'f', source: 'hatched',
-           date: '2022-05-03;%NULLVALUE%',
-           event: '%NULLVALUE%;nail trim' },
+           date: '2022-05-03|%NULLVALUE%',
+           event: '%NULLVALUE%|nail trim' },
           { id: '5', name: 'Lazarus', sex: 'm', source: 'adopted',
            date: nil,
            event: nil },
@@ -206,15 +209,15 @@ RSpec.describe Kiba::Extend::Transforms::Merge::MultiRowLookup do
       let(:expected) do
         [
           { id: '1', name: 'Weddy', sex: 'm', source: 'adopted',
-           date: '2019-07-21;2019-09-15;2020-04-15',
-           event: 'hatch;adopted;deworm',
-           by: 'kms;kms;kms',
-           loc: 'The Thicket;The Thicket;The Thicket' },
+           date: '2019-07-21|2019-09-15|2020-04-15',
+           event: 'hatch|adopted|deworm',
+           by: 'kms|kms|kms',
+           loc: 'The Thicket|The Thicket|The Thicket' },
           { id: '2', name: 'Kernel', sex: 'f', source: 'adopted',
-           date: '2019-08-01;2019-09-15;2020-04-15',
-           event: 'hatch;adopted;deworm',
-           by: 'kms;kms;kms',
-           loc: 'The Thicket;The Thicket;The Thicket' },
+           date: '2019-08-01|2019-09-15|2020-04-15',
+           event: 'hatch|adopted|deworm',
+           by: 'kms|kms|kms',
+           loc: 'The Thicket|The Thicket|The Thicket' },
           { id: '3', name: 'Boris', sex: 'm', source: 'adopted',
            date: nil,
            event: nil,
@@ -261,7 +264,7 @@ RSpec.describe Kiba::Extend::Transforms::Merge::MultiRowLookup do
       ]
     end
     
-    let(:lookup) { Lookup.csv_to_multi_hash(file: lookup_csv, csvopt: CSVOPT, keycolumn: :single) }
+    let(:lookup) { Lookup.csv_to_multi_hash(file: lookup_csv, csvopt: Kiba::Extend.csvopts, keycolumn: :single) }
 
     let(:transforms) do
       Kiba.job_segment do
@@ -378,4 +381,3 @@ RSpec.describe Kiba::Extend::Transforms::Merge::MultiRowLookup do
     end
   end
 end
-

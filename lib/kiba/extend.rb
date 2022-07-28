@@ -20,15 +20,6 @@ require 'kiba/extend/jobs/job_segmenter'
 require 'kiba/extend/destinations'
 require 'kiba/extend/destinations/csv'
 
-# These are still here to support legacy projects/unconverted tests.
-# Do not call these constants in new code.
-# Use Kiba::Extend.csvopts and Kiba::Extend.delim instead
-# Default CSV options
-CSVOPT = { headers: true, header_converters: :symbol }.freeze
-
-# Default multivalue delimter for splitting and joining multiple values in a field
-DELIM = ';'
-
 # The Kiba ETL framework for Ruby.
 # `kiba-extend` extends only Kiba OSS. Kiba Pro features are not used.
 #
@@ -77,7 +68,7 @@ module Kiba
 
     # Default delimiter for splitting/joining values in multi-valued fields
     #   Example: 'a;b' -> ['a', 'b']
-    setting :delim, default: ';', reader: true
+    setting :delim, default: '|', reader: true
 
     # Default subgrouping delimiter for splitting/joining values in multi-valued fields
     #   Example: 'a^^y;b^^z' -> [['a', 'y'], ['b', 'z']]

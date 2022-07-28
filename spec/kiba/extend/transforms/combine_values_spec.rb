@@ -3,49 +3,6 @@
 require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::CombineValues do
-  describe 'AcrossFieldGroup' do
-    rows = [
-      %w[person statusa date personb statusb date2 personc statusc date3],
-      %w[jim approved 2020 bill requested 2019 terri authorized 2018],
-      ['jim;mavis', 'approved;', '2020;2021', 'bill', 'requested', '2019', 'terri', 'authorized', '2018'],
-      [nil, 'acknowledged', '2020', 'jill', 'requested', nil, 'bill', 'followup', '2021'],
-      ['%NULLVALUE%;%NULLVALUE%', 'acknowledged;approved', '2020;%NULLVALUE%', 'jill', 'requested', nil, 'bill',
-       'followup', '2019']
-    ]
-
-    before do
-      generate_csv(rows)
-    end
-    it 'concatenates specified field values, keeping field group integrity' do
-      expected = [
-        { person: 'jim;bill;terri',
-          status: 'authorized;approved;requested',
-          statusdate: '2020;2019;2018' },
-        { person: 'jim;mavis;bill;terri',
-          status: 'authorized;approved;;requested',
-          statusdate: '2020;2021;2019;2018' },
-        { person: ';jill;bill',
-          status: 'followup;acknowledged;requested',
-          statusdate: '2020;;2021' },
-        { person: '%NULLVALUE%;%NULLVALUE%;jill;bill',
-          status: 'followup;acknowledged;approved;requested',
-          statusdate: '2020;%NULLVALUE%;;2019' }
-      ]
-      opts = {
-        fieldmap: {
-          person: %i[person personb personc],
-          status: %i[statusc statusa statusb],
-          statusdate: %i[date date2 date3]
-        },
-        sep: ';'
-      }
-      result = execute_job(filename: test_csv,
-                           xform: CombineValues::AcrossFieldGroup,
-                           xformopt: opts)
-      expect(result).to eq(expected)
-    end
-  end
-
   describe 'FromFieldsWithDelimiter' do
     rows = [
       %w[id name sex source],
@@ -68,8 +25,8 @@ RSpec.describe Kiba::Extend::Transforms::CombineValues do
       result = execute_job(filename: test_csv,
                            xform: CombineValues::FromFieldsWithDelimiter,
                            xformopt: { sources: %i[name sex source],
-                                       target: :newcol,
-                                       sep: ' --- ' })
+                                      target: :newcol,
+                                      sep: ' --- ' })
       expect(result).to eq(expected)
     end
 
@@ -84,9 +41,9 @@ RSpec.describe Kiba::Extend::Transforms::CombineValues do
         result = execute_job(filename: test_csv,
                              xform: CombineValues::FromFieldsWithDelimiter,
                              xformopt: { sources: %i[name sex source],
-                                         target: :newcol,
-                                         sep: ' --- ',
-                                         prepend_source_field_name: true })
+                                        target: :newcol,
+                                        sep: ' --- ',
+                                        prepend_source_field_name: true })
         expect(result).to eq(expected)
       end
       context 'when there are blank/nil fields' do
@@ -105,9 +62,9 @@ RSpec.describe Kiba::Extend::Transforms::CombineValues do
           result = execute_job(filename: test_csv,
                                xform: CombineValues::FromFieldsWithDelimiter,
                                xformopt: { sources: %i[name sex source],
-                                           target: :newcol,
-                                           sep: ' --- ',
-                                           prepend_source_field_name: true })
+                                          target: :newcol,
+                                          sep: ' --- ',
+                                          prepend_source_field_name: true })
           expect(result).to eq(expected)
         end
       end
@@ -124,9 +81,9 @@ RSpec.describe Kiba::Extend::Transforms::CombineValues do
         result = execute_job(filename: test_csv,
                              xform: CombineValues::FromFieldsWithDelimiter,
                              xformopt: { sources: %i[name sex source],
-                                         target: :newcol,
-                                         sep: '|',
-                                         delete_sources: false })
+                                        target: :newcol,
+                                        sep: '|',
+                                        delete_sources: false })
         expect(result).to eq(expected)
       end
     end
@@ -142,8 +99,8 @@ RSpec.describe Kiba::Extend::Transforms::CombineValues do
         result = execute_job(filename: test_csv,
                              xform: CombineValues::FromFieldsWithDelimiter,
                              xformopt: { sources: %i[name sex],
-                                         target: :name,
-                                         sep: '|' })
+                                        target: :name,
+                                        sep: '|' })
         expect(result).to eq(expected)
       end
     end
@@ -163,11 +120,11 @@ RSpec.describe Kiba::Extend::Transforms::CombineValues do
     it 'concatenates all fields (with given delimiter) into given field' do
       expected = [
         { name: 'Weddy', sex: 'm', source: 'adopted',
-          search: 'Weddy m adopted' },
+         search: 'Weddy m adopted' },
         { name: 'Niblet', sex: 'f', source: 'hatched',
-          search: 'Niblet f hatched' },
+         search: 'Niblet f hatched' },
         { name: 'Keet', sex: nil, source: 'hatched',
-          search: 'Keet hatched' }
+         search: 'Keet hatched' }
       ]
       result = execute_job(filename: test_csv,
                            xform: CombineValues::FullRecord,
