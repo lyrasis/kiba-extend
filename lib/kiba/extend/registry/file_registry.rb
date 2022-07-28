@@ -84,7 +84,7 @@ module Kiba
 
         def lookup(key)
           resolve(key)
-        rescue Dry::Container::Error
+        rescue Dry::Container::KeyError
           fail KeyNotRegisteredError, key
         end
 
