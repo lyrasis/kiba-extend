@@ -78,7 +78,9 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/kiba/extend/transforms/reshape.rb</dd>
+    <dd>lib/kiba/extend/transforms/reshape.rb<span class="defines">,<br />
+  lib/kiba/extend/transforms/reshape/simple_pivot.rb,<br /> lib/kiba/extend/transforms/reshape/fields_to_field_group_with_constant.rb,<br /> lib/kiba/extend/transforms/reshape/collapse_multiple_fields_to_one_typed_field_pair.rb</span>
+</dd>
   </dl>
   
 </div>
@@ -87,7 +89,13 @@
   <div class="discussion">
     <p>Transformations which significantly change the shape of the data without adding new rows.</p>
 
-<p>See <span class='object_link'><a href="Explode.html" title="Kiba::Extend::Transforms::Explode (module)">Explode</a></span> for transformations that change the shape and add new rows.</p>
+<h2 id="see-also">See also:</h2>
+
+<ul>
+<li><span class='object_link'><a href="Collapse.html" title="Kiba::Extend::Transforms::Collapse (module)">Collapse</a></span> transforms, which reduce the number of fields by combining
+them in various ways</li>
+<li><span class='object_link'><a href="Explode.html" title="Kiba::Extend::Transforms::Explode (module)">Explode</a></span> transforms, which change the shape <strong>and add new rows</strong></li>
+</ul>
 
 
   </div>
@@ -101,7 +109,7 @@
     
   
     
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Reshape/CollapseMultipleFieldsToOneTypedFieldPair.html" title="Kiba::Extend::Transforms::Reshape::CollapseMultipleFieldsToOneTypedFieldPair (class)">CollapseMultipleFieldsToOneTypedFieldPair</a></span>, <span class='object_link'><a href="Reshape/SimplePivot.html" title="Kiba::Extend::Transforms::Reshape::SimplePivot (class)">SimplePivot</a></span>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Reshape/CollapseMultipleFieldsToOneTypedFieldPair.html" title="Kiba::Extend::Transforms::Reshape::CollapseMultipleFieldsToOneTypedFieldPair (class)">CollapseMultipleFieldsToOneTypedFieldPair</a></span>, <span class='object_link'><a href="Reshape/FieldsToFieldGroupWithConstant.html" title="Kiba::Extend::Transforms::Reshape::FieldsToFieldGroupWithConstant (class)">FieldsToFieldGroupWithConstant</a></span>, <span class='object_link'><a href="Reshape/SimplePivot.html" title="Kiba::Extend::Transforms::Reshape::SimplePivot (class)">SimplePivot</a></span>
     
   
 </p>
@@ -117,7 +125,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Jun 30 16:27:38 2022 by
+  Generated on Thu Jul 28 18:39:57 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>

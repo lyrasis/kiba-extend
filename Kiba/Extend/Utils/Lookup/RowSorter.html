@@ -486,12 +486,7 @@ result.map{ |row| row[:id] } =&gt;
 112
 113
 114
-115
-116
-117
-118
-119
-120</pre>
+115</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/lookup/row_sorter.rb', line 102</span>
@@ -504,12 +499,7 @@ result.map{ |row| row[:id] } =&gt;
   <span class='id identifier rubyid_blank'>blank</span> <span class='op'>=</span> <span class='id identifier rubyid_blanks_sep'>blanks_sep</span><span class='lbracket'>[</span><span class='kw'>true</span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_not_blank'>not_blank</span> <span class='op'>=</span> <span class='id identifier rubyid_blanks_sep'>blanks_sep</span><span class='lbracket'>[</span><span class='kw'>false</span><span class='rbracket'>]</span>
 
-  <span class='id identifier rubyid_sorted'>sorted</span> <span class='op'>=</span> <span class='id identifier rubyid_not_blank'>not_blank</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='lbrace'>{</span> <span class='label'>sortval:</span> <span class='id identifier rubyid_convert'>convert</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_sortfield'>sortfield</span><span class='rbracket'>]</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='label'>row:</span> <span class='id identifier rubyid_row'>row</span><span class='rbrace'>}</span> <span class='rbrace'>}</span>
-    <span class='period'>.</span><span class='id identifier rubyid_group_by'>group_by</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='symbol'>:sortval</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span> <span class='rbrace'>}</span>
-    <span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_klass'>klass</span><span class='comma'>,</span> <span class='id identifier rubyid_rows'>rows</span><span class='op'>|</span> <span class='lbracket'>[</span><span class='id identifier rubyid_klass'>klass</span><span class='comma'>,</span> <span class='id identifier rubyid_sort'>sort</span><span class='lparen'>(</span><span class='id identifier rubyid_rows'>rows</span><span class='rparen'>)</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
-    <span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span>
-    <span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_klass'>klass</span><span class='comma'>,</span> <span class='id identifier rubyid_rows'>rows</span><span class='op'>|</span> <span class='lbracket'>[</span><span class='id identifier rubyid_klass'>klass</span><span class='comma'>,</span> <span class='id identifier rubyid_rows'>rows</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='symbol'>:row</span><span class='rbracket'>]</span> <span class='rbrace'>}</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
-    <span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span>
+  <span class='id identifier rubyid_sorted'>sorted</span> <span class='op'>=</span> <span class='id identifier rubyid_sorted_nonblanks'>sorted_nonblanks</span><span class='lparen'>(</span><span class='id identifier rubyid_not_blank'>not_blank</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_arranged'>arranged</span> <span class='op'>=</span> <span class='id identifier rubyid_arrange_sorted_rows'>arrange_sorted_rows</span><span class='lparen'>(</span><span class='id identifier rubyid_sorted'>sorted</span><span class='rparen'>)</span>
   
@@ -525,7 +515,7 @@ result.map{ |row| row[:id] } =&gt;
 </div>
 
       <div id="footer">
-  Generated on Thu Jun 30 16:27:39 2022 by
+  Generated on Thu Jul 28 18:39:58 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>

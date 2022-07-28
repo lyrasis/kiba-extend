@@ -61,7 +61,7 @@
 
       <div id="content"><h1>Class: Kiba::Extend::Transforms::CombineValues::AcrossFieldGroup
   
-  
+  <span class="deprecated note title">Deprecated</span>
   
 </h1>
 <div class="box_info">
@@ -94,79 +94,15 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/kiba/extend/transforms/combine_values.rb</dd>
+    <dd>lib/kiba/extend/transforms/combine_values/across_field_group.rb</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-  <div class="note todo">
-    <strong>TODO:</strong>
-    <div class='inline'><p>Make transformer smarter about padding out blank values to the necessary number of blank values when combined.
-This sort of assumes there will always be the same number of source fields mapped to each target field, but one
-approach would be to find the max length (once split) of source fields in each row with index[i]:
-person (0), statusc (2), date (1). Then pad accordingly. We&#39;d still have to make some assumption like
-&quot;if there&#39;s 1 value in a column, but max ct of column values is 2, pad as &#39;2020;&#39; instead of &#39;;2020&#39;</p>
-</div>
-  </div>
-
-<p>Combines values from multiple columns together as specified in fieldmap parameter.</p>
-
-<p>Target field name can be the same as an existing field name.</p>
-
-<h1 id="examples">Examples</h1>
-
-<p>Input table:</p>
-
-<pre class="code ruby"><code class="ruby">| person                  | statusa               | date             | personb | statusb   | date2 | personc | statusc    | date3 |
-|---------------------------------------------------------------------------------------------------------------------------------|
-| jim                     | approved              | 2020             | bill    | requested | 2019  | terri   | authorized |  2018 |
-| jim;mavis               | approved;             | 2020;2021        | bill    | requested | 2019  | terri   | authorized |  2018 |
-| nil                     | acknowledged          | 2020             | jill    | requested | nil   | bill    | followup   |  2021 |
-| %NULLVALUE%;%NULLVALUE% | acknowledged;approved | 2020;%NULLVALUE% | jill    | requested | nil   | bill    | followup   |  2019 |
-</code></pre>
-
-<p>Used in pipeline as:</p>
-
-<pre class="code ruby"><code class="ruby"> <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../CombineValues.html" title="Kiba::Extend::Transforms::CombineValues (module)">CombineValues</a></span></span><span class='op'>::</span><span class='const'>AcrossFieldGroup</span><span class='comma'>,</span>
-   <span class='label'>fieldmap:</span> <span class='lbrace'>{</span>
-               <span class='symbol'>:person</span> <span class='op'>=&gt;</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>person</span><span class='words_sep'> </span><span class='tstring_content'>personb</span><span class='words_sep'> </span><span class='tstring_content'>personc</span><span class='tstring_end'>]</span></span><span class='comma'>,</span>
-               <span class='symbol'>:status</span> <span class='op'>=&gt;</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>statusc</span><span class='words_sep'> </span><span class='tstring_content'>statusa</span><span class='words_sep'> </span><span class='tstring_content'>statusb</span><span class='tstring_end'>]</span></span><span class='comma'>,</span>
-               <span class='symbol'>:statusdate</span> <span class='op'>=&gt;</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>date</span><span class='words_sep'> </span><span class='tstring_content'>date2</span><span class='words_sep'> </span><span class='tstring_content'>date3</span><span class='tstring_end'>]</span></span>
-             <span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;</span><span class='tstring_end'>&#39;</span></span>
-</code></pre>
-
-<p>Results in:</p>
-
-<pre class="code ruby"><code class="ruby">| person                            | status                                   | statusdate             |
-|-----------------------------------|------------------------------------------|------------------------|
-| jim;bill;terri                    | authorized;approved;requested            | 2020;2019;2018         |
-| jim;mavis;bill;terri              | authorized;approved;;requested           | 2020;2021;2019;2018    |
-| ;jill;bill                        | followup;acknowledged;requested          | 2020;;2021             |
-| %NULLVALUE%;%NULLVALUE%;jill;bill | followup;acknowledged;approved;requested | 2020;%NULLVALUE%;;2019 |
-</code></pre>
-
-<h2 id="note">NOTE</h2>
-
-<p>If it is important that the number of values in each target column match in each row, depending on the situation, you may need to employ %NULLVALUE% or other placeholder value to ensure this. For example, contrast row 3 and 4 of the example. Row 3 works because an empty column value gets treated as a single value. Thus, it sees 3 person, status, and statusdate values, even though one person and one date value are nil.</p>
-
-<p>If the person column of row 4 were like this:</p>
-
-<pre class="code ruby"><code class="ruby">| person  | statusa               | date | personb | statusb   | date2 | personc | statusc    | date3 |
-|---------|-----------------------|------|---------|-----------|-------|---------|------------|-------|
-| nil     | acknowledged;approved | 2020 | jill    | requested | nil   | bill    | followup   |  2019 |
-</code></pre>
-
-<p>Then output would be:</p>
-
-<pre class="code ruby"><code class="ruby">| person     | status                                   | statusdate |
-|--------------------------------------------------------------------|
-| ;jill;bill | followup;acknowledged;approved;requested | 2020;;2019 |
-</code></pre>
-
-<p>Depending on your requirements, this could be problematic because you now have 3 values in person and statusdate, but 4 values in status</p>
+    <div class="note deprecated"><strong>Deprecated.</strong> <div class='inline'><p>In 2.9.0. Use <span class='object_link'><a href="../Collapse/FieldsWithCustomFieldmap.html" title="Kiba::Extend::Transforms::Collapse::FieldsWithCustomFieldmap (class)">Kiba::Extend::Transforms::Collapse::FieldsWithCustomFieldmap</a></span> instead.</p>
+</div></div>
 
 
   </div>
@@ -208,7 +144,7 @@ person (0), statusc (2), date (1). Then pad accordingly. We&#39;d still have to 
   
 
   
-    <span class="summary_desc"><div class='inline'><h1 id="more-on-fieldmap-parameter">More on <code>fieldmap</code> parameter.</h1>
+    <span class="summary_desc"><div class='inline'><p>A new instance of AcrossFieldGroup.</p>
 </div></span>
   
 </li>
@@ -231,78 +167,13 @@ person (0), statusc (2), date (1). Then pad accordingly. We&#39;d still have to 
   
 </h3><div class="docstring">
   <div class="discussion">
-    
-  <div class="note todo">
-    <strong>TODO:</strong>
-    <div class='inline'><p>Raise error if unequal number of source fields given</p>
-</div>
-  </div>
-
-<h1 id="more-on-fieldmap-parameter">More on <code>fieldmap</code> parameter</h1>
-
-<ul>
-<li><code>fieldmap</code> is a Hash</li>
-<li>Each key is a target field, given as a Symbol, into which values from multiple other fields will be combined</li>
-<li>Each value is an Array of Symbols. Each element of the array is a source field that will be mapped into the target field given as key. Order of source fields in this array controls the order in which the source fields are combined.</li>
-<li>There must be an equal number of source fields given in each source field Array</li>
-</ul>
+    <p>Returns a new instance of AcrossFieldGroup.</p>
 
 
   </div>
 </div>
 <div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
   
-    <li>
-      
-        <span class='name'>fieldmap</span>
-      
-      
-        <span class='type'>(<tt>Hash</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>Instructions on how to combine source fields into target fields. See above for fuller explanation of Hash format expectations</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>sep</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>String to use in splitting/joining the values</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>delete_sources</span>
-      
-      
-        <span class='type'>(<tt>Boolean</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>true</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'><p>Whether to delete source columns after values have been combined in target columns</p>
-</div>
-      
-    </li>
-  
-</ul>
-
 
 </div><table class="source_code">
   <tr>
@@ -310,19 +181,27 @@ person (0), statusc (2), date (1). Then pad accordingly. We&#39;d still have to 
       <pre class="lines">
 
 
-87
-88
-89
-90
-91</pre>
+9
+10
+11
+12
+13
+14
+15
+16
+17</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/combine_values.rb', line 87</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/combine_values/across_field_group.rb', line 9</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fieldmap:</span><span class='comma'>,</span> <span class='label'>sep:</span><span class='comma'>,</span> <span class='label'>delete_sources:</span> <span class='kw'>true</span><span class='rparen'>)</span>
-  <span class='ivar'>@fieldmap</span> <span class='op'>=</span> <span class='id identifier rubyid_fieldmap'>fieldmap</span>
-  <span class='ivar'>@sep</span> <span class='op'>=</span> <span class='id identifier rubyid_sep'>sep</span>
-  <span class='ivar'>@del</span> <span class='op'>=</span> <span class='id identifier rubyid_delete_sources'>delete_sources</span>
+  <span class='ivar'>@replacement</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Collapse.html" title="Kiba::Extend::Transforms::Collapse (module)">Collapse</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Collapse/FieldsWithCustomFieldmap.html" title="Kiba::Extend::Transforms::Collapse::FieldsWithCustomFieldmap (class)">FieldsWithCustomFieldmap</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Collapse/FieldsWithCustomFieldmap.html#initialize-instance_method" title="Kiba::Extend::Transforms::Collapse::FieldsWithCustomFieldmap#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+    <span class='label'>fieldmap:</span> <span class='id identifier rubyid_fieldmap'>fieldmap</span><span class='comma'>,</span>
+    <span class='label'>delim:</span> <span class='id identifier rubyid_sep'>sep</span><span class='comma'>,</span>
+    <span class='label'>delete_sources:</span> <span class='id identifier rubyid_delete_sources'>delete_sources</span>
+  <span class='rparen'>)</span>
+  <span class='id identifier rubyid_msg'>msg</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>CombineValues::AcrossFieldGroup to be deprecated in a future release. Convert any usage of this transform to Collapse::FieldsWithCustomFieldmap</span><span class='tstring_end'>&#39;</span></span>
+  <span class='id identifier rubyid_warn'>warn</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_warning_label'>warning_label</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_msg'>msg</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -335,7 +214,7 @@ person (0), statusc (2), date (1). Then pad accordingly. We&#39;d still have to 
 </div>
 
       <div id="footer">
-  Generated on Thu Jun 30 16:27:39 2022 by
+  Generated on Thu Jul 28 18:39:59 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>

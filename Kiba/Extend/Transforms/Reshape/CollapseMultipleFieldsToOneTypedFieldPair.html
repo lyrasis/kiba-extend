@@ -61,7 +61,7 @@
 
       <div id="content"><h1>Class: Kiba::Extend::Transforms::Reshape::CollapseMultipleFieldsToOneTypedFieldPair
   
-  
+  <span class="deprecated note title">Deprecated</span>
   
 </h1>
 <div class="box_info">
@@ -94,73 +94,15 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/kiba/extend/transforms/reshape.rb</dd>
+    <dd>lib/kiba/extend/transforms/reshape/collapse_multiple_fields_to_one_typed_field_pair.rb</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Takes multiple fields like :workphone, :homephone, :mobilephone and produces two new fields like :phone and :phonetype where :phonetype depends on the original field taken from</p>
-
-<h1 id="examples">Examples</h1>
-
-<p>Input table:</p>
-
-<pre class="code ruby"><code class="ruby">| work | home     | mobile | other | name |
-|------+----------+--------+-------+------|
-| 123  | 456      | 789    | 897   | Sue  |
-|      | 987;555  |        | 253   | Bob  |
-| nil  |          |        | nil   | Mae  |
-| 654  | 321      | 257    |       | Sid  |
-</code></pre>
-
-<p>Used in pipeline as:</p>
-
-<pre class="code ruby"><code class="ruby"> <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Reshape.html" title="Kiba::Extend::Transforms::Reshape (module)">Reshape</a></span></span><span class='op'>::</span><span class='const'>CollapseMultipleFieldsToOneTypedFieldPair</span><span class='comma'>,</span>
-   <span class='label'>sourcefieldmap:</span> <span class='lbrace'>{</span> <span class='label'>home:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>h</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>work:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>b</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>mobile:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>m</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>other:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span><span class='comma'>,</span>
-   <span class='label'>datafield:</span> <span class='symbol'>:phone</span><span class='comma'>,</span>
-   <span class='label'>typefield:</span> <span class='symbol'>:phonetype</span><span class='comma'>,</span>
-   <span class='label'>sourcesep:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
-   <span class='label'>targetsep:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>^</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
-   <span class='label'>delete_sources:</span> <span class='kw'>false</span>
-</code></pre>
-
-<p>Results in:</p>
-
-<pre class="code ruby"><code class="ruby">| work | home     | mobile | other | phone           | phonetype | name |
-|------+----------+--------+-------|-----------------+-----------+------|
-| 123  | 456      | 789    | 897   | 456^123^789^897 | h^b^m^    | Sue  |
-|      | 987;555  |        | 253   | 987^555^253     | h^h^      | Bob  |
-| nil  |          |        | nil   | nil             | nil       | Mae  |
-| 654  | 321      | 257    |       | 321^654^257     | h^b^m     | Sid  |
-</code></pre>
-
-<p>Used in pipeline as:</p>
-
-<pre class="code ruby"><code class="ruby"> <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Reshape.html" title="Kiba::Extend::Transforms::Reshape (module)">Reshape</a></span></span><span class='op'>::</span><span class='const'>CollapseMultipleFieldsToOneTypedFieldPair</span><span class='comma'>,</span>
-   <span class='label'>sourcefieldmap:</span> <span class='lbrace'>{</span> <span class='label'>home:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>h</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>work:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>b</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>mobile:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>other:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>o</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span><span class='comma'>,</span>
-   <span class='label'>datafield:</span> <span class='symbol'>:phone</span><span class='comma'>,</span>
-   <span class='label'>typefield:</span> <span class='symbol'>:phonetype</span><span class='comma'>,</span>
-   <span class='label'>targetsep:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>^</span><span class='tstring_end'>&#39;</span></span>
-</code></pre>
-
-<p>Results in:</p>
-
-<pre class="code ruby"><code class="ruby">| phone           | phonetype | name |
-|-----------------+-----------+------|
-| 456^123^789^897 | h^b^m^    | Sue  |
-| 987;555^253     | h^        | Bob  |
-| nil             | nil       | Mae  |
-| 321^654^257     | h^b^m     | Sid  |
-</code></pre>
-
-<h2 id="notice">Notice</h2>
-
-<ul>
-<li>The number of values in <code>phone</code> and <code>phonetype</code> are kept even</li>
-<li>The data in the target fields is in the order of the keys in the <code>sourcefieldmap</code>: home, work, mobile, other.</li>
-</ul>
+    <div class="note deprecated"><strong>Deprecated.</strong> <div class='inline'><p>In 2.9.0. Use <span class='object_link'><a href="../Collapse/FieldsToTypedFieldPair.html" title="Kiba::Extend::Transforms::Collapse::FieldsToTypedFieldPair (class)">Collapse::FieldsToTypedFieldPair</a></span> instead.</p>
+</div></div>
 
 
   </div>
@@ -231,105 +173,7 @@
   </div>
 </div>
 <div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
   
-    <li>
-      
-        <span class='name'>sourcefieldmap</span>
-      
-      
-        <span class='type'>(<tt>Hash{Symbol =&gt; String}</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>Keys are the names of the source fields. Each key&#39;s value is the type that should be assigned in <code>typefield</code></p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>datafield</span>
-      
-      
-        <span class='type'>(<tt>Symbol</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>Target field into which the original data value(s) from source fields will be mapped</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>typefield</span>
-      
-      
-        <span class='type'>(<tt>Symbol</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>Target field into which the type values will be mapped</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>sourcesep</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>nil</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'><p>Delimiter used to split source data into multiple values</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>targetsep</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>Delimiter used to join multiple values in target fields</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>delete_sources</span>
-      
-      
-        <span class='type'>(<tt>Boolean</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>true</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'><p>Whether to delete source fields after mapping them to target fields</p>
-</div>
-      
-    </li>
-  
-</ul>
-
 
 </div><table class="source_code">
   <tr>
@@ -337,25 +181,33 @@
       <pre class="lines">
 
 
-82
-83
-84
-85
-86
-87
-88
-89</pre>
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/reshape.rb', line 82</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/reshape/collapse_multiple_fields_to_one_typed_field_pair.rb', line 9</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>sourcefieldmap:</span><span class='comma'>,</span> <span class='label'>datafield:</span><span class='comma'>,</span> <span class='label'>typefield:</span><span class='comma'>,</span> <span class='label'>targetsep:</span><span class='comma'>,</span> <span class='label'>sourcesep:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>delete_sources:</span> <span class='kw'>true</span><span class='rparen'>)</span>
-  <span class='ivar'>@map</span> <span class='op'>=</span> <span class='id identifier rubyid_sourcefieldmap'>sourcefieldmap</span>
-  <span class='ivar'>@df</span> <span class='op'>=</span> <span class='id identifier rubyid_datafield'>datafield</span>
-  <span class='ivar'>@tf</span> <span class='op'>=</span> <span class='id identifier rubyid_typefield'>typefield</span>
-  <span class='ivar'>@sourcesep</span> <span class='op'>=</span> <span class='id identifier rubyid_sourcesep'>sourcesep</span>
-  <span class='ivar'>@targetsep</span> <span class='op'>=</span> <span class='id identifier rubyid_targetsep'>targetsep</span>
-  <span class='ivar'>@del</span> <span class='op'>=</span> <span class='id identifier rubyid_delete_sources'>delete_sources</span>
+  <span class='ivar'>@replacement</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Collapse.html" title="Kiba::Extend::Transforms::Collapse (module)">Collapse</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Collapse/FieldsToTypedFieldPair.html" title="Kiba::Extend::Transforms::Collapse::FieldsToTypedFieldPair (class)">FieldsToTypedFieldPair</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Collapse/FieldsToTypedFieldPair.html#initialize-instance_method" title="Kiba::Extend::Transforms::Collapse::FieldsToTypedFieldPair#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+    <span class='label'>sourcefieldmap:</span> <span class='id identifier rubyid_sourcefieldmap'>sourcefieldmap</span><span class='comma'>,</span>
+    <span class='label'>datafield:</span> <span class='id identifier rubyid_datafield'>datafield</span><span class='comma'>,</span>
+    <span class='label'>typefield:</span> <span class='id identifier rubyid_typefield'>typefield</span><span class='comma'>,</span>
+    <span class='label'>targetsep:</span> <span class='id identifier rubyid_targetsep'>targetsep</span><span class='comma'>,</span>
+    <span class='label'>sourcesep:</span> <span class='id identifier rubyid_sourcesep'>sourcesep</span><span class='comma'>,</span>
+    <span class='label'>delete_sources:</span> <span class='id identifier rubyid_delete_sources'>delete_sources</span>
+  <span class='rparen'>)</span>
+  <span class='id identifier rubyid_msg'>msg</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Reshape::CollapseMultipleFieldsToOneTypedFieldPair to be deprecated in a future release. Convert any usage of this transform to Collapse::FieldsToTypedFieldPair</span><span class='tstring_end'>&#39;</span></span>
+  <span class='id identifier rubyid_warn'>warn</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_warning_label'>warning_label</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_msg'>msg</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -368,7 +220,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Jun 30 16:27:39 2022 by
+  Generated on Thu Jul 28 18:39:59 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>

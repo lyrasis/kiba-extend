@@ -107,53 +107,26 @@
 
 <p>Input table:</p>
 
-<pre class="code ruby"><code class="ruby">&lt;/code&gt;</code></pre>
-
-<table><thead>
-<tr>
-<th>name</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>Weddy</td>
-</tr>
-<tr>
-<td>nil</td>
-</tr>
-<tr>
-<td></td>
-</tr>
-</tbody></table>
-
-<pre class="code ruby"><code class="ruby">
-Used in pipeline as:
-
+<pre class="code ruby"><code class="ruby">| name  |
+|-------|
+| Weddy |
+| nil   |
+|       |
 </code></pre>
 
-<p>transform Append::ToFieldValue, field: :name, value: &#39; (name)&#39;</p>
+<p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby">
-Results in:
-
+<pre class="code ruby"><code class="ruby"> <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Append.html" title="Kiba::Extend::Transforms::Append (module)">Append</a></span></span><span class='op'>::</span><span class='const'>ToFieldValue</span><span class='comma'>,</span> <span class='label'>field:</span> <span class='symbol'>:name</span><span class='comma'>,</span> <span class='label'>value:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> (name)</span><span class='tstring_end'>&#39;</span></span>
 </code></pre>
 
-<table><thead>
-<tr>
-<th>name</th>
-</tr>
-</thead><tbody>
-<tr>
-<td>Weddy (name)</td>
-</tr>
-<tr>
-<td>nil</td>
-</tr>
-<tr>
-<td></td>
-</tr>
-</tbody></table>
+<p>Results in:</p>
 
-<pre class="code ruby"><code class="ruby">&lt;/code&gt;</code></pre>
+<pre class="code ruby"><code class="ruby">| name         |
+|--------------|
+| Weddy (name) |
+| nil          |
+|              |
+</code></pre>
 
 
   </div>
@@ -266,13 +239,13 @@ Results in:
       <pre class="lines">
 
 
+82
 83
 84
-85
-86</pre>
+85</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/append.rb', line 83</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/append.rb', line 82</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>field:</span><span class='comma'>,</span> <span class='label'>value:</span><span class='rparen'>)</span>
   <span class='ivar'>@field</span> <span class='op'>=</span> <span class='id identifier rubyid_field'>field</span>
@@ -289,7 +262,7 @@ Results in:
 </div>
 
       <div id="footer">
-  Generated on Thu Jun 30 16:27:39 2022 by
+  Generated on Thu Jul 28 18:39:58 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>

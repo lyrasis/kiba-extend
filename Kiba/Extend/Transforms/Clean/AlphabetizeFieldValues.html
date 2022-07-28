@@ -332,7 +332,7 @@ individual fields of a row</p>
       
       
         &mdash;
-        <div class='inline'><p>Whether to treat %NULLVALUE% as a blank in processing</p>
+        <div class='inline'><p>Whether to treat <code>Kiba::Extend.nullvalue</code> as a blank in processing</p>
 </div>
       
     </li>
@@ -368,7 +368,9 @@ individual fields of a row</p>
 125
 126
 127
-128</pre>
+128
+129
+130</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/clean.rb', line 123</span>
@@ -378,6 +380,8 @@ individual fields of a row</p>
   <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_delim'>delim</span>
   <span class='ivar'>@usenull</span> <span class='op'>=</span> <span class='id identifier rubyid_usenull'>usenull</span>
   <span class='ivar'>@direction</span> <span class='op'>=</span> <span class='id identifier rubyid_direction'>direction</span>
+  <span class='id identifier rubyid_nv'>nv</span> <span class='op'>=</span> <span class='id identifier rubyid_usenull'>usenull</span> <span class='op'>?</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_nullvalue'>nullvalue</span> <span class='op'>:</span> <span class='kw'>nil</span>
+  <span class='ivar'>@value_getter</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Helpers.html" title="Kiba::Extend::Transforms::Helpers (module)">Helpers</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Helpers/FieldValueGetter.html" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter (class)">FieldValueGetter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Helpers/FieldValueGetter.html#initialize-instance_method" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='id identifier rubyid_fields'>fields</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='comma'>,</span> <span class='label'>treat_as_null:</span> <span class='id identifier rubyid_nv'>nv</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -390,7 +394,7 @@ individual fields of a row</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Jun 30 16:27:39 2022 by
+  Generated on Thu Jul 28 18:39:58 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>

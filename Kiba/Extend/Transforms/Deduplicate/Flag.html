@@ -94,7 +94,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/kiba/extend/transforms/deduplicate.rb</dd>
+    <dd>lib/kiba/extend/transforms/deduplicate/flag.rb</dd>
   </dl>
   
 </div>
@@ -107,8 +107,10 @@
   value will be marked &#39;y&#39;</p>
 
 <p>Use this transform if you need to retain/report on what will be treated as a duplicate. Use
-  <span class='object_link'><a href="../FilterRows/FieldEqualTo.html" title="Kiba::Extend::Transforms::FilterRows::FieldEqualTo (class)">FilterRows::FieldEqualTo</a></span> to extract only the duplicate rows and/or to keep only the
-  non-duplicate rows</p>
+  <span class='object_link'><a href="../FilterRows/FieldEqualTo.html" title="Kiba::Extend::Transforms::FilterRows::FieldEqualTo (class)">FilterRows::FieldEqualTo</a></span> to extract only the duplicate rows and/or to
+  keep only the non-duplicate rows.</p>
+
+<p>Use <span class='object_link'><a href="FlagAll.html" title="Kiba::Extend::Transforms::Deduplicate::FlagAll (class)">FlagAll</a></span> if you need all rows containing duplicate values flagged <code>y</code>.</p>
 
 <p>To delete duplicates all in one step, use <span class='object_link'><a href="Table.html" title="Kiba::Extend::Transforms::Deduplicate::Table (class)">Table</a></span></p>
 
@@ -305,16 +307,16 @@ use this transform</p>
       <pre class="lines">
 
 
-232
-233
-234
-235
-236
-237
-238</pre>
+57
+58
+59
+60
+61
+62
+63</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate.rb', line 232</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/flag.rb', line 57</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>on_field:</span><span class='comma'>,</span> <span class='label'>in_field:</span><span class='comma'>,</span> <span class='label'>using:</span><span class='comma'>,</span> <span class='label'>explicit_no:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='ivar'>@on</span> <span class='op'>=</span> <span class='id identifier rubyid_on_field'>on_field</span>
@@ -334,7 +336,7 @@ use this transform</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Jun 30 16:27:39 2022 by
+  Generated on Thu Jul 28 18:39:58 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>

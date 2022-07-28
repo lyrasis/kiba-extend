@@ -61,7 +61,7 @@
 
       <div id="content"><h1>Class: Kiba::Extend::Transforms::Clean::DelimiterOnlyFields
   
-  
+  <span class="deprecated note title">Deprecated</span>
   
 </h1>
 <div class="box_info">
@@ -87,11 +87,6 @@
   
   
   
-  <dl>
-      <dt>Includes:</dt>
-      <dd><span class='object_link'><a href="../Helpers.html" title="Kiba::Extend::Transforms::Helpers (module)">Helpers</a></span></dd>
-  </dl>
-  
   
 
   
@@ -99,12 +94,23 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/kiba/extend/transforms/clean.rb</dd>
+    <dd>lib/kiba/extend/transforms/clean/delimiter_only_fields.rb</dd>
   </dl>
   
 </div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <div class="note deprecated"><strong>Deprecated.</strong> <div class='inline'><p>in 2.9.0. Use <span class='object_link'><a href="../Delete/DelimiterOnlyFieldValues.html" title="Kiba::Extend::Transforms::Delete::DelimiterOnlyFieldValues (class)">Delete::DelimiterOnlyFieldValues</a></span> instead</p>
+</div></div>
 
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
 
 
 
@@ -147,17 +153,6 @@
     </ul>
   
 
-
-  
-  
-  
-  
-  
-  
-  
-  
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Helpers.html" title="Kiba::Extend::Transforms::Helpers (module)">Helpers</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../Helpers.html#delim_only%3F-class_method" title="Kiba::Extend::Transforms::Helpers.delim_only? (method)">delim_only?</a></span>, <span class='object_link'><a href="../Helpers.html#empty%3F-class_method" title="Kiba::Extend::Transforms::Helpers.empty? (method)">empty?</a></span>, <span class='object_link'><a href="../Helpers.html#field_values-class_method" title="Kiba::Extend::Transforms::Helpers.field_values (method)">field_values</a></span></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
@@ -186,17 +181,31 @@
       <pre class="lines">
 
 
-176
-177
-178
-179</pre>
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/clean.rb', line 176</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/clean/delimiter_only_fields.rb', line 9</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>delim:</span><span class='comma'>,</span> <span class='label'>use_nullvalue:</span> <span class='kw'>false</span><span class='rparen'>)</span>
-  <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_delim'>delim</span>
-  <span class='ivar'>@use_nullvalue</span> <span class='op'>=</span> <span class='id identifier rubyid_use_nullvalue'>use_nullvalue</span>
+  
+  <span class='id identifier rubyid_nullval'>nullval</span> <span class='op'>=</span> <span class='id identifier rubyid_use_nullvalue'>use_nullvalue</span> <span class='op'>?</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_nullvalue'>nullvalue</span> <span class='op'>:</span> <span class='kw'>nil</span>
+  <span class='ivar'>@replacement</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Delete.html" title="Kiba::Extend::Transforms::Delete (module)">Delete</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Delete/DelimiterOnlyFieldValues.html" title="Kiba::Extend::Transforms::Delete::DelimiterOnlyFieldValues (class)">DelimiterOnlyFieldValues</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Delete/DelimiterOnlyFieldValues.html#initialize-instance_method" title="Kiba::Extend::Transforms::Delete::DelimiterOnlyFieldValues#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+    <span class='label'>fields:</span> <span class='symbol'>:all</span><span class='comma'>,</span>
+    <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='comma'>,</span>
+    <span class='label'>treat_as_null:</span> <span class='id identifier rubyid_nullval'>nullval</span>
+  <span class='rparen'>)</span>
+  <span class='id identifier rubyid_msg'>msg</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Clean::DelimiterOnlyFields to be deprecated in a future release. Convert any usage of this transform to Delete::DelimiterOnlyFieldValues</span><span class='tstring_end'>&#39;</span></span>
+  <span class='id identifier rubyid_warn'>warn</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_warning_label'>warning_label</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_msg'>msg</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -209,7 +218,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Jun 30 16:27:39 2022 by
+  Generated on Thu Jul 28 18:39:59 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>

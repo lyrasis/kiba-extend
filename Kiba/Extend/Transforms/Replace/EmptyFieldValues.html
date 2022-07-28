@@ -94,12 +94,145 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/kiba/extend/transforms/replace.rb</dd>
+    <dd>lib/kiba/extend/transforms/replace/empty_field_values.rb</dd>
   </dl>
   
 </div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>Replace empty field values the given value</p>
 
+<p>Works on single or multivalue fields. Can be given a <code>treat_as_null</code> value to count as empty.</p>
+
+<h2 id="examples">Examples</h2>
+
+<h3 id="defaults-single-value-replaces-truly-nil-or-empty-values">Defaults (single value, replaces truly nil or empty values)</h3>
+
+<p>Source data:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>species:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>guineafowl</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>name:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>sex:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>species:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>guineafowl</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULL%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>sex:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULL%</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>species:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>guineafowl</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Weddy||Grimace|</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>sex:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>species:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>guineafowl</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>|Weddy|Grimace|</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>sex:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULL%|m|m|</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+</code></pre>
+
+<p>Used as:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Replace.html" title="Kiba::Extend::Transforms::Replace (module)">Replace</a></span></span><span class='op'>::</span><span class='const'>EmptyFieldValues</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>name</span><span class='words_sep'> </span><span class='tstring_content'>sex</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>value:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span>
+</code></pre>
+
+<p>Results in:</p>
+
+<pre class="code ruby"><code class="ruby">[
+  {species: &#39;guineafowl&#39;, name: &#39;%NULLVALUE%&#39;, sex: &#39;%NULLVALUE%&#39; },
+  {species: &#39;guineafowl&#39;, name: &#39;%NULL%&#39;, sex: &#39;%NULL%&#39;},
+  {species: &#39;guineafowl&#39;, name: &#39;Weddy||Grimace|&#39;, sex: &#39;%NULLVALUE%&#39;}
+  {species: &#39;guineafowl&#39;, name: &#39;|Weddy|Grimace|&#39;, sex: &#39;%NULL%|m|m|&#39;}
+]
+</code></pre>
+
+<h3 id="null-placeholder-single-value">Null placeholder (single value)</h3>
+
+<p>Using same source data as above, and transform set up as: </p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Replace.html" title="Kiba::Extend::Transforms::Replace (module)">Replace</a></span></span><span class='op'>::</span><span class='const'>EmptyFieldValues</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>name</span><span class='words_sep'> </span><span class='tstring_content'>sex</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>value:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>treat_as_null:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULL%</span><span class='tstring_end'>&#39;</span></span>
+</code></pre>
+
+<p>Results in:</p>
+
+<pre class="code ruby"><code class="ruby">[
+  {species: &#39;guineafowl&#39;, name: &#39;%NULLVALUE%&#39;, sex: &#39;%NULLVALUE%&#39; },
+  {species: &#39;guineafowl&#39;, name: &#39;%NULLVALUE%&#39;, sex: &#39;%NULLVALUE%&#39;},
+  {species: &#39;guineafowl&#39;, name: &#39;Weddy||Grimace|&#39;, sex: &#39;%NULLVALUE%&#39;}
+  {species: &#39;guineafowl&#39;, name: &#39;|Weddy|Grimace|&#39;, sex: &#39;%NULL%|m|m|&#39;}
+]
+</code></pre>
+
+<h3 id="multivalued-given-a-delim-value">Multivalued (given a <code>delim</code> value)</h3>
+
+<p>Using same source data as above, and transform set up as: </p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Replace.html" title="Kiba::Extend::Transforms::Replace (module)">Replace</a></span></span><span class='op'>::</span><span class='const'>EmptyFieldValues</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>name</span><span class='words_sep'> </span><span class='tstring_content'>sex</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>|</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>value:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span>
+</code></pre>
+
+<p>Results in:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>species:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>guineafowl</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>sex:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>species:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>guineafowl</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULL%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>sex:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULL%</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>species:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>guineafowl</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Weddy|%NULLVALUE%|Grimace|%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>sex:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>species:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>guineafowl</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%|Weddy|Grimace|%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>sex:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULL%|m|m|%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+</code></pre>
+
+<h3 id="multivalued-given-a-delim-value-with-treat_as_null">Multivalued (given a <code>delim</code> value) with <code>treat_as_null</code></h3>
+
+<p>Using same source data as above, and transform set up as: </p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Replace.html" title="Kiba::Extend::Transforms::Replace (module)">Replace</a></span></span><span class='op'>::</span><span class='const'>EmptyFieldValues</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>name</span><span class='words_sep'> </span><span class='tstring_content'>sex</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>|</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>value:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>treat_as_null:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULL%</span><span class='tstring_end'>&#39;</span></span>
+</code></pre>
+
+<p>Results in:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>species:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>guineafowl</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>sex:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>species:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>guineafowl</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>sex:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>species:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>guineafowl</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Weddy|%NULLVALUE%|Grimace|%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>sex:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>species:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>guineafowl</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%|Weddy|Grimace|%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>sex:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%|m|m|%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+</code></pre>
+
+<h3 id="multiple-treat_as_null-values">Multiple <code>treat_as_null</code> values</h3>
+
+<p>Results in:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>species:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>guineafowl</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULL%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>sex:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NADA%</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+
+</code></pre>
+
+<p>transform Replace::EmptyFieldValues, fields: %i[name sex], value: &#39;%NULLVALUE%&#39;,
+  treat_as_null: [&#39;%NULL%&#39;, &#39;%NADA%&#39;]</p>
+
+<pre class="code ruby"><code class="ruby">
+Results in:
+
+</code></pre>
+
+<p>[
+  {species: &#39;guineafowl&#39;, name: &#39;%NULLVALUE%&#39;, sex: &#39;%NULLVALUE%&#39; },
+]</p>
+
+<pre class="code ruby"><code class="ruby">&lt;/code&gt;</code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>2.9.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div>
 
 
 
@@ -117,7 +250,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(fields:, value:)  &#x21d2; EmptyFieldValues </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(fields:, value:, delim: nil, treat_as_null: &#39;&#39;)  &#x21d2; EmptyFieldValues </a>
     
 
     
@@ -148,7 +281,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(fields:, value:)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Replace::EmptyFieldValues (class)">EmptyFieldValues</a></span></tt> 
+    #<strong>initialize</strong>(fields:, value:, delim: nil, treat_as_null: &#39;&#39;)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Replace::EmptyFieldValues (class)">EmptyFieldValues</a></span></tt> 
   
 
   
@@ -162,7 +295,91 @@
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>fields</span>
+      
+      
+        <span class='type'>(<tt>Array(Symbol)</tt>, <tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>in which to perform replacements</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>value</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>replaces the empty value(s)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>delim</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>if provided, replacement of individual empty values in a multivalue
+field will be performed after splitting on this string</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>treat_as_null</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>Array(String)</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>&#39;&#39;</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>string(s) to treat as empty values</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>2.9.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -170,17 +387,25 @@
       <pre class="lines">
 
 
-12
-13
-14
-15</pre>
+131
+132
+133
+134
+135
+136
+137
+138</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/replace.rb', line 12</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/replace/empty_field_values.rb', line 131</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span><span class='comma'>,</span> <span class='label'>value:</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span><span class='comma'>,</span> <span class='label'>value:</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>treat_as_null:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fields'>fields</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
   <span class='ivar'>@value</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
+  <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_delim'>delim</span>
+  <span class='ivar'>@treat_as_null</span> <span class='op'>=</span> <span class='id identifier rubyid_treat_as_null'>treat_as_null</span>
+  <span class='ivar'>@initial_getter</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Helpers.html" title="Kiba::Extend::Transforms::Helpers (module)">Helpers</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Helpers/FieldValueGetter.html" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter (class)">FieldValueGetter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Helpers/FieldValueGetter.html#initialize-instance_method" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='id identifier rubyid_fields'>fields</span><span class='comma'>,</span> <span class='label'>discard:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='ivar'>@replacement_getter</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Helpers.html" title="Kiba::Extend::Transforms::Helpers (module)">Helpers</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Helpers/FieldValueGetter.html" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter (class)">FieldValueGetter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Helpers/FieldValueGetter.html#initialize-instance_method" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='id identifier rubyid_fields'>fields</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -193,7 +418,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Jun 30 16:27:39 2022 by
+  Generated on Thu Jul 28 18:39:59 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>

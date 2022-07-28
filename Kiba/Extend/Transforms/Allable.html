@@ -76,7 +76,7 @@
   
   <dl>
     <dt>Included in:</dt>
-    <dd><span class='object_link'><a href="Clean/RegexpFindReplaceFieldVals.html" title="Kiba::Extend::Transforms::Clean::RegexpFindReplaceFieldVals (class)">Clean::RegexpFindReplaceFieldVals</a></span>, <span class='object_link'><a href="Delete/EmptyFieldValues.html" title="Kiba::Extend::Transforms::Delete::EmptyFieldValues (class)">Delete::EmptyFieldValues</a></span>, <span class='object_link'><a href="FilterRows/AllFieldsPopulated.html" title="Kiba::Extend::Transforms::FilterRows::AllFieldsPopulated (class)">FilterRows::AllFieldsPopulated</a></span>, <span class='object_link'><a href="FilterRows/AnyFieldsPopulated.html" title="Kiba::Extend::Transforms::FilterRows::AnyFieldsPopulated (class)">FilterRows::AnyFieldsPopulated</a></span></dd>
+    <dd><span class='object_link'><a href="Clean/RegexpFindReplaceFieldVals.html" title="Kiba::Extend::Transforms::Clean::RegexpFindReplaceFieldVals (class)">Clean::RegexpFindReplaceFieldVals</a></span>, <span class='object_link'><a href="Delete/DelimiterOnlyFieldValues.html" title="Kiba::Extend::Transforms::Delete::DelimiterOnlyFieldValues (class)">Delete::DelimiterOnlyFieldValues</a></span>, <span class='object_link'><a href="Delete/EmptyFieldValues.html" title="Kiba::Extend::Transforms::Delete::EmptyFieldValues (class)">Delete::EmptyFieldValues</a></span>, <span class='object_link'><a href="FilterRows/AllFieldsPopulated.html" title="Kiba::Extend::Transforms::FilterRows::AllFieldsPopulated (class)">FilterRows::AllFieldsPopulated</a></span>, <span class='object_link'><a href="FilterRows/AnyFieldsPopulated.html" title="Kiba::Extend::Transforms::FilterRows::AnyFieldsPopulated (class)">FilterRows::AnyFieldsPopulated</a></span></dd>
   </dl>
   
 
@@ -98,7 +98,8 @@
 
 <p>Set the <code>fields</code> instance variable from user input as follows:</p>
 
-<pre class="code ruby"><code class="ruby">&lt;/code&gt;</code></pre>
+<pre class="code ruby"><code class="ruby"> <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fields'>fields</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
+</code></pre>
 
 <p>Add the following line as the first thing in the <code>process</code> method:</p>
 
@@ -138,7 +139,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Jun 30 16:27:38 2022 by
+  Generated on Thu Jul 28 18:39:57 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>

@@ -119,8 +119,11 @@
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby"> <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../CombineValues.html" title="Kiba::Extend::Transforms::CombineValues (module)">CombineValues</a></span></span><span class='op'>::</span><span class='const'>FromFieldsWithDelimiter</span><span class='comma'>,</span> <span class='label'>sources:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>col1</span><span class='words_sep'> </span><span class='tstring_content'>col3</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>target:</span> <span class='symbol'>:combined</span><span class='comma'>,</span>
-   <span class='label'>sep:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> - </span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>delete_sources:</span> <span class='kw'>false</span>
+<pre class="code ruby"><code class="ruby"> <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../CombineValues.html" title="Kiba::Extend::Transforms::CombineValues (module)">CombineValues</a></span></span><span class='op'>::</span><span class='const'>FromFieldsWithDelimiter</span><span class='comma'>,</span>
+   <span class='label'>sources:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>col1</span><span class='words_sep'> </span><span class='tstring_content'>col3</span><span class='tstring_end'>]</span></span><span class='comma'>,</span>
+   <span class='label'>target:</span> <span class='symbol'>:combined</span><span class='comma'>,</span>
+   <span class='label'>sep:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> - </span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>delete_sources:</span> <span class='kw'>false</span>
 </code></pre>
 
 <p>Results in:</p>
@@ -135,8 +138,11 @@
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby"> <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../CombineValues.html" title="Kiba::Extend::Transforms::CombineValues (module)">CombineValues</a></span></span><span class='op'>::</span><span class='const'>FromFieldsWithDelimiter</span><span class='comma'>,</span> <span class='label'>sources:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>col1</span><span class='words_sep'> </span><span class='tstring_content'>col3</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>target:</span> <span class='symbol'>:col1</span><span class='comma'>,</span>
-   <span class='label'>sep:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> - </span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>prepend_source_field_name:</span> <span class='kw'>true</span>
+<pre class="code ruby"><code class="ruby"> <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../CombineValues.html" title="Kiba::Extend::Transforms::CombineValues (module)">CombineValues</a></span></span><span class='op'>::</span><span class='const'>FromFieldsWithDelimiter</span><span class='comma'>,</span>
+   <span class='label'>sources:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>col1</span><span class='words_sep'> </span><span class='tstring_content'>col3</span><span class='tstring_end'>]</span></span><span class='comma'>,</span>
+   <span class='label'>target:</span> <span class='symbol'>:col1</span><span class='comma'>,</span>
+   <span class='label'>sep:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> - </span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>prepend_source_field_name:</span> <span class='kw'>true</span>
 </code></pre>
 
 <p>Results in:</p>
@@ -309,16 +315,16 @@
       <pre class="lines">
 
 
-168
-169
-170
-171
-172
-173
-174</pre>
+72
+73
+74
+75
+76
+77
+78</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/combine_values.rb', line 168</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/combine_values.rb', line 72</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>sources:</span><span class='comma'>,</span> <span class='label'>target:</span><span class='comma'>,</span> <span class='label'>sep:</span><span class='comma'>,</span> <span class='label'>prepend_source_field_name:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>delete_sources:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='ivar'>@sources</span> <span class='op'>=</span> <span class='id identifier rubyid_sources'>sources</span>
@@ -338,7 +344,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Jun 30 16:27:39 2022 by
+  Generated on Thu Jul 28 18:39:58 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>

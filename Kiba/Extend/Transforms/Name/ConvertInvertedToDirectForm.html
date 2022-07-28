@@ -87,11 +87,6 @@
   
   
   
-  <dl>
-      <dt>Includes:</dt>
-      <dd><span class='object_link'><a href="../Helpers.html" title="Kiba::Extend::Transforms::Helpers (module)">Helpers</a></span></dd>
-  </dl>
-  
   
 
   
@@ -237,17 +232,6 @@ properly in all cases. Handles only the most common English language name patter
     </ul>
   
 
-
-  
-  
-  
-  
-  
-  
-  
-  
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Helpers.html" title="Kiba::Extend::Transforms::Helpers (module)">Helpers</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../Helpers.html#delim_only%3F-class_method" title="Kiba::Extend::Transforms::Helpers.delim_only? (method)">delim_only?</a></span>, <span class='object_link'><a href="../Helpers.html#empty%3F-class_method" title="Kiba::Extend::Transforms::Helpers.empty? (method)">empty?</a></span>, <span class='object_link'><a href="../Helpers.html#field_values-class_method" title="Kiba::Extend::Transforms::Helpers.field_values (method)">field_values</a></span></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
@@ -361,6 +345,7 @@ field for suffix/name additions</p>
       <pre class="lines">
 
 
+82
 83
 84
 85
@@ -371,10 +356,11 @@ field for suffix/name additions</p>
 90
 91
 92
-93</pre>
+93
+94</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/name/convert_inverted_to_direct_form.rb', line 83</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/name/convert_inverted_to_direct_form.rb', line 82</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>source:</span><span class='comma'>,</span> <span class='label'>target:</span><span class='comma'>,</span> <span class='label'>nameparts:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>firstname</span><span class='words_sep'> </span><span class='tstring_content'>middlename</span><span class='words_sep'> </span><span class='tstring_content'>lastname</span><span class='words_sep'> </span><span class='tstring_content'>suffix</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>keep_parts:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='ivar'>@source</span> <span class='op'>=</span> <span class='id identifier rubyid_source'>source</span>
@@ -385,6 +371,8 @@ field for suffix/name additions</p>
   <span class='ivar'>@lastname</span> <span class='op'>=</span> <span class='id identifier rubyid_nameparts'>nameparts</span><span class='lbracket'>[</span><span class='int'>2</span><span class='rbracket'>]</span>
   <span class='ivar'>@suffix</span> <span class='op'>=</span> <span class='id identifier rubyid_nameparts'>nameparts</span><span class='lbracket'>[</span><span class='int'>3</span><span class='rbracket'>]</span>
   <span class='ivar'>@keep_parts</span> <span class='op'>=</span> <span class='id identifier rubyid_keep_parts'>keep_parts</span>
+  <span class='ivar'>@convert_getter</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Helpers.html" title="Kiba::Extend::Transforms::Helpers (module)">Helpers</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Helpers/FieldValueGetter.html" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter (class)">FieldValueGetter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Helpers/FieldValueGetter.html#initialize-instance_method" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='lbracket'>[</span><span class='id identifier rubyid_firstname'>firstname</span><span class='comma'>,</span> <span class='id identifier rubyid_middlename'>middlename</span><span class='comma'>,</span> <span class='id identifier rubyid_lastname'>lastname</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='ivar'>@convertable_getter</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Helpers.html" title="Kiba::Extend::Transforms::Helpers (module)">Helpers</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Helpers/FieldValueGetter.html" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter (class)">FieldValueGetter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Helpers/FieldValueGetter.html#initialize-instance_method" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='id identifier rubyid_nameparts'>nameparts</span><span class='rparen'>)</span>
   <span class='ivar'>@splitter</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Name.html" title="Kiba::Extend::Transforms::Name (module)">Name</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="SplitInverted.html" title="Kiba::Extend::Transforms::Name::SplitInverted (class)">SplitInverted</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="SplitInverted.html#initialize-instance_method" title="Kiba::Extend::Transforms::Name::SplitInverted#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>source:</span> <span class='id identifier rubyid_source'>source</span><span class='comma'>,</span> <span class='label'>targets:</span> <span class='id identifier rubyid_nameparts'>nameparts</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -398,7 +386,7 @@ field for suffix/name additions</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Jun 30 16:27:41 2022 by
+  Generated on Thu Jul 28 18:39:59 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>
