@@ -76,6 +76,7 @@ https://github.com/lyrasis/kiba-extend/compare/v2.8.0\...v2.9.0[Compare code cha
 * `ignore_case` parameter to `FilterRows::FieldMatchRegexp` transform. Defaults to `false` for backward compatibility. In https://github.com/lyrasis/kiba-extend/pull/85[PR#85]
 
 ==== Changed
+* BUGFIX: `Utils::Lookup::RowSorter` no longer fails if all rows given to sort have blank values. In https://github.com/lyrasis/kiba-extend/pull/92[PR#92]
 * BUGFIX: `Clean::EmptyFieldGroups` was broken if `sep` = `|` and `use_nullvalue` = `true`. In https://github.com/lyrasis/kiba-extend/pull/92[PR#92]
 * BUGFIX: No longer runs the same dependency job multiple times. In https://github.com/lyrasis/kiba-extend/pull/90[PR#90]
 * In `Merge::ConstantValueConditional` transform, lambda Proc is passed in as `condition`, rather than `conditions`. In https://github.com/lyrasis/kiba-extend/pull/88[PR#88]
