@@ -87,7 +87,7 @@ module Kiba
             @sep = sep
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             sourceval = row.fetch(@source, nil)
             return row if sourceval.nil?

@@ -58,7 +58,7 @@ module Kiba
             @placeholder = placeholder
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             field_val = row.fetch(@on_field, nil)
             if field_val.blank?

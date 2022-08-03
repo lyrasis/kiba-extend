@@ -91,7 +91,7 @@ module Kiba
             end
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             create_nil_fields(row)
             inverted = row.fetch(source, '')

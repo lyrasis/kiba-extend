@@ -77,7 +77,7 @@ module Kiba
             @prepend = prepend_source_field_name
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             vals = @sources.map { |src| row.fetch(src, nil) }
                            .map { |v| v.blank? ? nil : v }
@@ -135,7 +135,7 @@ module Kiba
             @sep = sep
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             vals = row.keys.map { |k| row.fetch(k, nil) }
             vals = vals.compact

@@ -72,7 +72,7 @@ module Kiba
             @sorter = sorter
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             field_data = Kiba::Extend::Utils::Fieldset.new(
               fields: fieldmap.values,

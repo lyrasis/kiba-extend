@@ -56,7 +56,7 @@ module Kiba
             @field_map = @fields.zip(@targets).to_h
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             @field_map.each do |field, target|
               field_val = row.fetch(field, nil)

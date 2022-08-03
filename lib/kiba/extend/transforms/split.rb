@@ -110,7 +110,7 @@ module Kiba
           end
           # rubocop:enable Metrics/ParameterLists
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             create_new_fields(row)
             val = row.fetch(@field, nil)

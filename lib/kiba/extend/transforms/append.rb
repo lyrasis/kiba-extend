@@ -38,7 +38,7 @@ module Kiba
             @fields = [fields].flatten
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             @fields.each do |field|
               row[field] = nil unless row.key?(field)
@@ -84,7 +84,7 @@ module Kiba
             @value = value
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             fv = row.fetch(@field, nil)
             return row if fv.blank?

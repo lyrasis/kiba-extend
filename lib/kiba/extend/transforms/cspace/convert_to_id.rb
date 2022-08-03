@@ -10,7 +10,7 @@ module Kiba
             @target = target
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             val = row.fetch(@source, '')
             idval = val.gsub(/\W/, '')

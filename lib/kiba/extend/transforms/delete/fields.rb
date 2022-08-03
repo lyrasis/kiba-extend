@@ -51,7 +51,7 @@ module Kiba
             @fields = [fields].flatten
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             fields.each { |name| row.delete(name) }
             row

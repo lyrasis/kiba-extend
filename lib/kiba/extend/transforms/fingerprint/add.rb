@@ -73,7 +73,7 @@ module Kiba
             @row_num = 0
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             @row_num += 1
             row[target] = get_fingerprint(row)

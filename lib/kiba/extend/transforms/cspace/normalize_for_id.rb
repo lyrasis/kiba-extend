@@ -12,7 +12,7 @@ module Kiba
             @delim = delim
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             row[@target] = nil
             val = row.fetch(@source, nil)

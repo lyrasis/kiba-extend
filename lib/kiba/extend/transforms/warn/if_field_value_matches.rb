@@ -32,7 +32,7 @@ module Kiba
             setup_single_warning
           end
           
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             return row unless single_warnings.empty?
 

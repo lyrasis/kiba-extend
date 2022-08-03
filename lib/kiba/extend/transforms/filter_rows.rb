@@ -17,7 +17,7 @@ module Kiba
             @value = value
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             val = row.fetch(@field)
             case @action

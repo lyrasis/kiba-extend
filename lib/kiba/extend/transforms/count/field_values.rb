@@ -139,7 +139,7 @@ module Kiba
             @count_empty = count_empty
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             row[@target] = '0'
             val = row.fetch(@field, nil)

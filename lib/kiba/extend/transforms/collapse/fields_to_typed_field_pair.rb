@@ -85,7 +85,7 @@ module Kiba
             @del = delete_sources
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             data = []
             type = []

@@ -41,7 +41,7 @@ module Kiba
             setup_single_warning
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             unless row.fetch(target, nil).blank?
               add_single_warning("Any values in existing `#{target}` field will be overwritten with `#{value}`")

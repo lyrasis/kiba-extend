@@ -220,7 +220,7 @@ module Kiba
             @value_getter = Helpers::FieldValueGetter.new(fields: renamed, delim: delim, treat_as_null: treat_as_null)
           end
           
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             renamer.process(row)
             empty_replacer.process(row) if replace_empty
