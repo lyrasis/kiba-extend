@@ -4,7 +4,18 @@ module Kiba
   module Extend
     module Utils
       # Callable service object returning true/false
+      #
+      # `matchmode: :plain` (the default) tests for a full match. You can test for partial matches with
+      #   `matchmode: :regex`. Wrapping a regex match with `^` and `$` anchors will force a full match
+      #   in regex match mode.
       class FieldValueMatcher
+        # @param field [Symbol] whose value to match
+        # @param match [String] expresses the match criteria 
+        # @param matchmode [:plain, :regex] If `:regex`, string is converted to a regular expression
+        # @param delim [nil, String] if a String is given, triggers multivalue matching, where field value is
+        #    split and the match is run against each resulting value
+        # @param treat_as_null [nil, String] if given, the string will be converted to empty string for matching
+        # @param casesensitive [Boolean] whether match cares about case
         def initialize(field:, match:, matchmode: :plain, delim: nil, treat_as_null: nil, casesensitive: true)
           @field = field
           @delim = delim
@@ -14,11 +25,10 @@ module Kiba
           @match = matchmode == :regexp ? create_regexp_match(match) : create_plain_match(match)
         end
 
+        # @param row [Hash{Symbol => String}]
         def call(row)
           value = row[field]
           return false if value.nil?
-          # pv = (prepare_value(value))
-          # binding.pry
           is_match?(prepare_value(value))
         end
         
