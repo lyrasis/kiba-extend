@@ -9,7 +9,8 @@ module Kiba
         # Prints single warning to STDOUT if the value of the given field matches the given value in
         #   any rows
         #
-        # Uses {Utils::FieldValueMatcher} to determine whether value matches.
+        # Uses {Utils::FieldValueMatcher} to determine whether value matches. See that class' documentation
+        #   for examples 
         class IfFieldValueMatches
           include SingleWarnable
           
@@ -20,12 +21,13 @@ module Kiba
         #    split and the match is run against each resulting value
         # @param treat_as_null [nil, String] if given, the string will be converted to empty string for matching
         # @param casesensitive [Boolean] whether match cares about case
-          def initialize(field:, match:, matchmode: :plain, delim: nil, treat_as_null: nil, casesensitive: true)
+          def initialize(field:, match:, matchmode: :plain, delim: nil, treat_as_null: nil, casesensitive: true,
+                        strip: true)
             @field = field
             @match = match
             @matcher = Utils::FieldValueMatcher.new(
               field: field, match: match, matchmode: matchmode, delim: delim,
-              treat_as_null: treat_as_null, casesensitive: casesensitive
+              treat_as_null: treat_as_null, casesensitive: casesensitive, strip: strip
             )
             setup_single_warning
           end
