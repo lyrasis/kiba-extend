@@ -96,7 +96,10 @@ GEM
     tzinfo (2.0.5)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.0.0)
+    webrick (1.7.0)
     xxhash (0.5.0)
+    yard (0.9.28)
+      webrick (~> 1.7.0)
     zeitwerk (2.6.0)
 
 PLATFORMS
@@ -113,6 +116,7 @@ DEPENDENCIES
   rubocop (~> 1.18.4)
   rubocop-rspec (~> 2.4.0)
   simplecov
+  yard (~> 0.9.28)
 
 BUNDLED WITH
    2.3.9

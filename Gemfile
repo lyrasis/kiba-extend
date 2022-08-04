@@ -4,8 +4,9 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
-group :development do
+group :documentation do
   gem 'redcarpet', '~>3.5' # markdown parser for generating documentation
+  gem 'yard', '~>0.9.28'
 end
 
 group :development, :test do
