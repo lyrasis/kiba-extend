@@ -38,6 +38,8 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 
 ==== Changed
 
+* Corrected bug in `Split::IntoMultipleColumns` that was not correctly splitting values
+
 ==== Deleted
 
 ==== To be deprecated/Will break in a future version
