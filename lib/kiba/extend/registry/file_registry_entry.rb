@@ -90,7 +90,6 @@ module Kiba
             .map(&:to_s)
             .map { |str| str.delete_prefix('@') }
             .map(&:to_sym)
-            .reject{ |var| var == :creator }
         end
 
         def allowed_setting?(key)
