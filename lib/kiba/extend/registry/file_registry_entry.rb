@@ -99,6 +99,12 @@ module Kiba
 
         def assign_value(key, val)
           if allowed_setting?(key)
+            if key == :dest_special_opts
+              val.transform_values!{ |v| v.is_a?(Proc) ? v.call : v }
+            else
+              val = val.is_a?(Proc) ? val.call : val
+            end
+            
             instance_variable_set("@#{key}".to_sym, val)
           else
             @warnings << ":#{key} is not an allowed FileRegistryEntry setting"
