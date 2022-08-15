@@ -14,6 +14,8 @@ A file registry entry is initialized with a Hash of data about the file. This Ha
 
 The allowable Hash keys, expected Hash value formats, and expectations about them are described below.
 
+**NOTE:** For all keys besides `:dest_special_opts`, you may pass a Proc that returns the expected value format when called. For `:dest_special_opts`, you may pass Procs as individual values within the option Hash.
+
 ### `:path` 
 [String] full or expandable relative path to the expected location of the file**
 
