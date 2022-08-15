@@ -55,8 +55,6 @@ module Kiba
       @loader.reload
     end
 
-    registry = Kiba::Extend::Registry::FileRegistry.new
-    
     # So we can call Kiba.job_segment
     Kiba.extend(Kiba::Extend::Jobs::JobSegmenter)
 
@@ -86,7 +84,7 @@ module Kiba
     # Prefix for warnings from the ETL
     setting :warning_label, default: 'KIBA WARNING', reader: true
 
-    setting :registry, default: registry, reader: true
+    setting :registry, default: Kiba::Extend::Registry::FileRegistry, constructor: proc { |value| value.new }, reader: true
     setting :default_job_method_name, default: :job, reader: true
 
     setting :job, reader: true do
