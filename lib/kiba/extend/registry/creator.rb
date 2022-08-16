@@ -8,7 +8,7 @@ module Kiba
         attr_reader :mod, :meth, :args
         
         def initialize(spec)
-          @spec = spec
+          @spec = spec.is_a?(Proc) ? spec.call : spec
           @mod = nil
           @meth = nil
           @args = nil

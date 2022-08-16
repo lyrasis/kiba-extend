@@ -27,7 +27,6 @@ module Kiba
         def initialize(reghash)
           set_defaults
           assign_values_from(reghash)
-          set_up_creator(reghash[:creator]) if reghash[:creator]
           validate
         end
 
@@ -100,6 +99,8 @@ module Kiba
           if allowed_setting?(key)
             if key == :dest_special_opts
               val.transform_values!{ |v| v.is_a?(Proc) ? v.call : v }
+            elsif key == :creator
+              val = set_up_creator(val)
             else
               val = val.is_a?(Proc) ? val.call : val
             end
