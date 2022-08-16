@@ -148,8 +148,9 @@ module Kiba
 
         def validate_creator
           return if supplied
-          return if creator
-          
+          return if creator.is_a?(Kiba::Extend::Registry::Creator)
+
+          @creator = nil
           @errors[:missing_creator_for_non_supplied_file] = nil
         end
 

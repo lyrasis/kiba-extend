@@ -5,6 +5,8 @@ require 'spec_helper'
 # used to test creator validation below
 module Helpers
   module Project
+    module_function
+    
     module Section
       module_function
       def job
@@ -12,6 +14,10 @@ module Helpers
     end
     module JoblessSection
       module_function
+    end
+
+    def headers
+      %i[a b c]
     end
   end
 end
@@ -88,7 +94,7 @@ RSpec.describe 'Kiba::Extend::Registry::FileRegistryEntry' do
     context 'when a String' do
       let(:data) { { path: path, creator: 'a string' } }
       it 'invalid as expected' do
-        expect(entry.creator).to eq('a string')
+        expect(entry.creator).to be_nil
         expect(entry.valid?).to be false
         expect(entry.errors.key?('Kiba::Extend::Registry::Creator::TypeError')).to be true
       end
@@ -97,7 +103,7 @@ RSpec.describe 'Kiba::Extend::Registry::FileRegistryEntry' do
     context 'when a Module not containing a `job` method, and no method given' do
       let(:data) { { path: path, creator: Helpers::Project::JoblessSection } }
       it 'invalid as expected' do
-        expect(entry.creator).to eq(Helpers::Project::JoblessSection)
+        expect(entry.creator).to be_nil
         expect(entry.valid?).to be false
         expect(entry.errors.key?('Kiba::Extend::Registry::Creator::JoblessModuleCreatorError')).to be true
       end
