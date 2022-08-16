@@ -5,7 +5,7 @@ require 'spec_helper'
 # rubocop:disable Metrics/BlockLength
 RSpec.describe 'Kiba::Extend::Registry::FileRegistry' do
   before(:context) do
-    Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry.new
+    Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry
     populate_registry
   end
 
@@ -17,7 +17,7 @@ RSpec.describe 'Kiba::Extend::Registry::FileRegistry' do
 
   describe 'initial setup and registration' do
     before(:context) do
-      Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry.new
+      Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry
       populate_registry
     end
     context 'when no namespace' do
@@ -45,7 +45,7 @@ RSpec.describe 'Kiba::Extend::Registry::FileRegistry' do
   describe 'transformation' do
     context 'when a supplied file does not exist' do
       before(:context) do
-        Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry.new
+        Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry
         @missing_supplied = File.join(fixtures_dir, 'supplied', 'not_there.csv')
         extra_entry = {
           missupp: { path: @missing_supplied, supplied: true }
@@ -68,7 +68,7 @@ RSpec.describe 'Kiba::Extend::Registry::FileRegistry' do
 
     context 'when expected directories do not exist' do
       before(:context) do
-        Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry.new
+        Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry
         @missing_dir = File.join(fixtures_dir, 'working')
         extra_entry = {
           missdir: { path: File.join(@missing_dir, 'test.csv'), creator: Helpers.method(:test_csv) }
@@ -90,7 +90,7 @@ RSpec.describe 'Kiba::Extend::Registry::FileRegistry' do
   # subsequent tests depend on the transformation having been done here
   describe 'post-transformation' do
     before(:context) do
-      Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry.new
+      Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry
       populate_registry
       transform_registry
     end

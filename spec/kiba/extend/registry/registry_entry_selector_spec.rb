@@ -5,7 +5,7 @@ require 'spec_helper'
 # rubocop:disable Metrics/BlockLength
 RSpec.describe 'Kiba::Extend::Registry::RegistryEntrySelector' do
   before(:context) do
-    Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry.new
+    Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry
     prepare_registry
   end
   let(:selector) { Kiba::Extend::Registry::RegistryEntrySelector.new }

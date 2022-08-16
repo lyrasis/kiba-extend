@@ -5,7 +5,7 @@ load 'lib/tasks/reg.thor'
 
 RSpec.describe Reg do
   before(:context) do
-    Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry.new
+    Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry
     prepare_registry
   end
 
