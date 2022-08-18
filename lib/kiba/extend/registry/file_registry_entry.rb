@@ -27,7 +27,6 @@ module Kiba
         def initialize(reghash)
           set_defaults
           assign_values_from(reghash)
-          set_up_creator(reghash[:creator]) if reghash[:creator]
           validate
         end
 
@@ -90,7 +89,6 @@ module Kiba
             .map(&:to_s)
             .map { |str| str.delete_prefix('@') }
             .map(&:to_sym)
-            .reject{ |var| var == :creator }
         end
 
         def allowed_setting?(key)
@@ -99,6 +97,14 @@ module Kiba
 
         def assign_value(key, val)
           if allowed_setting?(key)
+            if key == :dest_special_opts
+              val.transform_values!{ |v| v.is_a?(Proc) ? v.call : v }
+            elsif key == :creator
+              val = set_up_creator(val)
+            else
+              val = val.is_a?(Proc) ? val.call : val
+            end
+            
             instance_variable_set("@#{key}".to_sym, val)
           else
             @warnings << ":#{key} is not an allowed FileRegistryEntry setting"
@@ -143,8 +149,9 @@ module Kiba
 
         def validate_creator
           return if supplied
-          return if creator
-          
+          return if creator.is_a?(Kiba::Extend::Registry::Creator)
+
+          @creator = nil
           @errors[:missing_creator_for_non_supplied_file] = nil
         end
 

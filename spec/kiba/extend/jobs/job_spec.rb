@@ -6,7 +6,6 @@ require 'spec_helper'
 RSpec.describe 'Kiba::Extend::Jobs::Job' do
   before(:context) do
     @dest_file = File.join(fixtures_dir, 'base_job_dest.csv')
-    Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry.new
     entries = { base_src: { path: File.join(fixtures_dir, 'base_job_base.csv'), supplied: true },
                 base_lookup: { path: File.join(fixtures_dir, 'base_job_lookup.csv'), supplied: true,
                                lookup_on: :letter },
