@@ -364,7 +364,7 @@
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/creator.rb', line 10</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_spec'>spec</span><span class='rparen'>)</span>
-  <span class='ivar'>@spec</span> <span class='op'>=</span> <span class='id identifier rubyid_spec'>spec</span>
+  <span class='ivar'>@spec</span> <span class='op'>=</span> <span class='id identifier rubyid_spec'>spec</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Proc</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_spec'>spec</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span> <span class='op'>:</span> <span class='id identifier rubyid_spec'>spec</span>
   <span class='ivar'>@mod</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='ivar'>@meth</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='ivar'>@args</span> <span class='op'>=</span> <span class='kw'>nil</span>
@@ -686,7 +686,7 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Aug 16 01:03:05 2022 by
+  Generated on Thu Aug 18 21:48:41 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>

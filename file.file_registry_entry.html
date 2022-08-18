@@ -73,6 +73,8 @@
 
 <p>The allowable Hash keys, expected Hash value formats, and expectations about them are described below.</p>
 
+<p><strong>NOTE:</strong> For all keys besides <code>:dest_special_opts</code>, you may pass a Proc that returns the expected value format when called. For <code>:dest_special_opts</code>, you may pass Procs as individual values within the option Hash. This can be useful if you need to pass in a value that depends on other project config that may not be loaded/set up when registry is initially populated. A publicly available example is in <code>kiba-tms</code> which <a href="https://github.com/lyrasis/kiba-tms/blob/eb8f222f0dc753921e58d136cd15e5eab7472c60/lib/kiba/tms/table/prep/destination_options.rb#L32-L34">sets destination initial headers</a> <a href="https://github.com/lyrasis/kiba-tms/blob/eb8f222f0dc753921e58d136cd15e5eab7472c60/lib/kiba/tms/constituents.rb#L140-L148">based on the preferred name field for a given TMS client project, and whether they want to include &quot;flipped&quot; form as variant terms</a>.</p>
+
 <h3 id="path"><code>:path</code></h3>
 
 <p>[String] full or expandable relative path to the expected location of the file**</p>
@@ -345,7 +347,7 @@ end
 </div></div>
 
       <div id="footer">
-  Generated on Tue Aug 16 01:03:04 2022 by
+  Generated on Thu Aug 18 21:48:40 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>
