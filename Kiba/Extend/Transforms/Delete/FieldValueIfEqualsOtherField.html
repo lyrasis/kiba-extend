@@ -300,6 +300,28 @@ in {:del=&gt;&quot;A;d;e&quot;, :compare=&gt;&quot;c&quot;, :grpa=&gt;&quot;y;x;
 </li>
 
       
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#process-instance_method" title="#process (instance method)">#<strong>process</strong>(row)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
     </ul>
   
 
@@ -461,10 +483,106 @@ in {:del=&gt;&quot;A;d;e&quot;, :compare=&gt;&quot;c&quot;, :grpa=&gt;&quot;y;x;
 </div>
 
 
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="process-instance_method">
+  
+    #<strong>process</strong>(row)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>row</span>
+      
+      
+        <span class='type'>(<tt>Hash{ Symbol =&gt; String }</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/field_value_if_equals_other_field.rb', line 180</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_del_val'>del_val</span> <span class='op'>=</span> <span class='id identifier rubyid_prepare_val'>prepare_val</span><span class='lparen'>(</span><span class='id identifier rubyid_delete'>delete</span><span class='comma'>,</span> <span class='id identifier rubyid_row'>row</span><span class='comma'>,</span> <span class='symbol'>:compare</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_compare_val'>compare_val</span> <span class='op'>=</span> <span class='id identifier rubyid_prepare_val'>prepare_val</span><span class='lparen'>(</span><span class='id identifier rubyid_compare'>compare</span><span class='comma'>,</span> <span class='id identifier rubyid_row'>row</span><span class='comma'>,</span> <span class='symbol'>:compare</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_row'>row</span> <span class='kw'>if</span> <span class='id identifier rubyid_compare_val'>compare_val</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>||</span> <span class='id identifier rubyid_del_val'>del_val</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+
+  <span class='id identifier rubyid_compare_method'>compare_method</span> <span class='op'>=</span> <span class='id identifier rubyid_get_compare_method'>get_compare_method</span><span class='lparen'>(</span><span class='id identifier rubyid_del_val'>del_val</span><span class='comma'>,</span> <span class='id identifier rubyid_compare_val'>compare_val</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_to_delete'>to_delete</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='id identifier rubyid_compare_method'>compare_method</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_del_val'>del_val</span><span class='comma'>,</span> <span class='id identifier rubyid_compare_val'>compare_val</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_row'>row</span> <span class='kw'>if</span> <span class='id identifier rubyid_to_delete'>to_delete</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+
+  <span class='id identifier rubyid_orig_del_val'>orig_del_val</span> <span class='op'>=</span> <span class='id identifier rubyid_prepare_val'>prepare_val</span><span class='lparen'>(</span><span class='id identifier rubyid_delete'>delete</span><span class='comma'>,</span> <span class='id identifier rubyid_row'>row</span><span class='comma'>,</span> <span class='symbol'>:final</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_delete'>delete</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_do_deletes'>do_deletes</span><span class='lparen'>(</span><span class='id identifier rubyid_to_delete'>to_delete</span><span class='comma'>,</span> <span class='id identifier rubyid_orig_del_val'>orig_del_val</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_row'>row</span> <span class='kw'>unless</span> <span class='id identifier rubyid_grouped?'>grouped?</span>
+
+  <span class='id identifier rubyid_grouped'>grouped</span> <span class='op'>=</span> <span class='id identifier rubyid_group'>group</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span> <span class='id identifier rubyid_prepare_val'>prepare_val</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='comma'>,</span> <span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_validation'>validation</span> <span class='op'>=</span> <span class='id identifier rubyid_validate_groups'>validate_groups</span><span class='lparen'>(</span><span class='id identifier rubyid_grouped'>grouped</span><span class='comma'>,</span> <span class='id identifier rubyid_orig_del_val'>orig_del_val</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_report_group_issue'>report_group_issue</span><span class='lparen'>(</span><span class='id identifier rubyid_validation'>validation</span><span class='comma'>,</span> <span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_validation'>validation</span> <span class='op'>==</span> <span class='symbol'>:valid</span>
+  <span class='id identifier rubyid_grouped'>grouped</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_grp'>grp</span><span class='op'>|</span> <span class='id identifier rubyid_do_deletes'>do_deletes</span><span class='lparen'>(</span><span class='id identifier rubyid_to_delete'>to_delete</span><span class='comma'>,</span> <span class='id identifier rubyid_grp'>grp</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+    <span class='period'>.</span><span class='id identifier rubyid_each_with_index'>each_with_index</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_grp'>grp</span><span class='comma'>,</span> <span class='id identifier rubyid_i'>i</span><span class='op'>|</span> <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_group'>group</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_grp'>grp</span> <span class='rbrace'>}</span>
+  
+  <span class='id identifier rubyid_row'>row</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 18 21:48:42 2022 by
+  Generated on Thu Aug 18 21:56:48 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>
