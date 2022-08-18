@@ -18,7 +18,7 @@ module Kiba
             warn("#{Kiba::Extend.warning_label}: #{msg}")
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             replacement.process(row)
           end

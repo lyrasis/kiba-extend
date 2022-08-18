@@ -163,7 +163,7 @@ module Kiba
             setup_single_warning
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             fieldmap.each{ |target, sources| row[target] = compile_source_values(sources, row) }
             delete_sources(row) if del

@@ -252,8 +252,8 @@ module Kiba
           #   the same position are empty)
           # @param enforce_evenness [Boolean] whether to pad target fields with %NULLVALUE%s to ensure
           #   they all have the same number of values
-          # @param warn_if_uneven [Boolean] whether {Clean::EvenFieldGroups} should print warnings about
-          #   uneven field groups to STDOUT
+          # @param warn_if_uneven [Boolean] whether {Kiba::Extend::Transforms::Clean::EvenFieldGroups}
+          #   should print warnings about uneven field groups to STDOUT
           def initialize(
             sources:,
             targets:,

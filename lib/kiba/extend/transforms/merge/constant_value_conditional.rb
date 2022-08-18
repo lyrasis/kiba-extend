@@ -116,7 +116,7 @@ module Kiba
             @condition = condition
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             if condition_met?(row)
               @fieldmap.each { |target, value| row[target] = value }

@@ -73,7 +73,7 @@ module Kiba
             @lambda_tested = false
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             test_lambda(row) unless lambda_tested
             

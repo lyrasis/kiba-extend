@@ -147,7 +147,7 @@ module Kiba
             end
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             delim_only_cleaner.process(row)
             groups.each_with_index do |group, idx|

@@ -44,7 +44,7 @@ module Kiba
             @checker = Helpers::FieldEvennessChecker.new(fields: fields, delim: delim)
           end
           
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             return row if fields.length == 1
 

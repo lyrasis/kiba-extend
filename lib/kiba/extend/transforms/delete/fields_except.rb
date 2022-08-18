@@ -71,7 +71,7 @@ module Kiba
             end
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             deletefields = row.keys - fields
             deletefields.each { |f| row.delete(f) }

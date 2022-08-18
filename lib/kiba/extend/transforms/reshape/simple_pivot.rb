@@ -79,13 +79,13 @@ module Kiba
             @columns = {}
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             gather_column_field(row)
             nil
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def close
             @rows.each do |fieldval, data|
               row = {@row_field => fieldval}

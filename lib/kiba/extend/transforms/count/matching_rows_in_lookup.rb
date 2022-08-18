@@ -25,7 +25,7 @@ module Kiba
             )
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             id = row.fetch(keycolumn)
             matches = lookup.fetch(id, [])

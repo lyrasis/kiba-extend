@@ -22,7 +22,7 @@ module Kiba
             @sep = sep
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             rowval = row.fetch(@source, nil)
             origval = if rowval.nil?

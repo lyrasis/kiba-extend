@@ -129,7 +129,7 @@ module Kiba
             @value_getter = Helpers::FieldValueGetter.new(fields: fields, delim: delim, treat_as_null: nv)
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             value_getter.call(row).each do |field, val|
               next unless val[delim]
@@ -166,7 +166,7 @@ module Kiba
             @if_equals = if_equals
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             @fields.each do |field|
               if @if_equals.nil?
@@ -184,7 +184,7 @@ module Kiba
             @fields = [fields].flatten
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             @fields.each do |field|
               val = row.fetch(field)
@@ -208,7 +208,7 @@ module Kiba
             @use_nullvalue = use_nullvalue
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             @groups.each { |group| process_group(row, group) }
             row
@@ -277,7 +277,7 @@ module Kiba
             @sep = sep
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             finalize_fields(row)
             
@@ -315,7 +315,7 @@ module Kiba
             @fields = [fields].flatten
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             @fields.each do |field|
               val = row.fetch(field, nil)

@@ -93,7 +93,7 @@ module Kiba
             @splitter = Name::SplitInverted.new(source: source, targets: nameparts)
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             splitter.process(row)
             if convertable?(row)

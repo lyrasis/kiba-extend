@@ -128,8 +128,8 @@ module Kiba
           # @param field [Symbol] the field whose values should be counted
           # @param target [Symbol] new field in which to record counts
           # @param delim [String] value used to split
-          # @param placholder [String, NilValue] string that acts as a placeholder for empty value. If nil, nothing is
-          #   used as a placeholder
+          # @param placeholder [String, NilValue] string that acts as a placeholder for empty value. If nil,
+          #   nothing is used as a placeholder
           # @param count_empty [Boolean] whether empty placeholder values should be counted
           def initialize(field:, target:, delim: Kiba::Extend.delim, placeholder: nil, count_empty: false)
             @field = field
@@ -139,7 +139,7 @@ module Kiba
             @count_empty = count_empty
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             row[@target] = '0'
             val = row.fetch(@field, nil)

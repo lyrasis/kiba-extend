@@ -176,7 +176,7 @@ module Kiba
             @casesensitive = casesensitive
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             del_val = prepare_val(delete, row, :compare)
             compare_val = prepare_val(compare, row, :compare)

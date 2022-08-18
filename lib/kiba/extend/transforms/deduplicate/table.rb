@@ -51,7 +51,7 @@ module Kiba
             @delete = delete_field
           end
           
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             field_val = row.fetch(@field, nil)
             return if field_val.blank?
@@ -61,7 +61,7 @@ module Kiba
             nil
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def close
             @deduper.values.each do |row|
               row.delete(@field) if @delete

@@ -55,7 +55,7 @@ module Kiba
             @rows = []
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             val = row[on]
             deduper.key?(val) ? deduper[val] += 1 : deduper[val] = 1

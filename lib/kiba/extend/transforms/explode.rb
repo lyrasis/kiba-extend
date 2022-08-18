@@ -64,7 +64,7 @@ module Kiba
             @map = map_to
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             to_new_rows = new_row_groups(row)
             if to_new_rows.empty?
