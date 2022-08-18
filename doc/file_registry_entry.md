@@ -14,6 +14,8 @@ A file registry entry is initialized with a Hash of data about the file. This Ha
 
 The allowable Hash keys, expected Hash value formats, and expectations about them are described below.
 
+**NOTE:** For all keys besides `:dest_special_opts`, you may pass a Proc that returns the expected value format when called. For `:dest_special_opts`, you may pass Procs as individual values within the option Hash. This can be useful if you need to pass in a value that depends on other project config that may not be loaded/set up when registry is initially populated. A publicly available example is in `kiba-tms` which [sets destination initial headers](https://github.com/lyrasis/kiba-tms/blob/eb8f222f0dc753921e58d136cd15e5eab7472c60/lib/kiba/tms/table/prep/destination_options.rb#L32-L34) [based on the preferred name field for a given TMS client project, and whether they want to include "flipped" form as variant terms](https://github.com/lyrasis/kiba-tms/blob/eb8f222f0dc753921e58d136cd15e5eab7472c60/lib/kiba/tms/constituents.rb#L140-L148).
+
 ### `:path` 
 [String] full or expandable relative path to the expected location of the file**
 
