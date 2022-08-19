@@ -109,6 +109,12 @@
     <p>Prints single warning to STDOUT if the value of the given field matches the given value in
   any rows</p>
 
+<p>Useful if you have skipped mapping/setting up transforms for certain values in an initial/staging
+  data set, but need to ensure you will notice if later/production data includes new values
+  that need attention.</p>
+
+<p><a href="https://github.com/lyrasis/kiba-tms/blob/8c0122ddb3e085bb7146df432cd1754e24e86c41/lib/kiba/tms/jobs/loans/prep.rb#L53-L55" target="_parent" title="Publicly available example of use in kiba-tms">Publicly available example of use in kiba-tms</a></p>
+
 <p>Uses <span class='object_link'><a href="../../Utils/FieldValueMatcher.html" title="Kiba::Extend::Utils::FieldValueMatcher (class)">Utils::FieldValueMatcher</a></span> to determine whether value matches. See that class&#39; documentation
   for examples</p>
 
@@ -355,19 +361,19 @@ split and the match is run against each resulting value</p>
       <pre class="lines">
 
 
-24
-25
-26
-27
-28
-29
 30
 31
 32
-33</pre>
+33
+34
+35
+36
+37
+38
+39</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/warn/if_field_value_matches.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/warn/if_field_value_matches.rb', line 30</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>field:</span><span class='comma'>,</span> <span class='label'>match:</span><span class='comma'>,</span> <span class='label'>matchmode:</span> <span class='symbol'>:plain</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>treat_as_null:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>casesensitive:</span> <span class='kw'>true</span><span class='comma'>,</span>
               <span class='label'>strip:</span> <span class='kw'>true</span><span class='rparen'>)</span>
@@ -445,19 +451,19 @@ split and the match is run against each resulting value</p>
       <pre class="lines">
 
 
-36
-37
-38
-39
-40
-41
 42
 43
 44
-45</pre>
+45
+46
+47
+48
+49
+50
+51</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/warn/if_field_value_matches.rb', line 36</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/warn/if_field_value_matches.rb', line 42</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_row'>row</span> <span class='kw'>unless</span> <span class='id identifier rubyid_single_warnings'>single_warnings</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -479,7 +485,7 @@ split and the match is run against each resulting value</p>
 </div>
 
       <div id="footer">
-  Generated on Fri Aug 19 02:17:40 2022 by
+  Generated on Fri Aug 19 16:23:46 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>
