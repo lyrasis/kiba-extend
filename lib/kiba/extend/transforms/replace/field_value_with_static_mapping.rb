@@ -21,6 +21,7 @@ module Kiba
         #   'pl' => 'pearl gray',
         #   nil => 'undetermined'
         # }
+        # ```
         #
         # Initial examples all use the following rows as input:
         #
