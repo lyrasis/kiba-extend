@@ -110,181 +110,153 @@
 
 <p>The examples all share the following <code>mapping</code> Hash:</p>
 
-<pre class="code ruby"><code class="ruby">{
-  &#39;cb&#39; =&gt; &#39;coral blue&#39;,
-  &#39;rp&#39; =&gt; &#39;royal purple&#39;,
-  &#39;p&#39; =&gt; &#39;pied&#39;,
-  &#39;pl&#39; =&gt; &#39;pearl gray&#39;,
-  nil =&gt; &#39;undetermined&#39;
-}
-
-Initial examples all use the following rows as input:
-
+<pre class="code ruby"><code class="ruby"><span class='lbrace'>{</span>
+  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>cb</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>coral blue</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rp</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>royal purple</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>p</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>pied</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>pl</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>pearl gray</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='kw'>nil</span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>undetermined</span><span class='tstring_end'>&#39;</span></span>
+<span class='rbrace'>}</span>
 </code></pre>
 
-<p>[
-  &#39;Lazarus&#39;, color: &#39;cb&#39;,
-  &#39;Inkpot&#39;, color: &#39;rp&#39;,
-  &#39;Zipper&#39;, color: &#39;rp|p&#39;,
-  &#39;Divebomber|Earlybird&#39;, color: &#39;pl|pl&#39;,
-  &#39;Vern&#39;, color: &#39;v&#39;,
-  &#39;Clover|Hops&#39;, color: &#39;rp|c&#39;,
-  &#39;New&#39;, color: nil,
-  &#39;Old&#39;, color: &#39;&#39;,
-  &#39;New|Hunter&#39;, color: &#39;|pl&#39;
-]</p>
+<p>Initial examples all use the following rows as input:</p>
 
-<pre class="code ruby"><code class="ruby">
-Using:
-
+<pre class="code ruby"><code class="ruby"><span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Lazarus</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>cb</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Inkpot</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rp</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Zipper</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rp|p</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Divebomber|Earlybird</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>pl|pl</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Vern</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>v</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Clover|Hops</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rp|c</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>New</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Old</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>New|Hunter</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>|pl</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
 </code></pre>
 
-<p>transform Replace::FieldValueWithStaticMapping, source: :color, mapping: mapping</p>
+<p>Using:</p>
 
-<pre class="code ruby"><code class="ruby">
-Results in:
-
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Replace.html" title="Kiba::Extend::Transforms::Replace (module)">Replace</a></span></span><span class='op'>::</span><span class='const'>FieldValueWithStaticMapping</span><span class='comma'>,</span> <span class='label'>source:</span> <span class='symbol'>:color</span><span class='comma'>,</span> <span class='label'>mapping:</span> <span class='id identifier rubyid_mapping'>mapping</span>
 </code></pre>
 
-<p>[
-  &#39;Lazarus&#39;, color: &#39;coral blue&#39;,
-    &#39;Inkpot&#39;, color: &#39;royal purple&#39;,
-    &#39;Zipper&#39;, color: &#39;rp|p&#39;,
-    &#39;Divebomber|Earlybird&#39;, color: &#39;pl|pl&#39;,
-    &#39;Vern&#39;, color: &#39;v&#39;,
-    &#39;Clover|Hops&#39;, color: &#39;rp|c&#39;,
-    &#39;New&#39;, color: &#39;undetermined&#39;,
-    &#39;Old&#39;, color: &#39;&#39;,
-    &#39;New|Hunter&#39;, color: &#39;|pl&#39;
-]</p>
+<p>Results in:</p>
 
-<pre class="code ruby"><code class="ruby">
-Using:
-
+<pre class="code ruby"><code class="ruby"><span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Lazarus</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>coral blue</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Inkpot</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>royal purple</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Zipper</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rp|p</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Divebomber|Earlybird</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>pl|pl</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Vern</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>v</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Clover|Hops</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rp|c</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>New</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>undetermined</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Old</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>New|Hunter</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>|pl</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
 </code></pre>
 
-<p>transform Replace::FieldValueWithStaticMapping, source: :color, target: :fullcol, mapping: mapping</p>
+<p>Using:</p>
 
-<pre class="code ruby"><code class="ruby">
-Results in (showing first row only):
-
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Replace.html" title="Kiba::Extend::Transforms::Replace (module)">Replace</a></span></span><span class='op'>::</span><span class='const'>FieldValueWithStaticMapping</span><span class='comma'>,</span> <span class='label'>source:</span> <span class='symbol'>:color</span><span class='comma'>,</span> <span class='label'>target:</span> <span class='symbol'>:fullcol</span><span class='comma'>,</span> <span class='label'>mapping:</span> <span class='id identifier rubyid_mapping'>mapping</span>
 </code></pre>
 
-<p>[
-  &#39;Lazarus&#39;, fullcol: &#39;coral blue&#39;,
+<p>Results in (showing first row only):</p>
+
+<pre class="code ruby"><code class="ruby">[
+  {name: &#39;Lazarus&#39;, fullcol: &#39;coral blue&#39;},
   ...
-]</p>
-
-<pre class="code ruby"><code class="ruby">
-Using:
-
+]
 </code></pre>
 
-<p>transform Replace::FieldValueWithStaticMapping,
-  source: :color,
-  target: :fullcol,
-  mapping: mapping,
-  delete_source: false</p>
+<p>Using:</p>
 
-<pre class="code ruby"><code class="ruby">
-Results in (showing first row only):
-
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Replace.html" title="Kiba::Extend::Transforms::Replace (module)">Replace</a></span></span><span class='op'>::</span><span class='const'>FieldValueWithStaticMapping</span><span class='comma'>,</span>
+  <span class='label'>source:</span> <span class='symbol'>:color</span><span class='comma'>,</span>
+  <span class='label'>target:</span> <span class='symbol'>:fullcol</span><span class='comma'>,</span>
+  <span class='label'>mapping:</span> <span class='id identifier rubyid_mapping'>mapping</span><span class='comma'>,</span>
+  <span class='label'>delete_source:</span> <span class='kw'>false</span>
 </code></pre>
 
-<p>[
-  &#39;Lazarus&#39;, color: &#39;cb&#39;, fullcol: &#39;coral blue&#39;,
+<p>Results in (showing first row only):</p>
+
+<pre class="code ruby"><code class="ruby">[
+  {name: &#39;Lazarus&#39;, color: &#39;cb&#39;, fullcol: &#39;coral blue&#39;},
   ...
-]</p>
-
-<pre class="code ruby"><code class="ruby">
-Using:
-
+]
 </code></pre>
 
-<p>transform Replace::FieldValueWithStaticMapping,
-  source: :color,
-  mapping: mapping,
-  delim: &#39;|&#39;</p>
+<p>Using:</p>
 
-<pre class="code ruby"><code class="ruby">
-Results in:
-
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Replace.html" title="Kiba::Extend::Transforms::Replace (module)">Replace</a></span></span><span class='op'>::</span><span class='const'>FieldValueWithStaticMapping</span><span class='comma'>,</span>
+  <span class='label'>source:</span> <span class='symbol'>:color</span><span class='comma'>,</span>
+  <span class='label'>mapping:</span> <span class='id identifier rubyid_mapping'>mapping</span><span class='comma'>,</span>
+  <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>|</span><span class='tstring_end'>&#39;</span></span>
 </code></pre>
 
-<p>[
-  &#39;Lazarus&#39;, color: &#39;coral blue&#39;,
-  &#39;Inkpot&#39;, color: &#39;royal purple&#39;,
-  &#39;Zipper&#39;, color: &#39;royal purple|pied&#39;,
-  &#39;Divebomber|Earlybird&#39;, color: &#39;pearl gray|pearl gray&#39;,
-  &#39;Vern&#39;, color: &#39;v&#39;,
-  &#39;Clover|Hops&#39;, color: &#39;royal purple|c&#39;,
-  &#39;New&#39;, color: &#39;undetermined&#39;,
-  &#39;Old&#39;, color: &#39;&#39;,
-  &#39;New|Hunter&#39;, color: &#39;|pearl gray&#39;
-]</p>
+<p>Results in:</p>
 
-<pre class="code ruby"><code class="ruby">
-The remaining examples use only the following rows as input:
-
+<pre class="code ruby"><code class="ruby"><span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Lazarus</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>coral blue</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Inkpot</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>royal purple</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Zipper</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>royal purple|pied</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Divebomber|Earlybird</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>pearl gray|pearl gray</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Vern</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>v</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Clover|Hops</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>royal purple|c</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>New</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>undetermined</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Old</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>New|Hunter</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>|pearl gray</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
 </code></pre>
 
-<p>[
-  &#39;Vern&#39;, color: &#39;v&#39;,
-  &#39;Clover|Hops&#39;, color: &#39;rp|c&#39;,
-  &#39;New&#39;, color: nil,
-  &#39;Old&#39;, color: &#39;&#39;,
-  &#39;New|Hunter&#39;, color: &#39;|pl&#39;
-]</p>
+<p>The remaining examples use only the following rows as input:</p>
 
-<pre class="code ruby"><code class="ruby">
-Using:
-
+<pre class="code ruby"><code class="ruby"><span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Vern</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>v</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Clover|Hops</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>rp|c</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>New</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Old</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>New|Hunter</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>|pl</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
 </code></pre>
 
-<p>transform Replace::FieldValueWithStaticMapping,
-  source: :color,
-  mapping: mapping,
-  delim: &#39;|&#39;,
-  fallback_val: :nil</p>
+<p>Using:</p>
 
-<pre class="code ruby"><code class="ruby">
-Results in:
-
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Replace.html" title="Kiba::Extend::Transforms::Replace (module)">Replace</a></span></span><span class='op'>::</span><span class='const'>FieldValueWithStaticMapping</span><span class='comma'>,</span>
+  <span class='label'>source:</span> <span class='symbol'>:color</span><span class='comma'>,</span>
+  <span class='label'>mapping:</span> <span class='id identifier rubyid_mapping'>mapping</span><span class='comma'>,</span>
+  <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>|</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>fallback_val:</span> <span class='symbol'>:nil</span>
 </code></pre>
 
-<p>[
-  &#39;Vern&#39;, color: nil,
-  &#39;Clover|Hops&#39;, color: &#39;royal purple|&#39;,
-  &#39;New&#39;, color: &#39;undetermined&#39;,
-  &#39;Old&#39;, color: nil,
-  &#39;New|Hunter&#39;, color: &#39;|pearl gray&#39;
-]</p>
+<p>Results in:</p>
 
-<pre class="code ruby"><code class="ruby">
-Using:
-
+<pre class="code ruby"><code class="ruby"><span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Vern</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Clover|Hops</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>royal purple|</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>New</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>undetermined</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Old</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>New|Hunter</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>|pearl gray</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
 </code></pre>
 
-<p>transform Replace::FieldValueWithStaticMapping,
-  source: :color,
-  mapping: mapping,
-  delim: &#39;|&#39;,
-  fallback_val: &#39;nope&#39;</p>
+<p>Using:</p>
 
-<pre class="code ruby"><code class="ruby">
-Results in:
-
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Replace.html" title="Kiba::Extend::Transforms::Replace (module)">Replace</a></span></span><span class='op'>::</span><span class='const'>FieldValueWithStaticMapping</span><span class='comma'>,</span>
+  <span class='label'>source:</span> <span class='symbol'>:color</span><span class='comma'>,</span>
+  <span class='label'>mapping:</span> <span class='id identifier rubyid_mapping'>mapping</span><span class='comma'>,</span>
+  <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>|</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>fallback_val:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>nope</span><span class='tstring_end'>&#39;</span></span>
 </code></pre>
 
-<p>[
-  &#39;Vern&#39;, color: &#39;nope&#39;,
-  &#39;Clover|Hops&#39;, color: &#39;royal purple|nope&#39;,
-  &#39;New&#39;, color: &#39;undetermined&#39;,
-  &#39;Old&#39;, color: &#39;nope&#39;,
-  &#39;New|Hunter&#39;, color: &#39;nope|pearl gray&#39;
-]</p>
+<p>Results in:</p>
 
-<pre class="code ruby"><code class="ruby">&lt;/code&gt;</code></pre>
+<pre class="code ruby"><code class="ruby"><span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Vern</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>nope</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Clover|Hops</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>royal purple|nope</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>New</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>undetermined</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Old</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>nope</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>New|Hunter</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>nope|pearl gray</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+</code></pre>
 
 
   </div>
@@ -599,7 +571,6 @@ value on the string given</p>
       <pre class="lines">
 
 
-206
 207
 208
 209
@@ -609,10 +580,11 @@ value on the string given</p>
 213
 214
 215
-216</pre>
+216
+217</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/replace/field_value_with_static_mapping.rb', line 206</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/replace/field_value_with_static_mapping.rb', line 207</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>source:</span><span class='comma'>,</span> <span class='label'>target:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>mapping:</span><span class='comma'>,</span> <span class='label'>fallback_val:</span> <span class='symbol'>:orig</span><span class='comma'>,</span> <span class='label'>delete_source:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='kw'>nil</span><span class='comma'>,</span>
                <span class='label'>multival:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
@@ -652,13 +624,13 @@ value on the string given</p>
       <pre class="lines">
 
 
-179
 180
 181
-182</pre>
+182
+183</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/replace/field_value_with_static_mapping.rb', line 179</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/replace/field_value_with_static_mapping.rb', line 180</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delim_and_sep_warning'>delim_and_sep_warning</span>
   <span class='id identifier rubyid_warning'>warning</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Both `delim` and deprecated `sep` parameters given. Using `delim` value.\nTO FIX: remove `sep` parameter</span><span class='tstring_end'>&quot;</span></span>
@@ -684,13 +656,13 @@ value on the string given</p>
       <pre class="lines">
 
 
-184
 185
 186
-187</pre>
+187
+188</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/replace/field_value_with_static_mapping.rb', line 184</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/replace/field_value_with_static_mapping.rb', line 185</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_multival_warning'>multival_warning</span>
   <span class='id identifier rubyid_warning'>warning</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`multival` parameter is deprecated. In the future, if a `delim` is given, the transform will operate in multival mode\nTO FIX: remove `multival` parameter</span><span class='tstring_end'>&quot;</span></span>
@@ -716,13 +688,13 @@ value on the string given</p>
       <pre class="lines">
 
 
-189
 190
 191
-192</pre>
+192
+193</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/replace/field_value_with_static_mapping.rb', line 189</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/replace/field_value_with_static_mapping.rb', line 190</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sep_warning'>sep_warning</span>
   <span class='id identifier rubyid_warning'>warning</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`sep` parameters is deprecated.\nTO FIX: change `sep` to `delim`</span><span class='tstring_end'>&quot;</span></span>
@@ -778,7 +750,6 @@ value on the string given</p>
       <pre class="lines">
 
 
-219
 220
 221
 222
@@ -789,10 +760,11 @@ value on the string given</p>
 227
 228
 229
-230</pre>
+230
+231</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/replace/field_value_with_static_mapping.rb', line 219</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/replace/field_value_with_static_mapping.rb', line 220</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_set_initial_value'>set_initial_value</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
@@ -816,7 +788,7 @@ value on the string given</p>
 </div>
 
       <div id="footer">
-  Generated on Fri Aug 19 02:15:40 2022 by
+  Generated on Fri Aug 19 02:17:41 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>
