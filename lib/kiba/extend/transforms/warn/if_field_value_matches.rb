@@ -9,6 +9,12 @@ module Kiba
         # Prints single warning to STDOUT if the value of the given field matches the given value in
         #   any rows
         #
+        # Useful if you have skipped mapping/setting up transforms for certain values in an initial/staging
+        #   data set, but need to ensure you will notice if later/production data includes new values
+        #   that need attention.
+        #
+        # {https://github.com/lyrasis/kiba-tms/blob/8c0122ddb3e085bb7146df432cd1754e24e86c41/lib/kiba/tms/jobs/loans/prep.rb#L53-L55 Publicly available example of use in kiba-tms}
+        #
         # Uses {Utils::FieldValueMatcher} to determine whether value matches. See that class' documentation
         #   for examples 
         class IfFieldValueMatches
