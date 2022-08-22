@@ -41,11 +41,12 @@ module Kiba
           # @param row [Hash{ Symbol => String }]
           def process(row)
             return row unless single_warnings.empty?
+            return row if row[field].blank?
 
             result = matcher.call(row)
             return row if result
-            
-            msg = "#{Kiba::Extend.warning_label}: One or more rows has #{field} value not matching #{match}"
+
+            msg = "One or more rows has #{field} value not matching #{match}"
             add_single_warning(msg)
             row
           end

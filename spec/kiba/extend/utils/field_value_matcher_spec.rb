@@ -278,6 +278,23 @@ RSpec.describe Kiba::Extend::Utils::FieldValueMatcher do
       end
     end
 
+    context %{with field: :test, match: '^fo+$', matchmode: :regex, delim: '|', multimode: :all} do
+      let(:params){ {field: :test, match: '^fo+$', matchmode: :regex, delim: '|', multimode: :all} }
+      let(:expectations) do
+        {
+          {test: 'foo'} => true,
+          {test: 'foo|bar'} => false,
+          {test: 'foo|'} => true,
+          {test: 'Foo|bar'} => false,
+          {test: 'drink|food'} => false
+        }
+      end
+
+      it 'returns expected' do
+        expect(results).to eq(expected)
+      end
+    end
+
     context %{with field: :test, match: '^fo+', matchmode: :regex, delim: '|', casesensitive: false} do
       let(:params){ {field: :test, match: '^fo+', matchmode: :regex, delim: '|', casesensitive: false} }
       let(:expectations) do
