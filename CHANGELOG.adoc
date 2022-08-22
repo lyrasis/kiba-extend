@@ -43,6 +43,9 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 
 ==== Changed
 
+==== Bugfixes
+* `Reshape::FieldsToFieldGroupWithConstant` now works with single source fields (i.e. listed in `fieldmap` param) with nil values
+
 ==== Deleted
 
 ==== To be deprecated/Will break in a future version

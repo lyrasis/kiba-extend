@@ -164,4 +164,37 @@ RSpec.describe Kiba::Extend::Transforms::Reshape::FieldsToFieldGroupWithConstant
       expect(result).to eq(expected)
     end
   end
+
+  context 'with single source field' do
+    let(:input) do
+      [
+        {note: 'foo'},
+        {note: nil},
+        {note: ''},
+        {note: 'foo|bar'}
+      ]
+    end
+
+    let(:params) do
+      {
+        fieldmap: {note: :a_note},
+        constant_target: :a_type,
+        constant_value: 'a thing',
+        replace_empty: false
+      }
+    end
+    
+    let(:expected) do
+      [
+        {a_type: 'a thing', a_note: 'foo'},
+        {a_type: nil, a_note: nil},
+        {a_type: nil, a_note: nil},
+        {a_type: 'a thing|a thing', a_note: 'foo|bar'}
+      ]
+    end
+
+    it 'reshapes the columns as specified' do
+      expect(result).to eq(expected)
+    end
+  end
 end

@@ -249,7 +249,10 @@ module Kiba
           
           def find_max_vals(row)
             if renamed.length == 1
-              row[renamed.first].split(delim, -1).length
+              val = row[renamed.first]
+              return 0 if val.blank?
+              
+              val.split(delim, -1).length
             else
               value_getter.call(row)
                 .values
