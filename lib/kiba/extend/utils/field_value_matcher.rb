@@ -5,6 +5,11 @@ module Kiba
     module Utils
       # Callable service object returning true/false
       #
+      # If row does not contain the specified field at all, the result is always false.
+      #
+      # A `nil` value for the specified field will match `''` (matchmode: :plain) or `'^$'`
+      #   (matchmode: :regexp)
+      #
       # `matchmode: :plain` (the default) tests for a full match. You can test for partial matches with
       #   `matchmode: :regex`. Wrapping a regex match with `^` and `$` anchors will force a full match
       #   in regex match mode.
@@ -43,7 +48,7 @@ module Kiba
       #
       # ```
       # {foo: 'bar'} => false,
-      # {test: nil} => false,
+      # {test: nil} => true,
       # {test: ''} => true,
       # {test: ' '} => true, # values are stripped
       # {test: '    '} => true, # values are stripped
@@ -54,7 +59,7 @@ module Kiba
       #
       # ```
       # {foo: 'bar'} => false,
-      # {test: nil} => false,
+      # {test: nil} => true,
       # {test: ''} => true,
       # {test: 'UNMAPPED'} => false,
       # {test: '%NULL%'} => true, # gets converted to empty value prior to matching
@@ -65,7 +70,7 @@ module Kiba
       #
       # ```
       # {foo: 'bar'} => false,
-      # {test: nil} => false,
+      # {test: nil} => true,
       # {test: ''} => true,
       # {test: 'UNMAPPED'} => false,
       # {test: '%NULL%'} => true
@@ -148,6 +153,44 @@ module Kiba
       # {test: 'drink|food'} => true
       # ```
       #
+      # ### With params: `field: :test, match: 'Foo', delim: '|', multimode: :all`
+      #
+      # ```
+      # {foo: 'Foo'} => false,
+      # {test: nil} => false,
+      # {test: ''} => false,
+      # {test: 'Foo'} => true,
+      # {test: 'foo'} => false,
+      # {test: 'Foo|Foo'} => true,
+      # {test: 'Foo|bar'} => false,
+      # {test: 'baz|Foo'} => false,
+      # {test: ' Foo|bar'} => false,
+      # {test: 'baz| Foo '} => false,
+      # {test: '|Foo'} => true,
+      # {test: 'Foo|'} => true,
+      # {test: 'foo|'} => false,
+      # {test: 'bar|baz'} => false
+      # ```
+      #
+      # ### With params: `field: :test, match: 'Foo', delim: '|', multimode: :allstrict`
+      #
+      # ```
+      # {foo: 'Foo'} => false,
+      # {test: nil} => false,
+      # {test: ''} => false,
+      # {test: 'Foo'} => true,
+      # {test: 'foo'} => false,
+      # {test: 'Foo|Foo'} => true,
+      # {test: 'Foo|bar'} => false,
+      # {test: 'baz|Foo'} => false,
+      # {test: ' Foo|bar'} => false,
+      # {test: 'baz| Foo '} => false,
+      # {test: '|Foo'} => false,
+      # {test: 'Foo|'} => false,
+      # {test: 'foo|'} => false,
+      # {test: 'bar|baz'} => false
+      # ```
+      #
       class FieldValueMatcher
         # @param field [Symbol] whose value to match
         # @param match [String] expresses the match criteria 
@@ -157,8 +200,12 @@ module Kiba
         # @param treat_as_null [nil, String] if given, the string will be converted to empty string for matching
         # @param casesensitive [Boolean] whether match cares about case
         # @param strip [Boolean] whether to strip individual values prior to matching
+        # @param multimode [:any, :all, :allstrict] how a multivalue match is determined. If :any, result is true
+        #   if any value matches. If :all, empty values are ignored and will return true if all populated values
+        #   match. If :allstrict, empty values are not ignored and will return false if `match` value does not
+        #   match them
         def initialize(field:, match:, matchmode: :plain, delim: nil, treat_as_null: nil, casesensitive: true,
-                       strip: true)
+                       strip: true, multimode: :any)
           @field = field
           @delim = delim
           @casesensitive = casesensitive
@@ -166,18 +213,20 @@ module Kiba
           @nullval = treat_as_null
           @strip = strip
           @match = matchmode == :regexp ? create_regexp_match(match) : create_plain_match(match)
+          @multimode = multimode
         end
 
         # @param row [Hash{Symbol => String}]
         def call(row)
+          return false unless row.key?(field)
+
           value = row[field]
-          return false if value.nil?
           is_match?(prepare_value(value))
         end
         
         private
 
-        attr_reader :field, :delim, :match, :matchmode, :nullval, :casesensitive, :strip
+        attr_reader :field, :delim, :match, :matchmode, :nullval, :casesensitive, :strip, :multimode
         
         def create_regexp_match(match)
           casesensitive ? Regexp.new(match) : Regexp.new(match, Regexp::IGNORECASE)
@@ -188,14 +237,29 @@ module Kiba
         end
 
         def is_match?(vals)
+          multimode == :any ? is_match_any?(vals) : is_match_all?(vals)
+        end
+
+        def is_match_all?(vals)
+          vals.reject!{ |val| val.empty? } unless multimode == :allstrict
+          return false if vals.empty?
+          return vals.all?{ |val| val == match } if matchmode == :plain
+
+          vals.all?{ |val| val.match?(match) }
+        end
+
+        def is_match_any?(vals)
           return vals.any?{ |val| val == match } if matchmode == :plain
 
           vals.any?{ |val| val.match?(match) }
         end
-        
+
         def prepare_value(value)
+          return [''] if value.blank?
+          
           arrayed = delim ? value.split(delim, -1) : [value]
-          stripped = strip ? arrayed.map(&:strip) : arrayed
+          compacted = arrayed.map{ |val| val.nil? ? '' : val }
+          stripped = strip ? compacted.map(&:strip) : compacted
           nulled = nullval ? stripped.map{ |val| val == nullval ? '' : val } : stripped
           casesensitive ? nulled : nulled.map(&:downcase)
         end

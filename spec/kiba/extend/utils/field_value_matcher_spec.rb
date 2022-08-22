@@ -64,7 +64,7 @@ RSpec.describe Kiba::Extend::Utils::FieldValueMatcher do
       let(:expectations) do
         {
           {foo: 'bar'} => false,
-          {test: nil} => false,
+          {test: nil} => true,
           {test: ''} => true,
           {test: ' '} => true, # values are stripped
           {test: '    '} => true, # values are stripped
@@ -82,7 +82,7 @@ RSpec.describe Kiba::Extend::Utils::FieldValueMatcher do
       let(:expectations) do
         {
           {foo: 'bar'} => false,
-          {test: nil} => false,
+          {test: nil} => true,
           {test: ''} => true,
           {test: 'UNMAPPED'} => false,
           {test: '%NULL%'} => true, # gets converted to empty value prior to matching
@@ -100,7 +100,7 @@ RSpec.describe Kiba::Extend::Utils::FieldValueMatcher do
       let(:expectations) do
         {
           {foo: 'bar'} => false,
-          {test: nil} => false,
+          {test: nil} => true,
           {test: ''} => true,
           {test: 'UNMAPPED'} => false,
           {test: '%NULL%'} => true
@@ -136,6 +136,58 @@ RSpec.describe Kiba::Extend::Utils::FieldValueMatcher do
         expect(results).to eq(expected)
       end
     end
+
+    context %{when field: :test, match: match, delim: '|', multimode: :all} do
+      let(:params){ {field: :test, match: 'Foo', delim: '|', multimode: :all} }
+      let(:expectations) do
+        {
+          {foo: 'Foo'} => false,
+          {test: nil} => false,
+          {test: ''} => false,
+          {test: 'Foo'} => true,
+          {test: 'foo'} => false,
+          {test: 'Foo|Foo'} => true,
+          {test: 'Foo|bar'} => false,
+          {test: 'baz|Foo'} => false,
+          {test: ' Foo|bar'} => false,
+          {test: 'baz| Foo '} => false,
+          {test: '|Foo'} => true,
+          {test: 'Foo|'} => true,
+          {test: 'foo|'} => false,
+          {test: 'bar|baz'} => false
+        }
+      end
+
+      it 'returns expected' do
+        expect(results).to eq(expected)
+      end
+    end
+
+    context %{when field: :test, match: match, delim: '|', multimode: :allstrict} do
+      let(:params){ {field: :test, match: 'Foo', delim: '|', multimode: :allstrict} }
+      let(:expectations) do
+        {
+          {foo: 'Foo'} => false,
+          {test: nil} => false,
+          {test: ''} => false,
+          {test: 'Foo'} => true,
+          {test: 'foo'} => false,
+          {test: 'Foo|Foo'} => true,
+          {test: 'Foo|bar'} => false,
+          {test: 'baz|Foo'} => false,
+          {test: ' Foo|bar'} => false,
+          {test: 'baz| Foo '} => false,
+          {test: '|Foo'} => false,
+          {test: 'Foo|'} => false,
+          {test: 'foo|'} => false,
+          {test: 'bar|baz'} => false
+        }
+      end
+
+      it 'returns expected' do
+        expect(results).to eq(expected)
+      end
+    end
     
     context %{when field: :test, match: '^$', matchmode: :regex, delim: '|'} do
       let(:params){ {field: :test, match: '^$', matchmode: :regex, delim: '|'} }
@@ -161,6 +213,9 @@ RSpec.describe Kiba::Extend::Utils::FieldValueMatcher do
       let(:params){ {field: :test, match: '', delim: '|', treat_as_null: '%NULL%'} }
       let(:expectations) do
         {
+          {test: ''} => true,
+          {test: '%NULL%'} => true,
+          {test: nil} => true,
           {test: 'foo|%NULL%|bar'} => true,
           {test: 'foo||bar'} => true,
           {test: 'foo| %NULL% |bar'} => true,

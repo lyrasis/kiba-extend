@@ -36,6 +36,8 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 ==== Breaking
 
 ==== Added
+* `Warn::UnlessFieldValueMatches` transform
+* `multimode` parameter for `Utils::FieldValueMatcher`
 * Support for passing Procs in as file registry entry values (or as a value in a :dest_special_opts Hash).
 * `delim` parameter for `Replace::FieldValueWithStaticMapping` transform
 

@@ -16,7 +16,9 @@ module Kiba
         # {https://github.com/lyrasis/kiba-tms/blob/8c0122ddb3e085bb7146df432cd1754e24e86c41/lib/kiba/tms/jobs/loans/prep.rb#L53-L55 Publicly available example of use in kiba-tms}
         #
         # Uses {Utils::FieldValueMatcher} to determine whether value matches. See that class' documentation
-        #   for examples 
+        #   for examples
+        #
+        # This transform warns if {Utils::FieldValueMatcher} finds a match.
         class IfFieldValueMatches
           include SingleWarnable
           
@@ -27,13 +29,16 @@ module Kiba
         #    split and the match is run against each resulting value
         # @param treat_as_null [nil, String] if given, the string will be converted to empty string for matching
         # @param casesensitive [Boolean] whether match cares about case
+          # @param strip [Boolean] whether to strip leading/trailing spaces from values for matching
+          # @param multimode [:any, :all, :allstrict] See {Utils::FieldValueMatcher}
           def initialize(field:, match:, matchmode: :plain, delim: nil, treat_as_null: nil, casesensitive: true,
-                        strip: true)
+                        strip: true, multimode: :any)
             @field = field
             @match = match
             @matcher = Utils::FieldValueMatcher.new(
               field: field, match: match, matchmode: matchmode, delim: delim,
-              treat_as_null: treat_as_null, casesensitive: casesensitive, strip: strip
+              treat_as_null: treat_as_null, casesensitive: casesensitive, strip: strip,
+              multimode: multimode
             )
             setup_single_warning
           end
