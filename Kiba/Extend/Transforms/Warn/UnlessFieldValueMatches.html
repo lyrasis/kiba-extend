@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
-  Class: Kiba::Extend::Transforms::Warn::IfFieldValueMatches
+  Class: Kiba::Extend::Transforms::Warn::UnlessFieldValueMatches
   
     &mdash; Kiba-Extend Documentation
   
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="../../../../css/common.css" type="text/css" />
 
 <script type="text/javascript">
-  pathId = "Kiba::Extend::Transforms::Warn::IfFieldValueMatches";
+  pathId = "Kiba::Extend::Transforms::Warn::UnlessFieldValueMatches";
   relpath = '../../../../';
 </script>
 
@@ -36,10 +36,10 @@
       <div id="header">
         <div id="menu">
   
-    <a href="../../../../_index.html">Index (I)</a> &raquo;
+    <a href="../../../../_index.html">Index (U)</a> &raquo;
     <span class='title'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../Transforms.html" title="Kiba::Extend::Transforms (module)">Transforms</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Warn.html" title="Kiba::Extend::Transforms::Warn (module)">Warn</a></span></span>
      &raquo; 
-    <span class="title">IfFieldValueMatches</span>
+    <span class="title">UnlessFieldValueMatches</span>
   
 </div>
 
@@ -59,7 +59,7 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><h1>Class: Kiba::Extend::Transforms::Warn::IfFieldValueMatches
+      <div id="content"><h1>Class: Kiba::Extend::Transforms::Warn::UnlessFieldValueMatches
   
   
   
@@ -74,7 +74,7 @@
         <ul class="fullTree">
           <li>Object</li>
           
-            <li class="next">Kiba::Extend::Transforms::Warn::IfFieldValueMatches</li>
+            <li class="next">Kiba::Extend::Transforms::Warn::UnlessFieldValueMatches</li>
           
         </ul>
         <a href="#" class="inheritanceTree">show all</a>
@@ -99,47 +99,29 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/kiba/extend/transforms/warn/if_field_value_matches.rb</dd>
+    <dd>lib/kiba/extend/transforms/warn/unless_field_value_matches.rb</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Prints single warning to STDOUT if the value of the given field matches the given value in
-  any rows</p>
+    <p>Prints single warning to STDOUT if the value of the given field does not match match the given value
+  in any rows</p>
 
-<p>Useful if you have skipped mapping/setting up transforms for certain values in an initial/staging
-  data set, but need to ensure you will notice if later/production data includes new values
-  that need attention.</p>
-
-<p><a href="https://github.com/lyrasis/kiba-tms/blob/8c0122ddb3e085bb7146df432cd1754e24e86c41/lib/kiba/tms/jobs/loans/prep.rb#L53-L55" target="_parent" title="Publicly available example of use in kiba-tms">Publicly available example of use in kiba-tms</a></p>
+<p>Useful for getting notification that assumptions made during initial transformation development
+  have changed in subsequent data.</p>
 
 <p>Uses <span class='object_link'><a href="../../Utils/FieldValueMatcher.html" title="Kiba::Extend::Utils::FieldValueMatcher (class)">Utils::FieldValueMatcher</a></span> to determine whether value matches. See that class&#39; documentation
-  for examples</p>
+  for examples/more details on parameters.</p>
 
-<p>This transform warns if <span class='object_link'><a href="../../Utils/FieldValueMatcher.html" title="Kiba::Extend::Utils::FieldValueMatcher (class)">Utils::FieldValueMatcher</a></span> finds a match.</p>
+<p>This transform warns if <span class='object_link'><a href="../../Utils/FieldValueMatcher.html" title="Kiba::Extend::Utils::FieldValueMatcher (class)">Utils::FieldValueMatcher</a></span> does not find a match</p>
 
 
   </div>
 </div>
 <div class="tags">
   
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>2.9.0.94</p>
-</div>
-      
-    </li>
-  
-</ul>
 
 </div>
 
@@ -159,7 +141,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(field:, match:, matchmode: :plain, delim: nil, treat_as_null: nil, casesensitive: true, strip: true, multimode: :any)  &#x21d2; IfFieldValueMatches </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(field:, match:, matchmode: :plain, delim: nil, treat_as_null: nil, casesensitive: true, strip: true, multimode: :all)  &#x21d2; UnlessFieldValueMatches </a>
     
 
     
@@ -175,7 +157,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A new instance of IfFieldValueMatches.</p>
+    <span class="summary_desc"><div class='inline'><p>A new instance of UnlessFieldValueMatches.</p>
 </div></span>
   
 </li>
@@ -223,7 +205,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(field:, match:, matchmode: :plain, delim: nil, treat_as_null: nil, casesensitive: true, strip: true, multimode: :any)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Warn::IfFieldValueMatches (class)">IfFieldValueMatches</a></span></tt> 
+    #<strong>initialize</strong>(field:, match:, matchmode: :plain, delim: nil, treat_as_null: nil, casesensitive: true, strip: true, multimode: :all)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Warn::UnlessFieldValueMatches (class)">UnlessFieldValueMatches</a></span></tt> 
   
 
   
@@ -231,7 +213,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of IfFieldValueMatches.</p>
+    <p>Returns a new instance of UnlessFieldValueMatches.</p>
 
 
   </div>
@@ -239,6 +221,105 @@
 <div class="tags">
   <p class="tag_title">Parameters:</p>
 <ul class="param">
+  
+    <li>
+      
+        <span class='name'>field</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>whose value to match</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>match</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>expresses the match criteria</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>matchmode</span>
+      
+      
+        <span class='type'>(<tt>:plain</tt>, <tt>:regex</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>:plain</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>If <code>:regex</code>, string is converted to a regular expression</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>delim</span>
+      
+      
+        <span class='type'>(<tt>nil</tt>, <tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>if a String is given, triggers multivalue matching, where field value is
+split and the match is run against each resulting value</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>treat_as_null</span>
+      
+      
+        <span class='type'>(<tt>nil</tt>, <tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>if given, the string will be converted to empty string for matching</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>casesensitive</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>true</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>whether match cares about case</p>
+</div>
+      
+    </li>
   
     <li>
       
@@ -265,7 +346,7 @@
         <span class='type'>(<tt>:any</tt>, <tt>:all</tt>, <tt>:allstrict</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>:any</tt>)</em>
+        <em class="default">(defaults to: <tt>:all</tt>)</em>
       
       
         &mdash;
@@ -276,21 +357,6 @@
   
 </ul>
 
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>2.9.0.94</p>
-</div>
-      
-    </li>
-  
-</ul>
 
 </div><table class="source_code">
   <tr>
@@ -298,23 +364,23 @@
       <pre class="lines">
 
 
+29
+30
+31
+32
+33
 34
 35
 36
 37
 38
-39
-40
-41
-42
-43
-44</pre>
+39</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/warn/if_field_value_matches.rb', line 34</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/warn/unless_field_value_matches.rb', line 29</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>field:</span><span class='comma'>,</span> <span class='label'>match:</span><span class='comma'>,</span> <span class='label'>matchmode:</span> <span class='symbol'>:plain</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>treat_as_null:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>casesensitive:</span> <span class='kw'>true</span><span class='comma'>,</span>
-              <span class='label'>strip:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>multimode:</span> <span class='symbol'>:any</span><span class='rparen'>)</span>
+               <span class='label'>strip:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>multimode:</span> <span class='symbol'>:all</span><span class='rparen'>)</span>
   <span class='ivar'>@field</span> <span class='op'>=</span> <span class='id identifier rubyid_field'>field</span>
   <span class='ivar'>@match</span> <span class='op'>=</span> <span class='id identifier rubyid_match'>match</span>
   <span class='ivar'>@matcher</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Utils.html" title="Kiba::Extend::Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Utils/FieldValueMatcher.html" title="Kiba::Extend::Utils::FieldValueMatcher (class)">FieldValueMatcher</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../Utils/FieldValueMatcher.html#initialize-instance_method" title="Kiba::Extend::Utils::FieldValueMatcher#initialize (method)">new</a></span></span><span class='lparen'>(</span>
@@ -368,21 +434,6 @@
   
 </ul>
 
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>2.9.0.94</p>
-</div>
-      
-    </li>
-  
-</ul>
 
 </div><table class="source_code">
   <tr>
@@ -390,27 +441,27 @@
       <pre class="lines">
 
 
+42
+43
+44
+45
+46
 47
 48
 49
 50
-51
-52
-53
-54
-55
-56</pre>
+51</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/warn/if_field_value_matches.rb', line 47</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/warn/unless_field_value_matches.rb', line 42</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_row'>row</span> <span class='kw'>unless</span> <span class='id identifier rubyid_single_warnings'>single_warnings</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
 
   <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_matcher'>matcher</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
-  <span class='kw'>return</span> <span class='id identifier rubyid_row'>row</span> <span class='kw'>unless</span> <span class='id identifier rubyid_result'>result</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_row'>row</span> <span class='kw'>if</span> <span class='id identifier rubyid_result'>result</span>
   
-  <span class='id identifier rubyid_msg'>msg</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_warning_label'>warning_label</span><span class='embexpr_end'>}</span><span class='tstring_content'>: One or more rows has </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_field'>field</span><span class='embexpr_end'>}</span><span class='tstring_content'> value matching </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_match'>match</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_msg'>msg</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_warning_label'>warning_label</span><span class='embexpr_end'>}</span><span class='tstring_content'>: One or more rows has </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_field'>field</span><span class='embexpr_end'>}</span><span class='tstring_content'> value not matching </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_match'>match</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='id identifier rubyid_add_single_warning'>add_single_warning</span><span class='lparen'>(</span><span class='id identifier rubyid_msg'>msg</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_row'>row</span>
 <span class='kw'>end</span></pre>

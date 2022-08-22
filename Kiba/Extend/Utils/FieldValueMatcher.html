@@ -103,6 +103,11 @@
   <div class="discussion">
     <p>Callable service object returning true/false</p>
 
+<p>If row does not contain the specified field at all, the result is always false.</p>
+
+<p>A <code>nil</code> value for the specified field will match <code>&#39;&#39;</code> (matchmode: :plain) or <code>&#39;^$&#39;</code>
+  (matchmode: :regexp)</p>
+
 <p><code>matchmode: :plain</code> (the default) tests for a full match. You can test for partial matches with
   <code>matchmode: :regex</code>. Wrapping a regex match with <code>^</code> and <code>$</code> anchors will force a full match
   in regex match mode.</p>
@@ -137,7 +142,7 @@
 <h3 id="with-params-field-test-match">With params: <code>field: :test, match: &#39;&#39;</code></h3>
 
 <pre class="code ruby"><code class="ruby">{foo: &#39;bar&#39;} =&gt; false,
-{test: nil} =&gt; false,
+{test: nil} =&gt; true,
 {test: &#39;&#39;} =&gt; true,
 {test: &#39; &#39;} =&gt; true, # values are stripped
 {test: &#39;    &#39;} =&gt; true, # values are stripped
@@ -147,7 +152,7 @@
 <h3 id="with-params-field-test-match-treat_as_null-null">With params: <code>field: :test, match: &#39;&#39;, treat_as_null: &#39;%NULL%&#39;</code></h3>
 
 <pre class="code ruby"><code class="ruby">{foo: &#39;bar&#39;} =&gt; false,
-{test: nil} =&gt; false,
+{test: nil} =&gt; true,
 {test: &#39;&#39;} =&gt; true,
 {test: &#39;UNMAPPED&#39;} =&gt; false,
 {test: &#39;%NULL%&#39;} =&gt; true, # gets converted to empty value prior to matching
@@ -157,7 +162,7 @@
 <h3 id="with-params-field-test-match-treat_as_null-null-matchmode-regexp">With params: <code>field: :test, match: &#39;^$&#39;, treat_as_null: &#39;%NULL%&#39;, matchmode: :regexp</code></h3>
 
 <pre class="code ruby"><code class="ruby">{foo: &#39;bar&#39;} =&gt; false,
-{test: nil} =&gt; false,
+{test: nil} =&gt; true,
 {test: &#39;&#39;} =&gt; true,
 {test: &#39;UNMAPPED&#39;} =&gt; false,
 {test: &#39;%NULL%&#39;} =&gt; true
@@ -233,6 +238,42 @@
 {test: &#39;drink|food&#39;} =&gt; true
 </code></pre>
 
+<h3 id="with-params-field-test-match-foo-delim-multimode-all">With params: <code>field: :test, match: &#39;Foo&#39;, delim: &#39;|&#39;, multimode: :all</code></h3>
+
+<pre class="code ruby"><code class="ruby">{foo: &#39;Foo&#39;} =&gt; false,
+{test: nil} =&gt; false,
+{test: &#39;&#39;} =&gt; false,
+{test: &#39;Foo&#39;} =&gt; true,
+{test: &#39;foo&#39;} =&gt; false,
+{test: &#39;Foo|Foo&#39;} =&gt; true,
+{test: &#39;Foo|bar&#39;} =&gt; false,
+{test: &#39;baz|Foo&#39;} =&gt; false,
+{test: &#39; Foo|bar&#39;} =&gt; false,
+{test: &#39;baz| Foo &#39;} =&gt; false,
+{test: &#39;|Foo&#39;} =&gt; true,
+{test: &#39;Foo|&#39;} =&gt; true,
+{test: &#39;foo|&#39;} =&gt; false,
+{test: &#39;bar|baz&#39;} =&gt; false
+</code></pre>
+
+<h3 id="with-params-field-test-match-foo-delim-multimode-allstrict">With params: <code>field: :test, match: &#39;Foo&#39;, delim: &#39;|&#39;, multimode: :allstrict</code></h3>
+
+<pre class="code ruby"><code class="ruby">{foo: &#39;Foo&#39;} =&gt; false,
+{test: nil} =&gt; false,
+{test: &#39;&#39;} =&gt; false,
+{test: &#39;Foo&#39;} =&gt; true,
+{test: &#39;foo&#39;} =&gt; false,
+{test: &#39;Foo|Foo&#39;} =&gt; true,
+{test: &#39;Foo|bar&#39;} =&gt; false,
+{test: &#39;baz|Foo&#39;} =&gt; false,
+{test: &#39; Foo|bar&#39;} =&gt; false,
+{test: &#39;baz| Foo &#39;} =&gt; false,
+{test: &#39;|Foo&#39;} =&gt; false,
+{test: &#39;Foo|&#39;} =&gt; false,
+{test: &#39;foo|&#39;} =&gt; false,
+{test: &#39;bar|baz&#39;} =&gt; false
+</code></pre>
+
 
   </div>
 </div>
@@ -279,7 +320,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(field:, match:, matchmode: :plain, delim: nil, treat_as_null: nil, casesensitive: true, strip: true)  &#x21d2; FieldValueMatcher </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(field:, match:, matchmode: :plain, delim: nil, treat_as_null: nil, casesensitive: true, strip: true, multimode: :any)  &#x21d2; FieldValueMatcher </a>
     
 
     
@@ -310,7 +351,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(field:, match:, matchmode: :plain, delim: nil, treat_as_null: nil, casesensitive: true, strip: true)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Utils::FieldValueMatcher (class)">FieldValueMatcher</a></span></tt> 
+    #<strong>initialize</strong>(field:, match:, matchmode: :plain, delim: nil, treat_as_null: nil, casesensitive: true, strip: true, multimode: :any)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Utils::FieldValueMatcher (class)">FieldValueMatcher</a></span></tt> 
   
 
   
@@ -443,6 +484,26 @@ split and the match is run against each resulting value</p>
       
     </li>
   
+    <li>
+      
+        <span class='name'>multimode</span>
+      
+      
+        <span class='type'>(<tt>:any</tt>, <tt>:all</tt>, <tt>:allstrict</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>:any</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>how a multivalue match is determined. If :any, result is true
+if any value matches. If :all, empty values are ignored and will return true if all populated values
+match. If :allstrict, empty values are not ignored and will return false if <code>match</code> value does not
+match them</p>
+</div>
+      
+    </li>
+  
 </ul>
 
 
@@ -452,22 +513,23 @@ split and the match is run against each resulting value</p>
       <pre class="lines">
 
 
-160
-161
-162
-163
-164
-165
-166
-167
-168
-169</pre>
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/field_value_matcher.rb', line 160</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/field_value_matcher.rb', line 207</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>field:</span><span class='comma'>,</span> <span class='label'>match:</span><span class='comma'>,</span> <span class='label'>matchmode:</span> <span class='symbol'>:plain</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>treat_as_null:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>casesensitive:</span> <span class='kw'>true</span><span class='comma'>,</span>
-               <span class='label'>strip:</span> <span class='kw'>true</span><span class='rparen'>)</span>
+               <span class='label'>strip:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>multimode:</span> <span class='symbol'>:any</span><span class='rparen'>)</span>
   <span class='ivar'>@field</span> <span class='op'>=</span> <span class='id identifier rubyid_field'>field</span>
   <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_delim'>delim</span>
   <span class='ivar'>@casesensitive</span> <span class='op'>=</span> <span class='id identifier rubyid_casesensitive'>casesensitive</span>
@@ -475,6 +537,7 @@ split and the match is run against each resulting value</p>
   <span class='ivar'>@nullval</span> <span class='op'>=</span> <span class='id identifier rubyid_treat_as_null'>treat_as_null</span>
   <span class='ivar'>@strip</span> <span class='op'>=</span> <span class='id identifier rubyid_strip'>strip</span>
   <span class='ivar'>@match</span> <span class='op'>=</span> <span class='id identifier rubyid_matchmode'>matchmode</span> <span class='op'>==</span> <span class='symbol'>:regexp</span> <span class='op'>?</span> <span class='id identifier rubyid_create_regexp_match'>create_regexp_match</span><span class='lparen'>(</span><span class='id identifier rubyid_match'>match</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='id identifier rubyid_create_plain_match'>create_plain_match</span><span class='lparen'>(</span><span class='id identifier rubyid_match'>match</span><span class='rparen'>)</span>
+  <span class='ivar'>@multimode</span> <span class='op'>=</span> <span class='id identifier rubyid_multimode'>multimode</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -527,18 +590,20 @@ split and the match is run against each resulting value</p>
       <pre class="lines">
 
 
-172
-173
-174
-175
-176</pre>
+220
+221
+222
+223
+224
+225</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/field_value_matcher.rb', line 172</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/field_value_matcher.rb', line 220</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='rparen'>)</span>
+
   <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span>
-  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
   <span class='id identifier rubyid_is_match?'>is_match?</span><span class='lparen'>(</span><span class='id identifier rubyid_prepare_value'>prepare_value</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -551,7 +616,7 @@ split and the match is run against each resulting value</p>
 </div>
 
       <div id="footer">
-  Generated on Fri Aug 19 16:23:45 2022 by
+  Generated on Mon Aug 22 18:51:26 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>
