@@ -44,8 +44,8 @@ module Kiba
 
             result = matcher.call(row)
             return row if result
-            
-            msg = "#{Kiba::Extend.warning_label}: One or more rows has #{field} value not matching #{match}"
+
+            msg = "One or more rows has #{field} value not matching #{match}"
             add_single_warning(msg)
             row
           end
