@@ -19,8 +19,17 @@ RSpec.describe Kiba::Extend::Transforms::Warn::UnlessFieldValueMatches do
         context 'without value match' do
           let(:row){ {test: 'value'} }
 
-          it 'returns row and does not warn' do
+          it 'returns row and warns' do
             expect(xform).to receive(:warn)
+            expect(result).to eq(row)
+          end
+        end
+
+        context 'with nil value' do
+          let(:row){ {test: nil} }
+
+          it 'returns row' do
+            expect(xform).not_to receive(:warn)
             expect(result).to eq(row)
           end
         end
@@ -28,9 +37,9 @@ RSpec.describe Kiba::Extend::Transforms::Warn::UnlessFieldValueMatches do
         context 'with value match' do
           let(:row){ {test: 'LENDER'} }
           
-          it 'warns and returns row' do
-            expect(result).to eq(row)
+          it 'returns row' do
             expect(xform).not_to receive(:warn)
+            expect(result).to eq(row)
           end
         end
       end
@@ -41,7 +50,7 @@ RSpec.describe Kiba::Extend::Transforms::Warn::UnlessFieldValueMatches do
         context 'without value match' do
           let(:row){ {test: 'foo|bar'} }
 
-          it 'returns row and does not warn' do
+          it 'returns row and warns' do
             expect(xform).to receive(:warn)
             expect(result).to eq(row)
           end
@@ -50,7 +59,7 @@ RSpec.describe Kiba::Extend::Transforms::Warn::UnlessFieldValueMatches do
         context 'with partial value match' do
           let(:row){ {test: 'LENDER|another'} }
 
-          it 'returns row and does not warn' do
+          it 'returns row and warns' do
             expect(xform).to receive(:warn)
             expect(result).to eq(row)
           end
@@ -59,9 +68,9 @@ RSpec.describe Kiba::Extend::Transforms::Warn::UnlessFieldValueMatches do
         context 'with value match' do
           let(:row){ {test: 'LENDER|LENDER'} }
           
-          it 'warns and returns row' do
-            expect(result).to eq(row)
+          it 'returns row' do
             expect(xform).not_to receive(:warn)
+            expect(result).to eq(row)
           end
         end
       end
@@ -76,7 +85,7 @@ RSpec.describe Kiba::Extend::Transforms::Warn::UnlessFieldValueMatches do
         context 'without value match' do
           let(:row){ {test: 'food'} }
 
-          it 'returns row and does not warn' do
+          it 'returns row and warns' do
             expect(xform).to receive(:warn)
             expect(result).to eq(row)
           end
@@ -85,7 +94,7 @@ RSpec.describe Kiba::Extend::Transforms::Warn::UnlessFieldValueMatches do
         context 'with value match' do
           let(:row){ {test: 'foo'} }
           
-          it 'warns and returns row' do
+          it 'returns row' do
             expect(result).to eq(row)
             expect(xform).not_to receive(:warn)
           end
@@ -98,7 +107,7 @@ RSpec.describe Kiba::Extend::Transforms::Warn::UnlessFieldValueMatches do
         context 'without value match' do
           let(:row){ {test: 'food|another'} }
 
-          it 'returns row and does not warn' do
+          it 'returns row and warns' do
             expect(xform).to receive(:warn)
             expect(result).to eq(row)
           end
@@ -107,18 +116,18 @@ RSpec.describe Kiba::Extend::Transforms::Warn::UnlessFieldValueMatches do
         context 'with partial value match' do
           let(:row){ {test: 'nonmatch|foo|bar'} }
           
-          it 'warns and returns row' do
+          it 'returns row and warns' do
             expect(xform).to receive(:warn)
             expect(result).to eq(row)
           end
         end
 
         context 'with value match' do
-          let(:row){ {test: 'afoo|foo|'} }
+          let(:row){ {test: 'fooo|foo|'} }
           
-          it 'warns and returns row' do
-            expect(result).to eq(row)
+          it 'returns row' do
             expect(xform).not_to receive(:warn)
+            expect(result).to eq(row)
           end
         end
       end

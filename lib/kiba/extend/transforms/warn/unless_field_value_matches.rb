@@ -41,6 +41,7 @@ module Kiba
           # @param row [Hash{ Symbol => String }]
           def process(row)
             return row unless single_warnings.empty?
+            return row if row[field].blank?
 
             result = matcher.call(row)
             return row if result
