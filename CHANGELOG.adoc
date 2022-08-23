@@ -36,6 +36,8 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 
 ==== Added
 
+* Added test for the bug correction for `Split:IntoMultipleColumns`
+
 ==== Changed
 
 * Corrected bug in `Split::IntoMultipleColumns` that was not correctly splitting values
