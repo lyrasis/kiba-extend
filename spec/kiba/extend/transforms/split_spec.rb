@@ -3,6 +3,7 @@
 require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Split do
+  # add comment to force change?
   describe 'IntoMultipleColumns' do
     let(:xform){ Kiba::Extend::Transforms::Split::IntoMultipleColumns.new(**params) }
     let(:results){ rows.map{ |row| xform.process(row) } }
@@ -103,5 +104,25 @@ RSpec.describe Kiba::Extend::Transforms::Split do
         expect(results).to eq(expected)
       end
     end
+
+    context 'when longest split value (4) > max segments (2) and collapses_on :right' do
+      let(:rows) do
+        [
+          {name: 'Barrow, David Brown, Jr., 1931-'},
+          {name: 'Beaman, Warren M., II, 1921-2016'}
+        ]
+      end
+
+      let(:params){ {field: :name, sep: ',', max_segments: 2, collapse_on: :right} }
+
+      it 'collapses on right' do
+        expected = [
+          { name0: 'Barrow', name1: 'David Brown,Jr.,1931-' },
+          { name0: 'Beaman', name1: 'Warren M.,II,1921-2016' }
+        ]
+        expect(results).to eq(expected)
+      end
+    end
+
   end
 end

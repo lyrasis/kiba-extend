@@ -162,7 +162,7 @@ module Kiba
           end
 
           def process_right_collapse(valsplit, row)
-            valsplit.slice!(0..(diff(valsplit) - 1)).each_with_index do |val, i|
+            valsplit.slice!(0..(@max - 2)).each_with_index do |val, i|
               row["#{@field}#{i}".to_sym] = val
             end
             row["#{@field}#{@max - 1}".to_sym] = valsplit.join(@sep)
@@ -171,7 +171,7 @@ module Kiba
 
           def process_left_collapse(valsplit, row)
             dif = diff(valsplit)
-            valsplit.slice!(dif * -1, dif).each_with_index do |val, i|
+            valsplit.slice!((@max - 1) * -1, @max - 1).each_with_index do |val, i|
               row["#{@field}#{i + 1}".to_sym] = val
             end
             row["#{@field}0".to_sym] = valsplit.join(@sep)
