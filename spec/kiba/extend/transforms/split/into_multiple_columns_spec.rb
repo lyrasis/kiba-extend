@@ -2,10 +2,10 @@
 
 require 'spec_helper'
 
-RSpec.describe Kiba::Extend::Transforms::Split do
-  # add comment to force change?
-  describe 'IntoMultipleColumns' do
-    let(:xform){ Kiba::Extend::Transforms::Split::IntoMultipleColumns.new(**params) }
+RSpec.describe Kiba::Extend::Transforms::Split::IntoMultipleColumns do
+  subject(:xform){ described_class.new(**params) }
+
+  describe '#process' do
     let(:results){ rows.map{ |row| xform.process(row) } }
     
     context 'without max_segments param' do
@@ -123,6 +123,5 @@ RSpec.describe Kiba::Extend::Transforms::Split do
         expect(results).to eq(expected)
       end
     end
-
   end
 end
