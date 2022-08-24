@@ -44,8 +44,10 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 * Added test for the bug correction for `Split:IntoMultipleColumns`
 
 ==== Changed
+* `Split::IntoMultipleColumns`: If empty string is passed in as the value to be split, all newly created fields will be nil
 
 ==== Bugfixes
+* `Split::IntoMultipleColumns` no longer removes existing spaces between segments that get right/left collapsed
 * Fixes incorrect value splitting in `Split::IntoMultipleColumns`
 * `Reshape::FieldsToFieldGroupWithConstant` now works with single source fields (i.e. listed in `fieldmap` param) with nil values
 

@@ -52,7 +52,7 @@ RSpec.describe Kiba::Extend::Transforms::Split::IntoMultipleColumns do
         expected = [
           { summary0: 'a', summary1: 'b', summary2: 'c:d:e' },
           { summary0: 'f', summary1: 'g', summary2: nil },
-          { summary0: '', summary1: nil, summary2: nil },
+          { summary0: nil, summary1: nil, summary2: nil },
           { summary0: nil, summary1: nil, summary2: nil }
         ]
         expect(results).to eq(expected)
@@ -76,7 +76,7 @@ RSpec.describe Kiba::Extend::Transforms::Split::IntoMultipleColumns do
            warn: 'max_segments less than total number of split segments' },
           { summary0: 'f', summary1: 'g', summary2: nil,
            warn: nil },
-          { summary0: '', summary1: nil, summary2: nil, warn: nil },
+          { summary0: nil, summary1: nil, summary2: nil, warn: nil },
           { summary0: nil, summary1: nil, summary2: nil, warn: nil }
         ]
         expect(results).to eq(expected)
@@ -98,7 +98,7 @@ RSpec.describe Kiba::Extend::Transforms::Split::IntoMultipleColumns do
         expected = [
           { summary0: 'a:b:c', summary1: 'd', summary2: 'e' },
           { summary0: 'f', summary1: 'g', summary2: nil },
-          { summary0: '', summary1: nil, summary2: nil },
+          { summary0: nil, summary1: nil, summary2: nil },
           { summary0: nil, summary1: nil, summary2: nil }
         ]
         expect(results).to eq(expected)
@@ -117,8 +117,27 @@ RSpec.describe Kiba::Extend::Transforms::Split::IntoMultipleColumns do
 
       it 'collapses on right' do
         expected = [
-          { name0: 'Barrow', name1: 'David Brown,Jr.,1931-' },
-          { name0: 'Beaman', name1: 'Warren M.,II,1921-2016' }
+          { name0: 'Barrow', name1: 'David Brown, Jr., 1931-' },
+          { name0: 'Beaman', name1: 'Warren M., II, 1921-2016' }
+        ]
+        expect(results).to eq(expected)
+      end
+    end
+
+    context 'when longest split value (4) > max segments (2) and collapses_on :left' do
+      let(:rows) do
+        [
+          {name: 'Barrow, David Brown, Jr., 1931-'},
+          {name: 'Beaman, Warren M., II, 1921-2016'}
+        ]
+      end
+
+      let(:params){ {field: :name, sep: ',', max_segments: 2, collapse_on: :left} }
+
+      it 'collapses on left' do
+        expected = [
+          { name0: 'Barrow, David Brown, Jr.', name1: '1931-' },
+          { name0: 'Beaman, Warren M., II', name1: '1921-2016' }
         ]
         expect(results).to eq(expected)
       end

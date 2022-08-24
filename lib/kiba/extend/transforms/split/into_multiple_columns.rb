@@ -101,84 +101,106 @@ module Kiba
             @sep = sep
             @del = delete_source
             @max = max_segments
-            @collapse_on = collapse_on
+            @collapser = method("process_#{collapse_on}_collapse")
             @warn = !warnfield.blank?
             @warnfield = warnfield ||= :warning
-            @new_fields = (0..(@max - 1)).entries.map { |entry| "#{field}#{entry}".to_sym }
+            @warnvalue = 'max_segments less than total number of split segments'
           end
           # rubocop:enable Metrics/ParameterLists
 
           # @param row [Hash{ Symbol => String }]
           def process(row)
-            create_new_fields(row)
-            val = row.fetch(@field, nil)
-            if val.blank?
-              row[@new_fields.first] = val unless val.nil?
-              clean_up_fields(row)
-              return row
-            end
-
-            valsplit = val.split(@sep).map(&:strip)
-
-            if exceeds_max?(valsplit)
-              row[@warnfield] = 'max_segments less than total number of split segments'
-              method("process_#{@collapse_on}_collapse").call(valsplit, row)
-            else
-              process_splits(valsplit, row)
-            end
-
+            add_new_fields(row)
+            do_split(row)            
             clean_up_fields(row)
             row
           end
 
           private
 
+          attr_reader :field, :sep, :del, :max, :collapser, :warn, :warnfield, :warnvalue
+
+          def add_new_fields(row)
+            new_fields.each { |field| row[field] = nil }
+            row[warnfield] = nil
+          end
+
+          def add_warning(row)
+            row[warnfield] = warnvalue
+          end
+          
           def clean_up_fields(row)
-            row.delete(@field) if @del
-            row.delete(@warnfield) unless @warn
-            row
+            row.delete(field) if del
+            row.delete(warnfield) unless warn
+            strip_new_fields(row)
           end
 
-          def create_new_fields(row)
-            @new_fields.each { |field| row[field] = nil }
-            row[@warnfield] = nil
-            row
-          end
+          def do_split(row)
+            val = row[field]
+            return if val.blank?
 
-          def diff(valsplit)
-            valsplit.size - @max
+            valsplit = val.split(sep)
+
+            exceeds_max?(valsplit) ? collapser.call(valsplit, row) : process_splits(valsplit, row)
           end
 
           def exceeds_max?(valsplit)
-            valsplit.size > @max
+            valsplit.length > max
           end
 
-          def process_exceeding(valsplit, row)
-            return unless @collapse_on == :right
-            
-            process_right_split(valsplit, row)
+          def first_field
+            "#{field}0".to_sym
           end
 
-          def process_right_collapse(valsplit, row)
-            valsplit.slice!(0..(@max - 2)).each_with_index do |val, i|
-              row["#{@field}#{i}".to_sym] = val
-            end
-            row["#{@field}#{@max - 1}".to_sym] = valsplit.join(@sep)
-            row
+          def last_field
+            "#{field}#{max - 1}".to_sym
+          end
+          
+          def new_fields
+            (0..(max - 1)).entries.map{ |entry| "#{field}#{entry}".to_sym }
           end
 
           def process_left_collapse(valsplit, row)
-            dif = diff(valsplit)
-            valsplit.slice!((@max - 1) * -1, @max - 1).each_with_index do |val, i|
-              row["#{@field}#{i + 1}".to_sym] = val
+            add_warning(row)
+
+            ind = max - 1
+            to_iterate(valsplit).times do
+              row["#{field}#{ind}".to_sym] = valsplit.pop
+              ind -= 1
             end
-            row["#{@field}0".to_sym] = valsplit.join(@sep)
-            row
+            row[first_field] = valsplit.join(sep)
+          end
+
+          def process_right_collapse(valsplit, row)
+            add_warning(row)
+
+            ind = 0
+            to_iterate(valsplit).times do
+              row["#{field}#{ind}".to_sym] = valsplit.shift
+              ind += 1
+            end
+            row[last_field] = valsplit.join(sep)
           end
 
           def process_splits(valsplit, row)
-            valsplit.each_with_index { |val, i| row["#{@field}#{i}".to_sym] = val }
-            row
+            valsplit.each_with_index{ |val, i| row["#{field}#{i}".to_sym] = val }
+          end
+
+          def strip_new_fields(row)
+            new_fields.each do |field|
+              val = row[field]
+              next if val.blank?
+
+              row[field] = val.strip
+            end
+          end
+
+          def to_collapse(valsplit)
+            (valsplit.length - max ) + 1
+          end
+
+          def to_iterate(valsplit)
+            valsplit.length - to_collapse(valsplit)
           end
         end
       end
