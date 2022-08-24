@@ -48,7 +48,7 @@ module Kiba
             @sep = sep
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             @fields.each do |field|
               val = row.fetch(field)

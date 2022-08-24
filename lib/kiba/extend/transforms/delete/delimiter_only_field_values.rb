@@ -124,7 +124,7 @@ module Kiba
             @checker = Helpers::DelimOnlyChecker.new(delim: delim, treat_as_null: treat_as_null)
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             finalize_fields(row) unless fields_set
             process_fields(row)

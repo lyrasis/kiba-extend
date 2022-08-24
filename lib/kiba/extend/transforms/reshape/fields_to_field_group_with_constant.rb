@@ -220,7 +220,7 @@ module Kiba
             @value_getter = Helpers::FieldValueGetter.new(fields: renamed, delim: delim, treat_as_null: treat_as_null)
           end
           
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             renamer.process(row)
             empty_replacer.process(row) if replace_empty
@@ -249,7 +249,10 @@ module Kiba
           
           def find_max_vals(row)
             if renamed.length == 1
-              row[renamed.first].split(delim, -1).length
+              val = row[renamed.first]
+              return 0 if val.blank?
+              
+              val.split(delim, -1).length
             else
               value_getter.call(row)
                 .values

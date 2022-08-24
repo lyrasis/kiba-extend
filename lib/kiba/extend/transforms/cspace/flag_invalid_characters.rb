@@ -10,7 +10,7 @@ module Kiba
             @flag = flag
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             val = row.fetch(@check, nil)
             if val.blank?

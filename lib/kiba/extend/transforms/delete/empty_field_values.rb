@@ -86,7 +86,7 @@ module Kiba
             end
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
 
           def process(row)
             finalize_fields(row) unless fields_set

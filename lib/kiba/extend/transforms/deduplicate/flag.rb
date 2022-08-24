@@ -62,7 +62,7 @@ module Kiba
             @no_val = explicit_no ? 'n' : ''
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             val = row.fetch(on)
             if using.key?(val)

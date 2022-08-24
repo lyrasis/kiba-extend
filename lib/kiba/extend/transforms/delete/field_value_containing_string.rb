@@ -77,7 +77,7 @@ module Kiba
             @casesensitive = casesensitive
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             fields.each do |field|
               exval = row.fetch(field)

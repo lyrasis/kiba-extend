@@ -28,6 +28,7 @@ toc::[]
 * Remove `FilterRows::FieldValueGreaterThan`
 * Remove `Helpers.delim_only?`
 * Remove `Helpers.field_values`
+* Remove `multival` and `sep` parameters from `Replace::FieldValueWithStaticMapping` transform
 
 == Unreleased
 These changes are merged into the `main` branch but have not yet been tagged as a new version/release.
@@ -35,16 +36,23 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 ==== Breaking
 
 ==== Added
+* `Warn::UnlessFieldValueMatches` transform
+* `multimode` parameter for `Utils::FieldValueMatcher`
+* Support for passing Procs in as file registry entry values (or as a value in a :dest_special_opts Hash).
+* `delim` parameter for `Replace::FieldValueWithStaticMapping` transform
 
 * Added test for the bug correction for `Split:IntoMultipleColumns`
 
 ==== Changed
 
-* Corrected bug in `Split::IntoMultipleColumns` that was not correctly splitting values
+==== Bugfixes
+* Fixes incorrect value splitting in `Split::IntoMultipleColumns`
+* `Reshape::FieldsToFieldGroupWithConstant` now works with single source fields (i.e. listed in `fieldmap` param) with nil values
 
 ==== Deleted
 
 ==== To be deprecated/Will break in a future version
+* `multival` and `sep` parameters for `Replace::FieldValueWithStaticMapping` transform
 
 == Releases
 === 2.9.0 - 2022-07-28

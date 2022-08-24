@@ -68,7 +68,7 @@ module Kiba
             @row_ct = 0
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             @row_ct += 1
             target_fields.each{ |field| row[field] = nil }

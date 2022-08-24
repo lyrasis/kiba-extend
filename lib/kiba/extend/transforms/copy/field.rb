@@ -21,7 +21,7 @@ module Kiba
             @to = to
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             fail MissingFromFieldError.new(from, row.keys) unless row.key?(from)
             

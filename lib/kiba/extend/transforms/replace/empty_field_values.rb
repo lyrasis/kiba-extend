@@ -137,7 +137,7 @@ module Kiba
             @replacement_getter = Helpers::FieldValueGetter.new(fields: fields, delim: delim)
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             replace_fully_empty_fields(row)
             replace_multival_empty(row) if delim

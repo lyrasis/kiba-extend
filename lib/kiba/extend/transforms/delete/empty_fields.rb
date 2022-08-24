@@ -121,13 +121,13 @@ module Kiba
             @rows = []
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             populate_tracker(row)
             nil
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def close
             to_delete = rows.first.keys - pop_fields.keys
             rows.each do |row|

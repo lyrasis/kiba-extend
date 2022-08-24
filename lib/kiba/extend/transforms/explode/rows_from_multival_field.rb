@@ -40,7 +40,7 @@ module Kiba
             @delim = delim ||= Kiba::Extend.delim
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             other_fields = row.keys.reject { |k| k == field }
             fieldval = row.fetch(field, nil)

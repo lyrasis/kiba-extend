@@ -274,7 +274,7 @@ module Kiba
             end
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             value = row.fetch(@value, nil)
             unit = row.fetch(@unit, nil)

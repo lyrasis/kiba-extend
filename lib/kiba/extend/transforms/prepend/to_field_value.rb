@@ -69,7 +69,7 @@ module Kiba
             @delim = delim
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             fieldval = row.fetch(field, nil)
             return row if fieldval.blank?

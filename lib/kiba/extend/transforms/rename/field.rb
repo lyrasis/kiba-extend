@@ -37,7 +37,7 @@ module Kiba
             setup_single_warning
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             unless row.key?(from)
               add_single_warning("Cannot rename field: `#{from}` does not exist in row")

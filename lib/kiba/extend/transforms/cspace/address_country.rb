@@ -368,7 +368,7 @@ module Kiba
             setup_single_warning
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             row[target] = nil unless in_place?
             row.key?(source) ? handle_source(row) : handle_missing_source(row)

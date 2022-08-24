@@ -11,7 +11,7 @@ module Kiba
             @xform = Compare::FieldValues.new(...)
           end
 
-          # @private
+          # @param row [Hash{ Symbol => String }]
           def process(row)
             xform.process(row)
           end

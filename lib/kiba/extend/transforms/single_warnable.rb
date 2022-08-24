@@ -32,6 +32,10 @@ module Kiba
           instance_variable_set(:@single_warnings, {})
         end
         private_class_method :setup_single_warning
+
+        def single_warnings
+          @single_warnings
+        end
       end
     end
   end
