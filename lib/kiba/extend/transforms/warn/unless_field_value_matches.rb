@@ -4,6 +4,8 @@ module Kiba
   module Extend
     module Transforms
       module Warn
+        # @since 3.0.0
+        #
         # Prints single warning to STDOUT if the value of the given field does not match match the given value
         #   in any rows
         #

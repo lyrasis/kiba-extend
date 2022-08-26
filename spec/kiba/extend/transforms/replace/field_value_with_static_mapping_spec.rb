@@ -9,31 +9,16 @@ RSpec.describe Kiba::Extend::Transforms::Replace::FieldValueWithStaticMapping do
     context 'with multival' do
       let(:params){ {source: :color, target: :fullcol, mapping: {}, multival: true} }
 
-      it 'warns' do
-        allow_any_instance_of(described_class).to receive(:warn).with(described_class.multival_warning)
-        expect(xform.instance_variable_get(:@multival)).to be_falsey
-      end
-    end
-
-    context 'with delim and sep' do
-      let(:params){ {source: :color, target: :fullcol, mapping: {}, sep: ';', delim: '|'} }
-
-      it 'warns' do
-        allow_any_instance_of(described_class).to receive(:warn).with(described_class.delim_and_sep_warning)
-        inst = xform
-        expect(inst.instance_variable_get(:@delim)).to eq('|')
-        expect(inst.instance_variable_get(:@multival)).to be true
+      it 'raises error' do
+        expect{ xform }.to raise_error(ArgumentError, described_class.multival_msg)
       end
     end
 
     context 'with sep' do
       let(:params){ {source: :color, target: :fullcol, mapping: {}, sep: ';'} }
 
-      it 'warns' do
-        allow_any_instance_of(described_class).to receive(:warn).with(described_class.sep_warning)
-        inst = xform
-        expect(inst.instance_variable_get(:@delim)).to eq(';')
-        expect(inst.instance_variable_get(:@multival)).to be true
+      it 'raises error' do
+        expect{ xform }.to raise_error(ArgumentError, described_class.sep_msg)
       end
     end
   end
