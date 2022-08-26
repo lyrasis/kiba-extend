@@ -177,19 +177,31 @@ module Kiba
         # ```
         class FieldValueWithStaticMapping
           class << self
-            def delim_and_sep_warning
-              warning = "Both `delim` and deprecated `sep` parameters given. Using `delim` value.\nTO FIX: remove `sep` parameter"
-              "#{Kiba::Extend.warning_label}: #{self.class.name}: #{warning}"
-            end
-            
-            def multival_warning
-              warning = "`multival` parameter is deprecated. In the future, if a `delim` is given, the transform will operate in multival mode\nTO FIX: remove `multival` parameter"
-              "#{Kiba::Extend.warning_label}: #{self.class.name}: #{warning}"
+            def multival_msg
+              <<~MSG
+              #{self.name} no longer supports the `multival` parameter.
+              If a `delim` value is given, the transform will operate in multival mode
+              TO FIX: remove `multival` parameter, ensuring a `delim` value is given
+              MSG
             end
 
-            def sep_warning
-              warning = "`sep` parameters is deprecated.\nTO FIX: change `sep` to `delim`"
-              "#{Kiba::Extend.warning_label}: #{self.class.name}: #{warning}"
+            # Overridden to provide more informative/detailed ArgumentError messages for parameters that are
+            #   removed after not having been deprecated very long.
+            def new(source:, target: nil, mapping:, fallback_val: :orig, delete_source: true, delim: nil,
+                    multival: nil, sep: nil)
+              instance = allocate
+              fail(ArgumentError, sep_msg) if sep
+              fail(ArgumentError, multival_msg) if multival
+              instance.send(:initialize, **{source: source, target: target, mapping: mapping, fallback_val: fallback_val,
+                                            delete_source: delete_source, delim: delim})
+              instance
+            end
+            
+            def sep_msg
+              <<~MSG
+              #{self.name} no longer supports the `sep` parameter
+              TO FIX: change `sep` to `delim`"
+              MSG
             end
           end
 
@@ -202,17 +214,13 @@ module Kiba
           #   a different target field is not given
           # @param delim [nil, String] if a value is given, turns on "multival" mode, splitting the whole field
           #   value on the string given
-          # @param multival [nil, Boolean] DEPRECATED - DO NOT USE
-          # @param sep [nil, String] DEPRECATED - DO NOT USE
-          def initialize(source:, target: nil, mapping:, fallback_val: :orig, delete_source: true, delim: nil,
-                         multival: nil, sep: nil)
+          def initialize(source:, target: nil, mapping:, fallback_val: :orig, delete_source: true, delim: nil)
             @source = source
             @target = target ? target : source
             @mapping = mapping
             @fallback = fallback_val
             @del = delete_source
-            @delim = set_delim(sep, delim)
-            warn(self.class.multival_warning) unless multival.nil?
+            @delim = delim
             @multival = true if @delim
           end
 
