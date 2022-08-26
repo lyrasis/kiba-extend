@@ -20,8 +20,8 @@ and this project adheres to https://semver.org/spec/v2.0.0.html[Semantic Version
 
 toc::[]
 
-== Planned
-=== Release after 2.9.0
+== Planned for a future release
+
 * Remove `Clean::DelimiterOnlyFields`
 * Remove `CombineValues::AcrossFieldGroup`
 * Remove `Reshape::CollapseMultipleFieldsToOneTypedFieldPair`
@@ -36,12 +36,27 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 ==== Breaking
 
 ==== Added
+
+==== Changed
+
+==== Bugfixes
+
+==== Deleted
+
+==== To be deprecated/Will break in a future version
+
+== Releases
+
+== 2.10.0 - 2022-08-26
+
+==== Breaking
+* `Split::IntoMultipleColumns` transform: no longer removes spaces between split segments that end up collapsed left or right. This was a bug, but fixing it could cause jobs relying on that behavior (or introducing subsequent transforms to deal with it) to fail or generate unexpected results. 
+
+==== Added
 * `Warn::UnlessFieldValueMatches` transform
 * `multimode` parameter for `Utils::FieldValueMatcher`
-* Support for passing Procs in as file registry entry values (or as a value in a :dest_special_opts Hash).
+* Support for passing Procs in as file registry entry values (or as a value in a :dest_special_opts Hash). See [NOTE under "File Registry Data hashes in your ETL application](https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html#file-registry-data-hashes-in-your-etl-application)
 * `delim` parameter for `Replace::FieldValueWithStaticMapping` transform
-
-* Added test for the bug correction for `Split:IntoMultipleColumns`
 
 ==== Changed
 * `Split::IntoMultipleColumns`: If empty string is passed in as the value to be split, all newly created fields will be nil
@@ -56,7 +71,6 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 ==== To be deprecated/Will break in a future version
 * `multival` and `sep` parameters for `Replace::FieldValueWithStaticMapping` transform
 
-== Releases
 === 2.9.0 - 2022-07-28
 https://github.com/lyrasis/kiba-extend/compare/v2.8.0\...v2.9.0[Compare code changes]
 
