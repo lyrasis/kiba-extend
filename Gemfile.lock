@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    kiba-extend (2.10.0)
+    kiba-extend (3.0.0)
       activesupport (~> 6)
       amazing_print (~> 1.4)
       csv (~> 3)

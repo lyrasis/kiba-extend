@@ -203,7 +203,7 @@ module Kiba
         # @param multimode [:any, :all, :allstrict] how a multivalue match is determined. If :any, result is true
         #   if any value matches. If :all, empty values are ignored and will return true if all populated values
         #   match. If :allstrict, empty values are not ignored and will return false if `match` value does not
-        #   match them
+        #   match them (since 3.0.0)
         def initialize(field:, match:, matchmode: :plain, delim: nil, treat_as_null: nil, casesensitive: true,
                        strip: true, multimode: :any)
           @field = field

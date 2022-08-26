@@ -22,14 +22,6 @@ toc::[]
 
 == Planned for a future release
 
-* Remove `Clean::DelimiterOnlyFields`
-* Remove `CombineValues::AcrossFieldGroup`
-* Remove `Reshape::CollapseMultipleFieldsToOneTypedFieldPair`
-* Remove `FilterRows::FieldValueGreaterThan`
-* Remove `Helpers.delim_only?`
-* Remove `Helpers.field_values`
-* Remove `multival` and `sep` parameters from `Replace::FieldValueWithStaticMapping` transform
-
 == Unreleased
 These changes are merged into the `main` branch but have not yet been tagged as a new version/release.
 
@@ -47,10 +39,11 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 
 == Releases
 
-== 2.10.0 - 2022-08-26
+== 3.0.0 - 2022-08-26
 
 ==== Breaking
-* `Split::IntoMultipleColumns` transform: no longer removes spaces between split segments that end up collapsed left or right. This was a bug, but fixing it could cause jobs relying on that behavior (or introducing subsequent transforms to deal with it) to fail or generate unexpected results. 
+* See the list of deleted transforms, helpers, and params below.
+* `Split::IntoMultipleColumns` transform: no longer removes spaces between split segments that end up collapsed left or right. This was a bug, but fixing it could cause jobs relying on that behavior (or introducing subsequent transforms to deal with it) to fail or generate unexpected results.
 
 ==== Added
 * `Warn::UnlessFieldValueMatches` transform
@@ -67,6 +60,16 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 * `Reshape::FieldsToFieldGroupWithConstant` now works with single source fields (i.e. listed in `fieldmap` param) with nil values
 
 ==== Deleted
+* Transforms
+** `Clean::DelimiterOnlyFields`
+** `CombineValues::AcrossFieldGroup`
+** `Reshape::CollapseMultipleFieldsToOneTypedFieldPair`
+** `FilterRows::FieldValueGreaterThan`
+* Transform Helpers
+** `Helpers.delim_only?`
+** `Helpers.field_values`
+* Parameters
+** `multival` and `sep` parameters from `Replace::FieldValueWithStaticMapping` transform
 
 ==== To be deprecated/Will break in a future version
 * `multival` and `sep` parameters for `Replace::FieldValueWithStaticMapping` transform

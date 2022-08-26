@@ -213,7 +213,7 @@ module Kiba
           # @param delete_source [Boolean] whether to remove source field after mapping. Has no effect if
           #   a different target field is not given
           # @param delim [nil, String] if a value is given, turns on "multival" mode, splitting the whole field
-          #   value on the string given
+          #   value on the string given (since 3.0.0)
           def initialize(source:, target: nil, mapping:, fallback_val: :orig, delete_source: true, delim: nil)
             @source = source
             @target = target ? target : source
