@@ -122,6 +122,21 @@
 </div>
 <div class="tags">
   
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>3.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div>
 
@@ -357,6 +372,21 @@ split and the match is run against each resulting value</p>
   
 </ul>
 
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>3.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -364,8 +394,6 @@ split and the match is run against each resulting value</p>
       <pre class="lines">
 
 
-29
-30
 31
 32
 33
@@ -374,10 +402,12 @@ split and the match is run against each resulting value</p>
 36
 37
 38
-39</pre>
+39
+40
+41</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/warn/unless_field_value_matches.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/warn/unless_field_value_matches.rb', line 31</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>field:</span><span class='comma'>,</span> <span class='label'>match:</span><span class='comma'>,</span> <span class='label'>matchmode:</span> <span class='symbol'>:plain</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>treat_as_null:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>casesensitive:</span> <span class='kw'>true</span><span class='comma'>,</span>
                <span class='label'>strip:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>multimode:</span> <span class='symbol'>:all</span><span class='rparen'>)</span>
@@ -434,6 +464,21 @@ split and the match is run against each resulting value</p>
   
 </ul>
 
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>3.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -441,8 +486,6 @@ split and the match is run against each resulting value</p>
       <pre class="lines">
 
 
-42
-43
 44
 45
 46
@@ -451,10 +494,12 @@ split and the match is run against each resulting value</p>
 49
 50
 51
-52</pre>
+52
+53
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/warn/unless_field_value_matches.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/warn/unless_field_value_matches.rb', line 44</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_row'>row</span> <span class='kw'>unless</span> <span class='id identifier rubyid_single_warnings'>single_warnings</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -477,7 +522,7 @@ split and the match is run against each resulting value</p>
 </div>
 
       <div id="footer">
-  Generated on Wed Aug 24 14:41:52 2022 by
+  Generated on Fri Aug 26 16:07:04 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>
