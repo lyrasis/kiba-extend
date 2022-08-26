@@ -39,7 +39,7 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 
 == Releases
 
-== 3.0.0 - 2022-08-26
+=== 3.0.0 - 2022-08-26
 
 ==== Breaking
 * See the list of deleted transforms, helpers, and params below.
@@ -70,9 +70,6 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 ** `Helpers.field_values`
 * Parameters
 ** `multival` and `sep` parameters from `Replace::FieldValueWithStaticMapping` transform
-
-==== To be deprecated/Will break in a future version
-* `multival` and `sep` parameters for `Replace::FieldValueWithStaticMapping` transform
 
 === 2.9.0 - 2022-07-28
 https://github.com/lyrasis/kiba-extend/compare/v2.8.0\...v2.9.0[Compare code changes]
