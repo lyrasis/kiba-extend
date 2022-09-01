@@ -29,7 +29,7 @@ module Kiba
                          pre: [' ', '-'],
                          delete_sources: false)
             @fields = [fields].flatten
-            @targets = targets
+            @targets = targets ? [targets].flatten : nil
             @target_format = target_format
             @places = places
             @delete_sources = delete_sources
@@ -55,13 +55,22 @@ module Kiba
           end
           
           def to_decimal(field, row)
+            targetfield = target(field)
             fieldval = row[field]
+            row[targetfield] = fieldval
             return if fieldval.blank?
 
             fractions = extractor.call(fieldval)
             return if fractions.empty?
 
-            row[field] = replace_fractions(fractions, fieldval)
+            row[targetfield] = replace_fractions(fractions, fieldval)
+          end
+
+          def target(srcfield)
+            return srcfield unless targets
+
+            ind = fields.find_index(srcfield)
+            targets[ind]
           end
         end
       end
