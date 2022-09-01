@@ -21,6 +21,9 @@ module Kiba
           result = []
           scanner = StringScanner.new(value)
           scan(scanner, result)
+          result.each do |fraction|
+            warn("#{self.class.name}: Unconvertible fraction: #{value[fraction.position]}") unless fraction.convertible?
+          end
           result.sort.reverse
         end
         
