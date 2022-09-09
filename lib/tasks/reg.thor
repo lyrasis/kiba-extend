@@ -4,24 +4,16 @@ require 'thor'
 class Reg < Thor  
   desc 'list', 'List all entries in file registry with file key, path, description, and creator'
   def list
-    puts Kiba::Extend::Registry::RegistryList.new
+    Kiba::Extend::Command::Reg.list
   end
 
   desc 'tags', 'List tags used in the registry'
   def tags
-    tags = []
-    Kiba::Extend.registry.entries.each do |entry|
-      entrytags = entry.tags
-      next if entrytags.blank?
-
-      tags << entrytags
-    end
-    clean = tags.flatten.sort.uniq
-    puts clean
+    puts Kiba::Extend::Command::Reg.tags
   end
 
   desc 'validate', 'List entries in file registry with errors and warnings'
   def validate
-    Kiba::Extend::Registry::RegistryValidator.new.report
+    Kiba::Extend::Command::Reg.validate
   end
 end
