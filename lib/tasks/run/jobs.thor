@@ -7,6 +7,6 @@ class Run < Runnable
 
   def jobs
     preprocess_options
-    options[:keys].each{ |key| run_job(key) }
+    options[:keys].each{ |key| Kiba::Extend::Command::Run.job(key) }
   end
 end

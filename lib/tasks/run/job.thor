@@ -5,6 +5,6 @@ class Run < Runnable
   
   def job(key)
     preprocess_options
-    run_job(key)
+    Kiba::Extend::Command::Run.job(key)
   end
 end
