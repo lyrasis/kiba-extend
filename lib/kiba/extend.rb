@@ -89,6 +89,10 @@ module Kiba
 
     # ## Pre-job task settings
     #
+    # If configured properly, the pre-job task is run when a job is run via Thor invocation. This includes
+    #   `run:job`, `run:jobs`, and `jobs:tagged -r tagvalue`. The task is run once when the Thor task is
+    #   invoked. 
+    #
     # Whether to use Kiba::Extend's pre-job task functionality. The default is `false` for backward
     #   compatibility, as existing projects may not have the required settings configured.
     setting :pre_job_task_run, default: false, reader: true
