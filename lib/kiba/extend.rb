@@ -87,6 +87,32 @@ module Kiba
     setting :registry, default: Kiba::Extend::Registry::FileRegistry, constructor: proc { |value| value.new }, reader: true
     setting :default_job_method_name, default: :job, reader: true
 
+    # ## Pre-job task settings
+    #
+    # If pre_job_task_action == :backup, set the backup directory here. It will be created if it does not exist.
+    setting :pre_job_task_backup_dir, default: nil, reader: true
+    
+    # List paths to directories that will be affected by pre-task action
+    setting :pre_job_task_directories, default: [], reader: true
+    
+    # Controls what happens when pre-task is run
+    # Options: :backup or :nuke
+    #
+    #  - :backup - Moves all existing files in specified directories to backup directory created in your `:datadir`
+    #  - :nuke - Deletes all existing files in specified directories when a job is run. **Make sure you only specify
+    #    directories that contain derived/generated files!**
+    setting :pre_job_task_action, default: :backup, reader: true
+    
+    # Controls whether pre-job task is run
+    # Options: :job (will run) or any other value
+    #   :job - runs pre-job task specified above whenever you invoke `thor run:job ...`. All dependency jobs
+    #   required for the invoked job will be run. This mode is recommended during development when you want
+    #   any change in the dependency chain to get picked up.
+    #   any other value - only regenerates missing dependency files. Useful when your data is really big and/or your
+    #     jobs are more stable
+    setting :pre_job_task_mode, default: :job, reader: true
+
+
     setting :job, reader: true do
       # Whether to output results to STDOUT for debugging
       setting :show_me, default: false, reader: true

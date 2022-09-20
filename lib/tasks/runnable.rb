@@ -19,6 +19,7 @@ class Runnable < Thor
 
   def run_jobs(keys)
     preprocess_options
+    Kiba::Extend::Utils::PreJobTask.call
     keys.each{ |key| Kiba::Extend::Command::Run.job(key) }
   end
 end
