@@ -147,19 +147,17 @@
 
 <p>Since 3.1.0, you can do this from any project using <code>kiba-extend</code>: </p>
 
-<h2 id="source-ruby">[source,ruby]</h2>
-
-<p>job = Kiba::Extend::Command::Run.job(:prep__objects)</p>
-
-<h2 id="puts-some-records-omitted-if-job-outrows-job-srcrows">puts &quot;Some records omitted&quot; if job.outrows &lt; job.srcrows</h2>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_job'>job</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Kiba/Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Kiba/Extend/Command.html" title="Kiba::Extend::Command (module)">Command</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Kiba/Extend/Command/Run.html" title="Kiba::Extend::Command::Run (module)">Run</a></span></span><span class='period'>.</span><span class='id identifier rubyid_job'><span class='object_link'><a href="Kiba/Extend/Command/Run.html#job-class_method" title="Kiba::Extend::Command::Run.job (method)">job</a></span></span><span class='lparen'>(</span><span class='symbol'>:prep__objects</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Some records omitted</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_job'>job</span><span class='period'>.</span><span class='id identifier rubyid_outrows'>outrows</span> <span class='op'>&lt;</span> <span class='id identifier rubyid_job'>job</span><span class='period'>.</span><span class='id identifier rubyid_srcrows'>srcrows</span>
+</code></pre>
 
 <p>This assumes <code>:prep__objects</code> is registered as a job.</p>
 
-<p>This is being used in the publicly available <code>kiba-tms</code> project, in the auto-config generation and to-do check processes. <a href="https://github.com/lyrasis/kiba-tms/search?q=Kiba%3A%3AExtend%3A%3ACommand%3A%3ARun.job%5BExamples%5D">https://github.com/lyrasis/kiba-tms/search?q=Kiba%3A%3AExtend%3A%3ACommand%3A%3ARun.job[Examples]</a></p>
+<p>This is being used in the publicly available <code>kiba-tms</code> project, in the auto-config generation and to-do check processes. <a href="https://github.com/lyrasis/kiba-tms/search?q=Kiba%3A%3AExtend%3A%3ACommand%3A%3ARun.job">Examples</a></p>
 </div></div>
 
       <div id="footer">
-  Generated on Tue Sep 20 16:45:53 2022 by
+  Generated on Tue Sep 20 23:31:35 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>
