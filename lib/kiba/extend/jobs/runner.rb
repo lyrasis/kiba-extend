@@ -108,7 +108,7 @@ module Kiba
         end
 
         def show_me_decoration
-          return unless Kiba::Extend.job.show_me
+          return unless Kiba::Extend.job_show_me
           
           extend ShowMeJob
           decorate
@@ -121,7 +121,7 @@ module Kiba
         end
 
         def tell_me_decoration
-          return unless Kiba::Extend.job.tell_me
+          return unless Kiba::Extend.job_tell_me
           
           extend TellMeJob
           decorate

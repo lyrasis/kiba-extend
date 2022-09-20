@@ -12,9 +12,9 @@ class Runnable < Thor
   private
 
   def preprocess_options
-    Kiba::Extend.config.job.show_me = options[:show]
-    Kiba::Extend.config.job.tell_me = options[:tell]
-    Kiba::Extend.config.job.verbosity = options[:verbosity].to_sym
+    Kiba::Extend.config.job_show_me = options[:show]
+    Kiba::Extend.config.job_tell_me = options[:tell]
+    Kiba::Extend.config.job_verbosity = options[:verbosity].to_sym
   end
 
   def run_jobs(keys)

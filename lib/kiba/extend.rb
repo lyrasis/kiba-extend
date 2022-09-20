@@ -120,18 +120,18 @@ module Kiba
     #     jobs are more stable
     setting :pre_job_task_mode, default: :job, reader: true
 
+    # @return [Boolean] whether to output results to STDOUT for debugging
+    setting :job_show_me, default: false, reader: true
 
-    setting :job, reader: true do
-      # Whether to output results to STDOUT for debugging
-      setting :show_me, default: false, reader: true
-      # Whether to have computer say something when job is complete
-      setting :tell_me, default: false, reader: true
-      # How much output about jobs to output to STDOUT
-      # :debug - tells you A LOT - helpful when developing pipelines and debugging
-      # :normal - reports what is running, from where, and the results
-      # :minimal - bare minimum
-      setting :verbosity, default: :normal, reader: true
-    end
+    # @return [Boolean] whether to have computer audibly say something when job is complete
+    setting :job_tell_me, default: false, reader: true
+    
+    # @return [:debug, :normal, :minimal] how much output about jobs to output to STDOUT
+    #
+    # - :debug - tells you A LOT - helpful when developing pipelines and debugging
+    # - :normal - reports what is running, from where, and the results
+    # - :minimal - bare minimum
+    setting :job_verbosity, default: :normal, reader: true
 
     # strips, collapses multiple spaces, removes terminal commas, strips again
     # removes "NULL"/treats as nilValue
