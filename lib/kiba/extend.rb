@@ -89,6 +89,10 @@ module Kiba
 
     # ## Pre-job task settings
     #
+    # Whether to use Kiba::Extend's pre-job task functionality. The default is `false` for backward
+    #   compatibility, as existing projects may not have the required settings configured.
+    setting :pre_job_task_run, default: false, reader: true
+    
     # If pre_job_task_action == :backup, set the backup directory here. It will be created if it does not exist.
     setting :pre_job_task_backup_dir, default: nil, reader: true
     

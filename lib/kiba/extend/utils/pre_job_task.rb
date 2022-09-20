@@ -6,6 +6,9 @@ module Kiba
       class PreJobTask
         class << self
           def call
+            use_setting = :pre_job_task_run
+            return unless Kiba::Extend.respond_to?(use_setting) && Kiba::Extend.send(use_setting)
+              
             action = Kiba::Extend.pre_job_task_action
             return unless action && valid_action?(action)
             
