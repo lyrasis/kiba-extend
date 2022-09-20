@@ -21,21 +21,23 @@ and this project adheres to https://semver.org/spec/v2.0.0.html[Semantic Version
 toc::[]
 
 == Planned for a future release
+=== Breaking
+* Removal of nested `job.show_me`, `job.tell_me`, and `job.verbosity` config settings (deprecated in 3.2.0)
 
 == Unreleased
 These changes are merged into the `main` branch but have not yet been tagged as a new version/release.
 
-==== Breaking
+=== Breaking
 
-==== Added
+=== Added
 
-==== Changed
+=== Changed
 
-==== Bugfixes
+=== Bugfixes
 
-==== Deleted
+=== Deleted
 
-==== To be deprecated/Will break in a future version
+=== Deprecated/Will break in a future version
 
 == Releases
 
@@ -43,6 +45,11 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 
 ==== Added
 * Configurable pre-job task handling
+* `Kiba::Extend::Registry::FileRegistry.finalize` method
+* Unnested `job_show_me`, `job_tell_me`, and `job_verbosity` config settings.
+
+==== Deprecated/Will break in a future version
+* Nested `job.show_me`, `job.tell_me`, and `job.verbosity` config settings.
 
 === 3.1.0 - 2022-09-20
 
