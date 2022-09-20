@@ -65,6 +65,15 @@ module Kiba
           @entries ||= populate_entries
         end
 
+        # Convenience method combining the steps of transforming initial registry entry hashes
+        #   into FileRegistryEntry objects, and then making the registry immutable for the
+        #   rest of the application's run. `:freeze` is from dry-container.
+        def finalize
+          transform
+          freeze
+        end
+
+        # Transforms registered file hashes into Kiba::Extend::Registry::FileRegistryEntry objects
         def transform
           each { |key, val| decorate(key) { FileRegistryEntry.new(val) } }
           @entries = populate_entries

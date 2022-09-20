@@ -6,7 +6,7 @@ module Kiba
       # Mixin methods for reporting
       module Reporter
         def report_run_start
-          case Kiba::Extend.job.verbosity
+          case Kiba::Extend.job_verbosity
           when :verbose
             verbose_start
             return
@@ -19,7 +19,7 @@ module Kiba
         end
 
         def report_run_end
-          case Kiba::Extend.job.verbosity
+          case Kiba::Extend.job_verbosity
           when :verbose
             verbose_end
             return

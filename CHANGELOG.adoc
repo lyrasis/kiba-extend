@@ -39,6 +39,11 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 
 == Releases
 
+=== 3.2.0 - 2022-09-20
+
+==== Added
+* Configurable pre-job task handling
+
 === 3.1.0 - 2022-09-20
 
 ==== Added
