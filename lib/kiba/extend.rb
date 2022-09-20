@@ -59,7 +59,7 @@ module Kiba
                 'convert_to_id' => 'ConvertToID',
                 'version' => 'VERSION',
                 'csv' => 'CSV'
-                )
+              )
               @loader.enable_reloading
               @loader.setup
               @loader.eager_load
@@ -161,7 +161,25 @@ module Kiba
     # - :minimal - bare minimum
     setting :job_verbosity, default: :normal, reader: true
 
+    
+    # The section below is for backward comapatibility only
+    def warn_unnested(name, value)
+      rep_by = "job_#{name}"
+      msg = "Kiba::Extend.config.job.#{name} setting has been replaced by Kiba::Extend.config.#{rep_by}"
+      warn("#{Kiba::Extend.warning_label}: #{msg}")
+      value
+    end
 
+    setting :job, reader: true do
+      setting :show_me, default: Kiba::Extend.job_show_me, reader: true,
+        constructor: proc{ |name, value| Kiba::Extend.warn_unnested(name, value) }
+      setting :tell_me, default: Kiba::Extend.job_tell_me, reader: true,
+        constructor: proc{ |name, value| Kiba::Extend.warn_unnested(name, value) }
+      setting :verbosity, default: Kiba::Extend.job_verbosity, reader: true,
+        constructor: proc{ |name, value| Kiba::Extend.warn_unnested(name, value) }
+    end
+
+    
     # strips, collapses multiple spaces, removes terminal commas, strips again
     # removes "NULL"/treats as nilValue
     CSV::Converters[:stripplus] = lambda { |s|
