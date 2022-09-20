@@ -26,7 +26,22 @@ require 'kiba/extend/destinations/csv'
 # * [Main website](https://www.kiba-etl.org/)
 # * [Github repo](https://github.com/thbar/kiba)
 module Kiba
-  # Provides a suite of abstract, reusable, well-tested data transformations for use in Kiba ETL pipelines
+  # Handles:
+  #
+  # - auto-loading of the code
+  # - extending `Kiba` with `Kiba::Extend::Jobs::JobSegmenter` so we can call `Kiba.job_segment`
+  # - defining config settings, all of which can be overridden by project applications using
+  #   `kiba-extend`
+  #
+  # Also defines some CSV converters:
+  #
+  # - `:stripextra` -- strips leading/trailing spaces, collapses multiple spaces, removes terminal commas,
+  #   strips again
+  # - `:nulltonil` -- replaces any values that are a literal string NULL with a nil value
+  # - `:stripplus` -- strips leading/trailing spaces, collapses multiple spaces, removes terminal commas,
+  #   strips again, removes "NULL" (i.e. literal string "NULL" becomes a `nilValue`
+  #
+  # Note that `:stripplus` combines the functionality of `:stripextra` and `:nulltonil`
   module Extend
     module_function
     extend Dry::Configurable
@@ -58,33 +73,46 @@ module Kiba
     # So we can call Kiba.job_segment
     Kiba.extend(Kiba::Extend::Jobs::JobSegmenter)
 
-    # Default options used for CSV sources/destinations
+    # @return [Hash] default options used for CSV sources/destinations
     setting :csvopts, default: { headers: true, header_converters: %i[symbol downcase] }, reader: true
 
-    # Default settings for Lambda destination
+    # @return [Hash] default settings for Lambda destination
     setting :lambdaopts, default: { on_write: ->(r) { accumulator << r } }, reader: true
 
-    # Default delimiter for splitting/joining values in multi-valued fields
-    #   Example: 'a;b' -> ['a', 'b']
+    # @return [String] default delimiter for splitting/joining values in multi-valued fields
+    # @example If :delim == '|'
+    #   'a|b' -> ['a', 'b']
     setting :delim, default: '|', reader: true
 
-    # Default subgrouping delimiter for splitting/joining values in multi-valued fields
-    #   Example: 'a^^y;b^^z' -> [['a', 'y'], ['b', 'z']]
+    # @return [String] default subgrouping delimiter for splitting/joining values in multi-valued fields
+    # @example If :delim == '|' and :sgdelim == '^^'
+    #   'a^^y|b^^z' -> [['a', 'y'], ['b', 'z']]
     setting :sgdelim, default: '^^', reader: true
 
-    # Default string to be treated as though it were a null/empty value.
+    # @return [String] default string to be treated as though it were a null/empty value.
     setting :nullvalue, default: '%NULLVALUE%', reader: true
     
-    # Default source class for jobs
+    # @!method source
+    # Default source class for jobs. Must meet implementation criteria in [Kiba wiki](https://github.com/thbar/kiba/wiki/Implementing-ETL-sources)
     setting :source, default: Kiba::Common::Sources::CSV, reader: true
 
-    # Default destination class for jobs
+    # @!method destination
+    # Default destination class for jobs. Must meet implementation criteria in [Kiba wiki](https://github.com/thbar/kiba/wiki/Implementing-ETL-destinations)
     setting :destination, default: Kiba::Extend::Destinations::CSV, reader: true
 
-    # Prefix for warnings from the ETL
+    # @return [String] prefix for warnings from the ETL
     setting :warning_label, default: 'KIBA WARNING', reader: true
 
-    setting :registry, default: Kiba::Extend::Registry::FileRegistry, constructor: proc { |value| value.new }, reader: true
+    # @return [Kiba::Extend::Registry::FileRegistry] A customized
+    #   [dry-container](https://dry-rb.org/gems/dry-container/main/) for registering and resolving
+    #   jobs
+    setting :registry,
+      default: Kiba::Extend::Registry::FileRegistry,
+      constructor: proc { |value| value.new },
+      reader: true
+
+    # @return [Symbol] the job definition module method expected to be present if you [define a registry
+    #   entry hash creator as a Module](https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html#module-creator-example-since-2-7-2)
     setting :default_job_method_name, default: :job, reader: true
 
     # ## Pre-job task settings
@@ -92,32 +120,32 @@ module Kiba
     # If configured properly, the pre-job task is run when a job is run via Thor invocation. This includes
     #   `run:job`, `run:jobs`, and `jobs:tagged -r tagvalue`. The task is run once when the Thor task is
     #   invoked. 
-    #
-    # Whether to use Kiba::Extend's pre-job task functionality. The default is `false` for backward
-    #   compatibility, as existing projects may not have the required settings configured.
+    
+    # @return [Boolean] whether to use Kiba::Extend's pre-job task functionality. The default is `false`
+    #   for backward compatibility, as existing projects may not have the required settings configured.
     setting :pre_job_task_run, default: false, reader: true
     
-    # If pre_job_task_action == :backup, set the backup directory here. It will be created if it does not exist.
+    # @return [String] full path to directory to which files will be moved if `pre_job_task_action ==
+    #   :backup`. The directory will be created if it does not exist.
     setting :pre_job_task_backup_dir, default: nil, reader: true
     
-    # List paths to directories that will be affected by pre-task action
+    # @return [Array<String>] full paths to directories that will be affected by the specified pre-task action
     setting :pre_job_task_directories, default: [], reader: true
     
-    # Controls what happens when pre-task is run
-    # Options: :backup or :nuke
+    # @return [:backup, :nuke] Controls what happens when pre-job task is run
     #
     #  - :backup - Moves all existing files in specified directories to backup directory created in your `:datadir`
-    #  - :nuke - Deletes all existing files in specified directories when a job is run. **Make sure you only specify
-    #    directories that contain derived/generated files!**
+    #  - :nuke - Deletes all existing files in specified directories when a job is run. **Make sure you only
+    #    specify directories that contain derived/generated files!**
     setting :pre_job_task_action, default: :backup, reader: true
     
-    # Controls whether pre-job task is run
-    # Options: :job (will run) or any other value
-    #   :job - runs pre-job task specified above whenever you invoke `thor run:job ...`. All dependency jobs
+    # @return [:job, *] Controls whether pre-job task is run
+    #
+    # - :job - runs pre-job task specified above whenever you invoke `thor run:job ...`. All dependency jobs
     #   required for the invoked job will be run. This mode is recommended during development when you want
     #   any change in the dependency chain to get picked up.
-    #   any other value - only regenerates missing dependency files. Useful when your data is really big and/or your
-    #     jobs are more stable
+    # - any other value - only regenerates missing dependency files. Useful when your data is really big
+    #   and/or your jobs are more stable
     setting :pre_job_task_mode, default: :job, reader: true
 
     # @return [Boolean] whether to output results to STDOUT for debugging
@@ -132,6 +160,7 @@ module Kiba
     # - :normal - reports what is running, from where, and the results
     # - :minimal - bare minimum
     setting :job_verbosity, default: :normal, reader: true
+
 
     # strips, collapses multiple spaces, removes terminal commas, strips again
     # removes "NULL"/treats as nilValue
