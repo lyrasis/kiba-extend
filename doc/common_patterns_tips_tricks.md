@@ -84,3 +84,18 @@ The basic idea of this is:
 One pattern for doing this is publicly viewable [in the `kiba-tms` project](https://github.com/lyrasis/csws-update/blob/main/lib/csws/registry_data.rb#L7-L15). `register_supplied_files` automates registry of the original TMS CSV files included in the project. `register_prep_files` automates the creation of entries for all original files into a `prep` namespace. If a custom prep method or module has been creating matching the name pattern, it will be used as the creator. Otherwise, the creator will be [`Kiba::Tms::Jobs::AbstractPrep`](https://github.com/lyrasis/kiba-tms/blob/main/lib/kiba/tms/jobs/abstract_prep.rb), which removes TMS-specific fields and deletes any empty fields. 
 
 Another example (in LYRASIS private repo) is [here](https://github.com/lyrasis/csws-update/blob/main/lib/csws/registry_data.rb#L7-L15).
+
+## Running jobs, and checking `srcrows` and `outrows` counts from client project code
+
+Since 3.1.0, you can do this from any project using `kiba-extend`: 
+
+[source,ruby]
+----
+job = Kiba::Extend::Command::Run.job(:prep__objects)
+puts "Some records omitted" if job.outrows < job.srcrows
+----
+
+This assumes `:prep__objects` is registered as a job.
+
+This is being used in the publicly available `kiba-tms` project, in the auto-config generation and to-do check processes. https://github.com/lyrasis/kiba-tms/search?q=Kiba%3A%3AExtend%3A%3ACommand%3A%3ARun.job[Examples]
+

@@ -39,6 +39,27 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 
 == Releases
 
+=== 3.1.0 - 2022-09-20
+
+==== Added
+* Add publicly readable `srcrows` and `outrows` on `Kiba::Extend::Jobs::BaseJob` (inherited by all job types). This makes it possible to do things like this in client projects:
+
+[source,ruby]
+----
+job = Kiba::Extend::Command::Run.job(:prep__objects)
+puts "Some records omitted" if job.outrows < job.srcrows
+----
+
+These attributes were previously only accessible via:
+
+[source,ruby]
+----
+job.context.instance_variable_get(:@srcrows)
+---
+
+==== Changed
+* Refactored thor tasks. Moved basically all logic/behavior into `Kiba::Extend::Command` namespace where it can be called by Thor tasks _or_ directly by client projects. This leaves the `/lib/tasks` more purely about defining the CLI interaction
+
 === 3.0.0 - 2022-08-26
 
 ==== Breaking
