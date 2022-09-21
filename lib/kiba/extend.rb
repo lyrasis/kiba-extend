@@ -13,13 +13,6 @@ require 'pry'
 require 'xxhash'
 require 'zeitwerk'
 
-require 'kiba/extend/error'
-require 'kiba/extend/registry/file_registry'
-require 'kiba/extend/jobs'
-require 'kiba/extend/jobs/job_segmenter'
-require 'kiba/extend/destinations'
-require 'kiba/extend/destinations/csv'
-
 # The Kiba ETL framework for Ruby.
 # `kiba-extend` extends only Kiba OSS. Kiba Pro features are not used.
 #
@@ -70,9 +63,6 @@ module Kiba
       @loader.reload
     end
 
-    # So we can call Kiba.job_segment
-    Kiba.extend(Kiba::Extend::Jobs::JobSegmenter)
-
     # @return [Hash] default options used for CSV sources/destinations
     setting :csvopts, default: { headers: true, header_converters: %i[symbol downcase] }, reader: true
 
@@ -105,7 +95,7 @@ module Kiba
 
     # @!method destination
     # Default destination class for jobs. Must meet implementation criteria in [Kiba wiki](https://github.com/thbar/kiba/wiki/Implementing-ETL-destinations)
-    setting :destination, default: Kiba::Extend::Destinations::CSV, reader: true
+    setting :destination, constructor: proc{ Kiba::Extend::Destinations::CSV }, reader: true
 
     # @return [String] prefix for warnings from the ETL
     setting :warning_label, default: 'KIBA WARNING', reader: true
@@ -114,8 +104,7 @@ module Kiba
     #   [dry-container](https://dry-rb.org/gems/dry-container/main/) for registering and resolving
     #   jobs
     setting :registry,
-      default: Kiba::Extend::Registry::FileRegistry,
-      constructor: proc { |value| value.new },
+      constructor: proc{ Kiba::Extend::Registry::FileRegistry.new },
       reader: true
 
     # @return [Symbol] the job definition module method expected to be present if you [define a registry
@@ -244,3 +233,5 @@ end
 
 
 Kiba::Extend.loader
+# So we can call Kiba.job_segment
+Kiba.extend(Kiba::Extend::Jobs::JobSegmenter)
