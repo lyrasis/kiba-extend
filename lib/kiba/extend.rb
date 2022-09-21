@@ -91,6 +91,13 @@ module Kiba
 
     # @return [String] default string to be treated as though it were a null/empty value.
     setting :nullvalue, default: '%NULLVALUE%', reader: true
+
+    # @return [String] used to join nested namespaces and registered keys in FileRegistry
+    # @example With namespace 'ns' and registered key 'foo'
+    #   'ns__foo'
+    # @example With parent namespace 'ns', child namespace 'child', and registered key 'foo'
+    #   'ns__child__foo'
+    setting :registry_namespace_separator, default: '__', reader: true
     
     # @!method source
     # Default source class for jobs. Must meet implementation criteria in [Kiba wiki](https://github.com/thbar/kiba/wiki/Implementing-ETL-sources)
