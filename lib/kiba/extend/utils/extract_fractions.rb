@@ -5,19 +5,21 @@ require 'strscan'
 module Kiba
   module Extend
     module Utils
+      # Extracts {Data::ConvertibleFractions} from given String and returns only fractions that can be
+      #   converted to decimal, in the order they will need to be replaced in the string
       class ExtractFractions
-        # @param pre [Array(String)] List of characters/strings that precede a fraction. These are removed in the
-        #   result
-        def initialize(pre: [' ', '-'])
-          @pre = pre
-          @pattern = /(\d+)(?:#{pre.join('|')})(\d+\/\d+|\d+\/\d+)/
+        # @param whole_fraction_sep [Array(String)] List of characters that precede a fraction after a whole number,
+        #   indicating that the whole number and fraction should be extracted together.
+        def initialize(whole_fraction_sep: [' ', '-'])
+          @whole_fraction_sep = whole_fraction_sep
           @fpattern = /(\d+\/\d+)/
-          @wfpattern = /(\d+)(?:#{pre.join('|')})(\d+\/\d+)/
-          @fklass = Kiba::Extend::Data::ConvertibleFraction
+          @fraction = Kiba::Extend::Data::ConvertibleFraction
         end
 
         # @param value [String]
         def call(value)
+          return [] unless value.match?(fpattern)
+          
           result = []
           scanner = StringScanner.new(value)
           scan(scanner, result)
@@ -29,28 +31,28 @@ module Kiba
         
         private
 
-        attr_reader :pattern, :fpattern, :wfpattern, :fklass
+        attr_reader :fpattern, :whole_fraction_sep, :fraction
 
         def extract_fraction(scanner, result)
           startpos = scanner.pos
-          chk = scanner.scan(fpattern)
-          return unless chk
-
-          result << fklass.new(**{fraction: scanner.captures[0], position: startpos..scanner.pos - 1 })
+          scanner.scan(fpattern)
+          result << fraction.new(**{fraction: scanner.captures[0], position: startpos..scanner.pos - 1 })
         end
 
-        def extract_whole_fraction(scanner, result)
+        def try_whole_fraction_extract(scanner, result)
           startpos = scanner.pos
-          chk = scanner.scan(wfpattern)
-          return unless chk
-
-          result << fklass.new(**{whole: scanner.captures[0].to_i, fraction: scanner.captures[1], position: startpos..scanner.pos - 1 })
+          whole_num = scanner.scan(/\d+/).to_i
+          sep = scanner.scan(/./)
+          fmatch = scanner.match?(fpattern)
+          if whole_fraction_sep.any?(sep) && fmatch
+            result << fraction.new(**{whole: whole_num, fraction: scanner.scan(fpattern), position: startpos..scanner.pos - 1 })
+          end
         end
-        
+
         def scan(scanner, result)
           return if scanner.eos?
           return if scanner.rest_size < 3
-          return unless scanner.exist?(fpattern) || scanner.exist?(wfpattern)
+          return unless scanner.exist?(fpattern)
 
           scan_next(scanner, result)
         end
@@ -59,10 +61,8 @@ module Kiba
           scanner.skip(/\D+/)
           if scanner.match?(fpattern)
             extract_fraction(scanner, result)
-          elsif scanner.match?(wfpattern)
-            extract_whole_fraction(scanner, result)
           else
-            scanner.skip(/./)
+            try_whole_fraction_extract(scanner, result)
           end
           scan(scanner, result)
         end
