@@ -5,6 +5,27 @@ require 'spec_helper'
 RSpec.describe Kiba::Extend::Data::ConvertibleFraction do
   subject(:klass){ described_class }
 
+  describe '.initialize' do
+    let(:result){ klass.new(**params) }
+
+    context 'when `whole` is not an Integer' do
+      let(:params){ {whole: '1', fraction: '3/4', position: 2..4} }
+
+      it 'raises TypeError' do
+        expect{ result }.to raise_error(TypeError, '`whole` must be an Integer')
+      end
+    end
+
+    context 'when `position` is not a Range' do
+      let(:params){ {whole: 1, fraction: '3/4', position: 2} }
+
+      it 'raises TypeError' do
+        expect{ result }.to raise_error(TypeError, '`position` must be a Range')
+      end
+    end
+  end
+
+
   describe '#to_h' do
     it 'returns Hash' do
       cf = klass.new(fraction: '1/2', position: 0..2)
@@ -35,7 +56,7 @@ RSpec.describe Kiba::Extend::Data::ConvertibleFraction do
       expect(results).to eq(expected)
     end
   end
-  
+
   describe '#to_f' do
     let(:expectations) do
       {
