@@ -43,8 +43,7 @@ class Transformer
 end
 ```
 
-It can also be useful in other transforms as shown below:
-
+It can also be used in order to compose additional behavior in another transform as shown below:
 
 ```
 class Transformer
@@ -69,6 +68,29 @@ end
 ```
 
 See the code for {Kiba::Extend::Transforms::Rename::Fields} for an example of embedding another transform to compose transformation logic.
+
+## Using transforms in job definitions
+
+The following code snippets are equivalent.
+
+This one relies on the domain specific language (DSL) "magic" defined in kiba:
+
+```
+Kiba.job_segment do
+  transform Merge::ConstantValue, target: :data_source, value: 'source system'
+end
+```
+
+This one uses plain Ruby to set up the transform class and calls its `:process` method on each row: 
+
+```
+Kiba.job_segment do
+  xform = Merge::ConstantValue.new(target: :data_source, value: 'source system')
+  transform{ |row| xform.process(row) }
+end
+```
+
+The second one might be useful in situations when you are trying to set things up more flexibly.
 
 ## Calling a job with parameters
 
