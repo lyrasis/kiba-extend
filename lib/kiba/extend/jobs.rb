@@ -2,8 +2,6 @@
 
 require_relative 'jobs/parser'
 
-Kiba::Extend::Jobs.extend(Kiba::Extend::Jobs::Parser)
-
 module Kiba
   module Extend
     # Reusable, composable patterns for jobs
@@ -55,5 +53,7 @@ module Kiba
     # @since 2.2.0
     module Jobs
     end
+
+    Kiba::Extend::Jobs.extend(Kiba::Extend::Jobs::Parser)
   end
 end

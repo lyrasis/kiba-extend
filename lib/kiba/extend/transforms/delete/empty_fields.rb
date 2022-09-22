@@ -127,7 +127,6 @@ module Kiba
             nil
           end
 
-          # @param row [Hash{ Symbol => String }]
           def close
             to_delete = rows.first.keys - pop_fields.keys
             rows.each do |row|

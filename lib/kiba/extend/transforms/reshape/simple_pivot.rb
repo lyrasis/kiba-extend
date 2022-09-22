@@ -85,7 +85,6 @@ module Kiba
             nil
           end
 
-          # @param row [Hash{ Symbol => String }]
           def close
             @rows.each do |fieldval, data|
               row = {@row_field => fieldval}

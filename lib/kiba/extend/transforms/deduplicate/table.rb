@@ -61,7 +61,6 @@ module Kiba
             nil
           end
 
-          # @param row [Hash{ Symbol => String }]
           def close
             @deduper.values.each do |row|
               row.delete(@field) if @delete

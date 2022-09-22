@@ -26,7 +26,6 @@ module Kiba
           attr_reader :key, :type
           # @param key [Symbol]
           # @param type [Symbol<:destination, :source, :lookup>]
-          # @param job 
           def initialize(key, type = nil)
             @key = key
             @type = type

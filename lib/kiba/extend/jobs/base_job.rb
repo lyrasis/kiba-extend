@@ -21,7 +21,6 @@ module Kiba
 
         # @param files [Hash]
         # @param transformer [Kiba::Control]
-        # @param show [Boolean]
         def initialize(files:, transformer:)
           @dependency = true if caller(2, 5).join(' ')['block in handle_requirements']
           extend DependencyJob if @dependency

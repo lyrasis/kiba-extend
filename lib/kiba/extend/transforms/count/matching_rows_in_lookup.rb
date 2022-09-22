@@ -10,7 +10,7 @@ module Kiba
         class MatchingRowsInLookup
           # @param lookup [Hash] created with `csv_to_multihash`
           # @param keycolumn [Symbol] field in the source containing value to match on
-          # @param target [Symbol] field to put the result value in
+          # @param targetfield [Symbol] field to put the result value in
           # @param conditions [Hash] See [https://github.com/lyrasis/kiba-extend/blob/e5a77d4622334cd4f021ba3c4d7bf59f010472b2/spec/kiba/extend/utils/lookup_spec.rb#L477](RowSelector spec)
           #    for examples on how to use
           # @param result_type [Symbol<:str, :int>] form in which to return the resulting values
