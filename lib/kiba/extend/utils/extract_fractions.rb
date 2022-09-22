@@ -8,8 +8,12 @@ module Kiba
       # Extracts {Data::ConvertibleFractions} from given String and returns only fractions that can be
       #   converted to decimal, in the order they will need to be replaced in the string
       class ExtractFractions
-        # @param whole_fraction_sep [Array(String)] List of characters that precede a fraction after a whole number,
-        #   indicating that the whole number and fraction should be extracted together.
+        # @param whole_fraction_sep [Array(String)] List of characters that precede a fraction after a whole
+        #   number, indicating that the whole number and fraction should be extracted together. If this is
+        #   set to `[' ', '-']` (the default), then both `1 1/2` and `1-1/2` will be extracted with `1` as
+        #   the whole number and `1/2` as the fraction, and converted to `1.5`. If this is set to `[' ']`,
+        #   then `1 1/2` will be extracted as described preveiously. For `1-1/2`, no whole number value
+        #   will be extracted. `1/2` will be extracted as the fraction, and it will be converted to '0.5'.
         def initialize(whole_fraction_sep: [' ', '-'])
           @whole_fraction_sep = whole_fraction_sep
           @fpattern = /(\d+\/\d+)/
@@ -24,7 +28,9 @@ module Kiba
           scanner = StringScanner.new(value)
           scan(scanner, result)
           result.each do |fraction|
-            warn("#{self.class.name}: Unconvertible fraction: #{value[fraction.position]}") unless fraction.convertible?
+            unless fraction.convertible?
+              warn("#{self.class.name}: Unconvertible fraction: #{value[fraction.position]}")
+            end
           end
           result.sort.reverse
         end
