@@ -25,13 +25,16 @@ toc::[]
 * Removal of nested `job.show_me`, `job.tell_me`, and `job.verbosity` config settings (deprecated in 3.2.0)
 
 == Unreleased
-These changes are merged into the `main` branch but have not yet been tagged as a new version/release.
+These changes are merged into the `main` branch, but have not been released. After merging pull requests (PRs) that are not immediately released into `main`, a tag is added appending the PR# to the current release. For example, if the release version/tag is `3.2.1`, and PR# 107 is merged without a new release, the state of the codebase after that merge will be tagged as `3.2.1.107`.
 
 === Breaking
 
 === Added
+* `yardspec` gem to support running YARD examples as RSpec tests (PR#107)
+* Branch coverage to `simplecov` setup (PR#107)
 
 === Changed
+* Tests for the `Prepend::ToFieldValue` transform converted to use `yardspec` (PR#107)
 
 === Bugfixes
 

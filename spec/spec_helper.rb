@@ -5,7 +5,9 @@ Bundler.require(:tools)
 
 # This needs to be the very first thing in this file
 require 'simplecov'
-SimpleCov.start
+SimpleCov.start do
+  enable_coverage :branch
+end
 
 require_relative './helpers'
 require 'kiba/extend'
