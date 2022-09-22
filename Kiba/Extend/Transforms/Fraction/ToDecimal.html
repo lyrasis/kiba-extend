@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: Kiba::Extend::Transforms::Fraction::ToDecimal
+  
+    &mdash; Kiba-Extend Documentation
+  
+</title>
+
+  <link rel="stylesheet" href="../../../../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../../../../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "Kiba::Extend::Transforms::Fraction::ToDecimal";
+  relpath = '../../../../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../../../../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../../../../_index.html">Index (T)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../Transforms.html" title="Kiba::Extend::Transforms (module)">Transforms</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Fraction.html" title="Kiba::Extend::Transforms::Fraction (module)">Fraction</a></span></span>
+     &raquo; 
+    <span class="title">ToDecimal</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../../../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: Kiba::Extend::Transforms::Fraction::ToDecimal
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Kiba::Extend::Transforms::Fraction::ToDecimal</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/kiba/extend/transforms/fraction/to_decimal.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>Converts fractions expressed like &quot;1 1/4&quot; to decimals like &quot;1.25&quot;</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>Defaults and general behavior/value handling</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='comment'># Used in pipeline as:
+</span><span class='comment'># transform Fraction::ToDecimal, fields: :dim
+</span><span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Fraction.html" title="Kiba::Extend::Transforms::Fraction (module)">Fraction</a></span></span><span class='op'>::</span><span class='const'>ToDecimal</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Fraction::ToDecimal#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='symbol'>:dim</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>dim:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>dim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>dim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>dim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1/2</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>dim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>6-1/4 x 9-1/4</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>dim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>10 5/8x13</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>dim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1 2/3 x 5 1/2</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>dim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>approximately 2/3 by 1/2in (height unknown)</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>dim:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>dim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>dim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>dim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>0.5</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>dim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>6.25 x 9.25</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>dim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>10.625x13</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>dim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1.6667 x 5.5</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>dim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>approximately 0.6667 by 0.5in (height unknown)</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Multiple fields and targets</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='comment'># Used in pipeline as:
+</span><span class='comment'># transform Fraction::ToDecimal, fields: %i[w h], targets: %i[width height]
+</span><span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Fraction.html" title="Kiba::Extend::Transforms::Fraction (module)">Fraction</a></span></span><span class='op'>::</span><span class='const'>ToDecimal</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Fraction::ToDecimal#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>w</span><span class='words_sep'> </span><span class='tstring_content'>h</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>targets:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>width</span><span class='words_sep'> </span><span class='tstring_content'>height</span><span class='tstring_end'>]</span></span><span class='rparen'>)</span>
+<span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='lbrace'>{</span><span class='label'>w:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>8 1/2</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>h:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>11</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='rbracket'>]</span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='lbrace'>{</span><span class='label'>w:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>8 1/2</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>h:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>11</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>width:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>8.5</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>height:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>11</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='rbracket'>]</span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Multiple fields and targets, and <code>delete_sources</code> = true</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='comment'># Used in pipeline as:
+</span><span class='comment'># transform Fraction::ToDecimal, fields: %i[w h], targets: %i[w height], delete_sources: true
+</span><span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Fraction.html" title="Kiba::Extend::Transforms::Fraction (module)">Fraction</a></span></span><span class='op'>::</span><span class='const'>ToDecimal</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Fraction::ToDecimal#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>w</span><span class='words_sep'> </span><span class='tstring_content'>h</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>targets:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>w</span><span class='words_sep'> </span><span class='tstring_content'>height</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>delete_sources:</span> <span class='kw'>true</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='lbrace'>{</span><span class='label'>w:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>8 1/2</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>h:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>11</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='rbracket'>]</span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='lbrace'>{</span><span class='label'>w:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>8.5</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>height:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>11</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='rbracket'>]</span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p><code>target_format: :float</code> and <code>places: 2</code></p>
+</div></p>
+      
+      <pre class="example code"><code><span class='comment'># Used in pipeline as:
+</span><span class='comment'># transform Fraction::ToDecimal, fields: :w, target_format: :float, places: 2
+</span><span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Fraction.html" title="Kiba::Extend::Transforms::Fraction (module)">Fraction</a></span></span><span class='op'>::</span><span class='const'>ToDecimal</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Fraction::ToDecimal#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='symbol'>:w</span><span class='comma'>,</span> <span class='label'>target_format:</span> <span class='symbol'>:float</span><span class='comma'>,</span> <span class='label'>places:</span> <span class='int'>2</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>w:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>8-2/3</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>w:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2/3 in</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>w:</span> <span class='float'>8.67</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>w:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>0.67 in</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p><code>target_format: :float, places: 2, whole_fraction_sep: [&#39; &#39;]</code></p>
+</div></p>
+      
+      <pre class="example code"><code><span class='comment'># Used in pipeline as:
+</span><span class='comment'># transform Fraction::ToDecimal,
+</span><span class='comment'>#   fields: :w,
+</span><span class='comment'>#   target_format: :float,
+</span><span class='comment'>#   places: 2,
+</span><span class='comment'>#   whole_fraction_sep: [&#39; &#39;]
+</span><span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Fraction.html" title="Kiba::Extend::Transforms::Fraction (module)">Fraction</a></span></span><span class='op'>::</span><span class='const'>ToDecimal</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Fraction::ToDecimal#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+  <span class='label'>fields:</span> <span class='symbol'>:w</span><span class='comma'>,</span> <span class='label'>target_format:</span> <span class='symbol'>:float</span><span class='comma'>,</span> <span class='label'>places:</span> <span class='int'>2</span><span class='comma'>,</span> <span class='label'>whole_fraction_sep:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> </span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+<span class='rparen'>)</span>
+<span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>w:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>8-2/3</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>w:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2/3 in</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>w:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>8-0.67</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>w:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>0.67 in</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
+  </div>
+
+
+</div>
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(fields:, targets: nil, target_format: :string, places: 4, whole_fraction_sep: [&#39; &#39;, &#39;-&#39;], delete_sources: false)  &#x21d2; ToDecimal </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A new instance of ToDecimal.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#process-instance_method" title="#process (instance method)">#<strong>process</strong>(row)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>(fields:, targets: nil, target_format: :string, places: 4, whole_fraction_sep: [&#39; &#39;, &#39;-&#39;], delete_sources: false)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Fraction::ToDecimal (class)">ToDecimal</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns a new instance of ToDecimal.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>fields</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>, <tt>Array(Symbol)</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Source data fields. If no targets given, converted values are
+written back into the original fields.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>targets</span>
+      
+      
+        <span class='type'>(<tt>nil</tt>, <tt>Symbol</tt>, <tt>Array(Symbol)</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Target data fields, if different from source data fields.
+If <code>targets</code> are specified at all, a target must be specified for each value in <code>fields</code>. The target
+for a given field can be the same as the given field, however.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>target_format</span>
+      
+      
+        <span class='type'>(<tt>:string</tt>, <tt>:float</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>:string</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>If fractions are being extracted from longer text strings and replaced,
+this should always be <code>:string</code>. Likewise if there may be more than one fraction in a given field value.
+This is the usual expected case. If the source data fields are known to only contain single fraction
+values and you need to use them in calculations in subsequent transforms within the same job, you may
+wish to set this as <code>:float</code> for greater accuracy.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>places</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>4</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Number of decimal places. Applied if <code>target_format</code> = <code>:string</code></p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>whole_fraction_sep</span>
+      
+      
+        <span class='type'>(<tt>Array(String)</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>[&#39; &#39;, &#39;-&#39;]</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>List of characters that precede a fraction after a whole
+number, indicating that the whole number and fraction should be extracted together.
+See <span class='object_link'><a href="../../Utils/ExtractFractions.html" title="Kiba::Extend::Utils::ExtractFractions (class)">Utils::ExtractFractions</a></span> for further explanation.</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>delete_sources</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>If <code>targets</code> are given, <code>fields</code> are deleted from row. Has no effect
+if no <code>targets</code> are given, or if the target for a field equals the field.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fraction/to_decimal.rb', line 106</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span><span class='comma'>,</span>
+               <span class='label'>targets:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+               <span class='label'>target_format:</span> <span class='symbol'>:string</span><span class='comma'>,</span>
+               <span class='label'>places:</span> <span class='int'>4</span><span class='comma'>,</span>
+               <span class='label'>whole_fraction_sep:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> </span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>-</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='comma'>,</span>
+               <span class='label'>delete_sources:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+  <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fields'>fields</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
+  <span class='ivar'>@targets</span> <span class='op'>=</span> <span class='id identifier rubyid_targets'>targets</span> <span class='op'>?</span> <span class='lbracket'>[</span><span class='id identifier rubyid_targets'>targets</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span> <span class='op'>:</span> <span class='kw'>nil</span>
+  <span class='ivar'>@target_format</span> <span class='op'>=</span> <span class='id identifier rubyid_target_format'>target_format</span>
+  <span class='ivar'>@places</span> <span class='op'>=</span> <span class='id identifier rubyid_places'>places</span>
+  <span class='ivar'>@delete_sources</span> <span class='op'>=</span> <span class='id identifier rubyid_delete_sources'>delete_sources</span>
+  <span class='ivar'>@extractor</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Utils.html" title="Kiba::Extend::Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Utils/ExtractFractions.html" title="Kiba::Extend::Utils::ExtractFractions (class)">ExtractFractions</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../Utils/ExtractFractions.html#initialize-instance_method" title="Kiba::Extend::Utils::ExtractFractions#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>whole_fraction_sep:</span> <span class='id identifier rubyid_whole_fraction_sep'>whole_fraction_sep</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="process-instance_method">
+  
+    #<strong>process</strong>(row)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>row</span>
+      
+      
+        <span class='type'>(<tt>Hash{ Symbol =&gt; String }</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+121
+122
+123
+124
+125</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fraction/to_decimal.rb', line 121</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_fields'>fields</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span> <span class='id identifier rubyid_to_decimal'>to_decimal</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='comma'>,</span> <span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_delete_source_fields'>delete_source_fields</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_row'>row</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Thu Sep 22 22:08:55 2022 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.28 (ruby-2.7.6).
+</div>
+
+    </div>
+  </body>
+</html>
