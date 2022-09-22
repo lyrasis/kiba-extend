@@ -30,8 +30,11 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 === Breaking
 
 === Added
+* `yardspec` gem to support running YARD examples as RSpec tests
+* Branch coverage to `simplecov` setup
 
 === Changed
+* Tests for the `Prepend::ToFieldValue` transform converted to use `yardspec`
 
 === Bugfixes
 
