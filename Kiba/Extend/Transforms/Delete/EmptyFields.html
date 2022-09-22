@@ -402,46 +402,22 @@ as blank/empty. <strong>If multiple values should be considered blank for one fi
   
 
   
-</h3><div class="docstring">
-  <div class="discussion">
-    
-
-  </div>
-</div>
-<div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
-  
-    <li>
-      
-        <span class='name'>row</span>
-      
-      
-        <span class='type'>(<tt>Hash{ Symbol =&gt; String }</tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
-
-
-</div><table class="source_code">
+</h3><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
+130
 131
 132
 133
 134
 135
-136
-137</pre>
+136</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/empty_fields.rb', line 131</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/empty_fields.rb', line 130</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_close'>close</span>
   <span class='id identifier rubyid_to_delete'>to_delete</span> <span class='op'>=</span> <span class='id identifier rubyid_rows'>rows</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span> <span class='op'>-</span> <span class='id identifier rubyid_pop_fields'>pop_fields</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span>
@@ -516,7 +492,7 @@ as blank/empty. <strong>If multiple values should be considered blank for one fi
 </div>
 
       <div id="footer">
-  Generated on Thu Sep 22 00:17:28 2022 by
+  Generated on Thu Sep 22 15:47:48 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>
