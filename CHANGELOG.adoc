@@ -41,6 +41,17 @@ These changes are merged into the `main` branch but have not yet been tagged as 
 
 == Releases
 
+=== 3.2.1 - 2022-09-21
+
+==== Added
+* Config setting to control string used as registry namespace separator
+
+==== Bugfixes
+* Require the kiba-common ShowMe extension so that option actually works when running jobs
+
+==== Changed
+* Refactoring `lib/kiba/extend.rb` so inter-application `require` statements can be removed
+
 === 3.2.0 - 2022-09-20
 
 ==== Added
