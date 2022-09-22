@@ -3,8 +3,12 @@
 module Kiba
   module Extend
     module Data
+      # Value object encoding an extracted string fraction (e.g. '1 1/2') so it can be converted.
+      #
+      # Can represent invalid/non-convertible "fractions" 
       class ConvertibleFraction
         include Comparable
+        
         attr_reader :whole, :fraction, :position
         
         # @param whole [Integer] whole number preceding a fraction
@@ -18,12 +22,16 @@ module Kiba
           @position = position.freeze
         end
 
+        # @param val [String] the value in which textual fraction will be replaced with a decimal
+        # @param places [Integer] maximum number of decimal places to keep in the resulting decimal value
+        # @return [String]
         def replace_in(val:, places: 4)
           return val unless convertible?
 
           [prefix ? val[prefix] : '', to_s(places), val[suffix]].compact.join
         end
-        
+
+        # @return [Float]
         def to_f
           return nil unless convertible?
 
@@ -31,12 +39,14 @@ module Kiba
         end
 
         # @param places [Integer]
+        # @return [String]
         def to_s(places = 4)
           return nil unless convertible?
 
           ( Rational(fraction) + whole ).round(+places).to_f.to_s
         end
 
+        # @return [Boolean] whether the fraction is indeed convertible
         def convertible?
           Rational(fraction)
         rescue ZeroDivisionError
