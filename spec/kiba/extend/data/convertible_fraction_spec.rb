@@ -135,7 +135,7 @@ RSpec.describe Kiba::Extend::Data::ConvertibleFraction do
     let(:expectations) do
       {
         [{whole: 0, fraction: '1/2', position: 0..2},
-         {whole: 0, fraction: '1/2', position: 0..2}] => true,
+         {fraction: '1/2', position: 0..2}] => true,
         [{whole: 1, fraction: '1/2', position: 0..2},
          {whole: 0, fraction: '1/2', position: 0..2}] => false
       }
