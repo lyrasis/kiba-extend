@@ -9,6 +9,26 @@ module Kiba
         #
         # If target field value is blank, it is left blank
         #
+        # @example non-multival (default)
+        #   # Used in pipeline as:
+        #   # transform Prepend::ToFieldValue, field: :name, value: 'aka: '
+        #
+        #   xform = Prepend::ToFieldValue.new(field: :name, value: 'aka: ')
+        #   input = [
+        #       {name: 'Weddy'},
+        #       {name: 'Kernel|Zipper'},
+        #       {name: nil},
+        #       {name: ''}
+        #     ]
+        #   result = input.map{ |row| xform.process(row) }
+        #   expected = [
+        #       {name: 'aka: Weddy'},
+        #       {name: 'aka: Kernel|Zipper'},
+        #       {name: nil},
+        #       {name: ''}
+        #     ]
+        #   expect(result).to eq(expected)
+        #
         # ## Examples
         #
         # Input table:

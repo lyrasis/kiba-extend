@@ -100,6 +100,9 @@ GEM
     xxhash (0.5.0)
     yard (0.9.28)
       webrick (~> 1.7.0)
+    yardspec (0.2.0)
+      rspec
+      yard
     zeitwerk (2.6.0)
 
 PLATFORMS
@@ -117,6 +120,7 @@ DEPENDENCIES
   rubocop-rspec (~> 2.4.0)
   simplecov
   yard (~> 0.9.28)
+  yardspec (~> 0.2.0)
 
 BUNDLED WITH
    2.3.9
