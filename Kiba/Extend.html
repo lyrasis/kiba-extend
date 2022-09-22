@@ -143,7 +143,7 @@ strips again, removes &quot;NULL&quot; (i.e. literal string &quot;NULL&quot; bec
         <dt id="VERSION-constant" class="">VERSION =
           
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>3.2.0</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>3.2.1</span><span class='tstring_end'>&#39;</span></span></pre></dd>
       
     </dl>
   
@@ -536,6 +536,29 @@ strips again, removes &quot;NULL&quot; (i.e. literal string &quot;NULL&quot; bec
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#registry_namespace_separator-class_method" title="registry_namespace_separator (class method)">.<strong>registry_namespace_separator</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Used to join nested namespaces and registered keys in FileRegistry.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#reload!-class_method" title="reload! (class method)">.<strong>reload!</strong>  &#x21d2; Object </a>
     
 
@@ -699,10 +722,10 @@ strips again, removes &quot;NULL&quot; (i.e. literal string &quot;NULL&quot; bec
       <pre class="lines">
 
 
-77</pre>
+67</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 77</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 67</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:csvopts</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='lbrace'>{</span> <span class='label'>headers:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>header_converters:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>symbol</span><span class='words_sep'> </span><span class='tstring_content'>downcase</span><span class='tstring_end'>]</span></span> <span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -754,10 +777,10 @@ entry hash creator as a Module</a></p>
       <pre class="lines">
 
 
-116</pre>
+112</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 116</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 112</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:default_job_method_name</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='symbol'>:job</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -818,10 +841,10 @@ entry hash creator as a Module</a></p>
       <pre class="lines">
 
 
-85</pre>
+75</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 85</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 75</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:delim</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>|</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -854,12 +877,12 @@ entry hash creator as a Module</a></p>
       <pre class="lines">
 
 
-101</pre>
+98</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 101</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 98</span>
 
-<span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:destination</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='const'><span class='object_link'><a href="../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Extend/Destinations.html" title="Kiba::Extend::Destinations (module)">Destinations</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Extend/Destinations/CSV.html" title="Kiba::Extend::Destinations::CSV (class)">CSV</a></span></span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
+<span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:destination</span><span class='comma'>,</span> <span class='label'>constructor:</span> <span class='id identifier rubyid_proc'>proc</span><span class='lbrace'>{</span> <span class='const'><span class='object_link'><a href="../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Extend/Destinations.html" title="Kiba::Extend::Destinations (module)">Destinations</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Extend/Destinations/CSV.html" title="Kiba::Extend::Destinations::CSV (class)">CSV</a></span></span> <span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
   </tr>
 </table>
@@ -907,10 +930,10 @@ entry hash creator as a Module</a></p>
       <pre class="lines">
 
 
-152</pre>
+148</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 152</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 148</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:job_show_me</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -960,10 +983,10 @@ entry hash creator as a Module</a></p>
       <pre class="lines">
 
 
-155</pre>
+151</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 155</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 151</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:job_tell_me</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1017,10 +1040,10 @@ entry hash creator as a Module</a></p>
       <pre class="lines">
 
 
-162</pre>
+158</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 162</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 158</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:job_verbosity</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='symbol'>:normal</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1070,10 +1093,10 @@ entry hash creator as a Module</a></p>
       <pre class="lines">
 
 
-80</pre>
+70</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 80</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 70</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:lambdaopts</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='lbrace'>{</span> <span class='label'>on_write:</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_r'>r</span><span class='rparen'>)</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_accumulator'>accumulator</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_r'>r</span> <span class='rbrace'>}</span> <span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1096,12 +1119,12 @@ entry hash creator as a Module</a></p>
       <pre class="lines">
 
 
-49
-50
-51</pre>
+42
+43
+44</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 49</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 42</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_loader'>loader</span>
   <span class='ivar'>@loader</span> <span class='op'>||=</span> <span class='id identifier rubyid_setup_loader'>setup_loader</span>
@@ -1153,10 +1176,10 @@ entry hash creator as a Module</a></p>
       <pre class="lines">
 
 
-93</pre>
+83</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 93</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 83</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:nullvalue</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1218,10 +1241,10 @@ specify directories that contain derived/generated files!</strong></li>
       <pre class="lines">
 
 
-140</pre>
+136</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 140</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 136</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:pre_job_task_action</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='symbol'>:backup</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1273,10 +1296,10 @@ specify directories that contain derived/generated files!</strong></li>
       <pre class="lines">
 
 
-130</pre>
+126</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 130</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 126</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:pre_job_task_backup_dir</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1326,10 +1349,10 @@ specify directories that contain derived/generated files!</strong></li>
       <pre class="lines">
 
 
-133</pre>
+129</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 133</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 129</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:pre_job_task_directories</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1385,10 +1408,10 @@ and/or your jobs are more stable</li>
       <pre class="lines">
 
 
-149</pre>
+145</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 149</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 145</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:pre_job_task_mode</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='symbol'>:job</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1440,10 +1463,10 @@ for backward compatibility, as existing projects may not have the required setti
       <pre class="lines">
 
 
-126</pre>
+122</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 126</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 122</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:pre_job_task_run</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1497,18 +1520,86 @@ jobs</p>
       <pre class="lines">
 
 
-109
-110
-111
-112</pre>
+106
+107
+108</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 109</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 106</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:registry</span><span class='comma'>,</span>
-<span class='label'>default:</span> <span class='const'><span class='object_link'><a href="../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Extend/Registry.html" title="Kiba::Extend::Registry (module)">Registry</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Extend/Registry/FileRegistry.html" title="Kiba::Extend::Registry::FileRegistry (class)">FileRegistry</a></span></span><span class='comma'>,</span>
-<span class='label'>constructor:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_value'>value</span><span class='op'>|</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+<span class='label'>constructor:</span> <span class='id identifier rubyid_proc'>proc</span><span class='lbrace'>{</span> <span class='const'><span class='object_link'><a href="../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Extend/Registry.html" title="Kiba::Extend::Registry (module)">Registry</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Extend/Registry/FileRegistry.html" title="Kiba::Extend::Registry::FileRegistry (class)">FileRegistry</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='rbrace'>}</span><span class='comma'>,</span>
 <span class='label'>reader:</span> <span class='kw'>true</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="registry_namespace_separator-class_method">
+  
+    .<strong>registry_namespace_separator</strong>  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns used to join nested namespaces and registered keys in FileRegistry.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>With namespace &#39;ns&#39; and registered key &#39;foo&#39;</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ns__foo</span><span class='tstring_end'>&#39;</span></span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>With parent namespace &#39;ns&#39;, child namespace &#39;child&#39;, and registered key &#39;foo&#39;</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ns__child__foo</span><span class='tstring_end'>&#39;</span></span></code></pre>
+    
+  </div>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>used to join nested namespaces and registered keys in FileRegistry</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+90</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 90</span>
+
+<span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:registry_namespace_separator</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>__</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
   </tr>
 </table>
@@ -1529,12 +1620,12 @@ jobs</p>
       <pre class="lines">
 
 
-69
-70
-71</pre>
+62
+63
+64</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 69</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 62</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_reload!'>reload!</span>
   <span class='ivar'>@loader</span><span class='period'>.</span><span class='id identifier rubyid_reload'>reload</span>
@@ -1597,10 +1688,10 @@ jobs</p>
       <pre class="lines">
 
 
-90</pre>
+80</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 90</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 80</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:sgdelim</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>^^</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1633,10 +1724,10 @@ jobs</p>
       <pre class="lines">
 
 
-97</pre>
+94</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 97</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 94</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:source</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='const'><span class='object_link'><a href="../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>Sources</span><span class='op'>::</span><span class='const'>CSV</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1669,15 +1760,15 @@ jobs</p>
       <pre class="lines">
 
 
+162
+163
+164
+165
 166
-167
-168
-169
-170
-171</pre>
+167</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 166</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 162</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_warn_unnested'>warn_unnested</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_rep_by'>rep_by</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>job_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -1732,10 +1823,10 @@ jobs</p>
       <pre class="lines">
 
 
-104</pre>
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 104</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 101</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:warning_label</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>KIBA WARNING</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1748,7 +1839,7 @@ jobs</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Sep 20 23:33:09 2022 by
+  Generated on Thu Sep 22 00:17:26 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>

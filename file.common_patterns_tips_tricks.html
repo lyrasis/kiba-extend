@@ -101,7 +101,7 @@
 <span class='kw'>end</span>
 </code></pre>
 
-<p>It can also be useful in other transforms as shown below:</p>
+<p>It can also be used in order to compose additional behavior in another transform as shown below:</p>
 
 <pre class="code ruby"><code class="ruby"><span class='kw'>class</span> <span class='const'>Transformer</span>
   <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>param1:</span><span class='comma'>,</span> <span class='label'>param2:</span><span class='rparen'>)</span>
@@ -125,6 +125,27 @@
 </code></pre>
 
 <p>See the code for <span class='object_link'><a href="Kiba/Extend/Transforms/Rename/Fields.html" title="Kiba::Extend::Transforms::Rename::Fields (class)">Kiba::Extend::Transforms::Rename::Fields</a></span> for an example of embedding another transform to compose transformation logic.</p>
+
+<h2 id="using-transforms-in-job-definitions">Using transforms in job definitions</h2>
+
+<p>The following code snippets are equivalent.</p>
+
+<p>This one relies on the domain specific language (DSL) &quot;magic&quot; defined in kiba:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='period'>.</span><span class='id identifier rubyid_job_segment'><span class='object_link'><a href="Kiba/Extend/Jobs/JobSegmenter.html#job_segment-instance_method" title="Kiba::Extend::Jobs::JobSegmenter#job_segment (method)">job_segment</a></span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_transform'>transform</span> <span class='const'>Merge</span><span class='op'>::</span><span class='const'>ConstantValue</span><span class='comma'>,</span> <span class='label'>target:</span> <span class='symbol'>:data_source</span><span class='comma'>,</span> <span class='label'>value:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>source system</span><span class='tstring_end'>&#39;</span></span>
+<span class='kw'>end</span>
+</code></pre>
+
+<p>This one uses plain Ruby to set up the transform class and calls its <code>:process</code> method on each row: </p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='period'>.</span><span class='id identifier rubyid_job_segment'><span class='object_link'><a href="Kiba/Extend/Jobs/JobSegmenter.html#job_segment-instance_method" title="Kiba::Extend::Jobs::JobSegmenter#job_segment (method)">job_segment</a></span></span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'>Merge</span><span class='op'>::</span><span class='const'>ConstantValue</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>target:</span> <span class='symbol'>:data_source</span><span class='comma'>,</span> <span class='label'>value:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>source system</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_transform'>transform</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<p>The second one might be useful in situations when you are trying to set things up more flexibly.</p>
 
 <h2 id="calling-a-job-with-parameters">Calling a job with parameters</h2>
 
@@ -157,7 +178,7 @@
 </div></div>
 
       <div id="footer">
-  Generated on Tue Sep 20 23:33:09 2022 by
+  Generated on Thu Sep 22 00:17:26 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>
