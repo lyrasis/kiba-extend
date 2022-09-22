@@ -12,33 +12,14 @@ class Runnable < Thor
   private
 
   def preprocess_options
-    Kiba::Extend.config.job.show_me = options[:show]
-    Kiba::Extend.config.job.tell_me = options[:tell]
-    Kiba::Extend.config.job.verbosity = options[:verbosity].to_sym
+    Kiba::Extend.config.job_show_me = options[:show]
+    Kiba::Extend.config.job_tell_me = options[:tell]
+    Kiba::Extend.config.job_verbosity = options[:verbosity].to_sym
   end
 
-  def resolve_job(key)
-    Kiba::Extend.registry.resolve(key)
-  rescue Dry::Container::KeyError
-    puts "No job with key: #{key}"
-    :failure
-  end
-
-  def resolve_creator(job)
-    creator = job.creator
-    return creator if creator
-
-    puts "No creator method for #{job.key}"
-    :failure
-  end
-
-  def run_job(key)
-    job = resolve_job(key)
-    return if job == :failure
-
-    creator = resolve_creator(job)
-    return if creator == :failure
-
-    creator.call
+  def run_jobs(keys)
+    preprocess_options
+    Kiba::Extend::Utils::PreJobTask.call
+    keys.each{ |key| Kiba::Extend::Command::Run.job(key) }
   end
 end

@@ -15,6 +15,6 @@ LONG
 
     return unless options[:run]
 
-    result.map(&:key).each{ |key| run_job(key) }
+    run_jobs(result.map(&:key))
   end
 end

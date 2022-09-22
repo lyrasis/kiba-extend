@@ -6,7 +6,6 @@ class Run < Runnable
          desc: 'Registry keys for the job to run'
 
   def jobs
-    preprocess_options
-    options[:keys].each{ |key| run_job(key) }
+    run_jobs(options[:keys])
   end
 end

@@ -19,7 +19,7 @@ module Kiba
       class FileRegistry
         include Dry::Container::Mixin
 
-        config.namespace_separator = '__'
+        config.namespace_separator = Kiba::Extend.registry_namespace_separator
 
         # Exception raised if the file key is not registered
         class KeyNotRegisteredError < Kiba::Extend::Error
@@ -65,6 +65,15 @@ module Kiba
           @entries ||= populate_entries
         end
 
+        # Convenience method combining the steps of transforming initial registry entry hashes
+        #   into FileRegistryEntry objects, and then making the registry immutable for the
+        #   rest of the application's run. `:freeze` is from dry-container.
+        def finalize
+          transform
+          freeze
+        end
+
+        # Transforms registered file hashes into Kiba::Extend::Registry::FileRegistryEntry objects
         def transform
           each { |key, val| decorate(key) { FileRegistryEntry.new(val) } }
           @entries = populate_entries

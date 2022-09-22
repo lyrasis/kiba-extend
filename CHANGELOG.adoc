@@ -21,23 +21,67 @@ and this project adheres to https://semver.org/spec/v2.0.0.html[Semantic Version
 toc::[]
 
 == Planned for a future release
+=== Breaking
+* Removal of nested `job.show_me`, `job.tell_me`, and `job.verbosity` config settings (deprecated in 3.2.0)
 
 == Unreleased
 These changes are merged into the `main` branch but have not yet been tagged as a new version/release.
 
-==== Breaking
+=== Breaking
 
-==== Added
+=== Added
 
-==== Changed
+=== Changed
 
-==== Bugfixes
+=== Bugfixes
 
-==== Deleted
+=== Deleted
 
-==== To be deprecated/Will break in a future version
+=== Deprecated/Will break in a future version
 
 == Releases
+
+=== 3.2.1 - 2022-09-21
+
+==== Added
+* Config setting to control string used as registry namespace separator
+
+==== Bugfixes
+* Require the kiba-common ShowMe extension so that option actually works when running jobs
+
+==== Changed
+* Refactoring `lib/kiba/extend.rb` so inter-application `require` statements can be removed
+
+=== 3.2.0 - 2022-09-20
+
+==== Added
+* Configurable pre-job task handling
+* `Kiba::Extend::Registry::FileRegistry.finalize` method
+* Unnested `job_show_me`, `job_tell_me`, and `job_verbosity` config settings.
+
+==== Deprecated/Will break in a future version
+* Nested `job.show_me`, `job.tell_me`, and `job.verbosity` config settings.
+
+=== 3.1.0 - 2022-09-20
+
+==== Added
+* Add publicly readable `srcrows` and `outrows` on `Kiba::Extend::Jobs::BaseJob` (inherited by all job types). This makes it possible to do things like this in client projects:
+
+[source,ruby]
+----
+job = Kiba::Extend::Command::Run.job(:prep__objects)
+puts "Some records omitted" if job.outrows < job.srcrows
+----
+
+These attributes were previously only accessible via:
+
+[source,ruby]
+----
+job.context.instance_variable_get(:@srcrows)
+----
+
+==== Changed
+* Refactored thor tasks. Moved basically all logic/behavior into `Kiba::Extend::Command` namespace where it can be called by Thor tasks _or_ directly by client projects. This leaves the `/lib/tasks` more purely about defining the CLI interaction
 
 === 3.0.0 - 2022-08-26
 

@@ -17,7 +17,7 @@ module Kiba
         include Runner
         include Parser
 
-        attr_reader :control, :context, :files, :transformer
+        attr_reader :control, :context, :files, :transformer, :srcrows, :outrows
 
         # @param files [Hash]
         # @param transformer [Kiba::Control]
@@ -35,6 +35,7 @@ module Kiba
           assemble_control # defined in Runner
           run
           report_run_end # defined in Reporter
+          set_row_count_instance_variables
         end
 
         def run
@@ -93,6 +94,13 @@ module Kiba
           Kiba.job_segment do
             post_process do
             end
+          end
+        end
+
+        def set_row_count_instance_variables
+          %w[srcrows outrows].each do |var|
+            varsym = "@#{var}".to_sym
+            instance_variable_set(varsym, context.instance_variable_get(varsym))
           end
         end
       end
