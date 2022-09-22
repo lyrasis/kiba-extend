@@ -24,3 +24,5 @@ group :test do
 end
 # Specify your gem's dependencies in kiba-extend.gemspec
 gemspec
+
+gem "yardspec", "~> 0.2.0"

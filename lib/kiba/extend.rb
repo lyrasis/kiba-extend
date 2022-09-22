@@ -69,24 +69,32 @@ module Kiba
     # @return [Hash] default settings for Lambda destination
     setting :lambdaopts, default: { on_write: ->(r) { accumulator << r } }, reader: true
 
-    # @return [String] default delimiter for splitting/joining values in multi-valued fields
-    # @example If :delim == '|'
-    #   'a|b' -> ['a', 'b']
+    # @return [String]
+    # Default delimiter for splitting/joining values in multi-valued fields.
+    #
+    # ```
+    # 'a|b'.split(Kiba::Extend.delim) => ['a', 'b']
+    # ```
     setting :delim, default: '|', reader: true
 
-    # @return [String] default subgrouping delimiter for splitting/joining values in multi-valued fields
-    # @example If :delim == '|' and :sgdelim == '^^'
-    #   'a^^y|b^^z' -> [['a', 'y'], ['b', 'z']]
+    # @return [String]
+    # Default subgrouping delimiter for splitting/joining values in multi-valued fields
+    #
+    # ```
+    # orig = 'a^^y|b^^z'
+    # delim_split = orig.split(delim)
+    # sgdelim_split = delim_split.map{ |val| val.split(sgdelim) }
+    # sgdelim_split => [['a', 'y'], ['b', 'z']]
+    # ```
     setting :sgdelim, default: '^^', reader: true
 
     # @return [String] default string to be treated as though it were a null/empty value.
     setting :nullvalue, default: '%NULLVALUE%', reader: true
 
-    # @return [String] used to join nested namespaces and registered keys in FileRegistry
-    # @example With namespace 'ns' and registered key 'foo'
-    #   'ns__foo'
-    # @example With parent namespace 'ns', child namespace 'child', and registered key 'foo'
-    #   'ns__child__foo'
+    # @return [String]
+    # Used to join nested namespaces and registered keys in FileRegistry. With namespace 'ns' and registered
+    #   key 'foo': 'ns\__foo'. With parent namespace 'ns', child namespace 'child', and registered key 'foo':
+    #   'ns\__child\__foo'
     setting :registry_namespace_separator, default: '__', reader: true
     
     # @!method source
@@ -135,7 +143,9 @@ module Kiba
     #    specify directories that contain derived/generated files!**
     setting :pre_job_task_action, default: :backup, reader: true
     
-    # @return [:job, *] Controls whether pre-job task is run
+    # @return [:job, nil, anyValue]
+    #
+    #Controls whether pre-job task is run
     #
     # - :job - runs pre-job task specified above whenever you invoke `thor run:job ...`. All dependency jobs
     #   required for the invoked job will be run. This mode is recommended during development when you want
@@ -159,12 +169,16 @@ module Kiba
 
     
     # The section below is for backward comapatibility only
+
+    # @since 3.2.1
+    # Warns that nested job config settings will be deprecated and gives new setting to use
     def warn_unnested(name, value)
       rep_by = "job_#{name}"
       msg = "Kiba::Extend.config.job.#{name} setting has been replaced by Kiba::Extend.config.#{rep_by}"
       warn("#{Kiba::Extend.warning_label}: #{msg}")
       value
     end
+    private_class_method :warn_unnested
 
     setting :job, reader: true do
       setting :show_me, default: Kiba::Extend.job_show_me, reader: true,

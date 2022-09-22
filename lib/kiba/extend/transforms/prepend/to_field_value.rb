@@ -9,53 +9,45 @@ module Kiba
         #
         # If target field value is blank, it is left blank
         #
-        # ## Examples
+        # @example Treated as single value (default)
+        #   # Used in pipeline as:
+        #   # transform Prepend::ToFieldValue, field: :name, value: 'aka: '
         #
-        # Input table:
+        #   xform = Prepend::ToFieldValue.new(field: :name, value: 'aka: ')
+        #   input = [
+        #       {name: 'Weddy'},
+        #       {name: 'Kernel|Zipper'},
+        #       {name: nil},
+        #       {name: ''}
+        #     ]
+        #   result = input.map{ |row| xform.process(row) }
+        #   expected = [
+        #       {name: 'aka: Weddy'},
+        #       {name: 'aka: Kernel|Zipper'},
+        #       {name: nil},
+        #       {name: ''}
+        #     ]
+        #   expect(result).to eq(expected)
         #
-        # ```
-        # | name          |
-        # |---------------|
-        # | Weddy         |
-        # | Kernel|Zipper |
-        # | nil           |
-        # |               |
-        # ```
+        # @example Treated as multivalue
+        #   # Used in pipeline as:
+        #   # transform Prepend::ToFieldValue, field: :name, value: 'aka: ', multival: true, delim: '|'
         #
-        # Used in pipeline as:
-        #
-        # ```
-        # transform Prepend::ToFieldValue, field: :name, value: 'aka: '
-        # ```
-        #
-        # Results in:
-        #
-        # ```
-        # | name               |
-        # |--------------------|
-        # | aka: Weddy         |
-        # | aka: Kernel|Zipper |
-        # | nil                |
-        # |                    |
-        # ```
-        #
-        # Used in pipeline as:
-        #
-        # ```
-        # transform Prepend::ToFieldValue, field: :name, value: 'aka: ', multival: true, delim: '|'
-        # ```
-        #
-        # Results in:
-        #
-        # ```
-        # | name                    |
-        # |-------------------------|
-        # | aka: Weddy              |
-        # | aka: Kernel|aka: Zipper |
-        # | nil                     |
-        # |                         |
-        # ```
-        #
+        #   xform = Prepend::ToFieldValue.new(field: :name, value: 'aka: ', multival: true, delim: '|')
+        #   input = [
+        #       {name: 'Weddy'},
+        #       {name: 'Kernel|Zipper'},
+        #       {name: nil},
+        #       {name: ''}
+        #     ]
+        #   result = input.map{ |row| xform.process(row) }
+        #   expected = [
+        #       {name: 'aka: Weddy'},
+        #       {name: 'aka: Kernel|aka: Zipper'},
+        #       {name: nil},
+        #       {name: ''}
+        #     ]
+        #   expect(result).to eq(expected)
         class ToFieldValue
           # @note `mvdelim` argument is deprecated and replaced by `multival` and `delim`
           # @param field [Symbol] The field to prepend to
