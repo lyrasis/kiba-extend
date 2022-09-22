@@ -83,5 +83,16 @@ RSpec.describe Kiba::Extend::Utils::ExtractFractions do
         expect(results).to eq(expected)
       end
     end
+
+    context %{with un-convertable "fraction"} do
+      let(:params){ {} }
+      let(:value){ 'copy 1/0' }
+      let(:result){ xform.call(value) }
+      it 'returns expected' do
+        msg = 'Kiba::Extend::Utils::ExtractFractions: Unconvertible fraction: 1/0'
+        expect(xform).to receive(:warn).with(msg)
+        expect(result).to eq([fraction({fraction: '1/0', position: 5..7})])
+      end
+    end
   end
 end
