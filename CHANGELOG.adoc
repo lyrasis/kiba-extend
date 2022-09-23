@@ -45,6 +45,19 @@ These changes are merged into the `main` branch, but have not been released. Aft
 
 == Releases
 
+=== 3.2.2 - 2022-09-23
+
+==== Added
+* `Fraction::ToDecimal` transform (and supporting `Utils::ExtractFractions` and `Data::ConvertibleFraction` classes) (PR#108)
+* `yardspec` gem to support running YARD examples as RSpec tests (PR#107)
+* Branch coverage to `simplecov` setup (PR#107)
+
+==== Changed
+* Tests for the `Prepend::ToFieldValue` transform converted to use `yardspec` (PR#107)
+
+==== Bugfixes
+* No longer falls over when a project has nested job config settings (scope changes when used in a project, and the private :warn_unnested method couldn't be called)
+
 === 3.2.1 - 2022-09-21
 
 ==== Added
@@ -277,4 +290,3 @@ These will now give warnings if used.
 
 - `Delete::FieldsExcept` `keepfields` keyword parameter. Change to `fields`  (in https://github.com/lyrasis/kiba-extend/pull/57[PR#57])
 - `Delete::EmptyFieldValues` `sep` keyword parameter. Change to `delim`  (in https://github.com/lyrasis/kiba-extend/pull/57[PR#57])
-

@@ -96,7 +96,7 @@ module Kiba
     #   key 'foo': 'ns\__foo'. With parent namespace 'ns', child namespace 'child', and registered key 'foo':
     #   'ns\__child\__foo'
     setting :registry_namespace_separator, default: '__', reader: true
-    
+
     # @!method source
     # Default source class for jobs. Must meet implementation criteria in [Kiba wiki](https://github.com/thbar/kiba/wiki/Implementing-ETL-sources)
     setting :source, default: Kiba::Common::Sources::CSV, reader: true
@@ -123,26 +123,26 @@ module Kiba
     #
     # If configured properly, the pre-job task is run when a job is run via Thor invocation. This includes
     #   `run:job`, `run:jobs`, and `jobs:tagged -r tagvalue`. The task is run once when the Thor task is
-    #   invoked. 
-    
+    #   invoked.
+
     # @return [Boolean] whether to use Kiba::Extend's pre-job task functionality. The default is `false`
     #   for backward compatibility, as existing projects may not have the required settings configured.
     setting :pre_job_task_run, default: false, reader: true
-    
+
     # @return [String] full path to directory to which files will be moved if `pre_job_task_action ==
     #   :backup`. The directory will be created if it does not exist.
     setting :pre_job_task_backup_dir, default: nil, reader: true
-    
+
     # @return [Array<String>] full paths to directories that will be affected by the specified pre-task action
     setting :pre_job_task_directories, default: [], reader: true
-    
+
     # @return [:backup, :nuke] Controls what happens when pre-job task is run
     #
     #  - :backup - Moves all existing files in specified directories to backup directory created in your `:datadir`
     #  - :nuke - Deletes all existing files in specified directories when a job is run. **Make sure you only
     #    specify directories that contain derived/generated files!**
     setting :pre_job_task_action, default: :backup, reader: true
-    
+
     # @return [:job, nil, anyValue]
     #
     #Controls whether pre-job task is run
@@ -159,7 +159,7 @@ module Kiba
 
     # @return [Boolean] whether to have computer audibly say something when job is complete
     setting :job_tell_me, default: false, reader: true
-    
+
     # @return [:debug, :normal, :minimal] how much output about jobs to output to STDOUT
     #
     # - :debug - tells you A LOT - helpful when developing pipelines and debugging
@@ -167,7 +167,7 @@ module Kiba
     # - :minimal - bare minimum
     setting :job_verbosity, default: :normal, reader: true
 
-    
+
     # The section below is for backward comapatibility only
 
     # @since 3.2.1
@@ -178,7 +178,6 @@ module Kiba
       warn("#{Kiba::Extend.warning_label}: #{msg}")
       value
     end
-    private_class_method :warn_unnested
 
     setting :job, reader: true do
       setting :show_me, default: Kiba::Extend.job_show_me, reader: true,
@@ -189,7 +188,7 @@ module Kiba
         constructor: proc{ |name, value| Kiba::Extend.warn_unnested(name, value) }
     end
 
-    
+
     # strips, collapses multiple spaces, removes terminal commas, strips again
     # removes "NULL"/treats as nilValue
     CSV::Converters[:stripplus] = lambda { |s|
@@ -241,7 +240,7 @@ module Kiba
         s
       end
     }
-    
+
   end
 end
 
