@@ -30,12 +30,8 @@ These changes are merged into the `main` branch, but have not been released. Aft
 === Breaking
 
 === Added
-* `Fraction::ToDecimal` transform (and supporting `Utils::ExtractFractions` and `Data::ConvertibleFraction` classes) (PR#108)
-* `yardspec` gem to support running YARD examples as RSpec tests (PR#107)
-* Branch coverage to `simplecov` setup (PR#107)
 
 === Changed
-* Tests for the `Prepend::ToFieldValue` transform converted to use `yardspec` (PR#107)
 
 === Bugfixes
 
