@@ -30,6 +30,8 @@ These changes are merged into the `main` branch, but have not been released. Aft
 === Breaking
 
 === Added
+* `Explode::ArrayFromMultivalField` transform
+* Test for `Explode::ArrayFromMultivalField`
 
 === Changed
 
