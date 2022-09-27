@@ -121,7 +121,7 @@ module Kiba
             @rows = []
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             populate_tracker(row)
             nil
@@ -134,7 +134,7 @@ module Kiba
               yield row
             end
           end
-          
+
           private
 
           attr_reader :pop_fields, :rows, :usenull, :consider_blank
@@ -146,7 +146,7 @@ module Kiba
 
           def prepare(row)
             return row unless usenull || consider_blank
-            
+
             strip_consider_blanks(strip_nulls(row.dup))
           end
 
@@ -158,10 +158,10 @@ module Kiba
             end
             row
           end
-          
+
           def strip_nulls(row)
             return row unless usenull
-            
+
             row.transform_values{ |val| Helpers.empty?(val, usenull) ? '' : val }
           end
         end
@@ -169,4 +169,3 @@ module Kiba
     end
   end
 end
-

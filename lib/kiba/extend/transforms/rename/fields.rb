@@ -36,7 +36,7 @@ module Kiba
             @renamers = fieldmap.map{ |from, to| Rename::Field.new(from: from, to: to) }
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             renamers.each{ |renamer| renamer.process(row) }
             row

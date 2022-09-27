@@ -14,7 +14,7 @@ module Kiba
         # condition = ->(row) do
         #   row[:note].is_a?(String) && row[:note].match?(/gift|donation/i) && row[:type] != 'obj'
         # end
-        # transform Merge::ConstantValueConditional, 
+        # transform Merge::ConstantValueConditional,
         #   fieldmap: { reason: 'gift', cost: '0' },
         #   condition: condition
         # ```
@@ -60,7 +60,7 @@ module Kiba
         # condition = ->(row) do
         #   row[:note].is_a?(row[:note].match?(/gift|donation/i) && row[:type] != 'obj' }
         # end
-        # transform Merge::ConstantValueConditional, 
+        # transform Merge::ConstantValueConditional,
         #   fieldmap: { reason: 'gift', cost: '0' },
         #   condition: condition
         # ```
@@ -82,7 +82,7 @@ module Kiba
         #
         # ```
         # condition = ->(row){ row[:note].length }
-        # transform Merge::ConstantValueConditional, 
+        # transform Merge::ConstantValueConditional,
         #   fieldmap: { reason: 'gift', cost: '0' },
         #   condition: condition
         # ```
@@ -105,7 +105,7 @@ module Kiba
               super(msg)
             end
           end
-          
+
           # @param fieldmap [Hash{Symbol => String}]
           # @param condition [Proc] A lambda Proc is expected.
           #   The lambda function should return true or false (i.e. whether the constant should be merged into the row).
@@ -116,7 +116,7 @@ module Kiba
             @condition = condition
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             if condition_met?(row)
               @fieldmap.each { |target, value| row[target] = value }
@@ -129,14 +129,14 @@ module Kiba
           private
 
           attr_reader :fieldmap, :condition
-          
+
           def condition_met?(row)
             begin
               result = condition.call(row)
             rescue StandardError
               fail(ConditionError.new(row))
             end
-            
+
             return result if result == true || result == false
 
             fail(NonBooleanConditionError.new)

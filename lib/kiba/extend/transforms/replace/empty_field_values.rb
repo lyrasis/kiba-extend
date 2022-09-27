@@ -44,7 +44,7 @@ module Kiba
         #
         # ### Null placeholder (single value)
         #
-        # Using same source data as above, and transform set up as: 
+        # Using same source data as above, and transform set up as:
         #
         # ```
         # transform Replace::EmptyFieldValues, fields: %i[name sex], value: '%NULLVALUE%',
@@ -64,7 +64,7 @@ module Kiba
         #
         # ### Multivalued (given a `delim` value)
         #
-        # Using same source data as above, and transform set up as: 
+        # Using same source data as above, and transform set up as:
         #
         # ```
         # transform Replace::EmptyFieldValues, fields: %i[name sex], delim: '|', value: '%NULLVALUE%'
@@ -83,7 +83,7 @@ module Kiba
         #
         # ### Multivalued (given a `delim` value) with `treat_as_null`
         #
-        # Using same source data as above, and transform set up as: 
+        # Using same source data as above, and transform set up as:
         #
         # ```
         # transform Replace::EmptyFieldValues, fields: %i[name sex], delim: '|', value: '%NULLVALUE%',
@@ -137,7 +137,7 @@ module Kiba
             @replacement_getter = Helpers::FieldValueGetter.new(fields: fields, delim: delim)
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             replace_fully_empty_fields(row)
             replace_multival_empty(row) if delim
@@ -151,7 +151,7 @@ module Kiba
           def is_empty?(val)
             [nil, '', treat_as_null].flatten.any?(val)
           end
-          
+
           def replace_fully_empty_fields(row)
             initial_getter.call(row)
               .select{ |field, value| is_empty?(value) }

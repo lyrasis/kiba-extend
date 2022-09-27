@@ -73,10 +73,10 @@ module Kiba
             @lambda_tested = false
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             test_lambda(row) unless lambda_tested
-            
+
             case action
             when :keep
               return row if lambda.call(row)
@@ -92,7 +92,7 @@ module Kiba
           def test_lambda(row)
             result = lambda.call(row)
             fail(NonBooleanLambdaError) unless result.is_a?(TrueClass) || result.is_a?(FalseClass)
-            
+
             @lambda_tested = true
           end
         end

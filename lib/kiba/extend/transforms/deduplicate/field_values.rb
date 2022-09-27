@@ -12,7 +12,7 @@ module Kiba
         #   to be the same length
         #
         # Input table:
-        # 
+        #
         # ```
         # | foo         | bar       |
         # |-------------------------|
@@ -48,7 +48,7 @@ module Kiba
             @sep = sep
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             @fields.each do |field|
               val = row.fetch(field)

@@ -86,15 +86,15 @@ module Kiba
             end
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
 
           def process(row)
             finalize_fields(row) unless fields_set
-            
+
             fields.each do |field|
               val = row.fetch(field)
               next if val.nil?
-              
+
               row[field] = val.split(delim)
                 .compact
                 .reject{ |str| Helpers.empty?(str, usenull) }

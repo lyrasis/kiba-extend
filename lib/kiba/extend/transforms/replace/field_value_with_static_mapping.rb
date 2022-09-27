@@ -196,7 +196,7 @@ module Kiba
                                             delete_source: delete_source, delim: delim})
               instance
             end
-            
+
             def sep_msg
               <<~MSG
               #{self.name} no longer supports the `sep` parameter
@@ -224,12 +224,12 @@ module Kiba
             @multival = true if @delim
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             set_initial_value(row)
             rowval = row[source]
             vals = prep_vals(rowval)
-            
+
             @fallback_val = get_fallback_vals(vals)
 
             row[target] = join_result(result(vals))
@@ -263,7 +263,7 @@ module Kiba
 
             multival ? results.join(delim) : results.first
           end
-          
+
           def result(vals)
             vals.map.with_index{ |v, i| mapping.fetch(v, fallback_val[i]) }
           end
@@ -274,7 +274,7 @@ module Kiba
 
             multival ? val.split(delim, -1) : [val]
           end
-          
+
           def set_delim(sep, delim)
             if delim && sep
               warn(self.class.delim_and_sep_warning)
@@ -284,7 +284,7 @@ module Kiba
               sep
             else
               delim
-            end             
+            end
           end
 
           def set_initial_value(row)

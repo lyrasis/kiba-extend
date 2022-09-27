@@ -41,7 +41,7 @@ module Kiba
             @mergers = constantmap.map{ |target, value| Merge::ConstantValue.new(target: target, value: value) }
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             mergers.each{ |merger| merger.process(row) }
             row

@@ -115,7 +115,7 @@ module Kiba
         # ```
         class AlphabetizeFieldValues
           include Kiba::Extend::Transforms::Helpers
-          
+
           # @param fields [Array(Symbol)] names of fields to sort
           # @param delim [String] Character(s) on which to split field values
           # @param usenull [Boolean] Whether to treat `Kiba::Extend.nullvalue` as a blank in processing
@@ -129,7 +129,7 @@ module Kiba
             @value_getter = Helpers::FieldValueGetter.new(fields: fields, delim: delim, treat_as_null: nv)
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             value_getter.call(row).each do |field, val|
               next unless val[delim]
@@ -153,7 +153,7 @@ module Kiba
 
           def sort_values(vals)
             if direction == :asc
-              vals.sort_by { |v| process_for_sort(v) } 
+              vals.sort_by { |v| process_for_sort(v) }
             else
               vals.sort_by { |v| process_for_sort(v) }.reverse
             end
@@ -166,7 +166,7 @@ module Kiba
             @if_equals = if_equals
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             @fields.each do |field|
               if @if_equals.nil?
@@ -184,7 +184,7 @@ module Kiba
             @fields = [fields].flatten
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             @fields.each do |field|
               val = row.fetch(field)
@@ -208,7 +208,7 @@ module Kiba
             @use_nullvalue = use_nullvalue
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             @groups.each { |group| process_group(row, group) }
             row
@@ -266,7 +266,7 @@ module Kiba
 
         class RegexpFindReplaceFieldVals
           include Allable
-          
+
           def initialize(fields:, find:, replace:, casesensitive: true, multival: false, sep: nil, debug: false)
             @fields = [fields].flatten
             @find = Regexp.new(find) if casesensitive == true
@@ -277,10 +277,10 @@ module Kiba
             @sep = sep
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             finalize_fields(row)
-            
+
             fields.each do |field|
               oldval = row.fetch(field, nil)
               next if oldval.nil?
@@ -315,7 +315,7 @@ module Kiba
             @fields = [fields].flatten
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             @fields.each do |field|
               val = row.fetch(field, nil)

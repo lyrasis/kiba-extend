@@ -139,7 +139,7 @@ module Kiba
             @count_empty = count_empty
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             row[@target] = '0'
             val = row.fetch(@field, nil)
@@ -153,7 +153,7 @@ module Kiba
 
           private
 
-          def handle_empty(vals)            
+          def handle_empty(vals)
             with_placeholder = handle_placeholder(vals)
             return with_placeholder if @count_empty
 

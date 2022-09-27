@@ -13,7 +13,7 @@ module Kiba
               super(msg)
             end
           end
-          
+
           # @param from [Symbol] Name of field to copy data from
           # @param to [Symbol] Name of field to copy data to
           def initialize(from:, to:)
@@ -21,10 +21,10 @@ module Kiba
             @to = to
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             fail MissingFromFieldError.new(from, row.keys) unless row.key?(from)
-            
+
             row[to] = row.fetch(from)
             row
           end

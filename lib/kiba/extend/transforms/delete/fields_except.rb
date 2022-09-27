@@ -52,7 +52,7 @@ module Kiba
               super
             end
           end
-          
+
           # @param keepfields [Array<Symbol>, Symbol, nil] **DEPRECATED; DO NOT USE**
           # @param fields [Array<Symbol>, Symbol, nil] list of fields to keep
           # @note The `keepfields` parameter will be deprecated in a future version. Use `fields` in new code.
@@ -71,7 +71,7 @@ module Kiba
             end
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             deletefields = row.keys - fields
             deletefields.each { |f| row.delete(f) }
@@ -86,4 +86,3 @@ module Kiba
     end
   end
 end
-

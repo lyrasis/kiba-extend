@@ -111,7 +111,7 @@ module Kiba
         # ```
         class DelimiterOnlyFieldValues
           include Allable
-          
+
           # @param fields [:all, Symbol, Array(Symbol)] in which to delete delimiter-only-values. See
           #   {Transforms} for more on fields parameter.
           # @param delim [String]
@@ -124,7 +124,7 @@ module Kiba
             @checker = Helpers::DelimOnlyChecker.new(delim: delim, treat_as_null: treat_as_null)
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             finalize_fields(row) unless fields_set
             process_fields(row)
@@ -139,7 +139,7 @@ module Kiba
             val = row[field]
             row[field] = nil if checker.call(val)
           end
-          
+
           def process_fields(row)
             fields.each{ |field| process_field(field, row) }
           end

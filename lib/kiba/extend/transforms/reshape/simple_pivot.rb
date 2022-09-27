@@ -79,7 +79,7 @@ module Kiba
             @columns = {}
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             gather_column_field(row)
             nil

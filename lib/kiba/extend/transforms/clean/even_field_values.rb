@@ -18,7 +18,7 @@ module Kiba
         #  {a_foo: 'af', a_bar: 'ab', a_baz: 'az|zz'}
         # ```
         #
-        # is transformed to: 
+        # is transformed to:
         #
         # ```
         #   {a_foo: 'af|%NULLVALUE%', a_bar: 'ab|%NULLVALUE%', a_baz: 'az|zz'}
@@ -39,7 +39,7 @@ module Kiba
         # ### Default use
         #
         # Source data:
-        # 
+        #
         # ```
         # [
         #   {foo: 'a', bar: 'b', baz: 'c'},
@@ -69,7 +69,7 @@ module Kiba
         # ### Custom evener (String)
         #
         # Source data:
-        # 
+        #
         # ```
         # [
         #   {foo: 'a|a|a', bar: '|b', baz: 'c'}
@@ -96,7 +96,7 @@ module Kiba
         #   as necessary to achieve evenness across fields in the group.
         #
         # Source data:
-        # 
+        #
         # ```
         # [
         #   {foo: '', bar: nil, baz: 'c'},
@@ -141,13 +141,13 @@ module Kiba
             @evener = evener
             @delim = delim
             @warn = warn
-            
+
             @value_getter = Helpers::FieldValueGetter.new(fields: fields, treat_as_null: treat_as_null, delim: delim)
             @checker = Helpers::FieldEvennessChecker.new(fields: fields, delim: delim)
             @warner = Warn::UnevenFields.new(fields: fields, delim: delim)
           end
-          
-          # @param row [Hash{ Symbol => String }]
+
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             return row if fields.length == 1
 
@@ -180,11 +180,11 @@ module Kiba
             diff.times{ vals << pad }
             row[field] = vals.join(delim)
           end
-          
+
           def pad_uneven_values(row, chk, max)
             chk.each{ |field, val| pad_uneven_value(row, field, val, max) }
           end
-          
+
           def even_val(val_ary)
             if evener == :value
               val_ary[-1]
