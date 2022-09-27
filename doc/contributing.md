@@ -234,6 +234,6 @@ Organization of these needs to be re-thought. For now, I'm thinking `lib/transfo
 
 Pull requests are welcome!
 
-Please add entries in the "Unrealeased" section of the CHANGELOG.adoc that describe your changes.
+Please add entries in the "Unreleased" section of the CHANGELOG.adoc that describe your changes. In general we don't need to specify that tests were added or code was refactored in the CHANGELOG, since it primarily should reflect what users of `kiba-extend` need to know about its evolution.
 
 Assign @kspurgin as a reviewer.
