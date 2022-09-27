@@ -108,10 +108,10 @@ module Kiba
           end
           # rubocop:enable Metrics/ParameterLists
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             add_new_fields(row)
-            do_split(row)            
+            do_split(row)
             clean_up_fields(row)
             row
           end
@@ -128,7 +128,7 @@ module Kiba
           def add_warning(row)
             row[warnfield] = warnvalue
           end
-          
+
           def clean_up_fields(row)
             row.delete(field) if del
             row.delete(warnfield) unless warn
@@ -155,7 +155,7 @@ module Kiba
           def last_field
             "#{field}#{max - 1}".to_sym
           end
-          
+
           def new_fields
             (0..(max - 1)).entries.map{ |entry| "#{field}#{entry}".to_sym }
           end

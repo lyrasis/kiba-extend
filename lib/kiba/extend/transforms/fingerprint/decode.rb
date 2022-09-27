@@ -68,7 +68,7 @@ module Kiba
             @row_ct = 0
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             @row_ct += 1
             target_fields.each{ |field| row[field] = nil }
@@ -109,5 +109,3 @@ module Kiba
     end
   end
 end
-
-

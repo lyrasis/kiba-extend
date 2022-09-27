@@ -47,7 +47,7 @@ module Kiba
         #
         # Results in an error because column b contains the fingerprint delimiter. If you tried to decode the
         #   resulting fingerprint, you would get too many columns and loss of data integrity
-        # 
+        #
         # ## Notes
         # Before field values are joined, the following substitutions are run on all field values:
         #
@@ -73,7 +73,7 @@ module Kiba
             @row_num = 0
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             @row_num += 1
             row[target] = get_fingerprint(row)
@@ -86,7 +86,7 @@ module Kiba
 
           def check_delim(delim)
             return if override_app_delim_check
-            
+
             raise Kiba::Extend::Transforms::Fingerprint::DelimiterCollisionError if delim[Kiba::Extend.delim]
             raise Kiba::Extend::Transforms::Fingerprint::DelimiterCollisionError if delim[Kiba::Extend.sgdelim]
             raise Kiba::Extend::Transforms::Fingerprint::DelimiterCollisionError if Kiba::Extend.delim[delim]

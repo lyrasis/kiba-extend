@@ -176,7 +176,7 @@ module Kiba
             @casesensitive = casesensitive
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             del_val = prepare_val(delete, row, :compare)
             compare_val = prepare_val(compare, row, :compare)
@@ -195,7 +195,7 @@ module Kiba
             report_group_issue(validation, row) unless validation == :valid
             grouped.map{ |grp| do_deletes(to_delete, grp) }
               .each_with_index{ |grp, i| row[group[i]] = grp }
-            
+
             row
           end
 
@@ -210,7 +210,7 @@ module Kiba
             end
             to_del.sort.reverse
           end
-          
+
           def compare_against_single_value(del_val, compare_val)
             cval = compare_val.first
             to_del = []
@@ -223,10 +223,10 @@ module Kiba
           def do_deletes(to_delete, vals)
             to_delete.each{ |i| vals.delete_at(i) }
             return nil if vals.empty?
-            
+
             vals.join(delim)
           end
-          
+
           def get_compare_method(del_val, compare_val)
             return :compare_against_single_value if compare_val.length == 1
 
@@ -236,7 +236,7 @@ module Kiba
           def grouped?
             !group.empty?
           end
-          
+
           def prepare_val(field, row, type = :final)
             val = row.fetch(field)
             return nil if val.blank?
@@ -245,7 +245,7 @@ module Kiba
               split = multival ? val.split(delim) : [val]
               return split
             end
-            
+
             norm_val = casesensitive ? val : val.downcase
             multival ? norm_val.split(delim) : [norm_val]
           end

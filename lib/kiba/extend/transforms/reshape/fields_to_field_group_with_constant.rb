@@ -5,7 +5,7 @@ module Kiba
     module Transforms
       module Reshape
         # @since 2.9.0
-        # 
+        #
         # Convenience transform to rename one or more fields and add a field with a constant value,
         #   by default ensuring explicit empty field values and field evenness expected in
         #   field groups. Runs the following other transforms, which you will want to understand
@@ -209,7 +209,7 @@ module Kiba
             @evener = evener.nil? ? treat_as_null : evener
             @uneven_warning = uneven_warning
             @remove_empty_groups = remove_empty_groups
-            
+
             @empty_replacer = Replace::EmptyFieldValues.new(fields: @renamed, value: treat_as_null, delim: delim,
                                                             treat_as_null: treat_as_null)
             @even_xform = Clean::EvenFieldValues.new(fields: @renamed, evener: @evener, delim: delim,
@@ -219,8 +219,8 @@ module Kiba
             )
             @value_getter = Helpers::FieldValueGetter.new(fields: renamed, delim: delim, treat_as_null: treat_as_null)
           end
-          
-          # @param row [Hash{ Symbol => String }]
+
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             renamer.process(row)
             empty_replacer.process(row) if replace_empty
@@ -237,7 +237,7 @@ module Kiba
             :enforce_evenness, :evener, :even_xform,
             :remove_empty_groups, :group_cleaner,
             :value_getter
-            
+
 
           def add_constant(row, max)
             if max
@@ -246,12 +246,12 @@ module Kiba
               row[target] = nil
             end
           end
-          
+
           def find_max_vals(row)
             if renamed.length == 1
               val = row[renamed.first]
               return 0 if val.blank?
-              
+
               val.split(delim, -1).length
             else
               value_getter.call(row)
@@ -274,7 +274,7 @@ module Kiba
             diff.times{ split << even_val(split) }
             row[field] = split.join(delim)
           end
-          
+
           def even_renamed_fields(row, max)
             renamed.each{ |field| even_renamed_field(field, row, max) }
           end

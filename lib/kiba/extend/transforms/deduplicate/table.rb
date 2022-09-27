@@ -50,8 +50,8 @@ module Kiba
             @deduper = {}
             @delete = delete_field
           end
-          
-          # @param row [Hash{ Symbol => String }]
+
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             field_val = row.fetch(@field, nil)
             return if field_val.blank?

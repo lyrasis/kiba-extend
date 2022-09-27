@@ -74,7 +74,7 @@ module Kiba
             @match = ignore_case ? Regexp.new(match, Regexp::IGNORECASE) : Regexp.new(match)
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             val = row.fetch(field)
             test = val ? val.match?(match) : false

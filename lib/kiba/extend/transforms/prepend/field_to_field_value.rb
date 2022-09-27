@@ -143,7 +143,7 @@ module Kiba
           end
           # rubocop:enable Metrics/ParameterLists
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             field_val = row.fetch(@field, nil)
             prepend_val = row.fetch(@prepend, nil)

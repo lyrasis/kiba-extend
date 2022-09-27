@@ -50,7 +50,7 @@ module Kiba
             @sep = sep
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             fv = row.fetch(@field)
             seen = []

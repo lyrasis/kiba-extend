@@ -20,7 +20,7 @@ module Kiba
             attr_reader :lookup
           end
 
-          # @param fieldmap [Hash{Symbol => Symbol}] key = field in source row to merge lookup data into; 
+          # @param fieldmap [Hash{Symbol => Symbol}] key = field in source row to merge lookup data into;
           #   value = field from lookup table whose value maps into target field
           # @param lookup [Hash] created by Utils::LookupHash. If you have registered a job as a lookup,
           #   kiba-extend takes care of creating this for you.
@@ -49,7 +49,7 @@ module Kiba
           #   are merged in. Without specifying a sorter, the lookup data is merged in the order it appears
           #   in the lookup table. So, if you ensure your lookup data source is sorted as desired prior to
           #   using it in a lookup, you may not need a sorter.
-          # @note Interaction of specifying a `sorter` and `multikey: true` may be unexpected. 
+          # @note Interaction of specifying a `sorter` and `multikey: true` may be unexpected.
           def initialize(fieldmap:, lookup:, keycolumn:, constantmap: {},
                          conditions: {}, multikey: false, delim: Kiba::Extend.delim, null_placeholder: nil,
                          sorter: nil)
@@ -57,7 +57,7 @@ module Kiba
             @constantmap = constantmap # hash of constants to add for each merged-in row
             @lookup = lookup # lookuphash; should be created with csv_to_multi_hash
             fail LookupTypeError.new(lookup) unless lookup.is_a?(Hash)
-            
+
             @keycolumn = keycolumn # column in main table containing value expected to be lookup key
             @multikey = multikey # should the key be treated as multivalued
             @conditions = conditions
@@ -72,7 +72,7 @@ module Kiba
             @sorter = sorter
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             field_data = Kiba::Extend::Utils::Fieldset.new(
               fields: fieldmap.values,
@@ -124,7 +124,7 @@ module Kiba
           def sort(results)
             return results unless sorter
             return results if results.length < 2
-            
+
             sorter.call(results)
           end
         end

@@ -56,7 +56,7 @@ module Kiba
             @action = action
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             case action
             when :keep

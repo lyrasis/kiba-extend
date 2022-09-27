@@ -12,7 +12,7 @@ module Kiba
             @delim = delim
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             row[@target] = nil
             val = row.fetch(@source, nil)
@@ -29,7 +29,7 @@ module Kiba
             BRUTEFORCE.each { |k, v| val = val.gsub(k, v) }
             ActiveSupport::Inflector.transliterate(val).gsub(/\W/, '').downcase
           end
-          
+
           def values(val)
             return [val] unless @multival
 

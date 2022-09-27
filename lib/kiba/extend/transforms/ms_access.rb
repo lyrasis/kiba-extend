@@ -13,7 +13,7 @@ module Kiba
             @fields = [fields].flatten
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             @fields.each { |field| process_field(row, field) }
             row

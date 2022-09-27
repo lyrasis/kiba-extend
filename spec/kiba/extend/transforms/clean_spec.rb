@@ -28,7 +28,7 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
               direction: :asc
           end
         end
-        
+
         it 'sorts as expected' do
           expected = [
             { type: 'Organization;Person;unmapped'},
@@ -49,7 +49,7 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
                 direction: :desc
             end
           end
-          
+
           it 'sorts as expected' do
             expected = [
               { type: 'unmapped;Person;Organization'},
@@ -88,7 +88,7 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
           expect(result).to eq(expected)
         end
       end
-      
+
 
       context 'when direction = :desc' do
         let(:transforms) do
@@ -286,227 +286,6 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
            b2: 'empty',
            b3: 'empty' }
         ]
-        expect(result).to eq(expected)
-      end
-    end
-  end
-
-  describe 'RegexpFindReplaceFieldVals' do
-    let(:input) do
-      [
-        {val: 'xxxxxx a thing'},
-        {val: 'thing xxxx 123'},
-        {val: 'x files'}
-      ]
-    end
-
-    let(:expected) do
-      [
-        {val: 'exes a thing'},
-        {val: 'thing exes 123'},
-        {val: 'x files'}
-      ]
-    end
-
-    let(:transforms) do
-      Kiba.job_segment do
-        transform Clean::RegexpFindReplaceFieldVals, fields: :val, find: 'xx+', replace: 'exes'
-      end
-    end
-
-    it 'Does specified regexp find/replace in field values' do
-      expect(result).to eq(expected)
-    end
-
-    context 'with start/end string anchors' do
-      let(:transforms) do
-        Kiba.job_segment do
-          transform Clean::RegexpFindReplaceFieldVals, fields: [:val], find: '^xx+', replace: 'exes'
-        end
-      end
-      
-      let(:expected) do
-        [
-          {val: 'exes a thing'},
-          {val: 'thing xxxx 123'},
-          {val: 'x files'}
-        ]
-      end
-
-    it 'Does specified regexp find/replace in field values' do
-        expect(result).to eq(expected)
-      end
-    end
-
-    context 'when case insensitive' do
-      let(:input) do
-        [
-          {val: 'the thing'},
-          {val: 'The Thing'}
-        ]
-      end
-      
-      let(:transforms) do
-        Kiba.job_segment do
-          transform Clean::RegexpFindReplaceFieldVals, fields: [:val], find: 'thing', replace: 'object', casesensitive: false
-        end
-      end
-      
-      let(:expected) do
-        [
-          {val: 'the object'},
-          {val: 'The object'}
-        ]
-      end
-      it 'Does specified regexp find/replace in field values' do
-        expect(result).to eq(expected)
-      end
-    end
-
-    context 'when replacing line breaks' do
-      let(:input) do
-        [
-          {val: '\n pace/macgill'},
-          {val: 'database number\n'}
-        ]
-      end
-      
-      let(:transforms) do
-        Kiba.job_segment do
-          transform Clean::RegexpFindReplaceFieldVals, fields: :val, find: '\\\\n', replace: ''
-        end
-      end
-      
-      let(:expected) do
-        [
-          {val: ' pace/macgill'},
-          {val: 'database number'}
-        ]
-      end
-      it 'Does specified regexp find/replace in field values' do
-        expect(result).to eq(expected)
-      end
-    end
-
-    context 'with capture groups' do
-      let(:input) do
-        [
-          {val: 'a thing'}
-        ]
-      end
-
-      let(:transforms) do
-        Kiba.job_segment do
-          transform Clean::RegexpFindReplaceFieldVals, fields: [:val], find: '^(a) (thing)', replace: 'about \1 curious \2'
-        end
-      end
-      
-      let(:expected) do
-        [
-          {val: 'about a curious thing'}
-        ]
-      end
-      
-      it 'Does specified regexp find/replace in field values' do
-        expect(result).to eq(expected)
-      end
-    end
-
-    context 'when replacement results in empty string' do
-      let(:input) do
-        [
-          {val: 'xxxxxx'}
-        ]
-      end
-      
-      let(:transforms) do
-        Kiba.job_segment do
-          transform Clean::RegexpFindReplaceFieldVals, fields: [:val], find: 'xx+', replace: ''
-        end
-      end
-      
-      let(:expected){ [{val: nil}] }
-      
-      it 'sets field value to nil' do
-        expect(result).to eq(expected)
-      end
-    end
-
-    context 'when multiple fields are given' do
-      let(:input) do
-        [
-          {val: 'xxxxxx1', another: 'xxx2xxxxx'}
-        ]
-      end
-
-      let(:transforms) do
-        Kiba.job_segment do
-          transform Clean::RegexpFindReplaceFieldVals, fields: %i[val another], find: 'xx+', replace: ''
-        end
-      end
-      
-      let(:expected){ [{val: '1', another: '2'}] }
-      it 'Does specified regexp find/replace in field values' do
-        expect(result).to eq(expected)
-      end
-    end
-
-    context 'when fields = :all' do
-      let(:input) do
-        [
-          {val: 'xxxxxx1', another: 'xxx2xxxxx'},
-          {val: 10, another: nil}
-        ]
-      end
-
-      let(:transforms) do
-        Kiba.job_segment do
-          transform Clean::RegexpFindReplaceFieldVals, fields: :all, find: 'xx+', replace: ''
-        end
-      end
-      
-      let(:expected){ [{val: '1', another: '2'}, {val: 10, another: nil}] }
-      it 'Does specified regexp find/replace in field values' do
-        expect(result).to eq(expected)
-      end
-    end
-
-    context 'when debug = true option is specified' do
-      let(:input) do
-        [
-          {val: 'xxxx1'}
-        ]
-      end
-
-      let(:transforms) do
-        Kiba.job_segment do
-          transform Clean::RegexpFindReplaceFieldVals, fields: [:val], find: 'xx+', replace: '', debug: true
-        end
-      end
-      
-      let(:expected){ [{val: 'xxxx1', val_repl: '1'}] }
-      
-      it 'creates new field with `_repl` suffix instead of doing change in place' do
-        expect(result).to eq(expected)
-      end
-    end
-
-    context 'when multival = true option and sep are specified' do
-      let(:input) do
-        [
-          {val: 'bats;bats'}
-        ]
-        end
-
-      let(:transforms) do
-        Kiba.job_segment do
-          transform Clean::RegexpFindReplaceFieldVals, fields: [:val], find: 's$', replace: '', multival: true, sep: ';'
-        end
-      end
-      
-      let(:expected){ [{val: 'bat;bat'}] }
-      
-      it 'splits field into multiple values and applies find/replace to each value' do
         expect(result).to eq(expected)
       end
     end

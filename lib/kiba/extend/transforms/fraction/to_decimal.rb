@@ -117,7 +117,7 @@ module Kiba
             @extractor = Kiba::Extend::Utils::ExtractFractions.new(whole_fraction_sep: whole_fraction_sep)
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             fields.each{ |field| to_decimal(field, row) }
             delete_source_fields(row)
@@ -145,7 +145,7 @@ module Kiba
 
             value.to_f
           end
-          
+
           def replace_fractions(fractions, value)
             val = value.dup
             fractions.each do |fraction|
@@ -153,7 +153,7 @@ module Kiba
             end
             val
           end
-          
+
           def to_decimal(field, row)
             targetfield = target(field)
             fieldval = row[field]
