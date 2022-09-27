@@ -446,7 +446,7 @@ if there are more than max_segments</p>
         <span class='name'>row</span>
       
       
-        <span class='type'>(<tt>Hash{ Symbol =&gt; String }</tt>)</span>
+        <span class='type'>(<tt>Hash{ Symbol =&gt; String, nil }</tt>)</span>
       
       
       
@@ -473,7 +473,7 @@ if there are more than max_segments</p>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_add_new_fields'>add_new_fields</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_do_split'>do_split</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>            
+  <span class='id identifier rubyid_do_split'>do_split</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_clean_up_fields'>clean_up_fields</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_row'>row</span>
 <span class='kw'>end</span></pre>
@@ -487,7 +487,7 @@ if there are more than max_segments</p>
 </div>
 
       <div id="footer">
-  Generated on Fri Sep 23 16:02:39 2022 by
+  Generated on Tue Sep 27 21:14:41 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>

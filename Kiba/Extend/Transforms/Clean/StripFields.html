@@ -192,12 +192,12 @@
       <pre class="lines">
 
 
-314
-315
-316</pre>
+268
+269
+270</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/clean.rb', line 314</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/clean.rb', line 268</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span><span class='rparen'>)</span>
   <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fields'>fields</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
@@ -238,7 +238,7 @@
         <span class='name'>row</span>
       
       
-        <span class='type'>(<tt>Hash{ Symbol =&gt; String }</tt>)</span>
+        <span class='type'>(<tt>Hash{ Symbol =&gt; String, nil }</tt>)</span>
       
       
       
@@ -253,20 +253,20 @@
       <pre class="lines">
 
 
-319
-320
-321
-322
-323
-324
-325
-326
-327
-328
-329</pre>
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/clean.rb', line 319</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/clean.rb', line 273</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='ivar'>@fields</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span>
@@ -289,7 +289,7 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Sep 23 16:02:37 2022 by
+  Generated on Tue Sep 27 21:14:39 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>

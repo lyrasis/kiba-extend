@@ -370,7 +370,7 @@
         <span class='name'>row</span>
       
       
-        <span class='type'>(<tt>Hash{ Symbol =&gt; String }</tt>)</span>
+        <span class='type'>(<tt>Hash{ Symbol =&gt; String, nil }</tt>)</span>
       
       
       
@@ -416,7 +416,7 @@
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_finalize_fields'>finalize_fields</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_fields_set'>fields_set</span>
-  
+
   <span class='kw'>case</span> <span class='id identifier rubyid_action'>action</span>
   <span class='kw'>when</span> <span class='symbol'>:keep</span>
     <span class='kw'>return</span> <span class='id identifier rubyid_row'>row</span> <span class='kw'>if</span> <span class='id identifier rubyid_all_populated?'>all_populated?</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
@@ -434,7 +434,7 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Sep 23 16:02:39 2022 by
+  Generated on Tue Sep 27 21:14:41 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>

@@ -729,7 +729,7 @@ value on the string given (since 3.0.0)</p>
         <span class='name'>row</span>
       
       
-        <span class='type'>(<tt>Hash{ Symbol =&gt; String }</tt>)</span>
+        <span class='type'>(<tt>Hash{ Symbol =&gt; String, nil }</tt>)</span>
       
       
       
@@ -764,7 +764,7 @@ value on the string given (since 3.0.0)</p>
   <span class='id identifier rubyid_set_initial_value'>set_initial_value</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_rowval'>rowval</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_source'>source</span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_vals'>vals</span> <span class='op'>=</span> <span class='id identifier rubyid_prep_vals'>prep_vals</span><span class='lparen'>(</span><span class='id identifier rubyid_rowval'>rowval</span><span class='rparen'>)</span>
-  
+
   <span class='ivar'>@fallback_val</span> <span class='op'>=</span> <span class='id identifier rubyid_get_fallback_vals'>get_fallback_vals</span><span class='lparen'>(</span><span class='id identifier rubyid_vals'>vals</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_target'>target</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_join_result'>join_result</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='lparen'>(</span><span class='id identifier rubyid_vals'>vals</span><span class='rparen'>)</span><span class='rparen'>)</span>
@@ -782,7 +782,7 @@ value on the string given (since 3.0.0)</p>
 </div>
 
       <div id="footer">
-  Generated on Fri Sep 23 16:02:40 2022 by
+  Generated on Tue Sep 27 21:14:41 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>

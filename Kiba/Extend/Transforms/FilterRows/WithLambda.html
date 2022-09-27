@@ -390,7 +390,7 @@ to/return <code>TrueClass</code> or <code>FalseClass</code></p>
         <span class='name'>row</span>
       
       
-        <span class='type'>(<tt>Hash{ Symbol =&gt; String }</tt>)</span>
+        <span class='type'>(<tt>Hash{ Symbol =&gt; String, nil }</tt>)</span>
       
       
       
@@ -436,7 +436,7 @@ to/return <code>TrueClass</code> or <code>FalseClass</code></p>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_test_lambda'>test_lambda</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_lambda_tested'>lambda_tested</span>
-  
+
   <span class='kw'>case</span> <span class='id identifier rubyid_action'>action</span>
   <span class='kw'>when</span> <span class='symbol'>:keep</span>
     <span class='kw'>return</span> <span class='id identifier rubyid_row'>row</span> <span class='kw'>if</span> <span class='id identifier rubyid_lambda'>lambda</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
@@ -454,7 +454,7 @@ to/return <code>TrueClass</code> or <code>FalseClass</code></p>
 </div>
 
       <div id="footer">
-  Generated on Fri Sep 23 16:02:39 2022 by
+  Generated on Tue Sep 27 21:14:40 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>

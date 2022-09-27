@@ -136,7 +136,7 @@
 
 <h3 id="null-placeholder-single-value">Null placeholder (single value)</h3>
 
-<p>Using same source data as above, and transform set up as: </p>
+<p>Using same source data as above, and transform set up as:</p>
 
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Replace.html" title="Kiba::Extend::Transforms::Replace (module)">Replace</a></span></span><span class='op'>::</span><span class='const'>EmptyFieldValues</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>name</span><span class='words_sep'> </span><span class='tstring_content'>sex</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>value:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
   <span class='label'>treat_as_null:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULL%</span><span class='tstring_end'>&#39;</span></span>
@@ -154,7 +154,7 @@
 
 <h3 id="multivalued-given-a-delim-value">Multivalued (given a <code>delim</code> value)</h3>
 
-<p>Using same source data as above, and transform set up as: </p>
+<p>Using same source data as above, and transform set up as:</p>
 
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Replace.html" title="Kiba::Extend::Transforms::Replace (module)">Replace</a></span></span><span class='op'>::</span><span class='const'>EmptyFieldValues</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>name</span><span class='words_sep'> </span><span class='tstring_content'>sex</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>|</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>value:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span>
 </code></pre>
@@ -171,7 +171,7 @@
 
 <h3 id="multivalued-given-a-delim-value-with-treat_as_null">Multivalued (given a <code>delim</code> value) with <code>treat_as_null</code></h3>
 
-<p>Using same source data as above, and transform set up as: </p>
+<p>Using same source data as above, and transform set up as:</p>
 
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Replace.html" title="Kiba::Extend::Transforms::Replace (module)">Replace</a></span></span><span class='op'>::</span><span class='const'>EmptyFieldValues</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>name</span><span class='words_sep'> </span><span class='tstring_content'>sex</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>|</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>value:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
   <span class='label'>treat_as_null:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULL%</span><span class='tstring_end'>&#39;</span></span>
@@ -465,7 +465,7 @@ field will be performed after splitting on this string</p>
         <span class='name'>row</span>
       
       
-        <span class='type'>(<tt>Hash{ Symbol =&gt; String }</tt>)</span>
+        <span class='type'>(<tt>Hash{ Symbol =&gt; String, nil }</tt>)</span>
       
       
       
@@ -519,7 +519,7 @@ field will be performed after splitting on this string</p>
 </div>
 
       <div id="footer">
-  Generated on Fri Sep 23 16:02:39 2022 by
+  Generated on Tue Sep 27 21:14:41 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>

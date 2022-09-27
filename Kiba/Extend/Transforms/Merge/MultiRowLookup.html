@@ -225,7 +225,7 @@
       
       
         &mdash;
-        <div class='inline'><p>key = field in source row to merge lookup data into; 
+        <div class='inline'><p>key = field in source row to merge lookup data into;
 value = field from lookup table whose value maps into target field</p>
 </div>
       
@@ -423,7 +423,7 @@ using it in a lookup, you may not need a sorter.</p>
 </span>  <span class='ivar'>@constantmap</span> <span class='op'>=</span> <span class='id identifier rubyid_constantmap'>constantmap</span> <span class='comment'># hash of constants to add for each merged-in row
 </span>  <span class='ivar'>@lookup</span> <span class='op'>=</span> <span class='id identifier rubyid_lookup'>lookup</span> <span class='comment'># lookuphash; should be created with csv_to_multi_hash
 </span>  <span class='id identifier rubyid_fail'>fail</span> <span class='const'><span class='object_link'><a href="MultiRowLookup/LookupTypeError.html" title="Kiba::Extend::Transforms::Merge::MultiRowLookup::LookupTypeError (class)">LookupTypeError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="MultiRowLookup/LookupTypeError.html#initialize-instance_method" title="Kiba::Extend::Transforms::Merge::MultiRowLookup::LookupTypeError#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_lookup'>lookup</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_lookup'>lookup</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span>
-  
+
   <span class='ivar'>@keycolumn</span> <span class='op'>=</span> <span class='id identifier rubyid_keycolumn'>keycolumn</span> <span class='comment'># column in main table containing value expected to be lookup key
 </span>  <span class='ivar'>@multikey</span> <span class='op'>=</span> <span class='id identifier rubyid_multikey'>multikey</span> <span class='comment'># should the key be treated as multivalued
 </span>  <span class='ivar'>@conditions</span> <span class='op'>=</span> <span class='id identifier rubyid_conditions'>conditions</span>
@@ -473,7 +473,7 @@ using it in a lookup, you may not need a sorter.</p>
         <span class='name'>row</span>
       
       
-        <span class='type'>(<tt>Hash{ Symbol =&gt; String }</tt>)</span>
+        <span class='type'>(<tt>Hash{ Symbol =&gt; String, nil }</tt>)</span>
       
       
       
@@ -556,7 +556,7 @@ using it in a lookup, you may not need a sorter.</p>
 </div>
 
       <div id="footer">
-  Generated on Fri Sep 23 16:02:39 2022 by
+  Generated on Tue Sep 27 21:14:40 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>

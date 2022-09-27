@@ -99,12 +99,262 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/kiba/extend/transforms/clean.rb</dd>
+    <dd>lib/kiba/extend/transforms/clean/regexp_find_replace_field_vals.rb</dd>
   </dl>
   
 </div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>Performs specified regular expression find/replace in the specified
+  field(s)</p>
 
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>Basic match(default)</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='comment'># Used in pipeline as:
+</span><span class='comment'># transform Clean::RegexpFindReplaceFieldVals,
+</span><span class='comment'>#   fields: :val,
+</span><span class='comment'>#   find: &#39;xx+&#39;,
+</span><span class='comment'>#   replace: &#39;exes&#39;
+</span><span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Clean.html" title="Kiba::Extend::Transforms::Clean (module)">Clean</a></span></span><span class='op'>::</span><span class='const'>RegexpFindReplaceFieldVals</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Clean::RegexpFindReplaceFieldVals#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+  <span class='label'>fields:</span> <span class='symbol'>:val</span><span class='comma'>,</span>
+  <span class='label'>find:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>xx+</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>replace:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>exes</span><span class='tstring_end'>&#39;</span></span>
+<span class='rparen'>)</span>
+<span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>xxxxxx a thing</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>thing xxxx 123</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x files</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>exes a thing</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>thing exes 123</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>x files</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Handles start/end anchors</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Clean.html" title="Kiba::Extend::Transforms::Clean (module)">Clean</a></span></span><span class='op'>::</span><span class='const'>RegexpFindReplaceFieldVals</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Clean::RegexpFindReplaceFieldVals#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+  <span class='label'>fields:</span> <span class='symbol'>:val</span><span class='comma'>,</span>
+  <span class='label'>find:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>^xx+</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>replace:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>exes</span><span class='tstring_end'>&#39;</span></span>
+<span class='rparen'>)</span>
+<span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>xxxxxx a thing</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>thing xxxx 123</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>exes a thing</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>thing xxxx 123</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Case insensitive</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Clean.html" title="Kiba::Extend::Transforms::Clean (module)">Clean</a></span></span><span class='op'>::</span><span class='const'>RegexpFindReplaceFieldVals</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Clean::RegexpFindReplaceFieldVals#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+  <span class='label'>fields:</span> <span class='symbol'>:val</span><span class='comma'>,</span>
+  <span class='label'>find:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>replace:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>object</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>casesensitive:</span> <span class='kw'>false</span>
+<span class='rparen'>)</span>
+<span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>the thing</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>The Thing</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>the object</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>The object</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Matching/replacing line breaks (note double quotes)</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Clean.html" title="Kiba::Extend::Transforms::Clean (module)">Clean</a></span></span><span class='op'>::</span><span class='const'>RegexpFindReplaceFieldVals</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Clean::RegexpFindReplaceFieldVals#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+  <span class='label'>fields:</span> <span class='symbol'>:val</span><span class='comma'>,</span>
+  <span class='label'>find:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+  <span class='label'>replace:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+<span class='rparen'>)</span>
+<span class='id identifier rubyid_s1'>s1</span> <span class='op'>=</span> <span class='heredoc_beg'>&lt;&lt;~STR</span>
+<span class='tstring_content'>
+</span><span class='tstring_content'>       pace/mcgill
+</span><span class='heredoc_end'>     STR
+</span><span class='id identifier rubyid_s2'>s2</span> <span class='op'>=</span> <span class='heredoc_beg'>&lt;&lt;~STR</span>
+<span class='tstring_content'>       pace/mcgill
+</span><span class='tstring_content'>
+</span><span class='heredoc_end'>     STR
+</span><span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='id identifier rubyid_s1'>s1</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='id identifier rubyid_s2'>s2</span><span class='rbrace'>}</span><span class='comma'>,</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>pace/mcgill</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>pace/mcgill</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>With capture groups</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Clean.html" title="Kiba::Extend::Transforms::Clean (module)">Clean</a></span></span><span class='op'>::</span><span class='const'>RegexpFindReplaceFieldVals</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Clean::RegexpFindReplaceFieldVals#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+  <span class='label'>fields:</span> <span class='symbol'>:val</span><span class='comma'>,</span>
+  <span class='label'>find:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>^(a) (thing)</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>replace:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>about \1 curious \2</span><span class='tstring_end'>&#39;</span></span>
+<span class='rparen'>)</span>
+<span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>about a curious thing</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>When result is empty string</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Clean.html" title="Kiba::Extend::Transforms::Clean (module)">Clean</a></span></span><span class='op'>::</span><span class='const'>RegexpFindReplaceFieldVals</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Clean::RegexpFindReplaceFieldVals#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+  <span class='label'>fields:</span> <span class='symbol'>:val</span><span class='comma'>,</span>
+  <span class='label'>find:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>xx+</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>replace:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+<span class='rparen'>)</span>
+<span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>xxxxx</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='kw'>nil</span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>With multiple fields</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Clean.html" title="Kiba::Extend::Transforms::Clean (module)">Clean</a></span></span><span class='op'>::</span><span class='const'>RegexpFindReplaceFieldVals</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Clean::RegexpFindReplaceFieldVals#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+  <span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>val</span><span class='words_sep'> </span><span class='tstring_content'>another</span><span class='tstring_end'>]</span></span><span class='comma'>,</span>
+  <span class='label'>find:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>xx+</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>replace:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+<span class='rparen'>)</span>
+<span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>xxxx1</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>another:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>xxxx2xxxx</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>another:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>With <code>fields: :all</code></p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Clean.html" title="Kiba::Extend::Transforms::Clean (module)">Clean</a></span></span><span class='op'>::</span><span class='const'>RegexpFindReplaceFieldVals</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Clean::RegexpFindReplaceFieldVals#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+  <span class='label'>fields:</span> <span class='symbol'>:all</span><span class='comma'>,</span>
+  <span class='label'>find:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>xx+</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>replace:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+<span class='rparen'>)</span>
+<span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>xxxx1</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>another:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>xxxx2xxxx</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>another:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>With <code>debug: true</code></p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Clean.html" title="Kiba::Extend::Transforms::Clean (module)">Clean</a></span></span><span class='op'>::</span><span class='const'>RegexpFindReplaceFieldVals</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Clean::RegexpFindReplaceFieldVals#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+  <span class='label'>fields:</span> <span class='symbol'>:val</span><span class='comma'>,</span>
+  <span class='label'>find:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>s$</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>replace:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>debug:</span> <span class='kw'>true</span>
+<span class='rparen'>)</span>
+<span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bats|bats</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bats|bats</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>val_repl:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bats|bat</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>With <code>multival: true</code> and :sep (Compare to replacement value in previous example)</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Clean.html" title="Kiba::Extend::Transforms::Clean (module)">Clean</a></span></span><span class='op'>::</span><span class='const'>RegexpFindReplaceFieldVals</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Clean::RegexpFindReplaceFieldVals#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+  <span class='label'>fields:</span> <span class='symbol'>:val</span><span class='comma'>,</span>
+  <span class='label'>find:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>s$</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>replace:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>multival:</span> <span class='kw'>true</span><span class='comma'>,</span>
+  <span class='label'>sep:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;</span><span class='tstring_end'>&#39;</span></span>
+<span class='rparen'>)</span>
+<span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bats;bats</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bat;bat</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>With <code>multival: true</code> and no :sep</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_delim'>delim</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>|</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Clean.html" title="Kiba::Extend::Transforms::Clean (module)">Clean</a></span></span><span class='op'>::</span><span class='const'>RegexpFindReplaceFieldVals</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Clean::RegexpFindReplaceFieldVals#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+  <span class='label'>fields:</span> <span class='symbol'>:val</span><span class='comma'>,</span>
+  <span class='label'>find:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>s$</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>replace:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>multival:</span> <span class='kw'>true</span>
+<span class='rparen'>)</span>
+<span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bats|bats</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_reset_config'>reset_config</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>val:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bat|bat</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
+  </div>
+
+
+</div>
 
 
 
@@ -195,7 +445,116 @@
   </div>
 </div>
 <div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
   
+    <li>
+      
+        <span class='name'>fields</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>, <tt>Symbol</tt>, <tt>nil</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>in which to find/replace</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>find</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>make sure to use double quotes to match slash
+escaped characters (\n, etc)</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>replace</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>casesensitive</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>true</tt>)</em>
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>multival</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>sep</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>required if <code>multival: true</code>; if not given,
+will default to <code>Kiba::Extend.delim</code> value</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>debug</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>if true, will put replacement value in a new
+field. New field name is same as old field name, with &quot;_repl&quot;
+suffix added</p>
+</div>
+      
+    </li>
+  
+</ul>
+
 
 </div><table class="source_code">
   <tr>
@@ -203,27 +562,35 @@
       <pre class="lines">
 
 
-270
-271
-272
-273
-274
-275
-276
-277
-278</pre>
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/clean.rb', line 270</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/clean/regexp_find_replace_field_vals.rb', line 215</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span><span class='comma'>,</span> <span class='label'>find:</span><span class='comma'>,</span> <span class='label'>replace:</span><span class='comma'>,</span> <span class='label'>casesensitive:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>multival:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>debug:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span><span class='comma'>,</span> <span class='label'>find:</span><span class='comma'>,</span> <span class='label'>replace:</span><span class='comma'>,</span> <span class='label'>casesensitive:</span> <span class='kw'>true</span><span class='comma'>,</span>
+               <span class='label'>multival:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>debug:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fields'>fields</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
-  <span class='ivar'>@find</span> <span class='op'>=</span> <span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_find'>find</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_casesensitive'>casesensitive</span> <span class='op'>==</span> <span class='kw'>true</span>
-  <span class='ivar'>@find</span> <span class='op'>=</span> <span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_find'>find</span><span class='comma'>,</span> <span class='const'>Regexp</span><span class='op'>::</span><span class='const'>IGNORECASE</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_casesensitive'>casesensitive</span> <span class='op'>==</span> <span class='kw'>false</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_casesensitive'>casesensitive</span> <span class='op'>==</span> <span class='kw'>true</span>
+    <span class='ivar'>@find</span> <span class='op'>=</span> <span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_find'>find</span><span class='rparen'>)</span>
+  <span class='kw'>else</span>
+    <span class='ivar'>@find</span> <span class='op'>=</span> <span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_find'>find</span><span class='comma'>,</span> <span class='const'>Regexp</span><span class='op'>::</span><span class='const'>IGNORECASE</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
   <span class='ivar'>@replace</span> <span class='op'>=</span> <span class='id identifier rubyid_replace'>replace</span>
   <span class='ivar'>@debug</span> <span class='op'>=</span> <span class='id identifier rubyid_debug'>debug</span>
   <span class='ivar'>@mv</span> <span class='op'>=</span> <span class='id identifier rubyid_multival'>multival</span>
-  <span class='ivar'>@sep</span> <span class='op'>=</span> <span class='id identifier rubyid_sep'>sep</span>
+  <span class='ivar'>@sep</span> <span class='op'>=</span> <span class='id identifier rubyid_set_sep'>set_sep</span><span class='lparen'>(</span><span class='id identifier rubyid_sep'>sep</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -261,7 +628,7 @@
         <span class='name'>row</span>
       
       
-        <span class='type'>(<tt>Hash{ Symbol =&gt; String }</tt>)</span>
+        <span class='type'>(<tt>Hash{ Symbol =&gt; String, nil }</tt>)</span>
       
       
       
@@ -276,31 +643,27 @@
       <pre class="lines">
 
 
-281
-282
-283
-284
-285
-286
-287
-288
-289
-290
-291
-292
-293
-294
-295
-296
-297
-298</pre>
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/clean.rb', line 281</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/clean/regexp_find_replace_field_vals.rb', line 230</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_finalize_fields'>finalize_fields</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
-  
+
   <span class='id identifier rubyid_fields'>fields</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span>
     <span class='id identifier rubyid_oldval'>oldval</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span>
     <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_oldval'>oldval</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -308,11 +671,7 @@
 
     <span class='id identifier rubyid_newval'>newval</span> <span class='op'>=</span> <span class='id identifier rubyid_mv'>mv</span> <span class='op'>?</span> <span class='id identifier rubyid_mv_find_replace'>mv_find_replace</span><span class='lparen'>(</span><span class='id identifier rubyid_oldval'>oldval</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='id identifier rubyid_sv_find_replace'>sv_find_replace</span><span class='lparen'>(</span><span class='id identifier rubyid_oldval'>oldval</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_target'>target</span> <span class='op'>=</span> <span class='id identifier rubyid_debug'>debug</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_field'>field</span><span class='embexpr_end'>}</span><span class='tstring_content'>_repl</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span> <span class='op'>:</span> <span class='id identifier rubyid_field'>field</span>
-    <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_target'>target</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_newval'>newval</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
-                    <span class='kw'>nil</span>
-                  <span class='kw'>else</span>
-                    <span class='id identifier rubyid_newval'>newval</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='op'>?</span> <span class='kw'>nil</span> <span class='op'>:</span> <span class='id identifier rubyid_newval'>newval</span>
-                  <span class='kw'>end</span>
+    <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_target'>target</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_newval'>newval</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span> <span class='op'>?</span> <span class='kw'>nil</span> <span class='op'>:</span> <span class='id identifier rubyid_newval'>newval</span>
   <span class='kw'>end</span>
   <span class='id identifier rubyid_row'>row</span>
 <span class='kw'>end</span></pre>
@@ -326,7 +685,7 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Sep 23 16:02:37 2022 by
+  Generated on Tue Sep 27 21:14:41 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>

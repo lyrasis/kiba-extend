@@ -112,7 +112,7 @@
 <pre class="code ruby"><code class="ruby"> <span class='lbrace'>{</span><span class='label'>a_foo:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>af</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_bar:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ab</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_baz:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>az|zz</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
 </code></pre>
 
-<p>is transformed to: </p>
+<p>is transformed to:</p>
 
 <pre class="code ruby"><code class="ruby">  <span class='lbrace'>{</span><span class='label'>a_foo:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>af|%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_bar:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ab|%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_baz:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>az|zz</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
 </code></pre>
@@ -456,7 +456,7 @@ evening will be repeated to even out the field.</p>
   <span class='ivar'>@evener</span> <span class='op'>=</span> <span class='id identifier rubyid_evener'>evener</span>
   <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_delim'>delim</span>
   <span class='ivar'>@warn</span> <span class='op'>=</span> <span class='id identifier rubyid_warn'>warn</span>
-  
+
   <span class='ivar'>@value_getter</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Helpers.html" title="Kiba::Extend::Transforms::Helpers (module)">Helpers</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Helpers/FieldValueGetter.html" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter (class)">FieldValueGetter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Helpers/FieldValueGetter.html#initialize-instance_method" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='id identifier rubyid_fields'>fields</span><span class='comma'>,</span> <span class='label'>treat_as_null:</span> <span class='id identifier rubyid_treat_as_null'>treat_as_null</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='rparen'>)</span>
   <span class='ivar'>@checker</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Helpers.html" title="Kiba::Extend::Transforms::Helpers (module)">Helpers</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Helpers/FieldEvennessChecker.html" title="Kiba::Extend::Transforms::Helpers::FieldEvennessChecker (class)">FieldEvennessChecker</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Helpers/FieldEvennessChecker.html#initialize-instance_method" title="Kiba::Extend::Transforms::Helpers::FieldEvennessChecker#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='id identifier rubyid_fields'>fields</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='rparen'>)</span>
   <span class='ivar'>@warner</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Warn.html" title="Kiba::Extend::Transforms::Warn (module)">Warn</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Warn/UnevenFields.html" title="Kiba::Extend::Transforms::Warn::UnevenFields (class)">UnevenFields</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Warn/UnevenFields.html#initialize-instance_method" title="Kiba::Extend::Transforms::Warn::UnevenFields#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='id identifier rubyid_fields'>fields</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='rparen'>)</span>
@@ -497,7 +497,7 @@ evening will be repeated to even out the field.</p>
         <span class='name'>row</span>
       
       
-        <span class='type'>(<tt>Hash{ Symbol =&gt; String }</tt>)</span>
+        <span class='type'>(<tt>Hash{ Symbol =&gt; String, nil }</tt>)</span>
       
       
       
@@ -565,7 +565,7 @@ evening will be repeated to even out the field.</p>
 </div>
 
       <div id="footer">
-  Generated on Fri Sep 23 16:02:39 2022 by
+  Generated on Tue Sep 27 21:14:40 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>

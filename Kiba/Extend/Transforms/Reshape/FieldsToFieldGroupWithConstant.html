@@ -612,7 +612,7 @@ used. If <code>:value</code>, the <strong>final</strong> value in the field will
   <span class='ivar'>@evener</span> <span class='op'>=</span> <span class='id identifier rubyid_evener'>evener</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>?</span> <span class='id identifier rubyid_treat_as_null'>treat_as_null</span> <span class='op'>:</span> <span class='id identifier rubyid_evener'>evener</span>
   <span class='ivar'>@uneven_warning</span> <span class='op'>=</span> <span class='id identifier rubyid_uneven_warning'>uneven_warning</span>
   <span class='ivar'>@remove_empty_groups</span> <span class='op'>=</span> <span class='id identifier rubyid_remove_empty_groups'>remove_empty_groups</span>
-  
+
   <span class='ivar'>@empty_replacer</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Replace.html" title="Kiba::Extend::Transforms::Replace (module)">Replace</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Replace/EmptyFieldValues.html" title="Kiba::Extend::Transforms::Replace::EmptyFieldValues (class)">EmptyFieldValues</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Replace/EmptyFieldValues.html#initialize-instance_method" title="Kiba::Extend::Transforms::Replace::EmptyFieldValues#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='ivar'>@renamed</span><span class='comma'>,</span> <span class='label'>value:</span> <span class='id identifier rubyid_treat_as_null'>treat_as_null</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='comma'>,</span>
                                                   <span class='label'>treat_as_null:</span> <span class='id identifier rubyid_treat_as_null'>treat_as_null</span><span class='rparen'>)</span>
   <span class='ivar'>@even_xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Clean.html" title="Kiba::Extend::Transforms::Clean (module)">Clean</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Clean/EvenFieldValues.html" title="Kiba::Extend::Transforms::Clean::EvenFieldValues (class)">EvenFieldValues</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Clean/EvenFieldValues.html#initialize-instance_method" title="Kiba::Extend::Transforms::Clean::EvenFieldValues#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='ivar'>@renamed</span><span class='comma'>,</span> <span class='label'>evener:</span> <span class='ivar'>@evener</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='comma'>,</span>
@@ -658,7 +658,7 @@ used. If <code>:value</code>, the <strong>final</strong> value in the field will
         <span class='name'>row</span>
       
       
-        <span class='type'>(<tt>Hash{ Symbol =&gt; String }</tt>)</span>
+        <span class='type'>(<tt>Hash{ Symbol =&gt; String, nil }</tt>)</span>
       
       
       
@@ -718,7 +718,7 @@ used. If <code>:value</code>, the <strong>final</strong> value in the field will
 </div>
 
       <div id="footer">
-  Generated on Fri Sep 23 16:02:40 2022 by
+  Generated on Tue Sep 27 21:14:41 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>

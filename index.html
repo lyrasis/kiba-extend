@@ -61,12 +61,12 @@
 
 <p>Kiba is a <a href="https://github.com/thbar/kiba">Data processing &amp; ETL framework for Ruby</a>.</p>
 
-<p>kiba-extend is a suite of Kiba extensions useful in transforming and reshaping data. It includes the following: </p>
+<p>kiba-extend is a suite of Kiba extensions useful in transforming and reshaping data. It includes the following:</p>
 
 <ul>
 <li>An extensive library of abstract, reusable transformations</li>
 <li>Some custom source and destination types</li>
-<li>File/job registry support for use in migration projects. This handles repetitive aspects of configuring source, lookup, and destination files, as well as ensures dependency jobs are called to create files created for a given job. Files/jobs may be tagged and run from a project application via Rake tasks </li>
+<li>File/job registry support for use in migration projects. This handles repetitive aspects of configuring source, lookup, and destination files, as well as ensures dependency jobs are called to create files created for a given job. Files/jobs may be tagged and run from a project application via Rake tasks</li>
 <li>Job templating and decoration. No need to repeat the same source/destination setup, requirements running, pre-processing, post-processing, and initial/final transforms over and over again in your ETL code.</li>
 </ul>
 
@@ -75,15 +75,15 @@
 <ul>
 <li>You can turn on &quot;show me!&quot; when you run a job via Rake task, without doing anything in your code.</li>
 <li>You can similarly turn on &quot;tell me&quot; from the command line, which will have your computer say something when a job is complete---useful for long running jobs.</li>
-<li>There is a TestingJob that allows you to easily write automated tests for any transformation or set of transformations</li>
+<li>There is a TestingJob that can be used to set up automated tests for sequences of transforms (i.e. job definition xforms/segments)</li>
 </ul>
 
 <p><strong>The transformations and source/destination types may be used completely independently of the registry/job templating.</strong> The registry and job templating functionality are highly dependent on one another.</p>
 
-<p>On the to-do list: </p>
+<p>On the to-do list:</p>
 
 <ul>
-<li>Wiki documentation for how to use the registry and job templating</li>
+<li>Wiki documentation for how to use the registry and job templating. In the meantime the best place to get an understanding of this is <a href="https://github.com/lyrasis/kiba-extend-project">kiba-extend-project</a>.</li>
 </ul>
 
 <h2 id="documentation">Documentation</h2>
@@ -98,21 +98,27 @@
 
 <h3 id="specs">Specs</h3>
 
-<p>To get a full overview of available transformations and what they do, run <code>rake spec</code> from the repo base directory. This will give you the names of all the transformations in <code>kiba-extend</code> and brief descriptions of what they do. </p>
+<p>To get a full overview of available transformations and what they do, run <code>rake spec</code> from the repo base directory. This will give you the names of all the transformations in <code>kiba-extend</code> and brief descriptions of what they do.</p>
 
 <p>For more clarity about exactly what each transformation does, if it is not described in the documentation yet, check the actual test files in <code>/spec/kiba/extend/transforms</code>, which include sample input rows, transformation calls, and the resulting output</p>
 
 <h2 id="example-project-applications">Example project applications</h2>
 
-<p><a href="https://github.com/lyrasis/kiba-extend-project">kiba-extend-project</a> is a Github template repository for starting a new ETL project using <code>kiba-extend</code>. It is heavily commented in an attempt to explain how things work. </p>
+<p><a href="https://github.com/lyrasis/kiba-extend-project">kiba-extend-project</a> is a Github template repository for starting a new ETL project using <code>kiba-extend</code>. It is heavily commented in an attempt to explain how things work.</p>
+
+<p><a href="https://github.com/lyrasis/kiba-tms/">kiba-tms</a> is a publicly available project not for a specific client. It uses <code>kiba-extend</code> to handle most of the data transformations required for a TMS-&gt;CollectionSpace migration. It makes heavy use of <code>dry-configurable</code> settings and probably ill-advised metaprogramming to account for the fact that every client uses TMS differently and thus basically everything needs to be configurable. <a href="https://cs.github.com/?scope=org%3Alyrasis&scopeName=lyrasis&q=gem+%27kiba-tms%27">Private, client-specific repos for individual TMS-&gt;CollectionSpace migration clients</a> that require <code>kiba-tms</code> are set up to define client-specific migration configs, transforms, and jobs.</p>
 
 <p><a href="https://github.com/lyrasis/mimsy-to-cspace">mimsy-to-cspace</a> is a publicly available example of <code>kiba-extend</code> usage. It was completed before the registry/job templating functions were added, so it only shows how transformations get used. (And it is a good example of how repetitive the code gets without templating)</p>
 
-<p><a href="https://github.com/lyrasis/fwm-cspace-migration">fwm-cspace-migration</a> is the first project in which I&#39;m using the new registry/job templating functions. Unfortunately it is a private repo because it contains client-specific information. </p>
+<p>LYRASIS staff with permissions to private repos can find a number of other project examples using <code>kiba-extend</code> <a href="https://cs.github.com/?scope=org%3Alyrasis&scopeName=lyrasis&q=gem+%27kiba-extend%27">in our organizationrepo list</a></p>
+
+<h2 id="contributing">Contributing</h2>
+
+<p>Please see <a href="https://lyrasis.github.io/kiba-extend/file.contributing.html">Contributing to <code>kiba-extend</code></a> for contributor guidelines.</p>
 </div></div>
 
       <div id="footer">
-  Generated on Fri Sep 23 16:02:37 2022 by
+  Generated on Tue Sep 27 21:14:38 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>
