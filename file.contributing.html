@@ -73,7 +73,10 @@
 
 <ul>
 <li>Create a new <code>.rb</code> file in <code>lib/kiba/extend/transforms</code> to document the scope of the namespace and alias the namespace (so you don&#39;t have to type out <code>Kiba::Extend::Transforms</code> for every transform used in a pipeline/job.) See <a href="https://github.com/lyrasis/kiba-extend/blob/main/lib/kiba/extend/transforms/name.rb"><code>name.rb</code></a> as an example.
-** Note: If a namespace includes similar transforms, this is an appropriate place to differentiate them. See the <code>Deduplicate</code> transform namespace <a href="https://github.com/lyrasis/kiba-extend/blob/main/lib/kiba/extend/transforms/deduplicate.rb">code</a> and <a href="https://lyrasis.github.io/kiba-extend/Kiba/Extend/Transforms/Deduplicate.html">documentation page</a></li>
+
+<ul>
+<li>Note: If a namespace includes similar transforms, this is an appropriate place to differentiate them. See the <code>Deduplicate</code> transform namespace <a href="https://github.com/lyrasis/kiba-extend/blob/main/lib/kiba/extend/transforms/deduplicate.rb">code</a> and <a href="https://lyrasis.github.io/kiba-extend/Kiba/Extend/Transforms/Deduplicate.html">documentation page</a></li>
+</ul></li>
 <li>Create a directory to hold the transforms that will be in the new namespace. See <a href="https://github.com/lyrasis/kiba-extend/tree/main/lib/kiba/extend/transforms/name"><code>name</code> directory</a> as an example.</li>
 </ul>
 
@@ -277,7 +280,7 @@ kill -9 {pid}
 
 <h3 id="extract-reusable-processing-logic-to-command-service-objects">Extract reusable processing logic to command service objects</h3>
 
-<p>These object classes should more or less follow [the Command Pattern](<a href="https://www.alchemists.io/articles/command_pattern/">https://www.alchemists.io/articles/command_pattern/</a>]. The linked article is very rigorous about what the pattern requires, but the main things are:</p>
+<p>These object classes should more or less follow <a href="https://www.alchemists.io/articles/command_pattern/">the Command Pattern</a>. The linked article is very rigorous about what the pattern requires, but the main things are:</p>
 
 <ul>
 <li>The class should do one specific thing</li>
@@ -300,7 +303,7 @@ kill -9 {pid}
 </div></div>
 
       <div id="footer">
-  Generated on Tue Sep 27 21:14:38 2022 by
+  Generated on Tue Sep 27 21:21:41 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>
