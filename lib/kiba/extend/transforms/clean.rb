@@ -264,52 +264,6 @@ module Kiba
           end
         end
 
-        class RegexpFindReplaceFieldVals
-          include Allable
-
-          def initialize(fields:, find:, replace:, casesensitive: true, multival: false, sep: nil, debug: false)
-            @fields = [fields].flatten
-            @find = Regexp.new(find) if casesensitive == true
-            @find = Regexp.new(find, Regexp::IGNORECASE) if casesensitive == false
-            @replace = replace
-            @debug = debug
-            @mv = multival
-            @sep = sep
-          end
-
-          # @param row [Hash{ Symbol => String, nil }]
-          def process(row)
-            finalize_fields(row)
-
-            fields.each do |field|
-              oldval = row.fetch(field, nil)
-              next if oldval.nil?
-              next unless oldval.is_a?(String)
-
-              newval = mv ? mv_find_replace(oldval) : sv_find_replace(oldval)
-              target = debug ? "#{field}_repl".to_sym : field
-              row[target] = if newval.nil?
-                              nil
-                            else
-                              newval.empty? ? nil : newval
-                            end
-            end
-            row
-          end
-
-          private
-
-          attr_reader :fields, :find, :replace, :debug, :mv, :sep
-
-          def mv_find_replace(val)
-            val.split(sep).map { |v| v.gsub(find, replace) }.join(sep)
-          end
-
-          def sv_find_replace(val)
-            val.gsub(find, replace)
-          end
-        end
-
         class StripFields
           def initialize(fields:)
             @fields = [fields].flatten
