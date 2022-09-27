@@ -368,7 +368,7 @@ module Kiba
             setup_single_warning
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             row[target] = nil unless in_place?
             row.key?(source) ? handle_source(row) : handle_missing_source(row)
@@ -393,7 +393,7 @@ module Kiba
 
             LOOKUP[val]
           end
-          
+
           def handle_source(row)
             sourceval = row[source]
             sourceval.blank? ? handle_blank_source(sourceval, row) : handle_source_value(sourceval, row)
@@ -403,7 +403,7 @@ module Kiba
             row[target] = val
             delete_source(row)
           end
-          
+
           def handle_missing_source(row)
             add_single_warning("Cannot map addresscountry: Field `#{source}` does not exist in source data")
             row[target] = nil
@@ -419,7 +419,7 @@ module Kiba
             row[target] = nil
             delete_source(row)
           end
-          
+
           def in_place?
             source == target
           end

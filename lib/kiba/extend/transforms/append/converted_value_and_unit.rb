@@ -15,7 +15,7 @@ module Kiba
         # This transform makes a number of strong assumptions, largely based on CollectionSpace data migration needs.
         #   The major ones, which are not overrideable via parameters, include:
         #
-        # - one field contains a single numeric/decimal measurement value 
+        # - one field contains a single numeric/decimal measurement value
         # - another field contains a single string measurement unit value
         # - each of these measurements should be converted to one additional unit, with the converted value/unit appended to the appropriate field
         #
@@ -45,7 +45,7 @@ module Kiba
         # | 2     | ounces      |
         # | 200   | grams       |
         # ```
-        # 
+        #
         # Used in pipeline as:
         #
         # ```
@@ -77,8 +77,8 @@ module Kiba
         #   parameter:
         #
         # - conversions (to indicate that the new unit should be converted to another, or that another unit should be converted to the new unit
-        # 
-        # You will not need to pass in `conversion_amounts`, as Measured already knows how to convert these units. 
+        #
+        # You will not need to pass in `conversion_amounts`, as Measured already knows how to convert these units.
         #
         # Input table:
         #
@@ -88,7 +88,7 @@ module Kiba
         # | 1     | yard   |
         # | 36    | inches |
         # ```
-        # 
+        #
         # Used in pipeline as:
         #
         # ```
@@ -119,7 +119,7 @@ module Kiba
         # | 4     | hops  |
         # | 15    | leaps |
         # ```
-        # 
+        #
         # Used in pipeline as:
         #
         # ```
@@ -156,7 +156,7 @@ module Kiba
         # |-------+---------|
         # | 36    | inches  |
         # ```
-        # 
+        #
         # Used in pipeline as:
         #
         # ```
@@ -179,7 +179,7 @@ module Kiba
         # # Example 5 - overriding default converted unit name
         #
         # By default, if the existing unit is converted to centimeters, the appended unit value will be "centimeters". If you
-        #   find that cumbersome and want to output "cm" instead: 
+        #   find that cumbersome and want to output "cm" instead:
         #
         # Input table:
         #
@@ -188,7 +188,7 @@ module Kiba
         # |-------+---------|
         # | 36    | inches  |
         # ```
-        # 
+        #
         # Used in pipeline as:
         #
         # ```
@@ -269,24 +269,24 @@ module Kiba
             type_conversions(conversions)
             @unit_names = UnitNames.merge(unit_names)
             unless conversion_amounts.empty?
-              set_up_custom_conversions(conversion_amounts) 
+              set_up_custom_conversions(conversion_amounts)
               customize_types(conversion_amounts)
             end
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             value = row.fetch(@value, nil)
             unit = row.fetch(@unit, nil)
             return row if value.blank? || unit.blank?
-            return row if multival?(value) || multival?(unit)            
+            return row if multival?(value) || multival?(unit)
             return unknown_unit_type(unit, row) unless known_unit_type?(unit)
             return unknown_conversion(unit, row) unless known_conversion?(unit)
             return not_convertable(unit, row) unless convertable?(unit)
 
             measured = measured_conversion(value, unit)
             return row if measured == :failure
-            
+
             converted = measured.convert_to(@conversions[unit])
             conv_value = converted.value.to_f.round(@places).to_s.delete_suffix('.0')
             row[@value] = [value, conv_value].join(@delim)
@@ -305,7 +305,7 @@ module Kiba
 
             conversion = @conversions[name]
             return false unless conversion
-            
+
             @conversions = @conversions.merge({unit=>conversion})
             true
           end
@@ -313,7 +313,7 @@ module Kiba
           def check_measured_alias_types(unit)
             system = measured_unit_system(unit)
             return false unless system
-            
+
             @types = @types.merge({unit=>system})
             true
           end
@@ -330,12 +330,12 @@ module Kiba
 
             name.first
           end
-          
+
           def configured_system_unit_names(system)
             types = @types.select{ |_unit, type| type == system }.keys
             @conversions.keys.select{ |unit| types.any?(unit) }
           end
-          
+
           def convertable?(unit)
             unit_system = @types[unit]
             true if unit_system.unit_or_alias?(clean(unit)) && unit_system.unit_or_alias?(clean(@conversions[unit]))
@@ -344,7 +344,7 @@ module Kiba
           def customize_types(conversion_amounts)
             conversion_amounts.keys.each{ |unit| @types[unit.to_s] = @converter }
           end
-          
+
           def known_conversion?(unit)
             return true if @conversions.key?(unit)
 
@@ -362,11 +362,11 @@ module Kiba
           rescue
             :failure
           end
-          
+
           def measured_names(system, unit)
             system.new(1, clean(unit)).unit.names
           end
-          
+
           def measured_unit_system(unit)
             unit_system = nil
             [Measured::Length, Measured::Weight, Measured::Volume].each do |system|
@@ -374,7 +374,7 @@ module Kiba
             end
             unit_system
           end
-          
+
           def multival?(val)
             true if val[@delim]
           end
@@ -395,7 +395,7 @@ module Kiba
             base_units.each{ |unit| builder.unit(unit.to_sym) }
             units_to_convert.each{ |unit| builder.unit(unit.to_sym, value: conversion_amounts[unit]) }
 
-            
+
             @converter =  Class.new(Measured::Measurable) do
               class << self
                 attr_reader :unit_system
@@ -408,11 +408,11 @@ module Kiba
           def type_conversions(conversions)
             conversions.keys.each{ |ctype| known_unit_type?(ctype) }
           end
-          
+
           def unit_name(unit)
             name = unit.name
             return name unless @unit_names.key?(name)
-            
+
             checked = []
             until checked.any?(name) || !@unit_names.key?(name)
               checked << name
@@ -425,7 +425,7 @@ module Kiba
             puts %Q[#{Kiba::Extend.warning_label}: Unknown conversion to perform for "#{unit}" in "#{@unit}" field. Configure conversions parameter]
             row
           end
-          
+
           def unknown_unit_type(unit, row)
             puts %Q[#{Kiba::Extend.warning_label}: Unknown unit "#{unit}" in "#{@unit}" field. You may need to configure a custom unit. See example 3 in transform documentation]
             row

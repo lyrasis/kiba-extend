@@ -98,7 +98,7 @@ module Kiba
         # ]
         # ```
         #
-        # ### Do not treat any strings except empty string (`''`) as empty 
+        # ### Do not treat any strings except empty string (`''`) as empty
         #
         # Used in job as:
         #
@@ -147,7 +147,7 @@ module Kiba
             end
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             delim_only_cleaner.process(row)
             groups.each_with_index do |group, idx|
@@ -180,13 +180,13 @@ module Kiba
             val = vals.empty? ? nil : vals.join(delim)
             row[field] = val
           end
-          
+
           def multi_field_blank_remover(row, field_vals)
             split_vals = field_vals.transform_values{ |vals| vals.split(delim, -1) }
             idxs = empty_indexes(split_vals)
             split_vals.each{ |field, vals| delete_blank_indexes(row, field, vals, idxs) }
           end
-          
+
           def single_field_blank_remover(row, field_vals)
             field_vals.each do |field, vals|
               row[field] = vals.split(delim, -1)
@@ -208,18 +208,18 @@ module Kiba
               vals.each_with_index{ |val, idx| analyzer[idx] << val }
             end
           end
-          
+
           def setup_index_analyzer(prepped_vals)
             analyzer = {}
             prepped_vals.first[1].each_with_index{ |_e, idx| analyzer[idx] = [] }
             analyzer
           end
-          
+
           def prep_for_empty_index_identification(vals)
             vals.dup
               .transform_values{ |vals| vals.map{ |val| empty_val?(val) ? :empty : :notempty } }
           end
-          
+
           def empty_val?(str)
             [nil, '', null_vals].flatten.any?(str)
           end
@@ -237,5 +237,3 @@ module Kiba
     end
   end
 end
-
-

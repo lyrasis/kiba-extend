@@ -96,7 +96,7 @@ module Kiba
             @ignore_blank = ignore_blank
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             row[@target] = 'diff'
             values = []

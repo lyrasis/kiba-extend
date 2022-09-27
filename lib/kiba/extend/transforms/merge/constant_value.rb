@@ -34,19 +34,19 @@ module Kiba
         class ConstantValue
           include SingleWarnable
           # @param target [Symbol] target field in which to enter constant value
-          # @param value [String] the constant value to enter in target field 
+          # @param value [String] the constant value to enter in target field
           def initialize(target:, value:)
             @target = target
             @value = value
             setup_single_warning
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             unless row.fetch(target, nil).blank?
               add_single_warning("Any values in existing `#{target}` field will be overwritten with `#{value}`")
             end
-            
+
             row[target] = value
             row
           end

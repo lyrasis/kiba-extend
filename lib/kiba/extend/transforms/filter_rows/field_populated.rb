@@ -55,7 +55,7 @@ module Kiba
             @field = field
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             val = row.fetch(field, nil)
             case action

@@ -9,8 +9,16 @@ SimpleCov.start do
   enable_coverage :branch
 end
 
+
 require_relative './helpers'
 require 'kiba/extend'
+require 'dry/configurable/test_interface'
+
+module Kiba
+  module Extend
+    enable_test_interface
+  end
+end
 
 RSpec.configure do |config|
   config.include Helpers

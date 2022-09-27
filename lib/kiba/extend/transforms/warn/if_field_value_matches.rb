@@ -21,9 +21,9 @@ module Kiba
         # This transform warns if {Utils::FieldValueMatcher} finds a match.
         class IfFieldValueMatches
           include SingleWarnable
-          
+
         # @param field [Symbol] whose value to match
-        # @param match [String] expresses the match criteria 
+        # @param match [String] expresses the match criteria
         # @param matchmode [:plain, :regex] If `:regex`, string is converted to a regular expression
         # @param delim [nil, String] if a String is given, triggers multivalue matching, where field value is
         #    split and the match is run against each resulting value
@@ -42,14 +42,14 @@ module Kiba
             )
             setup_single_warning
           end
-          
-          # @param row [Hash{ Symbol => String }]
+
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             return row unless single_warnings.empty?
 
             result = matcher.call(row)
             return row unless result
-            
+
             msg = "One or more rows has #{field} value matching #{match}"
             add_single_warning(msg)
             row

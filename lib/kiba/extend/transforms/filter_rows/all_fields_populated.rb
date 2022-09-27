@@ -61,7 +61,7 @@ module Kiba
         # ```
         class AllFieldsPopulated
           include Allable
-          
+
           # @param action [:keep, :reject] what to do with row matching criteria
           # @param fields [Array<Symbol>, :all] to check populated status in
           def initialize(action:, fields:)
@@ -69,10 +69,10 @@ module Kiba
             @fields = [fields].flatten
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             finalize_fields(row) unless fields_set
-            
+
             case action
             when :keep
               return row if all_populated?(row)

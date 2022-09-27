@@ -73,15 +73,15 @@ module Kiba
             @match = casesensitive ? Regexp.new(match) : Regexp.new(match, Regexp::IGNORECASE)
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             fields.each do |field|
               val = row.fetch(field)
               next if val.blank?
-              
+
               row[field] = nil if val.match?(match)
             end
-            
+
             row
           end
 

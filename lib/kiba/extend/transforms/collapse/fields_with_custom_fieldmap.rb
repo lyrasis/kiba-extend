@@ -150,7 +150,7 @@ module Kiba
         # * There must be an equal number of source fields given in each source field Array
         class FieldsWithCustomFieldmap
           include SingleWarnable
-          
+
           # @param fieldmap [Hash{Symbol => Array<Symbol>}] Instructions on how to combine source fields into
           #   target fields. See above for fuller explanation of Hash format expectations
           # @param delim [String] String to use in splitting/joining the values
@@ -163,7 +163,7 @@ module Kiba
             setup_single_warning
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             fieldmap.each{ |target, sources| row[target] = compile_source_values(sources, row) }
             delete_sources(row) if del

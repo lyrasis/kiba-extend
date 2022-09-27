@@ -91,7 +91,7 @@ module Kiba
             end
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             create_nil_fields(row)
             inverted = row.fetch(source, '')
@@ -103,7 +103,7 @@ module Kiba
           end
 
           private
-          
+
           attr_reader :source, :targets, :firstname, :middlename, :lastname, :suffix, :fallback
 
           def create_nil_fields(row)
@@ -139,13 +139,13 @@ module Kiba
               row[middlename] = sval[0][1..-1]
             end
           end
-          
+
           def space_split(val, row)
             sval = val.split(' ')
             row[firstname] = sval.shift
             row[middlename] = sval.join(' ') unless sval.empty?
           end
-          
+
           def split(val, row)
             sval = val.split(',').map(&:strip)
             row[lastname] = sval.shift
@@ -154,7 +154,7 @@ module Kiba
             row[suffix] = sval.join(', ') unless sval.empty?
             row
           end
-          
+
           def splittable?(val)
             return false unless val
 

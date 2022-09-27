@@ -65,7 +65,7 @@ module Kiba
         # ```
         #
         # Results in:
-        # 
+        #
         # ```
         # | x | y   | z   |
         # |---+-----+-----|
@@ -87,7 +87,7 @@ module Kiba
             @sep = sep
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             sourceval = row.fetch(@source, nil)
             return row if sourceval.nil?

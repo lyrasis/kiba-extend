@@ -11,13 +11,13 @@ module Kiba
             @xform = Compare::FieldValues.new(...)
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             xform.process(row)
           end
 
           private
-          
+
           attr_reader :xform
         end
       end

@@ -61,7 +61,7 @@ module Kiba
             @delim = delim
           end
 
-          # @param row [Hash{ Symbol => String }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             fieldval = row.fetch(field, nil)
             return row if fieldval.blank?

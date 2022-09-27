@@ -9,7 +9,7 @@ module Kiba
         # Prints warning to STDOUT for each row having uneven values in the given fields
         #
         # ## What is meant by "Even fields"?
-        # 
+        #
         # When a field group is even, each field in the group contains the same number of values. For
         #   example:
         #
@@ -43,8 +43,8 @@ module Kiba
             @delim = delim
             @checker = Helpers::FieldEvennessChecker.new(fields: fields, delim: delim)
           end
-          
-          # @param row [Hash{ Symbol => String }]
+
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             return row if fields.length == 1
 
