@@ -44,3 +44,7 @@ For more clarity about exactly what each transformation does, if it is not descr
 [mimsy-to-cspace](https://github.com/lyrasis/mimsy-to-cspace) is a publicly available example of `kiba-extend` usage. It was completed before the registry/job templating functions were added, so it only shows how transformations get used. (And it is a good example of how repetitive the code gets without templating)
 
 LYRASIS staff with permissions to private repos can find a number of other project examples using `kiba-extend` [in our organizationrepo list](https://cs.github.com/?scope=org%3Alyrasis&scopeName=lyrasis&q=gem+%27kiba-extend%27)
+
+## Contributing
+
+Please see [Contributing to `kiba-extend`](https://lyrasis.github.io/kiba-extend/file.contributing.html) for contributor guidelines.

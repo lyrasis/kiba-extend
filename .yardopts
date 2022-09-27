@@ -6,6 +6,7 @@
 --markup-provider redcarpet
 -
 LICENSE.txt
+doc/contributing.md
 doc/file_registry_entry.md
 doc/cli.md
 doc/common_patterns_tips_tricks.md
