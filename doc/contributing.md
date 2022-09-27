@@ -13,7 +13,7 @@ Transforms go in `lib/kiba/extend/transforms`.
 ### If creating a new transform namespace
 
 * Create a new `.rb` file in `lib/kiba/extend/transforms` to document the scope of the namespace and alias the namespace (so you don't have to type out `Kiba::Extend::Transforms` for every transform used in a pipeline/job.) See [`name.rb`](https://github.com/lyrasis/kiba-extend/blob/main/lib/kiba/extend/transforms/name.rb) as an example.
-** Note: If a namespace includes similar transforms, this is an appropriate place to differentiate them. See the `Deduplicate` transform namespace [code](https://github.com/lyrasis/kiba-extend/blob/main/lib/kiba/extend/transforms/deduplicate.rb) and [documentation page](https://lyrasis.github.io/kiba-extend/Kiba/Extend/Transforms/Deduplicate.html)
+  * Note: If a namespace includes similar transforms, this is an appropriate place to differentiate them. See the `Deduplicate` transform namespace [code](https://github.com/lyrasis/kiba-extend/blob/main/lib/kiba/extend/transforms/deduplicate.rb) and [documentation page](https://lyrasis.github.io/kiba-extend/Kiba/Extend/Transforms/Deduplicate.html)
 * Create a directory to hold the transforms that will be in the new namespace. See [`name` directory](https://github.com/lyrasis/kiba-extend/tree/main/lib/kiba/extend/transforms/name) as an example.
 
 ### New transforms
@@ -219,7 +219,7 @@ A more complex example is [`Collapse::FieldsToRepeatableFieldGroup`](https://git
 
 ### Extract reusable processing logic to command service objects
 
-These object classes should more or less follow [the Command Pattern](https://www.alchemists.io/articles/command_pattern/]. The linked article is very rigorous about what the pattern requires, but the main things are:
+These object classes should more or less follow [the Command Pattern](https://www.alchemists.io/articles/command_pattern/). The linked article is very rigorous about what the pattern requires, but the main things are:
 
 * The class should do one specific thing
 * The class should have one public method: `:call`. When you call `:call`, the class does the thing and returns the result
