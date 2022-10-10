@@ -69,17 +69,19 @@ module Kiba
           end
 
           def process(row)
-            @fields.each do |field|
+            fields.each do |field|
               fieldval = row[field]
               if fieldval.nil?
                 row[field] = [fieldval]
               else
-                row[field] = fieldval.nil? ? [] : fieldval.split(@delim)
+                row[field] = fieldval.nil? ? [] : fieldval.split(delim)
               end
             end
 
             row
           end
+
+          attr_reader :fields, :delim
         end
       end
     end
