@@ -58,9 +58,11 @@ module Kiba
         #   expect(result).to eq(expected)
         class ToArray
           # @param fields [Symbol, Array(Symbol)] Source data fields.
-          # @param delim [String, nil] The delimiting character. If no delim is given, the default delim is `Kiba::Extend.delim`.
-          #   If `nil` is provided (do not delimit string value), the string value will instead be wrapped in an array without
-          #   attempting to split the string value.
+          # @param delim [String, nil] The delimiting character. If no delim is
+          #   given, the default delim is `Kiba::Extend.delim`. If `nil` is
+          #   provided (do not delimit string value), the string value will
+          #   instead be wrapped in an array without attempting to split the
+          #   string value.
           def initialize(fields:, delim: Kiba::Extend.delim)
             @fields = [fields].flatten
             @delim = delim
