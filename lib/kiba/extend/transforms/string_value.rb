@@ -3,7 +3,7 @@
 module Kiba
   module Extend
     module Transforms
-      # Transforms to deal with string values in fields
+      # Transforms to convert String values in fields to other types
       module StringValue
         ::StringValue = Kiba::Extend::Transforms::StringValue
       end
