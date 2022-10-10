@@ -30,7 +30,7 @@ These changes are merged into the `main` branch, but have not been released. Aft
 === Breaking
 
 === Added
-* `StringValue::ToArray` transform
+* `StringValue::ToArray` transform (PR#111)
 
 === Changed
 
