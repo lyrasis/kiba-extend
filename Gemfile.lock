@@ -5,7 +5,7 @@ PATH
       activesupport (~> 6)
       amazing_print (~> 1.4)
       csv (~> 3)
-      dry-configurable (~> 0)
+      dry-configurable (= 0.15.0)
       dry-container (~> 0)
       kiba (~> 4)
       kiba-common (~> 1)
