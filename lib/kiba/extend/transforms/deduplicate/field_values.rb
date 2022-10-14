@@ -25,7 +25,6 @@ module Kiba
         # Used in pipeline as:
         #
         # ```
-        #   @deduper = {}
         #   transform Deduplicate::FieldValues, fields: %i[foo bar], sep: ';'
         # ```
         #
