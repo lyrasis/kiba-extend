@@ -35,6 +35,7 @@ These changes are merged into the `main` branch, but have not been released. Aft
 === Changed
 
 === Bugfixes
+* Fix https://github.com/lyrasis/kiba-extend/issues/121[#121] (PR#122)
 
 === Deleted
 

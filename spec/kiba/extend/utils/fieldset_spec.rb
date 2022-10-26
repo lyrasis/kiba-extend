@@ -18,11 +18,22 @@ RSpec.describe Kiba::Extend::Utils::Fieldset do
       expect(fieldset.fields).to eq(fields)
     end
   end
+
   describe '#populate' do
+    let(:result){ fieldset.populate(rows).hash }
+
     it 'populates hash with field values from given rows' do
-      fieldset.populate(rows)
       expected = [['bb', nil, 'bee'], %w[cc cee cee]]
-      expect(fieldset.hash.values).to eq(expected)
+      expect(result.values).to eq(expected)
+    end
+
+    context 'with nil rows' do
+      let(:rows){ nil }
+
+      it 'returns empty field arrays' do
+        expected = {:b=>[], :c=>[]}
+        expect(result).to eq(expected)
+      end
     end
   end
 

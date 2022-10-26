@@ -6,7 +6,7 @@ module Kiba
       # Data structure class used in processing merge transforms
       class Fieldset
         attr_reader :hash
-        
+
         def initialize(fields:, null_placeholder: nil)
           @null_placeholder = null_placeholder
           @hash = {}
@@ -30,10 +30,11 @@ module Kiba
         end
 
         def populate(rows)
-          return if rows.empty?
+          return self if rows.blank?
 
           rows.each { |row| get_field_values(row) }
           remove_valueless_rows
+          self
         end
 
         def value_ct
