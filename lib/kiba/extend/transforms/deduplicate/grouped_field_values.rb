@@ -11,36 +11,80 @@ module Kiba
         # @note Tread with caution, as this has not been used much and is not
         #   extensively tested
         #
-        #
-        # Input table:
-        #
-        # ```
-        # | name                  | work                   | role                                   |
-        # |-----------------------+------------------------+----------------------------------------|
-        # | Fred;Freda;Fred;James | Report;Book;Paper;Book | author;photographer;editor;illustrator |
-        # | ;                     | ;                      | ;                                      |
-        # | Martha                | Book                   | contributor                            |
-        # ```
-        #
-        # Used in pipeline as:
-        #
-        # ```
-        # transform Deduplicate::GroupedFieldValues,
-        #   on_field: :name,
-        #   grouped_fields: %i[work role],
-        #   sep: ';'
-        # ```
-        #
-        # Results in:
-        #
-        # ```
-        # | name             | work             | role                            |
-        # |------------------+------------------+---------------------------------|
-        # | Fred;Freda;James | Report;Book;Book | author;photographer;illustrator |
-        # | nil              | nil              | nil                             |
-        # | Martha           | Book             | contributor                     |
-        # ```
-        #
+        # @example Basic usage/defaults
+        #   # Used in pipeline as:
+        #   # transform Deduplicate::GroupedFieldValues,
+        #   #   on_field: :name,
+        #   #   grouped_fields: %i[work role],
+        #   #   sep: ';'
+        #   xform = Deduplicate::GroupedFieldValues.new(
+        #     on_field: :name,
+        #     grouped_fields: %i[work role],
+        #     sep: ';'
+        #   )
+        #   input = [
+        #     # empty/delim-only values in :on_field
+        #     {name: ';',
+        #      work: ';',
+        #      role: 'auth;ed'},
+        #     # nil value in :on_field
+        #     {name: nil,
+        #      work: 'auth;ed',
+        #      role: ';'},
+        #     # nil value in other field
+        #     {name: 'Jan;Jan',
+        #      work: nil,
+        #      role: 'auth;ed'},
+        #     # role has empty value for Jan
+        #     {name: 'Bob;Jan;Bob',
+        #      work: ';',
+        #      role: 'auth;;ctb'},
+        #     # work is empty string value; role has only 2 values
+        #     {name: 'Cam;Jan;Cam',
+        #      work: '',
+        #      role: 'auth;ed'},
+        #     # lots of values, multiple duplicates
+        #     {name: 'Fred;Jan;Fred;Bob;Fred;Bob',
+        #      work: 'Rpt;Bk;Paper;Bk;Pres;Bk',
+        #      role: 'auth;photog;ed;ill;auth;ed.'},
+        #     # single value
+        #     {name: 'Martha',
+        #      work: 'Bk',
+        #      role: 'ctb'}
+        #   ]
+        #   result = input.map{ |row| xform.process(row) }
+        #   expected = [
+        #     # empty string values returned as nil values
+        #     {name: nil,
+        #      work: nil,
+        #      role: 'auth'},
+        #     # no processing possible, row passed through
+        #     {name: nil,
+        #      work: 'auth;ed',
+        #      role: ';'},
+        #     # nil values not processed
+        #     {name: 'Jan',
+        #      work: nil,
+        #      role: 'auth'},
+        #     # empty string values to be concatenated are treated as such
+        #     {name: 'Bob;Jan',
+        #      work: nil,
+        #      role: 'auth;'},
+        #     # empty string -> nil, role not having a 3rd value to delete does
+        #     #   not cause failure or weirdness
+        #     {name: 'Cam;Jan',
+        #      work: nil,
+        #      role: 'auth;ed'},
+        #     # keeps first value associated with each name
+        #     {name: 'Fred;Jan;Bob',
+        #      work: 'Rpt;Bk;Bk',
+        #      role: 'auth;photog;ill'},
+        #     # passes row through; nothing to deduplicate
+        #     {name: 'Martha',
+        #      work: 'Bk',
+        #      role: 'ctb'}
+        #   ]
+        #   expect(result).to eq(expected)
         class GroupedFieldValues
           # @param on_field [Symbol] the field we deduplicating (comparing, and
           #   initially removing values from
@@ -61,15 +105,16 @@ module Kiba
 
           # @param row [Hash{ Symbol => String, nil }]
           def process(row)
-            vals = comparable_values(row)
-            if vals.empty? || vals.all?{ |v| v.empty? }
-              null_fields(row)
-            else
-              to_delete = deletable_elements(vals)
-              return row if to_delete.empty?
+            val = row[field]
+            return row if val.blank?
 
-              do_deletes(row, to_delete)
-            end
+            vals = comparable_values(row)
+
+            to_delete = deletable_elements(vals)
+            return row if to_delete.empty?
+
+            do_deletes(row, to_delete)
+
             row
           end
 
