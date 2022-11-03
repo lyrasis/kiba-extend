@@ -16,11 +16,11 @@ module Kiba
         #   # transform Deduplicate::GroupedFieldValues,
         #   #   on_field: :name,
         #   #   grouped_fields: %i[work role],
-        #   #   sep: ';'
+        #   #   delim: ';'
         #   xform = Deduplicate::GroupedFieldValues.new(
         #     on_field: :name,
         #     grouped_fields: %i[work role],
-        #     sep: ';'
+        #     delim: ';'
         #   )
         #   input = [
         #     # empty/delim-only values in :on_field
@@ -85,6 +85,25 @@ module Kiba
         #      role: 'ctb'}
         #   ]
         #   expect(result).to eq(expected)
+        # @example Case insensitive deduplication
+        #   xform = Deduplicate::GroupedFieldValues.new(
+        #     on_field: :name,
+        #     grouped_fields: %i[work role],
+        #     delim: ';',
+        #     ignore_case: true
+        #   )
+        #   input = [
+        #     {name: 'Jan;jan',
+        #      work: nil,
+        #      role: 'auth;ed'},
+        #   ]
+        #   result = input.map{ |row| xform.process(row) }
+        #   expected = [
+        #     {name: 'Jan',
+        #      work: nil,
+        #      role: 'auth'},
+        #   ]
+        #   expect(result).to eq(expected)
         class GroupedFieldValues
           include SepDeprecatable
           # @param on_field [Symbol] the field we deduplicating (comparing, and
@@ -96,7 +115,8 @@ module Kiba
           #   multi-field grouping as `field`. Values will be removed from these
           #   fields **positionally**, if the corresponding value was removed
           #   from `field`
-          def initialize(on_field:, sep: nil, delim: nil, grouped_fields: [])
+          def initialize(on_field:, sep: nil, delim: nil, grouped_fields: [],
+                         ignore_case: false)
             @field = on_field
             @other = grouped_fields
             @delim = usedelim(sepval: sep, delimval: delim, calledby: self)
@@ -104,6 +124,7 @@ module Kiba
               fields: grouped_fields,
               discard: %i[nil]
             )
+            @ignore_case = ignore_case
           end
 
           # @param row [Hash{ Symbol => String, nil }]
@@ -123,13 +144,14 @@ module Kiba
 
           private
 
-          attr_reader :field, :other, :delim, :getter
+          attr_reader :field, :other, :delim, :getter, :ignore_case
 
           def comparable_values(row)
             val = row[field]
             return [] if val.blank?
 
-            val.split(delim, -1)
+            cased = ignore_case ? val.downcase : val
+            cased.split(delim, -1)
           end
 
           def delete_values(arr, to_delete)
