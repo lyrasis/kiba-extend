@@ -4,10 +4,12 @@ module Kiba
   module Extend
     module Transforms
       module Deduplicate
-        # Field value deduplication that is at least semi-safe for use with grouped fields that expect the same number
-        #   of values for each field in the grouping
+        # Field value deduplication that is at least semi-safe for use with
+        #   grouped fields that expect the same number of values for each field
+        #   in the grouping
         #
-        # @note Tread with caution, as this has not been used much and is not extensively tested
+        # @note Tread with caution, as this has not been used much and is not
+        #   extensively tested
         # @todo Refactor this hideous mess
         #
         #
@@ -43,7 +45,8 @@ module Kiba
         class GroupedFieldValues
           # @param on_field [Symbol] the value to be deduplicated
           # @param sep [String] used to split/join multivalued field values
-          # @param grouped_fields [Array<Symbol>] other fields in the same multi-field grouping as `field`
+          # @param grouped_fields [Array<Symbol>] other fields in the same
+          #   multi-field grouping as `field`
           def initialize(on_field:, sep:, grouped_fields: [])
             @field = on_field
             @other = grouped_fields
