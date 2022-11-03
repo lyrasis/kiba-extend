@@ -10,7 +10,6 @@ module Kiba
         #
         # @note Tread with caution, as this has not been used much and is not
         #   extensively tested
-        # @todo Refactor this hideous mess
         #
         #
         # Input table:
@@ -43,66 +42,89 @@ module Kiba
         # ```
         #
         class GroupedFieldValues
-          # @param on_field [Symbol] the value to be deduplicated
+          # @param on_field [Symbol] the field we deduplicating (comparing, and
+          #   initially removing values from
           # @param sep [String] used to split/join multivalued field values
-          # @param grouped_fields [Array<Symbol>] other fields in the same
-          #   multi-field grouping as `field`
+          # @param grouped_fields [Array<Symbol>] other field(s) in the same
+          #   multi-field grouping as `field`. Values will be removed from these
+          #   fields **positionally**, if the corresponding value was removed
+          #   from `field`
           def initialize(on_field:, sep:, grouped_fields: [])
             @field = on_field
             @other = grouped_fields
             @sep = sep
+            @getter = Kiba::Extend::Transforms::Helpers::FieldValueGetter.new(
+              fields: grouped_fields,
+              discard: %i[nil]
+            )
           end
 
           # @param row [Hash{ Symbol => String, nil }]
           def process(row)
-            fv = row.fetch(field)
-            seen = []
-            delete = []
-            unless fv.nil?
-              fv = fv.split(sep)
-              valfreq = get_value_frequency(fv)
-              fv.each_with_index do |val, i|
-                if valfreq[val] > 1
-                  if seen.include?(val)
-                    delete << i
-                  else
-                    seen << val
-                  end
-                end
-              end
-              row[field] = fv.uniq.join(sep)
+            vals = comparable_values(row)
+            if vals.empty? || vals.all?{ |v| v.empty? }
+              null_fields(row)
+            else
+              to_delete = deletable_elements(vals)
+              return row if to_delete.empty?
 
-              if delete.size.positive?
-                delete = delete.sort.reverse
-                h = {}
-                other.each { |of| h[of] = row.fetch(of) }
-                h = h.reject { |_f, val| val.nil? }.to_h
-                h.each { |f, val| h[f] = val.split(sep) }
-                h.each do |f, val|
-                  delete.each { |i| val.delete_at(i) }
-                  row[f] = val.size.positive? ? val.join(sep) : nil
-                end
-              end
+              do_deletes(row, to_delete)
             end
-
-            fv = row.fetch(field, nil)
-            if !fv.nil? && fv.empty?
-              row[field] = nil
-              other.each { |f| row[f] = nil }
-            end
-
             row
           end
 
           private
 
-          attr_reader :field, :other, :sep
+          attr_reader :field, :other, :sep, :getter
 
-          def get_value_frequency(fv)
-            h = {}
-            fv.uniq.each { |v| h[v] = 0 }
-            fv.uniq { |v| h[v] += 1 }
-            h
+          def comparable_values(row)
+            val = row[field]
+            return [] if val.blank?
+
+            val.split(sep, -1)
+          end
+
+          def delete_values(arr, to_delete)
+            to_delete.each{ |idx| arr.delete_at(idx) }
+            arr.empty? ? nil : arr.join(sep)
+          end
+
+          def field_deletes(row, to_delete)
+            vals = row[field]
+              .split(sep)
+            row[field] = delete_values(vals, to_delete)
+          end
+
+          def do_deletes(row, to_delete)
+            field_deletes(row, to_delete)
+            others = getter.call(row)
+            return if others.empty?
+
+            others.each do |fld, val|
+              other_deletes(row, to_delete, fld, val)
+            end
+          end
+
+          def deletable_elements(arr)
+            return [] if arr.empty?
+
+            to_delete = []
+            keeping = []
+
+            arr.each_with_index do |val, idx|
+              keeping.any?(val) ? to_delete << idx : keeping << val
+            end
+            to_delete.sort.reverse
+          end
+
+          def null_fields(row)
+            [field, other].flatten
+              .each{ |fld| row[fld] = nil }
+          end
+
+          def other_deletes(row, to_delete, fld, val)
+            vals = val.split(sep)
+            row[fld] = delete_values(vals, to_delete)
           end
         end
       end
