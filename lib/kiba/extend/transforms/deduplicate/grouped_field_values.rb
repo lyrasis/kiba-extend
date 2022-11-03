@@ -55,11 +55,11 @@ module Kiba
 
           # @param row [Hash{ Symbol => String, nil }]
           def process(row)
-            fv = row.fetch(@field)
+            fv = row.fetch(field)
             seen = []
             delete = []
             unless fv.nil?
-              fv = fv.split(@sep)
+              fv = fv.split(sep)
               valfreq = get_value_frequency(fv)
               fv.each_with_index do |val, i|
                 if valfreq[val] > 1
@@ -70,31 +70,33 @@ module Kiba
                   end
                 end
               end
-              row[@field] = fv.uniq.join(@sep)
+              row[field] = fv.uniq.join(sep)
 
               if delete.size.positive?
                 delete = delete.sort.reverse
                 h = {}
-                @other.each { |of| h[of] = row.fetch(of) }
+                other.each { |of| h[of] = row.fetch(of) }
                 h = h.reject { |_f, val| val.nil? }.to_h
-                h.each { |f, val| h[f] = val.split(@sep) }
+                h.each { |f, val| h[f] = val.split(sep) }
                 h.each do |f, val|
                   delete.each { |i| val.delete_at(i) }
-                  row[f] = val.size.positive? ? val.join(@sep) : nil
+                  row[f] = val.size.positive? ? val.join(sep) : nil
                 end
               end
             end
 
-            fv = row.fetch(@field, nil)
+            fv = row.fetch(field, nil)
             if !fv.nil? && fv.empty?
-              row[@field] = nil
-              @other.each { |f| row[f] = nil }
+              row[field] = nil
+              other.each { |f| row[f] = nil }
             end
 
             row
           end
 
           private
+
+          attr_reader :field, :other, :sep
 
           def get_value_frequency(fv)
             h = {}
