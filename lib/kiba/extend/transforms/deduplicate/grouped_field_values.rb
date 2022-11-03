@@ -86,17 +86,20 @@ module Kiba
         #   ]
         #   expect(result).to eq(expected)
         class GroupedFieldValues
+          include SepDeprecatable
           # @param on_field [Symbol] the field we deduplicating (comparing, and
           #   initially removing values from
-          # @param sep [String] used to split/join multivalued field values
+          # @param sep [nil, String] **DEPRECATED** do not use in new transforms
+          # @param delim [nil, String] used to split/join multivalued field
+          #   values
           # @param grouped_fields [Array<Symbol>] other field(s) in the same
           #   multi-field grouping as `field`. Values will be removed from these
           #   fields **positionally**, if the corresponding value was removed
           #   from `field`
-          def initialize(on_field:, sep:, grouped_fields: [])
+          def initialize(on_field:, sep: nil, delim: nil, grouped_fields: [])
             @field = on_field
             @other = grouped_fields
-            @sep = sep
+            @delim = usedelim(sepval: sep, delimval: delim, calledby: self)
             @getter = Kiba::Extend::Transforms::Helpers::FieldValueGetter.new(
               fields: grouped_fields,
               discard: %i[nil]
@@ -120,23 +123,23 @@ module Kiba
 
           private
 
-          attr_reader :field, :other, :sep, :getter
+          attr_reader :field, :other, :delim, :getter
 
           def comparable_values(row)
             val = row[field]
             return [] if val.blank?
 
-            val.split(sep, -1)
+            val.split(delim, -1)
           end
 
           def delete_values(arr, to_delete)
             to_delete.each{ |idx| arr.delete_at(idx) }
-            arr.empty? ? nil : arr.join(sep)
+            arr.empty? ? nil : arr.join(delim)
           end
 
           def field_deletes(row, to_delete)
             vals = row[field]
-              .split(sep)
+              .split(delim)
             row[field] = delete_values(vals, to_delete)
           end
 
@@ -168,7 +171,7 @@ module Kiba
           end
 
           def other_deletes(row, to_delete, fld, val)
-            vals = val.split(sep)
+            vals = val.split(delim)
             row[fld] = delete_values(vals, to_delete)
           end
         end

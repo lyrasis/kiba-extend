@@ -26,7 +26,7 @@ module Kiba
       # 3. Include in class :initialize method:
       #
       # ```
-      # @delim = usedelim(sepval: sep, delimval: delim, calledby: self)
+      #   @delim = usedelim(sepval: sep, delimval: delim, calledby: self)
       # ```
       module SepDeprecatable
         def usedelim(sepval:, delimval:, calledby:)
