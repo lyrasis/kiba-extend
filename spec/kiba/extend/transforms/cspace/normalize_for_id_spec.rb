@@ -15,7 +15,7 @@ RSpec.describe Kiba::Extend::Transforms::Cspace::NormalizeForID do
     ]
   end
 
-  context 'when multival = false' do
+  context 'with defaults' do
     let(:expected) do
       [
         { subject: 'Oświęcim (Poland)', norm: 'oswiecimpoland' },
@@ -31,13 +31,13 @@ RSpec.describe Kiba::Extend::Transforms::Cspace::NormalizeForID do
         transform Cspace::NormalizeForID, source: :subject, target: :norm
       end
     end
-    
+
     it 'normalizes as expected' do
       expect(result).to eq(expected)
     end
   end
 
-  context 'when multival = true' do
+  context 'with delim' do
     let(:expected) do
       [
         { subject: 'Oświęcim (Poland)', norm: 'oswiecimpoland' },
@@ -50,10 +50,10 @@ RSpec.describe Kiba::Extend::Transforms::Cspace::NormalizeForID do
 
     let(:transforms) do
       Kiba.job_segment do
-        transform Cspace::NormalizeForID, source: :subject, target: :norm, multival: true, delim: '|'
+        transform Cspace::NormalizeForID, source: :subject, target: :norm, delim: '|'
       end
     end
-    
+
     it 'normalizes as expected' do
       expect(result).to eq(expected)
     end
