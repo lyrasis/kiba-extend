@@ -31,6 +31,11 @@ These changes are merged into the `main` branch, but have not been released. Aft
 
 === Added
 * `StringValue::ToArray` transform (PR#111)
+* Two mixin modules to Transforms to support deprecating non-preferred parameter signatures:
+** `Transforms::SepDeprecatable` (PR#124)
+** `Transforms::MultivalPlusDelimDeprecatable` (PR#124)
+* `Utils::StringNormalizer` service class (PR#124)
+* `ignore_case` and `normalized` parameters for `Deduplicate::GroupedFieldValues` (PR#124)
 
 === Changed
 
@@ -40,6 +45,12 @@ These changes are merged into the `main` branch, but have not been released. Aft
 === Deleted
 
 === Deprecated/Will break in a future version
+* `sep` parameter in `Deduplicate::GroupedFieldValues` (PR#124)
+* `multival` parameter in `Cspace::NormalizeForId` (PR#124)
+
+=== Dev
+* Run Rspec in random order with seed (PR#124)
+
 
 == Releases
 
