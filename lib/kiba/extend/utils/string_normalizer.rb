@@ -30,65 +30,65 @@ module Kiba
       #   of the class every time it is called.
       #
       # @example Default settings
-      # util = StringNormalizer.new
-      # input = [
-      #   'Oświęcim (Poland)',
-      #   'Oswiecim, Poland',
-      #   'Iași, Romania',
-      #   'Iasi, Romania',
-      #   'Table, café',
-      #   '1,001 Arabian Nights',
-      #   "foo\n\nbar"
-      # ]
-      # expected = [
-      #  'oswiecimpoland',
-      #  'oswiecimpoland',
-      #  'iairomania',
-      #  'iasiromania',
-      #  'tablecafe',
-      #  '1001arabiannights',
-      #  'foobar'
-      # ]
-      # results = input.map{ |str| util.call(str) }
-      # expect(results).to eq(expected)
+      #   util = Kiba::Extend::Utils::StringNormalizer.new
+      #   input = [
+      #     'Oświęcim (Poland)',
+      #     'Oswiecim, Poland',
+      #     'Iași, Romania',
+      #     'Iasi, Romania',
+      #     'Table, café',
+      #     '1,001 Arabian Nights',
+      #     "foo\n\nbar"
+      #   ]
+      #   expected = [
+      #    'oswiecimpoland',
+      #    'oswiecimpoland',
+      #    'iairomania',
+      #    'iasiromania',
+      #    'tablecafe',
+      #    '1001arabiannights',
+      #    'foobar'
+      #   ]
+      #   results = input.map{ |str| util.call(str) }
+      #   expect(results).to eq(expected)
       # @example downcased = false
-      # util = StringNormalizer.new(downcased = false)
-      # input = [
-      #   'Oświęcim (Poland)',
-      #   'Oswiecim, Poland',
-      #   'Iași, Romania',
-      #   'Iasi, Romania',
-      #   'Table, café',
-      #   '1,001 Arabian Nights',
-      #   "foo\n\nbar"
-      # ]
-      # expected = [
-      #  'OswiecimPoland',
-      #  'OswiecimPoland',
-      #  'IaiRomania',
-      #  'IasiRomania',
-      #  'Tablecafe',
-      #  '1001ArabianNights',
-      #  'foobar'
-      # ]
-      # results = input.map{ |str| util.call(str) }
-      # expect(results).to eq(expected)
+      #   util = Kiba::Extend::Utils::StringNormalizer.new(downcased: false)
+      #   input = [
+      #     'Oświęcim (Poland)',
+      #     'Oswiecim, Poland',
+      #     'Iași, Romania',
+      #     'Iasi, Romania',
+      #     'Table, café',
+      #     '1,001 Arabian Nights',
+      #     "foo\n\nbar"
+      #   ]
+      #   expected = [
+      #    'OswiecimPoland',
+      #    'OswiecimPoland',
+      #    'IaiRomania',
+      #    'IasiRomania',
+      #    'Tablecafe',
+      #    '1001ArabianNights',
+      #    'foobar'
+      #   ]
+      #   results = input.map{ |str| util.call(str) }
+      #   expect(results).to eq(expected)
       # @example :cspaceid mode
-      # util = StringNormalizer.new(mode: :cspaceid)
-      # input = [
-      #   'Oświęcim (Poland)',
-      #   'Oswiecim, Poland',
-      #   'Iași, Romania',
-      #   'Iasi, Romania'
-      # ]
-      # expected = [
-      #  'oswiecimpoland',
-      #  'oswiecimpoland',
-      #  'iasiromania',
-      #  'iasiromania'
-      # ]
-      # results = input.map{ |str| util.call(str) }
-      # expect(results).to eq(expected)
+      #   util = Kiba::Extend::Utils::StringNormalizer.new(mode: :cspaceid)
+      #   input = [
+      #     'Oświęcim (Poland)',
+      #     'Oswiecim, Poland',
+      #     'Iași, Romania',
+      #     'Iasi, Romania'
+      #   ]
+      #   expected = [
+      #    'oswiecimpoland',
+      #    'oswiecimpoland',
+      #    'iasiromania',
+      #    'iasiromania'
+      #   ]
+      #   results = input.map{ |str| util.call(str) }
+      #   expect(results).to eq(expected)
       class StringNormalizer
         class << self
           # @param mode [:plain, :cspaceid] :plain does no find/replace before
