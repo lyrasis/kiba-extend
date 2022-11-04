@@ -87,23 +87,41 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Transformations specific to preparing data for import into CollectionSpace</p>
+    <p>Transformations specific to preparing data for import into
+  CollectionSpace</p>
+
+<h2 id="using-cspace-transforms-when-your-project-defines-a-cspace-module">Using Cspace transforms when your project defines a Cspace module</h2>
+
+<p>If you get errors running jobs containing transforms in the
+  Kiba::Extend::Cspace namespace in your project, and you have defined
+  a Cspace module in your project, you will need to write the transform
+  like:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Transforms.html" title="Kiba::Extend::Transforms (module)">Transforms</a></span></span><span class='op'>::</span><span class='const'>Cspace</span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Cspace/NormalizeForID.html" title="Kiba::Extend::Transforms::Cspace::NormalizeForID (class)">NormalizeForID</a></span></span><span class='comma'>,</span>
+  <span class='label'>source:</span> <span class='symbol'>:field</span><span class='comma'>,</span>
+  <span class='label'>target:</span> <span class='symbol'>:norm</span>
+</code></pre>
 
 <h2 id="other-transforms-of-special-relevance-to-collectionspace-jobs">Other transforms of special relevance to CollectionSpace jobs</h2>
 
 <ul>
-<li><span class='object_link'><a href="Append/ConvertedValueAndUnit.html" title="Kiba::Extend::Transforms::Append::ConvertedValueAndUnit (class)">Append::ConvertedValueAndUnit</a></span> - For augmenting Object dimension values</li>
+<li><span class='object_link'><a href="Append/ConvertedValueAndUnit.html" title="Kiba::Extend::Transforms::Append::ConvertedValueAndUnit (class)">Append::ConvertedValueAndUnit</a></span> - For augmenting Object dimension
+values</li>
 <li><span class='object_link'><a href="Name.html" title="Kiba::Extend::Transforms::Name (module)">Name</a></span> transforms for Person authorities</li>
-<li><span class='object_link'><a href="Fingerprint.html" title="Kiba::Extend::Transforms::Fingerprint (module)">Fingerprint</a></span> transforms for preparing cleanup worksheets for clients and merging completed worksheets
-back into migration projects</li>
-<li>Reshape::CollapseMultipleFieldsToOneTypedFieldPair - often useful for preparing phone type and email
-type fields</li>
-<li>CombineValues::AcrossFieldGroup and <span class='object_link'><a href="Collapse/FieldsToRepeatableFieldGroup.html" title="Kiba::Extend::Transforms::Collapse::FieldsToRepeatableFieldGroup (class)">Kiba::Extend::Transforms::Collapse::FieldsToRepeatableFieldGroup</a></span> - different approaches to
-generating data for repeatable field groups. CombineValues::AcrossFieldGroup makes sense if the data
-to be combined exists in basically the right &quot;shape&quot; for combining. You can just define what source
-fields map to what target fields without renaming fields in a particular way. When you have to
-explode/reshape/create source data into a combinable form, and you can do that buy creating fields
-using a consistent naming convention, <span class='object_link'><a href="Collapse/FieldsToRepeatableFieldGroup.html" title="Kiba::Extend::Transforms::Collapse::FieldsToRepeatableFieldGroup (class)">Kiba::Extend::Transforms::Collapse::FieldsToRepeatableFieldGroup</a></span> is a simpler transform
+<li><span class='object_link'><a href="Fingerprint.html" title="Kiba::Extend::Transforms::Fingerprint (module)">Fingerprint</a></span> transforms for preparing cleanup worksheets for clients
+and merging completed worksheets back into migration projects</li>
+<li>Reshape::CollapseMultipleFieldsToOneTypedFieldPair - often useful
+for preparing phone type and email type fields</li>
+<li>CombineValues::AcrossFieldGroup and
+<span class='object_link'><a href="Collapse/FieldsToRepeatableFieldGroup.html" title="Kiba::Extend::Transforms::Collapse::FieldsToRepeatableFieldGroup (class)">Kiba::Extend::Transforms::Collapse::FieldsToRepeatableFieldGroup</a></span> - different approaches to
+generating data for repeatable field groups.
+CombineValues::AcrossFieldGroup makes sense if the data to be
+combined exists in basically the right &quot;shape&quot; for combining. You can
+just define what source fields map to what target fields without
+renaming fields in a particular way. When you have to explode,
+reshape, or create source data into a combinable form, and you can do
+that buy creating fields using a consistent naming convention,
+<span class='object_link'><a href="Collapse/FieldsToRepeatableFieldGroup.html" title="Kiba::Extend::Transforms::Collapse::FieldsToRepeatableFieldGroup (class)">Kiba::Extend::Transforms::Collapse::FieldsToRepeatableFieldGroup</a></span> is a simpler transform
 to set up, and applies <span class='object_link'><a href="Clean/EmptyFieldGroups.html" title="Kiba::Extend::Transforms::Clean::EmptyFieldGroups (class)">Kiba::Extend::Transforms::Clean::EmptyFieldGroups</a></span> automatically</li>
 </ul>
 
@@ -124,18 +142,66 @@ to set up, and applies <span class='object_link'><a href="Clean/EmptyFieldGroups
   
 </p>
 
+
+
+
+
+
+
   
     <h2>
-      Constant Summary
-      <small><a href="#" class="constants_summary_toggle">collapse</a></small>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
     </h2>
 
-    <dl class="constants">
+    <ul class="summary">
       
-        <dt id="BRUTEFORCE-constant" class="">BRUTEFORCE =
-          <div class="docstring">
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#shady_characters-class_method" title="shady_characters (class method)">.<strong>shady_characters</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Characters or character combinations known to be treated strangely by   CollectionSpace when creating IDs.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="shady_characters-class_method">
+  
+    .<strong>shady_characters</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
   <div class="discussion">
-    <p>Characters or character combinations known to be treated strangely by CollectionSpace when creating IDs. Used as a lookup to force the substitution we need</p>
+    <p>Characters or character combinations known to be treated strangely by
+  CollectionSpace when creating IDs. Used as a lookup to force the
+  substitution we need</p>
 
 
   </div>
@@ -143,28 +209,39 @@ to set up, and applies <span class='object_link'><a href="Clean/EmptyFieldGroups
 <div class="tags">
   
 
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+47
+48
+49
+50
+51
+52</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/cspace.rb', line 47</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_shady_characters'>shady_characters</span>
+  <span class='lbrace'>{</span>
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ș</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>s</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>t̕a</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ta</span><span class='tstring_end'>&#39;</span></span>
+  <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
 </div>
-        </dt>
-        <dd><pre class="code"><span class='lbrace'>{</span>
-  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ș</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>s</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
-  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>t̕a</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ta</span><span class='tstring_end'>&#39;</span></span>
-<span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span></pre></dd>
-      
-    </dl>
-  
-
-
-
-
-
-
-
-
+    
+  </div>
 
 </div>
 
       <div id="footer">
-  Generated on Wed Oct 26 14:49:52 2022 by
+  Generated on Fri Nov  4 19:34:17 2022 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.6).
 </div>
