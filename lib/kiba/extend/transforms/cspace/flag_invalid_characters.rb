@@ -17,7 +17,7 @@ module Kiba
               row[@flag] = nil
             else
               val = val.unicode_normalized?(:nfkc) ? val : val.unicode_normalize(:nfkc)
-              BRUTEFORCE.each { |k, v| val = val.gsub(k, v) }
+              Cspace.shady_characters.each { |k, v| val = val.gsub(k, v) }
               norm = ActiveSupport::Inflector.transliterate(val, '%INVCHAR%')
               row[@flag] = norm.include?('%INVCHAR%') ? norm : nil
             end
