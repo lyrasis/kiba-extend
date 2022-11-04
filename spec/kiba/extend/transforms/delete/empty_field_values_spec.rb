@@ -4,7 +4,7 @@ require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Transforms::Delete::EmptyFieldValues do
   before{ Kiba::Extend.config.delim = '|' }
-  
+  after{ Kiba::Extend.reset_config }
   let(:input) do
     [
       {data: 'abc;;;d e f'},

@@ -4,7 +4,9 @@ require 'spec_helper'
 
 # rubocop:disable Metrics/BlockLength
 RSpec.describe 'Kiba::Extend::Jobs::Job' do
-  before(:context) do
+  before(:all) do
+    reg = Kiba::Extend::Registry::FileRegistry.new
+    Kiba::Extend.config.registry = reg
     @dest_file = File.join(fixtures_dir, 'base_job_dest.csv')
     entries = { base_src: { path: File.join(fixtures_dir, 'base_job_base.csv'), supplied: true },
                 base_lookup: { path: File.join(fixtures_dir, 'base_job_lookup.csv'), supplied: true,
@@ -48,7 +50,7 @@ RSpec.describe 'Kiba::Extend::Jobs::Job' do
 
     context 'when dependency files do not exist' do
       let(:base_job_config) { { source: [:missing_src], destination: [:base_dest], lookup: [:base_lookup] } }
-      
+
       it 'calls dependency creators',
         skip: 'cannot figure out how to test this in a timely manner. Will test manually for now.' do
         missing_file = File.join(fixtures_dir, 'base_job_missing.csv')

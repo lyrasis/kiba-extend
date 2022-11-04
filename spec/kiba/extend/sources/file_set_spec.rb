@@ -4,7 +4,7 @@ require 'spec_helper'
 
 # rubocop:disable Metrics/BlockLength
 RSpec.describe 'Kiba::Extend::Sources::FileSet' do
-  before(:context) do
+  before do
     @path = File.join(fixtures_dir, 'fileset')
     FileUtils.mkdir(@path)
     FileUtils.touch(File.join(@path, 'a.csv'))
@@ -12,7 +12,7 @@ RSpec.describe 'Kiba::Extend::Sources::FileSet' do
     FileUtils.touch(File.join(@path, 't.txt'))
     FileUtils.touch(File.join(@path, '.~lock.a.csv'))
   end
-  after(:context) { FileUtils.rm_rf(@path) }
+  after{ FileUtils.rm_rf(@path) }
 
   let(:args) { { path: @path } }
   let(:set) { Kiba::Extend::Sources::FileSet.new(**args) }
@@ -46,7 +46,7 @@ RSpec.describe 'Kiba::Extend::Sources::FileSet' do
     end
 
     context 'when recursive' do
-      before(:context) do
+      before do
         subdir = File.join(@path, 'subdir')
         FileUtils.mkdir(subdir)
         FileUtils.touch(File.join(subdir, 'd.csv'))
@@ -54,6 +54,7 @@ RSpec.describe 'Kiba::Extend::Sources::FileSet' do
         FileUtils.touch(File.join(subdir, 'f.xml'))
         FileUtils.touch(File.join(subdir, '.~lock.d.csv'))
       end
+      after { FileUtils.rm_rf(@path) }
       context 'with include and exclude' do
         let(:args) { { path: @path, recursive: true, include: '.*\.csv$', exclude: '^\.~lock' } }
         it 'returns expected files' do
