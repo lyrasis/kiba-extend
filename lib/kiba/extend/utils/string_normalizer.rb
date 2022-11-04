@@ -129,10 +129,7 @@ module Kiba
         def set_subs
           case mode
           when :cspaceid
-            {
-              'ș' => 's',
-              't̕a' => 'ta'
-            }.freeze
+            Cspace.shady_characters
           else
             {}.freeze
           end
