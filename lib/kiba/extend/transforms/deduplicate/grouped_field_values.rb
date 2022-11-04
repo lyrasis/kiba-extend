@@ -104,6 +104,23 @@ module Kiba
         #      role: 'auth'},
         #   ]
         #   expect(result).to eq(expected)
+        # @example Normalized deduplication
+        #   xform = Deduplicate::GroupedFieldValues.new(
+        #     on_field: :role,
+        #     grouped_fields: %i[name],
+        #     delim: ';',
+        #     normalized: true
+        #   )
+        #   input = [
+        #     {name: 'Jan;Bob;Sam;Pat;Hops',
+        #      role: 'auth./ill.;auth, ill;ed;ed.;Ed.'},
+        #   ]
+        #   result = input.map{ |row| xform.process(row) }
+        #   expected = [
+        #     {name: 'Jan;Sam;Hops',
+        #      role: 'auth./ill.;ed;Ed.'},
+        #   ]
+        #   expect(result).to eq(expected)
         class GroupedFieldValues
           include SepDeprecatable
           # @param on_field [Symbol] the field we deduplicating (comparing, and
@@ -115,8 +132,12 @@ module Kiba
           #   multi-field grouping as `field`. Values will be removed from these
           #   fields **positionally**, if the corresponding value was removed
           #   from `field`
+          # @param ignore_case [Boolean]
+          # @param normalized [Boolean] if true, will apply
+          #   {Kiba::Extend::Utils::StringNormalizer} with arguments:
+          #   `mode: :plain, downcased: false` to values for comparison
           def initialize(on_field:, sep: nil, delim: nil, grouped_fields: [],
-                         ignore_case: false)
+                         ignore_case: false, normalized: false)
             @field = on_field
             @other = grouped_fields
             @delim = usedelim(sepval: sep, delimval: delim, calledby: self)
@@ -125,6 +146,9 @@ module Kiba
               discard: %i[nil]
             )
             @ignore_case = ignore_case
+            if normalized
+              @normalizer = Utils::StringNormalizer.new(downcased: false)
+            end
           end
 
           # @param row [Hash{ Symbol => String, nil }]
@@ -144,14 +168,19 @@ module Kiba
 
           private
 
-          attr_reader :field, :other, :delim, :getter, :ignore_case
+          attr_reader :field, :other, :delim, :getter, :ignore_case, :normalizer
 
           def comparable_values(row)
             val = row[field]
             return [] if val.blank?
 
-            cased = ignore_case ? val.downcase : val
-            cased.split(delim, -1)
+            vals = val.split(delim, -1)
+            cased = ignore_case ? vals.map(&:downcase) : vals
+            if normalizer
+              cased.map{ |val| normalizer.call(val) }
+            else
+              cased
+            end
           end
 
           def delete_values(arr, to_delete)
