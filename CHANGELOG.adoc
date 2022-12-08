@@ -40,6 +40,7 @@ These changes are merged into the `main` branch, but have not been released. Aft
 === Changed
 
 === Bugfixes
+* Catch `Merge::MultiRowLookup` transform created with empty `fieldmap` and raise error on initialization, rather than letting it blow up `Utils::Fieldset` later (PR#127)
 * Fix https://github.com/lyrasis/kiba-extend/issues/121[#121] (PR#122)
 
 === Deleted
