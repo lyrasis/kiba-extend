@@ -68,6 +68,28 @@ RSpec.describe Kiba::Extend::Transforms::Merge::MultiRowLookup do
       expect(result).to eq(expected)
     end
 
+    context 'with empty fieldhash' do
+      let(:transforms) do
+        Kiba.job_segment do
+          lkup_table = [
+            {:id=>"4", :date=>"", :treatment=>"nail trim"},
+            {:id=>"2", :date=>"2019-08-01", :treatment=>"hatch"}
+          ]
+          transform Merge::MultiRowLookup,
+            fieldmap: {},
+            keycolumn: :id,
+            lookup: Lookup.enum_to_hash(enum: lkup_table, keycolumn: :id),
+            delim: '|'
+        end
+      end
+
+      it 'raises error' do
+        expect{ result }.to raise_error(
+          Kiba::Extend::Transforms::Merge::MultiRowLookup::EmptyFieldmap
+        )
+      end
+    end
+
     context 'with sorter specified' do
       let(:transforms) do
         Kiba.job_segment do
@@ -177,7 +199,7 @@ RSpec.describe Kiba::Extend::Transforms::Merge::MultiRowLookup do
         expect(result).to eq(expected)
       end
     end
-    
+
     context 'with constantmap specified' do
       let(:transforms) do
         Kiba.job_segment do
@@ -205,7 +227,7 @@ RSpec.describe Kiba::Extend::Transforms::Merge::MultiRowLookup do
             constantmap: { by: 'kms', loc: 'The Thicket' }
         end
       end
-      
+
       let(:expected) do
         [
           { id: '1', name: 'Weddy', sex: 'm', source: 'adopted',
@@ -263,40 +285,40 @@ RSpec.describe Kiba::Extend::Transforms::Merge::MultiRowLookup do
         { single: nil, doubles: nil, triples: nil }
       ]
     end
-    
+
     let(:lookup) { Lookup.csv_to_multi_hash(file: lookup_csv, csvopt: Kiba::Extend.csvopts, keycolumn: :single) }
 
     let(:transforms) do
       Kiba.job_segment do
         transform Merge::MultiRowLookup,
-            fieldmap: {
-              doubles: :double,
-              triples: :triple
-            },
-            keycolumn: :single,
-            multikey: true,
-            delim: '|',
-            lookup: {
-              "a"=>[
-                {:single=>"a", :double=>"aa", :triple=>"aaa"}
-              ],
-              "b"=>[
-                {:single=>"b", :double=>"bb", :triple=>"bbb"},
-                {:single=>"b", :double=>"beebee", :triple=>""}
-              ],
-              "c"=>[
-                {:single=>"c", :double=>"cc", :triple=>"ccc"}
-              ],
-              "d"=>[
-                {:single=>"d", :double=>"dd", :triple=>"ddd"}
-              ],
-              "e"=>[
-                {:single=>"e", :double=>"ee", :triple=>"eee"}
-              ],
-              "g"=>[
-                {:single=>"g", :double=>"", :triple=>"ggg"}
-              ]
-            }
+          fieldmap: {
+            doubles: :double,
+            triples: :triple
+          },
+          keycolumn: :single,
+          multikey: true,
+          delim: '|',
+          lookup: {
+            "a"=>[
+              {:single=>"a", :double=>"aa", :triple=>"aaa"}
+            ],
+            "b"=>[
+              {:single=>"b", :double=>"bb", :triple=>"bbb"},
+              {:single=>"b", :double=>"beebee", :triple=>""}
+            ],
+            "c"=>[
+              {:single=>"c", :double=>"cc", :triple=>"ccc"}
+            ],
+            "d"=>[
+              {:single=>"d", :double=>"dd", :triple=>"ddd"}
+            ],
+            "e"=>[
+              {:single=>"e", :double=>"ee", :triple=>"eee"}
+            ],
+            "g"=>[
+              {:single=>"g", :double=>"", :triple=>"ggg"}
+            ]
+          }
       end
     end
 
@@ -318,38 +340,38 @@ RSpec.describe Kiba::Extend::Transforms::Merge::MultiRowLookup do
       let(:transforms) do
         Kiba.job_segment do
           transform Merge::MultiRowLookup,
-              fieldmap: {
-                doubles: :double,
-                triples: :triple
-              },
-              lookup: {
-                "a"=>[
-                  {:single=>"a", :double=>"aa", :triple=>"aaa"}
-                ],
-                "b"=>[
-                  {:single=>"b", :double=>"bb", :triple=>"bbb"},
-                  {:single=>"b", :double=>"beebee", :triple=>""}
-                ],
-                "c"=>[
-                  {:single=>"c", :double=>"cc", :triple=>"ccc"}
-                ],
-                "d"=>[
-                  {:single=>"d", :double=>"dd", :triple=>"ddd"}
-                ],
-                "e"=>[
-                  {:single=>"e", :double=>"ee", :triple=>"eee"}
-                ],
-                "g"=>[
-                  {:single=>"g", :double=>"", :triple=>"ggg"}
-                ]
-              },
-              keycolumn: :single,
-              multikey: true,
-              delim: '|',
-              constantmap: { quad: 4, pent: 5 }
+            fieldmap: {
+              doubles: :double,
+              triples: :triple
+            },
+            lookup: {
+              "a"=>[
+                {:single=>"a", :double=>"aa", :triple=>"aaa"}
+              ],
+              "b"=>[
+                {:single=>"b", :double=>"bb", :triple=>"bbb"},
+                {:single=>"b", :double=>"beebee", :triple=>""}
+              ],
+              "c"=>[
+                {:single=>"c", :double=>"cc", :triple=>"ccc"}
+              ],
+              "d"=>[
+                {:single=>"d", :double=>"dd", :triple=>"ddd"}
+              ],
+              "e"=>[
+                {:single=>"e", :double=>"ee", :triple=>"eee"}
+              ],
+              "g"=>[
+                {:single=>"g", :double=>"", :triple=>"ggg"}
+              ]
+            },
+            keycolumn: :single,
+            multikey: true,
+            delim: '|',
+            constantmap: { quad: 4, pent: 5 }
         end
       end
-      
+
       it 'merges specified constant values into specified fields for each row merged' do
         expect(result).to eq(expected)
       end

@@ -20,6 +20,8 @@ module Kiba
             attr_reader :lookup
           end
 
+          class EmptyFieldmap < Kiba::Extend::Error; end
+
           # @param fieldmap [Hash{Symbol => Symbol}] key = field in source row to merge lookup data into;
           #   value = field from lookup table whose value maps into target field
           # @param lookup [Hash] created by Utils::LookupHash. If you have registered a job as a lookup,
@@ -54,6 +56,8 @@ module Kiba
                          conditions: {}, multikey: false, delim: Kiba::Extend.delim, null_placeholder: nil,
                          sorter: nil)
             @fieldmap = fieldmap # hash of looked-up values to merge in for each merged-in row
+            fail EmptyFieldmap if fieldmap.empty?
+
             @constantmap = constantmap # hash of constants to add for each merged-in row
             @lookup = lookup # lookuphash; should be created with csv_to_multi_hash
             fail LookupTypeError.new(lookup) unless lookup.is_a?(Hash)
