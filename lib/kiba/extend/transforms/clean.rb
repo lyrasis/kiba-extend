@@ -263,25 +263,6 @@ module Kiba
             thesevals.empty? ? true : false
           end
         end
-
-        class StripFields
-          def initialize(fields:)
-            @fields = [fields].flatten
-          end
-
-          # @param row [Hash{ Symbol => String, nil }]
-          def process(row)
-            @fields.each do |field|
-              val = row.fetch(field, nil)
-              row[field] = if val.nil? || val.empty?
-                             nil
-                           else
-                             val.strip
-                           end
-            end
-            row
-          end
-        end
       end
     end
   end

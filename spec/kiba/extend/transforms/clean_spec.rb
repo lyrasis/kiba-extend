@@ -290,26 +290,4 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
       end
     end
   end
-
-  describe 'StripFields' do
-    rows = [
-      %w[id val],
-      ['1', ' blah '],
-      %w[2 blah],
-      ['3', nil],
-      ['4', '']
-    ]
-
-    before { generate_csv(rows) }
-    let(:result) { execute_job(filename: test_csv, xform: Clean::StripFields, xformopt: { fields: %i[val] }) }
-    it 'strips field value' do
-      expected = [
-        { id: '1', val: 'blah' },
-        { id: '2', val: 'blah' },
-        { id: '3', val: nil },
-        { id: '4', val: nil }
-      ]
-      expect(result).to eq(expected)
-    end
-  end
 end

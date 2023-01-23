@@ -36,6 +36,9 @@ These changes are merged into the `main` branch, but have not been released. Aft
 ** `Transforms::MultivalPlusDelimDeprecatable` (PR#124)
 * `Utils::StringNormalizer` service class (PR#124)
 * `ignore_case` and `normalized` parameters for `Deduplicate::GroupedFieldValues` (PR#124)
+* Options to `Clean::StripFields` transform (PR#129):
+** Ability to pass `fields: :all` to strip all fields in a table
+** Ability to turn on multivalue processing by passing in a `delim` value
 
 === Changed
 
