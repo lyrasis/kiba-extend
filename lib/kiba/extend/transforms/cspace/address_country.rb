@@ -405,7 +405,9 @@ module Kiba
 
           def handle_source(row)
             sourceval = row[source]
-            sourceval.blank? ? handle_blank_source(sourceval, row) : handle_source_value(sourceval, row)
+            return handle_blank_source(sourceval, row) if sourceval.blank?
+
+            handle_source_value(sourceval, row)
           end
 
           def handle_blank_source(val, row)
@@ -414,17 +416,22 @@ module Kiba
           end
 
           def handle_missing_source(row)
-            add_single_warning("Cannot map addresscountry: Field `#{source}` does not exist in source data")
+            add_single_warning("Cannot map addresscountry: Field `#{source}` "\
+                               "does not exist in source data")
             row[target] = nil
             row
           end
 
           def handle_source_value(val, row)
-            LOOKUP.key?(val) || LOOKUP.value?(val) ? do_mapping(val, row) : handle_unmapped(val, row)
+            return do_mapping(val, row) if LOOKUP.key?(val) ||
+              LOOKUP.value?(val)
+
+            handle_unmapped(val, row)
           end
 
           def handle_unmapped(val, row)
-            add_single_warning("Cannot map addresscountry: No mapping for #{source} value: #{val}")
+            add_single_warning("Cannot map addresscountry: No mapping for "\
+                               "#{source} value: #{val}")
             row[target] = nil
             delete_source(row)
           end
