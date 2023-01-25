@@ -39,6 +39,7 @@ These changes are merged into the `main` branch, but have not been released. Aft
 * Options to `Clean::StripFields` transform (PR#129):
 ** Ability to pass `fields: :all` to strip all fields in a table
 ** Ability to turn on multivalue processing by passing in a `delim` value
+* More country mappings to `Cspace::AddressCountry` transform (PR#132)
 
 === Changed
 
