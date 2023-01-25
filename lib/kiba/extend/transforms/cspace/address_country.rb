@@ -90,6 +90,8 @@ module Kiba
         #
         # @since 2.8.0
         class AddressCountry
+          include SingleWarnable
+
           LOOKUP = {
             "Afghanistan" => 'AF',
             "Åland Islands" => 'AX',
@@ -359,8 +361,6 @@ module Kiba
             "Zambia" => 'ZM',
             "Zimbabwe" => 'ZW',
           }
-
-          include SingleWarnable
 
           # @param source [Symbol] field containing value to look up and map
           # @param target [Symbol] field in which to write ISO 3166 code
