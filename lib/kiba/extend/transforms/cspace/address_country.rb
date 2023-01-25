@@ -27,6 +27,7 @@ module Kiba
         #     {addresscountry: 'Shangri-La'},
         #     {addresscountry: ''},
         #     {addresscountry: nil},
+        #     {addresscountry: 'LU'},
         #     {foo: 'bar'}
         #   ]
         #   nomap = "KIBA WARNING: Cannot map addresscountry: No mapping for "\
@@ -41,6 +42,7 @@ module Kiba
         #    {addresscountry: nil},
         #    {addresscountry: ''},
         #    {addresscountry: nil},
+        #    {addresscountry: 'LU'},
         #    {foo: 'bar', addresscountry: nil}
         #   ]
         #   expect(result).to eq(expected)
