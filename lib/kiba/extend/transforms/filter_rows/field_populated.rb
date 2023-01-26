@@ -57,12 +57,13 @@ module Kiba
 
           # @param row [Hash{ Symbol => String, nil }]
           def process(row)
-            val = row.fetch(field, nil)
+            val = row[field]
+
             case action
             when :keep
-              val.nil? || val.empty? ? nil : row
+              val.blank? ? nil : row
             when :reject
-              val.nil? || val.empty? ? row : nil
+              val.blank? ? row : nil
             end
           end
 
