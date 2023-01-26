@@ -113,7 +113,7 @@
 <ul>
 <li>Runs <span class='object_link'><a href="../Replace/EmptyFieldValues.html" title="Kiba::Extend::Transforms::Replace::EmptyFieldValues (class)">Replace::EmptyFieldValues</a></span> to replace source fields values that are nil or empty (the full
 field value) with value of given for <code>null_placeholder</code>. This avoids odd situations where dropping
-fields because they are empty at this point introduces unevenness. </li>
+fields because they are empty at this point introduces unevenness.</li>
 <li>If <code>enforce_evenness: true</code>, ensure all fields from a given source have the same number of
 values by running <span class='object_link'><a href="../Clean/EvenFieldValues.html" title="Kiba::Extend::Transforms::Clean::EvenFieldValues (class)">Kiba::Extend::Transforms::Clean::EvenFieldValues</a></span> with <code>evener: even_val</code>, <code>treat_as_null:
 null_placeholder</code>, and <code>warn: warn_if_uneven</code></li>
@@ -443,8 +443,9 @@ individual empty values in a multi-value string) and <code>value: null_placehold
       
       
         &mdash;
-        <div class='inline'><p>the list of original source fields that field group intermediate
-fields were derived from (with <code>source_targetfield</code> pattern)</p>
+        <div class='inline'><p>the list of original source fields
+that field group intermediate fields were derived from (with
+<code>source_targetfield</code> pattern)</p>
 </div>
       
     </li>
@@ -459,8 +460,8 @@ fields were derived from (with <code>source_targetfield</code> pattern)</p>
       
       
         &mdash;
-        <div class='inline'><p>the list of final field group fields that the
-intermediate fields will be combined into</p>
+        <div class='inline'><p>the list of final field group fields
+that the intermediate fields will be combined into</p>
 </div>
       
     </li>
@@ -511,8 +512,8 @@ intermediate fields will be combined into</p>
       
       
         &mdash;
-        <div class='inline'><p>passed as <code>evener</code> parameter to <span class='object_link'><a href="../Clean/EvenFieldValues.html" title="Kiba::Extend::Transforms::Clean::EvenFieldValues (class)">Kiba::Extend::Transforms::Clean::EvenFieldValues</a></span> when
-<code>enforce_evenness: true</code>.</p>
+        <div class='inline'><p>passed as <code>evener</code> parameter to
+<span class='object_link'><a href="../Clean/EvenFieldValues.html" title="Kiba::Extend::Transforms::Clean::EvenFieldValues (class)">Kiba::Extend::Transforms::Clean::EvenFieldValues</a></span> when <code>enforce_evenness: true</code>.</p>
 </div>
       
     </li>
@@ -529,8 +530,9 @@ intermediate fields will be combined into</p>
       
       
         &mdash;
-        <div class='inline'><p>treatment of empty field groups (i.e. all target field values in
-the same position are empty)</p>
+        <div class='inline'><p>treatment of empty field
+groups (i.e. all target field values in the same position are
+empty)</p>
 </div>
       
     </li>
@@ -547,8 +549,8 @@ the same position are empty)</p>
       
       
         &mdash;
-        <div class='inline'><p>whether to pad target fields with %NULLVALUE%s to ensure
-they all have the same number of values</p>
+        <div class='inline'><p>whether to pad target fields with
+%NULLVALUE%s to ensure they all have the same number of values</p>
 </div>
       
     </li>
@@ -565,7 +567,7 @@ they all have the same number of values</p>
       
       
         &mdash;
-        <div class='inline'><p>whether Kiba::Extend::Transforms::Clean::EvenFieldGroups
+        <div class='inline'><p>whether <span class='object_link'><a href="../Clean/EvenFieldValues.html" title="Kiba::Extend::Transforms::Clean::EvenFieldValues (class)">Kiba::Extend::Transforms::Clean::EvenFieldValues</a></span>
 should print warnings about uneven field groups to STDOUT</p>
 </div>
       
@@ -595,8 +597,6 @@ should print warnings about uneven field groups to STDOUT</p>
       <pre class="lines">
 
 
-257
-258
 259
 260
 261
@@ -650,10 +650,12 @@ should print warnings about uneven field groups to STDOUT</p>
 309
 310
 311
-312</pre>
+312
+313
+314</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/collapse/fields_to_repeatable_field_group.rb', line 257</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/collapse/fields_to_repeatable_field_group.rb', line 259</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span>
   <span class='label'>sources:</span><span class='comma'>,</span>
@@ -762,8 +764,6 @@ should print warnings about uneven field groups to STDOUT</p>
       <pre class="lines">
 
 
-314
-315
 316
 317
 318
@@ -773,10 +773,12 @@ should print warnings about uneven field groups to STDOUT</p>
 322
 323
 324
-325</pre>
+325
+326
+327</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/collapse/fields_to_repeatable_field_group.rb', line 314</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/collapse/fields_to_repeatable_field_group.rb', line 316</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_srcemptyreplacers'>srcemptyreplacers</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_replacer'>replacer</span><span class='op'>|</span> <span class='id identifier rubyid_replacer'>replacer</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -800,7 +802,7 @@ should print warnings about uneven field groups to STDOUT</p>
 </div>
 
       <div id="footer">
-  Generated on Wed Jan 25 16:12:48 2023 by
+  Generated on Thu Jan 26 17:14:02 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.7).
 </div>
