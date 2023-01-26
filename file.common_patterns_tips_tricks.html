@@ -61,11 +61,17 @@
 
 <h2 id="troubleshooting-missingdependencyerror-when-all-dependencies-are-set-up-as-expected">Troubleshooting <code>MissingDependencyError</code> when all dependencies are set up as expected</h2>
 
-<p>Usually the cause of a <code>MissingDependencyError</code> is that a table required in some later job unexpectedly ends up with no rows, and thus is not written out.</p>
+<p>Usually the cause of a <code>MissingDependencyError</code> is that a table required in some later job ends up having no rows, and thus is not written out.</p>
 
-<p>So the dependent job is set up properly, but the expected output doesn&#39;t exist.</p>
+<p>So jobs are all set up properly, but some expected output file doesn&#39;t exist.</p>
 
-<p>I can&#39;t think of a way to handle this better, given that, when there are no rows to write out to a Destination, we don&#39;t even know what the expected headers would have been in order to write a headers-only CSV.</p>
+<p>When there are no rows to write out to a Destination, we don&#39;t even know what the expected headers would have been in order to write a headers-only CSV.</p>
+
+<p>At some point I plan to test whether jobs with no output can be made to just create a blank file, and whether that causes dependent jobs to fail in other ways.</p>
+
+<p>For now, as of 3.1.0, you can add a little extra code to defend against this. See <a href="https://lyrasis.github.io/kiba-extend/file.common_patterns_tips_tricks.html#running-jobs-and-checking-srcrows-and-outrows-counts-from-client-project-code">Running jobs, and checking <code>srcrows</code> and <code>outrows</code> counts from client project code</a> below.</p>
+
+<p>An example of use is the <a href="https://github.com/search?q=repo%3Alyrasis%2Fkiba-tms+%22def+job_output%3F%22&type=code"><code>job_output?</code> method in the kiba-tms project</a> and <a href="https://github.com/search?q=repo%3Alyrasis%2Fkiba-tms+%22base.select%22&type=code">its use defining lookups in jobs</a>, where some clients may not have data in all the lookup tables.</p>
 
 <h2 id="joining-the-rows-of-multiple-sources-that-may-have-different-fields">Joining the rows of multiple sources that may have different fields</h2>
 
@@ -222,7 +228,7 @@
 </div></div>
 
       <div id="footer">
-  Generated on Thu Jan 26 17:13:59 2023 by
+  Generated on Thu Jan 26 17:35:23 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.7).
 </div>
