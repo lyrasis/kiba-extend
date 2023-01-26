@@ -17,7 +17,7 @@ module Kiba
         #
         # - Runs {Replace::EmptyFieldValues} to replace source fields values that are nil or empty (the full
         #   field value) with value of given for `null_placeholder`. This avoids odd situations where dropping
-        #   fields because they are empty at this point introduces unevenness. 
+        #   fields because they are empty at this point introduces unevenness.
         # - If `enforce_evenness: true`, ensure all fields from a given source have the same number of
         #   values by running {Clean::EvenFieldValues} with `evener: even_val`, `treat_as_null:
         #   null_placeholder`, and `warn: warn_if_uneven`
@@ -240,19 +240,21 @@ module Kiba
         #   uneven fields, because how the values should actually line up (and thus what is actually
         #   empty) is ambiguous.
         class FieldsToRepeatableFieldGroup
-          # @param sources [Array<Symbol>] the list of original source fields that field group intermediate
-          #   fields were derived from (with `source_targetfield` pattern)
-          # @param targets [Array<Symbol>] the list of final field group fields that the
-          #   intermediate fields will be combined into
+          # @param sources [Array<Symbol>] the list of original source fields
+          #   that field group intermediate fields were derived from (with
+          #   `source_targetfield` pattern)
+          # @param targets [Array<Symbol>] the list of final field group fields
+          #   that the intermediate fields will be combined into
           # @param delim [String] used to split/join multiple values in a field
           # @param null_placeholder [String] used to replace nil or empty values
-          # @param even_val [:value, String] passed as `evener` parameter to {Clean::EvenFieldValues} when
-          #   `enforce_evenness: true`. 
-          # @param empty_groups [:delete, :retain] treatment of empty field groups (i.e. all target field values in
-          #   the same position are empty)
-          # @param enforce_evenness [Boolean] whether to pad target fields with %NULLVALUE%s to ensure
-          #   they all have the same number of values
-          # @param warn_if_uneven [Boolean] whether {Kiba::Extend::Transforms::Clean::EvenFieldGroups}
+          # @param even_val [:value, String] passed as `evener` parameter to
+          #   {Clean::EvenFieldValues} when `enforce_evenness: true`.
+          # @param empty_groups [:delete, :retain] treatment of empty field
+          #   groups (i.e. all target field values in the same position are
+          #   empty)
+          # @param enforce_evenness [Boolean] whether to pad target fields with
+          #   %NULLVALUE%s to ensure they all have the same number of values
+          # @param warn_if_uneven [Boolean] whether {Clean::EvenFieldValues}
           #   should print warnings about uneven field groups to STDOUT
           def initialize(
             sources:,
@@ -310,7 +312,7 @@ module Kiba
               value: null_placeholder
               )
           end
-          
+
           def process(row)
             srcemptyreplacers.each{ |replacer| replacer.process(row) }
             if enforce_evenness
@@ -342,7 +344,7 @@ module Kiba
 
             [null_placeholder, even_val]
           end
-          
+
           def field_name(source, target)
             "#{source}_#{target}".to_sym
           end
