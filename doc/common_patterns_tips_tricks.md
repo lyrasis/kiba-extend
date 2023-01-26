@@ -2,11 +2,17 @@
 
 ## Troubleshooting `MissingDependencyError` when all dependencies are set up as expected
 
-Usually the cause of a `MissingDependencyError` is that a table required in some later job unexpectedly ends up with no rows, and thus is not written out.
+Usually the cause of a `MissingDependencyError` is that a table required in some later job ends up having no rows, and thus is not written out.
 
-So the dependent job is set up properly, but the expected output doesn't exist.
+So jobs are all set up properly, but some expected output file doesn't exist.
 
-I can't think of a way to handle this better, given that, when there are no rows to write out to a Destination, we don't even know what the expected headers would have been in order to write a headers-only CSV.
+When there are no rows to write out to a Destination, we don't even know what the expected headers would have been in order to write a headers-only CSV.
+
+At some point I plan to test whether jobs with no output can be made to just create a blank file, and whether that causes dependent jobs to fail in other ways.
+
+For now, as of 3.1.0, you can add a little extra code to defend against this. See [Running jobs, and checking `srcrows` and `outrows` counts from client project code](https://lyrasis.github.io/kiba-extend/file.common_patterns_tips_tricks.html#running-jobs-and-checking-srcrows-and-outrows-counts-from-client-project-code) below.
+
+An example of use is the [`job_output?` method in the kiba-tms project](https://github.com/search?q=repo%3Alyrasis%2Fkiba-tms+%22def+job_output%3F%22&type=code) and [its use defining lookups in jobs](https://github.com/search?q=repo%3Alyrasis%2Fkiba-tms+%22base.select%22&type=code), where some clients may not have data in all the lookup tables.
 
 ## Joining the rows of multiple sources that may have different fields
 
