@@ -3,12 +3,6 @@
 require 'marc'
 require 'spec_helper'
 
-def get_record(path, index)
-  recs = []
-  MARC::Reader.new(path).each{ |rec| recs << rec }
-  recs[index]
-end
-
 RSpec.describe Kiba::Extend::Utils::MarcIdExtractor do
   subject(:xform){ described_class.new }
   let(:recpath){ File.join(fixtures_dir, 'harvard_open_data.mrc') }
@@ -30,7 +24,7 @@ RSpec.describe Kiba::Extend::Utils::MarcIdExtractor do
     let(:result){ xform.call(record) }
 
     context 'with field: 001'  do
-      let(:record){ get_record(recpath, 3) }
+      let(:record){ get_marc_record(recpath, 3) }
 
       it 'returns expected' do
         expect(result).to eq('008000411-3')
@@ -39,7 +33,7 @@ RSpec.describe Kiba::Extend::Utils::MarcIdExtractor do
 
     context 'with field: 999'  do
       before{ Kiba::Extend.config.marc_id_tag = '999' }
-      let(:record){ get_record(recpath, 3) }
+      let(:record){ get_marc_record(recpath, 3) }
 
       it 'returns expected' do
         expect(result).to be_nil
@@ -48,7 +42,7 @@ RSpec.describe Kiba::Extend::Utils::MarcIdExtractor do
 
     context 'with complex multiple complex 035s' do
       before{ Kiba::Extend.config.marc_id_tag = '035' }
-      let(:record){ get_record(recpath, 0) }
+      let(:record){ get_marc_record(recpath, 0) }
       # 035    $a (OCoLC)01484180 $z (OCoLC)35680312 $z (OCoLC)41668919
       # 035    $a (OCoLC)ocm01484180
       # 035    $a (EXLNZ-01GALI_NETWORK)9911119856302931

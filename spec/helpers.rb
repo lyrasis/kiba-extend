@@ -22,7 +22,7 @@ module Helpers
       Kiba.run(control)
     end
   end
-  
+
   # Format examples for Yard documentation
   #
   # Use: Helpers::ExampleFormatter.new(input, expected)
@@ -83,15 +83,15 @@ module Helpers
       end
       t_row
     end
-    
+
     def grab_rows
       @norm.each{ |row| @table << grab_row(row) }
     end
-    
+
     def max_val_length_for_header(header)
       @clean.map{ |row| row[header].length }.max
     end
-    
+
     def normalize
       @norm = []
       @clean.each{ |row| @norm << normalize_row(row) }
@@ -105,7 +105,7 @@ module Helpers
       end
       norm
     end
-    
+
     def populate_maxes
       @maxes = @clean.first.map{ |e| [e[0], e[0].length] }.to_h
       headers = @maxes.keys
@@ -117,7 +117,7 @@ module Helpers
 
     def put_row(row)
       puts "# | #{row.join(' | ')} |"
-    end  
+    end
 
     def put_table
       table = @table.dup
@@ -133,8 +133,15 @@ module Helpers
     end
   end
 
-  
-  
+  # @param path [String] path to MARC binary file (.mrc, .dat, etc)
+  # @param index [Integer] which record from file you want to use in your
+  #   test. Count starts at 0.
+  def get_marc_record(path, index)
+    recs = []
+    MARC::Reader.new(path).each{ |rec| recs << rec }
+    recs[index]
+  end
+
   def fixtures_dir
     app_dir = File.realpath(File.join(File.dirname(__FILE__), '..'))
     File.join(app_dir, 'spec', 'fixtures')
