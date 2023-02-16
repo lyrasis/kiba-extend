@@ -11,15 +11,15 @@ module Kiba
         class ControlFieldsDoNotHaveSubfieldsError < Kiba::Extend::Error; end
 
         def initialize
-          @tag = Kiba::Extend.marc_id_tag
-          @subfield = Kiba::Extend.marc_id_subfield
+          @tag = Kiba::Extend::Marc.id_tag
+          @subfield = Kiba::Extend::Marc.id_subfield
           if subfield && MARC::ControlField.control_tags.any?(tag)
             raise ControlFieldsDoNotHaveSubfieldsError
           end
 
-          @field_selector = Kiba::Extend.marc_id_field_selector
-          @subfield_selector = Kiba::Extend.marc_id_subfield_selector
-          @value_formatter = Kiba::Extend.marc_id_value_formatter
+          @field_selector = Kiba::Extend::Marc.id_field_selector
+          @subfield_selector = Kiba::Extend::Marc.id_subfield_selector
+          @value_formatter = Kiba::Extend::Marc.id_value_formatter
         end
 
         # @param record [MARC::Record]

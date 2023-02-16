@@ -17,6 +17,10 @@ require 'dry/configurable/test_interface'
 module Kiba
   module Extend
     enable_test_interface
+
+    module Marc
+      enable_test_interface
+    end
   end
 end
 

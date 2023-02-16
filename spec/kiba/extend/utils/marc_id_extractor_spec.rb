@@ -6,11 +6,11 @@ require 'spec_helper'
 RSpec.describe Kiba::Extend::Utils::MarcIdExtractor do
   subject(:xform){ described_class.new }
   let(:recpath){ File.join(fixtures_dir, 'harvard_open_data.mrc') }
-  after(:each){ Kiba::Extend.reset_config }
+  after(:each){ Kiba::Extend::Marc.reset_config }
 
   describe '.new' do
     context 'with field: 001 and subfield: a'  do
-      before{ Kiba::Extend.config.marc_id_subfield = 'a' }
+      before{ Kiba::Extend::Marc.config.id_subfield = 'a' }
 
       it 'raises ControlFieldsDoNotHaveSubfieldsError' do
         expect{ xform }.to raise_error(
@@ -32,7 +32,7 @@ RSpec.describe Kiba::Extend::Utils::MarcIdExtractor do
     end
 
     context 'with field: 999'  do
-      before{ Kiba::Extend.config.marc_id_tag = '999' }
+      before{ Kiba::Extend::Marc.config.id_tag = '999' }
       let(:record){ get_marc_record(recpath, 3) }
 
       it 'returns expected' do
@@ -41,7 +41,7 @@ RSpec.describe Kiba::Extend::Utils::MarcIdExtractor do
     end
 
     context 'with complex multiple complex 035s' do
-      before{ Kiba::Extend.config.marc_id_tag = '035' }
+      before{ Kiba::Extend::Marc.config.id_tag = '035' }
       let(:record){ get_marc_record(recpath, 0) }
       # 035    $a (OCoLC)01484180 $z (OCoLC)35680312 $z (OCoLC)41668919
       # 035    $a (OCoLC)ocm01484180
@@ -50,11 +50,11 @@ RSpec.describe Kiba::Extend::Utils::MarcIdExtractor do
 
       context 'with taking prefixed OCLC num from $a' do
         before do
-          Kiba::Extend.config.marc_id_subfield = 'a'
-          Kiba::Extend.config.marc_id_subfield_selector = ->(value) do
+          Kiba::Extend::Marc.config.id_subfield = 'a'
+          Kiba::Extend::Marc.config.id_subfield_selector = ->(value) do
             value.match?(/^\(OCoLC\)\D/)
           end
-          Kiba::Extend.config.marc_id_value_formatter = ->(values) do
+          Kiba::Extend::Marc.config.id_value_formatter = ->(values) do
             values.first
               .delete_prefix('(OCoLC)')
               .strip
@@ -68,9 +68,9 @@ RSpec.describe Kiba::Extend::Utils::MarcIdExtractor do
 
       context 'with complicated multiple value processing' do
         before do
-          Kiba::Extend.config.marc_id_subfield = 'a'
-          Kiba::Extend.config.marc_id_field_selector = nil
-          Kiba::Extend.config.marc_id_value_formatter = ->(values) do
+          Kiba::Extend::Marc.config.id_subfield = 'a'
+          Kiba::Extend::Marc.config.id_field_selector = nil
+          Kiba::Extend::Marc.config.id_value_formatter = ->(values) do
             values.map{ |val| val.sub(/^\(.*\)/, '') }
               .map{ |val| val.sub(/^\D+/, '') }
               .map(&:strip)
@@ -86,11 +86,11 @@ RSpec.describe Kiba::Extend::Utils::MarcIdExtractor do
 
       context 'when nothing matches criteria' do
         before do
-          Kiba::Extend.config.marc_id_subfield = 'a'
-          Kiba::Extend.config.marc_id_subfield_selector = ->(value) do
+          Kiba::Extend::Marc.config.id_subfield = 'a'
+          Kiba::Extend::Marc.config.id_subfield_selector = ->(value) do
             value.match?(/^\(OCoLC\)ocn/)
           end
-          Kiba::Extend.config.marc_id_value_formatter = ->(values) do
+          Kiba::Extend::Marc.config.id_value_formatter = ->(values) do
             values.first
               .delete_prefix('(OCoLC)')
               .strip
