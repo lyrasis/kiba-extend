@@ -14,8 +14,14 @@ module Kiba
       #   for more details about args that can be passed in to deal with
       #   character encoding.
       #
+      # See [File Registry Entry documentation page](https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html)
+      #   for more details on how to set up a Marc source in a project.
+      #
       # @note Only transforms in the `Kiba::Extend::Transforms::Marc` namespace
       #   can initially be used on records from this source
+      #
+      # @note The class name is `Marc` instead of `MARC` because the `ruby-marc`
+      #   gem already has the `MARC` namespace
       class Marc
         # @param filename [String] path to MARC binary file (.mrc, .dat, etc.)
         # @param args [Hash] of `MARC::Reader` optional keyword
