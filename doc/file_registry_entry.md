@@ -245,7 +245,12 @@ reghash = {
 * required if file is used as a lookup source
 * You can register the same file multiple times under different file keys with different `:lookup_on` values if you need to use the data for different lookup purposes
 
-Currently lookups can only be done on supplied files with CSV source, or created-by-job entries with CSV output.
+Currently only the following types of registry entries can be used as lookups:
+
+* `:supplied` = `true` and `:src_class` returns row/record Hashes
+* `:dest_class` writes/returns row/record Hashes
+
+Other types of registry entries should not define a `:lookup_on` value.
 
 ### `:desc`
 [String] description of what the file is/what it is used for. Used when post-processing reports results to STDOUT
