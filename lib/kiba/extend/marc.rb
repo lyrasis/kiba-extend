@@ -45,6 +45,12 @@ module Kiba
       # @return [Symbol] field in which to write the MARC id value when
       #   converting MARC data to CSV row
       setting :id_target_field, default: :marcid, reader: true
+      # @return [Array<String>] subfields to be extracted as part of title
+      #   from 245 fields
+      setting :title_part_subfields,
+        default: %w[a b f g k n p s],
+        reader: true
+
       # @param record [MARC::Record]
       # @param tag [String] of normal MARC field, e.g. '245'
       # @return [Array<MARC::DataField>] 880 fields linked to fields with given
