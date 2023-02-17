@@ -45,6 +45,10 @@ module Kiba
       # @return [Symbol] field in which to write the MARC id value when
       #   converting MARC data to CSV row
       setting :id_target_field, default: :marcid, reader: true
+      # @return [Boolean] If true, returns linked 880 field values instead of
+      #   main field (transliterated values). If false, returns main field
+      #   value, followed by 880 field value
+      setting :prefer_vernacular, default: true, reader: true
       # @return [Array<String>] subfields to be extracted as part of title
       #   from 245 fields
       setting :title_part_subfields,
