@@ -210,7 +210,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>The Symmbol used for the file options when calling source class as a Lookup.</p>
+    <span class="summary_desc"><div class='inline'><p>The Symbol used for the file options when calling source class as a Lookup.</p>
 </div></span>
   
 </li>
@@ -321,7 +321,9 @@
 17
 18
 19
-20</pre>
+20
+21
+22</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/source_dest_registry.rb', line 9</span>
@@ -334,7 +336,9 @@
     <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>Destinations</span><span class='op'>::</span><span class='const'>Lambda</span> <span class='op'>=&gt;</span> <span class='kw'>false</span><span class='comma'>,</span>
     <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>Sources</span><span class='op'>::</span><span class='const'>CSV</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
     <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>Sources</span><span class='op'>::</span><span class='const'>Enumerable</span> <span class='op'>=&gt;</span> <span class='kw'>false</span><span class='comma'>,</span>
-    <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Destinations.html" title="Kiba::Extend::Destinations (module)">Destinations</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Destinations/JsonArray.html" title="Kiba::Extend::Destinations::JsonArray (class)">JsonArray</a></span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span><span class='label'>filename:</span> <span class='id identifier rubyid_path'>path</span><span class='rbrace'>}</span>
+    <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Destinations.html" title="Kiba::Extend::Destinations (module)">Destinations</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Destinations/JsonArray.html" title="Kiba::Extend::Destinations::JsonArray (class)">JsonArray</a></span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span><span class='label'>filename:</span> <span class='id identifier rubyid_path'>path</span><span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Sources.html" title="Kiba::Extend::Sources (module)">Sources</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Sources/Marc.html" title="Kiba::Extend::Sources::Marc (class)">Marc</a></span></span> <span class='op'>=&gt;</span>
+      <span class='lbrace'>{</span><span class='label'>path:</span> <span class='id identifier rubyid_path'>path</span><span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_labeled_options'>labeled_options</span><span class='lparen'>(</span><span class='id identifier rubyid_klass'>klass</span><span class='rparen'>)</span><span class='rparen'>)</span>
   <span class='rbrace'>}</span>
   <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='id identifier rubyid_klass'>klass</span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
@@ -382,9 +386,6 @@
       <pre class="lines">
 
 
-40
-41
-42
 43
 44
 45
@@ -393,10 +394,14 @@
 48
 49
 50
-51</pre>
+51
+52
+53
+54
+55</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/source_dest_registry.rb', line 40</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/source_dest_registry.rb', line 43</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_default_file_options'>default_file_options</span><span class='lparen'>(</span><span class='id identifier rubyid_klass'>klass</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='lbrace'>{</span>
@@ -406,7 +411,8 @@
     <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>Destinations</span><span class='op'>::</span><span class='const'>Lambda</span> <span class='op'>=&gt;</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_lambdaopts'><span class='object_link'><a href="../../Extend.html#lambdaopts-class_method" title="Kiba::Extend.lambdaopts (method)">lambdaopts</a></span></span><span class='comma'>,</span>
     <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>Sources</span><span class='op'>::</span><span class='const'>CSV</span> <span class='op'>=&gt;</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_csvopts'><span class='object_link'><a href="../../Extend.html#csvopts-class_method" title="Kiba::Extend.csvopts (method)">csvopts</a></span></span><span class='comma'>,</span>
     <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>Sources</span><span class='op'>::</span><span class='const'>Enumerable</span> <span class='op'>=&gt;</span> <span class='kw'>nil</span><span class='comma'>,</span>
-    <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Destinations.html" title="Kiba::Extend::Destinations (module)">Destinations</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Destinations/JsonArray.html" title="Kiba::Extend::Destinations::JsonArray (class)">JsonArray</a></span></span> <span class='op'>=&gt;</span> <span class='kw'>nil</span>
+    <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Destinations.html" title="Kiba::Extend::Destinations (module)">Destinations</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Destinations/JsonArray.html" title="Kiba::Extend::Destinations::JsonArray (class)">JsonArray</a></span></span> <span class='op'>=&gt;</span> <span class='kw'>nil</span><span class='comma'>,</span>
+    <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Sources.html" title="Kiba::Extend::Sources (module)">Sources</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Sources/Marc.html" title="Kiba::Extend::Sources::Marc (class)">Marc</a></span></span> <span class='op'>=&gt;</span> <span class='kw'>nil</span>
   <span class='rbrace'>}</span>
   <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='id identifier rubyid_klass'>klass</span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
@@ -454,10 +460,6 @@
       <pre class="lines">
 
 
-53
-54
-55
-56
 57
 58
 59
@@ -465,10 +467,15 @@
 61
 62
 63
-64</pre>
+64
+65
+66
+67
+68
+69</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/source_dest_registry.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/source_dest_registry.rb', line 57</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_labeled_options'>labeled_options</span><span class='lparen'>(</span><span class='id identifier rubyid_klass'>klass</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='lbrace'>{</span>
@@ -478,7 +485,8 @@
     <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>Destinations</span><span class='op'>::</span><span class='const'>Lambda</span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_options_label'>options_label</span><span class='lparen'>(</span><span class='id identifier rubyid_klass'>klass</span><span class='rparen'>)</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_default_file_options'>default_file_options</span><span class='lparen'>(</span><span class='id identifier rubyid_klass'>klass</span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='comma'>,</span>
     <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>Sources</span><span class='op'>::</span><span class='const'>CSV</span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_options_label'>options_label</span><span class='lparen'>(</span><span class='id identifier rubyid_klass'>klass</span><span class='rparen'>)</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_default_file_options'>default_file_options</span><span class='lparen'>(</span><span class='id identifier rubyid_klass'>klass</span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='comma'>,</span>
     <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>Sources</span><span class='op'>::</span><span class='const'>Enumerable</span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span>
-    <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Destinations.html" title="Kiba::Extend::Destinations (module)">Destinations</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Destinations/JsonArray.html" title="Kiba::Extend::Destinations::JsonArray (class)">JsonArray</a></span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+    <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Destinations.html" title="Kiba::Extend::Destinations (module)">Destinations</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Destinations/JsonArray.html" title="Kiba::Extend::Destinations::JsonArray (class)">JsonArray</a></span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Sources.html" title="Kiba::Extend::Sources (module)">Sources</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Sources/Marc.html" title="Kiba::Extend::Sources::Marc (class)">Marc</a></span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_options_label'>options_label</span><span class='lparen'>(</span><span class='id identifier rubyid_klass'>klass</span><span class='rparen'>)</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_default_file_options'>default_file_options</span><span class='lparen'>(</span><span class='id identifier rubyid_klass'>klass</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
   <span class='rbrace'>}</span>
   <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='id identifier rubyid_klass'>klass</span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
@@ -498,7 +506,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>The Symmbol used for the file options when calling source class as a Lookup</p>
+    <p>The Symbol used for the file options when calling source class as a Lookup</p>
 
 
   </div>
@@ -527,15 +535,15 @@
       <pre class="lines">
 
 
-81
-82
-83
-84
-85
-86</pre>
+87
+88
+89
+90
+91
+92</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/source_dest_registry.rb', line 81</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/source_dest_registry.rb', line 87</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_lookup_options_label'>lookup_options_label</span><span class='lparen'>(</span><span class='id identifier rubyid_klass'>klass</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='lbrace'>{</span>
@@ -588,21 +596,22 @@
       <pre class="lines">
 
 
-67
-68
-69
-70
-71
 72
 73
 74
 75
 76
 77
-78</pre>
+78
+79
+80
+81
+82
+83
+84</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/source_dest_registry.rb', line 67</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/source_dest_registry.rb', line 72</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_options_label'>options_label</span><span class='lparen'>(</span><span class='id identifier rubyid_klass'>klass</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='lbrace'>{</span>
@@ -612,7 +621,8 @@
     <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>Destinations</span><span class='op'>::</span><span class='const'>Lambda</span> <span class='op'>=&gt;</span> <span class='symbol'>:options</span><span class='comma'>,</span>
     <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>Sources</span><span class='op'>::</span><span class='const'>CSV</span> <span class='op'>=&gt;</span> <span class='symbol'>:csv_options</span><span class='comma'>,</span>
     <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>Sources</span><span class='op'>::</span><span class='const'>Enumerable</span> <span class='op'>=&gt;</span> <span class='kw'>nil</span><span class='comma'>,</span>
-    <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Destinations.html" title="Kiba::Extend::Destinations (module)">Destinations</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Destinations/JsonArray.html" title="Kiba::Extend::Destinations::JsonArray (class)">JsonArray</a></span></span> <span class='op'>=&gt;</span> <span class='kw'>nil</span>
+    <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Destinations.html" title="Kiba::Extend::Destinations (module)">Destinations</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Destinations/JsonArray.html" title="Kiba::Extend::Destinations::JsonArray (class)">JsonArray</a></span></span> <span class='op'>=&gt;</span> <span class='kw'>nil</span><span class='comma'>,</span>
+    <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Sources.html" title="Kiba::Extend::Sources (module)">Sources</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Sources/Marc.html" title="Kiba::Extend::Sources::Marc (class)">Marc</a></span></span> <span class='op'>=&gt;</span> <span class='symbol'>:args</span>
   <span class='rbrace'>}</span>
   <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='id identifier rubyid_klass'>klass</span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
@@ -678,8 +688,6 @@
       <pre class="lines">
 
 
-27
-28
 29
 30
 31
@@ -689,10 +697,13 @@
 35
 36
 37
-38</pre>
+38
+39
+40
+41</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/source_dest_registry.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/source_dest_registry.rb', line 29</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_requires_path?'>requires_path?</span><span class='lparen'>(</span><span class='id identifier rubyid_klass'>klass</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='lbrace'>{</span>
@@ -702,7 +713,8 @@
     <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>Destinations</span><span class='op'>::</span><span class='const'>Lambda</span> <span class='op'>=&gt;</span> <span class='kw'>false</span><span class='comma'>,</span>
     <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>Sources</span><span class='op'>::</span><span class='const'>CSV</span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
     <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>Common</span><span class='op'>::</span><span class='const'>Sources</span><span class='op'>::</span><span class='const'>Enumerable</span> <span class='op'>=&gt;</span> <span class='kw'>false</span><span class='comma'>,</span>
-    <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Destinations.html" title="Kiba::Extend::Destinations (module)">Destinations</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Destinations/JsonArray.html" title="Kiba::Extend::Destinations::JsonArray (class)">JsonArray</a></span></span> <span class='op'>=&gt;</span> <span class='kw'>true</span>
+    <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Destinations.html" title="Kiba::Extend::Destinations (module)">Destinations</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Destinations/JsonArray.html" title="Kiba::Extend::Destinations::JsonArray (class)">JsonArray</a></span></span> <span class='op'>=&gt;</span> <span class='kw'>true</span><span class='comma'>,</span>
+    <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Sources.html" title="Kiba::Extend::Sources (module)">Sources</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Sources/Marc.html" title="Kiba::Extend::Sources::Marc (class)">Marc</a></span></span> <span class='op'>=&gt;</span> <span class='kw'>true</span>
   <span class='rbrace'>}</span>
   <span class='id identifier rubyid_data'>data</span><span class='lbracket'>[</span><span class='id identifier rubyid_klass'>klass</span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
@@ -716,7 +728,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Jan 26 17:35:23 2023 by
+  Generated on Fri Feb 17 19:39:20 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.7).
 </div>
