@@ -8,6 +8,7 @@ RSpec.describe Reg do
     Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry
     prepare_registry
   end
+  after(:context){ Kiba::Extend.reset_config }
 
   context 'with tags' do
     it 'lists tags' do

@@ -8,6 +8,7 @@ RSpec.describe 'Kiba::Extend::Registry::RegistryEntrySelector' do
     Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry
     prepare_registry
   end
+  after(:context){ Kiba::Extend.reset_config }
   let(:selector) { Kiba::Extend::Registry::RegistryEntrySelector.new }
 
   describe '#tagged_any' do

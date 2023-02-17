@@ -3,19 +3,21 @@
 require 'spec_helper'
 
 RSpec.describe Kiba::Extend::Destinations::CSV do
-  TEST_FILENAME = 'output.csv'
-  def run_job(input)
+  before(:all){ @test_filename = 'output.csv' }
+  let(:testfile){ @test_filename }
+
+  def run_job(input, output)
     job = Kiba.parse do
       source Kiba::Common::Sources::Enumerable, input
-      destination Kiba::Extend::Destinations::CSV, filename: TEST_FILENAME, initial_headers: %i[y z a]
+      destination Kiba::Extend::Destinations::CSV, filename: output, initial_headers: %i[y z a]
     end
 
     Kiba.run(job)
 
-    IO.read(TEST_FILENAME)
+    IO.read(output)
   end
 
-  after{ File.delete(TEST_FILENAME) if File.exist?(TEST_FILENAME) }
+  after(:each){ File.delete(@test_filename) if File.exist?(@test_filename) }
 
   describe '#write' do
     context 'when intial headers present' do
@@ -29,7 +31,7 @@ RSpec.describe Kiba::Extend::Destinations::CSV do
         "y,z,a\nyak,zebra,and\nyarrow,zizia,apple\n"
       end
       it 'produces CSV as expected' do
-        expect(run_job(input)).to eq(expected)
+        expect(run_job(input, testfile)).to eq(expected)
       end
     end
 
@@ -44,14 +46,14 @@ RSpec.describe Kiba::Extend::Destinations::CSV do
       let(:expected) do
         "z,a\nzebra,and\nzizia,apple\n"
       end
-      
+
       it 'produces CSV as expected' do
-        expect(run_job(input)).to eq(expected)
+        expect(run_job(input, testfile)).to eq(expected)
       end
 
       it 'writes warning to STDOUT' do
         msg = 'Output data does not contain specified initial header: y'
-        expect { run_job(input) }.to output(/#{msg}/).to_stdout
+        expect { run_job(input, testfile) }.to output(/#{msg}/).to_stdout
       end
     end
   end
@@ -67,7 +69,7 @@ RSpec.describe Kiba::Extend::Destinations::CSV do
       %i[a y z]
     end
     it 'returns fieldnames as expected', skip: 'cannot make post-run destination load without error' do
-      run_job(input)
+      run_job(input, testfile)
       args = [{:filename=>"output.csv", :initial_headers=>[:y, :z]}]
       dest = Kiba::StreamingRunner.to_instance(
         Kiba::Extend::Destinations::CSV, args, nil, false, true
@@ -76,4 +78,3 @@ RSpec.describe Kiba::Extend::Destinations::CSV do
     end
   end
 end
-

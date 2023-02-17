@@ -26,6 +26,7 @@ RSpec.describe 'Kiba::Extend::Jobs::MarcJob' do
     entries.each { |key, data| Kiba::Extend.registry.register(key, data) }
     transform_registry
   end
+  after(:all){ Kiba::Extend.reset_config }
   before(:each) do
     FileUtils.rm(@dest_file) if File.exist?(@dest_file)
   end
