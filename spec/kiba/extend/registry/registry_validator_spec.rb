@@ -8,6 +8,8 @@ RSpec.describe 'Kiba::Extend::Registry::RegistryValidator' do
     Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry
     prepare_registry
   end
+  after(:context){ Kiba::Extend.reset_config }
+
   let(:validator) { Kiba::Extend::Registry::RegistryValidator.new }
 
   describe '#valid?' do

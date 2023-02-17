@@ -8,8 +8,8 @@ RSpec.describe 'Kiba::Extend::Registry::FileRegistry' do
     Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry
     populate_registry
   end
+  after(:context){ Kiba::Extend.reset_config }
 
-  
   let(:filekey) { :fkey }
   let(:fkeypath) { File.join(fixtures_dir, 'existing.csv') }
   let(:registry) { Kiba::Extend.registry }
@@ -20,6 +20,8 @@ RSpec.describe 'Kiba::Extend::Registry::FileRegistry' do
       Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry
       populate_registry
     end
+    after(:context){ Kiba::Extend.reset_config }
+
     context 'when no namespace' do
       let(:data) { { path: fkeypath, supplied: true, lookup_on: :id } }
       it 'registers and resolves' do
@@ -56,13 +58,14 @@ RSpec.describe 'Kiba::Extend::Registry::FileRegistry' do
       after(:context) do
         dir = Pathname.new(@missing_supplied).dirname
         dir.delete if dir.exist?
+        Kiba::Extend.reset_config
       end
 
       it 'warns of missing file' do
         msg = <<~MSG
         #{Kiba::Extend.warning_label}: Missing supplied file: #{fixtures_dir}/supplied/not_there.csv
       MSG
-        expect{ transform_registry }.to output(msg).to_stdout 
+        expect{ transform_registry }.to output(msg).to_stdout
       end
     end
 
@@ -79,6 +82,7 @@ RSpec.describe 'Kiba::Extend::Registry::FileRegistry' do
 
       after(:context) do
         Dir.delete(@missing_dir) if Dir.exist?(@missing_dir)
+        Kiba::Extend.reset_config
       end
 
       it 'creates expected directories' do
@@ -94,6 +98,8 @@ RSpec.describe 'Kiba::Extend::Registry::FileRegistry' do
       populate_registry
       transform_registry
     end
+    after(:context){ Kiba::Extend.reset_config }
+
     describe '#transform' do
       it 'converts all registered items to FileRegistryEntry objects' do
         chk = []
