@@ -45,6 +45,15 @@ module Kiba
       # @return [Symbol] field in which to write the MARC id value when
       #   converting MARC data to CSV row
       setting :id_target_field, default: :marcid, reader: true
+      # @param record [MARC::Record]
+      # @param tag [String] of normal MARC field, e.g. '245'
+      # @return [Array<MARC::DataField>] 880 fields linked to fields with given
+      #   tag
+      def linked_fields(record, tag)
+        record.find_all do |field|
+          field.tag == '880' && field['6'].start_with?(tag)
+        end
+      end
     end
   end
 end
