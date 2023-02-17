@@ -5,7 +5,11 @@ require_relative 'base_job'
 module Kiba
   module Extend
     module Jobs
-      # Job with one MARC source, one destination, and zero-to-n lookups
+      # Job with one MARC source, one destination (to which a Hash/row can be
+      #   written), and zero-to-n lookups.
+      #
+      # @note The first transform called in a `MarcJob` must be one from the
+      #   {Kiba::Extend::Transforms::Marc} namespace.
       class MarcJob < BaseJob
         private
 
