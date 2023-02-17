@@ -136,7 +136,8 @@ module Helpers
   # @param path [String] path to MARC binary file (.mrc, .dat, etc)
   # @param index [Integer] which record from file you want to use in your
   #   test. Count starts at 0.
-  def get_marc_record(path, index)
+  def get_marc_record(path: File.join(fixtures_dir, 'harvard_open_data.mrc'),
+                      index:)
     recs = []
     MARC::Reader.new(path).each{ |rec| recs << rec }
     recs[index]
