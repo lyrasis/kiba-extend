@@ -178,6 +178,21 @@ Wraps field value in an array if <code>delim</code> is explicitly set to <code>n
     
   </div>
 
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>3.3.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div>
 
@@ -208,8 +223,7 @@ Wraps field value in an array if <code>delim</code> is explicitly set to <code>n
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute delim.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -236,8 +250,7 @@ Wraps field value in an array if <code>delim</code> is explicitly set to <code>n
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Returns the value of attribute fields.</p>
-</div></span>
+    <span class="summary_desc"><div class='inline'></div></span>
   
 </li>
 
@@ -366,6 +379,21 @@ string value.</p>
   
 </ul>
 
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>3.3.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -373,13 +401,13 @@ string value.</p>
       <pre class="lines">
 
 
-66
-67
 68
-69</pre>
+69
+70
+71</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/string_value/to_array.rb', line 66</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/string_value/to_array.rb', line 68</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_delim'><span class='object_link'><a href="../../../Extend.html#delim-class_method" title="Kiba::Extend.delim (method)">delim</a></span></span><span class='rparen'>)</span>
   <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fields'>fields</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
@@ -408,13 +436,27 @@ string value.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns the value of attribute delim.</p>
-
+    
 
   </div>
 </div>
 <div class="tags">
   
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>3.3.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -422,12 +464,12 @@ string value.</p>
       <pre class="lines">
 
 
-84
-85
-86</pre>
+86
+87
+88</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/string_value/to_array.rb', line 84</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/string_value/to_array.rb', line 86</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delim'>delim</span>
   <span class='ivar'>@delim</span>
@@ -450,13 +492,27 @@ string value.</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns the value of attribute fields.</p>
-
+    
 
   </div>
 </div>
 <div class="tags">
   
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>3.3.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -464,12 +520,12 @@ string value.</p>
       <pre class="lines">
 
 
-84
-85
-86</pre>
+86
+87
+88</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/string_value/to_array.rb', line 84</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/string_value/to_array.rb', line 86</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fields'>fields</span>
   <span class='ivar'>@fields</span>
@@ -495,14 +551,36 @@ string value.</p>
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>3.3.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-71
-72
 73
 74
 75
@@ -512,10 +590,12 @@ string value.</p>
 79
 80
 81
-82</pre>
+82
+83
+84</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/string_value/to_array.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/string_value/to_array.rb', line 73</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_fields'>fields</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span>
@@ -539,7 +619,7 @@ string value.</p>
 </div>
 
       <div id="footer">
-  Generated on Fri Feb 17 20:07:07 2023 by
+  Generated on Fri Feb 17 20:52:44 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.7).
 </div>

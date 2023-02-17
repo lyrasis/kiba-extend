@@ -207,6 +207,21 @@
     
   </div>
 
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>3.3.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div>
 
@@ -365,6 +380,21 @@ handle weirdly internally</p>
   
 </ul>
 
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>3.3.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -372,14 +402,14 @@ handle weirdly internally</p>
       <pre class="lines">
 
 
-108
-109
 110
 111
-112</pre>
+112
+113
+114</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/string_normalizer.rb', line 108</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/string_normalizer.rb', line 110</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>mode:</span> <span class='symbol'>:plain</span><span class='comma'>,</span> <span class='label'>downcased:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='ivar'>@mode</span> <span class='op'>=</span> <span class='id identifier rubyid_mode'>mode</span>
@@ -470,6 +500,21 @@ handle weirdly internally</p>
   
 </ul>
 
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>3.3.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -477,12 +522,12 @@ handle weirdly internally</p>
       <pre class="lines">
 
 
-99
-100
-101</pre>
+101
+102
+103</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/string_normalizer.rb', line 99</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/string_normalizer.rb', line 101</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='label'>mode:</span> <span class='symbol'>:plain</span><span class='comma'>,</span> <span class='label'>downcased:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>str:</span><span class='rparen'>)</span>
   <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>mode:</span> <span class='id identifier rubyid_mode'>mode</span><span class='comma'>,</span> <span class='label'>downcased:</span> <span class='id identifier rubyid_downcased'>downcased</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_str'>str</span><span class='rparen'>)</span>
@@ -507,14 +552,36 @@ handle weirdly internally</p>
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>3.3.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-114
-115
 116
 117
 118
@@ -522,10 +589,12 @@ handle weirdly internally</p>
 120
 121
 122
-123</pre>
+123
+124
+125</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/string_normalizer.rb', line 114</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/string_normalizer.rb', line 116</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_val'>val</span><span class='rparen'>)</span>
   <span class='kw'>unless</span> <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_unicode_normalized?'>unicode_normalized?</span><span class='lparen'>(</span><span class='symbol'>:nfkc</span><span class='rparen'>)</span>
@@ -547,7 +616,7 @@ handle weirdly internally</p>
 </div>
 
       <div id="footer">
-  Generated on Fri Feb 17 20:07:06 2023 by
+  Generated on Fri Feb 17 20:52:43 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.7).
 </div>
