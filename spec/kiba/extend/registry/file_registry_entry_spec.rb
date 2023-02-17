@@ -6,18 +6,18 @@ require 'spec_helper'
 module Helpers
   module Project
     module_function
-    
+
     module Section
       module_function
 
       def desc
         <<~DESC
           Here is the job description.
-          
+
           Blah blah blah.
         DESC
       end
-      
+
       def job
       end
     end
@@ -40,6 +40,40 @@ RSpec.describe 'Kiba::Extend::Registry::FileRegistryEntry' do
   let(:path) { File.join('spec', 'fixtures', 'fkey.csv') }
   let(:entry) { Kiba::Extend::Registry::FileRegistryEntry.new(data) }
 
+  context 'with MARC source' do
+    let(:path) { File.join('spec', 'fixtures', 'harvard_open_data.mrc') }
+
+    context 'when supplied not set' do
+      let(:data) do
+        {
+          path: path,
+          src_class: Kiba::Extend::Sources::Marc
+        }
+      end
+
+      it 'returns invalid' do
+        expect(entry.valid?).to be false
+      end
+    end
+
+    context 'when lookup_on set' do
+      let(:data) do
+        {
+          path: path,
+          supplied: true,
+          src_class: Kiba::Extend::Sources::Marc,
+          lookup_on: :id
+        }
+      end
+
+      it 'returns invalid' do
+        expect(entry.valid?).to be false
+        errkey = entry.errors.key?(:cannot_lookup_from_supplied_marc_source)
+        expect(errkey).to be true
+      end
+    end
+  end
+
   context 'with valid data' do
     let(:data) { { path: path, creator: Helpers.method(:test_csv) } }
     it 'valid as expected' do
@@ -56,7 +90,7 @@ RSpec.describe 'Kiba::Extend::Registry::FileRegistryEntry' do
         dest_special_opts: {initial_headers: Helpers::Project.headers}
       }
     end
-    
+
     it 'valid as expected' do
       expect(entry.valid?).to be true
       expect(entry.dest_special_opts[:initial_headers]).to eq(%i[a b c])
@@ -71,7 +105,7 @@ RSpec.describe 'Kiba::Extend::Registry::FileRegistryEntry' do
         dest_special_opts: {initial_headers: Proc.new { Helpers::Project.headers.reverse }}
       }
     end
-    
+
     it 'valid as expected' do
       expect(entry.valid?).to be true
       expect(entry.dest_special_opts[:initial_headers]).to eq(%i[c b a])
@@ -86,7 +120,7 @@ RSpec.describe 'Kiba::Extend::Registry::FileRegistryEntry' do
         desc: Proc.new { Helpers::Project::Section.desc }
       }
     end
-    
+
     it 'valid as expected' do
       expect(entry.valid?).to be true
       expect(entry.desc).to eq(Helpers::Project::Section.desc)

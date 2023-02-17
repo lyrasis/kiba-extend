@@ -12,7 +12,6 @@ module Kiba
       # Abstract definition of Job and job interface
       #
       # @abstract
-      # @return [Kiba::Control]
       class BaseJob
         include Runner
         include Parser

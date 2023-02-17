@@ -12,3 +12,5 @@
 .byebug_history
 
 **/.~lock*coverage
+
+spec/fixtures/*.mrk

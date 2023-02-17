@@ -40,6 +40,7 @@ These changes are merged into the `main` branch, but have not been released. Aft
 ** Ability to pass `fields: :all` to strip all fields in a table
 ** Ability to turn on multivalue processing by passing in a `delim` value
 * More country mappings to `Cspace::AddressCountry` transform (PR#132)
+* `Marc` source, `MarcJob`, `Kiba::Extend::Marc` configuration module, `Utils::MarcIdExtractor`, and an initial `Marc::Extract245Title` transform (PR#134)
 
 === Changed
 

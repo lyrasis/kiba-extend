@@ -16,6 +16,7 @@ RSpec.describe 'Kiba::Extend::Registry::RegisteredSource' do
 
   describe '#args' do
     let(:result) { source.args }
+
     context 'with basic defaults' do
       let(:data) { default }
       let(:expected) do
@@ -34,6 +35,41 @@ RSpec.describe 'Kiba::Extend::Registry::RegisteredSource' do
       end
       it 'returns with given opts' do
         expect(result).to eq(expected)
+      end
+    end
+
+    context 'with MARC source' do
+      let(:path) { File.join('spec', 'fixtures', 'harvard_open_data.mrc') }
+
+      context 'with path only' do
+        let(:data) do
+          {
+            path: path,
+            supplied: true,
+            src_class: Kiba::Extend::Sources::Marc
+          }
+        end
+        let(:expected){ {filename: path, args: nil} }
+
+        it 'returns default opts' do
+          expect(result).to eq(expected)
+        end
+      end
+
+      context 'with src_opt' do
+        let(:data) do
+          {
+            path: path,
+            supplied: true,
+            src_class: Kiba::Extend::Sources::Marc,
+            src_opt: {external_encoding: 'UTF-8'}
+          }
+        end
+        let(:expected){ {filename: path, args: {external_encoding: 'UTF-8'}} }
+
+        it 'returns default opts' do
+          expect(result).to eq(expected)
+        end
       end
     end
   end

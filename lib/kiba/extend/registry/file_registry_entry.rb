@@ -33,7 +33,7 @@ module Kiba
         def dir
           path.dirname
         end
-        
+
         # Used by FileRegistry.transform to add the key as an instance variable to each Entry
         def set_key(key)
           @key = key
@@ -69,7 +69,7 @@ module Kiba
         def summary_padding
           '    '
         end
-        
+
         # Whether the Entry is valid
         # @return [Boolean]
         def valid?
@@ -83,7 +83,7 @@ module Kiba
         rescue Kiba::Extend::Error => err
           errors[err.class.name] = err.message
         end
-        
+
         def allowed_settings
           instance_variables
             .map(&:to_s)
@@ -104,7 +104,7 @@ module Kiba
             else
               val = val.is_a?(Proc) ? val.call : val
             end
-            
+
             instance_variable_set("@#{key}".to_sym, val)
           else
             @warnings << ":#{key} is not an allowed FileRegistryEntry setting"
@@ -144,6 +144,7 @@ module Kiba
           validate_path
           validate_creator
           validate_type
+          validate_lookup
           @valid = true if errors.empty?
         end
 
@@ -153,6 +154,13 @@ module Kiba
 
           @creator = nil
           @errors[:missing_creator_for_non_supplied_file] = nil
+        end
+
+        def validate_lookup
+          return unless lookup_on
+          return unless src_class == Kiba::Extend::Sources::Marc && supplied
+
+          @errors[:cannot_lookup_from_supplied_marc_source] = nil
         end
 
         def validate_path
