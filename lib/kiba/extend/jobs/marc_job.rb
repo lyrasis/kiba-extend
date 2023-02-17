@@ -10,6 +10,7 @@ module Kiba
       #
       # @note The first transform called in a `MarcJob` must be one from the
       #   {Kiba::Extend::Transforms::Marc} namespace.
+      # @since 3.3.0
       class MarcJob < BaseJob
         private
 

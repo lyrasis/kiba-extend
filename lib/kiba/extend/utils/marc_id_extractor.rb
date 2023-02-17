@@ -6,7 +6,7 @@ module Kiba
   module Extend
     module Utils
       # Callable service to generate a fingerprint value from the given fields
-      # @since 2.7.1.65
+      # @since 3.3.0
       class MarcIdExtractor
         class ControlFieldsDoNotHaveSubfieldsError < Kiba::Extend::Error; end
 

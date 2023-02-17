@@ -6,7 +6,8 @@ module Kiba
   module Extend
     module Transforms
       module Marc
-        # doc
+        # Extract title fields from 245 (and/or linked 880) fields, along with
+        #   :marcid value
         #
         # @example Just 245
         #   # 245 13 $a Un sextuor pour piano et cordes en mi bémol majeur
@@ -53,6 +54,8 @@ module Kiba
         #   Kiba::Extend::Marc.reset_config
         #   expected = 'Jidō shinri hen|兒童心理篇'
         #   expect(result).to eq(expected)
+        #
+        # @since 3.3.0
         class Extract245Title
           # @param id_target [Symbol] row field into which id value will be
           #   written

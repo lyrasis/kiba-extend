@@ -2,6 +2,8 @@ module Kiba
   module Extend
     module Transforms
       module StringValue
+        # @since 3.3.0
+        #
         # Splits given field value into an array on given delimiter.
         # Wraps field value in an array if `delim` is explicitly set to `nil`.
         #

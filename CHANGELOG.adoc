@@ -23,6 +23,8 @@ toc::[]
 == Planned for a future release
 === Breaking
 * Removal of nested `job.show_me`, `job.tell_me`, and `job.verbosity` config settings (deprecated in 3.2.0)
+* Removal of `sep` parameter in `Deduplicate::GroupedFieldValues` (deprecated in 3.3.0)
+* Removal of `multival` parameter in `Cspace::NormalizeForId`  (deprecated in 3.3.0)
 
 == Unreleased
 These changes are merged into the `main` branch, but have not been released. After merging pull requests (PRs) that are not immediately released into `main`, a tag is added appending the PR# to the current release. For example, if the release version/tag is `3.2.1`, and PR# 107 is merged without a new release, the state of the codebase after that merge will be tagged as `3.2.1.107`.
@@ -30,6 +32,22 @@ These changes are merged into the `main` branch, but have not been released. Aft
 === Breaking
 
 === Added
+
+=== Changed
+
+=== Bugfixes
+
+=== Deleted
+
+=== Deprecated/Will break in a future version
+
+=== Dev
+
+== Releases
+
+=== 3.3.0 - 2023-02-17
+
+==== Added
 * `StringValue::ToArray` transform (PR#111)
 * Two mixin modules to Transforms to support deprecating non-preferred parameter signatures:
 ** `Transforms::SepDeprecatable` (PR#124)
@@ -42,23 +60,16 @@ These changes are merged into the `main` branch, but have not been released. Aft
 * More country mappings to `Cspace::AddressCountry` transform (PR#132)
 * `Marc` source, `MarcJob`, `Kiba::Extend::Marc` configuration module, `Utils::MarcIdExtractor`, and an initial `Marc::Extract245Title` transform (PR#134)
 
-=== Changed
-
-=== Bugfixes
+==== Bugfixes
 * Catch `Merge::MultiRowLookup` transform created with empty `fieldmap` and raise error on initialization, rather than letting it blow up `Utils::Fieldset` later (PR#127)
 * Fix https://github.com/lyrasis/kiba-extend/issues/121[#121] (PR#122)
 
-=== Deleted
-
-=== Deprecated/Will break in a future version
+==== Deprecated/Will break in a future version
 * `sep` parameter in `Deduplicate::GroupedFieldValues` (PR#124)
 * `multival` parameter in `Cspace::NormalizeForId` (PR#124)
 
-=== Dev
+==== Dev
 * Run Rspec in random order with seed (PR#124)
-
-
-== Releases
 
 === 3.2.2 - 2022-09-23
 
