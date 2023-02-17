@@ -28,6 +28,8 @@ module Kiba
       # ```
       #   @delim = usedelim(sepval: sep, delimval: delim, calledby: self)
       # ```
+      #
+      # @since 3.3.0
       module SepDeprecatable
         def usedelim(sepval:, delimval:, calledby:)
           if delimval && !sepval

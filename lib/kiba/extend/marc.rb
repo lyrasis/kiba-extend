@@ -2,6 +2,8 @@
 
 module Kiba
   module Extend
+    # @since 3.3.0
+    # Configuration and shared methods for MARC data
     module Marc
       module_function
       extend Dry::Configurable

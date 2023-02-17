@@ -42,6 +42,8 @@ module Kiba
       #   true
       # end
       # ````
+      #
+      # @since 3.3.0
       module MultivalPlusDelimDeprecatable
         def set_multival(multival, omitted, calledby)
           if omitted

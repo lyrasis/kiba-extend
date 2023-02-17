@@ -89,6 +89,8 @@ module Kiba
       #   ]
       #   results = input.map{ |str| util.call(str) }
       #   expect(results).to eq(expected)
+      #
+      # @since 3.3.0
       class StringNormalizer
         class << self
           # @param mode [:plain, :cspaceid] :plain does no find/replace before
