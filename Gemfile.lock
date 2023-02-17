@@ -120,7 +120,6 @@ DEPENDENCIES
   bundler (~> 2.3)
   byebug (~> 11.0)
   kiba-extend!
-  marc (~> 1.2)
   pry (~> 0.14)
   rake (~> 13.0)
   redcarpet (~> 3.5)
