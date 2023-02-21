@@ -24,7 +24,7 @@ module Kiba
           show_me_decoration
           tell_me_decoration
         end
-        
+
         # Add lookup tables to the context as methods memoized to instance variables
         def add_lookup(config)
           key_as_iv = "@#{config.key}".to_sym
@@ -33,7 +33,10 @@ module Kiba
             if instance_variable_defined?(key_as_iv)
               instance_variable_get(key_as_iv)
             else
-              instance_variable_set(key_as_iv, Lookup.csv_to_hash(**config.args))
+              instance_variable_set(
+                key_as_iv,
+                Lookup.csv_to_hash(**config.args.compact)
+              )
             end
           }
         end
@@ -84,7 +87,7 @@ module Kiba
 
         def handle_requirements
           [@files[:source], @files[:lookup]].compact.flatten.compact.each do |registered|
-            next unless  registered.required
+            next unless registered.required
 
             registered.required.call
           end
@@ -109,7 +112,7 @@ module Kiba
 
         def show_me_decoration
           return unless Kiba::Extend.job_show_me
-          
+
           extend ShowMeJob
           decorate
         end
@@ -122,7 +125,7 @@ module Kiba
 
         def tell_me_decoration
           return unless Kiba::Extend.job_tell_me
-          
+
           extend TellMeJob
           decorate
         end
