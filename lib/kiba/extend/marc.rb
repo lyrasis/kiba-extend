@@ -8,6 +8,9 @@ module Kiba
       module_function
       extend Dry::Configurable
 
+      # @return [Symbol] field in which the write the field tag value from
+      #   which data was extracted when converting MARC data to Hash row
+      setting :field_tag_target, default: :sourcefield, reader: true
       # @return [String] the MARC field tag from which id value is extracted
       setting :id_tag, default: '001', reader: true
       # @return [Proc, nil] Code to perform any further selection from the Array
@@ -47,10 +50,85 @@ module Kiba
       # @return [Symbol] field in which to write the MARC id value when
       #   converting MARC data to CSV row
       setting :id_target_field, default: :marcid, reader: true
+      # @return [Array<String>] MARC field tags for fields that contain the
+      #   structured meeting name data pattern documented at
+      #   https://www.loc.gov/marc/bibliographic/bdx11.html
+      setting :meeting_data_tags,
+        default: %w[111 611 711 811],
+        reader: true
+      # @return [Array<String>] subfields to be extracted as part of name values
+      #   from {meeting_data_tags}
+      setting :meeting_name_part_subfields,
+        default: %w[a b c d g n u],
+        reader: true
+      # @return [Array<String>] subfields to be extracted as meeting role codes
+      #   from {meeting_data_tags}
+      setting :meeting_role_code_subfields,
+        default: %w[4],
+        reader: true
+      # @return [Array<String>] subfields to be extracted as meeting role terms
+      #   from {meeting_data_tags}
+      setting :meeting_role_term_subfields,
+        default: %w[e],
+        reader: true
+      # @return [Symbol] field in which to write the name value when
+      #   converting MARC data to CSV row when extracting names
+      setting :name_target, default: :name, reader: true
+      # @return [Symbol] field in which to write the name type value when
+      #   converting MARC data to CSV row when extracting names
+      setting :name_type_target, default: :nametype, reader: true
+      # @return [Array<String>] MARC field tags for fields that contain the
+      #   structured org name data pattern documented at
+      #   https://www.loc.gov/marc/bibliographic/bdx10.html
+      setting :org_data_tags,
+        default: %w[110 610 710 810],
+        reader: true
+      # @return [Array<String>] subfields to be extracted as part of name values
+      #   from {org_data_tags}
+      setting :org_name_part_subfields,
+        default: %w[a b c d g n u],
+        reader: true
+      # @return [Array<String>] subfields to be extracted as org role codes
+      #   from {org_data_tags}
+      setting :org_role_code_subfields,
+        default: %w[4],
+        reader: true
+      # @return [Array<String>] subfields to be extracted as org role terms
+      #   from {org_data_tags}
+      setting :org_role_term_subfields,
+        default: %w[e],
+        reader: true
+      # @return [Array<String>] MARC field tags for fields that contain the
+      #   structured person name data pattern documented at
+      #   https://www.loc.gov/marc/bibliographic/bdx00.html
+      setting :person_data_tags,
+        default: %w[100 600 700 800],
+        reader: true
+      # @return [Array<String>] subfields to be extracted as part of name values
+      #   from {person_data_tags}
+      setting :person_name_part_subfields,
+        default: %w[a b c d j q u],
+        reader: true
+      # @return [Array<String>] subfields to be extracted as person role codes
+      #   from {person_data_tags}
+      setting :person_role_code_subfields,
+        default: %w[4],
+        reader: true
+      # @return [Array<String>] subfields to be extracted as person role terms
+      #   from {person_data_tags}
+      setting :person_role_term_subfields,
+        default: %w[e],
+        reader: true
       # @return [Boolean] If true, returns linked 880 field values instead of
       #   main field (transliterated values). If false, returns main field
       #   value, followed by 880 field value
       setting :prefer_vernacular, default: true, reader: true
+      # @return [Symbol] field in which to write the role code value when
+      #   converting MARC data to CSV row for name extraction
+      setting :role_code_target, default: :role_code, reader: true
+      # @return [Symbol] field in which to write the role term value when
+      #   converting MARC data to CSV row for name extraction
+      setting :role_term_target, default: :role_term, reader: true
       # @return [Array<String>] subfields to be extracted as part of title
       #   from 245 fields
       setting :title_part_subfields,

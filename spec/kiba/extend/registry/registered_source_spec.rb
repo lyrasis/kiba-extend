@@ -83,11 +83,48 @@ RSpec.describe 'Kiba::Extend::Registry::RegisteredSource' do
       end
     end
 
-    context 'with a given class' do
-      let(:override_klass) { Kiba::Common::Destinations::CSV }
-      let(:data) { { path: path, src_class: override_klass } }
+    context 'with supplied entry with MARC source' do
+      let(:data) do
+        {path: path, src_class: Kiba::Extend::Sources::Marc, supplied: true}
+      end
+
       it 'returns given class' do
-        expect(result).to eq(override_klass)
+        expect(result).to eq(Kiba::Extend::Sources::Marc)
+      end
+    end
+
+    context 'with job entry with MARC source and CSV dest' do
+      let(:data) do
+        {
+          path: path,
+          src_class: Kiba::Extend::Sources::Marc,
+          creator: -> { Helpers.test_csv },
+          dest_class: Kiba::Extend::Destinations::CSV
+        }
+      end
+
+      it 'returns given class' do
+        expect(result).to eq(Kiba::Common::Sources::CSV)
+      end
+    end
+
+    context 'with job entry with CSV source and Lambda dest' do
+      let(:data) do
+        {
+          path: path,
+          src_class: Kiba::Common::Sources::CSV,
+          creator: -> { Helpers.test_csv },
+          dest_class: Kiba::Common::Destinations::Lambda
+        }
+      end
+
+      it 'raises error' do
+        expect{ result }.to raise_error(
+          Kiba::Extend::Registry::CannotBeUsedAsSourceError,
+          'The result of a registry entry with a '\
+            'Kiba::Common::Destinations::Lambda dest_class cannot '\
+            'be used as source file in a job'
+        )
       end
     end
   end

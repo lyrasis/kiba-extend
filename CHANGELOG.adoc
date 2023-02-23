@@ -32,10 +32,12 @@ These changes are merged into the `main` branch, but have not been released. Aft
 === Breaking
 
 === Added
+* `Marc::ExtractMeetingNameData`, `Marc::ExtractOrgNameData`, `Marc::ExtractPersonNameData`, and `Marc::ExtractNameData` transforms (PR#137)
 
 === Changed
 
 === Bugfixes
+* Fixes issue where job registry entry with a Marc source and CSV destination could not be used as a source or lookup in jobs (PR#137)
 
 === Deleted
 

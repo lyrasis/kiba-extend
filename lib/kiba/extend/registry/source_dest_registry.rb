@@ -21,6 +21,21 @@ module Kiba
           data[klass]
         end
 
+        # For each class that may be used as a registry entry `dest_class`,
+        #   gives the source class that should be used to read that registry entry
+        #   when it is used as a source in a job
+        # @note Entries having destinations mapped to nil here cannot be
+        #   used as sources in jobs.
+        def dest_src_mapping(klass)
+          data = {
+            Kiba::Extend::Destinations::CSV => Kiba::Common::Sources::CSV,
+            Kiba::Common::Destinations::CSV => Kiba::Common::Sources::CSV,
+            Kiba::Common::Destinations::Lambda => nil,
+            Kiba::Extend::Destinations::JsonArray => nil
+          }
+          data[klass]
+        end
+
         # Registry of known source/destination classes and whether they require a path
         #
         # Enumerable and Lambda are 'in-memory' and useful for testing and possibly
