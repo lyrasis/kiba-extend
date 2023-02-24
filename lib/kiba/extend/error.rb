@@ -24,5 +24,13 @@ module Kiba
         locs
       end
     end
+
+    class InvalidActionError < ArgumentError
+      include Kiba::Extend::ErrMod
+      def initialize(msg="Action must be :keep or :reject")
+        super
+      end
+    end
+
   end
 end
