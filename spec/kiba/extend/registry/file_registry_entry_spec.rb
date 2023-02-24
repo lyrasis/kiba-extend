@@ -43,7 +43,7 @@ RSpec.describe 'Kiba::Extend::Registry::FileRegistryEntry' do
   context 'with MARC source' do
     let(:path) { File.join('spec', 'fixtures', 'harvard_open_data.mrc') }
 
-    context 'when supplied not set' do
+    context 'when job entry (not supplied)' do
       let(:data) do
         {
           path: path,
@@ -56,7 +56,21 @@ RSpec.describe 'Kiba::Extend::Registry::FileRegistryEntry' do
       end
     end
 
-    context 'when lookup_on set' do
+    context 'when supplied entry' do
+      let(:data) do
+        {
+          path: path,
+          src_class: Kiba::Extend::Sources::Marc,
+          supplied: true
+        }
+      end
+
+      it 'returns valid' do
+        expect(entry.valid?).to be true
+      end
+    end
+
+    context 'when supplied entry with lookup_on' do
       let(:data) do
         {
           path: path,
@@ -68,7 +82,40 @@ RSpec.describe 'Kiba::Extend::Registry::FileRegistryEntry' do
 
       it 'returns invalid' do
         expect(entry.valid?).to be false
-        errkey = entry.errors.key?(:cannot_lookup_from_supplied_marc_source)
+        errkey = entry.errors.key?(:cannot_lookup_from_nonCSV_supplied_source)
+        expect(errkey).to be true
+      end
+    end
+  end
+
+  context 'with MARC destination' do
+    let(:path) { File.join('spec', 'fixtures', 'harvard_open_data.mrc') }
+
+    context 'when job entry (not supplied)' do
+      let(:data) do
+        {
+          path: path,
+          dest_class: Kiba::Extend::Destinations::Marc
+        }
+      end
+
+      it 'returns valid' do
+        expect(entry.valid?).to be false
+      end
+    end
+
+    context 'when job entry with lookup_on' do
+      let(:data) do
+        {
+          path: path,
+          dest_class: Kiba::Extend::Destinations::Marc,
+          lookup_on: :id
+        }
+      end
+
+      it 'returns invalid' do
+        expect(entry.valid?).to be false
+        errkey = entry.errors.key?(:cannot_lookup_from_nonCSV_destination)
         expect(errkey).to be true
       end
     end

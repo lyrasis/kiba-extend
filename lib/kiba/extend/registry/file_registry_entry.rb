@@ -159,9 +159,21 @@ module Kiba
 
         def validate_lookup
           return unless lookup_on
-          return unless src_class == Kiba::Extend::Sources::Marc && supplied
 
-          @errors[:cannot_lookup_from_supplied_marc_source] = nil
+          supplied ? validate_supplied_lookup : validate_job_lookup
+        end
+
+        def validate_job_lookup
+          dest_as_src = dest_src_mapping(dest_class)
+          return if lookup_options_label(dest_as_src)
+
+          @errors[:cannot_lookup_from_nonCSV_destination] = nil
+        end
+
+        def validate_supplied_lookup
+          return if src_class.name.end_with?('CSV')
+
+          @errors[:cannot_lookup_from_nonCSV_supplied_source] = nil
         end
 
         def validate_path
