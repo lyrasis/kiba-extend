@@ -5,25 +5,26 @@ require_relative 'source_dest_registry'
 module Kiba
   module Extend
     module Registry
-      # Value object capturing the data about an entry in the file registry
+      # Captures the data about an entry in the file registry
       #
-      # This is the underlying data that can be used to derive a registered source,
-      #   destination, or lookup file object.
+      # This is the underlying data that can be used to derive a registered
+      #   source, destination, or lookup file object.
       #
-      # Used instead of just passing around a Hash so that it can validate itself and
-      #   carry its own errors/warnings
+      # Used instead of just passing around a Hash so that it can validate
+      #   itself and carry its own errors/warnings
       class FileRegistryEntry
         include SourceDestRegistry
 
         attr_reader :path, :key,
-          :creator, :supplied, :dest_special_opts, :desc, :lookup_on, :tags, :message,
-          :dest_class, :dest_opt, :src_class, :src_opt, :type,
+          :creator, :supplied, :dest_special_opts, :desc, :lookup_on, :tags,
+          :message, :dest_class, :dest_opt, :src_class, :src_opt, :type,
           :valid, :errors, :warnings
 
         # allowed types
         TYPES = :file, :fileset, :enum, :lambda
 
-        # @param reghash [Hash] File data. See {file:doc/file_registry_entry.md} for details
+        # @param reghash [Hash] File data. See {file:doc/file_registry_entry.md}
+        #   for details
         def initialize(reghash)
           set_defaults
           assign_values_from(reghash)
