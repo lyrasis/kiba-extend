@@ -241,6 +241,7 @@ module Kiba
       end
     }
 
+    ErrMod = Module.new
   end
 end
 
