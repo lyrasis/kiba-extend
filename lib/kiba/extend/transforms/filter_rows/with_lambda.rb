@@ -51,23 +51,25 @@ module Kiba
         # {a: '', b: 'b', c: 'c' },
         # ```
         #
-        # The following will raise a NonBooleanLambdaError because `logic` returns an Array, rather than
-        #   `TrueClass` or `FalseClass`:
+        # The following will raise a NonBooleanLambdaError because `logic`
+        #   returns an Array, rather than `TrueClass` or `FalseClass`:
         #
         # ```
         # logic = ->(row){ row.values.select{ |val| val.nil? } }
         # transform FilterRows::WithLambda, action: :keep, lambda: logic
         # ```
         #
-        # @raise [NonBooleanLambdaError] if given lambda does not evaluate to `TrueClass` or `FalseClass` using
+        # @raise [Kiba::Extend::BooleanReturningLambdaError] if given lambda
+        #   does not evaluate to `TrueClass` or `FalseClass` using
         #   the first row of data passed to the `process` method
         class WithLambda
-          class NonBooleanLambdaError < Kiba::Extend::Error; end
+          include ActionArgumentable
 
           # @param action [:keep, :reject] what to do with row matching criteria
           # @param lambda [Lambda] with one parameter for row to be passed in through. The Lambda must evaulate
           #   to/return `TrueClass` or `FalseClass`
           def initialize(action:, lambda:)
+            validate_action_argument(action)
             @action = action
             @lambda = lambda
             @lambda_tested = false
@@ -91,7 +93,9 @@ module Kiba
 
           def test_lambda(row)
             result = lambda.call(row)
-            fail(NonBooleanLambdaError) unless result.is_a?(TrueClass) || result.is_a?(FalseClass)
+            unless result.is_a?(TrueClass) || result.is_a?(FalseClass)
+              fail(Kiba::Extend::BooleanReturningLambdaError)
+            end
 
             @lambda_tested = true
           end

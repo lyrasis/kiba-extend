@@ -32,9 +32,12 @@ These changes are merged into the `main` branch, but have not been released. Aft
 === Breaking
 
 === Added
+* `Destinations::Marc` (PR#138)
+* `Marc::FilterRecords::ById` and `Marc::FilterRecords::WithLambda` transforms  (PR#138)
 * `Marc::ExtractMeetingNameData`, `Marc::ExtractOrgNameData`, `Marc::ExtractPersonNameData`, and `Marc::ExtractNameData` transforms (PR#137)
 
 === Changed
+* Transforms that take an `action` argument now mix in the new `ActionArgumentable` module and validate the argument values in a consistent way (PR#138)
 
 === Bugfixes
 * Fixes issue where job registry entry with a Marc source and CSV destination could not be used as a source or lookup in jobs (PR#137)
@@ -44,6 +47,7 @@ These changes are merged into the `main` branch, but have not been released. Aft
 === Deprecated/Will break in a future version
 
 === Dev
+* Adds `Kiba::Extend::ErrMod` module to be included into `Kiba::Extend`-specific error classes. This allows us to subclass each application-specific error to the semantically appropriate Ruby exception class, while retaining the ability to identify/scope/rescue only application-specific errors. (PR#138)
 
 == Releases
 

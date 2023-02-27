@@ -24,7 +24,7 @@ RSpec.describe Kiba::Extend::Transforms::FilterRows::WithLambda do
         {a: '', b: nil, c: nil }
       ]
     end
-    
+
     it 'transforms as expected' do
       expect(result).to eq(expected)
     end
@@ -39,7 +39,7 @@ RSpec.describe Kiba::Extend::Transforms::FilterRows::WithLambda do
         {a: '', b: 'b', c: 'c' },
       ]
     end
-    
+
     it 'transforms as expected' do
       expect(result).to eq(expected)
     end
@@ -47,9 +47,11 @@ RSpec.describe Kiba::Extend::Transforms::FilterRows::WithLambda do
 
   context 'when lambda does not eval to true/false' do
     let(:row){ {a: '', b: nil, c: 'c' } }
-    let(:lambda){ ->(row){ row.values.select{ |val| val.nil? } } }    
+    let(:lambda){ ->(row){ row.values.select{ |val| val.nil? } } }
     it 'raises error' do
-      expect{ transform.process(row) }.to raise_error(Kiba::Extend::Transforms::FilterRows::WithLambda::NonBooleanLambdaError)
+      expect{ transform.process(row) }.to raise_error(
+        Kiba::Extend::BooleanReturningLambdaError
+      )
     end
   end
 end

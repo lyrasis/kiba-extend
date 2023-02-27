@@ -48,9 +48,12 @@ module Kiba
         # {val:  nil},
         # ```
         class FieldPopulated
+          include ActionArgumentable
+
           # @param action [:keep, :reject] what to do with row matching criteria
           # @param field [Symbol] to check populated status in
           def initialize(action:, field:)
+            validate_action_argument(action)
             @action = action
             @field = field
           end

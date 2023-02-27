@@ -63,11 +63,13 @@ module Kiba
         # {a: '', b: nil, c: nil }
         # ```
         class AnyFieldsPopulated
+          include ActionArgumentable
           include Allable
 
           # @param action [:keep, :reject] what to do with row matching criteria
           # @param fields [Array<Symbol>, :all] to check populated status in
           def initialize(action:, fields:)
+            validate_action_argument(action)
             @action = action
             @fields = [fields].flatten
           end

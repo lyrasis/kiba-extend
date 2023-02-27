@@ -64,11 +64,14 @@ module Kiba
         # {val: nil},
         # ```
         class FieldMatchRegexp
+          include ActionArgumentable
+
           # @param action [:keep, :reject] what to do with row matching criteria
           # @param field [Symbol] to match value in
           # @param match [String] value that will be turned into a `Regexp` using `Regexp.new(match)`
           # @param ignore_case [Boolean] controls case sensitivity of matching
           def initialize(action:, field:, match:, ignore_case: false)
+            validate_action_argument(action)
             @action = action
             @field = field
             @match = ignore_case ? Regexp.new(match, Regexp::IGNORECASE) : Regexp.new(match)

@@ -9,12 +9,15 @@ module Kiba
         def default_args(klass)
           data = {
             nil => false,
-            Kiba::Extend::Destinations::CSV => {filename: path}.merge(labeled_options(klass)),
-            Kiba::Common::Destinations::CSV => {filename: path}.merge(labeled_options(klass)),
+            Kiba::Common::Destinations::CSV =>
+              {filename: path}.merge(labeled_options(klass)),
             Kiba::Common::Destinations::Lambda => false,
             Kiba::Common::Sources::CSV => true,
             Kiba::Common::Sources::Enumerable => false,
+            Kiba::Extend::Destinations::CSV =>
+              {filename: path}.merge(labeled_options(klass)),
             Kiba::Extend::Destinations::JsonArray => {filename: path},
+            Kiba::Extend::Destinations::Marc => {filename: path},
             Kiba::Extend::Sources::Marc =>
               {path: path}.merge(labeled_options(klass))
           }
@@ -28,10 +31,11 @@ module Kiba
         #   used as sources in jobs.
         def dest_src_mapping(klass)
           data = {
-            Kiba::Extend::Destinations::CSV => Kiba::Common::Sources::CSV,
             Kiba::Common::Destinations::CSV => Kiba::Common::Sources::CSV,
             Kiba::Common::Destinations::Lambda => nil,
-            Kiba::Extend::Destinations::JsonArray => nil
+            Kiba::Extend::Destinations::CSV => Kiba::Common::Sources::CSV,
+            Kiba::Extend::Destinations::JsonArray => nil,
+            Kiba::Extend::Destinations::Marc => Kiba::Extend::Sources::Marc
           }
           data[klass]
         end
@@ -44,12 +48,13 @@ module Kiba
         def requires_path?(klass)
           data = {
             nil => false,
-            Kiba::Extend::Destinations::CSV => true,
             Kiba::Common::Destinations::CSV => true,
             Kiba::Common::Destinations::Lambda => false,
             Kiba::Common::Sources::CSV => true,
             Kiba::Common::Sources::Enumerable => false,
+            Kiba::Extend::Destinations::CSV => true,
             Kiba::Extend::Destinations::JsonArray => true,
+            Kiba::Extend::Destinations::Marc => true,
             Kiba::Extend::Sources::Marc => true
           }
           data[klass]
@@ -58,12 +63,13 @@ module Kiba
         def default_file_options(klass)
           data = {
             nil => nil,
-            Kiba::Extend::Destinations::CSV => Kiba::Extend.csvopts,
             Kiba::Common::Destinations::CSV => Kiba::Extend.csvopts,
             Kiba::Common::Destinations::Lambda => Kiba::Extend.lambdaopts,
             Kiba::Common::Sources::CSV => Kiba::Extend.csvopts,
             Kiba::Common::Sources::Enumerable => nil,
+            Kiba::Extend::Destinations::CSV => Kiba::Extend.csvopts,
             Kiba::Extend::Destinations::JsonArray => nil,
+            Kiba::Extend::Destinations::Marc => nil,
             Kiba::Extend::Sources::Marc => nil
           }
           data[klass]
@@ -72,33 +78,42 @@ module Kiba
         def labeled_options(klass)
           data = {
             nil => nil,
-            Kiba::Extend::Destinations::CSV => { options_label(klass) => default_file_options(klass) },
-            Kiba::Common::Destinations::CSV => { options_label(klass) => default_file_options(klass) },
-            Kiba::Common::Destinations::Lambda => { options_label(klass) => default_file_options(klass) },
-            Kiba::Common::Sources::CSV => { options_label(klass) => default_file_options(klass) },
+            Kiba::Common::Destinations::CSV =>
+              { options_label(klass) => default_file_options(klass) },
+            Kiba::Common::Destinations::Lambda =>
+              { options_label(klass) => default_file_options(klass) },
+            Kiba::Common::Sources::CSV =>
+              { options_label(klass) => default_file_options(klass) },
             Kiba::Common::Sources::Enumerable => {},
+            Kiba::Extend::Destinations::CSV =>
+              { options_label(klass) => default_file_options(klass) },
             Kiba::Extend::Destinations::JsonArray => {},
-            Kiba::Extend::Sources::Marc => { options_label(klass) => default_file_options(klass) }
+            Kiba::Extend::Destinations::Marc => {},
+            Kiba::Extend::Sources::Marc =>
+              { options_label(klass) => default_file_options(klass) }
           }
           data[klass]
         end
 
-        # The Symbol used for the options in the Kiba Source/Destination file configuration hash
+        # The Symbol used for the options in the Kiba Source/Destination file
+        #   configuration hash
         def options_label(klass)
           data = {
             nil => nil,
-            Kiba::Extend::Destinations::CSV => :csv_options,
             Kiba::Common::Destinations::CSV => :csv_options,
             Kiba::Common::Destinations::Lambda => :options,
             Kiba::Common::Sources::CSV => :csv_options,
             Kiba::Common::Sources::Enumerable => nil,
+            Kiba::Extend::Destinations::CSV => :csv_options,
             Kiba::Extend::Destinations::JsonArray => nil,
+            Kiba::Extend::Destinations::Marc => nil,
             Kiba::Extend::Sources::Marc => :args
           }
           data[klass]
         end
 
-        # The Symbol used for the file options when calling source class as a {Kiba::Extend::Lookup}
+        # The Symbol used for the file options when calling source class as a
+        #   {Kiba::Extend::Lookup}
         def lookup_options_label(klass)
           data = {
             Kiba::Common::Sources::CSV => :csvopt,

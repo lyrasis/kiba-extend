@@ -57,15 +57,25 @@ The allowable Hash keys, expected Hash value formats, and expectations about the
 [Hash] additional options for writing out the data
 
 * optional
-* Not all destination classes support extra options. If you provide unsupported extra options, they will not be sent through to the destination class, and you will receive a warning in STDOUT. The current most common use is to define `initial_headers` (i.e. which columns should be first in file) to {Kiba::Extend::Destinations::CSV}.
+* Only the following destination classes support extra options. If you provide unsupported extra options, they will not be sent through to the destination class, and you will receive a warning in STDOUT.
+  * {Kiba::Extend::Destinations::CSV} (`initial_headers`)
+  * {Kiba::Extend::Destinations::Marc} (`allow_oversized`)
 
-Example:
+Examples:
 
 ```ruby
 reghash = {
   path: '/path/to/file.csv',
   dest_class: Kiba::Extend::Destinations::CSV,
   dest_special_opts: { initial_headers: %i[objectnumber briefdescription] }
+  }
+```
+
+```ruby
+reghash = {
+  path: '/path/to/long_marc_records.mrc',
+  dest_class: Kiba::Extend::Destinations::Marc,
+  dest_special_opts: { allow_oversized: true }
   }
 ```
 

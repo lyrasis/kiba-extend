@@ -10,16 +10,21 @@ module Kiba
       class MarcIdExtractor
         class ControlFieldsDoNotHaveSubfieldsError < Kiba::Extend::Error; end
 
-        def initialize
-          @tag = Kiba::Extend::Marc.id_tag
-          @subfield = Kiba::Extend::Marc.id_subfield
+        def initialize(
+          id_tag: Kiba::Extend::Marc.id_tag,
+          id_field_selector: Kiba::Extend::Marc.id_field_selector,
+          id_subfield: Kiba::Extend::Marc.id_subfield,
+          id_subfield_selector: Kiba::Extend::Marc.id_subfield_selector,
+          id_value_formatter: Kiba::Extend::Marc.id_value_formatter
+        )
+          @tag = id_tag
+          @subfield = id_subfield
           if subfield && MARC::ControlField.control_tags.any?(tag)
             raise ControlFieldsDoNotHaveSubfieldsError
           end
-
-          @field_selector = Kiba::Extend::Marc.id_field_selector
-          @subfield_selector = Kiba::Extend::Marc.id_subfield_selector
-          @value_formatter = Kiba::Extend::Marc.id_value_formatter
+          @field_selector = id_field_selector
+          @subfield_selector = id_subfield_selector
+          @value_formatter = id_value_formatter
         end
 
         # @param record [MARC::Record]
