@@ -101,7 +101,8 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>An extension of Kiba::Common&#39;s CSV destination, adding the <code>initial_headers</code> option</p>
+    <p>An extension of Kiba::Common&#39;s CSV destination, adding the
+  <code>initial_headers</code> option</p>
 
 
   </div>
@@ -420,9 +421,11 @@
       
       
         &mdash;
-        <div class='inline'><p>names of fields in the order you want them output in the
-CSV. Any you do not explicitly include here will be appended in whatever order they got
-created/processed in, to the right of the ones named here.</p>
+        <div class='inline'><p>names of fields in the order
+you want them output in the CSV. Any you do not explicitly include
+here will be appended in whatever order they got created/processed
+in, to the right of the ones named here. <strong>Set in registry entry&#39;s
+<code>dest_special_opts</code></strong></p>
 </div>
       
     </li>
@@ -436,17 +439,19 @@ created/processed in, to the right of the ones named here.</p>
       <pre class="lines">
 
 
-19
-20
-21
 22
 23
-24</pre>
+24
+25
+26
+27
+28</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 19</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 22</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>filename:</span><span class='comma'>,</span> <span class='label'>csv_options:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>headers:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>initial_headers:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>filename:</span><span class='comma'>,</span> <span class='label'>csv_options:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>headers:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+               <span class='label'>initial_headers:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='ivar'>@filename</span> <span class='op'>=</span> <span class='id identifier rubyid_filename'>filename</span>
   <span class='ivar'>@csv_options</span> <span class='op'>=</span> <span class='id identifier rubyid_csv_options'>csv_options</span> <span class='op'>||</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
   <span class='ivar'>@headers</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span>
@@ -489,12 +494,12 @@ created/processed in, to the right of the ones named here.</p>
       <pre class="lines">
 
 
-10
 11
-12</pre>
+12
+13</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 10</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 11</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_csv'>csv</span>
   <span class='ivar'>@csv</span>
@@ -531,12 +536,12 @@ created/processed in, to the right of the ones named here.</p>
       <pre class="lines">
 
 
-10
 11
-12</pre>
+12
+13</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 10</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 11</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_csv_options'>csv_options</span>
   <span class='ivar'>@csv_options</span>
@@ -573,12 +578,12 @@ created/processed in, to the right of the ones named here.</p>
       <pre class="lines">
 
 
-10
 11
-12</pre>
+12
+13</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 10</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 11</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_filename'>filename</span>
   <span class='ivar'>@filename</span>
@@ -615,12 +620,12 @@ created/processed in, to the right of the ones named here.</p>
       <pre class="lines">
 
 
-10
 11
-12</pre>
+12
+13</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 10</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 11</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_headers'>headers</span>
   <span class='ivar'>@headers</span>
@@ -652,12 +657,12 @@ created/processed in, to the right of the ones named here.</p>
       <pre class="lines">
 
 
-47
-48
-49</pre>
+51
+52
+53</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 47</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 51</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_close'>close</span>
   <span class='id identifier rubyid_csv'>csv</span><span class='op'>&amp;.</span><span class='id identifier rubyid_close'>close</span>
@@ -704,21 +709,21 @@ created/processed in, to the right of the ones named here.</p>
       <pre class="lines">
 
 
-27
-28
-29
-30
 31
 32
 33
-34</pre>
+34
+35
+36
+37
+38</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 31</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fields'>fields</span>
   <span class='kw'>return</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='kw'>unless</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='rparen'>)</span>
-  
+
   <span class='id identifier rubyid_csv'>csv</span> <span class='op'>||=</span> <span class='op'>::</span><span class='const'>CSV</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>r</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_csv_options'>csv_options</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_hdrs'>hdrs</span> <span class='op'>=</span> <span class='id identifier rubyid_csv'>csv</span><span class='period'>.</span><span class='id identifier rubyid_shift'>shift</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span>
   <span class='id identifier rubyid_close'>close</span>
@@ -744,17 +749,17 @@ created/processed in, to the right of the ones named here.</p>
       <pre class="lines">
 
 
-37
-38
-39
-40
 41
 42
 43
-44</pre>
+44
+45
+46
+47
+48</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 41</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='ivar'>@csv</span> <span class='op'>||=</span> <span class='op'>::</span><span class='const'>CSV</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>wb</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_csv_options'>csv_options</span><span class='rparen'>)</span>
@@ -774,7 +779,7 @@ created/processed in, to the right of the ones named here.</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Feb 23 17:03:07 2023 by
+  Generated on Mon Feb 27 17:39:55 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.7).
 </div>

@@ -89,7 +89,7 @@
   
   <dl>
       <dt>Includes:</dt>
-      <dd><span class='object_link'><a href="../Allable.html" title="Kiba::Extend::Transforms::Allable (module)">Allable</a></span></dd>
+      <dd><span class='object_link'><a href="../ActionArgumentable.html" title="Kiba::Extend::Transforms::ActionArgumentable (module)">ActionArgumentable</a></span>, <span class='object_link'><a href="../Allable.html" title="Kiba::Extend::Transforms::Allable (module)">Allable</a></span></dd>
   </dl>
   
   
@@ -245,6 +245,12 @@
   
   
   
+  
+  
+  
+  
+  
+  
   <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
@@ -322,15 +328,17 @@
       <pre class="lines">
 
 
-67
 68
 69
-70</pre>
+70
+71
+72</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/filter_rows/all_fields_populated.rb', line 67</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/filter_rows/all_fields_populated.rb', line 68</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>action:</span><span class='comma'>,</span> <span class='label'>fields:</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_validate_action_argument'>validate_action_argument</span><span class='lparen'>(</span><span class='id identifier rubyid_action'>action</span><span class='rparen'>)</span>
   <span class='ivar'>@action</span> <span class='op'>=</span> <span class='id identifier rubyid_action'>action</span>
   <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fields'>fields</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
 <span class='kw'>end</span></pre>
@@ -400,8 +408,6 @@
       <pre class="lines">
 
 
-73
-74
 75
 76
 77
@@ -409,10 +415,12 @@
 79
 80
 81
-82</pre>
+82
+83
+84</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/filter_rows/all_fields_populated.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/filter_rows/all_fields_populated.rb', line 75</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_finalize_fields'>finalize_fields</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_fields_set'>fields_set</span>
@@ -434,7 +442,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Feb 23 17:03:10 2023 by
+  Generated on Mon Feb 27 17:39:57 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.7).
 </div>

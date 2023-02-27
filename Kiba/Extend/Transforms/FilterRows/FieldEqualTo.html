@@ -87,6 +87,11 @@
   
   
   
+  <dl>
+      <dt>Includes:</dt>
+      <dd><span class='object_link'><a href="../ActionArgumentable.html" title="Kiba::Extend::Transforms::ActionArgumentable (module)">ActionArgumentable</a></span></dd>
+  </dl>
+  
   
 
   
@@ -210,7 +215,13 @@
     </ul>
   
 
-<div id="constructor_details" class="method_details_list">
+
+  
+  
+  
+  
+  
+  <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
     <div class="method_details first">
@@ -287,16 +298,18 @@
       <pre class="lines">
 
 
-53
-54
 55
 56
-57</pre>
+57
+58
+59
+60</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/filter_rows/field_equal_to.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/filter_rows/field_equal_to.rb', line 55</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>action:</span><span class='comma'>,</span> <span class='label'>field:</span><span class='comma'>,</span> <span class='label'>value:</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_validate_action_argument'>validate_action_argument</span><span class='lparen'>(</span><span class='id identifier rubyid_action'>action</span><span class='rparen'>)</span>
   <span class='ivar'>@column</span> <span class='op'>=</span> <span class='id identifier rubyid_field'>field</span>
   <span class='ivar'>@value</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
   <span class='ivar'>@action</span> <span class='op'>=</span> <span class='id identifier rubyid_action'>action</span>
@@ -352,17 +365,17 @@
       <pre class="lines">
 
 
-60
-61
-62
 63
 64
 65
 66
-67</pre>
+67
+68
+69
+70</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/filter_rows/field_equal_to.rb', line 60</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/filter_rows/field_equal_to.rb', line 63</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_action'>action</span>
@@ -382,7 +395,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Feb 23 17:03:09 2023 by
+  Generated on Mon Feb 27 17:39:57 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.7).
 </div>

@@ -145,15 +145,27 @@
 
 <ul>
 <li>optional</li>
-<li>Not all destination classes support extra options. If you provide unsupported extra options, they will not be sent through to the destination class, and you will receive a warning in STDOUT. The current most common use is to define <code>initial_headers</code> (i.e. which columns should be first in file) to <span class='object_link'><a href="Kiba/Extend/Destinations/CSV.html" title="Kiba::Extend::Destinations::CSV (class)">Kiba::Extend::Destinations::CSV</a></span>.</li>
+<li>Only the following destination classes support extra options. If you provide unsupported extra options, they will not be sent through to the destination class, and you will receive a warning in STDOUT.
+
+<ul>
+<li><span class='object_link'><a href="Kiba/Extend/Destinations/CSV.html" title="Kiba::Extend::Destinations::CSV (class)">Kiba::Extend::Destinations::CSV</a></span> (<code>initial_headers</code>)</li>
+<li><span class='object_link'><a href="Kiba/Extend/Destinations/Marc.html" title="Kiba::Extend::Destinations::Marc (class)">Kiba::Extend::Destinations::Marc</a></span> (<code>allow_oversized</code>)</li>
+</ul></li>
 </ul>
 
-<p>Example:</p>
+<p>Examples:</p>
 
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_reghash'>reghash</span> <span class='op'>=</span> <span class='lbrace'>{</span>
   <span class='label'>path:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>/path/to/file.csv</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
   <span class='label'>dest_class:</span> <span class='const'><span class='object_link'><a href="Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Kiba/Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Kiba/Extend/Destinations.html" title="Kiba::Extend::Destinations (module)">Destinations</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Kiba/Extend/Destinations/CSV.html" title="Kiba::Extend::Destinations::CSV (class)">CSV</a></span></span><span class='comma'>,</span>
   <span class='label'>dest_special_opts:</span> <span class='lbrace'>{</span> <span class='label'>initial_headers:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>objectnumber</span><span class='words_sep'> </span><span class='tstring_content'>briefdescription</span><span class='tstring_end'>]</span></span> <span class='rbrace'>}</span>
+  <span class='rbrace'>}</span>
+</code></pre>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_reghash'>reghash</span> <span class='op'>=</span> <span class='lbrace'>{</span>
+  <span class='label'>path:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>/path/to/long_marc_records.mrc</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>dest_class:</span> <span class='const'><span class='object_link'><a href="Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Kiba/Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Kiba/Extend/Destinations.html" title="Kiba::Extend::Destinations (module)">Destinations</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Kiba/Extend/Destinations/Marc.html" title="Kiba::Extend::Destinations::Marc (class)">Marc</a></span></span><span class='comma'>,</span>
+  <span class='label'>dest_special_opts:</span> <span class='lbrace'>{</span> <span class='label'>allow_oversized:</span> <span class='kw'>true</span> <span class='rbrace'>}</span>
   <span class='rbrace'>}</span>
 </code></pre>
 
@@ -380,7 +392,7 @@ end
 </div></div>
 
       <div id="footer">
-  Generated on Thu Feb 23 17:03:06 2023 by
+  Generated on Mon Feb 27 17:39:54 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.7).
 </div>

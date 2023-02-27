@@ -87,6 +87,11 @@
   
   
   
+  <dl>
+      <dt>Includes:</dt>
+      <dd><span class='object_link'><a href="../ActionArgumentable.html" title="Kiba::Extend::Transforms::ActionArgumentable (module)">ActionArgumentable</a></span></dd>
+  </dl>
+  
   
 
   
@@ -141,8 +146,8 @@
 {a: &#39;&#39;, b: &#39;b&#39;, c: &#39;c&#39; },
 </code></pre>
 
-<p>The following will raise a NonBooleanLambdaError because <code>logic</code> returns an Array, rather than
-  <code>TrueClass</code> or <code>FalseClass</code>:</p>
+<p>The following will raise a NonBooleanLambdaError because <code>logic</code>
+  returns an Array, rather than <code>TrueClass</code> or <code>FalseClass</code>:</p>
 
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_logic'>logic</span> <span class='op'>=</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span><span class='tlambeg'>{</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_val'>val</span><span class='op'>|</span> <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='rbrace'>}</span> <span class='rbrace'>}</span>
 <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../FilterRows.html" title="Kiba::Extend::Transforms::FilterRows (module)">FilterRows</a></span></span><span class='op'>::</span><span class='const'>WithLambda</span><span class='comma'>,</span> <span class='label'>action:</span> <span class='symbol'>:keep</span><span class='comma'>,</span> <span class='label'>lambda:</span> <span class='id identifier rubyid_logic'>logic</span>
@@ -159,12 +164,13 @@
     <li>
       
       
-        <span class='type'>(<tt><span class='object_link'><a href="WithLambda/NonBooleanLambdaError.html" title="Kiba::Extend::Transforms::FilterRows::WithLambda::NonBooleanLambdaError (class)">NonBooleanLambdaError</a></span></tt>)</span>
+        <span class='type'>(<tt><span class='object_link'><a href="../../BooleanReturningLambdaError.html" title="Kiba::Extend::BooleanReturningLambdaError (class)">Kiba::Extend::BooleanReturningLambdaError</a></span></tt>)</span>
       
       
       
         &mdash;
-        <div class='inline'><p>if given lambda does not evaluate to <code>TrueClass</code> or <code>FalseClass</code> using
+        <div class='inline'><p>if given lambda
+does not evaluate to <code>TrueClass</code> or <code>FalseClass</code> using
 the first row of data passed to the <code>process</code> method</p>
 </div>
       
@@ -187,17 +193,7 @@ the first row of data passed to the <code>process</code> method</p>
   
 </ul>
 
-</div><h2>Defined Under Namespace</h2>
-<p class="children">
-  
-    
-  
-    
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="WithLambda/NonBooleanLambdaError.html" title="Kiba::Extend::Transforms::FilterRows::WithLambda::NonBooleanLambdaError (class)">NonBooleanLambdaError</a></span>
-    
-  
-</p>
-
+</div>
 
 
 
@@ -262,7 +258,13 @@ the first row of data passed to the <code>process</code> method</p>
     </ul>
   
 
-<div id="constructor_details" class="method_details_list">
+
+  
+  
+  
+  
+  
+  <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
     <div class="method_details first">
@@ -340,16 +342,18 @@ to/return <code>TrueClass</code> or <code>FalseClass</code></p>
       <pre class="lines">
 
 
-70
 71
 72
 73
-74</pre>
+74
+75
+76</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/filter_rows/with_lambda.rb', line 70</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/filter_rows/with_lambda.rb', line 71</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>action:</span><span class='comma'>,</span> <span class='label'>lambda:</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_validate_action_argument'>validate_action_argument</span><span class='lparen'>(</span><span class='id identifier rubyid_action'>action</span><span class='rparen'>)</span>
   <span class='ivar'>@action</span> <span class='op'>=</span> <span class='id identifier rubyid_action'>action</span>
   <span class='ivar'>@lambda</span> <span class='op'>=</span> <span class='id identifier rubyid_lambda'>lambda</span>
   <span class='ivar'>@lambda_tested</span> <span class='op'>=</span> <span class='kw'>false</span>
@@ -420,8 +424,6 @@ to/return <code>TrueClass</code> or <code>FalseClass</code></p>
       <pre class="lines">
 
 
-77
-78
 79
 80
 81
@@ -429,10 +431,12 @@ to/return <code>TrueClass</code> or <code>FalseClass</code></p>
 83
 84
 85
-86</pre>
+86
+87
+88</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/filter_rows/with_lambda.rb', line 77</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/filter_rows/with_lambda.rb', line 79</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_test_lambda'>test_lambda</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_lambda_tested'>lambda_tested</span>
@@ -454,7 +458,7 @@ to/return <code>TrueClass</code> or <code>FalseClass</code></p>
 </div>
 
       <div id="footer">
-  Generated on Thu Feb 23 17:03:09 2023 by
+  Generated on Mon Feb 27 17:39:56 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.7).
 </div>
