@@ -6,6 +6,9 @@ module Kiba
   module Extend
     module Transforms
       module Marc
+        # Mix-in module providing methods for dealing with identifying
+        #   and extracting data from linked transliterated and vernacular
+        #   (e.g. 880) fields in MARC data
         module FieldLinkable
           # @param field [MARC::DataField]
           # @param row [Hash]
@@ -18,6 +21,8 @@ module Kiba
             end
           end
 
+          # @param row [Hash]
+          # return [Hash] row with added linkage data removed
           def delete_linkage_data(row)
             non_linkage_data.keys.each{ |key| row.delete(key) }
             row
@@ -29,6 +34,9 @@ module Kiba
             field.codes.any?('6')
           end
 
+          # @param rows [Array<Hash>]
+          # @return [Array<Hash>] removes transliterated rows if
+          #  vernacular is preferred
           def preferred(rows)
             return rows if rows.empty?
             return rows unless Kiba::Extend::Marc.prefer_vernacular
@@ -39,6 +47,9 @@ module Kiba
             rows - non_preferred_field_data(linked)
           end
 
+          # @param record [MARC::Record]
+          # @param tags [Array<String>]
+          # @return [Array<MARC::ControlField,MARC::DataField>]
           def select_fields(record, tags)
             select_main_fields(record, tags) +
               select_vernacular_fields(record, tags)
