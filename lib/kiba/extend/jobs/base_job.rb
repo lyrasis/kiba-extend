@@ -38,8 +38,8 @@ module Kiba
 
         def run
           Kiba.run(control)
-        rescue Kiba::Extend::Error => err
-          puts "JOB FAILED: TRANSFORM ERROR IN: #{job_data.creator.to_s}"
+        rescue StandardError => err
+          puts "JOB FAILED: TRANSFORM ERROR IN: #{job_data.creator}"
           puts "#{err.class.name}: #{err.message}"
           exit
         end
