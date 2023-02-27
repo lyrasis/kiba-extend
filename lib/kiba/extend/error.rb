@@ -2,9 +2,8 @@
 
 module Kiba
   module Extend
-    # Base for kiba-extend specific errors, adding better identification of the
-    #   job from which the error is being raised
-    class Error < StandardError
+
+    module ErrMod
       def calling_job
         pre_base_job_initialize.reject{ |loc| loc.path['kiba-extend'] }.first
       end
@@ -25,11 +24,24 @@ module Kiba
       end
     end
 
+    class BooleanReturningLambdaError < TypeError
+      include Kiba::Extend::ErrMod
+      def initialize(msg="Lambda must return true or false")
+        super
+      end
+    end
+
     class InvalidActionError < ArgumentError
       include Kiba::Extend::ErrMod
       def initialize(msg="Action must be :keep or :reject")
         super
       end
+    end
+
+    # Base for kiba-extend specific errors, adding better identification of the
+    #   job from which the error is being raised
+    class Error < StandardError
+      include Kiba::Extend::ErrMod
     end
 
   end
