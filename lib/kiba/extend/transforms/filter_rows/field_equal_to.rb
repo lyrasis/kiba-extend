@@ -47,10 +47,13 @@ module Kiba
         # {val:  nil}
         # ```
         class FieldEqualTo
+          include ActionArgumentable
+
           # @param action [:keep, :reject] what to do with row matching criteria
           # @param field [Symbol] to match value in
           # @param value [String] value to match
           def initialize(action:, field:, value:)
+            validate_action_argument(action)
             @column = field
             @value = value
             @action = action

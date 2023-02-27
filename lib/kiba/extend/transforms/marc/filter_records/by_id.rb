@@ -59,15 +59,9 @@ module Kiba
           #     xform.process(rec){ |result| results << result }
           #   }
           #   expect(results.length).to eq(3)
-          # @example With invalid :action
-          #   xform = ->{Marc::FilterRecords::ById.new(
-          #     id_values: ['008000103-3', '008000204-8', '008000307-9'],
-          #     action: :select
-          #   )}
-          #   expect{ xform.call }.to raise_error(
-          #     Kiba::Extend::InvalidActionError
-          #   )
           class ById
+            include ActionArgumentable
+
             # @param id_values [Array, Proc] against which IDs extracted from
             #   source records will be matched
             # @param action [:keep, :reject] taken if source record ID matches
@@ -89,12 +83,7 @@ module Kiba
               id_value_formatter: nil
             )
               @ids = id_values.is_a?(Array) ? id_values : id_values.call
-
-              if %i[keep reject].none?(action)
-                raise Kiba::Extend::InvalidActionError.new(
-                  "#{self.class.name} @action must be :keep or :reject"
-                )
-              end
+              validate_action_argument(action)
               @action = action
 
               settings = {
