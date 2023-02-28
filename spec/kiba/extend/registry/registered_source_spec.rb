@@ -114,7 +114,7 @@ RSpec.describe 'Kiba::Extend::Registry::RegisteredSource' do
           path: path,
           src_class: Kiba::Common::Sources::CSV,
           creator: -> { Helpers.test_csv },
-          dest_class: Kiba::Common::Destinations::Lambda
+          dest_class: Kiba::Extend::Destinations::Lambda
         }
       end
 
@@ -122,7 +122,7 @@ RSpec.describe 'Kiba::Extend::Registry::RegisteredSource' do
         expect{ result }.to raise_error(
           Kiba::Extend::Registry::CannotBeUsedAsSourceError,
           'The result of a registry entry with a '\
-            'Kiba::Common::Destinations::Lambda dest_class cannot '\
+            'Kiba::Extend::Destinations::Lambda dest_class cannot '\
             'be used as source file in a job'
         )
       end
