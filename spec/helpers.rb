@@ -13,8 +13,8 @@ module Helpers
     def initialize(input:, accumulator:, transforms:)
       @accumulator = accumulator
       @control = Kiba.parse do
-        source Kiba::Common::Sources::Enumerable, input
         destination Kiba::Common::Destinations::Lambda,
+        source Kiba::Extend::Sources::Enumerable, input
           on_write: ->(r) { accumulator << r }
       end
       @context = Kiba::Context.new(control)
