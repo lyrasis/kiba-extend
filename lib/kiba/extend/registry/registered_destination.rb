@@ -30,13 +30,6 @@ module Kiba
           dest_class
         end
 
-        # Info hash for file
-        #
-        # @deprecated Use {#description} and {#key} instead
-        def info
-          { filekey: @key, desc: description }
-        end
-
         private
 
         def dest_opts
