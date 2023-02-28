@@ -46,7 +46,7 @@ module Kiba
 
         # returns equivalent source class for given destination class
         def dest_src
-          src = dest_src_mapping(dest_class)
+          src = dest_class.as_source_class
           raise CannotBeUsedAsSourceError.new(dest_class) if src.nil?
 
           src
