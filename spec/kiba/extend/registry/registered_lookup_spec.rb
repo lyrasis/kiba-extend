@@ -23,6 +23,40 @@ RSpec.describe 'Kiba::Extend::Registry::RegisteredLookup' do
     end
   end
 
+  context 'when called with unlookupable src' do
+    let(:data) do
+      {
+        path: path,
+        lookup_on: key,
+        supplied: true,
+        src_class: Kiba::Extend::Sources::Marc
+      }
+    end
+
+    it 'raises CannotBeUsedAsLookupError' do
+      expect{ lookup }.to raise_error(
+        Kiba::Extend::Registry::RegisteredLookup::CannotBeUsedAsLookupError
+      )
+    end
+  end
+
+  context 'when called with unlookupable dest' do
+    let(:data) do
+      {
+        path: path,
+        lookup_on: key,
+        creator: Helpers.method(:test_csv),
+        dest_class: Kiba::Extend::Destinations::Marc
+      }
+    end
+
+    it 'raises CannotBeUsedAsLookupError' do
+      expect{ lookup }.to raise_error(
+        Kiba::Extend::Registry::RegisteredLookup::CannotBeUsedAsLookupError
+      )
+    end
+  end
+
   describe '#args' do
     let(:result) { lookup.args }
     context 'with basic defaults' do

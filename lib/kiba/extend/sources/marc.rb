@@ -23,6 +23,26 @@ module Kiba
       # @note The class name is `Marc` instead of `MARC` because the `ruby-marc`
       #   gem already has the `MARC` namespace
       class Marc
+        extend Sourceable
+
+        class << self
+          def default_file_options
+            nil
+          end
+
+          def options_key
+            :args
+          end
+
+          def path_key
+            :filename
+          end
+
+          def requires_path?
+            true
+          end
+        end
+
         # @param filename [String] path to MARC binary file (.mrc, .dat, etc.)
         # @param args [Hash] of `MARC::Reader` optional keyword
         #   arguments. See documentation at:

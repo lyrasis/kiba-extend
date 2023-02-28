@@ -12,8 +12,18 @@ module Kiba
       # Assumes this file will be used to build a {Kiba::Extend::Lookup}
       class RegisteredLookup < RegisteredFile
         include RequirableFile
+
+        class CannotBeUsedAsLookupError < TypeError
+          include Kiba::Extend::ErrMod
+          def initialize(klass)
+            super("The result of a registry entry with a #{klass} "\
+                  "dest_class cannot be used as source file in a job")
+          end
+        end
+
         # Exception raised if {Kiba::Extend::FileRegistry} contains no lookup key for file
-        class NoLookupKeyError < StandardError
+        class NoLookupKeyError < NameError
+          include Kiba::Extend::ErrMod
           # @param filekey [Symbol] key not found in {Kiba::Extend::FileRegistry}
           def initialize(filekey)
             msg = "No lookup key column found for :#{filekey} in file registry hash"
@@ -22,7 +32,8 @@ module Kiba
         end
 
         # Exception raised if the lookup key value for the file is not a Symbol
-        class NonSymbolLookupKeyError < StandardError
+        class NonSymbolLookupKeyError < TypeError
+          include Kiba::Extend::ErrMod
           # @param filekey [Symbol] key not found in {Kiba::Extend::FileRegistry}
           def initialize(filekey)
             msg = "Lookup key found for :#{filekey} is not a Ruby Symbol. Prepend a : to the field name to fix."
@@ -34,8 +45,13 @@ module Kiba
         # @param data [Hash] file data from {FileRegistry}
         def initialize(key:, data:)
           super
-          raise NoLookupKeyError, @key unless @data.lookup_on
-          raise NonSymbolLookupKeyError, @key unless @data.lookup_on.is_a?(Symbol)
+          unless src_class.respond_to?(:lookupable?)
+            fail CannotBeUsedAsLookupError.new(src_class)
+          end
+          fail NoLookupKeyError, @key unless lookup_on
+          unless lookup_on.is_a?(Symbol)
+            fail NonSymbolLookupKeyError, @key
+          end
         end
 
         # Arguments for calling {Kiba::Extend::Lookup} with this file
@@ -47,11 +63,10 @@ module Kiba
         private
 
         def options
-          klass = @data.src_class
-          label = lookup_options_label(klass)
-          return {label=>@data.src_opt} if @data.src_opt
+          label = src_class.lookup_options_key
+          return {label=>src_opt} if src_opt
 
-          {label=>default_file_options(klass)}
+          {label=>src_class.default_file_options}
         end
       end
     end

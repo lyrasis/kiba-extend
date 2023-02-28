@@ -38,6 +38,13 @@ module Kiba
       end
     end
 
+    class SourceRequiresPathError < ArgumentError
+      include Kiba::Extend::ErrMod
+      def initialize(msg="Provide path for specified source")
+        super
+      end
+    end
+
     # Base for kiba-extend specific errors, adding better identification of the
     #   job from which the error is being raised
     class Error < StandardError

@@ -99,7 +99,7 @@ module Kiba
 
     # @!method source
     # Default source class for jobs. Must meet implementation criteria in [Kiba wiki](https://github.com/thbar/kiba/wiki/Implementing-ETL-sources)
-    setting :source, default: Kiba::Common::Sources::CSV, reader: true
+    setting :source, constructor: proc{ Kiba::Extend::Sources::CSV }, reader: true
 
     # @!method destination
     # Default destination class for jobs. Must meet implementation criteria in [Kiba wiki](https://github.com/thbar/kiba/wiki/Implementing-ETL-destinations)

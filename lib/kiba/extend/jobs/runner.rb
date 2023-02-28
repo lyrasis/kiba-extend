@@ -82,7 +82,11 @@ module Kiba
         end
 
         def file_config(config)
-          { klass: config.klass, args: config.args }
+          if config.respond_to?(:klass)
+            { klass: config.klass, args: config.args }
+          else
+            { klass: config.src_class, args: config.args }
+          end
         end
 
         def handle_requirements

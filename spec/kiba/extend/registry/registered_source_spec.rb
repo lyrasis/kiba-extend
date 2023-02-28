@@ -49,7 +49,7 @@ RSpec.describe 'Kiba::Extend::Registry::RegisteredSource' do
             src_class: Kiba::Extend::Sources::Marc
           }
         end
-        let(:expected){ {filename: path, args: nil} }
+        let(:expected){ {filename: path} }
 
         it 'returns default opts' do
           expect(result).to eq(expected)
@@ -74,8 +74,8 @@ RSpec.describe 'Kiba::Extend::Registry::RegisteredSource' do
     end
   end
 
-  describe '#klass' do
-    let(:result) { source.klass }
+  describe '#src_class' do
+    let(:result) { source.send(:src_class) }
     context 'with basic defaults' do
       let(:data) { default }
       it 'returns Kiba::Extend default source class' do
@@ -104,7 +104,7 @@ RSpec.describe 'Kiba::Extend::Registry::RegisteredSource' do
       end
 
       it 'returns given class' do
-        expect(result).to eq(Kiba::Common::Sources::CSV)
+        expect(result).to eq(Kiba::Extend::Sources::CSV)
       end
     end
 

@@ -31,9 +31,9 @@ module Kiba
         #   used as sources in jobs.
         def dest_src_mapping(klass)
           data = {
-            Kiba::Common::Destinations::CSV => Kiba::Common::Sources::CSV,
+            Kiba::Common::Destinations::CSV => Kiba::Extend::Sources::CSV,
             Kiba::Common::Destinations::Lambda => nil,
-            Kiba::Extend::Destinations::CSV => Kiba::Common::Sources::CSV,
+            Kiba::Extend::Destinations::CSV => Kiba::Extend::Sources::CSV,
             Kiba::Extend::Destinations::JsonArray => nil,
             Kiba::Extend::Destinations::Marc => Kiba::Extend::Sources::Marc
           }
