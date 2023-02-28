@@ -8,10 +8,21 @@ RSpec.describe 'Kiba::Extend::Jobs::Job' do
     reg = Kiba::Extend::Registry::FileRegistry.new
     Kiba::Extend.config.registry = reg
     @dest_file = File.join(fixtures_dir, 'base_job_dest.csv')
-    entries = { base_src: { path: File.join(fixtures_dir, 'base_job_base.csv'), supplied: true },
-                base_lookup: { path: File.join(fixtures_dir, 'base_job_lookup.csv'), supplied: true,
-                               lookup_on: :letter },
-                base_dest: { path: @dest_file, creator: Helpers.method(:fake_creator_method) }, }
+    entries = {
+      base_src: {
+        path: File.join(fixtures_dir, 'base_job_base.csv'),
+        supplied: true
+      },
+      base_lookup: {
+        path: File.join(fixtures_dir, 'base_job_lookup.csv'),
+        supplied: true,
+        lookup_on: :letter
+      },
+      base_dest: {
+        path: @dest_file,
+        creator: Helpers.method(:fake_creator_method)
+      }
+    }
     entries.each { |key, data| Kiba::Extend.registry.register(key, data) }
     transform_registry
   end
@@ -23,11 +34,24 @@ RSpec.describe 'Kiba::Extend::Jobs::Job' do
     FileUtils.rm(@dest_file) if File.exist?(@dest_file)
   end
 
-  let(:base_job) { Kiba::Extend::Jobs::Job.new(files: base_job_config, transformer: base_job_transforms) }
-  let(:base_job_config) { { source: [:base_src], destination: ['base_dest'], lookup: [:base_lookup] } }
+  let(:base_job) do
+    Kiba::Extend::Jobs::Job.new(
+      files: base_job_config,
+      transformer: base_job_transforms
+    )
+  end
+  let(:base_job_config) do
+    {
+      source: [:base_src],
+      destination: ['base_dest'],
+      lookup: [:base_lookup]
+    }
+  end
   let(:base_job_transforms) do
     Kiba.job_segment do
-      transform Kiba::Extend::Transforms::Rename::Field, from: :letter, to: :alpha
+      transform Kiba::Extend::Transforms::Rename::Field,
+        from: :letter,
+        to: :alpha
       transform Merge::MultiRowLookup,
                 lookup: base_lookup,
                 keycolumn: :alpha,
@@ -44,19 +68,30 @@ RSpec.describe 'Kiba::Extend::Jobs::Job' do
       it 'runs and produces expected result' do
         job
         result = CSV.read(@dest_file)
-        expected = [['number', 'alpha', 'from_lkup'], ['1', 'a', 'aardvark'], ['2', 'b', 'bird']]
+        expected = [
+          ['number', 'alpha', 'from_lkup'],
+          ['1', 'a', 'aardvark'],
+          ['2', 'b', 'bird']
+        ]
         expect(result).to eq(expected)
       end
     end
 
     context 'when dependency files do not exist' do
-      let(:base_job_config) { { source: [:missing_src], destination: [:base_dest], lookup: [:base_lookup] } }
+      let(:base_job_config) do
+        {
+          source: [:missing_src],
+          destination: [:base_dest],
+          lookup: [:base_lookup]
+        }
+      end
 
       it 'calls dependency creators',
-        skip: 'cannot figure out how to test this in a timely manner. Will test manually for now.' do
-        missing_file = File.join(fixtures_dir, 'base_job_missing.csv')
-        creator = double()
-        Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry.new
+        skip: 'cannot figure out how to test this in a timely manner. Will '\
+        'test manually for now.' do
+          missing_file = File.join(fixtures_dir, 'base_job_missing.csv')
+          creator = double()
+          Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry.new
         entries = { base_lookup: { path: File.join(fixtures_dir, 'base_job_lookup.csv'), supplied: true, lookup_on: :letter },
                     base_dest: { path: @dest_file, creator: Helpers.method(:fake_creator_method) },
                     missing_src: { path: missing_file, creator: Helpers::BaseJob.method(:creator) } }

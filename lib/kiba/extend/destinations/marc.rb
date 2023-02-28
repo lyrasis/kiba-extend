@@ -27,11 +27,15 @@ module Kiba
           end
 
           def path_key
-            :path
+            :filename
           end
 
           def requires_path?
             true
+          end
+
+          def special_options
+            [:allow_oversized]
           end
         end
 

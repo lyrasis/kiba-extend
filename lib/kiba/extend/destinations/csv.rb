@@ -30,6 +30,10 @@ module Kiba
           def requires_path?
             true
           end
+
+          def special_options
+            [:initial_headers]
+          end
         end
 
         attr_reader :filename, :csv_options, :csv, :headers

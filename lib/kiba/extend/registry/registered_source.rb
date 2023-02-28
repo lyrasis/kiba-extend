@@ -23,13 +23,17 @@ module Kiba
         # Arguments for calling Kiba Source class
         # @return [Hash]
         def args
-          { src_class.path_key=>path }.merge(src_opts)
+          {src_class.path_key=>path}.merge(src_opts)
+        end
+
+        def klass
+          src_class
         end
 
         private
 
         def src_opts
-          return { src_class.options_key => src_opt } if src_opt
+          return {src_class.options_key => src_opt} if src_opt
 
           src_class.labeled_options
         end

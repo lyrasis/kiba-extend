@@ -57,7 +57,11 @@ module Kiba
         # Arguments for calling {Kiba::Extend::Lookup} with this file
         # @return [Hash]
         def args
-          { file: path, keycolumn: @data.lookup_on }.merge(options)
+          { file: path, keycolumn: lookup_on }.merge(options)
+        end
+
+        def klass
+          src_class
         end
 
         private

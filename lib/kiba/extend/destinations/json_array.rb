@@ -33,6 +33,10 @@ module Kiba
           def requires_path?
             true
           end
+
+          def special_options
+            []
+          end
         end
 
         # @param filename [String] path for writing JSON file

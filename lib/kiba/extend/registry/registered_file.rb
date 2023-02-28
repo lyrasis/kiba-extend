@@ -8,7 +8,6 @@ module Kiba
       # Abstract base class defining interface for destination files, lookup files, and source files
       #   returned by {Kiba::Extend::FileRegistry}
       class RegisteredFile
-        include SourceDestRegistry
         # Exception raised if no path is given in {FileRegistry} hash
         class NoFilePathError < StandardError
           # @param filekey [Symbol] key for which a file path was not found in {Kiba::Extend::FileRegistry}
@@ -20,8 +19,9 @@ module Kiba
 
         # @!attribute [r] key
         #   @return [Symbol] The file's key in {FileRegistry} hash
-        attr_reader :key, :data, :path, :dest_class, :src_class, :src_opt,
-          :supplied, :lookup_on
+        attr_reader :key, :data, :path, :dest_class, :dest_opt,
+          :dest_special_opts, :src_class, :src_opt, :supplied, :lookup_on,
+          :desc
 
         # @param key [Symbol] the {Kiba::Extend::FileRegistry} lookup key
         # @param data [Hash] the hash of data for the file from {Kiba::Extend::FileRegistry}
@@ -33,9 +33,12 @@ module Kiba
           @data = data
           @path = data.path.to_s
           @dest_class = data.dest_class
+          @dest_opt = data.dest_opt
+          @dest_special_opts = data.dest_special_opts
           @src_opt = data.src_opt
           @supplied = data.supplied
           @lookup_on = data.lookup_on
+          @desc = data.desc
         end
 
         def src_class

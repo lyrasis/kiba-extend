@@ -5,14 +5,15 @@ require_relative 'registered_file'
 module Kiba
   module Extend
     module Registry
-      # Value object representing a destination file registered in a {Kiba::Extend::FileRegistry}
+      # Value object representing a destination file registered in a
+      #   {Kiba::Extend::FileRegistry}
       class RegisteredDestination < RegisteredFile
         # Arguments for calling Kiba Destination class
         def args
-          return simple_args unless @data.dest_special_opts
+          return simple_args unless dest_special_opts
 
           opts = supported_special_opts
-          warn_about_opts if opts.length < @data.dest_special_opts.length
+          warn_about_opts if opts.length < dest_special_opts.length
           return simple_args if opts.empty?
 
           simple_args.merge(supported_special_opts)
@@ -22,7 +23,11 @@ module Kiba
         #
         # Used in post-processing STDOUT
         def description
-          @data.desc
+          desc
+        end
+
+        def klass
+          dest_class
         end
 
         # Info hash for file
@@ -32,34 +37,34 @@ module Kiba
           { filekey: @key, desc: description }
         end
 
-        # Kiba Destination class to call
-        def klass
-          @data.dest_class
-        end
-
         private
 
-        def klass_opts
-          klass.instance_method(:initialize).parameters.map { |arr| arr[1] }
+        def dest_opts
+          return {dest_class.options_key=>dest_opt} if dest_opt
+
+          dest_class.labeled_options
         end
 
         def simple_args
-          return { filename: path }.merge(options_label(klass) => @data.dest_opt) if @data.dest_opt
-
-          default_args(klass)
+          {dest_class.path_key=>path}.merge(dest_opts)
         end
 
         def supported_special_opts
-          @data.dest_special_opts.select { |key, _| klass_opts.any?(key) }
+          dest_special_opts.select do |key, _|
+            dest_class.special_options.any?(key)
+          end
         end
 
         def unsupported_special_opts
-          @data.dest_special_opts.reject { |key, _| klass_opts.any?(key) }
+          dest_special_opts.reject do |key, _|
+            dest_class.special_options.any?(key)
+          end
         end
 
         def warn_about_opts
           unsupported_special_opts.each do |opt, _|
-            puts "WARNING: Destination file :#{key} is called with special option :#{opt}, which is unsupported by #{klass}"
+            puts "WARNING: Destination file :#{key} is called with special "\
+              "option :#{opt}, which is unsupported by #{dest_class}"
           end
         end
       end

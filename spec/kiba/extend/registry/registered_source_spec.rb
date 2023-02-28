@@ -74,8 +74,8 @@ RSpec.describe 'Kiba::Extend::Registry::RegisteredSource' do
     end
   end
 
-  describe '#src_class' do
-    let(:result) { source.send(:src_class) }
+  describe '#klass' do
+    let(:result) { source.klass }
     context 'with basic defaults' do
       let(:data) { default }
       it 'returns Kiba::Extend default source class' do

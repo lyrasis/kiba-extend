@@ -21,6 +21,12 @@ module Kiba
         def is_destination?
           true
         end
+
+        # @return Array of defined special options for class
+        def special_options
+          raise NotImplementedError,
+            ':special_options must be defined in extending class'
+        end
       end
     end
   end

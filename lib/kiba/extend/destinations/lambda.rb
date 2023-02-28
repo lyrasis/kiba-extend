@@ -27,6 +27,10 @@ module Kiba
           def requires_path?
             false
           end
+
+          def special_options
+            []
+          end
         end
       end
     end
