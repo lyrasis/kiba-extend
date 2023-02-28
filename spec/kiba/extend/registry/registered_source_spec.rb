@@ -112,7 +112,7 @@ RSpec.describe 'Kiba::Extend::Registry::RegisteredSource' do
       let(:data) do
         {
           path: path,
-          src_class: Kiba::Common::Sources::CSV,
+          src_class: Kiba::Extend::Sources::CSV,
           creator: -> { Helpers.test_csv },
           dest_class: Kiba::Extend::Destinations::Lambda
         }

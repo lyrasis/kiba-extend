@@ -94,7 +94,7 @@ RSpec.describe 'Kiba::Extend::Registry::RegisteredDestination' do
     end
 
     context 'with a given class' do
-      let(:override_klass) { Kiba::Common::Sources::CSV }
+      let(:override_klass) { Kiba::Extend::Sources::Marc }
       let(:data) { { path: path, dest_class: override_klass } }
       it 'returns given class' do
         expect(result).to eq(override_klass)

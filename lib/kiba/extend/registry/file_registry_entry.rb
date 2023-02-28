@@ -118,11 +118,7 @@ module Kiba
 
         def path_required?
           chk = [dest_class, src_class].map do |klass|
-            if klass.respond_to?(:requires_path?)
               klass.requires_path?
-            else
-              requires_path?(klass)
-            end
           end
           return false if chk.uniq == [false]
 
