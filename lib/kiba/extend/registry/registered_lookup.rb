@@ -45,7 +45,7 @@ module Kiba
         # @param data [Hash] file data from {FileRegistry}
         def initialize(key:, data:)
           super
-          unless src_class.respond_to?(:lookupable?)
+          unless src_class.respond_to?(:is_lookupable?)
             fail CannotBeUsedAsLookupError.new(src_class)
           end
           fail NoLookupKeyError, @key unless lookup_on

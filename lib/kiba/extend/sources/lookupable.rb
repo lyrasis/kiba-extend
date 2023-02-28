@@ -7,7 +7,7 @@ module Kiba
       #   (or not) as lookups in jobs
       module Lookupable
         # @return True
-        def lookupable?
+        def is_lookupable?
           true
         end
 
