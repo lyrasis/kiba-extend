@@ -6,7 +6,7 @@ module Kiba
   module Extend
     module Transforms
       module Marc
-        # Extract :marcid and person name data (name, role term, role code,
+        # Extract :marcid and org name data (name, role term, role code,
         #   source field tag) from fields containing structured name data
         #
         # @example
