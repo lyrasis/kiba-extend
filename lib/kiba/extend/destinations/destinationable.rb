@@ -7,7 +7,7 @@ module Kiba
       #   jobs
       module Destinationable
         include Kiba::Extend::Registry::Fileable
-        # @return #is_source? if there is a {Kiba::Extend::Sources} class
+        # @return Constant if there is a {Kiba::Extend::Sources} class
         #   for reading the output of jobs that have this class as their
         #   destination
         # @return Nil if results of a job with this destination cannot be
