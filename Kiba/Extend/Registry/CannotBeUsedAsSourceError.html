@@ -69,14 +69,12 @@
   <dl>
     <dt>Inherits:</dt>
     <dd>
-      <span class="inheritName"><span class='object_link'><a href="../Error.html" title="Kiba::Extend::Error (class)">Error</a></span></span>
+      <span class="inheritName">TypeError</span>
       
         <ul class="fullTree">
           <li>Object</li>
           
-            <li class="next">StandardError</li>
-          
-            <li class="next"><span class='object_link'><a href="../Error.html" title="Kiba::Extend::Error (class)">Error</a></span></li>
+            <li class="next">TypeError</li>
           
             <li class="next">Kiba::Extend::Registry::CannotBeUsedAsSourceError</li>
           
@@ -90,6 +88,11 @@
   
   
   
+  
+  <dl>
+      <dt>Includes:</dt>
+      <dd><span class='object_link'><a href="../ErrMod.html" title="Kiba::Extend::ErrMod (module)">ErrMod</a></span></dd>
+  </dl>
   
   
 
@@ -177,7 +180,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(entry)  &#x21d2; CannotBeUsedAsSourceError </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(dest_class)  &#x21d2; CannotBeUsedAsSourceError </a>
     
 
     
@@ -211,12 +214,6 @@
   
   
   
-  
-  
-  
-  
-  
-  
   <h3 class="inherited">Methods included from <span class='object_link'><a href="../ErrMod.html" title="Kiba::Extend::ErrMod (module)">ErrMod</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="../ErrMod.html#calling_job-instance_method" title="Kiba::Extend::ErrMod#calling_job (method)">#calling_job</a></span></p>
 
@@ -226,7 +223,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(entry)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Registry::CannotBeUsedAsSourceError (class)">CannotBeUsedAsSourceError</a></span></tt> 
+    #<strong>initialize</strong>(dest_class)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Registry::CannotBeUsedAsSourceError (class)">CannotBeUsedAsSourceError</a></span></tt> 
   
 
   
@@ -263,18 +260,16 @@
       <pre class="lines">
 
 
-11
 12
 13
 14
 15</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/registered_source.rb', line 11</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/registered_source.rb', line 12</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_entry'>entry</span><span class='rparen'>)</span>
-  <span class='ivar'>@entry</span> <span class='op'>=</span> <span class='id identifier rubyid_entry'>entry</span>
-  <span class='kw'>super</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The result of a registry entry with a </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_entry'>entry</span><span class='period'>.</span><span class='id identifier rubyid_dest_class'>dest_class</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span>\
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_dest_class'>dest_class</span><span class='rparen'>)</span>
+  <span class='kw'>super</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>The result of a registry entry with a </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_dest_class'>dest_class</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span>\
         <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>dest_class cannot be used as source file in a job</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -328,12 +323,12 @@
       <pre class="lines">
 
 
-10
 11
-12</pre>
+12
+13</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/registered_source.rb', line 10</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/registered_source.rb', line 11</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_entry'>entry</span>
   <span class='ivar'>@entry</span>
@@ -349,7 +344,7 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Feb 28 15:53:54 2023 by
+  Generated on Wed Mar  1 01:03:02 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.7).
 </div>

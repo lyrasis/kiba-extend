@@ -85,6 +85,11 @@
 
   
   
+  <dl>
+      <dt>Extended by:</dt>
+      <dd><span class='object_link'><a href="Sourceable.html" title="Kiba::Extend::Sources::Sourceable (module)">Sourceable</a></span></dd>
+  </dl>
+  
   
   
   
@@ -143,6 +148,103 @@ gem already has the <code>MARC</code> namespace</p>
 
   
     <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#default_file_options-class_method" title="default_file_options (class method)">.<strong>default_file_options</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#options_key-class_method" title="options_key (class method)">.<strong>options_key</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#path_key-class_method" title="path_key (class method)">.<strong>path_key</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#requires_path%3F-class_method" title="requires_path? (class method)">.<strong>requires_path?</strong>  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
+  
+    <h2>
       Instance Method Summary
       <small><a href="#" class="summary_toggle">collapse</a></small>
     </h2>
@@ -199,6 +301,28 @@ gem already has the <code>MARC</code> namespace</p>
     </ul>
   
 
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Sourceable.html" title="Kiba::Extend::Sources::Sourceable (module)">Sourceable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Sourceable.html#is_source%3F-instance_method" title="Kiba::Extend::Sources::Sourceable#is_source? (method)">is_source?</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Registry/Fileable.html" title="Kiba::Extend::Registry::Fileable (module)">Registry::Fileable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Registry/Fileable.html#default_args-instance_method" title="Kiba::Extend::Registry::Fileable#default_args (method)">#default_args</a></span>, <span class='object_link'><a href="../Registry/Fileable.html#default_file_options-instance_method" title="Kiba::Extend::Registry::Fileable#default_file_options (method)">#default_file_options</a></span>, <span class='object_link'><a href="../Registry/Fileable.html#labeled_options-instance_method" title="Kiba::Extend::Registry::Fileable#labeled_options (method)">#labeled_options</a></span>, <span class='object_link'><a href="../Registry/Fileable.html#options_key-instance_method" title="Kiba::Extend::Registry::Fileable#options_key (method)">#options_key</a></span>, <span class='object_link'><a href="../Registry/Fileable.html#path_key-instance_method" title="Kiba::Extend::Registry::Fileable#path_key (method)">#path_key</a></span>, <span class='object_link'><a href="../Registry/Fileable.html#requires_path%3F-instance_method" title="Kiba::Extend::Registry::Fileable#requires_path? (method)">#requires_path?</a></span></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
@@ -266,16 +390,16 @@ for more details</p>
       <pre class="lines">
 
 
-31
-32
-33
-34
-35
-36
-37</pre>
+51
+52
+53
+54
+55
+56
+57</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/sources/marc.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/sources/marc.rb', line 51</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>filename:</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span>
@@ -291,6 +415,154 @@ for more details</p>
   
 </div>
 
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="default_file_options-class_method">
+  
+    .<strong>default_file_options</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+29
+30
+31</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/sources/marc.rb', line 29</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_default_file_options'>default_file_options</span>
+  <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="options_key-class_method">
+  
+    .<strong>options_key</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+33
+34
+35</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/sources/marc.rb', line 33</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_options_key'>options_key</span>
+  <span class='symbol'>:args</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="path_key-class_method">
+  
+    .<strong>path_key</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+37
+38
+39</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/sources/marc.rb', line 37</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_path_key'>path_key</span>
+  <span class='symbol'>:filename</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="requires_path?-class_method">
+  
+    .<strong>requires_path?</strong>  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+41
+42
+43</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/sources/marc.rb', line 41</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_requires_path?'>requires_path?</span>
+  <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
@@ -311,14 +583,14 @@ for more details</p>
       <pre class="lines">
 
 
-39
-40
-41
-42
-43</pre>
+59
+60
+61
+62
+63</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/sources/marc.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/sources/marc.rb', line 59</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_each'>each</span>
   <span class='const'>MARC</span><span class='op'>::</span><span class='const'>Reader</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_record'>record</span><span class='op'>|</span>
@@ -335,7 +607,7 @@ for more details</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Feb 28 15:53:53 2023 by
+  Generated on Wed Mar  1 01:03:01 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.7).
 </div>

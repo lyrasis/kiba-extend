@@ -85,6 +85,11 @@
 
   
   
+  <dl>
+      <dt>Extended by:</dt>
+      <dd><span class='object_link'><a href="Destinationable.html" title="Kiba::Extend::Destinations::Destinationable (module)">Destinationable</a></span></dd>
+  </dl>
+  
   
   
   
@@ -101,9 +106,11 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Writes each row as a valid JSON object that is an element in a JSON array</p>
+    <p>Writes each row as a valid JSON object that is an element in a JSON
+  array</p>
 
-<p>This is simliar to the idea of, but not technically compliant with, <a href="https://jsonlines.org/">JSON Lines</a></p>
+<p>This is simliar to the idea of, but not technically compliant with,
+  <a href="https://jsonlines.org/">JSON Lines</a></p>
 
 
   </div>
@@ -118,6 +125,147 @@
 
 
 
+  
+    <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#as_source_class-class_method" title="as_source_class (class method)">.<strong>as_source_class</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#default_file_options-class_method" title="default_file_options (class method)">.<strong>default_file_options</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#options_key-class_method" title="options_key (class method)">.<strong>options_key</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#path_key-class_method" title="path_key (class method)">.<strong>path_key</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#requires_path%3F-class_method" title="requires_path? (class method)">.<strong>requires_path?</strong>  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#special_options-class_method" title="special_options (class method)">.<strong>special_options</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+    </ul>
   
     <h2>
       Instance Method Summary
@@ -198,6 +346,28 @@
     </ul>
   
 
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Destinationable.html" title="Kiba::Extend::Destinations::Destinationable (module)">Destinationable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Destinationable.html#as_source_class-instance_method" title="Kiba::Extend::Destinations::Destinationable#as_source_class (method)">as_source_class</a></span>, <span class='object_link'><a href="Destinationable.html#is_destination%3F-instance_method" title="Kiba::Extend::Destinations::Destinationable#is_destination? (method)">is_destination?</a></span>, <span class='object_link'><a href="Destinationable.html#special_options-instance_method" title="Kiba::Extend::Destinations::Destinationable#special_options (method)">special_options</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Registry/Fileable.html" title="Kiba::Extend::Registry::Fileable (module)">Registry::Fileable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../Registry/Fileable.html#default_args-instance_method" title="Kiba::Extend::Registry::Fileable#default_args (method)">#default_args</a></span>, <span class='object_link'><a href="../Registry/Fileable.html#default_file_options-instance_method" title="Kiba::Extend::Registry::Fileable#default_file_options (method)">#default_file_options</a></span>, <span class='object_link'><a href="../Registry/Fileable.html#labeled_options-instance_method" title="Kiba::Extend::Registry::Fileable#labeled_options (method)">#labeled_options</a></span>, <span class='object_link'><a href="../Registry/Fileable.html#options_key-instance_method" title="Kiba::Extend::Registry::Fileable#options_key (method)">#options_key</a></span>, <span class='object_link'><a href="../Registry/Fileable.html#path_key-instance_method" title="Kiba::Extend::Registry::Fileable#path_key (method)">#path_key</a></span>, <span class='object_link'><a href="../Registry/Fileable.html#requires_path%3F-instance_method" title="Kiba::Extend::Registry::Fileable#requires_path? (method)">#requires_path?</a></span></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
@@ -245,13 +415,13 @@
       <pre class="lines">
 
 
-13
-14
-15
-16</pre>
+43
+44
+45
+46</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/json_array.rb', line 13</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/json_array.rb', line 43</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>filename:</span><span class='rparen'>)</span>
   <span class='ivar'>@json</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -264,6 +434,214 @@
   
 </div>
 
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="as_source_class-class_method">
+  
+    .<strong>as_source_class</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+17
+18
+19</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/json_array.rb', line 17</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_as_source_class'>as_source_class</span>
+  <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="default_file_options-class_method">
+  
+    .<strong>default_file_options</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+21
+22
+23</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/json_array.rb', line 21</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_default_file_options'>default_file_options</span>
+  <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="options_key-class_method">
+  
+    .<strong>options_key</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+25
+26
+27</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/json_array.rb', line 25</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_options_key'>options_key</span>
+  <span class='kw'>nil</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="path_key-class_method">
+  
+    .<strong>path_key</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+29
+30
+31</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/json_array.rb', line 29</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_path_key'>path_key</span>
+  <span class='symbol'>:filename</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="requires_path?-class_method">
+  
+    .<strong>requires_path?</strong>  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+33
+34
+35</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/json_array.rb', line 33</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_requires_path?'>requires_path?</span>
+  <span class='kw'>true</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="special_options-class_method">
+  
+    .<strong>special_options</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+37
+38
+39</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/json_array.rb', line 37</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_special_options'>special_options</span>
+  <span class='lbracket'>[</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
 
   <div id="instance_method_details" class="method_details_list">
     <h2>Instance Method Details</h2>
@@ -284,13 +662,13 @@
       <pre class="lines">
 
 
-24
-25
-26
-27</pre>
+54
+55
+56
+57</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/json_array.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/json_array.rb', line 54</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_close'>close</span>
   <span class='ivar'>@file</span> <span class='op'>&lt;&lt;</span> <span class='ivar'>@json</span><span class='period'>.</span><span class='id identifier rubyid_to_json'>to_json</span>
@@ -316,12 +694,12 @@
       <pre class="lines">
 
 
-19
-20
-21</pre>
+49
+50
+51</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/json_array.rb', line 19</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/json_array.rb', line 49</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='ivar'>@json</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_row'>row</span>
@@ -336,7 +714,7 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Feb 28 15:53:53 2023 by
+  Generated on Wed Mar  1 01:03:01 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.7).
 </div>

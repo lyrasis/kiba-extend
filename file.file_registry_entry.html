@@ -57,19 +57,43 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><div id='filecontents'><h1 id="file-registry-entry">File Registry Entry</h1>
+      <div id="content"><div id='filecontents'><h1 id="file-registry-entry-reference">File Registry Entry Reference</h1>
 
-<h2 id="note-sourcedestregistry">Note: SourceDestRegistry</h2>
+<h2 id="what-are-file-registry-entries">What are file registry entries?</h2>
 
-<p><span class='object_link'><a href="Kiba/Extend/Registry/FileRegistryEntry.html" title="Kiba::Extend::Registry::FileRegistryEntry (class)">Kiba::Extend::Registry::FileRegistryEntry</a></span> mixes in the <span class='object_link'><a href="Kiba/Extend/Registry/SourceDestRegistry.html" title="Kiba::Extend::Registry::SourceDestRegistry (module)">Kiba::Extend::Registry::SourceDestRegistry</a></span> module, which provides certain information about source and destination types necessary for validating them and preparing entries using them for use in jobs.</p>
+<p>A file registry entry is initialized with a Hash of data about a file. Depending on the details, this allows a given entry to be:</p>
 
-<p>If you create/use a new source or destination type in your File Registry, it will need to be added to <code>SourceDestRegistryConstant</code> or you will get errors.</p>
+<ul>
+<li>the destination of one job;</li>
+<li>a source for another job; and</li>
+<li>a lookup for yet another job</li>
+</ul>
 
-<p>(This is one of the signs I made a poor design choice around FileRegistryEntry modeling, which I now thing needs to be re-implemented using the Strategy pattern or something else. But here it is for now.)</p>
+<p>Creating file registry entries and referring to them when setting up your project&#39;s jobs has two major benefits:</p>
 
-<h2 id="file-registry-data-hashes-in-your-etl-application">File Registry Data hashes in your ETL application</h2>
+<ul>
+<li>a given entry may be reused in different ways, in many jobs, without having to specify details about how to find and read/write the associated file each time it is used</li>
+<li>Kiba::Extend can generate all non-supplied dependencies for any job automatically</li>
+</ul>
 
-<p>A file registry entry is initialized with a Hash of data about the file. This Hash will be sent from your ETL application.</p>
+<h2 id="types-of-file-registry-entries">Types of file registry entries</h2>
+
+<ul>
+<li><strong>supplied entries</strong>: These entries represent files that are not created by jobs in your project application. Indicate that an entry is supplied by including <code>supplied: true</code> in the registry entry hash. Supplied entries can be used as sources and, depending on the type of file, as lookups in jobs. They cannot be used as destinations for jobs, since, by definition, files created by jobs are not supplied.</li>
+<li><strong>job entries</strong>: These entries represent files that are output as the destination by a job in your project application. A job entry hash must have a <code>creator</code> key, indicating the job that creates the file. The job pointed at by an entry&#39;s <code>creator</code> must have that entry as its destination in the file config of the job.</li>
+</ul>
+
+<h2 id="file-registry-entries-in-your-etl-application">File registry entries in your ETL application</h2>
+
+<p>File registry entries are defined as Ruby <code>Hash</code>es in your ETL application.</p>
+
+<p>In the most basic Kiba::Extend project, these hashes will be manually entered in the <code>YourProject::RegistryData.register_files</code> method.</p>
+
+<p>You can also write code to dynamically generate registry entry <code>Hash</code>es that follow a pattern. The <a href="https://github.com/lyrasis/kiba-extend-project/blob/main/lib/ke_project/registry_data.rb">kiba-extend-project repository</a> provides some examples. See also <a href="file.common_patterns_tips_tricks.html#automating-repetitive-file-registry" title="common_patterns_tips_tricks">common_patterns_tips_tricks</a>.</p>
+
+<p>Kiba::Extend converts these <code>Hash</code>es to <span class='object_link'><a href="Kiba/Extend/Registry/FileRegistryEntry.html" title="Kiba::Extend::Registry::FileRegistryEntry (class)">Kiba::Extend::Registry::FileRegistryEntry</a></span> classes when you call <span class='object_link'><a href="Kiba/Extend/Registry/FileRegistry.html#finalize-instance_method" title="Kiba::Extend::Registry::FileRegistry#finalize (method)">Kiba::Extend::Registry::FileRegistry#finalize</a></span> or <span class='object_link'><a href="Kiba/Extend/Registry/FileRegistry.html#transform-instance_method" title="Kiba::Extend::Registry::FileRegistry#transform (method)">Kiba::Extend::Registry::FileRegistry#transform</a></span> on your project&#39;s registry.</p>
+
+<h2 id="file-registry-hash-format">File registry <code>Hash</code> format</h2>
 
 <p>The allowable Hash keys, expected Hash value formats, and expectations about them are described below.</p>
 
@@ -81,7 +105,7 @@
 
 <ul>
 <li>default: <code>nil</code></li>
-<li>required if either <code>:src_class</code> or <code>:dest_class</code> requires a path (in <span class='object_link'><a href="Kiba/Extend/Registry/SourceDestRegistry.html#requires_path%3F-class_method" title="Kiba::Extend::Registry::SourceDestRegistry.requires_path? (method)">Kiba::Extend::Registry::SourceDestRegistry.requires_path?</a></span>)</li>
+<li>required if either <code>:src_class</code> or <code>:dest_class</code> requires a path (in Kiba::Extend::Registry::SourceDestRegistry.requires_path?)</li>
 </ul>
 
 <h3 id="src_class"><code>:src_class</code></h3>
@@ -90,7 +114,7 @@
 
 <ul>
 <li>required, but default supplied if not given</li>
-<li>default: value of <span class='object_link'><a href="Kiba/Extend.html#source-class_method" title="Kiba::Extend.source (method)">Kiba::Extend.source</a></span> (<code>Kiba::Common::Sources::CSV</code> unless overridden by your ETL app)</li>
+<li>default: value of <span class='object_link'><a href="Kiba/Extend.html#source-class_method" title="Kiba::Extend.source (method)">Kiba::Extend.source</a></span> (<code>Kiba::Extend::Sources::CSV</code> unless overridden by your ETL app)</li>
 </ul>
 
 <h3 id="src_opt"><code>:src_opt</code></h3>
@@ -99,12 +123,12 @@
 
 <ul>
 <li>required, but default supplied if not given</li>
-<li>if <code>:src_class</code> is <code>Kiba::Common::Sources::CSV</code>:
+<li>if <code>:src_class</code> is <code>Kiba::Extend::Sources::CSV</code>:
 
 <ul>
 <li>default: value of <span class='object_link'><a href="Kiba/Extend.html#csvopts-class_method" title="Kiba::Extend.csvopts (method)">Kiba::Extend.csvopts</a></span></li>
 </ul></li>
-<li>if <code>:src_class</code> is <code>Kiba::Common::Sources::Marc</code>:
+<li>if <code>:src_class</code> is <code>Kiba::Extend::Sources::Marc</code>:
 
 <ul>
 <li>default: <code>nil</code></li>
@@ -114,7 +138,7 @@
 
 <h3 id="dest_class"><code>:dest_class</code></h3>
 
-<p>[Class] the Ruby class used to write out the data. This class must be defined in the <code>Destinations</code> namespace or equivalent. Example: you should never use <code>Kiba::Common::Sources::CSV</code> as a <code>:dest_class</code> value.</p>
+<p>[Class] the Ruby class used to write out the data. This class must be defined in the <code>Destinations</code> namespace or equivalent. Example: you should never use <code>Kiba::Extend::Sources::CSV</code> as a <code>:dest_class</code> value.</p>
 
 <ul>
 <li>required, but default supplied if not given</li>
@@ -127,7 +151,7 @@
 
 <ul>
 <li>required, but default supplied if not given</li>
-<li>if <code>:dest_class</code> is <span class='object_link'><a href="Kiba/Extend/Destinations/CSV.html" title="Kiba::Extend::Destinations::CSV (class)">Kiba::Extend::Destinations::CSV</a></span> or <code>Kiba::Common::Destinations::CSV</code>:
+<li>if <code>:dest_class</code> is <span class='object_link'><a href="Kiba/Extend/Destinations/CSV.html" title="Kiba::Extend::Destinations::CSV (class)">Kiba::Extend::Destinations::CSV</a></span>
 
 <ul>
 <li>default: value of <span class='object_link'><a href="Kiba/Extend.html#csvopts-class_method" title="Kiba::Extend.csvopts (method)">Kiba::Extend.csvopts</a></span></li>
@@ -392,7 +416,7 @@ end
 </div></div>
 
       <div id="footer">
-  Generated on Tue Feb 28 15:53:52 2023 by
+  Generated on Wed Mar  1 01:03:00 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.7).
 </div>

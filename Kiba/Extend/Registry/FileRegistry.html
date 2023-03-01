@@ -427,7 +427,7 @@
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 42</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_as_destination'>as_destination</span><span class='lparen'>(</span><span class='id identifier rubyid_filekey'>filekey</span><span class='rparen'>)</span>
-  <span class='const'><span class='object_link'><a href="RegisteredDestination.html" title="Kiba::Extend::Registry::RegisteredDestination (class)">RegisteredDestination</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RegisteredFile.html#initialize-instance_method" title="Kiba::Extend::Registry::RegisteredFile#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>key:</span> <span class='id identifier rubyid_filekey'>filekey</span><span class='comma'>,</span> <span class='label'>data:</span> <span class='id identifier rubyid_lookup'>lookup</span><span class='lparen'>(</span><span class='id identifier rubyid_filekey'>filekey</span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='const'><span class='object_link'><a href="RegisteredDestination.html" title="Kiba::Extend::Registry::RegisteredDestination (class)">RegisteredDestination</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RegisteredDestination.html#initialize-instance_method" title="Kiba::Extend::Registry::RegisteredDestination#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>key:</span> <span class='id identifier rubyid_filekey'>filekey</span><span class='comma'>,</span> <span class='label'>data:</span> <span class='id identifier rubyid_lookup'>lookup</span><span class='lparen'>(</span><span class='id identifier rubyid_filekey'>filekey</span><span class='rparen'>)</span><span class='rparen'>)</span>
 <span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="FileRegistry/KeyNotRegisteredError.html" title="Kiba::Extend::Registry::FileRegistry::KeyNotRegisteredError (class)">KeyNotRegisteredError</a></span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_err'>err</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="FileRegistry/KeyNotRegisteredError.html" title="Kiba::Extend::Registry::FileRegistry::KeyNotRegisteredError (class)">KeyNotRegisteredError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="FileRegistry/KeyNotRegisteredError.html#initialize-instance_method" title="Kiba::Extend::Registry::FileRegistry::KeyNotRegisteredError#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_err'>err</span><span class='period'>.</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='symbol'>:destination</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
@@ -942,7 +942,7 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Feb 28 15:53:53 2023 by
+  Generated on Wed Mar  1 01:03:01 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.7).
 </div>
