@@ -30,11 +30,15 @@ toc::[]
 These changes are merged into the `main` branch, but have not been released. After merging pull requests (PRs) that are not immediately released into `main`, a tag is added appending the PR# to the current release. For example, if the release version/tag is `3.2.1`, and PR# 107 is merged without a new release, the state of the codebase after that merge will be tagged as `3.2.1.107`.
 
 === Breaking
+* `Kiba::Common::Sources` and `Kiba::Common::Destinations` are no longer supported. To use an external source or destination class, subclass it in a `Kiba::Extend` source or destination class that extends `Kiba::Extend::Sourceable` or `Kiba::Extend::Destinationable` (PR#139)
+* Using a supplied file registry entry as the destination of a job raises an error, since the definition of a supplied entry is that it is not created by a job in the project. (PR#139)
 
 === Added
 * `Destinations::Marc` (PR#138)
 * `Marc::FilterRecords::ById` and `Marc::FilterRecords::WithLambda` transforms  (PR#138)
 * `Marc::ExtractMeetingNameData`, `Marc::ExtractOrgNameData`, `Marc::ExtractPersonNameData`, and `Marc::ExtractNameData` transforms (PR#137)
+* `Sources::CSV` and `Sources::Enumerable` (PR#139)
+* `Destinations::Lambda` (PR#139)
 
 === Changed
 * Transforms that take an `action` argument now mix in the new `ActionArgumentable` module and validate the argument values in a consistent way (PR#138)

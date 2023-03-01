@@ -6,11 +6,11 @@ require_relative 'requirable_file'
 module Kiba
   module Extend
     module Registry
-      class CannotBeUsedAsSourceError < Kiba::Extend::Error
+      class CannotBeUsedAsSourceError < TypeError
+        include Kiba::Extend::ErrMod
         attr_reader :entry
-        def initialize(entry)
-          @entry = entry
-          super("The result of a registry entry with a #{entry.dest_class} "\
+        def initialize(dest_class)
+          super("The result of a registry entry with a #{dest_class} "\
                 "dest_class cannot be used as source file in a job")
         end
       end
@@ -23,27 +23,19 @@ module Kiba
         # Arguments for calling Kiba Source class
         # @return [Hash]
         def args
-          { filename: path }.merge(src_opts)
+          {src_class.path_key=>path}.merge(src_opts)
         end
 
-        # Kiba Source class to call
         def klass
-          @data.supplied ? @data.src_class : dest_src
+          src_class
         end
 
         private
 
-        def dest_src
-          src = dest_src_mapping(@data.dest_class)
-          raise CannotBeUsedAsSourceError.new(@data) if src.nil?
-
-          src
-        end
-
         def src_opts
-          return { options_label(klass) => @data.src_opt } if @data.src_opt
+          return {src_class.options_key => src_opt} if src_opt
 
-          labeled_options(klass)
+          src_class.labeled_options
         end
       end
     end

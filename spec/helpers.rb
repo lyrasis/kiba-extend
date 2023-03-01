@@ -13,8 +13,8 @@ module Helpers
     def initialize(input:, accumulator:, transforms:)
       @accumulator = accumulator
       @control = Kiba.parse do
-        source Kiba::Common::Sources::Enumerable, input
-        destination Kiba::Common::Destinations::Lambda,
+        source Kiba::Extend::Sources::Enumerable, input
+        destination Kiba::Extend::Destinations::Lambda,
           on_write: ->(r) { accumulator << r }
       end
       @context = Kiba::Context.new(control)
@@ -160,7 +160,7 @@ module Helpers
                foo: { path: fkeypath, creator: Helpers.method(:test_csv), tags: %i[test] },
                bar: { path: fkeypath, creator: Helpers.method(:lookup_csv), tags: %i[test report] },
                baz: { path: fkeypath, creator: Kiba::Extend::Utils::Lookup.method(:csv_to_hash), tags: %i[report] },
-               warn: { path: fkeypath, dest_class: Kiba::Common::Destinations::CSV,
+               warn: { path: fkeypath, dest_class: Kiba::Extend::Destinations::CSV,
                       creator: Kiba::Extend.method(:csvopts),
                       dest_special_opts: { initial_headers: %i[objectnumber briefdescription] } },
                json_arr: {path: fkeypath, dest_class: Kiba::Extend::Destinations::JsonArray,

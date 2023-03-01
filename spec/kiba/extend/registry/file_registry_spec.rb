@@ -111,16 +111,33 @@ RSpec.describe 'Kiba::Extend::Registry::FileRegistry' do
     end
 
     describe 'as destination' do
-      let(:result) { registry.as_destination(filekey) }
-      it 'returns destination file config' do
-        expect(result).to be_a(Kiba::Extend::Registry::RegisteredDestination)
+      let(:result){ registry.as_destination(filekey) }
+
+      context 'with job entry key' do
+        let(:filekey){ :foo }
+
+        it 'returns destination file config' do
+          expect(result).to be_a(Kiba::Extend::Registry::RegisteredDestination)
+        end
+      end
+
+      context 'with supplied entry key' do
+        let(:filekey){ :fee }
+
+        it 'raises error' do
+          expect{ result }.to raise_error(
+            Kiba::Extend::Registry::RegisteredDestination::SuppliedEntryError
+          )
+        end
       end
 
       context 'when called with nonexistent key' do
         let(:filekey) { :cats }
         it 'raises error' do
           msg = "No file registered under the key: :#{filekey} (as destination)"
-          expect { result }.to raise_error(Kiba::Extend::Registry::FileRegistry::KeyNotRegisteredError, msg)
+          expect{ result }.to raise_error(
+            Kiba::Extend::Registry::FileRegistry::KeyNotRegisteredError, msg
+          )
         end
       end
     end

@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'source_dest_registry'
-
 module Kiba
   module Extend
     module Registry
@@ -13,8 +11,6 @@ module Kiba
       # Used instead of just passing around a Hash so that it can validate
       #   itself and carry its own errors/warnings
       class FileRegistryEntry
-        include SourceDestRegistry
-
         attr_reader :path, :key,
           :creator, :supplied, :dest_special_opts, :desc, :lookup_on, :tags,
           :message, :dest_class, :dest_opt, :src_class, :src_opt, :type,
@@ -117,7 +113,9 @@ module Kiba
         end
 
         def path_required?
-          chk = [dest_class, src_class].map { |klass| requires_path?(klass) }
+          chk = [dest_class, src_class].map do |klass|
+              klass.requires_path?
+          end
           return false if chk.uniq == [false]
 
           true
@@ -164,8 +162,8 @@ module Kiba
         end
 
         def validate_job_lookup
-          dest_as_src = dest_src_mapping(dest_class)
-          return if lookup_options_label(dest_as_src)
+          return if dest_class.as_source_class
+            .respond_to?(:is_lookupable)
 
           @errors[:cannot_lookup_from_nonCSV_destination] = nil
         end

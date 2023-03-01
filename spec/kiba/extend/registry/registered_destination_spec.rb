@@ -15,6 +15,19 @@ RSpec.describe 'Kiba::Extend::Registry::RegisteredDestination' do
     )
   end
   let(:optres) { { csv_options: Kiba::Extend.csvopts } }
+
+  describe '#new' do
+    context 'with supplied entry' do
+      let(:data) { {path: path, supplied: true} }
+
+      it 'raises error' do
+        expect{ dest }.to raise_error(
+         Kiba::Extend::Registry::RegisteredDestination::SuppliedEntryError
+        )
+      end
+    end
+  end
+
   describe '#args' do
     let(:result) { dest.args }
     context 'with basic defaults' do
@@ -94,7 +107,7 @@ RSpec.describe 'Kiba::Extend::Registry::RegisteredDestination' do
     end
 
     context 'with a given class' do
-      let(:override_klass) { Kiba::Common::Sources::CSV }
+      let(:override_klass) { Kiba::Extend::Sources::Marc }
       let(:data) { { path: path, dest_class: override_klass } }
       it 'returns given class' do
         expect(result).to eq(override_klass)

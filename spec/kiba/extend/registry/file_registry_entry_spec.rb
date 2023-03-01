@@ -186,8 +186,8 @@ RSpec.describe 'Kiba::Extend::Registry::FileRegistryEntry' do
 
     context 'when un-written source/dest' do
       let(:data) {
-        { src_class: Kiba::Common::Sources::Enumerable,
-         dest_class: Kiba::Common::Destinations::Lambda,
+        { src_class: Kiba::Extend::Sources::Enumerable,
+         dest_class: Kiba::Extend::Destinations::Lambda,
          supplied: true }
       }
       it 'valid as expected' do

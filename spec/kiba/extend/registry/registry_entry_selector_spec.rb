@@ -4,12 +4,13 @@ require 'spec_helper'
 
 # rubocop:disable Metrics/BlockLength
 RSpec.describe 'Kiba::Extend::Registry::RegistryEntrySelector' do
-  before(:context) do
+  subject(:selector) { Kiba::Extend::Registry::RegistryEntrySelector.new }
+
+  before(:all) do
     Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry
     prepare_registry
   end
-  after(:context){ Kiba::Extend.reset_config }
-  let(:selector) { Kiba::Extend::Registry::RegistryEntrySelector.new }
+  after(:all){ Kiba::Extend.reset_config }
 
   describe '#tagged_any' do
     let(:result) { selector.tagged_any(tags) }

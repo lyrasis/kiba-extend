@@ -11,6 +11,34 @@ module Kiba
       #   relevant documentation in:
       #   https://github.com/ruby-marc/ruby-marc/blob/main/lib/marc/writer.rb
       class Marc
+        extend Destinationable
+
+        class << self
+          def as_source_class
+            Kiba::Extend::Sources::Marc
+          end
+
+          def default_file_options
+            nil
+          end
+
+          def options_key
+            nil
+          end
+
+          def path_key
+            :filename
+          end
+
+          def requires_path?
+            true
+          end
+
+          def special_options
+            [:allow_oversized]
+          end
+        end
+
         # @param filename [String] path for writing MARC file
         # @param allow_oversized [Boolean, nil] If given, will set
         #   MARC::Writer's `allow_oversized` attribute. **Set in registry

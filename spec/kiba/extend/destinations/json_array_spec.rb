@@ -8,7 +8,7 @@ RSpec.describe Kiba::Extend::Destinations::JsonArray do
 
   def run_job(input, output)
     job = Kiba.parse do
-      source Kiba::Common::Sources::Enumerable, input
+      source Kiba::Extend::Sources::Enumerable, input
       destination Kiba::Extend::Destinations::JsonArray, filename: output
     end
 

@@ -49,7 +49,7 @@ RSpec.describe 'Kiba::Extend::Registry::RegisteredSource' do
             src_class: Kiba::Extend::Sources::Marc
           }
         end
-        let(:expected){ {filename: path, args: nil} }
+        let(:expected){ {filename: path} }
 
         it 'returns default opts' do
           expect(result).to eq(expected)
@@ -104,7 +104,7 @@ RSpec.describe 'Kiba::Extend::Registry::RegisteredSource' do
       end
 
       it 'returns given class' do
-        expect(result).to eq(Kiba::Common::Sources::CSV)
+        expect(result).to eq(Kiba::Extend::Sources::CSV)
       end
     end
 
@@ -112,9 +112,9 @@ RSpec.describe 'Kiba::Extend::Registry::RegisteredSource' do
       let(:data) do
         {
           path: path,
-          src_class: Kiba::Common::Sources::CSV,
+          src_class: Kiba::Extend::Sources::CSV,
           creator: -> { Helpers.test_csv },
-          dest_class: Kiba::Common::Destinations::Lambda
+          dest_class: Kiba::Extend::Destinations::Lambda
         }
       end
 
@@ -122,7 +122,7 @@ RSpec.describe 'Kiba::Extend::Registry::RegisteredSource' do
         expect{ result }.to raise_error(
           Kiba::Extend::Registry::CannotBeUsedAsSourceError,
           'The result of a registry entry with a '\
-            'Kiba::Common::Destinations::Lambda dest_class cannot '\
+            'Kiba::Extend::Destinations::Lambda dest_class cannot '\
             'be used as source file in a job'
         )
       end
