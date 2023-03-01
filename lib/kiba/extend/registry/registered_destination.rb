@@ -8,6 +8,19 @@ module Kiba
       # Value object representing a destination file registered in a
       #   {Kiba::Extend::FileRegistry}
       class RegisteredDestination < RegisteredFile
+        class SuppliedEntryError < TypeError
+          include Kiba::Extend::ErrMod
+          def initialize(entry_key)
+            super("Registry entry #{entry_key} is a supplied entry, so it "\
+                  "cannot be used as a job destination")
+          end
+        end
+
+        def initialize(key:, data:)
+          super
+          fail SuppliedEntryError.new(key) if supplied
+        end
+
         # Arguments for calling Kiba Destination class
         def args
           return simple_args unless dest_special_opts
