@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative 'source_dest_registry'
-
 module Kiba
   module Extend
     module Registry
