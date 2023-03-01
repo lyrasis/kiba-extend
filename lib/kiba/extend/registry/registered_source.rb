@@ -33,9 +33,13 @@ module Kiba
         private
 
         def src_opts
-          return {src_class.options_key => src_opt} if src_opt
-
-          src_class.labeled_options
+          if src_opt && src_class.options_key
+            return {src_class.options_key => src_opt}
+          elsif src_opt
+            src_opt
+          else
+            src_class.labeled_options
+          end
         end
       end
     end

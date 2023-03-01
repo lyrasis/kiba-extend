@@ -27,7 +27,7 @@ module Kiba
           end
 
           def options_key
-            :args
+            nil
           end
 
           def path_key
