@@ -1,14 +1,12 @@
 # frozen_string_literal: true
 
-require_relative 'base_job'
-
 module Kiba
   module Extend
     module Jobs
       # Job with one source, one destination, and zero-to-n lookups
       class Job < BaseJob
         private
-        
+
         def initial_transforms
           Kiba.job_segment do
             transform { |r| r.to_h }
