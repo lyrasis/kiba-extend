@@ -1,16 +1,34 @@
-# File Registry Entry
+# File Registry Entry Reference
 
-## Note: SourceDestRegistry
+## What are file registry entries?
 
-{Kiba::Extend::Registry::FileRegistryEntry} mixes in the {Kiba::Extend::Registry::SourceDestRegistry} module, which provides certain information about source and destination types necessary for validating them and preparing entries using them for use in jobs.
+A file registry entry is initialized with a Hash of data about a file. Depending on the details, this allows a given entry to be:
 
-If you create/use a new source or destination type in your File Registry, it will need to be added to `SourceDestRegistryConstant` or you will get errors.
+- the destination of one job;
+- a source for another job; and
+- a lookup for yet another job
 
-(This is one of the signs I made a poor design choice around FileRegistryEntry modeling, which I now thing needs to be re-implemented using the Strategy pattern or something else. But here it is for now.)
+Creating file registry entries and referring to them when setting up your project's jobs has two major benefits:
 
-## File Registry Data hashes in your ETL application
+- a given entry may be reused in different ways, in many jobs, without having to specify details about how to find and read/write the associated file each time it is used
+- Kiba::Extend can generate all non-supplied dependencies for any job automatically
 
-A file registry entry is initialized with a Hash of data about the file. This Hash will be sent from your ETL application.
+## Types of file registry entries
+
+- **supplied entries**: These entries represent files that are not created by jobs in your project application. Indicate that an entry is supplied by including `supplied: true` in the registry entry hash. Supplied entries can be used as sources and, depending on the type of file, as lookups in jobs. They cannot be used as destinations for jobs, since, by definition, files created by jobs are not supplied.
+- **job entries**: These entries represent files that are output as the destination by a job in your project application. A job entry hash must have a `creator` key, indicating the job that creates the file. The job pointed at by an entry's `creator` must have that entry as its destination in the file config of the job.
+
+## File registry entries in your ETL application
+
+File registry entries are defined as Ruby `Hash`es in your ETL application.
+
+In the most basic Kiba::Extend project, these hashes will be manually entered in the `YourProject::RegistryData.register_files` method.
+
+You can also write code to dynamically generate registry entry `Hash`es that follow a pattern. The [kiba-extend-project repository](https://github.com/lyrasis/kiba-extend-project/blob/main/lib/ke_project/registry_data.rb) provides some examples. See also {file:docs/common_patterns_tips_tricks.md#automating-repetitive-file-registry}.
+
+Kiba::Extend converts these `Hash`es to {Kiba::Extend::Registry::FileRegistryEntry} classes when you call {Kiba::Extend::Registry::FileRegistry.finalize} or {Kiba::Extend::Registry::FileRegistry.transform} on your project's registry.
+
+## File registry `Hash` format
 
 The allowable Hash keys, expected Hash value formats, and expectations about them are described below.
 
@@ -26,20 +44,20 @@ The allowable Hash keys, expected Hash value formats, and expectations about the
 [Class] the Ruby class used to read in data. This class must be defined in the `Sources` namespace or equivalent. Example: you should never use {Kiba::Extend::Destinations::CSV} as a `src_class`value.
 
 * required, but default supplied if not given
-* default: value of {Kiba::Extend.source} (`Kiba::Common::Sources::CSV` unless overridden by your ETL app)
+* default: value of {Kiba::Extend.source} (`Kiba::Extend::Sources::CSV` unless overridden by your ETL app)
 
 ### `:src_opt`
 [Hash] file options used when reading in source
 
 * required, but default supplied if not given
-* if `:src_class` is `Kiba::Common::Sources::CSV`:
+* if `:src_class` is `Kiba::Extend::Sources::CSV`:
   * default: value of {Kiba::Extend.csvopts}
-* if `:src_class` is `Kiba::Common::Sources::Marc`:
+* if `:src_class` is `Kiba::Extend::Sources::Marc`:
   * default: `nil`
   * A hash of keyword parameters defined for [MARC::Reader](https://github.com/ruby-marc/ruby-marc/blob/main/lib/marc/reader.rb) can be entered, for example: `{external_encoding: "MARC-8", internal_encoding: "UTF-16LE"}`
 
 ### `:dest_class`
-[Class] the Ruby class used to write out the data. This class must be defined in the `Destinations` namespace or equivalent. Example: you should never use `Kiba::Common::Sources::CSV` as a `:dest_class` value.
+[Class] the Ruby class used to write out the data. This class must be defined in the `Destinations` namespace or equivalent. Example: you should never use `Kiba::Extend::Sources::CSV` as a `:dest_class` value.
 
 * required, but default supplied if not given
 * default: value of {Kiba::Extend.destination} ({Kiba::Extend::Destinations::CSV} unless overridden by your ETL app)
@@ -48,7 +66,7 @@ The allowable Hash keys, expected Hash value formats, and expectations about the
 [Hash] file options used when writing data
 
 * required, but default supplied if not given
-* if `:dest_class` is {Kiba::Extend::Destinations::CSV} or `Kiba::Common::Destinations::CSV`:
+* if `:dest_class` is {Kiba::Extend::Destinations::CSV}
   * default: value of {Kiba::Extend.csvopts}
 * if `:dest_class` is {Kiba::Extend::Destinations::JsonArray}:
   * default: `nil`
