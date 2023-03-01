@@ -38,7 +38,7 @@ The allowable Hash keys, expected Hash value formats, and expectations about the
 [String] full or expandable relative path to the expected location of the file**
 
 * default: `nil`
-* required if either `:src_class` or `:dest_class` requires a path (in {Kiba::Extend::Registry::SourceDestRegistry.requires_path?})
+* required if either `:src_class` or `:dest_class` requires a path
 
 ### `:src_class`
 [Class] the Ruby class used to read in data. This class must be defined in the `Sources` namespace or equivalent. Example: you should never use {Kiba::Extend::Destinations::CSV} as a `src_class`value.
