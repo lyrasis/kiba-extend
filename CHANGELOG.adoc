@@ -39,6 +39,8 @@ These changes are merged into the `main` branch, but have not been released. Aft
 * `Marc::ExtractMeetingNameData`, `Marc::ExtractOrgNameData`, `Marc::ExtractPersonNameData`, and `Marc::ExtractNameData` transforms (PR#137)
 * `Sources::CSV` and `Sources::Enumerable` (PR#139)
 * `Destinations::Lambda` (PR#139)
+* `Sources::JsonDir` and `Jobs::JsonToCsvJob` (PR#140)
+* `Clean::EnsureConsistentFields` transform (PR#140)
 
 === Changed
 * Transforms that take an `action` argument now mix in the new `ActionArgumentable` module and validate the argument values in a consistent way (PR#138)
