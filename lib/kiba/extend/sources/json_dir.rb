@@ -10,6 +10,28 @@ module Kiba
       #   specifications, and returns the result as a Hash with empty values
       #   converted to `nil`
       #
+      # Nothing is done to handle non-String data structures as the values
+      #   of top-level keys in the JSON documents. If using CSV destination,
+      #   such values are written out as text string versions of their Ruby
+      #   representations. That is, your CSV field value might be:
+      #
+      # `{"65"=>{"title"=>"C1", "file"=>"66.jp2"}, "67"=>{"title"=>"C2", "file"=>"67.jp2"}}`
+      #
+      # If you need to work with such a value in subsequent jobs (i.e. reading
+      #   the string back in from the CSV), you can do something like:
+      #
+      # ```
+      # transform do |row|
+      #   val = row[:codestringfield]
+      #   next row if val.blank?
+      #
+      #   # Given the example above, this will convert `val` to a Ruby Hash
+      #   code = instance_eval(val)
+      #   # whatever additional code you need to process the data
+      #   row
+      # end
+      # ```
+      #
       # @note May return Hashes having different keys, which will cause problems
       #   writing out to {Kiba::Extend::Destinations::CSV}, which expects all
       #   rows to have the same headers/fields. Using
