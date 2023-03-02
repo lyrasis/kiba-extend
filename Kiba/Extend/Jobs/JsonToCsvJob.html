@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
-  Class: Kiba::Extend::Jobs::MarcJob
+  Class: Kiba::Extend::Jobs::JsonToCsvJob
   
     &mdash; Kiba-Extend Documentation
   
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="../../../css/common.css" type="text/css" />
 
 <script type="text/javascript">
-  pathId = "Kiba::Extend::Jobs::MarcJob";
+  pathId = "Kiba::Extend::Jobs::JsonToCsvJob";
   relpath = '../../../';
 </script>
 
@@ -36,10 +36,10 @@
       <div id="header">
         <div id="menu">
   
-    <a href="../../../_index.html">Index (M)</a> &raquo;
+    <a href="../../../_index.html">Index (J)</a> &raquo;
     <span class='title'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Jobs.html" title="Kiba::Extend::Jobs (module)">Jobs</a></span></span>
      &raquo; 
-    <span class="title">MarcJob</span>
+    <span class="title">JsonToCsvJob</span>
   
 </div>
 
@@ -59,7 +59,7 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><h1>Class: Kiba::Extend::Jobs::MarcJob
+      <div id="content"><h1>Class: Kiba::Extend::Jobs::JsonToCsvJob
   
   
   
@@ -76,7 +76,7 @@
           
             <li class="next"><span class='object_link'><a href="BaseJob.html" title="Kiba::Extend::Jobs::BaseJob (class)">BaseJob</a></span></li>
           
-            <li class="next">Kiba::Extend::Jobs::MarcJob</li>
+            <li class="next">Kiba::Extend::Jobs::JsonToCsvJob</li>
           
         </ul>
         <a href="#" class="inheritanceTree">show all</a>
@@ -96,22 +96,16 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/kiba/extend/jobs/marc_job.rb</dd>
+    <dd>lib/kiba/extend/jobs/json_to_csv_job.rb</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    
-  <div class="note notetag">
-    <strong>Note:</strong>
-    <div class='inline'><p>The first transform called in a <code>MarcJob</code> must be one from the
-<span class='object_link'><a href="../Transforms/Marc.html" title="Kiba::Extend::Transforms::Marc (module)">Transforms::Marc</a></span> namespace.</p>
-</div>
-  </div>
-
-<p>Job with one MARC source, one destination, and zero-to-n lookups.</p>
+    <p>Job taking a JSON source that yields <code>Hash</code>es, and writing
+  to a CSV (or other tabular) destination expecting the same
+  headers/fields in every row</p>
 
 
   </div>
@@ -127,7 +121,7 @@
       
       
         
-        <div class='inline'><p>3.3.0</p>
+        <div class='inline'><p>2.2.0</p>
 </div>
       
     </li>

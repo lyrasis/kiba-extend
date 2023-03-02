@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
-  Class: Kiba::Extend::Sources::Marc
+  Class: Kiba::Extend::Sources::JsonDir
   
     &mdash; Kiba-Extend Documentation
   
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="../../../css/common.css" type="text/css" />
 
 <script type="text/javascript">
-  pathId = "Kiba::Extend::Sources::Marc";
+  pathId = "Kiba::Extend::Sources::JsonDir";
   relpath = '../../../';
 </script>
 
@@ -36,10 +36,10 @@
       <div id="header">
         <div id="menu">
   
-    <a href="../../../_index.html">Index (M)</a> &raquo;
+    <a href="../../../_index.html">Index (J)</a> &raquo;
     <span class='title'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Sources.html" title="Kiba::Extend::Sources (module)">Sources</a></span></span>
      &raquo; 
-    <span class="title">Marc</span>
+    <span class="title">JsonDir</span>
   
 </div>
 
@@ -59,7 +59,7 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><h1>Class: Kiba::Extend::Sources::Marc
+      <div id="content"><h1>Class: Kiba::Extend::Sources::JsonDir
   
   
   
@@ -74,7 +74,7 @@
         <ul class="fullTree">
           <li>Object</li>
           
-            <li class="next">Kiba::Extend::Sources::Marc</li>
+            <li class="next">Kiba::Extend::Sources::JsonDir</li>
           
         </ul>
         <a href="#" class="inheritanceTree">show all</a>
@@ -99,7 +99,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/kiba/extend/sources/marc.rb</dd>
+    <dd>lib/kiba/extend/sources/json_dir.rb</dd>
   </dl>
   
 </div>
@@ -109,29 +109,45 @@
     
   <div class="note notetag">
     <strong>Note:</strong>
-    <div class='inline'><p>Only transforms in the <code>Kiba::Extend::Transforms::Marc</code> namespace
-can initially be used on records from this source</p>
+    <div class='inline'><p>May return Hashes having different keys, which will cause problems
+writing out to <span class='object_link'><a href="../Destinations/CSV.html" title="Kiba::Extend::Destinations::CSV (class)">Destinations::CSV</a></span>, which expects all
+rows to have the same headers/fields. Using
+<span class='object_link'><a href="../Transforms/Clean/EnsureConsistentFields.html" title="Kiba::Extend::Transforms::Clean::EnsureConsistentFields (class)">Transforms::Clean::EnsureConsistentFields</a></span> in any job
+that has a <span class='object_link'><a href="" title="Kiba::Extend::Sources::JsonDir (class)">JsonDir</a></span> source and a <span class='object_link'><a href="../Destinations/CSV.html" title="Kiba::Extend::Destinations::CSV (class)">Destinations::CSV</a></span>
+destination will protect against these errors.
+<span class='object_link'><a href="../Jobs/JsonToCsvJob.html" title="Kiba::Extend::Jobs::JsonToCsvJob (class)">Jobs::JsonToCsvJob</a></span> runs this transform automatically
+as the last step before writing out rows</p>
 </div>
   </div>
 
-  <div class="note notetag">
-    <strong>Note:</strong>
-    <div class='inline'><p>The class name is <code>Marc</code> instead of <code>MARC</code> because the <code>ruby-marc</code>
-gem already has the <code>MARC</code> namespace</p>
-</div>
-  </div>
+<p>Given path to a directory, JSON parses each file matching given
+  specifications, and returns the result as a Hash with:</p>
 
-<p>Given a binary MARC file containing one or more MARC records, yields one
-  MARC record at a time, for processing.</p>
+<ul>
+<li>empty values converted to <code>nil</code></li>
+<li>keys downcased and converted to Symbols</li>
+</ul>
 
-<p>This is just a simple wrapper around <code>ruby-marc</code>&#39;s <code>MARC::Reader</code>
-  <code>:each</code> method. See that class&#39; documentation at
-  <a href="https://github.com/ruby-marc/ruby-marc/blob/main/lib/marc/reader.rb">https://github.com/ruby-marc/ruby-marc/blob/main/lib/marc/reader.rb</a>
-  for more details about args that can be passed in to deal with
-  character encoding.</p>
+<p>Nothing is done to handle non-String data structures as the values
+  of top-level keys in the JSON documents. If using CSV destination,
+  such values are written out as text string versions of their Ruby
+  representations. That is, your CSV field value might be:</p>
 
-<p>See <a href="https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html">File Registry Entry documentation page</a>
-  for more details on how to set up a Marc source in a project.</p>
+<p><code>{&quot;65&quot;=&gt;{&quot;title&quot;=&gt;&quot;C1&quot;, &quot;file&quot;=&gt;&quot;66.jp2&quot;}, &quot;67&quot;=&gt;{&quot;title&quot;=&gt;&quot;C2&quot;, &quot;file&quot;=&gt;&quot;67.jp2&quot;}}</code></p>
+
+<p>If you need to work with such a value in subsequent jobs (i.e. reading
+  the string back in from the CSV), you can do something like:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span>
+  <span class='id identifier rubyid_val'>val</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='symbol'>:codestringfield</span><span class='rbracket'>]</span>
+  <span class='kw'>next</span> <span class='id identifier rubyid_row'>row</span> <span class='kw'>if</span> <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+
+  <span class='comment'># Given the example above, this will convert `val` to a Ruby Hash
+</span>  <span class='id identifier rubyid_code'>code</span> <span class='op'>=</span> <span class='id identifier rubyid_instance_eval'>instance_eval</span><span class='lparen'>(</span><span class='id identifier rubyid_val'>val</span><span class='rparen'>)</span>
+  <span class='comment'># whatever additional code you need to process the data
+</span>  <span class='id identifier rubyid_row'>row</span>
+<span class='kw'>end</span>
+</code></pre>
 
 
   </div>
@@ -254,7 +270,7 @@ gem already has the <code>MARC</code> namespace</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#each-instance_method" title="#each (instance method)">#<strong>each</strong>  &#x21d2; Object </a>
+      <a href="#each-instance_method" title="#each (instance method)">#<strong>each</strong> {|jsonhash| ... } &#x21d2; Object </a>
     
 
     
@@ -276,7 +292,7 @@ gem already has the <code>MARC</code> namespace</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(filename:, args: nil)  &#x21d2; Marc </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(dirpath:, recursive: false, filesuffixes: [&#39;.json&#39;])  &#x21d2; JsonDir </a>
     
 
     
@@ -292,7 +308,7 @@ gem already has the <code>MARC</code> namespace</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A new instance of Marc.</p>
+    <span class="summary_desc"><div class='inline'><p>A new instance of JsonDir.</p>
 </div></span>
   
 </li>
@@ -329,7 +345,7 @@ gem already has the <code>MARC</code> namespace</p>
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(filename:, args: nil)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Sources::Marc (class)">Marc</a></span></tt> 
+    #<strong>initialize</strong>(dirpath:, recursive: false, filesuffixes: [&#39;.json&#39;])  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Sources::JsonDir (class)">JsonDir</a></span></tt> 
   
 
   
@@ -337,7 +353,7 @@ gem already has the <code>MARC</code> namespace</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of Marc.</p>
+    <p>Returns a new instance of JsonDir.</p>
 
 
   </div>
@@ -348,7 +364,7 @@ gem already has the <code>MARC</code> namespace</p>
   
     <li>
       
-        <span class='name'>filename</span>
+        <span class='name'>dirpath</span>
       
       
         <span class='type'>(<tt>String</tt>)</span>
@@ -356,27 +372,43 @@ gem already has the <code>MARC</code> namespace</p>
       
       
         &mdash;
-        <div class='inline'><p>path to MARC binary file (.mrc, .dat, etc.)</p>
+        <div class='inline'><p>path of directory containing JSON files</p>
 </div>
       
     </li>
   
     <li>
       
-        <span class='name'>args</span>
+        <span class='name'>recursive</span>
       
       
-        <span class='type'>(<tt>Hash</tt>)</span>
+        <span class='type'>(<tt>Boolean</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>nil</tt>)</em>
+        <em class="default">(defaults to: <tt>false</tt>)</em>
       
       
         &mdash;
-        <div class='inline'><p>of <code>MARC::Reader</code> optional keyword
-arguments. See documentation at:
-<a href="https://github.com/ruby-marc/ruby-marc/blob/main/lib/marc/reader.rb">https://github.com/ruby-marc/ruby-marc/blob/main/lib/marc/reader.rb</a>
-for more details</p>
+        <div class='inline'><p>Whether to include eligible JSON
+files in subdirectories</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>filesuffixes</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;String&gt;</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>[&#39;.json&#39;]</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>to read in as
+JSON records. Include preceding period</p>
 </div>
       
     </li>
@@ -390,23 +422,19 @@ for more details</p>
       <pre class="lines">
 
 
-51
-52
-53
-54
-55
-56
-57</pre>
+71
+72
+73
+74
+75</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/sources/marc.rb', line 51</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/sources/json_dir.rb', line 71</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>filename:</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
-  <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span>
-    <span class='ivar'>@args</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_filename'>filename</span><span class='comma'>,</span> <span class='id identifier rubyid_args'>args</span><span class='rbracket'>]</span>
-  <span class='kw'>else</span>
-    <span class='ivar'>@args</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_filename'>filename</span><span class='rbracket'>]</span>
-  <span class='kw'>end</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>dirpath:</span><span class='comma'>,</span> <span class='label'>recursive:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>filesuffixes:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>.json</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='ivar'>@path</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='id identifier rubyid_dirpath'>dirpath</span><span class='rparen'>)</span>
+  <span class='ivar'>@recursive</span> <span class='op'>=</span> <span class='id identifier rubyid_recursive'>recursive</span>
+  <span class='ivar'>@filesuffixes</span> <span class='op'>=</span> <span class='id identifier rubyid_filesuffixes'>filesuffixes</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -435,12 +463,12 @@ for more details</p>
       <pre class="lines">
 
 
-29
-30
-31</pre>
+49
+50
+51</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/sources/marc.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/sources/json_dir.rb', line 49</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_default_file_options'>default_file_options</span>
   <span class='kw'>nil</span>
@@ -465,15 +493,15 @@ for more details</p>
       <pre class="lines">
 
 
-33
-34
-35</pre>
+53
+54
+55</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/sources/marc.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/sources/json_dir.rb', line 53</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_options_key'>options_key</span>
-  <span class='symbol'>:args</span>
+  <span class='kw'>nil</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -495,15 +523,15 @@ for more details</p>
       <pre class="lines">
 
 
-37
-38
-39</pre>
+57
+58
+59</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/sources/marc.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/sources/json_dir.rb', line 57</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_path_key'>path_key</span>
-  <span class='symbol'>:filename</span>
+  <span class='symbol'>:dirpath</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -547,12 +575,12 @@ for more details</p>
       <pre class="lines">
 
 
-41
-42
-43</pre>
+61
+62
+63</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/sources/marc.rb', line 41</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/sources/json_dir.rb', line 61</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_requires_path?'>requires_path?</span>
   <span class='kw'>true</span>
@@ -571,30 +599,76 @@ for more details</p>
       <div class="method_details first">
   <h3 class="signature first" id="each-instance_method">
   
-    #<strong>each</strong>  &#x21d2; <tt>Object</tt> 
+    #<strong>each</strong> {|jsonhash| ... } &#x21d2; <tt>Object</tt> 
   
 
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>If a file cannot be read/parsed as JSON, no Hash is yielded
+and a warning is written to STDOUT</p>
+</div>
+  </div>
+
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Yield Parameters:</p>
+<ul class="yieldparam">
+  
+    <li>
+      
+        <span class='name'>jsonhash</span>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>of parsed JSON</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-59
-60
-61
-62
-63</pre>
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/sources/marc.rb', line 59</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/sources/json_dir.rb', line 80</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_each'>each</span>
-  <span class='const'>MARC</span><span class='op'>::</span><span class='const'>Reader</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='op'>*</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_record'>record</span><span class='op'>|</span>
-    <span class='kw'>yield</span><span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_file_list'>file_list</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_path'>path</span><span class='op'>|</span>
+    <span class='id identifier rubyid_jsonhash'>jsonhash</span> <span class='op'>=</span> <span class='id identifier rubyid_parse_json'>parse_json</span><span class='lparen'>(</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_jsonhash'>jsonhash</span>
+      <span class='kw'>yield</span> <span class='id identifier rubyid_jsonhash'>jsonhash</span>
+    <span class='kw'>else</span>
+      <span class='id identifier rubyid_warn'>warn</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cannot read/parse </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_path'>path</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
