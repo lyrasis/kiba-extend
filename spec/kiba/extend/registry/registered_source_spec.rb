@@ -38,6 +38,42 @@ RSpec.describe 'Kiba::Extend::Registry::RegisteredSource' do
       end
     end
 
+    context 'with JsonDir source' do
+      let(:path) { File.join(fixtures_dir, 'json_dir') }
+      let(:src_class) { Kiba::Extend::Sources::JsonDir }
+
+      context 'with path only' do
+        let(:data) do
+          {
+            path: path,
+            supplied: true,
+            src_class: src_class
+          }
+        end
+        let(:expected){ {dirpath: path} }
+
+        it 'returns default opts' do
+          expect(result).to eq(expected)
+        end
+      end
+
+      context 'with src_opt' do
+        let(:data) do
+          {
+            path: path,
+            supplied: true,
+            src_class: src_class,
+            src_opt: {recursive: true}
+          }
+        end
+        let(:expected){ {dirpath: path, recursive: true} }
+
+        it 'returns specified opts' do
+          expect(result).to eq(expected)
+        end
+      end
+    end
+
     context 'with MARC source' do
       let(:path) { File.join('spec', 'fixtures', 'harvard_open_data.mrc') }
 

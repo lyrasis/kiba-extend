@@ -3,19 +3,21 @@
 module Kiba
   module Extend
     module Jobs
-      # Job with one source, one destination, and zero-to-n lookups
-      class Job < BaseJob
+      # Job taking a JSON source that yields `Hash`es, and writing
+      #   to a CSV (or other tabular) destination expecting the same
+      #   headers/fields in every row
+      class JsonToCsvJob < BaseJob
         private
 
         def initial_transforms
           Kiba.job_segment do
-            transform { |r| r.to_h }
             transform { |r| @srcrows += 1; r }
           end
         end
 
         def final_transforms
           Kiba.job_segment do
+            transform Clean::EnsureConsistentFields
             transform { |r| @outrows += 1; r }
           end
         end
