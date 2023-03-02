@@ -15,6 +15,7 @@ RSpec.describe 'Kiba::Extend::Sources::JsonDir' do
         source.each{ |rec| result << rec }
         expect(result.length).to eq(2)
         expect(result.first).to be_a(Hash)
+        expect(result.first.key?(:title)).to be true
       end
     end
 
