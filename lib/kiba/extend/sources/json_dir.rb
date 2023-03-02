@@ -7,8 +7,10 @@ module Kiba
   module Extend
     module Sources
       # Given path to a directory, JSON parses each file matching given
-      #   specifications, and returns the result as a Hash with empty values
-      #   converted to `nil`
+      #   specifications, and returns the result as a Hash with:
+      #
+      # - empty values converted to `nil`
+      # - keys downcased and converted to Symbols
       #
       # Nothing is done to handle non-String data structures as the values
       #   of top-level keys in the JSON documents. If using CSV destination,
@@ -72,6 +74,9 @@ module Kiba
           @filesuffixes = filesuffixes
         end
 
+        # @yieldparam jsonhash [Hash] of parsed JSON
+        # @note If a file cannot be read/parsed as JSON, no Hash is yielded
+        #   and a warning is written to STDOUT
         def each
           file_list.each do |path|
             jsonhash = parse_json(path)

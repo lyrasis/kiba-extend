@@ -8,6 +8,9 @@ module Kiba
         #   for writing out to {Kiba::Extend::Destinations::CSV}, which expects
         #   all rows to have the same headers
         #
+        # @note This transform runs in memory, so for very large sources, it may
+        #   take a long time or fail.
+        #
         # @example
         #   # Used in pipeline as:
         #   # transform Clean::EnsureConsistentFields
@@ -31,6 +34,7 @@ module Kiba
           end
 
           # @param row [Hash{ Symbol => String, nil }]
+          # @return Nil
           def process(row)
             @keys = keys.merge(row.keys
                         .map{ |key| [key, nil] }
@@ -39,11 +43,13 @@ module Kiba
             nil
           end
 
+          # @yieldparam evened_row [Hash{ Symbol => String, nil }]
           def close
             @allfields = keys.keys
 
             rows.each do |row|
-              yield add_fields(row)
+              evened_row = add_fields(row)
+              yield evened_row
             end
           end
 
