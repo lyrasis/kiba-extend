@@ -77,6 +77,7 @@ module Kiba
         def parse_json(path)
           JSON.parse(File.read(path))
             .transform_values{ |val| val.empty? ? nil : val }
+            .transform_keys{ |key| key.downcase.to_sym }
         rescue StandardError
           nil
         end
