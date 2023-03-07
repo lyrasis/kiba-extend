@@ -95,7 +95,7 @@ module Kiba
           check_requirements
         rescue MissingDependencyError => err
           puts "JOB FAILED: DEPENDENCY ERROR IN: #{err.calling_job}"
-          puts "#{err.class.name}: #{err.message}"
+          err.info
           exit
         end
 

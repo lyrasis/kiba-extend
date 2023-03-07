@@ -41,6 +41,8 @@ module Kiba
         rescue StandardError => err
           puts "JOB FAILED: TRANSFORM ERROR IN: #{job_data.creator}"
           puts "#{err.class.name}: #{err.message}"
+          puts "AT:"
+          puts err.backtrace.first(10)
           exit
         end
 
@@ -79,7 +81,7 @@ module Kiba
           meth.call(key)
         rescue Kiba::Extend::Registry::FileRegistry::KeyNotRegisteredError => err
           puts "JOB FAILED: TRANSFORM ERROR IN: #{err.calling_job}"
-          puts "#{err.class.name}: #{err.message}"
+          err.info
           exit
         end
 

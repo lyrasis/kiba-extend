@@ -10,15 +10,55 @@ module Kiba
         #   and extracting data from linked transliterated and vernacular
         #   (e.g. 880) fields in MARC data
         module FieldLinkable
+
+          # @param record [MARC::Record]
+          # @param tags [Array<String>]
+          # @return [Array<MARC::ControlField,MARC::DataField>]
+          def select_fields(record, tags)
+            all = candidate_fields(record, tags)
+              .map{ |field| add_linkage_data(field) }
+            preferred(all)
+              .map{ |fldhsh| update_tag(fldhsh) }
+              .map{ |fldhsh| fldhsh[:datafield] }
+          end
+
+          private
+
+          def update_tag(fieldhash)
+            fieldhash[:datafield].tag =
+              fieldhash[Kiba::Extend::Marc.field_tag_target]
+            fieldhash
+          end
+
+          # @param record [MARC::Record]
+          # @param tags [Array<String>]
+          # @return [Array<MARC::ControlField,MARC::DataField>]
+          def candidate_fields(record, tags)
+            select_main_fields(record, tags) +
+              select_vernacular_fields(record, tags)
+          end
+
           # @param field [MARC::DataField]
-          # @param row [Hash]
-          # @return [Hash] row with linkage data merged in
-          def add_linkage_data(field, row)
+          # @return [Hash] with linkage data merged in
+          def add_linkage_data(field)
             if linked?(field)
-              row.merge(linkage_data(field))
+              {datafield: field}.merge(linkage_data(field))
             else
-              row.merge(non_linkage_data)
+              {datafield: field}.merge(non_linkage_data(field))
             end
+          end
+
+          # @param fieldhashes [Array<Hash>]
+          # @return [Array<Hash>] removes transliterated fieldhashes if
+          #  vernacular is preferred
+          def preferred(fieldhashes)
+            return fieldhashes if fieldhashes.empty?
+            return fieldhashes unless Kiba::Extend::Marc.prefer_vernacular
+
+            linked = fieldhashes.select{ |row| row[:linked] }
+            return fieldhashes if linked.empty?
+
+            fieldhashes - non_preferred_field_data(linked)
           end
 
           # @param row [Hash]
@@ -27,49 +67,6 @@ module Kiba
             non_linkage_data.keys.each{ |key| row.delete(key) }
             row
           end
-
-          # @param field [MARC::DataField]
-          # @return [Boolean]
-          def linked?(field)
-            field.codes.any?('6')
-          end
-
-          # @param rows [Array<Hash>]
-          # @return [Array<Hash>] removes transliterated rows if
-          #  vernacular is preferred
-          def preferred(rows)
-            return rows if rows.empty?
-            return rows unless Kiba::Extend::Marc.prefer_vernacular
-
-            linked = rows.select{ |row| row[:linked] }
-            return rows if linked.empty?
-
-            rows - non_preferred_field_data(linked)
-          end
-
-          # @param record [MARC::Record]
-          # @param tags [Array<String>]
-          # @return [Array<MARC::ControlField,MARC::DataField>]
-          def select_fields(record, tags)
-            select_main_fields(record, tags) +
-              select_vernacular_fields(record, tags)
-          end
-
-          # @param field [MARC::DataField]
-          # @return [Boolean]
-          def transliterated?(field)
-            !vernacular?(field)
-          end
-
-          # @param field [MARC::DataField]
-          # @return [Boolean]
-          def vernacular?(field)
-            return true if field.tag == '880'
-
-            false
-          end
-
-          private
 
           # @param field [MARC::DataField]
           # @return [String]
@@ -104,11 +101,12 @@ module Kiba
           end
 
           # @return [Hash]
-          def non_linkage_data
+          def non_linkage_data(field)
             {
               linked: false,
               linkid: nil,
-              vernacular: nil
+              vernacular: nil,
+              Kiba::Extend::Marc.field_tag_target=>extract_tag(field)
             }
           end
 
@@ -131,6 +129,26 @@ module Kiba
               .select do |fld|
                 tags.any?(fld['6'][0..2])
               end
+          end
+
+          # @param field [MARC::DataField]
+          # @return [Boolean]
+          def linked?(field)
+            field.codes.any?('6')
+          end
+
+          # @param field [MARC::DataField]
+          # @return [Boolean]
+          def transliterated?(field)
+            !vernacular?(field)
+          end
+
+          # @param field [MARC::DataField]
+          # @return [Boolean]
+          def vernacular?(field)
+            return true if field.tag == '880'
+
+            false
           end
         end
       end

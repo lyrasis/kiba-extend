@@ -10,13 +10,18 @@ module Kiba
         #   source field tag) from fields containing structured name data
         #
         # @example
+        #   # =001  008000714-7
+        #   # =711  2\$aAssociation of Child Psychology Annual Conference.$esponsor$evenue
         #   rec = get_marc_record(index: 6)
         #   xform = Marc::ExtractMeetingNameData.new
         #   results = []
-        #   result = xform.process(rec){ |row| results << row }
+        #   xform.process(rec){ |row| results << row }
         #   expect(results.length).to eq(1)
-        #   expect(results.first[:name]).to eq('Association of Child Psychology Annual Conference.')
-        #   expect(results.first[:role_term]).to eq('sponsor|venue')
+        #   row = {:sourcefield=>"711",
+        #          :name=>"Association of Child Psychology Annual Conference",
+        #          :nametype=>"meeting", :role_code=>"",
+        #          :role_term=>"sponsor|venue", :marcid=>"008000714-7"}
+        #   expect(results.first).to eq(row)
         class ExtractMeetingNameData < ExtractBaseNameData
           # @param name_type [String] to insert into name_type_target field
           # @param name_fields [Array<String>] MARC fields from which name data

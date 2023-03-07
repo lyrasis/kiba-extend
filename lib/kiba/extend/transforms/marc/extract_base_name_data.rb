@@ -56,6 +56,8 @@ module Kiba
             @role_code_subfields = role_code_subfields
             @delim = delim
             @idextractor = Kiba::Extend::Utils::MarcIdExtractor.new
+            @namecleaner = Kiba::Extend::Utils::MarcNameCleaner.new
+            @roletermcleaner = Kiba::Extend::Utils::MarcRoleTermCleaner.new
           end
 
           # @param record [MARC::Record]
@@ -73,29 +75,25 @@ module Kiba
           attr_reader :name_type, :id_target, :name_target, :role_code_target,
             :role_term_target, :field_tag_target, :name_type_target,
             :name_fields, :name_subfields, :role_code_subfields,
-            :role_term_subfields, :delim, :idextractor
+            :role_term_subfields, :delim, :idextractor, :namecleaner,
+            :roletermcleaner
 
           def prepare_rows(record)
             idhash = {id_target=>idextractor.call(record)}
-            field_data = select_fields(record, name_fields)
+            select_fields(record, name_fields)
               .map{ |fld| name_data_hash(fld) }
               .map{ |row| row.merge(idhash) }
-
-            preferred(field_data)
               .uniq
-              .map{ |row| delete_linkage_data(row) }
           end
 
           def name_data_hash(field)
-            base_row = {
+            {
               field_tag_target=>field.tag,
-              name_target=>name(field),
+              name_target=>namecleaner.call(name(field)),
               name_type_target=>name_type,
               role_code_target=>role_code(field),
               role_term_target=>role_term(field)
             }
-
-            add_linkage_data(field, base_row)
           end
 
           def name(field)
@@ -116,7 +114,7 @@ module Kiba
           def role_term(field)
             field.subfields
               .select{ |sf| role_term_subfields.any?(sf.code) }
-              .map{ |sf| sf.value.strip }
+              .map{ |sf| roletermcleaner.call(sf.value.strip) }
               .join(Kiba::Extend.delim)
           end
         end
