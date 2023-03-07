@@ -77,13 +77,10 @@ module Kiba
 
           def prepare_rows(record)
             idhash = {id_target=>idextractor.call(record)}
-            field_data = select_fields(record, name_fields)
+            select_fields(record, name_fields)
               .map{ |fld| name_data_hash(fld) }
               .map{ |row| row.merge(idhash) }
-
-            preferred(field_data)
               .uniq
-              .map{ |row| delete_linkage_data(row) }
           end
 
           def name_data_hash(field)
@@ -94,8 +91,6 @@ module Kiba
               role_code_target=>role_code(field),
               role_term_target=>role_term(field)
             }
-
-            add_linkage_data(field, base_row)
           end
 
           def name(field)
