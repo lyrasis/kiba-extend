@@ -8,6 +8,12 @@ module Kiba
         pre_base_job_initialize.reject{ |loc| loc.path['kiba-extend'] }.first
       end
 
+      def info
+        puts "#{self.class.name}: #{message}"
+        puts "AT:"
+        puts backtrace.first(10)
+      end
+
       private
 
       # returns caller_locations stack prior to initialization of kiba-extend
