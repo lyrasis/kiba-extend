@@ -10,11 +10,26 @@ module Kiba
         #   source field tag) from fields containing structured name data
         #
         # @example
+        #   # =001  008001024-5
+        #   # =100  1\$6880-03$aGlinka, M. I.$q(Mikhail Ivanovich),$d1804-1857,$ecomposer.$4cmp
+        #   # =700  1\$aBrussilovsky, Alexandre,$eperformer # no 880
+        #   # =880  1\$6100-03$aGlinka VERN,$ecomposer.$4cmp
         #   rec = get_marc_record(index: 9)
         #   xform = Marc::ExtractPersonNameData.new
         #   results = []
-        #   result = xform.process(rec){ |row| results << row }
+        #   xform.process(rec){ |row| results << row }
         #   expect(results.length).to eq(12)
+        #   first = {
+        #     :sourcefield=>"700", :name=>"Brussilovsky, Alexandre,",
+        #     :nametype=>"person", :role_code=>"", :role_term=>"performer",
+        #     :marcid=>"008001024-5"
+        #   }
+        #   last = {
+        #     :sourcefield=>"100", :name=>"Glinka VERN,", :nametype=>"person",
+        #     :role_code=>"cmp", :role_term=>"composer.", :marcid=>"008001024-5"
+        #   }
+        #   expect(results[0]).to eq(first)
+        #   expect(results[-1]).to eq(last)
         class ExtractPersonNameData < ExtractBaseNameData
           # @param name_type [String] to insert into name_type_target field
           # @param name_fields [Array<String>] MARC fields from which name data
