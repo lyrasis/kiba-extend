@@ -16,7 +16,7 @@ module Kiba
         #   xform = Marc::ExtractOrgNameData.new
         #   results = []
         #   xform.process(rec){ |row| results << row }
-        #   row = {:sourcefield=>"110", :name=>"H.M. Gousha Company.",
+        #   row = {:sourcefield=>"110", :name=>"H.M. Gousha Company",
         #         :nametype=>"org", :role_code=>"", :role_term=>"",
         #         :marcid=>"008000411-3"}
         #   expect(results.length).to eq(1)

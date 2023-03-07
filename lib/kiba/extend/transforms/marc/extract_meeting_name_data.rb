@@ -18,7 +18,7 @@ module Kiba
         #   xform.process(rec){ |row| results << row }
         #   expect(results.length).to eq(1)
         #   row = {:sourcefield=>"711",
-        #          :name=>"Association of Child Psychology Annual Conference.",
+        #          :name=>"Association of Child Psychology Annual Conference",
         #          :nametype=>"meeting", :role_code=>"",
         #          :role_term=>"sponsor|venue", :marcid=>"008000714-7"}
         #   expect(results.first).to eq(row)

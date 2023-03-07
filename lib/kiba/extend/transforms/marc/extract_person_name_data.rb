@@ -20,13 +20,13 @@ module Kiba
         #   xform.process(rec){ |row| results << row }
         #   expect(results.length).to eq(12)
         #   first = {
-        #     :sourcefield=>"700", :name=>"Brussilovsky, Alexandre,",
+        #     :sourcefield=>"700", :name=>"Brussilovsky, Alexandre",
         #     :nametype=>"person", :role_code=>"", :role_term=>"performer",
         #     :marcid=>"008001024-5"
         #   }
         #   last = {
-        #     :sourcefield=>"100", :name=>"Glinka VERN,", :nametype=>"person",
-        #     :role_code=>"cmp", :role_term=>"composer.", :marcid=>"008001024-5"
+        #     :sourcefield=>"100", :name=>"Glinka VERN", :nametype=>"person",
+        #     :role_code=>"cmp", :role_term=>"composer", :marcid=>"008001024-5"
         #   }
         #   expect(results[0]).to eq(first)
         #   expect(results[-1]).to eq(last)
