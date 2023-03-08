@@ -43,6 +43,7 @@ These changes are merged into the `main` branch, but have not been released. Aft
 * `Clean::EnsureConsistentFields` transform (PR#140)
 * Utility classes to clean ISBD trailing punctuation from name and role term values extracted from MARC data (PR#141)
 * `Marc::ExtractSubfieldsFromField` transform (PR#141)
+* `Split::PublicationStatement` transform (PR#142)
 
 === Changed
 * Transforms that take an `action` argument now mix in the new `ActionArgumentable` module and validate the argument values in a consistent way (PR#138)
