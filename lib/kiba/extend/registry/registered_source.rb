@@ -15,8 +15,8 @@ module Kiba
         end
       end
 
-      # Value object representing a {Kiba::Extend::RegistryEntry} being used as
-      #   a job source
+      # Value object representing a {Kiba::Extend::Registry::RegistryEntry}
+      #   being used as a job source
       class RegisteredSource < RegisteredFile
         include RequirableFile
 
