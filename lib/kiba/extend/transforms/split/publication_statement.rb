@@ -51,7 +51,7 @@ module Kiba
         #   delim: '%'
         # ```
         #
-        # @example Defaults with basic publication statement
+        # @example Default fieldnames, demonstrating parsing/splitting behavior
         #   input = [
         #     {ps: 'Belfast [i.e. Dublin : s.n.], 1946 [reprinted 1965]'},
         #     {ps: 'Harmondsworth : Penguin, 1949 (1963 printing)'},
