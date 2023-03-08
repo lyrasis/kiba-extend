@@ -18,8 +18,9 @@ module Kiba
         #   ambiguous when MARC subfield coding is not present. It is intended
         #   for use in preparing data for client review and cleanup.
         #
-        # Assumptions:
+        # Algorithm/assumptions:
         #
+        # - Terminal period is removed from field value pre-processing
         # - If field value starts with a digit, the whole field value is treated
         #   as a date
         # - If field value contains a `:` or `;`, followed by the pattern `comma
