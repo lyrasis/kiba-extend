@@ -18,6 +18,25 @@ module Kiba
         #   ambiguous when MARC subfield coding is not present. It is intended
         #   for use in preparing data for client review and cleanup.
         #
+        # Assumptions:
+        #
+        # - If field value starts with a digit, the whole field value is treated
+        #   as a date
+        # - If field value contains a `:` or `;`, followed by the pattern `comma
+        #   followed by non-comma characters and one or more digits`, then
+        #   everything including and following that pattern is treated as the
+        #   date value
+        # - If a field value contains `:` or `;`, we treat the first segment of
+        #   the value as place
+        # - If a field value does not contain `:` or `;`, and does not begin
+        #   with a digit, we treat the whole field value as publisher
+        # - Any part of the field value in parentheses is extracted separately
+        #   and checked for whether it follows the above patterns. If so, it is
+        #   run through processing as manufacturing data, and the
+        #   non-parenthetical data is run through the processing as publication
+        #   data. If parenthetical data does not match one of the patterns,
+        #   it gets included as part of publication place, name, or date field
+        #
         # ## Usage in jobs
         #
         # ```
@@ -149,6 +168,14 @@ module Kiba
 
           attr_reader :source, :fieldnames, :delim
 
+          def setup_fieldnames(overrides)
+            base = DEFAULT_FIELDNAMES.map{ |field| [field, field] }
+              .to_h
+            return base unless overrides
+
+            base.merge(overrides)
+          end
+
           def add_all_fields(row)
             fieldnames.values
               .each{ |field| row[field] = nil }
@@ -205,9 +232,20 @@ module Kiba
             row.merge(dateval)
           end
 
-          def extract_name(row, scanner:, type:)
-            nameval = {namefield(type)=>scanner.rest}
-            row.merge(nameval)
+          def extract_date(row, scanner:, type:)
+            scanner.scan_until(/,[^,]+\d.*/)
+            pre = scanner.pre_match
+              .strip
+            dateval = scanner.matched
+              .delete_prefix(',')
+              .strip
+            daterow = row.merge({
+              datefield(type)=>dateval
+            })
+
+            extract_segmenter(daterow,
+                              scanner: StringScanner.new(pre),
+                              type: type)
           end
 
           def extract_by_punct(row, scanner:, type:)
@@ -218,6 +256,11 @@ module Kiba
             elsif scanner.exist?(/[:;]/)
               extract_final_segment(row, scanner: scanner, type: type)
             end
+          end
+
+          def extract_name(row, scanner:, type:)
+            nameval = {namefield(type)=>scanner.rest}
+            row.merge(nameval)
           end
 
           def extract_place_from_start(row, scanner:, type:)
@@ -260,22 +303,6 @@ module Kiba
             end
           end
 
-          def extract_date(row, scanner:, type:)
-            scanner.scan_until(/,[^,]+\d.*/)
-            pre = scanner.pre_match
-              .strip
-            dateval = scanner.matched
-              .delete_prefix(',')
-              .strip
-            daterow = row.merge({
-              datefield(type)=>dateval
-            })
-
-            extract_segmenter(daterow,
-                              scanner: StringScanner.new(pre),
-                              type: type)
-          end
-
           def namefield(type)
             type == :pub ? fieldnames[:publisher] : fieldnames[:manufacturer]
           end
@@ -287,15 +314,6 @@ module Kiba
           def placefield(type)
             fieldnames["#{type}place".to_sym]
           end
-
-          def setup_fieldnames(overrides)
-            base = DEFAULT_FIELDNAMES.map{ |field| [field, field] }
-              .to_h
-            return base unless overrides
-
-            base.merge(overrides)
-          end
-
         end
       end
     end
