@@ -51,7 +51,7 @@ These changes are merged into the `main` branch, but have not been released. Aft
 
 === Bugfixes
 * Fixes issue where job registry entry with a Marc source and CSV destination could not be used as a source or lookup in jobs (PR#137)
-* Fixes issue in `StringValue::ToArray` transform where delim=nil was not correctly being calculated (PR#144)
+* Fixes issue in `StringValue::ToArray` transform where delim=nil was not correctly being calculated (PR#145)
 
 === Deleted
 
