@@ -58,13 +58,40 @@ module Kiba
         #     {r1: ['a','b'], r2: ['foo','bar']}
         #   ]
         #   expect(result).to eq(expected)
+        # 
+        # @example Empty array when fieldval is nil and delim is nil
+        #   # Used in pipeline as:
+        #   # transform StringValue::ToArray, fields: :r1, delim: nil
+        #   xform = StringValue::ToArray.new(fields: :r1, delim: nil)
+        #   input = [
+        #     {r1: nil, r2: 'foo;bar'}
+        #   ]
+        #   result = input.map{|row| xform.process(row)}
+        #   expected = [
+        #     {r1: [], r2: 'foo;bar'}
+        #   ]
+        #   expect(result).to eq(expected)
+        # 
+        # @example Empty array when fieldval is nil
+        #   # Used in pipeline as:
+        #   # transform StringValue::ToArray, fields: :r1
+        #   xform = StringValue::ToArray.new(fields: :r1)
+        #   input = [
+        #     {r1: nil, r2: 'foo;bar'}
+        #   ]
+        #   result = input.map{|row| xform.process(row)}
+        #   expected = [
+        #     {r1: [], r2: 'foo;bar'}
+        #   ]
+        #   expect(result).to eq(expected)
         class ToArray
           # @param fields [Symbol, Array(Symbol)] Source data fields.
           # @param delim [String, nil] The delimiting character. If no delim is
           #   given, the default delim is `Kiba::Extend.delim`. If `nil` is
           #   provided (do not delimit string value), the string value will
           #   instead be wrapped in an array without attempting to split the
-          #   string value.
+          #   string value. If `nil` is provided for delim and a field's value
+          #   is nil, this will create an empty array.
           def initialize(fields:, delim: Kiba::Extend.delim)
             @fields = [fields].flatten
             @delim = delim
@@ -73,8 +100,8 @@ module Kiba
           def process(row)
             fields.each do |field|
               fieldval = row[field]
-              if fieldval.nil?
-                row[field] = [fieldval]
+              if delim.nil?
+                row[field] = fieldval.nil? ? [] : [fieldval]
               else
                 row[field] = fieldval.nil? ? [] : fieldval.split(delim)
               end
