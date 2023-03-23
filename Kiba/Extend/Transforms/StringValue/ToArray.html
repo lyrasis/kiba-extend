@@ -176,6 +176,38 @@ Wraps field value in an array if <code>delim</code> is explicitly set to <code>n
 <span class='rbracket'>]</span>
 <span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
     
+      
+        <p class="example_title"><div class='inline'><p>Empty array when fieldval is nil and delim is nil</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='comment'># Used in pipeline as:
+</span><span class='comment'># transform StringValue::ToArray, fields: :r1, delim: nil
+</span><span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../StringValue.html" title="Kiba::Extend::Transforms::StringValue (module)">StringValue</a></span></span><span class='op'>::</span><span class='const'>ToArray</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::StringValue::ToArray#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='symbol'>:r1</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>r1:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>r2:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo;bar</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span><span class='rbrace'>}</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>r1:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>r2:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo;bar</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Empty array when fieldval is nil</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='comment'># Used in pipeline as:
+</span><span class='comment'># transform StringValue::ToArray, fields: :r1
+</span><span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../StringValue.html" title="Kiba::Extend::Transforms::StringValue (module)">StringValue</a></span></span><span class='op'>::</span><span class='const'>ToArray</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::StringValue::ToArray#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='symbol'>:r1</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>r1:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>r2:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo;bar</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span><span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span><span class='rbrace'>}</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>r1:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>r2:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo;bar</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
   </div>
 
 <p class="tag_title">Since:</p>
@@ -372,7 +404,8 @@ Wraps field value in an array if <code>delim</code> is explicitly set to <code>n
 given, the default delim is <code>Kiba::Extend.delim</code>. If <code>nil</code> is
 provided (do not delimit string value), the string value will
 instead be wrapped in an array without attempting to split the
-string value.</p>
+string value. If <code>nil</code> is provided for delim and a field&#39;s value
+is nil, this will create an empty array.</p>
 </div>
       
     </li>
@@ -401,13 +434,13 @@ string value.</p>
       <pre class="lines">
 
 
-68
-69
-70
-71</pre>
+95
+96
+97
+98</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/string_value/to_array.rb', line 68</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/string_value/to_array.rb', line 95</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_delim'><span class='object_link'><a href="../../../Extend.html#delim-class_method" title="Kiba::Extend.delim (method)">delim</a></span></span><span class='rparen'>)</span>
   <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fields'>fields</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
@@ -464,12 +497,12 @@ string value.</p>
       <pre class="lines">
 
 
-86
-87
-88</pre>
+113
+114
+115</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/string_value/to_array.rb', line 86</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/string_value/to_array.rb', line 113</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delim'>delim</span>
   <span class='ivar'>@delim</span>
@@ -520,12 +553,12 @@ string value.</p>
       <pre class="lines">
 
 
-86
-87
-88</pre>
+113
+114
+115</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/string_value/to_array.rb', line 86</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/string_value/to_array.rb', line 113</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fields'>fields</span>
   <span class='ivar'>@fields</span>
@@ -581,27 +614,27 @@ string value.</p>
       <pre class="lines">
 
 
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84</pre>
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/string_value/to_array.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/string_value/to_array.rb', line 100</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_fields'>fields</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span>
     <span class='id identifier rubyid_fieldval'>fieldval</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_fieldval'>fieldval</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
-      <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fieldval'>fieldval</span><span class='rbracket'>]</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_delim'>delim</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+      <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_fieldval'>fieldval</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>?</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='op'>:</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fieldval'>fieldval</span><span class='rbracket'>]</span>
     <span class='kw'>else</span>
       <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_fieldval'>fieldval</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>?</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='op'>:</span> <span class='id identifier rubyid_fieldval'>fieldval</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='id identifier rubyid_delim'>delim</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
@@ -619,7 +652,7 @@ string value.</p>
 </div>
 
       <div id="footer">
-  Generated on Wed Mar 22 19:05:51 2023 by
+  Generated on Thu Mar 23 15:42:31 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.28 (ruby-2.7.7).
 </div>
