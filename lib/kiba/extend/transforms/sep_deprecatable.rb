@@ -31,7 +31,11 @@ module Kiba
       #
       # @since 3.3.0
       module SepDeprecatable
-        def usedelim(sepval:, delimval:, calledby:)
+        # @param sepval [String] `sep` value passed to class
+        # @param delimval [String] `delim` value passed to class
+        # @param calledby Instance of the class in which sep is being deprecated
+        # @param default [nil, String] default sep/nil value used if none given
+        def usedelim(sepval:, delimval:, calledby:, default: nil)
           if delimval && !sepval
             delimval
           elsif !delimval && sepval
@@ -51,6 +55,8 @@ module Kiba
                 )
             delimval
           else
+            return default if default
+
             fail(ArgumentError, "#{calledby.class}: missing keyword: :delim")
           end
         end
