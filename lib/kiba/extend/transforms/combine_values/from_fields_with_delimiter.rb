@@ -64,22 +64,27 @@ module Kiba
         # | h    | nil                  |
         # ```
         class FromFieldsWithDelimiter
+          include SepDeprecatable
+
           # @param sources [Array<Symbol>] Fields whose values are to be
           #   combined
           # @param target [Symbol] Field into which the combined value will be
           #   written. May be one of the source fields
-          # @param sep [String] Value inserted between combined field values
+          # @param sep [String] Will be deprecated in a future version. Do not
+          #   use.
+          # @param delim [String] Value used to separate individual field values
+          #   in combined target field
           # @param prepend_source_field_name [Boolean] Whether to insert the
           #   source field name before its value in the combined value.
           # @param delete_sources [Boolean] Whether to delete the source fields
           #   after combining their values into the target field. If target
           #   field name is the same as one of the source fields, the target
           #   field is not deleted.
-          def initialize(sources:, target:, sep:,
+          def initialize(sources:, target:, sep: nil, delim: nil,
                          prepend_source_field_name: false, delete_sources: true)
             @sources = sources
             @target = target
-            @sep = sep
+            @delim = usedelim(sepval: sep, delimval: delim, calledby: self)
             @del = delete_sources
             @prepend = prepend_source_field_name
           end
@@ -97,7 +102,7 @@ module Kiba
               end
               vals = pvals
             end
-            val = vals.compact.join(@sep)
+            val = vals.compact.join(@delim)
             row[@target] = val.empty? ? nil : val
 
             @sources.each { |src| row.delete(src) unless src == @target } if @del
