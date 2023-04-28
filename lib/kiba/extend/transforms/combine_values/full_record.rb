@@ -51,22 +51,31 @@ module Kiba
               calledby: self,
               default: " "
             )
+            @fields = nil
           end
 
           # @param row [Hash{ Symbol => String, nil }]
           def process(row)
-            vals = row.keys.map { |k| row.fetch(k, nil) }
-            vals = vals.compact
-            row[@target] = if vals.empty?
+            set_fields(row) unless fields
+
+            vals = fields.map { |field| row[field] }
+              .reject(&:blank?)
+
+            row[target] = if vals.empty?
                              nil
                            else
                              vals.join(delim)
                            end
             row
           end
+
           private
 
           attr_reader :target, :delim, :fields
+
+          def set_fields(row)
+            @fields = row.keys
+          end
         end
       end
     end
