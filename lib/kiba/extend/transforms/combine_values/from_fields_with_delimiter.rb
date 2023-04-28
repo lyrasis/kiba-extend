@@ -89,25 +89,29 @@ module Kiba
             @prepend = prepend_source_field_name
           end
 
-          # @param row [Hash{ Symbol => String, nil }]
+          # param row [Hash{ Symbol => String, nil }]
           def process(row)
-            vals = @sources.map { |src| row.fetch(src, nil) }
+            vals = sources.map { |src| row.fetch(src, nil) }
               .map { |v| v.blank? ? nil : v }
 
-            if @prepend
+            if prepend
               pvals = []
               vals.each_with_index do |val, i|
-                val = "#{@sources[i]}: #{val}" unless val.nil?
+                val = "#{sources[i]}: #{val}" unless val.nil?
                 pvals << val
               end
               vals = pvals
             end
-            val = vals.compact.join(@delim)
-            row[@target] = val.empty? ? nil : val
+            val = vals.compact.join(delim)
+            row[target] = val.empty? ? nil : val
 
-            @sources.each { |src| row.delete(src) unless src == @target } if @del
+            sources.each { |src| row.delete(src) unless src == target } if del
             row
           end
+
+          private
+
+          attr_reader :sources, :target, :delim, :del, :prepend
         end
       end
     end
