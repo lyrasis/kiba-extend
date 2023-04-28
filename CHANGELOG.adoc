@@ -44,18 +44,22 @@ These changes are merged into the `main` branch, but have not been released. Aft
 * Utility classes to clean ISBD trailing punctuation from name and role term values extracted from MARC data (PR#141)
 * `Marc::ExtractSubfieldsFromField` transform (PR#141)
 * `Split::PublicationStatement` transform (PR#142)
+* `CombineValues::FromFieldWithDelimiter` can now take `sources: :all`, and will provide space as a default `delim` if not provided  (PR#147)
+* `CombineValues::FromFieldWithDelimiter` can now take `delete_sources` and `prepend_source_field_name` args (PR#147)
 
 === Changed
 * Transforms that take an `action` argument now mix in the new `ActionArgumentable` module and validate the argument values in a consistent way (PR#138)
 * Name and role term values extracted from MARC data by subclasses of `Transforms::Marc::ExtractBaseNameData` are run through `Utils::MarcNameCleaner` and `Utils::MarcRoleTermCleaner` (PR#141)
 
 === Bugfixes
+* Fixes https://github.com/lyrasis/kiba-extend/issues/146[#46 - CombineValues::FullRecord with multi-sources can result in different values] (PR#147)
 * Fixes issue where job registry entry with a Marc source and CSV destination could not be used as a source or lookup in jobs (PR#137)
 * Fixes issue in `StringValue::ToArray` transform where delim=nil was not correctly being calculated (PR#145)
 
 === Deleted
 
 === Deprecated/Will break in a future version
+* `sep` parameter will be replaced by `delim` in `CombineValues::FromFieldWithDelimiter` and `CombineValues::FullRecord` (PR#147)
 
 === Dev
 * Adds `Kiba::Extend::ErrMod` module to be included into `Kiba::Extend`-specific error classes. This allows us to subclass each application-specific error to the semantically appropriate Ruby exception class, while retaining the ability to identify/scope/rescue only application-specific errors. (PR#138)
