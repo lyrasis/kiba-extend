@@ -36,12 +36,21 @@ module Kiba
         # | Keet   | nil | hatched | Keet hatched     |
         # ```
         class FullRecord
+          include SepDeprecatable
+
           # @param target [Symbol] Field into which to write full record
-          # @param sep [String] Value used to separate individual field values
+          # @param sep [String] Will be deprecated in a future version. Do not
+          #   use.
+          # @param delim [String] Value used to separate individual field values
           #   in combined target field
-          def initialize(target:, sep: ' ')
+          def initialize(target: :index, sep: nil, delim: nil)
             @target = target
-            @sep = sep
+            @delim = usedelim(
+              sepval: sep,
+              delimval: delim,
+              calledby: self,
+              default: " "
+            )
           end
 
           # @param row [Hash{ Symbol => String, nil }]
@@ -51,10 +60,13 @@ module Kiba
             row[@target] = if vals.empty?
                              nil
                            else
-                             vals.join(@sep)
+                             vals.join(delim)
                            end
             row
           end
+          private
+
+          attr_reader :target, :delim, :fields
         end
       end
     end
