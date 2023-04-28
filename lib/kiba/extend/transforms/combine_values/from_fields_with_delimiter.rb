@@ -7,7 +7,64 @@ module Kiba
         # Combine values from given fields into the target field.
         #
         # This is like the CONCATENATE function in many spreadsheets. The given
-        #   `sep` value is used as a separator between the combined values.
+        #   `delim` value is used as a separator between the combined values.
+        #
+        # **Note:** Used with defaults, this has the same function as
+        #   {FullRecord}, but deletes the source fields. {FullRecord} retains
+        #   source fields by default.
+        #
+        # If target field has the same name as one of the source fields, and
+        #   `delete_sources` = true, no values are lost. The target field
+        #   is not deleted.
+        #
+        # Blank/nil values are dropped. If `prepend_source_field_name = true`,
+        #   names of blank/nil fields are omitted
+        #
+        # @example With defaults
+        #   # Used in pipeline as:
+        #   # transform CombineValues::FromFieldsWithDelimiter
+        #   xform = CombineValues::FromFieldsWithDelimiter.new
+        #   input = [
+        #     {name: "Weddy", sex: "m", source: "adopted"},
+        #     {source: "hatched", sex: "f", name: "Niblet"},
+        #     {source: "", sex: "m", name: "Tiresias"},
+        #     {name: "Keet", sex: nil, source: "hatched"},
+        #   ]
+        #   result = input.map{ |row| xform.process(row) }
+        #   expected = [
+        #     {index: "Weddy m adopted"},
+        #     {index: "Niblet f hatched"},
+        #     {index: "Tiresias m"},
+        #     {index: 'Keet hatched'}
+        #   ]
+        #   expect(result).to eq(expected)
+        # @example With custom sources, target (with same name as a source field), and delim
+        #   # Used in pipeline as:
+        #   # transform CombineValues::FromFieldsWithDelimiter,
+        #   #  sources: %i[name sex],
+        #   #  target: :name,
+        #   #  delim: ", "
+        #   xform = CombineValues::FromFieldsWithDelimiter.new(
+        #     sources: %i[name sex],
+        #     target: :name,
+        #     delim: ", "
+        #   )
+        #   input = [
+        #     {name: "Weddy", sex: "m", source: "adopted"},
+        #     {source: "hatched", sex: "f", name: "Niblet"},
+        #     {source: "", sex: "m", name: "Tiresias"},
+        #     {name: "Keet", sex: nil, source: "hatched"},
+        #     {name: "", sex: nil, source: "na"}
+        #   ]
+        #   result = input.map{ |row| xform.process(row) }
+        #   expected = [
+        #     {name: "Weddy, m", source: "adopted"},
+        #     {name: "Niblet, f", source: "hatched"},
+        #     {name: "Tiresias, m", source: ""},
+        #     {name: "Keet", source: "hatched"},
+        #     {name: nil, source: "na"}
+        #   ]
+        #   expect(result).to eq(expected)
         #
         # # Examples
         #
