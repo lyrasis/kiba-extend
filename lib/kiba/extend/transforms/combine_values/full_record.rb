@@ -51,6 +51,25 @@ module Kiba
         #     {name: "Keet", sex: nil, source: "hatched", all: 'Keet.hatched'}
         #   ]
         #   expect(result).to eq(expected)
+        # @example With `prepend_source_field_name` and `delete_sources` true
+        #   # Used in pipeline as:
+        #   # transform CombineValues::FullRecord,
+        #   #    prepend_source_field_name: true,
+        #   #    delete_sources: true
+        #   xform = CombineValues::FullRecord.new(
+        #     prepend_source_field_name: true,
+        #     delete_sources: true
+        #   )
+        #   input = [
+        #     {name: "Weddy", sex: "m", source: "adopted"},
+        #     {name: "Keet", sex: nil, source: "hatched"},
+        #   ]
+        #   result = input.map{ |row| xform.process(row) }
+        #   expected = [
+        #     {index: "name: Weddy sex: m source: adopted"},
+        #     {index: "name: Keet source: hatched"}
+        #   ]
+        #   expect(result).to eq(expected)
         class FullRecord < FromFieldsWithDelimiter
           # @param target [Symbol] Field into which the combined value will be
           #   written. May be one of the source fields
