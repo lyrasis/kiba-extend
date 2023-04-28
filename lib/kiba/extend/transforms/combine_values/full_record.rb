@@ -51,46 +51,23 @@ module Kiba
         #     {name: "Keet", sex: nil, source: "hatched", all: 'Keet.hatched'}
         #   ]
         #   expect(result).to eq(expected)
-        class FullRecord
-          include SepDeprecatable
-
-          # @param target [Symbol] Field into which to write full record
+        class FullRecord < FromFieldsWithDelimiter
+          # @param target [Symbol] Field into which the combined value will be
+          #   written. May be one of the source fields
           # @param sep [String] Will be deprecated in a future version. Do not
           #   use.
           # @param delim [String] Value used to separate individual field values
           #   in combined target field
-          def initialize(target: :index, sep: nil, delim: nil)
-            @target = target
-            @delim = usedelim(
-              sepval: sep,
-              delimval: delim,
-              calledby: self,
-              default: " "
-            )
-            @fields = nil
-          end
-
-          # @param row [Hash{ Symbol => String, nil }]
-          def process(row)
-            set_fields(row) unless fields
-
-            vals = fields.map { |field| row[field] }
-              .reject(&:blank?)
-
-            row[target] = if vals.empty?
-                             nil
-                           else
-                             vals.join(delim)
-                           end
-            row
-          end
-
-          private
-
-          attr_reader :target, :delim, :fields
-
-          def set_fields(row)
-            @fields = row.keys
+          # @param prepend_source_field_name [Boolean] Whether to insert the
+          #   source field name before its value in the combined value.
+          # @param delete_sources [Boolean] Whether to delete the source fields
+          #   after combining their values into the target field. If target
+          #   field name is the same as one of the source fields, the target
+          #   field is not deleted.
+          def initialize(target: :index, sep: nil, delim: nil,
+                         prepend_source_field_name: false,
+                         delete_sources: false)
+            super
           end
         end
       end

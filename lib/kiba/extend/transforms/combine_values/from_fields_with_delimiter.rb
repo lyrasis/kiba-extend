@@ -64,6 +64,7 @@ module Kiba
         # | h    | nil                  |
         # ```
         class FromFieldsWithDelimiter
+          include Allable
           include SepDeprecatable
 
           # @param sources [Array<Symbol>] Fields whose values are to be
@@ -80,24 +81,31 @@ module Kiba
           #   after combining their values into the target field. If target
           #   field name is the same as one of the source fields, the target
           #   field is not deleted.
-          def initialize(sources:, target:, sep: nil, delim: nil,
+          def initialize(sources: :all, target: :index, sep: nil, delim: nil,
                          prepend_source_field_name: false, delete_sources: true)
-            @sources = sources
+            @fields = [sources].flatten
             @target = target
-            @delim = usedelim(sepval: sep, delimval: delim, calledby: self)
+            @delim = usedelim(
+              sepval: sep,
+              delimval: delim,
+              calledby: self,
+              default: " "
+            )
             @del = delete_sources
             @prepend = prepend_source_field_name
           end
 
           # param row [Hash{ Symbol => String, nil }]
           def process(row)
-            vals = sources.map { |src| row.fetch(src, nil) }
+            finalize_fields(row) unless fields_set
+
+            vals = fields.map { |src| row.fetch(src, nil) }
               .map { |v| v.blank? ? nil : v }
 
             if prepend
               pvals = []
               vals.each_with_index do |val, i|
-                val = "#{sources[i]}: #{val}" unless val.nil?
+                val = "#{fields[i]}: #{val}" unless val.nil?
                 pvals << val
               end
               vals = pvals
@@ -105,13 +113,13 @@ module Kiba
             val = vals.compact.join(delim)
             row[target] = val.empty? ? nil : val
 
-            sources.each { |src| row.delete(src) unless src == target } if del
+            fields.each { |src| row.delete(src) unless src == target } if del
             row
           end
 
           private
 
-          attr_reader :sources, :target, :delim, :del, :prepend
+          attr_reader :fields, :target, :delim, :del, :prepend
         end
       end
     end
