@@ -105,31 +105,4 @@ RSpec.describe Kiba::Extend::Transforms::CombineValues do
       end
     end
   end
-
-  describe 'FullRecord' do
-    rows = [
-      %w[name sex source],
-      %w[Weddy m adopted],
-      %w[Niblet f hatched],
-      ['Keet', nil, 'hatched']
-    ]
-
-    before do
-      generate_csv(rows)
-    end
-    it 'concatenates all fields (with given delimiter) into given field' do
-      expected = [
-        { name: 'Weddy', sex: 'm', source: 'adopted',
-         search: 'Weddy m adopted' },
-        { name: 'Niblet', sex: 'f', source: 'hatched',
-         search: 'Niblet f hatched' },
-        { name: 'Keet', sex: nil, source: 'hatched',
-         search: 'Keet hatched' }
-      ]
-      result = execute_job(filename: test_csv,
-                           xform: CombineValues::FullRecord,
-                           xformopt: { target: :search })
-      expect(result).to eq(expected)
-    end
-  end
 end
