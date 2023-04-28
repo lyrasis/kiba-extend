@@ -8,6 +8,9 @@ module Kiba
         #   target field, using the given string as value separator in the
         #   combined value
         #
+        # **NOTE:** Run with defaults, behaves the same as
+        #   {FromFieldsWithDelimiter} except {FullRecord} retains source fields.
+        #
         # @example With defaults
         #   # Used in pipeline as:
         #   # transform CombineValues::FullRecord

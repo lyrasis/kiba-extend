@@ -65,61 +65,6 @@ module Kiba
         #     {name: nil, source: "na"}
         #   ]
         #   expect(result).to eq(expected)
-        #
-        # # Examples
-        #
-        # Input table:
-        #
-        # ```
-        # | col1 | col2 | col3 |
-        # |------+------+------|
-        # | a    | b    | c    |
-        # | d    | e    | nil  |
-        # | nil  | f    | g    |
-        # | nil  | h    |      |
-        # ```
-        #
-        # Used in pipeline as:
-        #
-        # ```
-        #  transform CombineValues::FromFieldsWithDelimiter,
-        #    sources: %i[col1 col3],
-        #    target: :combined,
-        #    sep: ' - ',
-        #    delete_sources: false
-        # ```
-        #
-        # Results in:
-        #
-        # ```
-        # | col1 | col2 | col3 | combined |
-        # |------+------+------+----------|
-        # | a    | b    | c    | a - c    |
-        # | d    | e    | nil  | d        |
-        # | nil  | f    | g    | g        |
-        # | nil  | h    |      | nil      |
-        # ```
-        #
-        # Used in pipeline as:
-        #
-        # ```
-        #  transform CombineValues::FromFieldsWithDelimiter,
-        #    sources: %i[col1 col3],
-        #    target: :col1,
-        #    sep: ' - ',
-        #    prepend_source_field_name: true
-        # ```
-        #
-        # Results in:
-        #
-        # ```
-        # | col2 | col1                 |
-        # +------+----------------------|
-        # | b    | col1: a - col3: c    |
-        # | e    | col1: d              |
-        # | f    | col3: g              |
-        # | h    | nil                  |
-        # ```
         class FromFieldsWithDelimiter
           include Allable
           include SepDeprecatable
