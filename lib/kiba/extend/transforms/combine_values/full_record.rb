@@ -8,33 +8,49 @@ module Kiba
         #   target field, using the given string as value separator in the
         #   combined value
         #
-        # # Example
-        #
-        # Input table:
-        #
-        # ```
-        # | name   | sex | source  |
-        # |--------+-----+---------|
-        # | Weddy  | m   | adopted |
-        # | Niblet | f   | hatched |
-        # | Keet   | nil | hatched |
-        # ```
-        #
-        # Used in pipeline as:
-        #
-        # ```
-        #  transform CombineValues::FullRecord, target: :index
-        # ```
-        #
-        # Results in:
-        #
-        # ```
-        # | name   | sex | source  | index            |
-        # |--------+-----+---------+------------------|
-        # | Weddy  | m   | adopted | Weddy m adopted  |
-        # | Niblet | f   | hatched | Niblet f hatched |
-        # | Keet   | nil | hatched | Keet hatched     |
-        # ```
+        # @example With defaults
+        #   # Used in pipeline as:
+        #   # transform CombineValues::FullRecord
+        #   xform = CombineValues::FullRecord.new
+        #   input = [
+        #     {name: "Weddy", sex: "m", source: "adopted"},
+        #     {source: "hatched", sex: "f", name: "Niblet"},
+        #     {source: "", sex: "m", name: "Tiresias"},
+        #     {name: "Keet", sex: nil, source: "hatched"},
+        #   ]
+        #   result = input.map{ |row| xform.process(row) }
+        #   expected = [
+        #     {name: "Weddy", sex: "m", source: "adopted",
+        #       index: "Weddy m adopted"},
+        #     {source: "hatched", sex: "f", name: "Niblet", index:
+        #       "Niblet f hatched"},
+        #     {source: "", sex: "m", name: "Tiresias", index: "Tiresias m"},
+        #     {name: "Keet", sex: nil, source: "hatched", index: 'Keet hatched'}
+        #   ]
+        #   expect(result).to eq(expected)
+        # @example With custom target and delim
+        #   # Used in pipeline as:
+        #   # transform CombineValues::FullRecord, target: :all, delim: "."
+        #   xform = CombineValues::FullRecord.new(
+        #     target: :all,
+        #     delim: "."
+        #   )
+        #   input = [
+        #     {name: "Weddy", sex: "m", source: "adopted"},
+        #     {source: "hatched", sex: "f", name: "Niblet"},
+        #     {source: "", sex: "m", name: "Tiresias"},
+        #     {name: "Keet", sex: nil, source: "hatched"},
+        #   ]
+        #   result = input.map{ |row| xform.process(row) }
+        #   expected = [
+        #     {name: "Weddy", sex: "m", source: "adopted",
+        #       all: "Weddy.m.adopted"},
+        #     {source: "hatched", sex: "f", name: "Niblet", all:
+        #       "Niblet.f.hatched"},
+        #     {source: "", sex: "m", name: "Tiresias", all: "Tiresias.m"},
+        #     {name: "Keet", sex: nil, source: "hatched", all: 'Keet.hatched'}
+        #   ]
+        #   expect(result).to eq(expected)
         class FullRecord
           include SepDeprecatable
 
