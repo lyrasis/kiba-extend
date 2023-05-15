@@ -13,5 +13,5 @@
 .byebug_history
 
 **/.~lock*coverage
-
+**/.DS_Store
 spec/fixtures/*.mrk
