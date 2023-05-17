@@ -79,6 +79,8 @@
 
 <p>I&#39;m going to set this up so that it can easily scale.</p>
 
+<h3 id="create-extract-job-to-get-unique-subject-values-from-each-field-in-a-consistent-way">Create extract job to get unique subject values from each field in a consistent way</h3>
+
 <p>First, create a job that accepts parameters. This will be used to isolate your subject field columns so they can be used as data sources. This job will drop rows with no subject values, and deduplicate each individual column, so our eventual combined list is smaller. It will also rename each source field to :subject.</p>
 
 <pre class="code ruby"><code class="ruby"><span class='comment'># clientproject/lib/client/jobs/subjects/extract_field_vals.rb
@@ -123,6 +125,41 @@
 <span class='kw'>end</span>
 </code></pre>
 
+<p><strong>TIP: Have multi-values in subject field?</strong></p>
+
+<p>Put this before you rename the field:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'>Explode</span><span class='op'>::</span><span class='const'>RowsFromMultivalField</span><span class='comma'>,</span>
+  <span class='label'>field:</span> <span class='id identifier rubyid_field'>field</span><span class='comma'>,</span>
+  <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>|</span><span class='tstring_end'>&#39;</span></span>
+</code></pre>
+
+<p><strong>TIP: Have multi-values in subject field AND you want the unique <em>subject subdivisions</em>?</strong></p>
+
+<p>Note: This creates a 2-column output for each subject field. You get the whole subject field value, so there&#39;s at least one example of the subdivision used in context.</p>
+
+<p>Put this before you rename the field:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'>Explode</span><span class='op'>::</span><span class='const'>RowsFromMultivalField</span><span class='comma'>,</span>
+  <span class='label'>field:</span> <span class='id identifier rubyid_field'>field</span><span class='comma'>,</span>
+  <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>|</span><span class='tstring_end'>&#39;</span></span>
+</code></pre>
+
+<p>Put this after you rename the field:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'>Copy</span><span class='op'>::</span><span class='const'>Field</span><span class='comma'>,</span>
+  <span class='label'>from:</span> <span class='symbol'>:subject</span><span class='comma'>,</span>
+  <span class='label'>to:</span> <span class='symbol'>:subdivision</span>
+<span class='id identifier rubyid_transform'>transform</span> <span class='const'>Explode</span><span class='op'>::</span><span class='const'>RowsFromMultivalField</span><span class='comma'>,</span>
+  <span class='label'>field:</span> <span class='symbol'>:subdivision</span><span class='comma'>,</span>
+  <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>--</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_transform'>transform</span> <span class='const'>Clean</span><span class='op'>::</span><span class='const'>StripFields</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='symbol'>:subdivision</span>
+</code></pre>
+
+<p>Then, change the field you deduplicate on to :subdivision.</p>
+
+<h3 id="set-up-registry-entries-to-dynamically-extract-and-compile-the-field-data-based-on-config">Set up registry entries to dynamically extract and compile the field data based on config</h3>
+
 <p>Set up your registry stuff to call this job dynamically for whatever sources you give it:</p>
 
 <pre class="code ruby"><code class="ruby"><span class='const'>Client</span><span class='period'>.</span><span class='id identifier rubyid_registry'>registry</span><span class='period'>.</span><span class='id identifier rubyid_namespace'>namespace</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>subjects</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
@@ -166,6 +203,8 @@
   <span class='rbrace'>}</span>
 <span class='kw'>end</span>
 </code></pre>
+
+<h3 id="write-the-compile-job-taking-its-sources-as-an-argument">Write the compile job, taking its sources as an argument</h3>
 
 <p>And the compile job you&#39;ll call to generate the list of all unique values. This is going to read in all the rows from all the single-column jobs and deduplicate the values:</p>
 
@@ -427,7 +466,7 @@
 </div></div>
 
       <div id="footer">
-  Generated on Wed May 17 00:54:35 2023 by
+  Generated on Wed May 17 01:08:32 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>
