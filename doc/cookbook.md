@@ -2,7 +2,144 @@
 
 A place to share patterns for handling common workflows.
 
-## Produce cleanup worksheet for client
+## Generate unique subject headings used in multiple fields, across multiple data sources
+
+Client data includes multiple tables. One or more fields from each table will end up mapping to `subject`. We need a list of all unique values mapping to `subject` for client to review, and/or to use as a base for producing a cleanup worksheet. Sample data:
+
+- coll1.csv - `mainsub`, `addtlsub` fields contain subject values
+- coll2.csv - `subject` field contains subject values
+
+Assume we have already registered supplied entries for these data sources:
+
+- :orig__coll1
+- :orig__coll2
+
+I'm going to set this up so that it can easily scale.
+
+First, create a job that accepts parameters. This will be used to isolate your subject field columns so they can be used as data sources. This job will drop rows with no subject values, and deduplicate each individual column, so our eventual combined list is smaller. It will also rename each source field to :subject.
+
+```
+# clientproject/lib/client/jobs/subjects/extract_field_vals.rb
+
+module Client
+  module Jobs
+    module Subjects
+      module ExtractFieldVals
+        module_function
+
+        # @param source [Symbol] registry entry key of source, without namespace
+        # @param dest [Symbol] registry entry key of destination, without namespace
+        # @param field [Symbol] field containing subject values
+        def job(source:, dest:, field:)
+          Kiba::Extend::Jobs::Job.new(
+            files: {
+              source: "orig__#{source}".to_sym,
+              destination: "subjects__#{dest}".to_sym
+            },
+            transformer: xforms(field)
+          )
+        end
+
+        def xforms(field)
+          Kiba.job_segment do
+            transform Delete::FieldsExcept,
+              fields: field
+            transform FilterRows::FieldPopulated,
+              action: :keep,
+              field: field
+            transform Rename::Field,
+              from: field,
+              to: :subject
+            transform Deduplicate::Table,
+              field: field,
+              delete_field: false
+          end
+        end
+      end
+    end
+  end
+end
+```
+
+Set up your registry stuff to call this job dynamically for whatever sources you give it:
+
+```
+Client.registry.namespace("subjects") do
+  # Here is where you configure your subject value sources. If you have
+  #   followed naming pattern/convention, then you don't have to touch
+  #   this again
+  src_cfg = [
+    ["coll1", :mainsub],
+    ["coll1", :addtlsub],
+    ["coll2", :subject]
+  ]
+  # We'll use this as an argument passed to our compilation job. It just
+  #   creates the full registry entry keys with namespaces that will be
+  #   sources for that job
+  subject_srcs = src_cfg.map do |cfg|
+    "subjects__#{cfg[0]}_#{cfg[1]}".to_sym
+  end
+
+  # Dynamically create individual source field extract jobs
+  src_cfg.each do |cfg|
+    src = cfg[0]
+    field = cfg[1]
+    dest = "#{src}_#{field}".to_sym
+    register dest, {
+      path: File.join(Client.datadir, "working",
+                      "subjects_from_#{dest}.csv"),
+      creator: {
+        callee: Client::Jobs::Subjects::ExtractFieldVals,
+        args: {source: src, dest: dest, field: field}
+      }
+    }
+  end
+  # This is also called with args, so the sources can be based on
+  #   the `src_cfg` you entered above
+  register :compile, {
+    path: File.join(Client.datadir, "working", "subjects_compiled.csv"),
+    creator: {
+      callee: Client::Jobs::Subjects::Compile,
+      args: {sources: subject_srcs}
+    }
+  }
+end
+```
+
+And the compile job you'll call to generate the list of all unique values. This is going to read in all the rows from all the single-column jobs and deduplicate the values:
+
+```
+module Client
+  module Jobs
+    module Subjects
+      module Compile
+        module_function
+
+        # @param sources [Array<Symbol>]
+        def job(sources:)
+          Kiba::Extend::Jobs::Job.new(
+            files: {
+              source: sources,
+              destination: :subjects__compile
+            },
+            transformer: xforms
+          )
+        end
+
+        def xforms
+          Kiba.job_segment do
+            transform Deduplicate::Table,
+              field: :subject,
+              delete_field: false
+          end
+        end
+      end
+    end
+  end
+end
+```
+
+## Produce `description` field cleanup worksheet for client
 
 Client has >10,000 source records. Their `description` field is free-text, but they have mostly entered data by cutting and pasting from the data entry guide for their previous system. However, some irregularities have crept in that they would like to clean up. Some of these irregularities may have been copied to many records by cloning records in the source system.
 
