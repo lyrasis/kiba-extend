@@ -16,6 +16,8 @@ Assume we have already registered supplied entries for these data sources:
 
 I'm going to set this up so that it can easily scale.
 
+### Create extract job to get unique subject values from each field in a consistent way
+
 First, create a job that accepts parameters. This will be used to isolate your subject field columns so they can be used as data sources. This job will drop rows with no subject values, and deduplicate each individual column, so our eventual combined list is smaller. It will also rename each source field to :subject.
 
 ```
@@ -61,6 +63,44 @@ module Client
 end
 ```
 
+**TIP: Have multi-values in subject field?**
+
+Put this before you rename the field:
+
+```
+transform Explode::RowsFromMultivalField,
+  field: field,
+  delim: '|'
+```
+
+**TIP: Have multi-values in subject field AND you want the unique _subject subdivisions_?**
+
+Note: This creates a 2-column output for each subject field. You get the whole subject field value, so there's at least one example of the subdivision used in context.
+
+Put this before you rename the field:
+
+```
+transform Explode::RowsFromMultivalField,
+  field: field,
+  delim: '|'
+```
+
+Put this after you rename the field:
+
+```
+transform Copy::Field,
+  from: :subject,
+  to: :subdivision
+transform Explode::RowsFromMultivalField,
+  field: :subdivision,
+  delim: '--'
+transform Clean::StripFields, fields: :subdivision
+```
+
+Then, change the field you deduplicate on to :subdivision.
+
+### Set up registry entries to dynamically extract and compile the field data based on config
+
 Set up your registry stuff to call this job dynamically for whatever sources you give it:
 
 ```
@@ -105,6 +145,8 @@ Client.registry.namespace("subjects") do
   }
 end
 ```
+
+### Write the compile job, taking its sources as an argument
 
 And the compile job you'll call to generate the list of all unique values. This is going to read in all the rows from all the single-column jobs and deduplicate the values:
 
