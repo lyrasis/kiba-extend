@@ -181,6 +181,46 @@ module Client
 end
 ```
 
+## Run the compilation job
+
+```
+thor run job subjects__compile
+```
+
+Everything else runs automagically in the background.
+
+Well, if any of your subject field sources ends up not writing a CSV file because there are no values in the field, this will fail. The easiest thing to do is remove that source from your `src_cfg` array.
+
+If your project is more dynamic, you can add a method like this somewhere:
+
+```
+module Client
+  # @param jobkey [Symbol]
+  def job_output?(jobkey)
+    reg = Client.registry.resolve(jobkey)
+    return false unless reg
+    return true if File.exist?(reg.path)
+
+    res = Kiba::Extend::Command::Run.job(jobkey)
+    return false unless res
+
+    !(res.outrows == 0)
+  end
+end
+```
+
+And register your compilation job like:
+
+```
+  register :compile, {
+    path: File.join(Client.datadir, "working", "subjects_compiled.csv"),
+    creator: {
+      callee: Client::Jobs::Subjects::Compile,
+      args: {sources: subject_srcs.select{ |key| Client.job_output?(key) }}
+    }
+  }
+```
+
 ## Produce `description` field cleanup worksheet for client
 
 Client has >10,000 source records. Their `description` field is free-text, but they have mostly entered data by cutting and pasting from the data entry guide for their previous system. However, some irregularities have crept in that they would like to clean up. Some of these irregularities may have been copied to many records by cloning records in the source system.
