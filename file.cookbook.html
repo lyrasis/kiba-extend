@@ -61,7 +61,145 @@
 
 <p>A place to share patterns for handling common workflows.</p>
 
-<h2 id="produce-cleanup-worksheet-for-client">Produce cleanup worksheet for client</h2>
+<h2 id="generate-unique-subject-headings-used-in-multiple-fields-across-multiple-data-sources">Generate unique subject headings used in multiple fields, across multiple data sources</h2>
+
+<p>Client data includes multiple tables. One or more fields from each table will end up mapping to <code>subject</code>. We need a list of all unique values mapping to <code>subject</code> for client to review, and/or to use as a base for producing a cleanup worksheet. Sample data:</p>
+
+<ul>
+<li>coll1.csv - <code>mainsub</code>, <code>addtlsub</code> fields contain subject values</li>
+<li>coll2.csv - <code>subject</code> field contains subject values</li>
+</ul>
+
+<p>Assume we have already registered supplied entries for these data sources:</p>
+
+<ul>
+<li>:orig__coll1</li>
+<li>:orig__coll2</li>
+</ul>
+
+<p>I&#39;m going to set this up so that it can easily scale.</p>
+
+<p>First, create a job that accepts parameters. This will be used to isolate your subject field columns so they can be used as data sources. This job will drop rows with no subject values, and deduplicate each individual column, so our eventual combined list is smaller. It will also rename each source field to :subject.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='comment'># clientproject/lib/client/jobs/subjects/extract_field_vals.rb
+</span>
+<span class='kw'>module</span> <span class='const'>Client</span>
+  <span class='kw'>module</span> <span class='const'>Jobs</span>
+    <span class='kw'>module</span> <span class='const'>Subjects</span>
+      <span class='kw'>module</span> <span class='const'>ExtractFieldVals</span>
+        <span class='id identifier rubyid_module_function'>module_function</span>
+
+        <span class='comment'># @param source [Symbol] registry entry key of source, without namespace
+</span>        <span class='comment'># @param dest [Symbol] registry entry key of destination, without namespace
+</span>        <span class='comment'># @param field [Symbol] field containing subject values
+</span>        <span class='kw'>def</span> <span class='id identifier rubyid_job'>job</span><span class='lparen'>(</span><span class='label'>source:</span><span class='comma'>,</span> <span class='label'>dest:</span><span class='comma'>,</span> <span class='label'>field:</span><span class='rparen'>)</span>
+          <span class='const'><span class='object_link'><a href="Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Kiba/Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Kiba/Extend/Jobs.html" title="Kiba::Extend::Jobs (module)">Jobs</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Kiba/Extend/Jobs/Job.html" title="Kiba::Extend::Jobs::Job (class)">Job</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Kiba/Extend/Jobs/BaseJob.html#initialize-instance_method" title="Kiba::Extend::Jobs::BaseJob#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+            <span class='label'>files:</span> <span class='lbrace'>{</span>
+              <span class='label'>source:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>orig__</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_source'>source</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='comma'>,</span>
+              <span class='label'>destination:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>subjects__</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_dest'>dest</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
+            <span class='rbrace'>}</span><span class='comma'>,</span>
+            <span class='label'>transformer:</span> <span class='id identifier rubyid_xforms'>xforms</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='rparen'>)</span>
+          <span class='rparen'>)</span>
+        <span class='kw'>end</span>
+
+        <span class='kw'>def</span> <span class='id identifier rubyid_xforms'>xforms</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='rparen'>)</span>
+          <span class='const'><span class='object_link'><a href="Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='period'>.</span><span class='id identifier rubyid_job_segment'><span class='object_link'><a href="Kiba/Extend/Jobs/JobSegmenter.html#job_segment-instance_method" title="Kiba::Extend::Jobs::JobSegmenter#job_segment (method)">job_segment</a></span></span> <span class='kw'>do</span>
+            <span class='id identifier rubyid_transform'>transform</span> <span class='const'>Delete</span><span class='op'>::</span><span class='const'>FieldsExcept</span><span class='comma'>,</span>
+              <span class='label'>fields:</span> <span class='id identifier rubyid_field'>field</span>
+            <span class='id identifier rubyid_transform'>transform</span> <span class='const'>FilterRows</span><span class='op'>::</span><span class='const'>FieldPopulated</span><span class='comma'>,</span>
+              <span class='label'>action:</span> <span class='symbol'>:keep</span><span class='comma'>,</span>
+              <span class='label'>field:</span> <span class='id identifier rubyid_field'>field</span>
+            <span class='id identifier rubyid_transform'>transform</span> <span class='const'>Rename</span><span class='op'>::</span><span class='const'>Field</span><span class='comma'>,</span>
+              <span class='label'>from:</span> <span class='id identifier rubyid_field'>field</span><span class='comma'>,</span>
+              <span class='label'>to:</span> <span class='symbol'>:subject</span>
+            <span class='id identifier rubyid_transform'>transform</span> <span class='const'>Deduplicate</span><span class='op'>::</span><span class='const'>Table</span><span class='comma'>,</span>
+              <span class='label'>field:</span> <span class='id identifier rubyid_field'>field</span><span class='comma'>,</span>
+              <span class='label'>delete_field:</span> <span class='kw'>false</span>
+          <span class='kw'>end</span>
+        <span class='kw'>end</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<p>Set up your registry stuff to call this job dynamically for whatever sources you give it:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'>Client</span><span class='period'>.</span><span class='id identifier rubyid_registry'>registry</span><span class='period'>.</span><span class='id identifier rubyid_namespace'>namespace</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>subjects</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
+  <span class='comment'># Here is where you configure your subject value sources. If you have
+</span>  <span class='comment'>#   followed naming pattern/convention, then you don&#39;t have to touch
+</span>  <span class='comment'>#   this again
+</span>  <span class='id identifier rubyid_src_cfg'>src_cfg</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+    <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>coll1</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:mainsub</span><span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>coll1</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:addtlsub</span><span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>coll2</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:subject</span><span class='rbracket'>]</span>
+  <span class='rbracket'>]</span>
+  <span class='comment'># We&#39;ll use this as an argument passed to our compilation job. It just
+</span>  <span class='comment'>#   creates the full registry entry keys with namespaces that will be
+</span>  <span class='comment'>#   sources for that job
+</span>  <span class='id identifier rubyid_subject_srcs'>subject_srcs</span> <span class='op'>=</span> <span class='id identifier rubyid_src_cfg'>src_cfg</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_cfg'>cfg</span><span class='op'>|</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>subjects__</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_cfg'>cfg</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_cfg'>cfg</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
+  <span class='kw'>end</span>
+
+  <span class='comment'># Dynamically create individual source field extract jobs
+</span>  <span class='id identifier rubyid_src_cfg'>src_cfg</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_cfg'>cfg</span><span class='op'>|</span>
+    <span class='id identifier rubyid_src'>src</span> <span class='op'>=</span> <span class='id identifier rubyid_cfg'>cfg</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_field'>field</span> <span class='op'>=</span> <span class='id identifier rubyid_cfg'>cfg</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_dest'>dest</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_src'>src</span><span class='embexpr_end'>}</span><span class='tstring_content'>_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_field'>field</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
+    <span class='id identifier rubyid_register'>register</span> <span class='id identifier rubyid_dest'>dest</span><span class='comma'>,</span> <span class='lbrace'>{</span>
+      <span class='label'>path:</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='const'>Client</span><span class='period'>.</span><span class='id identifier rubyid_datadir'>datadir</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>working</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+                      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>subjects_from_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_dest'>dest</span><span class='embexpr_end'>}</span><span class='tstring_content'>.csv</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
+      <span class='label'>creator:</span> <span class='lbrace'>{</span>
+        <span class='label'>callee:</span> <span class='const'>Client</span><span class='op'>::</span><span class='const'>Jobs</span><span class='op'>::</span><span class='const'>Subjects</span><span class='op'>::</span><span class='const'>ExtractFieldVals</span><span class='comma'>,</span>
+        <span class='label'>args:</span> <span class='lbrace'>{</span><span class='label'>source:</span> <span class='id identifier rubyid_src'>src</span><span class='comma'>,</span> <span class='label'>dest:</span> <span class='id identifier rubyid_dest'>dest</span><span class='comma'>,</span> <span class='label'>field:</span> <span class='id identifier rubyid_field'>field</span><span class='rbrace'>}</span>
+      <span class='rbrace'>}</span>
+    <span class='rbrace'>}</span>
+  <span class='kw'>end</span>
+  <span class='comment'># This is also called with args, so the sources can be based on
+</span>  <span class='comment'>#   the `src_cfg` you entered above
+</span>  <span class='id identifier rubyid_register'>register</span> <span class='symbol'>:compile</span><span class='comma'>,</span> <span class='lbrace'>{</span>
+    <span class='label'>path:</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='const'>Client</span><span class='period'>.</span><span class='id identifier rubyid_datadir'>datadir</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>working</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>subjects_compiled.csv</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
+    <span class='label'>creator:</span> <span class='lbrace'>{</span>
+      <span class='label'>callee:</span> <span class='const'>Client</span><span class='op'>::</span><span class='const'>Jobs</span><span class='op'>::</span><span class='const'>Subjects</span><span class='op'>::</span><span class='const'>Compile</span><span class='comma'>,</span>
+      <span class='label'>args:</span> <span class='lbrace'>{</span><span class='label'>sources:</span> <span class='id identifier rubyid_subject_srcs'>subject_srcs</span><span class='rbrace'>}</span>
+    <span class='rbrace'>}</span>
+  <span class='rbrace'>}</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<p>And the compile job you&#39;ll call to generate the list of all unique values. This is going to read in all the rows from all the single-column jobs and deduplicate the values:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='kw'>module</span> <span class='const'>Client</span>
+  <span class='kw'>module</span> <span class='const'>Jobs</span>
+    <span class='kw'>module</span> <span class='const'>Subjects</span>
+      <span class='kw'>module</span> <span class='const'>Compile</span>
+        <span class='id identifier rubyid_module_function'>module_function</span>
+
+        <span class='comment'># @param sources [Array&lt;Symbol&gt;]
+</span>        <span class='kw'>def</span> <span class='id identifier rubyid_job'>job</span><span class='lparen'>(</span><span class='label'>sources:</span><span class='rparen'>)</span>
+          <span class='const'><span class='object_link'><a href="Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Kiba/Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Kiba/Extend/Jobs.html" title="Kiba::Extend::Jobs (module)">Jobs</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Kiba/Extend/Jobs/Job.html" title="Kiba::Extend::Jobs::Job (class)">Job</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Kiba/Extend/Jobs/BaseJob.html#initialize-instance_method" title="Kiba::Extend::Jobs::BaseJob#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+            <span class='label'>files:</span> <span class='lbrace'>{</span>
+              <span class='label'>source:</span> <span class='id identifier rubyid_sources'>sources</span><span class='comma'>,</span>
+              <span class='label'>destination:</span> <span class='symbol'>:subjects__compile</span>
+            <span class='rbrace'>}</span><span class='comma'>,</span>
+            <span class='label'>transformer:</span> <span class='id identifier rubyid_xforms'>xforms</span>
+          <span class='rparen'>)</span>
+        <span class='kw'>end</span>
+
+        <span class='kw'>def</span> <span class='id identifier rubyid_xforms'>xforms</span>
+          <span class='const'><span class='object_link'><a href="Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='period'>.</span><span class='id identifier rubyid_job_segment'><span class='object_link'><a href="Kiba/Extend/Jobs/JobSegmenter.html#job_segment-instance_method" title="Kiba::Extend::Jobs::JobSegmenter#job_segment (method)">job_segment</a></span></span> <span class='kw'>do</span>
+            <span class='id identifier rubyid_transform'>transform</span> <span class='const'>Deduplicate</span><span class='op'>::</span><span class='const'>Table</span><span class='comma'>,</span>
+              <span class='label'>field:</span> <span class='symbol'>:subject</span><span class='comma'>,</span>
+              <span class='label'>delete_field:</span> <span class='kw'>false</span>
+          <span class='kw'>end</span>
+        <span class='kw'>end</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<h2 id="produce-description-field-cleanup-worksheet-for-client">Produce <code>description</code> field cleanup worksheet for client</h2>
 
 <p>Client has &gt;10,000 source records. Their <code>description</code> field is free-text, but they have mostly entered data by cutting and pasting from the data entry guide for their previous system. However, some irregularities have crept in that they would like to clean up. Some of these irregularities may have been copied to many records by cloning records in the source system.</p>
 
@@ -289,7 +427,7 @@
 </div></div>
 
       <div id="footer">
-  Generated on Tue May 16 21:41:27 2023 by
+  Generated on Wed May 17 00:54:35 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>
