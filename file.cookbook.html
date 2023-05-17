@@ -238,6 +238,43 @@
 <span class='kw'>end</span>
 </code></pre>
 
+<h2 id="run-the-compilation-job">Run the compilation job</h2>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_thor'>thor</span> <span class='id identifier rubyid_run'>run</span> <span class='id identifier rubyid_job'>job</span> <span class='id identifier rubyid_subjects__compile'>subjects__compile</span>
+</code></pre>
+
+<p>Everything else runs automagically in the background.</p>
+
+<p>Well, if any of your subject field sources ends up not writing a CSV file because there are no values in the field, this will fail. The easiest thing to do is remove that source from your <code>src_cfg</code> array.</p>
+
+<p>If your project is more dynamic, you can add a method like this somewhere:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='kw'>module</span> <span class='const'>Client</span>
+  <span class='comment'># @param jobkey [Symbol]
+</span>  <span class='kw'>def</span> <span class='id identifier rubyid_job_output?'>job_output?</span><span class='lparen'>(</span><span class='id identifier rubyid_jobkey'>jobkey</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_reg'>reg</span> <span class='op'>=</span> <span class='const'>Client</span><span class='period'>.</span><span class='id identifier rubyid_registry'>registry</span><span class='period'>.</span><span class='id identifier rubyid_resolve'>resolve</span><span class='lparen'>(</span><span class='id identifier rubyid_jobkey'>jobkey</span><span class='rparen'>)</span>
+    <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_reg'>reg</span>
+    <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span><span class='lparen'>(</span><span class='id identifier rubyid_reg'>reg</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
+
+    <span class='id identifier rubyid_res'>res</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Kiba/Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Kiba/Extend/Command.html" title="Kiba::Extend::Command (module)">Command</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Kiba/Extend/Command/Run.html" title="Kiba::Extend::Command::Run (module)">Run</a></span></span><span class='period'>.</span><span class='id identifier rubyid_job'><span class='object_link'><a href="Kiba/Extend/Command/Run.html#job-class_method" title="Kiba::Extend::Command::Run.job (method)">job</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_jobkey'>jobkey</span><span class='rparen'>)</span>
+    <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_res'>res</span>
+
+    <span class='op'>!</span><span class='lparen'>(</span><span class='id identifier rubyid_res'>res</span><span class='period'>.</span><span class='id identifier rubyid_outrows'>outrows</span> <span class='op'>==</span> <span class='int'>0</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<p>And register your compilation job like:</p>
+
+<pre class="code ruby"><code class="ruby">  <span class='id identifier rubyid_register'>register</span> <span class='symbol'>:compile</span><span class='comma'>,</span> <span class='lbrace'>{</span>
+    <span class='label'>path:</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='const'>Client</span><span class='period'>.</span><span class='id identifier rubyid_datadir'>datadir</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>working</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>subjects_compiled.csv</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
+    <span class='label'>creator:</span> <span class='lbrace'>{</span>
+      <span class='label'>callee:</span> <span class='const'>Client</span><span class='op'>::</span><span class='const'>Jobs</span><span class='op'>::</span><span class='const'>Subjects</span><span class='op'>::</span><span class='const'>Compile</span><span class='comma'>,</span>
+      <span class='label'>args:</span> <span class='lbrace'>{</span><span class='label'>sources:</span> <span class='id identifier rubyid_subject_srcs'>subject_srcs</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='op'>|</span> <span class='const'>Client</span><span class='period'>.</span><span class='id identifier rubyid_job_output?'>job_output?</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='rbrace'>}</span>
+    <span class='rbrace'>}</span>
+  <span class='rbrace'>}</span>
+</code></pre>
+
 <h2 id="produce-description-field-cleanup-worksheet-for-client">Produce <code>description</code> field cleanup worksheet for client</h2>
 
 <p>Client has &gt;10,000 source records. Their <code>description</code> field is free-text, but they have mostly entered data by cutting and pasting from the data entry guide for their previous system. However, some irregularities have crept in that they would like to clean up. Some of these irregularities may have been copied to many records by cloning records in the source system.</p>
@@ -466,7 +503,7 @@
 </div></div>
 
       <div id="footer">
-  Generated on Wed May 17 01:08:32 2023 by
+  Generated on Wed May 17 01:31:50 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>
