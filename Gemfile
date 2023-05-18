@@ -6,7 +6,7 @@ git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
 group :documentation do
   gem 'redcarpet', '~>3.5' # markdown parser for generating documentation
-  gem 'yard', '~>0.9.28'
+  gem 'yard', '~>0.9.34'
 end
 
 group :development, :test do
