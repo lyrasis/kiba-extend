@@ -154,17 +154,46 @@ module Helpers
 
   def populate_registry(more_entries: {})
     fkeypath = File.join(fixtures_dir, 'existing.csv')
-    entries = { fkey: { path: fkeypath, supplied: true, lookup_on: :id },
-               invalid: {},
-               fee: { path: fkeypath, lookup_on: :foo, supplied: true },
-               foo: { path: fkeypath, creator: Helpers.method(:test_csv), tags: %i[test] },
-               bar: { path: fkeypath, creator: Helpers.method(:lookup_csv), tags: %i[test report] },
-               baz: { path: fkeypath, creator: Kiba::Extend::Utils::Lookup.method(:csv_to_hash), tags: %i[report] },
-               warn: { path: fkeypath, dest_class: Kiba::Extend::Destinations::CSV,
-                      creator: Kiba::Extend.method(:csvopts),
-                      dest_special_opts: { initial_headers: %i[objectnumber briefdescription] } },
-               json_arr: {path: fkeypath, dest_class: Kiba::Extend::Destinations::JsonArray,
-                          creator: Helpers.method(:fake_creator_method)} }.merge(more_entries)
+    nofilepath = File.join(fixtures_dir, 'not_here.csv')
+    entries = {
+      fkey: { path: fkeypath, supplied: true, lookup_on: :id },
+      invalid: {},
+      fee: { path: fkeypath, lookup_on: :foo, supplied: true },
+      foo: {
+        path: fkeypath,
+        creator: Helpers.method(:test_csv),
+        tags: %i[test]
+      },
+      bar: {
+        path: fkeypath,
+        creator: Helpers.method(:lookup_csv),
+        tags: %i[test report]
+      },
+      baz: {
+        path: fkeypath,
+        creator: Kiba::Extend::Utils::Lookup.method(:csv_to_hash),
+        tags: %i[report]
+      },
+      warn: {
+        path: fkeypath,
+        dest_class: Kiba::Extend::Destinations::CSV,
+        creator: Kiba::Extend.method(:csvopts),
+        dest_special_opts: { initial_headers: %i[objectnumber briefdescription] }
+      },
+      json_arr: {
+        path: fkeypath,
+        dest_class: Kiba::Extend::Destinations::JsonArray,
+        creator: Helpers.method(:fake_creator_method)
+      },
+      noresultfile: {
+        path: nofilepath,
+        creator: Helpers.method(:fake_creator_with_no_job_output)
+      },
+      resultfile: {
+        path: nofilepath,
+        creator: Helpers.method(:fake_creator_with_job_output)
+      }
+    }.merge(more_entries)
     entries.each { |key, data| Kiba::Extend.registry.register(key, data) }
     Kiba::Extend.registry.namespace(:ns) do
       namespace(:sub) do
@@ -184,6 +213,22 @@ module Helpers
 
   def fake_creator_method
     FileUtils.touch(File.join(fixtures_dir, 'base_job_missing.csv'))
+  end
+
+  class OutputJob
+    attr_reader :outrows
+
+    def initialize(rowct)
+      @outrows = rowct
+    end
+  end
+
+  def fake_creator_with_no_job_output
+    OutputJob.new(0)
+  end
+
+  def fake_creator_with_job_output
+    OutputJob.new(101)
   end
 
   # for test in Kiba::Extend::Jobs::BaseJobsSpec that I can't get working
