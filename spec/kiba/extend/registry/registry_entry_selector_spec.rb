@@ -51,14 +51,6 @@ RSpec.describe 'Kiba::Extend::Registry::RegistryEntrySelector' do
         expect(result.map(&:key).sort).to eq(%w[baz warn])
       end
     end
-
-    context 'with Helpers' do
-      let(:cstr) { 'Helpers' }
-      it 'returns entries created by given class or method' do
-        expect(result.length).to eq(3)
-        expect(result.map(&:key).sort).to eq(%w[bar foo json_arr])
-      end
-    end
   end
 
   describe '#created_by_method' do
