@@ -69,9 +69,7 @@
 
 <p>At some point I plan to test whether jobs with no output can be made to just create a blank file, and whether that causes dependent jobs to fail in other ways.</p>
 
-<p>For now, as of 3.1.0, you can add a little extra code to defend against this. See <a href="https://lyrasis.github.io/kiba-extend/file.common_patterns_tips_tricks.html#running-jobs-and-checking-srcrows-and-outrows-counts-from-client-project-code">Running jobs, and checking <code>srcrows</code> and <code>outrows</code> counts from client project code</a> below.</p>
-
-<p>An example of use is the <a href="https://github.com/search?q=repo%3Alyrasis%2Fkiba-tms+%22def+job_output%3F%22&type=code"><code>job_output?</code> method in the kiba-tms project</a> and <a href="https://github.com/search?q=repo%3Alyrasis%2Fkiba-tms+%22base.select%22&type=code">its use defining lookups in jobs</a>, where some clients may not have data in all the lookup tables.</p>
+<p>For now, as of 3.3.0.150, you defend against this using the <code>Kiba::Extend::Job.output?</code> method to dynamically select only jobs having output for use as sources or lookups.</p>
 
 <h2 id="joining-the-rows-of-multiple-sources-that-may-have-different-fields">Joining the rows of multiple sources that may have different fields</h2>
 
@@ -228,7 +226,7 @@
 </div></div>
 
       <div id="footer">
-  Generated on Wed May 17 01:31:50 2023 by
+  Generated on Fri May 19 00:13:41 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>
