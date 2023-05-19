@@ -191,32 +191,14 @@ Everything else runs automagically in the background.
 
 Well, if any of your subject field sources ends up not writing a CSV file because there are no values in the field, this will fail. The easiest thing to do is remove that source from your `src_cfg` array.
 
-If your project is more dynamic, you can add a method like this somewhere:
-
-```
-module Client
-  # @param jobkey [Symbol]
-  def job_output?(jobkey)
-    reg = Client.registry.resolve(jobkey)
-    return false unless reg
-    return true if File.exist?(reg.path)
-
-    res = Kiba::Extend::Command::Run.job(jobkey)
-    return false unless res
-
-    !(res.outrows == 0)
-  end
-end
-```
-
-And register your compilation job like:
+If your project is more dynamic, you can register your compilation job like:
 
 ```
   register :compile, {
     path: File.join(Client.datadir, "working", "subjects_compiled.csv"),
     creator: {
       callee: Client::Jobs::Subjects::Compile,
-      args: {sources: subject_srcs.select{ |key| Client.job_output?(key) }}
+      args: {sources: subject_srcs.select{ |key| Kiba::Extend::Job.output?(key) }}
     }
   }
 ```

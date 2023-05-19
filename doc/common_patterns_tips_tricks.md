@@ -10,9 +10,7 @@ When there are no rows to write out to a Destination, we don't even know what th
 
 At some point I plan to test whether jobs with no output can be made to just create a blank file, and whether that causes dependent jobs to fail in other ways.
 
-For now, as of 3.1.0, you can add a little extra code to defend against this. See [Running jobs, and checking `srcrows` and `outrows` counts from client project code](https://lyrasis.github.io/kiba-extend/file.common_patterns_tips_tricks.html#running-jobs-and-checking-srcrows-and-outrows-counts-from-client-project-code) below.
-
-An example of use is the [`job_output?` method in the kiba-tms project](https://github.com/search?q=repo%3Alyrasis%2Fkiba-tms+%22def+job_output%3F%22&type=code) and [its use defining lookups in jobs](https://github.com/search?q=repo%3Alyrasis%2Fkiba-tms+%22base.select%22&type=code), where some clients may not have data in all the lookup tables.
+For now, as of 3.3.0.150, you defend against this using the `Kiba::Extend::Job.output?` method to dynamically select only jobs having output for use as sources or lookups.
 
 ## Joining the rows of multiple sources that may have different fields
 
