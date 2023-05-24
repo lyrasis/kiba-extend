@@ -454,7 +454,8 @@ See <span class='object_link'><a href="Add.html" title="Kiba::Extend::Transforms
 85
 86
 87
-88</pre>
+88
+89</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/decode.rb', line 72</span>
@@ -467,13 +468,14 @@ See <span class='object_link'><a href="Add.html" title="Kiba::Extend::Transforms
   <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_fingerprint'>fingerprint</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_delete'>delete</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_row'>row</span> <span class='kw'>if</span> <span class='id identifier rubyid_fpval'>fpval</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
 
-  <span class='id identifier rubyid_decoded'>decoded</span> <span class='op'>=</span> <span class='const'>Base64</span><span class='period'>.</span><span class='id identifier rubyid_strict_decode64'>strict_decode64</span><span class='lparen'>(</span><span class='id identifier rubyid_fpval'>fpval</span><span class='rparen'>)</span>
-    <span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='id identifier rubyid_delim'>delim</span><span class='rparen'>)</span>
-    <span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_val'>val</span><span class='op'>|</span> <span class='id identifier rubyid_val'>val</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>nil</span><span class='tstring_end'>&#39;</span></span> <span class='op'>?</span> <span class='kw'>nil</span> <span class='op'>:</span> <span class='id identifier rubyid_val'>val</span> <span class='rbrace'>}</span>
-    <span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_val'>val</span><span class='op'>|</span> <span class='id identifier rubyid_val'>val</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>empty</span><span class='tstring_end'>&#39;</span></span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span> <span class='op'>:</span> <span class='id identifier rubyid_val'>val</span> <span class='rbrace'>}</span>
-  <span class='id identifier rubyid_check_length'>check_length</span><span class='lparen'>(</span><span class='id identifier rubyid_decoded'>decoded</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_decoded'>decoded</span> <span class='op'>=</span> <span class='id identifier rubyid_decode'>decode</span><span class='lparen'>(</span><span class='id identifier rubyid_fpval'>fpval</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_parts'>parts</span> <span class='op'>=</span> <span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='id identifier rubyid_decoded'>decoded</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_reconstituted'>reconstituted</span> <span class='op'>=</span> <span class='id identifier rubyid_reconstitute'>reconstitute</span><span class='lparen'>(</span><span class='id identifier rubyid_parts'>parts</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_check_length'>check_length</span><span class='lparen'>(</span><span class='id identifier rubyid_reconstituted'>reconstituted</span><span class='rparen'>)</span>
 
-  <span class='id identifier rubyid_target_fields'>target_fields</span><span class='period'>.</span><span class='id identifier rubyid_each_with_index'>each_with_index</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='id identifier rubyid_i'>i</span><span class='op'>|</span> <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_target'>target</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_safe_decoded_value'>safe_decoded_value</span><span class='lparen'>(</span><span class='id identifier rubyid_decoded'>decoded</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_target_fields'>target_fields</span><span class='period'>.</span><span class='id identifier rubyid_each_with_index'>each_with_index</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='id identifier rubyid_idx'>idx</span><span class='op'>|</span>
+    <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_target'>target</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_reconstituted'>reconstituted</span><span class='lbracket'>[</span><span class='id identifier rubyid_idx'>idx</span><span class='rbracket'>]</span>
+  <span class='kw'>end</span>
   <span class='id identifier rubyid_row'>row</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -486,7 +488,7 @@ See <span class='object_link'><a href="Add.html" title="Kiba::Extend::Transforms
 </div>
 
       <div id="footer">
-  Generated on Wed May 24 15:51:51 2023 by
+  Generated on Wed May 24 16:21:03 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>
