@@ -77,13 +77,14 @@ module Kiba
             row.delete(fingerprint) if delete
             return row if fpval.blank?
 
-            decoded = Base64.strict_decode64(fpval)
-              .split(delim)
-              .map{ |val| val == 'nil' ? nil : val }
-              .map{ |val| val == 'empty' ? '' : val }
-            check_length(decoded)
+            decoded = decode(fpval)
+            parts = split(decoded)
+            reconstituted = reconstitute(parts)
+            check_length(reconstituted)
 
-            target_fields.each_with_index{ |target, i| row[target] = safe_decoded_value(decoded[i]) }
+            target_fields.each_with_index do |target, idx|
+              row[target] = reconstituted[idx]
+            end
             row
           end
 
@@ -91,9 +92,22 @@ module Kiba
 
           attr_reader :fingerprint, :source_fields, :delim, :prefix, :delete, :num_fields, :target_fields
 
+          def decode(fp)
+            Base64.strict_decode64(fp)
+            .force_encoding("UTF-8")
+          end
+
+          def split(decoded)
+            decoded.split(delim)
+          end
+
+          def reconstitute(parts)
+            parts.map{ |val| val == 'nil' ? nil : val }
+              .map{ |val| val == 'empty' ? '' : val }
+          end
           # @param decoded [Array<String>]
-          def check_length(decoded)
-            result_length = decoded.length
+          def check_length(fieldvals)
+            result_length = fieldvals.length
             return if result_length == num_fields
 
             warn("#{Kiba::Extend.warning_label}: ROW #{@row_ct}: Expected #{num_fields} fields from decoded fingerprint. Got #{result_length}")
