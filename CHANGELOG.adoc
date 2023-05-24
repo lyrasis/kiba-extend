@@ -48,6 +48,7 @@ These changes are merged into the `main` branch, but have not been released. Aft
 * `CombineValues::FromFieldWithDelimiter` can now take `delete_sources` and `prepend_source_field_name` args (PR#147)
 * `Transforms::Helpers::OrgNameChecker` (PR#148)
 * `Kiba::Extend::Job.output?` convenience method (PR#150)
+* `Sort::ByFieldValue` transform (PR#151)
 
 === Changed
 * Transforms that take an `action` argument now mix in the new `ActionArgumentable` module and validate the argument values in a consistent way (PR#138)
