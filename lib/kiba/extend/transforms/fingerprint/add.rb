@@ -55,25 +55,32 @@ module Kiba
         # - `nil` is converted to the string `'nil'`
         #
         class Add
-          # @param fields [Array<Symbol>] fields whose values should be used in fingerprint
           # @param delim [String] used to join field values into a hashable string
-          # @param target [Symbol] field in which fingerprint hash should inserted
-          # @param override_app_delim_check [Boolean] if true, will let you create a fingerprint with a delim
-          #   that contains or is contained by `Kiba::Extend.delim` or `Kiba::Extend.sgdelim`. Setting this
-          #   to `true` is dangerous and could result in un-decodeable fingerprints.
+          # @param fields [Array<Symbol>] fields whose values should be used in
+          #   fingerprint
+          # @param target [Symbol] field in which fingerprint hash should
+          #   inserted
+          # @param override_app_delim_check [Boolean] if true, will let you
+          #   create a fingerprint with a delim that contains or is contained by
+          #   `Kiba::Extend.delim` or `Kiba::Extend.sgdelim`. Setting this to
+          #   `true` if you are supplying a non-default delimter is dangerous
+          #   and could result in un-decodeable fingerprints.
           # @raise [DelimiterCollisionError] if `delim` conflicts with
           #   `Kiba::Extend.delim` or `Kiba::Extend.sgdelim`
-          # @raise [DelimiterInValueError] if the value of any field used to generate a fingerprint contains the
-          #   fingerprint delimiter
           def initialize(fields:, delim:, target:, override_app_delim_check: false)
             @override_app_delim_check = override_app_delim_check
             check_delim(delim)
-            @fingerprinter = Kiba::Extend::Utils::FingerprintCreator.new(fields: fields, delim: delim)
+            @fingerprinter = Kiba::Extend::Utils::FingerprintCreator.new(
+              fields: fields,
+              delim: delim
+            )
             @target = target
             @row_num = 0
           end
 
           # @param row [Hash{ Symbol => String, nil }]
+          # @raise [DelimiterInValueError] if the value of any field used to
+          #   generate a fingerprint contains the fingerprint delimiter
           def process(row)
             @row_num += 1
             row[target] = get_fingerprint(row)
@@ -86,18 +93,19 @@ module Kiba
 
           def check_delim(delim)
             return if override_app_delim_check
-
-            raise Kiba::Extend::Transforms::Fingerprint::DelimiterCollisionError if delim[Kiba::Extend.delim]
-            raise Kiba::Extend::Transforms::Fingerprint::DelimiterCollisionError if delim[Kiba::Extend.sgdelim]
-            raise Kiba::Extend::Transforms::Fingerprint::DelimiterCollisionError if Kiba::Extend.delim[delim]
-            raise Kiba::Extend::Transforms::Fingerprint::DelimiterCollisionError if Kiba::Extend.sgdelim[delim]
+            if delim[Kiba::Extend.delim] || delim[Kiba::Extend.sgdelim] ||
+                Kiba::Extend.delim[delim] || Kiba::Extend.sgdelim[delim]
+              raise Fingerprint::DelimiterCollisionError
+            end
           end
 
           def get_fingerprint(row)
             fingerprinter.call(row)
           rescue Kiba::Extend::Utils::DelimInValueFingerprintError
-            msg = "#{Kiba::Extend.warning_label}: Row #{@row_num}: A value in the fields used to create a fingerprint contains the fingerprint delimiter"
-            raise Kiba::Extend::Transforms::Fingerprint::DelimiterInValueError, msg
+            msg = "#{Kiba::Extend.warning_label}: Row #{@row_num}: "\
+              "A value in the fields used to create a fingerprint contains "\
+              "the fingerprint delimiter"
+            raise Fingerprint::DelimiterInValueError, msg
           end
         end
       end
