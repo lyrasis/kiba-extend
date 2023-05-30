@@ -86,11 +86,14 @@ module Kiba
         end
 
         def handle_requirements
-          [@files[:source], @files[:lookup]].compact.flatten.compact.each do |registered|
-            next unless registered.required
+          [@files[:source], @files[:lookup]].compact
+            .flatten
+            .compact
+            .each do |registered|
+              next unless registered.required
 
-            registered.required.call
-          end
+              registered.required.call
+            end
 
           check_requirements
         rescue MissingDependencyError => err

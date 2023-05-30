@@ -6,6 +6,7 @@ module Kiba
       # Mixin methods for reporting
       module Reporter
         def report_run_start
+          @start = Time.now
           case Kiba::Extend.job_verbosity
           when :verbose
             verbose_start
@@ -19,6 +20,7 @@ module Kiba
         end
 
         def report_run_end
+          @duration = Time.now - @start
           case Kiba::Extend.job_verbosity
           when :verbose
             verbose_end
@@ -52,7 +54,7 @@ module Kiba
         end
 
         def verbose_end
-          puts "\n#{job_data.key} complete"
+          puts "\n#{job_data.key} complete (#{get_duration})"
           puts "#{row_report} written to #{job_data.path}"
           puts "NOTE: #{job_data.message.upcase}" if job_data.message
           puts '-=-=-=-=-=-=-=-=-=-=-=-'
@@ -60,7 +62,7 @@ module Kiba
         end
 
         def normal_end
-          puts "\n#{row_report} written to #{job_data.path}"
+          puts "\n#{row_report} written to #{job_data.path} in #{get_duration}"
           puts "NOTE: #{job_data.message.upcase}" if job_data.message
           puts '-=-=-=-=-=-=-=-=-=-=-=-'
           puts ''
@@ -97,7 +99,7 @@ module Kiba
         end
 
         def row_report
-          "#{context.instance_variable_get(:@outrows)} of #{context.instance_variable_get(:@srcrows)} rows"
+          "#{outrows} of #{srcrows}"
         end
 
         def start_label
@@ -113,6 +115,14 @@ module Kiba
           return unless tags
 
           "tags: [#{tags.join(', ')}]"
+        end
+
+        def get_duration
+          minutes = (@duration / 60).floor
+          seconds = (@duration - (minutes * 60)).ceil
+          "#{minutes}m #{seconds}s"
+        rescue
+          ""
         end
       end
     end
