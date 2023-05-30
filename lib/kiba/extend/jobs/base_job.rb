@@ -20,22 +20,32 @@ module Kiba
 
         # @param files [Hash]
         # @param transformer [Kiba::Control]
-        def initialize(files:, transformer:)
+        # @param mode [:run, :setup, :info] :info mode sets up files only.
+        #   :setup mode sets up files and handles requirements, including
+        #   running any necessary jobs to create sources and/or lookups needed
+        #   by the job. :run does all of the above and runs the job.
+        def initialize(files:, transformer:, mode: :run)
           if caller(2, 5).join(' ')['block in handle_requirements']
             @dependency = true
           end
           extend DependencyJob if @dependency
 
           @files = setup_files(files)
-          report_run_start # defined in Reporter
-          @control = Kiba::Control.new
-          @context = Kiba::Context.new(control)
-          @transformer = transformer
-          handle_requirements # defined in Runner
-          assemble_control # defined in Runner
-          run
-          report_run_end # defined in Reporter
-          set_row_count_instance_variables
+
+          unless mode == :info
+            report_run_start # defined in Reporter
+            handle_requirements # defined in Runner
+          end
+
+          if mode == :run
+            @control = Kiba::Control.new
+            @context = Kiba::Context.new(control)
+            @transformer = transformer
+            assemble_control # defined in Runner
+            run
+            set_row_count_instance_variables
+            report_run_end # defined in Reporter
+          end
         end
 
         def run
