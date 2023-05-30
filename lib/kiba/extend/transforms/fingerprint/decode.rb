@@ -61,16 +61,19 @@ module Kiba
         # ```
         #
         class Decode
-          # @param delim [String] used to join/split fields before hashing/after decoding
-          def initialize(fingerprint:, source_fields:, delim:, prefix:, delete_fp: false)
           # @param fingerprint [Symbol] the name of the field containing
           #   fingerprint values
           # @param source_fields [Array<Symbol>] names of fields used to
           #   generate the fingerprint
+          # @param delim [String] used to join/split fields before hashing/after
+          #   decoding. The default value is U+241F / E2 90 9F / Symbol for Unit
+          #   Separator.
           # @param prefix [String] added to the names of the decoded fields
           #   added to rows
           # @param delete_fp [Boolean] whether to delete the given fingerprint
           #   field
+          def initialize(fingerprint:, source_fields:, delim: "␟", prefix: "fp",
+                         delete_fp: false)
             @fingerprint = fingerprint
             @source_fields = source_fields
             @delim = delim

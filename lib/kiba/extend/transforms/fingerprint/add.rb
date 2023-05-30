@@ -55,9 +55,11 @@ module Kiba
         # - `nil` is converted to the string `'nil'`
         #
         class Add
-          # @param delim [String] used to join field values into a hashable string
           # @param fields [Array<Symbol>] fields whose values should be used in
           #   fingerprint
+          # @param delim [String] used to join field values into a hashable
+          #   string. The default value is U+241F / E2 90 9F / Symbol for Unit
+          #   Separator.
           # @param target [Symbol] field in which fingerprint hash should
           #   inserted
           # @param override_app_delim_check [Boolean] if true, will let you
@@ -67,7 +69,8 @@ module Kiba
           #   and could result in un-decodeable fingerprints.
           # @raise [DelimiterCollisionError] if `delim` conflicts with
           #   `Kiba::Extend.delim` or `Kiba::Extend.sgdelim`
-          def initialize(fields:, delim:, target:, override_app_delim_check: false)
+          def initialize(fields:, target:, delim: "␟",
+                         override_app_delim_check: false)
             @override_app_delim_check = override_app_delim_check
             check_delim(delim)
             @fingerprinter = Kiba::Extend::Utils::FingerprintCreator.new(
