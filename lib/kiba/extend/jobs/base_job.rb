@@ -21,7 +21,9 @@ module Kiba
         # @param files [Hash]
         # @param transformer [Kiba::Control]
         def initialize(files:, transformer:)
-          @dependency = true if caller(2, 5).join(' ')['block in handle_requirements']
+          if caller(2, 5).join(' ')['block in handle_requirements']
+            @dependency = true
+          end
           extend DependencyJob if @dependency
 
           @files = setup_files(files)
@@ -52,7 +54,8 @@ module Kiba
           @files[:destination].first.data
         end
 
-        # Replace file key names with registered_source/lookup/destination objects dynamically
+        # Replace file key names with registered_source/lookup/destination
+        #   objects dynamically
         def setup_files(files)
           tmp = {}
           files.each do |type, arr|
