@@ -102,8 +102,8 @@
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     <p>Decodes a fingerprint string and expands it into its source fields
-See <span class='object_link'><a href="Add.html" title="Kiba::Extend::Transforms::Fingerprint::Add (class)">Add</a></span> for how the :fp field in the examples below
-  was derived.</p>
+See <span class='object_link'><a href="Add.html" title="Kiba::Extend::Transforms::Fingerprint::Add (class)">Add</a></span> for how the :fp field
+  in the examples below was derived.</p>
 
 <h1 id="examples">Examples</h1>
 
@@ -116,7 +116,11 @@ See <span class='object_link'><a href="Add.html" title="Kiba::Extend::Transforms
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Fingerprint.html" title="Kiba::Extend::Transforms::Fingerprint (module)">Fingerprint</a></span></span><span class='op'>::</span><span class='const'>Decode</span><span class='comma'>,</span> <span class='label'>fingerprint:</span> <span class='symbol'>:fp</span><span class='comma'>,</span> <span class='label'>source_fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>b</span><span class='words_sep'> </span><span class='tstring_content'>c</span><span class='words_sep'> </span><span class='tstring_content'>d</span><span class='words_sep'> </span><span class='tstring_content'>e</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;;;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>prefix:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>fp</span><span class='tstring_end'>&#39;</span></span>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Fingerprint.html" title="Kiba::Extend::Transforms::Fingerprint (module)">Fingerprint</a></span></span><span class='op'>::</span><span class='const'>Decode</span><span class='comma'>,</span>
+  <span class='label'>fingerprint:</span> <span class='symbol'>:fp</span><span class='comma'>,</span>
+  <span class='label'>source_fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>b</span><span class='words_sep'> </span><span class='tstring_content'>c</span><span class='words_sep'> </span><span class='tstring_content'>d</span><span class='words_sep'> </span><span class='tstring_content'>e</span><span class='tstring_end'>]</span></span><span class='comma'>,</span>
+  <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;;;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>prefix:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>fp</span><span class='tstring_end'>&#39;</span></span>
 </code></pre>
 
 <p>Results in:</p>
@@ -128,7 +132,12 @@ See <span class='object_link'><a href="Add.html" title="Kiba::Extend::Transforms
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Fingerprint.html" title="Kiba::Extend::Transforms::Fingerprint (module)">Fingerprint</a></span></span><span class='op'>::</span><span class='const'>Decode</span><span class='comma'>,</span> <span class='label'>fingerprint:</span> <span class='symbol'>:fp</span><span class='comma'>,</span> <span class='label'>source_fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>b</span><span class='words_sep'> </span><span class='tstring_content'>c</span><span class='words_sep'> </span><span class='tstring_content'>d</span><span class='words_sep'> </span><span class='tstring_content'>e</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;;;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>prefix:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>fp</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>delete_fp:</span> <span class='kw'>true</span>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Fingerprint.html" title="Kiba::Extend::Transforms::Fingerprint (module)">Fingerprint</a></span></span><span class='op'>::</span><span class='const'>Decode</span><span class='comma'>,</span>
+  <span class='label'>fingerprint:</span> <span class='symbol'>:fp</span><span class='comma'>,</span>
+  <span class='label'>source_fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>b</span><span class='words_sep'> </span><span class='tstring_content'>c</span><span class='words_sep'> </span><span class='tstring_content'>d</span><span class='words_sep'> </span><span class='tstring_content'>e</span><span class='tstring_end'>]</span></span><span class='comma'>,</span>
+  <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;;;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>prefix:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>fp</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>delete_fp:</span> <span class='kw'>true</span>
 </code></pre>
 
 <p>Results in:</p>
@@ -177,7 +186,7 @@ See <span class='object_link'><a href="Add.html" title="Kiba::Extend::Transforms
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(fingerprint:, source_fields:, delim:, prefix:, delete_fp: false)  &#x21d2; Decode </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(fingerprint:, source_fields:, delim: &quot;␟&quot;, prefix: &quot;fp&quot;, delete_fp: false)  &#x21d2; Decode </a>
     
 
     
@@ -230,7 +239,7 @@ See <span class='object_link'><a href="Add.html" title="Kiba::Extend::Transforms
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(fingerprint:, source_fields:, delim:, prefix:, delete_fp: false)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Fingerprint::Decode (class)">Decode</a></span></tt> 
+    #<strong>initialize</strong>(fingerprint:, source_fields:, delim: &quot;␟&quot;, prefix: &quot;fp&quot;, delete_fp: false)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Fingerprint::Decode (class)">Decode</a></span></tt> 
   
 
   
@@ -257,7 +266,8 @@ See <span class='object_link'><a href="Add.html" title="Kiba::Extend::Transforms
       
       
         &mdash;
-        <div class='inline'><p>the name of the field containing fingerprint values</p>
+        <div class='inline'><p>the name of the field containing
+fingerprint values</p>
 </div>
       
     </li>
@@ -272,7 +282,8 @@ See <span class='object_link'><a href="Add.html" title="Kiba::Extend::Transforms
       
       
         &mdash;
-        <div class='inline'><p>names of fields used to generate the fingerprint</p>
+        <div class='inline'><p>names of fields used to
+generate the fingerprint</p>
 </div>
       
     </li>
@@ -285,9 +296,13 @@ See <span class='object_link'><a href="Add.html" title="Kiba::Extend::Transforms
         <span class='type'>(<tt>String</tt>)</span>
       
       
+        <em class="default">(defaults to: <tt>&quot;␟&quot;</tt>)</em>
+      
       
         &mdash;
-        <div class='inline'><p>used to join/split fields before hashing/after decoding</p>
+        <div class='inline'><p>used to join/split fields before hashing/after
+decoding. The default value is U+241F / E2 90 9F / Symbol for Unit
+Separator.</p>
 </div>
       
     </li>
@@ -300,9 +315,12 @@ See <span class='object_link'><a href="Add.html" title="Kiba::Extend::Transforms
         <span class='type'>(<tt>String</tt>)</span>
       
       
+        <em class="default">(defaults to: <tt>&quot;fp&quot;</tt>)</em>
+      
       
         &mdash;
-        <div class='inline'><p>added to the names of the decoded fields added to rows</p>
+        <div class='inline'><p>added to the names of the decoded fields
+added to rows</p>
 </div>
       
     </li>
@@ -319,7 +337,8 @@ See <span class='object_link'><a href="Add.html" title="Kiba::Extend::Transforms
       
       
         &mdash;
-        <div class='inline'><p>whether to delete the given fingerprint field</p>
+        <div class='inline'><p>whether to delete the given fingerprint
+field</p>
 </div>
       
     </li>
@@ -348,28 +367,34 @@ See <span class='object_link'><a href="Add.html" title="Kiba::Extend::Transforms
       <pre class="lines">
 
 
-60
-61
-62
-63
-64
-65
-66
-67
-68
-69</pre>
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/decode.rb', line 60</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/decode.rb', line 75</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fingerprint:</span><span class='comma'>,</span> <span class='label'>source_fields:</span><span class='comma'>,</span> <span class='label'>delim:</span><span class='comma'>,</span> <span class='label'>prefix:</span><span class='comma'>,</span> <span class='label'>delete_fp:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fingerprint:</span><span class='comma'>,</span> <span class='label'>source_fields:</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>␟</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>prefix:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>fp</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+               <span class='label'>delete_fp:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='ivar'>@fingerprint</span> <span class='op'>=</span> <span class='id identifier rubyid_fingerprint'>fingerprint</span>
   <span class='ivar'>@source_fields</span> <span class='op'>=</span> <span class='id identifier rubyid_source_fields'>source_fields</span>
   <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_delim'>delim</span>
   <span class='ivar'>@prefix</span> <span class='op'>=</span> <span class='id identifier rubyid_prefix'>prefix</span>
   <span class='ivar'>@delete</span> <span class='op'>=</span> <span class='id identifier rubyid_delete_fp'>delete_fp</span>
   <span class='ivar'>@num_fields</span> <span class='op'>=</span> <span class='id identifier rubyid_source_fields'>source_fields</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
-  <span class='ivar'>@target_fields</span> <span class='op'>=</span> <span class='id identifier rubyid_source_fields'>source_fields</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_prefix'>prefix</span><span class='embexpr_end'>}</span><span class='tstring_content'>_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_field'>field</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span> <span class='rbrace'>}</span>
+  <span class='ivar'>@target_fields</span> <span class='op'>=</span> <span class='id identifier rubyid_source_fields'>source_fields</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_prefix'>prefix</span><span class='embexpr_end'>}</span><span class='tstring_content'>_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_field'>field</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
+  <span class='kw'>end</span>
   <span class='ivar'>@row_ct</span> <span class='op'>=</span> <span class='int'>0</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -438,27 +463,27 @@ See <span class='object_link'><a href="Add.html" title="Kiba::Extend::Transforms
       <pre class="lines">
 
 
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84
-85
-86
-87
-88
-89</pre>
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/decode.rb', line 72</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/decode.rb', line 90</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='ivar'>@row_ct</span> <span class='op'>+=</span> <span class='int'>1</span>
@@ -488,7 +513,7 @@ See <span class='object_link'><a href="Add.html" title="Kiba::Extend::Transforms
 </div>
 
       <div id="footer">
-  Generated on Tue May 30 17:20:52 2023 by
+  Generated on Tue May 30 20:27:56 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

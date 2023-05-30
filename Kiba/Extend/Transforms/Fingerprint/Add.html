@@ -193,7 +193,7 @@ a separate field vs. multiple values inside one field, and things will be a mess
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(fields:, delim:, target:, override_app_delim_check: false)  &#x21d2; Add </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(fields:, target:, delim: &quot;␟&quot;, override_app_delim_check: false)  &#x21d2; Add </a>
     
 
     
@@ -246,7 +246,7 @@ a separate field vs. multiple values inside one field, and things will be a mess
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(fields:, delim:, target:, override_app_delim_check: false)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Fingerprint::Add (class)">Add</a></span></tt> 
+    #<strong>initialize</strong>(fields:, target:, delim: &quot;␟&quot;, override_app_delim_check: false)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Fingerprint::Add (class)">Add</a></span></tt> 
   
 
   
@@ -273,7 +273,8 @@ a separate field vs. multiple values inside one field, and things will be a mess
       
       
         &mdash;
-        <div class='inline'><p>fields whose values should be used in fingerprint</p>
+        <div class='inline'><p>fields whose values should be used in
+fingerprint</p>
 </div>
       
     </li>
@@ -286,9 +287,13 @@ a separate field vs. multiple values inside one field, and things will be a mess
         <span class='type'>(<tt>String</tt>)</span>
       
       
+        <em class="default">(defaults to: <tt>&quot;␟&quot;</tt>)</em>
+      
       
         &mdash;
-        <div class='inline'><p>used to join field values into a hashable string</p>
+        <div class='inline'><p>used to join field values into a hashable
+string. The default value is U+241F / E2 90 9F / Symbol for Unit
+Separator.</p>
 </div>
       
     </li>
@@ -303,7 +308,8 @@ a separate field vs. multiple values inside one field, and things will be a mess
       
       
         &mdash;
-        <div class='inline'><p>field in which fingerprint hash should inserted</p>
+        <div class='inline'><p>field in which fingerprint hash should
+inserted</p>
 </div>
       
     </li>
@@ -320,9 +326,11 @@ a separate field vs. multiple values inside one field, and things will be a mess
       
       
         &mdash;
-        <div class='inline'><p>if true, will let you create a fingerprint with a delim
-that contains or is contained by <code>Kiba::Extend.delim</code> or <code>Kiba::Extend.sgdelim</code>. Setting this
-to <code>true</code> is dangerous and could result in un-decodeable fingerprints.</p>
+        <div class='inline'><p>if true, will let you
+create a fingerprint with a delim that contains or is contained by
+<code>Kiba::Extend.delim</code> or <code>Kiba::Extend.sgdelim</code>. Setting this to
+<code>true</code> if you are supplying a non-default delimter is dangerous
+and could result in un-decodeable fingerprints.</p>
 </div>
       
     </li>
@@ -342,20 +350,6 @@ to <code>true</code> is dangerous and could result in un-decodeable fingerprints
         &mdash;
         <div class='inline'><p>if <code>delim</code> conflicts with
 <code>Kiba::Extend.delim</code> or <code>Kiba::Extend.sgdelim</code></p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="DelimiterInValueError.html" title="Kiba::Extend::Transforms::Fingerprint::DelimiterInValueError (class)">DelimiterInValueError</a></span></tt>)</span>
-      
-      
-      
-        &mdash;
-        <div class='inline'><p>if the value of any field used to generate a fingerprint contains the
-fingerprint delimiter</p>
 </div>
       
     </li>
@@ -383,21 +377,29 @@ fingerprint delimiter</p>
       <pre class="lines">
 
 
-68
-69
-70
-71
 72
 73
-74</pre>
+74
+75
+76
+77
+78
+79
+80
+81
+82</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/add.rb', line 68</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/add.rb', line 72</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span><span class='comma'>,</span> <span class='label'>delim:</span><span class='comma'>,</span> <span class='label'>target:</span><span class='comma'>,</span> <span class='label'>override_app_delim_check:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span><span class='comma'>,</span> <span class='label'>target:</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>␟</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+               <span class='label'>override_app_delim_check:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='ivar'>@override_app_delim_check</span> <span class='op'>=</span> <span class='id identifier rubyid_override_app_delim_check'>override_app_delim_check</span>
   <span class='id identifier rubyid_check_delim'>check_delim</span><span class='lparen'>(</span><span class='id identifier rubyid_delim'>delim</span><span class='rparen'>)</span>
-  <span class='ivar'>@fingerprinter</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Utils.html" title="Kiba::Extend::Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Utils/FingerprintCreator.html" title="Kiba::Extend::Utils::FingerprintCreator (class)">FingerprintCreator</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../Utils/FingerprintCreator.html#initialize-instance_method" title="Kiba::Extend::Utils::FingerprintCreator#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='id identifier rubyid_fields'>fields</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='rparen'>)</span>
+  <span class='ivar'>@fingerprinter</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Utils.html" title="Kiba::Extend::Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Utils/FingerprintCreator.html" title="Kiba::Extend::Utils::FingerprintCreator (class)">FingerprintCreator</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../Utils/FingerprintCreator.html#initialize-instance_method" title="Kiba::Extend::Utils::FingerprintCreator#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+    <span class='label'>fields:</span> <span class='id identifier rubyid_fields'>fields</span><span class='comma'>,</span>
+    <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span>
+  <span class='rparen'>)</span>
   <span class='ivar'>@target</span> <span class='op'>=</span> <span class='id identifier rubyid_target'>target</span>
   <span class='ivar'>@row_num</span> <span class='op'>=</span> <span class='int'>0</span>
 <span class='kw'>end</span></pre>
@@ -445,6 +447,24 @@ fingerprint delimiter</p>
   
 </ul>
 
+<p class="tag_title">Raises:</p>
+<ul class="raise">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="DelimiterInValueError.html" title="Kiba::Extend::Transforms::Fingerprint::DelimiterInValueError (class)">DelimiterInValueError</a></span></tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>if the value of any field used to
+generate a fingerprint contains the fingerprint delimiter</p>
+</div>
+      
+    </li>
+  
+</ul>
 <p class="tag_title">Since:</p>
 <ul class="since">
   
@@ -467,14 +487,14 @@ fingerprint delimiter</p>
       <pre class="lines">
 
 
-77
-78
-79
-80
-81</pre>
+87
+88
+89
+90
+91</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/add.rb', line 77</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/add.rb', line 87</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='ivar'>@row_num</span> <span class='op'>+=</span> <span class='int'>1</span>
@@ -491,7 +511,7 @@ fingerprint delimiter</p>
 </div>
 
       <div id="footer">
-  Generated on Tue May 30 17:20:52 2023 by
+  Generated on Tue May 30 20:27:55 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>
