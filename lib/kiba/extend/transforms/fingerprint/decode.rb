@@ -10,8 +10,8 @@ module Kiba
         # Decodes a fingerprint string and expands it into its source fields
         # @since 2.7.1.65
         #
-        # See {Kiba::Extend::Transforms::Fingerprint::Add} for how the :fp field in the examples below
-        #   was derived.
+        # See {Kiba::Extend::Transforms::Fingerprint::Add} for how the :fp field
+        #   in the examples below was derived.
         #
         # # Examples
         #
@@ -26,7 +26,11 @@ module Kiba
         # Used in pipeline as:
         #
         # ```
-        # transform Fingerprint::Decode, fingerprint: :fp, source_fields: %i[b c d e], delim: ';;;', prefix: 'fp'
+        # transform Fingerprint::Decode,
+        #   fingerprint: :fp,
+        #   source_fields: %i[b c d e],
+        #   delim: ';;;',
+        #   prefix: 'fp'
         # ```
         #
         # Results in:
@@ -40,7 +44,12 @@ module Kiba
         # Used in pipeline as:
         #
         # ```
-        # transform Fingerprint::Decode, fingerprint: :fp, source_fields: %i[b c d e], delim: ';;;', prefix: 'fp', delete_fp: true
+        # transform Fingerprint::Decode,
+        #   fingerprint: :fp,
+        #   source_fields: %i[b c d e],
+        #   delim: ';;;',
+        #   prefix: 'fp',
+        #   delete_fp: true
         # ```
         #
         # Results in:
@@ -52,19 +61,28 @@ module Kiba
         # ```
         #
         class Decode
-          # @param fingerprint [Symbol] the name of the field containing fingerprint values
-          # @param source_fields [Array<Symbol>] names of fields used to generate the fingerprint
-          # @param delim [String] used to join/split fields before hashing/after decoding
-          # @param prefix [String] added to the names of the decoded fields added to rows
-          # @param delete_fp [Boolean] whether to delete the given fingerprint field
-          def initialize(fingerprint:, source_fields:, delim:, prefix:, delete_fp: false)
+          # @param fingerprint [Symbol] the name of the field containing
+          #   fingerprint values
+          # @param source_fields [Array<Symbol>] names of fields used to
+          #   generate the fingerprint
+          # @param delim [String] used to join/split fields before hashing/after
+          #   decoding. The default value is U+241F / E2 90 9F / Symbol for Unit
+          #   Separator.
+          # @param prefix [String] added to the names of the decoded fields
+          #   added to rows
+          # @param delete_fp [Boolean] whether to delete the given fingerprint
+          #   field
+          def initialize(fingerprint:, source_fields:, delim: "␟", prefix: "fp",
+                         delete_fp: false)
             @fingerprint = fingerprint
             @source_fields = source_fields
             @delim = delim
             @prefix = prefix
             @delete = delete_fp
             @num_fields = source_fields.length
-            @target_fields = source_fields.map{ |field| "#{prefix}_#{field}".to_sym }
+            @target_fields = source_fields.map do |field|
+              "#{prefix}_#{field}".to_sym
+            end
             @row_ct = 0
           end
 
@@ -90,7 +108,8 @@ module Kiba
 
           private
 
-          attr_reader :fingerprint, :source_fields, :delim, :prefix, :delete, :num_fields, :target_fields
+          attr_reader :fingerprint, :source_fields, :delim, :prefix, :delete,
+            :num_fields, :target_fields
 
           def decode(fp)
             Base64.strict_decode64(fp)
@@ -105,12 +124,16 @@ module Kiba
             parts.map{ |val| val == 'nil' ? nil : val }
               .map{ |val| val == 'empty' ? '' : val }
           end
-          # @param decoded [Array<String>]
+
+          # @param fieldvals [Array<String>]
           def check_length(fieldvals)
             result_length = fieldvals.length
             return if result_length == num_fields
 
-            warn("#{Kiba::Extend.warning_label}: ROW #{@row_ct}: Expected #{num_fields} fields from decoded fingerprint. Got #{result_length}")
+            warn(
+              "#{Kiba::Extend.warning_label}: ROW #{@row_ct}: Expected "\
+                "#{num_fields} fields from decoded fingerprint. Got "\
+                "#{result_length}")
           end
 
           def safe_decoded_value(val)

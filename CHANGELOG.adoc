@@ -51,10 +51,13 @@ These changes are merged into the `main` branch, but have not been released. Aft
 * `Sort::ByFieldValue` transform (PR#151)
 * `:mode` parameter to `Jobs::BaseJob` (PR#154)
 * Job duration report (added to normal and verbose job run) (PR#154)
+* `Fingerprint::FlagChanged` transform (PR#155)
 
 === Changed
 * Transforms that take an `action` argument now mix in the new `ActionArgumentable` module and validate the argument values in a consistent way (PR#138)
 * Name and role term values extracted from MARC data by subclasses of `Transforms::Marc::ExtractBaseNameData` are run through `Utils::MarcNameCleaner` and `Utils::MarcRoleTermCleaner` (PR#141)
+* `Fingerprint::Add` now passes in default delim: U+241F / E2 90 9F / Symbol for Unit Separator (PR#155)
+* `Fingerprint::Decode` now passes in default delim (U+241F / E2 90 9F / Symbol for Unit Separator), and default prefix (fp) (PR#155)
 
 === Bugfixes
 * Fixes https://github.com/lyrasis/kiba-extend/issues/146[#46 - CombineValues::FullRecord with multi-sources can result in different values] (PR#147)
