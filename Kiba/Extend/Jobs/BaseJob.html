@@ -322,7 +322,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(files:, transformer:)  &#x21d2; BaseJob </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(files:, transformer:, mode: :run)  &#x21d2; BaseJob </a>
     
 
     
@@ -401,14 +401,14 @@
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="Reporter.html" title="Kiba::Extend::Jobs::Reporter (module)">Reporter</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Reporter.html#desc_and_tags-instance_method" title="Kiba::Extend::Jobs::Reporter#desc_and_tags (method)">#desc_and_tags</a></span>, <span class='object_link'><a href="Reporter.html#minimal_end-instance_method" title="Kiba::Extend::Jobs::Reporter#minimal_end (method)">#minimal_end</a></span>, <span class='object_link'><a href="Reporter.html#minimal_start-instance_method" title="Kiba::Extend::Jobs::Reporter#minimal_start (method)">#minimal_start</a></span>, <span class='object_link'><a href="Reporter.html#normal_end-instance_method" title="Kiba::Extend::Jobs::Reporter#normal_end (method)">#normal_end</a></span>, <span class='object_link'><a href="Reporter.html#normal_start-instance_method" title="Kiba::Extend::Jobs::Reporter#normal_start (method)">#normal_start</a></span>, <span class='object_link'><a href="Reporter.html#put_file_details-instance_method" title="Kiba::Extend::Jobs::Reporter#put_file_details (method)">#put_file_details</a></span>, <span class='object_link'><a href="Reporter.html#report_run_end-instance_method" title="Kiba::Extend::Jobs::Reporter#report_run_end (method)">#report_run_end</a></span>, <span class='object_link'><a href="Reporter.html#report_run_start-instance_method" title="Kiba::Extend::Jobs::Reporter#report_run_start (method)">#report_run_start</a></span>, <span class='object_link'><a href="Reporter.html#row_report-instance_method" title="Kiba::Extend::Jobs::Reporter#row_report (method)">#row_report</a></span>, <span class='object_link'><a href="Reporter.html#start_and_def-instance_method" title="Kiba::Extend::Jobs::Reporter#start_and_def (method)">#start_and_def</a></span>, <span class='object_link'><a href="Reporter.html#start_label-instance_method" title="Kiba::Extend::Jobs::Reporter#start_label (method)">#start_label</a></span>, <span class='object_link'><a href="Reporter.html#tags-instance_method" title="Kiba::Extend::Jobs::Reporter#tags (method)">#tags</a></span>, <span class='object_link'><a href="Reporter.html#verbose_end-instance_method" title="Kiba::Extend::Jobs::Reporter#verbose_end (method)">#verbose_end</a></span>, <span class='object_link'><a href="Reporter.html#verbose_start-instance_method" title="Kiba::Extend::Jobs::Reporter#verbose_start (method)">#verbose_start</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="Reporter.html#desc_and_tags-instance_method" title="Kiba::Extend::Jobs::Reporter#desc_and_tags (method)">#desc_and_tags</a></span>, <span class='object_link'><a href="Reporter.html#get_duration-instance_method" title="Kiba::Extend::Jobs::Reporter#get_duration (method)">#get_duration</a></span>, <span class='object_link'><a href="Reporter.html#minimal_end-instance_method" title="Kiba::Extend::Jobs::Reporter#minimal_end (method)">#minimal_end</a></span>, <span class='object_link'><a href="Reporter.html#minimal_start-instance_method" title="Kiba::Extend::Jobs::Reporter#minimal_start (method)">#minimal_start</a></span>, <span class='object_link'><a href="Reporter.html#normal_end-instance_method" title="Kiba::Extend::Jobs::Reporter#normal_end (method)">#normal_end</a></span>, <span class='object_link'><a href="Reporter.html#normal_start-instance_method" title="Kiba::Extend::Jobs::Reporter#normal_start (method)">#normal_start</a></span>, <span class='object_link'><a href="Reporter.html#put_file_details-instance_method" title="Kiba::Extend::Jobs::Reporter#put_file_details (method)">#put_file_details</a></span>, <span class='object_link'><a href="Reporter.html#report_run_end-instance_method" title="Kiba::Extend::Jobs::Reporter#report_run_end (method)">#report_run_end</a></span>, <span class='object_link'><a href="Reporter.html#report_run_start-instance_method" title="Kiba::Extend::Jobs::Reporter#report_run_start (method)">#report_run_start</a></span>, <span class='object_link'><a href="Reporter.html#row_report-instance_method" title="Kiba::Extend::Jobs::Reporter#row_report (method)">#row_report</a></span>, <span class='object_link'><a href="Reporter.html#start_and_def-instance_method" title="Kiba::Extend::Jobs::Reporter#start_and_def (method)">#start_and_def</a></span>, <span class='object_link'><a href="Reporter.html#start_label-instance_method" title="Kiba::Extend::Jobs::Reporter#start_label (method)">#start_label</a></span>, <span class='object_link'><a href="Reporter.html#tags-instance_method" title="Kiba::Extend::Jobs::Reporter#tags (method)">#tags</a></span>, <span class='object_link'><a href="Reporter.html#verbose_end-instance_method" title="Kiba::Extend::Jobs::Reporter#verbose_end (method)">#verbose_end</a></span>, <span class='object_link'><a href="Reporter.html#verbose_start-instance_method" title="Kiba::Extend::Jobs::Reporter#verbose_start (method)">#verbose_start</a></span></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(files:, transformer:)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Jobs::BaseJob (class)">BaseJob</a></span></tt> 
+    #<strong>initialize</strong>(files:, transformer:, mode: :run)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Jobs::BaseJob (class)">BaseJob</a></span></tt> 
   
 
   
@@ -447,6 +447,26 @@
       
     </li>
   
+    <li>
+      
+        <span class='name'>mode</span>
+      
+      
+        <span class='type'>(<tt>:run</tt>, <tt>:setup</tt>, <tt>:info</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>:run</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>:info mode sets up files only.
+:setup mode sets up files and handles requirements, including
+running any necessary jobs to create sources and/or lookups needed
+by the job. :run does all of the above and runs the job.</p>
+</div>
+      
+    </li>
+  
 </ul>
 
 <p class="tag_title">Since:</p>
@@ -471,10 +491,6 @@
       <pre class="lines">
 
 
-23
-24
-25
-26
 27
 28
 29
@@ -485,25 +501,45 @@
 34
 35
 36
-37</pre>
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/base_job.rb', line 23</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/base_job.rb', line 27</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>files:</span><span class='comma'>,</span> <span class='label'>transformer:</span><span class='rparen'>)</span>
-  <span class='ivar'>@dependency</span> <span class='op'>=</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='id identifier rubyid_caller'>caller</span><span class='lparen'>(</span><span class='int'>2</span><span class='comma'>,</span> <span class='int'>5</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> </span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>block in handle_requirements</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>files:</span><span class='comma'>,</span> <span class='label'>transformer:</span><span class='comma'>,</span> <span class='label'>mode:</span> <span class='symbol'>:run</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_caller'>caller</span><span class='lparen'>(</span><span class='int'>2</span><span class='comma'>,</span> <span class='int'>5</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> </span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>block in handle_requirements</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+    <span class='ivar'>@dependency</span> <span class='op'>=</span> <span class='kw'>true</span>
+  <span class='kw'>end</span>
   <span class='id identifier rubyid_extend'>extend</span> <span class='const'><span class='object_link'><a href="DependencyJob.html" title="Kiba::Extend::Jobs::DependencyJob (module)">DependencyJob</a></span></span> <span class='kw'>if</span> <span class='ivar'>@dependency</span>
 
   <span class='ivar'>@files</span> <span class='op'>=</span> <span class='id identifier rubyid_setup_files'>setup_files</span><span class='lparen'>(</span><span class='id identifier rubyid_files'>files</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_report_run_start'>report_run_start</span> <span class='comment'># defined in Reporter
-</span>  <span class='ivar'>@control</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>Control</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
-  <span class='ivar'>@context</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>Context</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_control'>control</span><span class='rparen'>)</span>
-  <span class='ivar'>@transformer</span> <span class='op'>=</span> <span class='id identifier rubyid_transformer'>transformer</span>
-  <span class='id identifier rubyid_handle_requirements'>handle_requirements</span> <span class='comment'># defined in Runner
-</span>  <span class='id identifier rubyid_assemble_control'>assemble_control</span> <span class='comment'># defined in Runner
-</span>  <span class='id identifier rubyid_run'>run</span>
-  <span class='id identifier rubyid_report_run_end'>report_run_end</span> <span class='comment'># defined in Reporter
-</span>  <span class='id identifier rubyid_set_row_count_instance_variables'>set_row_count_instance_variables</span>
+
+  <span class='kw'>unless</span> <span class='id identifier rubyid_mode'>mode</span> <span class='op'>==</span> <span class='symbol'>:info</span>
+    <span class='id identifier rubyid_report_run_start'>report_run_start</span> <span class='comment'># defined in Reporter
+</span>    <span class='id identifier rubyid_handle_requirements'>handle_requirements</span> <span class='comment'># defined in Runner
+</span>  <span class='kw'>end</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_mode'>mode</span> <span class='op'>==</span> <span class='symbol'>:run</span>
+    <span class='ivar'>@control</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>Control</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+    <span class='ivar'>@context</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>Context</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_control'>control</span><span class='rparen'>)</span>
+    <span class='ivar'>@transformer</span> <span class='op'>=</span> <span class='id identifier rubyid_transformer'>transformer</span>
+    <span class='id identifier rubyid_assemble_control'>assemble_control</span> <span class='comment'># defined in Runner
+</span>    <span class='id identifier rubyid_run'>run</span>
+    <span class='id identifier rubyid_set_row_count_instance_variables'>set_row_count_instance_variables</span>
+    <span class='id identifier rubyid_report_run_end'>report_run_end</span> <span class='comment'># defined in Reporter
+</span>  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -897,18 +933,18 @@
       <pre class="lines">
 
 
-39
-40
-41
-42
-43
-44
-45
-46
-47</pre>
+51
+52
+53
+54
+55
+56
+57
+58
+59</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/base_job.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/base_job.rb', line 51</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run'>run</span>
   <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='period'>.</span><span class='id identifier rubyid_run'>run</span><span class='lparen'>(</span><span class='id identifier rubyid_control'>control</span><span class='rparen'>)</span>
@@ -929,7 +965,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed May 24 16:22:45 2023 by
+  Generated on Tue May 30 17:20:50 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>
