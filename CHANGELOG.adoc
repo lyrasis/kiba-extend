@@ -52,6 +52,7 @@ These changes are merged into the `main` branch, but have not been released. Aft
 * `:mode` parameter to `Jobs::BaseJob` (PR#154)
 * Job duration report (added to normal and verbose job run) (PR#154)
 * `Fingerprint::FlagChanged` transform (PR#155)
+* `Delete::FieldnamesStartingWith` transform (PR#156)
 
 === Changed
 * Transforms that take an `action` argument now mix in the new `ActionArgumentable` module and validate the argument values in a consistent way (PR#138)
