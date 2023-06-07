@@ -529,14 +529,14 @@ by the job. :run does all of the above and runs the job.</p>
   <span class='kw'>unless</span> <span class='id identifier rubyid_mode'>mode</span> <span class='op'>==</span> <span class='symbol'>:info</span>
     <span class='id identifier rubyid_report_run_start'>report_run_start</span> <span class='comment'># defined in Reporter
 </span>    <span class='id identifier rubyid_handle_requirements'>handle_requirements</span> <span class='comment'># defined in Runner
-</span>  <span class='kw'>end</span>
-
-  <span class='kw'>if</span> <span class='id identifier rubyid_mode'>mode</span> <span class='op'>==</span> <span class='symbol'>:run</span>
-    <span class='ivar'>@control</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>Control</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+</span>    <span class='ivar'>@control</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>Control</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
     <span class='ivar'>@context</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>Context</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_control'>control</span><span class='rparen'>)</span>
     <span class='ivar'>@transformer</span> <span class='op'>=</span> <span class='id identifier rubyid_transformer'>transformer</span>
     <span class='id identifier rubyid_assemble_control'>assemble_control</span> <span class='comment'># defined in Runner
-</span>    <span class='id identifier rubyid_run'>run</span>
+</span>  <span class='kw'>end</span>
+
+  <span class='kw'>if</span> <span class='id identifier rubyid_mode'>mode</span> <span class='op'>==</span> <span class='symbol'>:run</span>
+    <span class='id identifier rubyid_run'>run</span>
     <span class='id identifier rubyid_set_row_count_instance_variables'>set_row_count_instance_variables</span>
     <span class='id identifier rubyid_report_run_end'>report_run_end</span> <span class='comment'># defined in Reporter
 </span>  <span class='kw'>end</span>
@@ -965,7 +965,7 @@ by the job. :run does all of the above and runs the job.</p>
 </div>
 
       <div id="footer">
-  Generated on Tue May 30 21:13:28 2023 by
+  Generated on Wed Jun  7 18:18:47 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>
