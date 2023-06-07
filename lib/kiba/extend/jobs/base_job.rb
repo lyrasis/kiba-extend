@@ -35,13 +35,13 @@ module Kiba
           unless mode == :info
             report_run_start # defined in Reporter
             handle_requirements # defined in Runner
-          end
-
-          if mode == :run
             @control = Kiba::Control.new
             @context = Kiba::Context.new(control)
             @transformer = transformer
             assemble_control # defined in Runner
+          end
+
+          if mode == :run
             run
             set_row_count_instance_variables
             report_run_end # defined in Reporter
