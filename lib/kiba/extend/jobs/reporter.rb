@@ -6,7 +6,7 @@ module Kiba
       # Mixin methods for reporting
       module Reporter
         def report_run_start
-          @start = Time.now
+          @start = Time.now unless @dependency
           case Kiba::Extend.job_verbosity
           when :verbose
             verbose_start
@@ -20,7 +20,7 @@ module Kiba
         end
 
         def report_run_end
-          @duration = Time.now - @start
+          @duration = Time.now - @start unless @dependency
           case Kiba::Extend.job_verbosity
           when :verbose
             verbose_end
@@ -118,6 +118,8 @@ module Kiba
         end
 
         def get_duration
+          return "" if @dependency
+
           minutes = (@duration / 60).floor
           seconds = (@duration - (minutes * 60)).ceil
           "#{minutes}m #{seconds}s"

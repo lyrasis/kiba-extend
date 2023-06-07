@@ -49,10 +49,11 @@ These changes are merged into the `main` branch, but have not been released. Aft
 * `Transforms::Helpers::OrgNameChecker` (PR#148)
 * `Kiba::Extend::Job.output?` convenience method (PR#150)
 * `Sort::ByFieldValue` transform (PR#151)
-* `:mode` parameter to `Jobs::BaseJob` (PR#154)
-* Job duration report (added to normal and verbose job run) (PR#154)
+* `:mode` parameter to `Jobs::BaseJob` (PR#154, PR#157)
+* Job duration report (added to normal and verbose job run) (PR#154, PR#157)
 * `Fingerprint::FlagChanged` transform (PR#155)
 * `Delete::FieldnamesStartingWith` transform (PR#156)
+* `Fingerprint::MergeCorrected` transform (PR#157)
 
 === Changed
 * Transforms that take an `action` argument now mix in the new `ActionArgumentable` module and validate the argument values in a consistent way (PR#138)
