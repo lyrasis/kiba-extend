@@ -114,7 +114,9 @@ transform after running this, and before writing output.</p>
 <p>With a lookup table derived from a job using <span class='object_link'><a href="FlagChanged.html" title="Kiba::Extend::Transforms::Fingerprint::FlagChanged (class)">FlagChanged</a></span>, and a
   source table having a fingerprint field which can be used as a
   keycolumn for the lookup table, apply corrections from the lookup
-  table to the source table</p>
+  table to the source table. If multiple matching correction rows are
+  found in the lookup table, they will be applied in the order they
+  are returned from the lookup table.</p>
 
 
   </div>
@@ -135,7 +137,8 @@ transform after running this, and before writing output.</p>
 </span><span class='comment'>#   todofield: :corrected
 </span><span class='id identifier rubyid_lookup'>lookup</span> <span class='op'>=</span> <span class='lbrace'>{</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1</span><span class='tstring_end'>&quot;</span></span><span class='op'>=&gt;</span><span class='lbracket'>[</span><span class='lbrace'>{</span><span class='label'>key:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>apps</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>corrected:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>a|b</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='rbracket'>]</span><span class='comma'>,</span>
-  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2</span><span class='tstring_end'>&quot;</span></span><span class='op'>=&gt;</span><span class='lbracket'>[</span><span class='lbrace'>{</span><span class='label'>key:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>apple</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bee</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>corrected:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>b</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='rbracket'>]</span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2</span><span class='tstring_end'>&quot;</span></span><span class='op'>=&gt;</span><span class='lbracket'>[</span><span class='lbrace'>{</span><span class='label'>key:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>apple</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bee</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>corrected:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>b</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+        <span class='lbrace'>{</span><span class='label'>key:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>apples</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bee</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>corrected:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>a</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='rbracket'>]</span><span class='comma'>,</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>3</span><span class='tstring_end'>&quot;</span></span><span class='op'>=&gt;</span><span class='lbracket'>[</span><span class='lbrace'>{</span><span class='label'>key:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>3</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>apple</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bees</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>corrected:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='rbracket'>]</span>
 <span class='rbrace'>}</span>
 <span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Fingerprint.html" title="Kiba::Extend::Transforms::Fingerprint (module)">Fingerprint</a></span></span><span class='op'>::</span><span class='const'>MergeCorrected</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Fingerprint::MergeCorrected#initialize (method)">new</a></span></span><span class='lparen'>(</span>
@@ -153,7 +156,7 @@ transform after running this, and before writing output.</p>
   <span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_row'>row</span> <span class='rbrace'>}</span>
 <span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='lbracket'>[</span>
   <span class='lbrace'>{</span><span class='label'>fp:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>apps</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
-  <span class='lbrace'>{</span><span class='label'>fp:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ant</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bee</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>fp:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>apples</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bee</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
   <span class='lbrace'>{</span><span class='label'>fp:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>3</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ant</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bear</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
   <span class='lbrace'>{</span><span class='label'>fp:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>4</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ant</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bear</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
 <span class='rbracket'>]</span>
@@ -418,17 +421,17 @@ into each row. If <code>nil</code>, no indicator column is added</p>
       <pre class="lines">
 
 
-101
-102
-103
 104
 105
 106
 107
-108</pre>
+108
+109
+110
+111</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/merge_corrected.rb', line 101</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/merge_corrected.rb', line 104</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>keycolumn:</span><span class='comma'>,</span> <span class='label'>lookup:</span><span class='comma'>,</span> <span class='label'>todofield:</span><span class='comma'>,</span> <span class='label'>fieldmap:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span>
                <span class='label'>tag_affected_in:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
@@ -504,25 +507,25 @@ into each row. If <code>nil</code>, no indicator column is added</p>
       <pre class="lines">
 
 
-111
-112
-113
 114
 115
 116
 117
 118
-119</pre>
+119
+120
+121
+122</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/merge_corrected.rb', line 111</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/merge_corrected.rb', line 114</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_tag_affected_in'>tag_affected_in</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>n</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_tag_affected_in'>tag_affected_in</span>
-  <span class='id identifier rubyid_corrections'>corrections</span> <span class='op'>=</span> <span class='id identifier rubyid_get_corrections'>get_corrections</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
-  <span class='kw'>return</span> <span class='id identifier rubyid_row'>row</span> <span class='kw'>if</span> <span class='id identifier rubyid_corrections'>corrections</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+  <span class='id identifier rubyid_correction_steps'>correction_steps</span> <span class='op'>=</span> <span class='id identifier rubyid_get_correction_steps'>get_correction_steps</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_row'>row</span> <span class='kw'>if</span> <span class='id identifier rubyid_correction_steps'>correction_steps</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
 
-  <span class='id identifier rubyid_do_corrections'>do_corrections</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='comma'>,</span> <span class='id identifier rubyid_corrections'>corrections</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_do_correction_steps'>do_correction_steps</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='comma'>,</span> <span class='id identifier rubyid_correction_steps'>correction_steps</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_tag_affected_in'>tag_affected_in</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>y</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_tag_affected_in'>tag_affected_in</span>
   <span class='id identifier rubyid_row'>row</span>
 <span class='kw'>end</span></pre>
@@ -536,7 +539,7 @@ into each row. If <code>nil</code>, no indicator column is added</p>
 </div>
 
       <div id="footer">
-  Generated on Wed Jun  7 18:18:50 2023 by
+  Generated on Thu Jun  8 19:13:46 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>
