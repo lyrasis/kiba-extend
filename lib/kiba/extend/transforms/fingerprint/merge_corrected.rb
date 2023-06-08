@@ -8,7 +8,9 @@ module Kiba
         # With a lookup table derived from a job using {FlagChanged}, and a
         #   source table having a fingerprint field which can be used as a
         #   keycolumn for the lookup table, apply corrections from the lookup
-        #   table to the source table
+        #   table to the source table. If multiple matching correction rows are
+        #   found in the lookup table, they will be applied in the order they
+        #   are returned from the lookup table.
         #
         # @note If you are giving custom target fields via the `fieldmap`
         #   parameter, or your source table does not already contain the target
@@ -23,7 +25,8 @@ module Kiba
         #   #   todofield: :corrected
         #   lookup = {
         #     "1"=>[{key: "1", a: "apps", b: nil, corrected: "a|b"}],
-        #     "2"=>[{key: "2", a: "apple", b: "bee", corrected: "b"}],
+        #     "2"=>[{key: "2", a: "apple", b: "bee", corrected: "b"},
+        #           {key: "2", a: "apples", b: "bee", corrected: "a"}],
         #     "3"=>[{key: "3", a: "apple", b: "bees", corrected: nil}]
         #   }
         #   xform = Fingerprint::MergeCorrected.new(
@@ -41,7 +44,7 @@ module Kiba
         #     .map{ |row| row }
         #   expected = [
         #     {fp: "1", a: 'apps', b: nil},
-        #     {fp: "2", a: 'ant', b: 'bee'},
+        #     {fp: "2", a: 'apples', b: 'bee'},
         #     {fp: "3", a: 'ant', b: 'bear'},
         #     {fp: "4", a: 'ant', b: 'bear'},
         #   ]
@@ -110,10 +113,10 @@ module Kiba
           # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             row[tag_affected_in] = "n" if tag_affected_in
-            corrections = get_corrections(row)
-            return row if corrections.blank?
+            correction_steps = get_correction_steps(row)
+            return row if correction_steps.blank?
 
-            do_corrections(row, corrections)
+            do_correction_steps(row, correction_steps)
             row[tag_affected_in] = "y" if tag_affected_in
             row
           end
@@ -123,12 +126,17 @@ module Kiba
           attr_reader :keycolumn, :lookup, :todofield, :fieldmap,
             :tag_affected_in
 
-          def get_corrections(row)
+          def get_correction_steps(row)
             lookup_rows = lookup[row[keycolumn]]
             return {} if lookup_rows.blank?
 
             lookup_rows.reject{ |lkrow| lkrow[todofield].blank? }
-              .first
+          end
+
+          def do_correction_steps(row, correction_steps)
+            correction_steps.each do |corrections|
+              do_corrections(row, corrections)
+            end
           end
 
           def do_corrections(row, corrections)
