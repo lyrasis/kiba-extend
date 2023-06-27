@@ -24,82 +24,67 @@ module Kiba
             end
           end
 
-          # rubocop:disable Layout/LineLength
+          TERMS = <<~LIST
+            (?:
+            # business domains or types
+            auto(motive|)|hotels?|inn|insurance|plumb(ers|ing)|roofing|shop|
+            store|
+            # clubs and groups
+            association|club|fraternity|friends of the|legion|league|
+            society|sorority|team|
+            # corporate or company name terms
+            company|consultant(s|)|corporation|group|incorporated|service|
+            # education
+            academy|college|institute|program|university|school|
+            # events
+            games|olympics|
+            # food and drink
+            brewer(ies|y)|cafe|farm|grocer(ies|y)|restaurant|saloon|tavern|
+            # glam or cultural institutions
+            band|centers?|choir|ensemble|gallery|library|museum|observatory|
+            orchestra|studio|theat(er|re)|
+            # governmental
+            agency|court of|general assembly|senate|tribe|
+            # health-related
+            hospital|nursing home|pharmacy|
+            # military
+            artillery|brigade|infantry|regiment|
+            # non-profity terms
+            alliance|board of|foundation|program|task ?force|
+            # organizational units
+            administration|assembly|bureau|commission|committee|council|
+            department|division|federation|office|
+            # transportation
+            airport|depot|rail(road|way)
+            )
+          LIST
+
           DEFAULT_PATTERNS = [
               / LLC/i,
               / co$/i,
-              / co\./i,
-              / corp\.$/i,
-              / dept\.?$/i,
-              /dept\./i,
-              / inc$/i,
-              /inc\./i,
-              /^\w+ & \w+$/,
-              /^(\w+,? )+& \w+$/,
+              / corp$/i,
+              /\bdept$/i,
+              /\bdept\./i,
+              /\binc$/i,
+              /\binc\./i,
+              /^\w+ (?:&|and) \w+$/,
+              /^(\w+,? )+(?:&|and) \w+$/,
               /'s$/,
-              # military
-              /^(artillery|brigade|infantry|regiment) /i,
-              / (artillery|brigade|infantry|regiment) /i,
-              / (artillery|brigade|infantry|regiment)$/i,
-              # organizational units
-              /(inter|multi)?national/i,
-              /^(administration|assembly|bureau|commission|committee|council|department|division|federation|office) /i,
-              / (administration|assembly|bureau|commission|committee|council|department|division|federation|office) /i,
-              / (administration|assembly|bureau|commission|committee|council|department|division|federation|office)$/i,
-              # education
-              /^(academy|college|institute|program|university|school) /i,
-              / (academy|college|institute|program|university|school) /i,
-              / (academy|college|institute|program|university|school)$/i,
-              / (elementary|middle|primary|high)$/i,
-              # health-related
-              /^(hospital|nursing home|pharmacy) /i,
-              / (hospital|nursing home|pharmacy) /i,
-              / (hospital|nursing home|pharmacy)$/i,
-              # governmental
-              /^(agency|court of|general assembly|senate|tribe) /i,
-              / (agency|court of|general assembly|senate|tribe)\.? /i,
-              / (agency|court of|general assembly|senate|tribe)$/i,
-              # non-profity terms
-              /^(alliance|board of|foundation|program|task ?force) /i,
-              / (alliance|board of|foundation|program|task ?force) /i,
-              / (alliance|board of|foundation|program|task ?force)$/i,
+              /\b(inter|multi)?national\b/i,
               / (network|project|services?)$/i,
-              # corporate/company name terms
-              /^(company|consultant(s|)|corporation|group|incorporated|service) /i,
-              / (company|consultant(s|)|corporation|group|incorporated|service) /i,
-              / (company|consultant(s|)|corporation|group|incorporated|service)$/i,
               /\.com$/,
-              # glam/cultural institutions
-              /^(band|centers?|ensemble|gallery|library|museum|observatory|orchestra|studio|theat(er|re)) /i,
-              / (band|centers?|ensemble|gallery|library|museum|observatory|orchestra|studio|theat(er|re)) /i,
-              / (band|centers?|ensemble|gallery|library|museum|observatory|orchestra|studio|theat(er|re))$/i,
-              # clubs/groups
-              /^(association|choir|club|fraternity|friends of the|legion|league|society|sorority|team) /i,
-              / (association|choir|club|fraternity|friends of the|legion|league|society|sorority|team) /i,
-              / (association|choir|club|fraternity|friends of the|legion|league|society|sorority|team)$/i,
-              # events
-              /^(games|olympics) /i,
-              / (games|olympics) /i,
-              / (games|olympics)$/i,
-              # transportation
-              /^(airport|depot|rail(road|way)) /i,
-              / (airport|depot|rail(road|way)) /i,
-              / (airport|depot|rail(road|way))$/i,
-              # food and drink
-              /^(brewer(ies|y)|cafe|farm|grocer(ies|y)|restaurant|saloon|tavern) /i,
-              / (brewer(ies|y)|cafe|farm|grocer(ies|y)|restaurant|saloon|tavern) /i,
-              / (brewer(ies|y)|cafe|farm|grocer(ies|y)|restaurant|saloon|tavern)$/i,
-              # areas/types of business
               /publish/i,
-              /^(auto(motive|)|hotel(s)|inn|insurance|plumb(ers|ing)|roofing|shop|store) /i,
-              / (auto(motive|)|hotel(s)|inn|insurance|plumb(ers|ing)|roofing|shop|store) /i,
-              / (auto(motive|)|hotel(s)|inn|insurance|plumb(ers|ing)|roofing|shop|store)$/i,
+              # term at beginning
+              /^#{TERMS}\b.+/ix,
+              # term between other terms
+              /.+\b#{TERMS}\b.+/ix,
+              # term at end
+              /.+\b#{TERMS}$/ix
             ]
 
           FAMILY_PATTERNS = [
             / famil(ies|y)/i
           ]
-          # rubocop:enable Layout/LineLength
 
           # @param added_patterns [Array<Regexp>] non-standard regexp to check
           #   against. Best practice is to add these to this helper via a pull
@@ -116,8 +101,9 @@ module Kiba
           # @return [true] if `value` matches an org pattern
           # @return [false] otherwise
           def call(value)
-            return false if value.blank?
-            return true if patterns.any? { |pattern| value.match?(pattern) }
+            testval = value.sub(/\. *$/, "")
+            return false if testval.blank?
+            return true if patterns.any? { |pattern| testval.match?(pattern) }
 
             false
           end
