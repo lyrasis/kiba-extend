@@ -22,8 +22,13 @@ RSpec.describe Kiba::Extend::Transforms::Helpers::OrgNameChecker do
           "Acme, Inc."=>true,
           "Napo & El"=>true,
           "Hops, Munstead, & Vern"=>true,
+          "Napo and El"=>true,
+          "Hops, Munstead and Vern"=>true,
           "Smith family"=>false,
-          "Plumbing"=>false
+          "Plumbing"=>false,
+          "Hilton Hotels"=>true,
+          "Durham Hotel"=>true,
+          "Insurance."=>false
         }
       end
 

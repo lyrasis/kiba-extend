@@ -39,14 +39,24 @@ module Kiba
     module_function
     extend Dry::Configurable
 
+    # @return [String] path to this application's data directory (used
+    #   internally by transforms and utils), and not specific to a project
+    setting :ke_dir,
+      reader: true,
+      constructor: ->(value) do
+        Gem.loaded_specs["kiba-extend"].full_gem_path
+      end
+
     def loader
       @loader ||= setup_loader
     end
 
     private def setup_loader
               @loader = Zeitwerk::Loader.new
-              ke_dir = Gem.loaded_specs['kiba-extend'].full_gem_path
-              @loader.push_dir(File.join(ke_dir, 'lib', 'kiba', 'extend'), namespace: Kiba::Extend)
+              @loader.push_dir(
+                File.join(ke_dir, 'lib', 'kiba', 'extend'),
+                namespace: Kiba::Extend
+              )
               @loader.inflector.inflect(
                 'normalize_for_id' => 'NormalizeForID',
                 'convert_to_id' => 'ConvertToID',
@@ -166,7 +176,6 @@ module Kiba
     # - :normal - reports what is running, from where, and the results
     # - :minimal - bare minimum
     setting :job_verbosity, default: :normal, reader: true
-
 
     # The section below is for backward comapatibility only
 
