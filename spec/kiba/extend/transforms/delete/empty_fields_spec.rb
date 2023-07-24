@@ -2,7 +2,7 @@
 
 require 'spec_helper'
 
-RSpec.describe Kiba::Extend::Transforms::Delete::EmptyFields do  
+RSpec.describe Kiba::Extend::Transforms::Delete::EmptyFields do
   let(:accumulator){ [] }
   let(:test_job){ Helpers::TestJob.new(input: input, accumulator: accumulator, transforms: transforms) }
   let(:result){ test_job.accumulator }
@@ -113,6 +113,22 @@ RSpec.describe Kiba::Extend::Transforms::Delete::EmptyFields do
       it 'transforms as expected' do
         expect(result).to eq(expected)
       end
+    end
+  end
+
+  context 'with empty input source' do
+    let(:input){ [] }
+
+    let(:expected){ [] }
+
+    let(:transforms) do
+      Kiba.job_segment do
+        transform Delete::EmptyFields
+      end
+    end
+
+    it 'transforms as expected' do
+      expect(result).to eq(expected)
     end
   end
 end
