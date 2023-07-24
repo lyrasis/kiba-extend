@@ -128,6 +128,8 @@ module Kiba
           end
 
           def close
+            return if rows.empty?
+
             to_delete = rows.first.keys - pop_fields.keys
             rows.each do |row|
               to_delete.each{ |field| row.delete(field) }
