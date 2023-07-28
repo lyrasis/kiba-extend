@@ -59,7 +59,7 @@ module Kiba
       # @return [Array<String>] subfields to be extracted as part of name values
       #   from {meeting_data_tags}
       setting :meeting_name_part_subfields,
-        default: %w[a b c d g n u],
+        default: %w[a q b c d g n u],
         reader: true
       # @return [Array<String>] subfields to be extracted as meeting role codes
       #   from {meeting_data_tags}
