@@ -34,28 +34,47 @@ These changes are merged into the `main` branch, but have not been released. Aft
 * Using a supplied file registry entry as the destination of a job raises an error, since the definition of a supplied entry is that it is not created by a job in the project. (PR#139)
 
 === Added
+.New destinations
 * `Destinations::Marc` (PR#138)
-* `Marc::FilterRecords::ById` and `Marc::FilterRecords::WithLambda` transforms  (PR#138)
-* `Marc::ExtractMeetingNameData`, `Marc::ExtractOrgNameData`, `Marc::ExtractPersonNameData`, and `Marc::ExtractNameData` transforms (PR#137, #164)
-* `Sources::CSV` and `Sources::Enumerable` (PR#139)
 * `Destinations::Lambda` (PR#139)
-* `Sources::JsonDir` and `Jobs::JsonToCsvJob` (PR#140)
-* `Clean::EnsureConsistentFields` transform (PR#140)
-* Utility classes to clean ISBD trailing punctuation from name and role term values extracted from MARC data (PR#141)
-* `Marc::ExtractSubfieldsFromField` transform (PR#141)
+
+.New sources
+* `Sources::CSV` (PR#139)
+* `Sources::Enumerable` (PR#139)
+* `Sources::JsonDir` (PR#140)
+
+.New job types
+* `Jobs::JsonToCsvJob` (PR#140)
+
+.New transforms
+* `Clean::EnsureConsistentFields` (PR#140)
+* `Delete::FieldnamesStartingWith` (PR#156)
+* `Explode::RowsFromGroupedMultivalFields` (PR#165)
+* `Fingerprint::FlagChanged` (PR#155)
+* `Fingerprint::MergeCorrected` (PR#157)
+* `Marc::FilterRecords::ById` (PR#138)
+* `Marc::FilterRecords::WithLambda` (PR#138)
+* `Marc::ExtractMeetingNameData` (PR#164)
+* `Marc::ExtractOrgNameData` (PR#137)
+* `Marc::ExtractPersonNameData` (PR#137)
+* `Marc::ExtractNameData` (PR#137)
+* `Marc::ExtractSubfieldsFromField` (PR#141)
+* `Sort::ByFieldValue` (PR#151)
 * `Split::PublicationStatement` transform (PR#142)
+
+.New `Transforms::Helpers`
+* `OrgNameChecker` (PR#148)
+* `PersonNameChecker`(PR#161)
+
+.New params/options
 * `CombineValues::FromFieldWithDelimiter` can now take `sources: :all`, and will provide space as a default `delim` if not provided  (PR#147)
 * `CombineValues::FromFieldWithDelimiter` can now take `delete_sources` and `prepend_source_field_name` args (PR#147)
-* `Transforms::Helpers`
-** `OrgNameChecker` (PR#148)
-** `PersonNameChecker`(PR#161)
+* `:mode` parameter added to `Jobs::BaseJob` (PR#154, PR#157)
+
+.Other
+* Utility classes to clean ISBD trailing punctuation from name and role term values extracted from MARC data (PR#141)
 * `Kiba::Extend::Job.output?` convenience method (PR#150)
-* `Sort::ByFieldValue` transform (PR#151)
-* `:mode` parameter to `Jobs::BaseJob` (PR#154, PR#157)
 * Job duration report (added to normal and verbose job run) (PR#154, PR#157)
-* `Fingerprint::FlagChanged` transform (PR#155)
-* `Delete::FieldnamesStartingWith` transform (PR#156)
-* `Fingerprint::MergeCorrected` transform (PR#157)
 
 === Changed
 * Transforms that take an `action` argument now mix in the new `ActionArgumentable` module and validate the argument values in a consistent way (PR#138)
