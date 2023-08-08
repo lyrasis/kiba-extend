@@ -50,33 +50,22 @@ module Kiba
         #   expect(result).to eq(expected)
         class RowsFromMultivalField
           # @param field [Symbol] the field from which rows will be created
-          # @param delim [String] used to split `field` value. `Kiba::Extend.delim` used if value not given
+          # @param delim [String] used to split `field` value.
+          #   `Kiba::Extend.delim` used if value not given
           def initialize(field:, delim: nil)
-            @field = field
-            @delim = delim ||= Kiba::Extend.delim
+            @exploder = RowsFromGroupedMultivalFields.new(
+              fields: field, delim: delim
+            )
           end
 
           # @param row [Hash{ Symbol => String, nil }]
           def process(row)
-            other_fields = row.keys.reject { |k| k == field }
-            fieldval = row.fetch(field, nil)
-            fieldval = fieldval.nil? ? [] : fieldval.split(delim)
-            if fieldval.size > 1
-              fieldval.each do |val|
-                rowcopy = row.clone
-                other_fields.each { |f| rowcopy[f] = rowcopy.fetch(f, nil) }
-                rowcopy[field] = val
-                yield(rowcopy)
-              end
-              nil
-            else
-              row
-            end
+            exploder.process(row){ |r| yield r }
           end
 
           private
 
-          attr_reader :field, :delim
+          attr_reader :exploder
         end
       end
     end
