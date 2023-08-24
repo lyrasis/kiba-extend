@@ -59,6 +59,7 @@ These changes are merged into the `main` branch, but have not been released. Aft
 * `Marc::ExtractPersonNameData` (PR#137)
 * `Marc::ExtractNameData` (PR#137)
 * `Marc::ExtractSubfieldsFromField` (PR#141)
+* `Replace::NormWithMostFrequentlyUsedForm` (PR#167)
 * `Sort::ByFieldValue` (PR#151)
 * `Split::PublicationStatement` transform (PR#142)
 
