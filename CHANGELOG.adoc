@@ -82,7 +82,7 @@ These changes are merged into the `main` branch, but have not been released. Aft
 * Name and role term values extracted from MARC data by subclasses of `Transforms::Marc::ExtractBaseNameData` are run through `Utils::MarcNameCleaner` and `Utils::MarcRoleTermCleaner` (PR#141)
 * `Fingerprint::Add` now passes in default delim: U+241F / E2 90 9F / Symbol for Unit Separator (PR#155)
 * `Fingerprint::Decode` now passes in default delim (U+241F / E2 90 9F / Symbol for Unit Separator), and default prefix (fp) (PR#155)
-
+* `Fingerprint::FlagChanged` can now be passed an `ignore_fields` parameter indicating fields included in the fingerprint, but which should not be compared to current values and flagged (PR#168)
 === Bugfixes
 * Fixes https://github.com/lyrasis/kiba-extend/issues/146[#46 - CombineValues::FullRecord with multi-sources can result in different values] (PR#147)
 * Fixes issue where job registry entry with a Marc source and CSV destination could not be used as a source or lookup in jobs (PR#137)
