@@ -108,6 +108,33 @@
 
 <p>See <span class='object_link'><a href="Decode.html" title="Kiba::Extend::Transforms::Fingerprint::Decode (class)">Decode</a></span> for details on the decoding process.</p>
 
+<h2 id="notes-on-examples">Notes on examples</h2>
+
+<h3 id="example-1">Example 1</h3>
+
+<ul>
+<li>Row 1: fingerprinted values didn&#39;t change</li>
+<li>Row 2: :b changed from bee to bees, and :d changed from deer to doe
+after fingerprint was encoded. :e was changed from nil to an empty
+string, but because :empty_equals_nil is true by default, this
+change is not reported</li>
+<li>Row 3: :d was removed after fingerprint was encoded.</li>
+</ul>
+
+<h3 id="example-2">Example 2</h3>
+
+<ul>
+<li>Shows how Row 2 from Example 1 is treated differently if
+:empty_equals_nil is set to false</li>
+</ul>
+
+<h3 id="example-3">Example 3</h3>
+
+<ul>
+<li>Shows how Row 3 from Example 1 is treated differently if we indicate
+that :d should be ignored</li>
+</ul>
+
 
   </div>
 </div>
@@ -117,7 +144,7 @@
     <p class="tag_title">Examples:</p>
     
       
-        <p class="example_title"><div class='inline'><p>With :empty_equals_nil true (default)</p>
+        <p class="example_title"><div class='inline'><p>1: With defaults</p>
 </div></p>
       
       <pre class="example code"><code><span class='comment'># Used in pipeline as:
@@ -136,6 +163,8 @@
   <span class='lbrace'>{</span><span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ant</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bee</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>c:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>d:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>deer</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>e:</span> <span class='kw'>nil</span><span class='comma'>,</span>
    <span class='label'>fp:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>YmVlOzs7bmlsOzs7ZGVlcjs7O2VtcHR5</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
   <span class='lbrace'>{</span><span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ant</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bees</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>c:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>d:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>doe</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>e:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>fp:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>YmVlOzs7bmlsOzs7ZGVlcjs7O2VtcHR5</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ant</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bee</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>c:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>e:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
    <span class='label'>fp:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>YmVlOzs7bmlsOzs7ZGVlcjs7O2VtcHR5</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
 <span class='rbracket'>]</span>
 <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>StreamingRunner</span><span class='period'>.</span><span class='id identifier rubyid_transform_stream'>transform_stream</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='id identifier rubyid_xform'>xform</span><span class='rparen'>)</span>
@@ -145,15 +174,19 @@
    <span class='label'>fp:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>YmVlOzs7bmlsOzs7ZGVlcjs7O2VtcHR5</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
    <span class='label'>fp_b:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bee</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>fp_c:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>fp_d:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>deer</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>fp_e:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
    <span class='label'>changed:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
-    <span class='lbrace'>{</span><span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ant</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bees</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>c:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>d:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>doe</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>e:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='lbrace'>{</span><span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ant</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bees</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>c:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>d:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>doe</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>e:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
    <span class='label'>fp:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>YmVlOzs7bmlsOzs7ZGVlcjs7O2VtcHR5</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
    <span class='label'>fp_b:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bee</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>fp_c:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>fp_d:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>deer</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>fp_e:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
-   <span class='label'>changed:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>b|d</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+   <span class='label'>changed:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>b|d</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+   <span class='lbrace'>{</span><span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ant</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bee</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>c:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>e:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>fp:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>YmVlOzs7bmlsOzs7ZGVlcjs7O2VtcHR5</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>fp_b:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bee</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>fp_c:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>fp_d:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>deer</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>fp_e:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>changed:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>d</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
 <span class='rbracket'>]</span>
 <span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>With :empty_equals_nil false</p>
+        <p class="example_title"><div class='inline'><p>2: With :empty_equals_nil false</p>
 </div></p>
       
       <pre class="example code"><code><span class='comment'># Used in pipeline as:
@@ -181,6 +214,38 @@
    <span class='label'>fp:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>YmVlOzs7bmlsOzs7ZGVlcjs7O2VtcHR5</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
    <span class='label'>fp_b:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bee</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>fp_c:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>fp_d:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>deer</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>fp_e:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
    <span class='label'>changed:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>e</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>3: With ignore_fields</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='comment'># Used in pipeline as:
+</span><span class='comment'># transform Fingerprint::FlagChanged,
+</span><span class='comment'>#   fingerprint: :fp,
+</span><span class='comment'>#   source_fields: %i[b c d e],
+</span><span class='comment'>#   delim: &#39;;;;&#39;,
+</span><span class='comment'>#   target: :changed,
+</span><span class='comment'>#   ignore_fields: :d
+</span><span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Fingerprint.html" title="Kiba::Extend::Transforms::Fingerprint (module)">Fingerprint</a></span></span><span class='op'>::</span><span class='const'>FlagChanged</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Fingerprint::FlagChanged#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+  <span class='label'>fingerprint:</span> <span class='symbol'>:fp</span><span class='comma'>,</span>
+  <span class='label'>source_fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>b</span><span class='words_sep'> </span><span class='tstring_content'>c</span><span class='words_sep'> </span><span class='tstring_content'>d</span><span class='words_sep'> </span><span class='tstring_content'>e</span><span class='tstring_end'>]</span></span><span class='comma'>,</span>
+  <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;;;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>target:</span> <span class='symbol'>:changed</span><span class='comma'>,</span>
+  <span class='label'>ignore_fields:</span> <span class='symbol'>:d</span>
+<span class='rparen'>)</span>
+<span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ant</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bee</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>c:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>e:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>fp:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>YmVlOzs7bmlsOzs7ZGVlcjs7O2VtcHR5</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>StreamingRunner</span><span class='period'>.</span><span class='id identifier rubyid_transform_stream'>transform_stream</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='id identifier rubyid_xform'>xform</span><span class='rparen'>)</span>
+  <span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_row'>row</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+   <span class='lbrace'>{</span><span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ant</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bee</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>c:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>e:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>fp:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>YmVlOzs7bmlsOzs7ZGVlcjs7O2VtcHR5</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>fp_b:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bee</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>fp_c:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>fp_d:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>deer</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>fp_e:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>changed:</span> <span class='kw'>nil</span><span class='rbrace'>}</span>
 <span class='rbracket'>]</span>
 <span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
     
@@ -220,7 +285,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(fingerprint:, source_fields:, target:, delim: &quot;␟&quot;, prefix: &quot;fp&quot;, delete_fp: false, empty_equals_nil: true)  &#x21d2; FlagChanged </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(fingerprint:, source_fields:, target:, delim: &#39;␟&#39;, prefix: &#39;fp&#39;, delete_fp: false, ignore_fields: [], empty_equals_nil: true)  &#x21d2; FlagChanged </a>
     
 
     
@@ -273,7 +338,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(fingerprint:, source_fields:, target:, delim: &quot;␟&quot;, prefix: &quot;fp&quot;, delete_fp: false, empty_equals_nil: true)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Fingerprint::FlagChanged (class)">FlagChanged</a></span></tt> 
+    #<strong>initialize</strong>(fingerprint:, source_fields:, target:, delim: &#39;␟&#39;, prefix: &#39;fp&#39;, delete_fp: false, ignore_fields: [], empty_equals_nil: true)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Fingerprint::FlagChanged (class)">FlagChanged</a></span></tt> 
   
 
   
@@ -346,7 +411,7 @@ in which values have changed</p>
         <span class='type'>(<tt>String</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>&quot;␟&quot;</tt>)</em>
+        <em class="default">(defaults to: <tt>&#39;␟&#39;</tt>)</em>
       
       
         &mdash;
@@ -365,7 +430,7 @@ Separator.</p>
         <span class='type'>(<tt>String</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>&quot;fp&quot;</tt>)</em>
+        <em class="default">(defaults to: <tt>&#39;fp&#39;</tt>)</em>
       
       
         &mdash;
@@ -389,6 +454,24 @@ added to rows</p>
         &mdash;
         <div class='inline'><p>whether to delete the given fingerprint
 field</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>ignore_fields</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>, <tt>Array&lt;Symbol&gt;</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>[]</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>fields included in the
+fingerprint that should NOT compared/flagged</p>
 </div>
       
     </li>
@@ -435,28 +518,30 @@ values as equal</p>
       <pre class="lines">
 
 
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100
-101
-102
-103
-104
-105
-106</pre>
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/flag_changed.rb', line 91</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/flag_changed.rb', line 143</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fingerprint:</span><span class='comma'>,</span> <span class='label'>source_fields:</span><span class='comma'>,</span> <span class='label'>target:</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>␟</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-               <span class='label'>prefix:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>fp</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>delete_fp:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>empty_equals_nil:</span> <span class='kw'>true</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fingerprint:</span><span class='comma'>,</span> <span class='label'>source_fields:</span><span class='comma'>,</span> <span class='label'>target:</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>␟</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+               <span class='label'>prefix:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>fp</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>delete_fp:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>ignore_fields:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span>
+               <span class='label'>empty_equals_nil:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='ivar'>@decoder</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Decode.html" title="Kiba::Extend::Transforms::Fingerprint::Decode (class)">Decode</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Decode.html#initialize-instance_method" title="Kiba::Extend::Transforms::Fingerprint::Decode#initialize (method)">new</a></span></span><span class='lparen'>(</span>
     <span class='label'>fingerprint:</span> <span class='id identifier rubyid_fingerprint'>fingerprint</span><span class='comma'>,</span>
     <span class='label'>source_fields:</span> <span class='id identifier rubyid_source_fields'>source_fields</span><span class='comma'>,</span>
@@ -466,8 +551,8 @@ values as equal</p>
   <span class='rparen'>)</span>
   <span class='ivar'>@target</span> <span class='op'>=</span> <span class='id identifier rubyid_target'>target</span>
   <span class='ivar'>@empty_equals_nil</span> <span class='op'>=</span> <span class='id identifier rubyid_empty_equals_nil'>empty_equals_nil</span>
-  <span class='ivar'>@source_fields</span> <span class='op'>=</span> <span class='id identifier rubyid_source_fields'>source_fields</span>
-  <span class='ivar'>@target_fields</span> <span class='op'>=</span> <span class='id identifier rubyid_source_fields'>source_fields</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span>
+  <span class='ivar'>@source_fields</span> <span class='op'>=</span> <span class='id identifier rubyid_source_fields'>source_fields</span> <span class='op'>-</span> <span class='lbracket'>[</span><span class='id identifier rubyid_ignore_fields'>ignore_fields</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
+  <span class='ivar'>@target_fields</span> <span class='op'>=</span> <span class='ivar'>@source_fields</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span>
     <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_prefix'>prefix</span><span class='embexpr_end'>}</span><span class='tstring_content'>_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_field'>field</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -537,18 +622,18 @@ values as equal</p>
       <pre class="lines">
 
 
-109
-110
-111
-112
-113
-114
-115
-116
-117</pre>
+162
+163
+164
+165
+166
+167
+168
+169
+170</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/flag_changed.rb', line 109</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/flag_changed.rb', line 162</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_target'>target</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>nil</span>
@@ -569,7 +654,7 @@ values as equal</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 20:53:54 2023 by
+  Generated on Thu Aug 24 21:34:12 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>
