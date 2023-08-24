@@ -5,16 +5,20 @@ inherit_mode:
     - Exclude
 
 require:
-  # Performance cops are bundled with Standard
-  - rubocop-performance
   # Standard's config uses custom cops,
   # so it must be loaded
   - standard
+  - standard-custom
+  # Performance cops are bundled with Standard
+  - standard-performance
+  - rubocop-performance
 
 inherit_gem:
-  standard: config/base.yml
+  standard: config/ruby-3.1.yml
+  standard-custom: config/base.yml
+  standard-performance: config/base.yml
   # You can also choose a Ruby-version-specific config
-  # standard: config/ruby-3.0.yml
+  # standard: config/ruby-3.1.yml
 
 inherit_from:
   - https://raw.githubusercontent.com/kspurgin/code-quality/main/configurations/rubocop/standard-override.yml
