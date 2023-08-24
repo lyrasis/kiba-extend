@@ -21,8 +21,7 @@ end
 
 group :test do
   gem 'simplecov', require: false
+  gem 'yardspec', '~> 0.2.0'
 end
 # Specify your gem's dependencies in kiba-extend.gemspec
 gemspec
-
-gem "yardspec", "~> 0.2.0"
