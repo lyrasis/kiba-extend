@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'base64'
+require "base64"
 
 module Kiba
   module Extend
@@ -13,7 +13,9 @@ module Kiba
         def initialize(fields:, delim:)
           @fields = [fields].flatten
           @delim = delim
-          @value_getter = Transforms::Helpers::FieldValueGetter.new(fields: fields, delim: delim, discard: [])
+          @value_getter = Transforms::Helpers::FieldValueGetter.new(
+            fields: fields, delim: delim, discard: []
+          )
         end
 
         # @raise [DelimInValueFingerprintError] if any of the field values in the row contain the delim. This error is
@@ -22,7 +24,7 @@ module Kiba
         def call(row)
           values = value_getter.call(row).values
           check_values(values)
-          
+
           Base64.strict_encode64(hashable_values(values).join(delim))
         end
 
@@ -31,16 +33,18 @@ module Kiba
         attr_reader :fields, :delim, :value_getter
 
         def check_values(values)
-          raise Kiba::Extend::Utils::DelimInValueFingerprintError if values.compact.any?{ |val| val[delim] }
+          raise Kiba::Extend::Utils::DelimInValueFingerprintError if values.compact.any? { |val|
+                                                                       val[delim]
+                                                                     }
         end
 
         def hashable_values(values)
           values.map do |val|
             case val
             when nil
-              'nil'
-            when ''
-              'empty'
+              "nil"
+            when ""
+              "empty"
             else
               val
             end

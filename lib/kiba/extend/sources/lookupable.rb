@@ -17,7 +17,7 @@ module Kiba
         # @return Nil if no file options may be passed
         def lookup_options_key
           raise NotImplementedError,
-            ':lookup_options_key must be defined in including class'
+            ":lookup_options_key must be defined in including class"
         end
       end
     end

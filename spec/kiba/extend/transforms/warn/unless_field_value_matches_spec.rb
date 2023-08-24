@@ -1,74 +1,74 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 RSpec.describe Kiba::Extend::Transforms::Warn::UnlessFieldValueMatches do
-  subject(:xform){ described_class.new(**params) }
-  let(:field){ :test }
-  let(:delim){ '|' }
-  
-  describe '#process' do
-    let(:result){ xform.process(row) }
+  subject(:xform) { described_class.new(**params) }
+  let(:field) { :test }
+  let(:delim) { "|" }
 
-    context 'with string value' do
-      let(:match){ 'LENDER' }
+  describe "#process" do
+    let(:result) { xform.process(row) }
 
-      context 'when no delim (single value)' do
-        let(:params){ {field: field, match: match} }
-        
-        context 'without value match' do
-          let(:row){ {test: 'value'} }
+    context "with string value" do
+      let(:match) { "LENDER" }
 
-          it 'returns row and warns' do
+      context "when no delim (single value)" do
+        let(:params) { {field: field, match: match} }
+
+        context "without value match" do
+          let(:row) { {test: "value"} }
+
+          it "returns row and warns" do
             expect(xform).to receive(:warn)
             expect(result).to eq(row)
           end
         end
 
-        context 'with nil value' do
-          let(:row){ {test: nil} }
+        context "with nil value" do
+          let(:row) { {test: nil} }
 
-          it 'returns row' do
+          it "returns row" do
             expect(xform).not_to receive(:warn)
             expect(result).to eq(row)
           end
         end
 
-        context 'with value match' do
-          let(:row){ {test: 'LENDER'} }
-          
-          it 'returns row' do
+        context "with value match" do
+          let(:row) { {test: "LENDER"} }
+
+          it "returns row" do
             expect(xform).not_to receive(:warn)
             expect(result).to eq(row)
           end
         end
       end
 
-      context 'when delim (multi value)' do
-        let(:params){ {field: field, match: match, delim: delim} }
-        
-        context 'without value match' do
-          let(:row){ {test: 'foo|bar'} }
+      context "when delim (multi value)" do
+        let(:params) { {field: field, match: match, delim: delim} }
 
-          it 'returns row and warns' do
+        context "without value match" do
+          let(:row) { {test: "foo|bar"} }
+
+          it "returns row and warns" do
             expect(xform).to receive(:warn)
             expect(result).to eq(row)
           end
         end
 
-        context 'with partial value match' do
-          let(:row){ {test: 'LENDER|another'} }
+        context "with partial value match" do
+          let(:row) { {test: "LENDER|another"} }
 
-          it 'returns row and warns' do
+          it "returns row and warns" do
             expect(xform).to receive(:warn)
             expect(result).to eq(row)
           end
         end
 
-        context 'with value match' do
-          let(:row){ {test: 'LENDER|LENDER'} }
-          
-          it 'returns row' do
+        context "with value match" do
+          let(:row) { {test: "LENDER|LENDER"} }
+
+          it "returns row" do
             expect(xform).not_to receive(:warn)
             expect(result).to eq(row)
           end
@@ -76,56 +76,58 @@ RSpec.describe Kiba::Extend::Transforms::Warn::UnlessFieldValueMatches do
       end
     end
 
-    context 'with regex value' do
-      let(:match){ '^fo+$' }
+    context "with regex value" do
+      let(:match) { "^fo+$" }
 
-      context 'when no delim (single value)' do
-        let(:params){ {field: field, match: match, matchmode: :regex} }
-        
-        context 'without value match' do
-          let(:row){ {test: 'food'} }
+      context "when no delim (single value)" do
+        let(:params) { {field: field, match: match, matchmode: :regex} }
 
-          it 'returns row and warns' do
+        context "without value match" do
+          let(:row) { {test: "food"} }
+
+          it "returns row and warns" do
             expect(xform).to receive(:warn)
             expect(result).to eq(row)
           end
         end
 
-        context 'with value match' do
-          let(:row){ {test: 'foo'} }
-          
-          it 'returns row' do
+        context "with value match" do
+          let(:row) { {test: "foo"} }
+
+          it "returns row" do
             expect(result).to eq(row)
             expect(xform).not_to receive(:warn)
           end
         end
       end
 
-      context 'when delim (multi value)' do
-        let(:params){ {field: field, match: match, delim: delim, matchmode: :regex} }
-        
-        context 'without value match' do
-          let(:row){ {test: 'food|another'} }
+      context "when delim (multi value)" do
+        let(:params) {
+          {field: field, match: match, delim: delim, matchmode: :regex}
+        }
 
-          it 'returns row and warns' do
+        context "without value match" do
+          let(:row) { {test: "food|another"} }
+
+          it "returns row and warns" do
             expect(xform).to receive(:warn)
             expect(result).to eq(row)
           end
         end
 
-        context 'with partial value match' do
-          let(:row){ {test: 'nonmatch|foo|bar'} }
-          
-          it 'returns row and warns' do
+        context "with partial value match" do
+          let(:row) { {test: "nonmatch|foo|bar"} }
+
+          it "returns row and warns" do
             expect(xform).to receive(:warn)
             expect(result).to eq(row)
           end
         end
 
-        context 'with value match' do
-          let(:row){ {test: 'fooo|foo|'} }
-          
-          it 'returns row' do
+        context "with value match" do
+          let(:row) { {test: "fooo|foo|"} }
+
+          it "returns row" do
             expect(xform).not_to receive(:warn)
             expect(result).to eq(row)
           end

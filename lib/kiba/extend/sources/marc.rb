@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'marc'
+require "marc"
 
 module Kiba
   module Extend
@@ -49,10 +49,10 @@ module Kiba
         #   https://github.com/ruby-marc/ruby-marc/blob/main/lib/marc/reader.rb
         #   for more details
         def initialize(filename:, args: nil)
-          if args
-            @args = [filename, args]
+          @args = if args
+            [filename, args]
           else
-            @args = [filename]
+            [filename]
           end
         end
 

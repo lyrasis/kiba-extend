@@ -7,7 +7,6 @@ module Kiba
         # Merge one or more rows from a {Kiba::Extend::Utils::LookupHash} into source data, matching on
         #   `keycolumn` values
         class MultiRowLookup
-
           # @since 2.8.0
           class LookupTypeError < Kiba::Extend::Error
             def initialize(lookup)
@@ -53,8 +52,8 @@ module Kiba
           #   using it in a lookup, you may not need a sorter.
           # @note Interaction of specifying a `sorter` and `multikey: true` may be unexpected.
           def initialize(fieldmap:, lookup:, keycolumn:, constantmap: {},
-                         conditions: {}, multikey: false, delim: Kiba::Extend.delim, null_placeholder: nil,
-                         sorter: nil)
+            conditions: {}, multikey: false, delim: Kiba::Extend.delim, null_placeholder: nil,
+            sorter: nil)
             @fieldmap = fieldmap # hash of looked-up values to merge in for each merged-in row
             fail EmptyFieldmap if fieldmap.empty?
 
@@ -83,8 +82,8 @@ module Kiba
               null_placeholder: null_placeholder
             )
 
-            id_data = row.fetch(keycolumn, '')
-            id_data = id_data.nil? ? '' : id_data
+            id_data = row.fetch(keycolumn, "")
+            id_data = id_data.nil? ? "" : id_data
             ids = multikey ? id_data.split(delim) : [id_data]
 
             ids.each do |id|

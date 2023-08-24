@@ -14,7 +14,7 @@ module Kiba
         #   used as a source for another job
         def as_source_class
           raise NotImplementedError,
-            ':as_source_class must be defined in extending class'
+            ":as_source_class must be defined in extending class"
         end
 
         # @return true
@@ -25,7 +25,7 @@ module Kiba
         # @return Array of defined special options for class
         def special_options
           raise NotImplementedError,
-            ':special_options must be defined in extending class'
+            ":special_options must be defined in extending class"
         end
       end
     end

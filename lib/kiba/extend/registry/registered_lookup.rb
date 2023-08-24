@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative 'registered_file'
-require_relative 'requirable_file'
+require_relative "registered_file"
+require_relative "requirable_file"
 
 module Kiba
   module Extend
@@ -57,7 +57,7 @@ module Kiba
         # Arguments for calling {Kiba::Extend::Lookup} with this file
         # @return [Hash]
         def args
-          { file: path, keycolumn: lookup_on }.merge(options)
+          {file: path, keycolumn: lookup_on}.merge(options)
         end
 
         def klass
@@ -68,9 +68,9 @@ module Kiba
 
         def options
           label = src_class.lookup_options_key
-          return {label=>src_opt} if src_opt
+          return {label => src_opt} if src_opt
 
-          {label=>src_class.default_file_options}
+          {label => src_class.default_file_options}
         end
       end
     end

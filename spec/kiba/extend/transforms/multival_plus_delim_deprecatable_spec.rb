@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 RSpec.describe Kiba::Extend::Transforms::MultivalPlusDelimDeprecatable do
   class Xform
@@ -13,19 +13,19 @@ RSpec.describe Kiba::Extend::Transforms::MultivalPlusDelimDeprecatable do
     end
   end
 
-  subject(:mod){ Xform.new(**params) }
+  subject(:mod) { Xform.new(**params) }
 
-  context 'with no multival' do
-    let(:params){ {} }
+  context "with no multival" do
+    let(:params) { {} }
 
-    it 'returns expected' do
+    it "returns expected" do
       expect(mod.multival).to be false
       expect(mod).not_to receive(:warn)
     end
   end
 
-  context 'with multival: true' do
-    let(:params){ {multival: true} }
+  context "with multival: true" do
+    let(:params) { {multival: true} }
     let(:body) do
       class Warner
         include Kiba::Extend::Transforms::MultivalPlusDelimDeprecatable
@@ -33,19 +33,19 @@ RSpec.describe Kiba::Extend::Transforms::MultivalPlusDelimDeprecatable do
 
       "#{Warner.new.send(:warning_body)}\n"
     end
-    let(:warning){ "#{Kiba::Extend.warning_label}:\n  Xform: #{body}" }
+    let(:warning) { "#{Kiba::Extend.warning_label}:\n  Xform: #{body}" }
 
-    it 'returns expected' do
+    it "returns expected" do
       expect(mod.multival).to be true
     end
 
-    it 'warns' do
-      expect{ mod }.to output(warning).to_stderr
+    it "warns" do
+      expect { mod }.to output(warning).to_stderr
     end
   end
 
-  context 'with multival: false' do
-    let(:params){ {multival: false} }
+  context "with multival: false" do
+    let(:params) { {multival: false} }
     let(:body) do
       class Warner
         include Kiba::Extend::Transforms::MultivalPlusDelimDeprecatable
@@ -53,18 +53,18 @@ RSpec.describe Kiba::Extend::Transforms::MultivalPlusDelimDeprecatable do
 
       "#{Warner.new.send(:warning_body)}\n"
     end
-    let(:warning){ "#{Kiba::Extend.warning_label}:\n  Xform: #{body}" }
+    let(:warning) { "#{Kiba::Extend.warning_label}:\n  Xform: #{body}" }
 
-    it 'returns expected' do
+    it "returns expected" do
       expect(mod.multival).to be false
     end
 
-    it 'warns' do
-      expect{ mod }.to output(warning).to_stderr
+    it "warns" do
+      expect { mod }.to output(warning).to_stderr
     end
   end
 
-  context 'when default multival value = true' do
+  context "when default multival value = true" do
     before do
       class Xform
         def multival_default
@@ -76,10 +76,10 @@ RSpec.describe Kiba::Extend::Transforms::MultivalPlusDelimDeprecatable do
       mod.class.remove_method(:multival_default)
     end
 
-    context 'with no multival' do
-      let(:params){ {} }
+    context "with no multival" do
+      let(:params) { {} }
 
-      it 'returns expected' do
+      it "returns expected" do
         expect(mod.multival).to be true
         expect(mod).not_to receive(:warn)
       end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'strscan'
+require "strscan"
 
 module Kiba
   module Extend
@@ -138,7 +138,7 @@ module Kiba
         #   expect(result).to eq(expected)
         class PublicationStatement
           DEFAULT_FIELDNAMES = %i[pubplace publisher pubdate
-                                  manplace manufacturer mandate]
+            manplace manufacturer mandate]
 
           # @param source [Symbol] field containing publication statement to
           #   split
@@ -147,9 +147,8 @@ module Kiba
           # @param delim [String] for joining multiple values in a given target
           #   field
           def initialize(source:,
-                         fieldname_overrides: nil,
-                         delim: Kiba::Extend.delim
-                        )
+            fieldname_overrides: nil,
+            delim: Kiba::Extend.delim)
             @source = source
             @fieldnames = setup_fieldnames(fieldname_overrides)
             @delim = delim
@@ -170,7 +169,7 @@ module Kiba
           attr_reader :source, :fieldnames, :delim
 
           def setup_fieldnames(overrides)
-            base = DEFAULT_FIELDNAMES.map{ |field| [field, field] }
+            base = DEFAULT_FIELDNAMES.map { |field| [field, field] }
               .to_h
             return base unless overrides
 
@@ -179,15 +178,15 @@ module Kiba
 
           def add_all_fields(row)
             fieldnames.values
-              .each{ |field| row[field] = nil }
+              .each { |field| row[field] = nil }
             row
           end
 
           def initial_clean(val)
             StringScanner.new(
               val.strip
-                .gsub(/  +/, ' ')
-                .delete_suffix('.')
+                .gsub(/  +/, " ")
+                .delete_suffix(".")
             )
           end
 
@@ -207,8 +206,7 @@ module Kiba
           def man_handler(row, scanner:)
             pubscanner = StringScanner.new(scanner.pre_match.strip)
             manscanner = StringScanner.new(scanner.matched
-                                           .sub(/\((.*)\)/, '\1')
-                                          )
+                                           .sub(/\((.*)\)/, '\1'))
             manrow = extract_segmenter(row, scanner: manscanner, type: :man)
             extract_segmenter(manrow, scanner: pubscanner, type: :pub)
           end
@@ -229,7 +227,7 @@ module Kiba
 
           def extract_date_only(row, scanner:, type:)
             scanner.unscan
-            dateval = {datefield(type)=>scanner.rest}
+            dateval = {datefield(type) => scanner.rest}
             row.merge(dateval)
           end
 
@@ -238,15 +236,15 @@ module Kiba
             pre = scanner.pre_match
               .strip
             dateval = scanner.matched
-              .delete_prefix(',')
+              .delete_prefix(",")
               .strip
             daterow = row.merge({
-              datefield(type)=>dateval
+              datefield(type) => dateval
             })
 
             extract_segmenter(daterow,
-                              scanner: StringScanner.new(pre),
-                              type: type)
+              scanner: StringScanner.new(pre),
+              type: type)
           end
 
           def extract_by_punct(row, scanner:, type:)
@@ -260,7 +258,7 @@ module Kiba
           end
 
           def extract_name(row, scanner:, type:)
-            nameval = {namefield(type)=>scanner.rest}
+            nameval = {namefield(type) => scanner.rest}
             row.merge(nameval)
           end
 
@@ -290,22 +288,22 @@ module Kiba
           end
 
           def field_from_punct(punct:, type:)
-            meth = punct == ':' ? :namefield : :placefield
+            meth = (punct == ":") ? :namefield : :placefield
             send(meth, type)
           end
 
           def add_value(row, field:, value:)
             existing = row[field]
             if existing.blank?
-              row.merge({field=>value})
+              row.merge({field => value})
             else
               joined = [existing, value].join(delim)
-              row.merge({field=>joined})
+              row.merge({field => joined})
             end
           end
 
           def namefield(type)
-            type == :pub ? fieldnames[:publisher] : fieldnames[:manufacturer]
+            (type == :pub) ? fieldnames[:publisher] : fieldnames[:manufacturer]
           end
 
           def datefield(type)

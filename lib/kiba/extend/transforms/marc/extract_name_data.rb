@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'marc'
+require "marc"
 
 module Kiba
   module Extend
@@ -20,16 +20,16 @@ module Kiba
             @extractors = [
               Marc::ExtractPersonNameData.new,
               Marc::ExtractOrgNameData.new,
-              Marc::ExtractMeetingNameData.new,
+              Marc::ExtractMeetingNameData.new
             ]
           end
 
           def process(record)
             rows = []
             extractors.each do |extractor|
-              extractor.process(record){ |row| rows << row }
+              extractor.process(record) { |row| rows << row }
             end
-            rows.each{ |row| yield row }
+            rows.each { |row| yield row }
             nil
           end
 

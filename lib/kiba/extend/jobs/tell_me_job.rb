@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'kiba/extend'
+require "kiba/extend"
 module Kiba
   module Extend
     module Jobs
@@ -9,7 +9,8 @@ module Kiba
       # Useful for long-running jobs
       module TellMeJob
         def decorate
-          context.instance_variable_set(:@job_key, job_data.key.to_s.delete('_'))
+          context.instance_variable_set(:@job_key,
+            job_data.key.to_s.delete("_"))
           parse_job(control, context, [tell])
         end
 

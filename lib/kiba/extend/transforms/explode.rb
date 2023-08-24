@@ -68,7 +68,9 @@ module Kiba
           def process(row)
             to_new_rows = new_row_groups(row)
             if to_new_rows.empty?
-              newrow = @map.map { |field| [field, nil] }.to_h.merge(other_fields(row))
+              newrow = @map.map { |field|
+                [field, nil]
+              }.to_h.merge(other_fields(row))
               yield(newrow)
             else
               to_new_rows.each do |grp_data|
@@ -98,7 +100,8 @@ module Kiba
         end
 
         class FieldValuesToNewRows
-          def initialize(target:, fields: [], multival: false, sep: ' ', keep_nil: false, keep_empty: false)
+          def initialize(target:, fields: [], multival: false, sep: " ",
+            keep_nil: false, keep_empty: false)
             @fields = [fields].flatten
             @target = target
             @multival = multival
@@ -116,14 +119,14 @@ module Kiba
             @fields.each do |field|
               val = row.fetch(field, nil)
               vals = if val.nil?
-                       [nil]
-                     elsif val.empty?
-                       ['']
-                     elsif @multival
-                       val.split(@sep, -1)
-                     else
-                       [val]
-                     end
+                [nil]
+              elsif val.empty?
+                [""]
+              elsif @multival
+                val.split(@sep, -1)
+              else
+                [val]
+              end
 
               vals.each do |val|
                 next if !@keep_nil && val.nil?

@@ -94,7 +94,7 @@ module Kiba
         # ```
         class ConstantValueConditional
           class NonBooleanConditionError < Kiba::Extend::Error
-            def initialize(msg = '`condition` lambda must return true or false')
+            def initialize(msg = "`condition` lambda must return true or false")
               super
             end
           end
@@ -121,7 +121,9 @@ module Kiba
             if condition_met?(row)
               @fieldmap.each { |target, value| row[target] = value }
             else
-              @fieldmap.each { |target, _value| row[target] = row[target] ? row.fetch(target) : nil }
+              @fieldmap.each { |target, _value|
+                row[target] = row[target] ? row.fetch(target) : nil
+              }
             end
             row
           end
@@ -133,7 +135,7 @@ module Kiba
           def condition_met?(row)
             begin
               result = condition.call(row)
-            rescue StandardError
+            rescue
               fail(ConditionError.new(row))
             end
 

@@ -23,7 +23,7 @@ module Kiba
     #
     # `transform My::Transform, fields: :title`
     #
-    # If a transform mixes in {Allable}, then you can specify that it should be applied to all fields: 
+    # If a transform mixes in {Allable}, then you can specify that it should be applied to all fields:
     #
     # `transform My::Transform, fields: :all`
     #

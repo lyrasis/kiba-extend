@@ -9,28 +9,28 @@ module Kiba
 
           def initialize(pair:, row:, mergerow: {})
             comparison_type = :equals
-            pair = pair.map { |e| e.split('::') }
+            pair = pair.map { |e| e.split("::") }
             # convert row or mergerow fieldnames to symbols
-            pair = pair.each { |arr| arr[1] = arr[1].to_sym if arr[0]['row'] }
+            pair = pair.each { |arr| arr[1] = arr[1].to_sym if arr[0]["row"] }
             # fetch or convert values for comparison
             pair = pair.map do |arr|
               case arr[0]
-              when 'row'
-                row.fetch(arr[1], '%field does not exist%')
-              when 'mergerow'
-                mergerow.fetch(arr[1], '%field does not exist%')
-              when 'revalue'
+              when "row"
+                row.fetch(arr[1], "%field does not exist%")
+              when "mergerow"
+                mergerow.fetch(arr[1], "%field does not exist%")
+              when "revalue"
                 comparison_type = :match
                 arr[1] = "^#{arr[1]}$"
                 Regexp.new(arr[1])
-              when 'value'
+              when "value"
                 arr[1]
               end
             end
 
-            unless pair.include?(nil) && pair.include?('')
+            unless pair.include?(nil) && pair.include?("")
               # replace nil value with empty string for comparison
-              pair = pair.map { |e| e = e.nil? ? '' : e }
+              pair = pair.map { |e| e = e.nil? ? "" : e }
             end
 
             case comparison_type

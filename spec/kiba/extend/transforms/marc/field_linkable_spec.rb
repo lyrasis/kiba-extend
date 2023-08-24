@@ -1,62 +1,61 @@
 # frozen_string_literal: true
 
-require 'marc'
-require 'spec_helper'
+require "marc"
+require "spec_helper"
 
 RSpec.describe Kiba::Extend::Transforms::Marc::FieldLinkable do
-
   class Xform
     include Kiba::Extend::Transforms::Marc::FieldLinkable
   end
 
-  subject(:klass){ Xform.new }
+  subject(:klass) { Xform.new }
 
-  before(:each){ Kiba::Extend::Marc.config.field_tag_target = :sourcefield }
-  after(:each){ Kiba::Extend::Marc.reset_config }
+  before(:each) { Kiba::Extend::Marc.config.field_tag_target = :sourcefield }
+  after(:each) { Kiba::Extend::Marc.reset_config }
 
-  describe '#select_fields' do
-    let(:result){ klass.select_fields(rec, tags) }
-    let(:tags){ Kiba::Extend::Marc.person_data_tags }
+  describe "#select_fields" do
+    let(:result) { klass.select_fields(rec, tags) }
+    let(:tags) { Kiba::Extend::Marc.person_data_tags }
 
-    context 'with 880 fields and prefer vernacular' do
-      let(:rec){ get_marc_record(index: 9) }
+    context "with 880 fields and prefer vernacular" do
+      let(:rec) { get_marc_record(index: 9) }
 
-      it 'returns expected fields' do
+      it "returns expected fields" do
         expect(result.length).to eq(13)
       end
 
-      it 'converts 880 tags to linked field tags' do
-        expect(result.select{ |fld| fld.tag == '880' }).to be_empty
-        expect(result[-1].tag).to eq('100')
+      it "converts 880 tags to linked field tags" do
+        expect(result.select { |fld| fld.tag == "880" }).to be_empty
+        expect(result[-1].tag).to eq("100")
       end
     end
 
-    context 'with 880 fields and do not prefer vernacular' do
-      before(:each){ Kiba::Extend::Marc.config.prefer_vernacular = false }
-      let(:rec){ get_marc_record(index: 9) }
+    context "with 880 fields and do not prefer vernacular" do
+      before(:each) { Kiba::Extend::Marc.config.prefer_vernacular = false }
+      let(:rec) { get_marc_record(index: 9) }
 
-      it 'returns expected fields' do
+      it "returns expected fields" do
         expect(result.length).to eq(16)
       end
 
-      it 'converts 880 tags to linked field tags' do
-        expect(result.select{ |fld| fld.tag == '880' }).to be_empty
-        expect(result.select{ |fld| fld.tag == '100'}.length).to eq(2)
+      it "converts 880 tags to linked field tags" do
+        expect(result.select { |fld| fld.tag == "880" }).to be_empty
+        expect(result.select { |fld| fld.tag == "100" }.length).to eq(2)
       end
     end
 
-    context 'with no 880 fields' do
-      let(:rec){ get_marc_record(index: 0) }
+    context "with no 880 fields" do
+      let(:rec) { get_marc_record(index: 0) }
 
-      it 'returns expected' do
+      it "returns expected" do
         expect(result.length).to eq(1)
       end
     end
 
-    context 'with no matching fields' do
-      let(:rec){ get_marc_record(index: 3) }
+    context "with no matching fields" do
+      let(:rec) { get_marc_record(index: 3) }
 
-      it 'returns expected' do
+      it "returns expected" do
         expect(result).to eq([])
       end
     end

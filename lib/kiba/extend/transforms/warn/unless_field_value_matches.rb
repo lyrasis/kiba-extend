@@ -29,7 +29,7 @@ module Kiba
           # @param strip [Boolean] whether to strip leading/trailing spaces from values for matching
           # @param multimode [:any, :all, :allstrict] See {Utils::FieldValueMatcher}
           def initialize(field:, match:, matchmode: :plain, delim: nil, treat_as_null: nil, casesensitive: true,
-                         strip: true, multimode: :all)
+            strip: true, multimode: :all)
             @field = field
             @match = match
             @matcher = Utils::FieldValueMatcher.new(

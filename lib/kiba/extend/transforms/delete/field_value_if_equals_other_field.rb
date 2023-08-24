@@ -4,7 +4,6 @@ module Kiba
   module Extend
     module Transforms
       module Delete
-
         # Deletes value in `delete` field if that value matches value in `if_equal_to` field. Opinionated treatment
         #   of multivalued fields described below. Case sensitive or insensitive matching options. Can also delete
         #   associated field values (by position) in additional grouped fields. This is useful, for example,
@@ -167,7 +166,8 @@ module Kiba
           # @param delim [String] on which to split if `multival`. Defaults to `Kiba::Extend.delim` if not provided.
           # @param grouped_fields [Array<Symbol>] field(s) from which positionally corresponding values should also be removed
           # @param casesensitive [Boolean] matching mode
-          def initialize(delete:, if_equal_to:, multival: false, delim: nil, grouped_fields: [], casesensitive: true)
+          def initialize(delete:, if_equal_to:, multival: false, delim: nil,
+            grouped_fields: [], casesensitive: true)
             @delete = delete
             @compare = if_equal_to
             @multival = multival
@@ -183,25 +183,26 @@ module Kiba
             return row if compare_val.nil? || del_val.blank?
 
             compare_method = get_compare_method(del_val, compare_val)
-            to_delete = self.method(compare_method).call(del_val, compare_val)
+            to_delete = method(compare_method).call(del_val, compare_val)
             return row if to_delete.empty?
 
             orig_del_val = prepare_val(delete, row, :final)
             row[delete] = do_deletes(to_delete, orig_del_val.dup)
             return row unless grouped?
 
-            grouped = group.map{ |field| prepare_val(field, row) }
+            grouped = group.map { |field| prepare_val(field, row) }
             validation = validate_groups(grouped, orig_del_val)
             report_group_issue(validation, row) unless validation == :valid
-            grouped.map{ |grp| do_deletes(to_delete, grp) }
-              .each_with_index{ |grp, i| row[group[i]] = grp }
+            grouped.map { |grp| do_deletes(to_delete, grp) }
+              .each_with_index { |grp, i| row[group[i]] = grp }
 
             row
           end
 
           private
 
-          attr_reader :delete, :compare, :multival, :delim, :group, :casesensitive
+          attr_reader :delete, :compare, :multival, :delim, :group,
+            :casesensitive
 
           def compare_against_multi_value(del_val, compare_val)
             to_del = []
@@ -221,7 +222,7 @@ module Kiba
           end
 
           def do_deletes(to_delete, vals)
-            to_delete.each{ |i| vals.delete_at(i) }
+            to_delete.each { |i| vals.delete_at(i) }
             return nil if vals.empty?
 
             vals.join(delim)
@@ -251,14 +252,14 @@ module Kiba
           end
 
           def report_group_issue(validation, row)
-            grpfields = group.join(', ')
+            grpfields = group.join(", ")
             case validation
             when :ragged_group_length
               msg = "One or more grouped fields (#{grpfields}) has different number of values than the others"
             when :orig_vs_group_length_mismatch
               msg = "Grouped fields (#{grpfields}) have different number of values than #{delete} field"
             end
-            puts %Q[#{Kiba::Extend.warning_label}: #{msg} in #{row}]
+            puts %(#{Kiba::Extend.warning_label}: #{msg} in #{row})
           end
 
           def validate_groups(groups, orig_del_val)

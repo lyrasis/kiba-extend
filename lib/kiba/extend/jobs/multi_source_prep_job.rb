@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'job'
+require_relative "job"
 
 module Kiba
   module Extend
@@ -12,13 +12,13 @@ module Kiba
       # @see Kiba::Extend::Utils::MultiSourceNormalizer Usage example
       class MultiSourcePrepJob < Job
         class WrongDestinationTypeError < StandardError
-          def initialize(msg='Destination must be a Kiba::Extend::Destinations::CSV')
+          def initialize(msg = "Destination must be a Kiba::Extend::Destinations::CSV")
             super
           end
         end
 
         class WrongHelperTypeError < StandardError
-          def initialize(msg='Helper must be a Kiba::Extend::Utils::MultiSourceNormalizer')
+          def initialize(msg = "Helper must be a Kiba::Extend::Utils::MultiSourceNormalizer")
             super
           end
         end
@@ -31,11 +31,11 @@ module Kiba
         def initialize(files:, transformer:, helper:)
           raise WrongDestinationTypeError unless valid_destination?(files)
           raise WrongHelperTypeError unless helper.is_a?(Kiba::Extend::Utils::MultiSourceNormalizer)
-         
+
           @helperobj = helper
           super(files: files, transformer: transformer)
         end
-        
+
         private
 
         def pre_process
@@ -47,12 +47,13 @@ module Kiba
             end
           end
         end
-        
+
         def post_process
           Kiba.job_segment do
             post_process do
               dest_def = @control.destinations.first
-              dest = Kiba::StreamingRunner.to_instance(dest_def[:klass], dest_def[:args], nil, false, true)
+              dest = Kiba::StreamingRunner.to_instance(dest_def[:klass],
+                dest_def[:args], nil, false, true)
               helper = instance_variable_get(:@helper)
               helper.record_fields(dest.fields)
             end

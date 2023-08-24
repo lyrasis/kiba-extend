@@ -24,7 +24,13 @@ module Kiba
 
         def join_values(delim)
           hash.transform_values! do |vals|
-            placeholdered = null_placeholder ? vals.map{ |val| val.nil? ? null_placeholder : val } : vals
+            placeholdered = if null_placeholder
+              vals.map { |val|
+                val.nil? ? null_placeholder : val
+              }
+            else
+              vals
+            end
             placeholdered.join(delim)
           end
         end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'kiba-common/dsl_extensions/show_me'
+require "kiba-common/dsl_extensions/show_me"
 
 module Kiba
   module Extend

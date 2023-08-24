@@ -194,30 +194,31 @@ module Kiba
           # @param remove_empty_groups [Boolean] whether to run {Delete::EmptyFieldGroups} before finalizing row
           # @param delim [String] used to split/join multiple values in a field
           def initialize(fieldmap:, constant_target:, constant_value:, delim: Kiba::Extend.delim,
-                         replace_empty: true, treat_as_null: Kiba::Extend.nullvalue,
-                         enforce_evenness: true, evener: nil, uneven_warning: true,
-                         remove_empty_groups: true
-                        )
+            replace_empty: true, treat_as_null: Kiba::Extend.nullvalue,
+            enforce_evenness: true, evener: nil, uneven_warning: true,
+            remove_empty_groups: true)
             @renamer = Rename::Fields.new(fieldmap: fieldmap)
             @renamed = fieldmap.values
             @target = constant_target
             @value = constant_value
             @delim = delim
             @replace_empty = replace_empty
-            @treat_as_null = treat_as_null.nil? ? '' : treat_as_null
+            @treat_as_null = treat_as_null.nil? ? "" : treat_as_null
             @enforce_evenness = enforce_evenness
             @evener = evener.nil? ? treat_as_null : evener
             @uneven_warning = uneven_warning
             @remove_empty_groups = remove_empty_groups
 
             @empty_replacer = Replace::EmptyFieldValues.new(fields: @renamed, value: treat_as_null, delim: delim,
-                                                            treat_as_null: treat_as_null)
+              treat_as_null: treat_as_null)
             @even_xform = Clean::EvenFieldValues.new(fields: @renamed, evener: @evener, delim: delim,
-                                                     warn: uneven_warning)
+              warn: uneven_warning)
             @group_cleaner = Delete::EmptyFieldGroups.new(
-              groups: [[renamed, target].flatten], delim: delim, treat_as_null: treat_as_null
+              groups: [[renamed,
+                target].flatten], delim: delim, treat_as_null: treat_as_null
             )
-            @value_getter = Helpers::FieldValueGetter.new(fields: renamed, delim: delim, treat_as_null: treat_as_null)
+            @value_getter = Helpers::FieldValueGetter.new(fields: renamed,
+              delim: delim, treat_as_null: treat_as_null)
           end
 
           # @param row [Hash{ Symbol => String, nil }]
@@ -238,12 +239,9 @@ module Kiba
             :remove_empty_groups, :group_cleaner,
             :value_getter
 
-
           def add_constant(row, max)
-            if max
-              row[target] = Array.new(max, value).join(delim)
-            else
-              row[target] = nil
+            row[target] = if max
+              Array.new(max, value).join(delim)
             end
           end
 
@@ -256,7 +254,7 @@ module Kiba
             else
               value_getter.call(row)
                 .values
-                .map{ |val| val.split(delim, -1) }
+                .map { |val| val.split(delim, -1) }
                 .map(&:length)
                 .max
             end
@@ -271,12 +269,12 @@ module Kiba
             return if len == max
 
             diff = max - len
-            diff.times{ split << even_val(split) }
+            diff.times { split << even_val(split) }
             row[field] = split.join(delim)
           end
 
           def even_renamed_fields(row, max)
-            renamed.each{ |field| even_renamed_field(field, row, max) }
+            renamed.each { |field| even_renamed_field(field, row, max) }
           end
 
           def even_val(val_ary)
@@ -288,7 +286,7 @@ module Kiba
           end
 
           def replace_empty_values(row)
-            renamed.each{ |field| replace_empty_values_in_field(field, row) }
+            renamed.each { |field| replace_empty_values_in_field(field, row) }
           end
 
           def replace_empty_values_in_field(field, row)
@@ -296,9 +294,11 @@ module Kiba
             return if val.blank?
 
             split = val.split(delim, -1)
-            return unless split.any?{ |val| val.blank? }
+            return unless split.any? { |val| val.blank? }
 
-            row[field] = split.map{ |val| val.blank? ? treat_as_null : val }.join(delim)
+            row[field] = split.map { |val|
+              val.blank? ? treat_as_null : val
+            }.join(delim)
           end
         end
       end

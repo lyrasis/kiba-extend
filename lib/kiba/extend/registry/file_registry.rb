@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-require 'dry-container'
+require "dry-container"
 
-require_relative 'registered_source'
-require_relative 'registered_lookup'
-require_relative 'registered_destination'
-require_relative 'file_registry_entry'
-require_relative 'registry_validator'
+require_relative "registered_source"
+require_relative "registered_lookup"
+require_relative "registered_destination"
+require_relative "file_registry_entry"
+require_relative "registry_validator"
 
 module Kiba
   module Extend
@@ -99,7 +99,9 @@ module Kiba
         end
 
         def make_missing_directories
-          @entries.select(&:valid?).map(&:dir).uniq.each{ |dir| dir.mkdir unless dir.exist? }
+          @entries.select(&:valid?).map(&:dir).uniq.each { |dir|
+            dir.mkdir unless dir.exist?
+          }
         end
 
         def populate_entries
@@ -114,10 +116,12 @@ module Kiba
         end
 
         def verify_supplied_files_exist
-          @entries.select{ |entry| entry.supplied}.map(&:path).uniq.each do |file|
+          @entries.select { |entry|
+            entry.supplied
+          }.map(&:path).uniq.each do |file|
             next if file.exist?
 
-            puts %Q[#{Kiba::Extend.warning_label}: Missing supplied file: #{file}]
+            puts %(#{Kiba::Extend.warning_label}: Missing supplied file: #{file})
           end
         end
 
@@ -125,6 +129,6 @@ module Kiba
           @validator ||= RegistryValidator.new
         end
       end
-  end
     end
+  end
 end

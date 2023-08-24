@@ -1,10 +1,9 @@
 # frozen_string_literal: true
 
-require 'kiba/extend'
+require "kiba/extend"
 
 module Helpers
   module_function
-
 
   class TestJob
     include Kiba::Extend::Jobs::Parser
@@ -52,7 +51,7 @@ module Helpers
     def clean_data
       @clean = []
       @data.each do |row|
-        @clean << row.transform_values{ |val| val.nil? ? 'nil' : val  }
+        @clean << row.transform_values { |val| val.nil? ? "nil" : val }
       end
     end
 
@@ -70,7 +69,7 @@ module Helpers
     def grab_divider
       div = []
       headers.each do |header|
-        segment = '-' * header.length
+        segment = "-" * header.length
         div << segment
       end
       div
@@ -85,16 +84,16 @@ module Helpers
     end
 
     def grab_rows
-      @norm.each{ |row| @table << grab_row(row) }
+      @norm.each { |row| @table << grab_row(row) }
     end
 
     def max_val_length_for_header(header)
-      @clean.map{ |row| row[header].length }.max
+      @clean.map { |row| row[header].length }.max
     end
 
     def normalize
       @norm = []
-      @clean.each{ |row| @norm << normalize_row(row) }
+      @clean.each { |row| @norm << normalize_row(row) }
     end
 
     def normalize_row(row)
@@ -107,7 +106,7 @@ module Helpers
     end
 
     def populate_maxes
-      @maxes = @clean.first.map{ |e| [e[0], e[0].length] }.to_h
+      @maxes = @clean.first.map { |e| [e[0], e[0].length] }.to_h
       headers = @maxes.keys
       headers.each do |hdr|
         val_max = max_val_length_for_header(hdr)
@@ -116,49 +115,48 @@ module Helpers
     end
 
     def put_row(row)
-      puts "# | #{row.join(' | ')} |"
+      puts "# | #{row.join(" | ")} |"
     end
 
     def put_table
       table = @table.dup
-      puts ''
-      puts '#'
-      puts '# ```'
+      puts ""
+      puts "#"
+      puts "# ```"
       put_row(table.shift)
       div = table.shift
-      puts "# |-#{div.join('-+-')}-|"
-      table.each{ |row| put_row(row) }
-      puts '# ```'
-      puts '#'
+      puts "# |-#{div.join("-+-")}-|"
+      table.each { |row| put_row(row) }
+      puts "# ```"
+      puts "#"
     end
   end
 
   def marc_file
-    File.join(fixtures_dir, 'harvard_open_data.mrc')
+    File.join(fixtures_dir, "harvard_open_data.mrc")
   end
 
   # @param path [String] path to MARC binary file (.mrc, .dat, etc)
   # @param index [Integer] which record from file you want to use in your
   #   test. Count starts at 0.
-  def get_marc_record(path: marc_file,
-                      index:)
+  def get_marc_record(index:, path: marc_file)
     recs = []
-    MARC::Reader.new(path).each{ |rec| recs << rec }
+    MARC::Reader.new(path).each { |rec| recs << rec }
     recs[index]
   end
 
   def fixtures_dir
-    app_dir = File.realpath(File.join(File.dirname(__FILE__), '..'))
-    File.join(app_dir, 'spec', 'fixtures')
+    app_dir = File.realpath(File.join(File.dirname(__FILE__), ".."))
+    File.join(app_dir, "spec", "fixtures")
   end
 
   def populate_registry(more_entries: {})
-    fkeypath = File.join(fixtures_dir, 'existing.csv')
-    nofilepath = File.join(fixtures_dir, 'not_here.csv')
+    fkeypath = File.join(fixtures_dir, "existing.csv")
+    nofilepath = File.join(fixtures_dir, "not_here.csv")
     entries = {
-      fkey: { path: fkeypath, supplied: true, lookup_on: :id },
+      fkey: {path: fkeypath, supplied: true, lookup_on: :id},
       invalid: {},
-      fee: { path: fkeypath, lookup_on: :foo, supplied: true },
+      fee: {path: fkeypath, lookup_on: :foo, supplied: true},
       foo: {
         path: fkeypath,
         creator: Helpers.method(:test_csv),
@@ -178,7 +176,8 @@ module Helpers
         path: fkeypath,
         dest_class: Kiba::Extend::Destinations::CSV,
         creator: Kiba::Extend.method(:csvopts),
-        dest_special_opts: { initial_headers: %i[objectnumber briefdescription] }
+        dest_special_opts: {initial_headers: %i[objectnumber
+          briefdescription]}
       },
       json_arr: {
         path: fkeypath,
@@ -197,7 +196,7 @@ module Helpers
     entries.each { |key, data| Kiba::Extend.registry.register(key, data) }
     Kiba::Extend.registry.namespace(:ns) do
       namespace(:sub) do
-        register(:fkey, { path: fkeypath, supplied: true })
+        register(:fkey, {path: fkeypath, supplied: true})
       end
     end
   end
@@ -212,7 +211,7 @@ module Helpers
   end
 
   def fake_creator_method
-    FileUtils.touch(File.join(fixtures_dir, 'base_job_missing.csv'))
+    FileUtils.touch(File.join(fixtures_dir, "base_job_missing.csv"))
   end
 
   class OutputJob
@@ -250,28 +249,29 @@ module Helpers
   # end
 
   def test_csv
-    File.join(File.expand_path(__dir__), 'tmp', 'test.csv')
+    File.join(File.expand_path(__dir__), "tmp", "test.csv")
   end
 
   def lookup_csv
-    File.join(File.expand_path(__dir__), 'tmp', 'lkup.csv')
+    File.join(File.expand_path(__dir__), "tmp", "lkup.csv")
   end
 
   def generate_csv(rows)
-    CSV.open(test_csv, 'w') do |csv|
+    CSV.open(test_csv, "w") do |csv|
       rows.each { |row| csv << row }
     end
   end
 
   def generate_lookup_csv(rows)
-    CSV.open(lookup_csv, 'w') do |csv|
+    CSV.open(lookup_csv, "w") do |csv|
       rows.each { |row| csv << row }
     end
   end
 
   def execute_job(filename:, xform:, csvopt: {}, xformopt: {})
     output_rows = []
-    settings = { filename: filename, csv_options: Kiba::Extend.csvopts.merge(csvopt) }
+    settings = {filename: filename,
+                csv_options: Kiba::Extend.csvopts.merge(csvopt)}
     job = Kiba.parse do
       source Kiba::Common::Sources::CSV, **settings
       transform(&:to_h)
@@ -284,8 +284,10 @@ module Helpers
   end
 
   def job_csv(filename:, incsvopt: {}, outcsvopt: {})
-    insettings = { filename: filename, csv_options: Kiba::Extend.csvopts.merge(incsvopt) }
-    outsettings = { filename: filename, csv_options: Kiba::Extend.csvopts.merge(outcsvopt) }
+    insettings = {filename: filename,
+                  csv_options: Kiba::Extend.csvopts.merge(incsvopt)}
+    outsettings = {filename: filename,
+                   csv_options: Kiba::Extend.csvopts.merge(outcsvopt)}
     job = Kiba.parse do
       source Kiba::Common::Sources::CSV, **insettings
       transform(&:to_h)

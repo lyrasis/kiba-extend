@@ -88,7 +88,8 @@ module Kiba
           #   comparison. `true` results in a case insensitive comparison.
           # @param strip [Boolean] whether to remove leading/trailing spaces prior to comparison
           # @param ignore_blank [Boolean] `true` drops empty or nil values from the comparison
-          def initialize(fields:, target:, downcase: true, strip: true, ignore_blank: false)
+          def initialize(fields:, target:, downcase: true, strip: true,
+            ignore_blank: false)
             @fields = [fields].flatten
             @target = target
             @strip = strip
@@ -98,17 +99,17 @@ module Kiba
 
           # @param row [Hash{ Symbol => String, nil }]
           def process(row)
-            row[@target] = 'diff'
+            row[@target] = "diff"
             values = []
             @fields.each do |field|
-              value = row.fetch(field, '').dup
-              value = '' if value.nil?
+              value = row.fetch(field, "").dup
+              value = "" if value.nil?
               value = value.downcase if @downcase
               value = value.strip if @strip
               values << value
             end
             values.reject!(&:blank?) if @ignore_blank
-            row[@target] = 'same' if values.uniq.length == 1 || values.empty?
+            row[@target] = "same" if values.uniq.length == 1 || values.empty?
             row
           end
         end

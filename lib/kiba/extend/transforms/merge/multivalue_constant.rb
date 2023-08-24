@@ -69,10 +69,10 @@ module Kiba
             merge_vals = []
             field_val.split(@sep, -1).each do |field_val|
               merge_vals << if field_val == @placeholder || field_val.blank?
-                              @placeholder
-                            else
-                              @value
-                            end
+                @placeholder
+              else
+                @value
+              end
             end
 
             row[@target] = merge_vals.join(@sep)

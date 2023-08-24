@@ -1,10 +1,10 @@
 # frozen_string_literal: true
 
-require_relative 'runner'
-require_relative 'parser'
-require_relative 'show_me_job'
-require_relative 'tell_me_job'
-require_relative 'dependency_job'
+require_relative "runner"
+require_relative "parser"
+require_relative "show_me_job"
+require_relative "tell_me_job"
+require_relative "dependency_job"
 
 module Kiba
   module Extend
@@ -25,7 +25,7 @@ module Kiba
         #   running any necessary jobs to create sources and/or lookups needed
         #   by the job. :run does all of the above and runs the job.
         def initialize(files:, transformer:, mode: :run)
-          if caller(2, 5).join(' ')['block in handle_requirements']
+          if caller(2, 5).join(" ")["block in handle_requirements"]
             @dependency = true
           end
           extend DependencyJob if @dependency
@@ -50,7 +50,7 @@ module Kiba
 
         def run
           Kiba.run(control)
-        rescue StandardError => err
+        rescue => err
           puts "JOB FAILED: TRANSFORM ERROR IN: #{job_data.creator}"
           puts "#{err.class.name}: #{err.message}"
           puts "AT:"

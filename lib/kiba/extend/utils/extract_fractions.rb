@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'strscan'
+require "strscan"
 
 module Kiba
   module Extend
@@ -18,7 +18,7 @@ module Kiba
         #   `1 1/2` will be extracted as described preveiously. For `1-1/2`, no
         #   whole number value will be extracted. `1/2` will be extracted as the
         #   fraction, and it will be converted to '0.5'.
-        def initialize(whole_fraction_sep: [' ', '-'])
+        def initialize(whole_fraction_sep: [" ", "-"])
           @whole_fraction_sep = whole_fraction_sep
           @fpattern = /(\d+\/\d+)/
           @fraction = Kiba::Extend::Data::ConvertibleFraction
@@ -46,7 +46,8 @@ module Kiba
         def extract_fraction(scanner, result)
           startpos = scanner.pos
           scanner.scan(fpattern)
-          result << fraction.new(**{fraction: scanner.captures[0], position: startpos..scanner.pos - 1 })
+          result << fraction.new(fraction: scanner.captures[0],
+            position: startpos..scanner.pos - 1)
         end
 
         def try_whole_fraction_extract(scanner, result)
@@ -55,7 +56,8 @@ module Kiba
           sep = scanner.scan(/./)
           fmatch = scanner.match?(fpattern)
           if whole_fraction_sep.any?(sep) && fmatch
-            result << fraction.new(**{whole: whole_num, fraction: scanner.scan(fpattern), position: startpos..scanner.pos - 1 })
+            result << fraction.new(whole: whole_num,
+              fraction: scanner.scan(fpattern), position: startpos..scanner.pos - 1)
           end
         end
 

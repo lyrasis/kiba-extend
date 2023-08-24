@@ -22,17 +22,17 @@ module Kiba
         class IfFieldValueMatches
           include SingleWarnable
 
-        # @param field [Symbol] whose value to match
-        # @param match [String] expresses the match criteria
-        # @param matchmode [:plain, :regex] If `:regex`, string is converted to a regular expression
-        # @param delim [nil, String] if a String is given, triggers multivalue matching, where field value is
-        #    split and the match is run against each resulting value
-        # @param treat_as_null [nil, String] if given, the string will be converted to empty string for matching
-        # @param casesensitive [Boolean] whether match cares about case
+          # @param field [Symbol] whose value to match
+          # @param match [String] expresses the match criteria
+          # @param matchmode [:plain, :regex] If `:regex`, string is converted to a regular expression
+          # @param delim [nil, String] if a String is given, triggers multivalue matching, where field value is
+          #    split and the match is run against each resulting value
+          # @param treat_as_null [nil, String] if given, the string will be converted to empty string for matching
+          # @param casesensitive [Boolean] whether match cares about case
           # @param strip [Boolean] whether to strip leading/trailing spaces from values for matching
           # @param multimode [:any, :all, :allstrict] See {Utils::FieldValueMatcher}
           def initialize(field:, match:, matchmode: :plain, delim: nil, treat_as_null: nil, casesensitive: true,
-                        strip: true, multimode: :any)
+            strip: true, multimode: :any)
             @field = field
             @match = match
             @matcher = Utils::FieldValueMatcher.new(
@@ -58,7 +58,6 @@ module Kiba
           private
 
           attr_reader :field, :match, :matcher
-
         end
       end
     end

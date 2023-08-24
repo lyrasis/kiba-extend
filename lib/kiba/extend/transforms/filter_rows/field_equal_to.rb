@@ -63,9 +63,9 @@ module Kiba
           def process(row)
             case action
             when :keep
-              row.fetch(column, nil) == value ? row : nil
+              (row.fetch(column, nil) == value) ? row : nil
             when :reject
-              row.fetch(column, nil) == value ? nil : row
+              (row.fetch(column, nil) == value) ? nil : row
             end
           end
 

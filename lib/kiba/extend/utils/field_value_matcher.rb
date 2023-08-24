@@ -193,7 +193,7 @@ module Kiba
       #
       class FieldValueMatcher
         # @param field [Symbol] whose value to match
-        # @param match [String] expresses the match criteria 
+        # @param match [String] expresses the match criteria
         # @param matchmode [:plain, :regex] If `:regex`, string is converted to a regular expression
         # @param delim [nil, String] if a String is given, triggers multivalue matching, where field value is
         #    split and the match is run against each resulting value
@@ -205,14 +205,14 @@ module Kiba
         #   match. If :allstrict, empty values are not ignored and will return false if `match` value does not
         #   match them (since 3.0.0)
         def initialize(field:, match:, matchmode: :plain, delim: nil, treat_as_null: nil, casesensitive: true,
-                       strip: true, multimode: :any)
+          strip: true, multimode: :any)
           @field = field
           @delim = delim
           @casesensitive = casesensitive
           @matchmode = matchmode
           @nullval = treat_as_null
           @strip = strip
-          @match = matchmode == :regexp ? create_regexp_match(match) : create_plain_match(match)
+          @match = (matchmode == :regexp) ? create_regexp_match(match) : create_plain_match(match)
           @multimode = multimode
         end
 
@@ -223,13 +223,15 @@ module Kiba
           value = row[field]
           is_match?(prepare_value(value))
         end
-        
+
         private
 
-        attr_reader :field, :delim, :match, :matchmode, :nullval, :casesensitive, :strip, :multimode
-        
+        attr_reader :field, :delim, :match, :matchmode, :nullval,
+          :casesensitive, :strip, :multimode
+
         def create_regexp_match(match)
-          casesensitive ? Regexp.new(match) : Regexp.new(match, Regexp::IGNORECASE)
+          casesensitive ? Regexp.new(match) : Regexp.new(match,
+            Regexp::IGNORECASE)
         end
 
         def create_plain_match(match)
@@ -237,30 +239,36 @@ module Kiba
         end
 
         def is_match?(vals)
-          multimode == :any ? is_match_any?(vals) : is_match_all?(vals)
+          (multimode == :any) ? is_match_any?(vals) : is_match_all?(vals)
         end
 
         def is_match_all?(vals)
-          vals.reject!{ |val| val.empty? } unless multimode == :allstrict
+          vals.reject! { |val| val.empty? } unless multimode == :allstrict
           return false if vals.empty?
-          return vals.all?{ |val| val == match } if matchmode == :plain
+          return vals.all? { |val| val == match } if matchmode == :plain
 
-          vals.all?{ |val| val.match?(match) }
+          vals.all? { |val| val.match?(match) }
         end
 
         def is_match_any?(vals)
-          return vals.any?{ |val| val == match } if matchmode == :plain
+          return vals.any? { |val| val == match } if matchmode == :plain
 
-          vals.any?{ |val| val.match?(match) }
+          vals.any? { |val| val.match?(match) }
         end
 
         def prepare_value(value)
-          return [''] if value.blank?
-          
+          return [""] if value.blank?
+
           arrayed = delim ? value.split(delim, -1) : [value]
-          compacted = arrayed.map{ |val| val.nil? ? '' : val }
+          compacted = arrayed.map { |val| val.nil? ? "" : val }
           stripped = strip ? compacted.map(&:strip) : compacted
-          nulled = nullval ? stripped.map{ |val| val == nullval ? '' : val } : stripped
+          nulled = if nullval
+            stripped.map { |val|
+              (val == nullval) ? "" : val
+            }
+          else
+            stripped
+          end
           casesensitive ? nulled : nulled.map(&:downcase)
         end
       end

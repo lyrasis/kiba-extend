@@ -11,7 +11,7 @@ module Kiba
       # The basic idea is:
       # - an new instance of this class is created somewhere accessible from within jobs. In Kiba::TMS
       #   this is a config settig per multi-source job: `Kiba::Tms.config.name_compilation.multi_source_normalizer`
-      # 
+      #
       # - pass this instance in as a helper on the `MultiSourcePrepJob`s that generate files that will be used
       #   as sources in the multisource job:
       #
@@ -24,7 +24,7 @@ module Kiba
       #   transformer: from_obj_locations_xforms,
       #   helper: Kiba::Tms.config.name_compilation.multi_source_normalizer
       # )
-      #```
+      # ```
       #
       # Finally, in the multisource job, call the `get_fields` method of your normalizer as the `fields`
       #   argument of an `Append::NilFields` transform:
@@ -51,7 +51,7 @@ module Kiba
         def record_fields(new_fields)
           fields << new_fields
         end
-        
+
         private
 
         attr_reader :fields

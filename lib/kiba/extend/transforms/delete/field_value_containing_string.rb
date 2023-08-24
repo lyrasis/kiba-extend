@@ -4,7 +4,6 @@ module Kiba
   module Extend
     module Transforms
       module Delete
-
         # Deletes full field value of all given fields that contain the given string. You can control
         #   whether match is case sensitive or not.
         #

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'jobs/parser'
+require_relative "jobs/parser"
 
 module Kiba
   module Extend

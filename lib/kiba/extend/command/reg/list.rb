@@ -5,7 +5,6 @@ module Kiba
     module Command
       module Reg
         module List
-          
         end
       end
     end

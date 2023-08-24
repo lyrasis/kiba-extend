@@ -7,7 +7,7 @@ module Kiba
       class RegistryValidator
         # Prints to STDOUT a report of errors and warnings to inform needed development in project applications
         def report
-          puts ''
+          puts ""
           report_validity
           report_warnings
         end
@@ -33,7 +33,7 @@ module Kiba
         private
 
         def errs_to_str(errs)
-          errs.map { |key, val| "#{key} #{val}" }.join('; ')
+          errs.map { |key, val| "#{key} #{val}" }.join("; ")
         end
 
         def invalid
@@ -49,7 +49,7 @@ module Kiba
 
         def report_validity
           if valid?
-            puts 'All file registry entries are valid!'
+            puts "All file registry entries are valid!"
             return
           end
 
@@ -58,13 +58,13 @@ module Kiba
 
         def report_warnings
           unless warnings?
-            puts 'No warnings!'
+            puts "No warnings!"
             return
           end
 
           puts "Warning count: #{warnings.length}"
           warnings.each do |entry|
-            puts "  #{entry.key}: #{entry.warnings.join('; ')}"
+            puts "  #{entry.key}: #{entry.warnings.join("; ")}"
           end
         end
 

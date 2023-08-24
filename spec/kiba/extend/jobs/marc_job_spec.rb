@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
-require 'marc'
-require 'spec_helper'
+require "marc"
+require "spec_helper"
 
 # rubocop:disable Metrics/BlockLength
-RSpec.describe 'Kiba::Extend::Jobs::MarcJob' do
+RSpec.describe "Kiba::Extend::Jobs::MarcJob" do
   subject(:marcjob) do
     Kiba::Extend::Jobs::MarcJob.new(files: config, transformer: xforms)
   end
 
-  context 'with Marc source, CSV dest' do
+  context "with Marc source, CSV dest" do
     before(:context) do
       reg = Kiba::Extend::Registry::FileRegistry.new
       Kiba::Extend.config.registry = reg
-      @dest_file = File.join(fixtures_dir, 'marc_job_dest.csv')
+      @dest_file = File.join(fixtures_dir, "marc_job_dest.csv")
       FileUtils.rm(@dest_file) if File.exist?(@dest_file)
       entries = {
         marc_src: {
@@ -47,18 +47,18 @@ RSpec.describe 'Kiba::Extend::Jobs::MarcJob' do
       end
     end
 
-    it 'runs and produces expected result' do
+    it "runs and produces expected result" do
       marcjob
       result = CSV.table(@dest_file)
       expect(result).to be_a(CSV::Table)
     end
   end
 
-  context 'with Marc source, Marc dest' do
+  context "with Marc source, Marc dest" do
     before(:context) do
       reg = Kiba::Extend::Registry::FileRegistry.new
       Kiba::Extend.config.registry = reg
-      @dest_file = File.join(fixtures_dir, 'marc_job_dest.mrc')
+      @dest_file = File.join(fixtures_dir, "marc_job_dest.mrc")
       FileUtils.rm(@dest_file) if File.exist?(@dest_file)
       entries = {
         marc_src: {
@@ -94,11 +94,11 @@ RSpec.describe 'Kiba::Extend::Jobs::MarcJob' do
 
     let(:recs) do
       recs = []
-      MARC::Reader.new(@dest_file).each{ |rec| recs << rec }
+      MARC::Reader.new(@dest_file).each { |rec| recs << rec }
       recs
     end
 
-    it 'runs and produces expected result' do
+    it "runs and produces expected result" do
       marcjob
       expect(recs.first).to be_a(MARC::Record)
       expect(recs.length).to eq(10)

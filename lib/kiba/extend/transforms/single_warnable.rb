@@ -10,15 +10,15 @@ module Kiba
       #
       # ## Usage
       # Transform classes using this should: `include SingleWarnable`.
-      # 
+      #
       # The `initialize` method of a transform using this mixin should call `setup_single_warning`. Then,
       #   `add_single_warning("The warning message")` can be used from anywhere else in the transform.
       #
       # @since 2.8.0
       module SingleWarnable
         ::SingleWarnable = Kiba::Extend::Transforms::SingleWarnable
-        module_function
 
+        module_function
 
         def add_single_warning(warning)
           return if @single_warnings.key?(warning)

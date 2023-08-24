@@ -4,7 +4,7 @@ module Kiba
   module Extend
     module Utils
       module Lookup
-         class CriteriaChecker
+        class CriteriaChecker
           attr_reader :result, :type
 
           def initialize(check_type:, config:, row:, mergerow: {}, sep: nil)

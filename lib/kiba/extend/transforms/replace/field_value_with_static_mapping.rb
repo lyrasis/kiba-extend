@@ -179,28 +179,28 @@ module Kiba
           class << self
             def multival_msg
               <<~MSG
-              #{self.name} no longer supports the `multival` parameter.
-              If a `delim` value is given, the transform will operate in multival mode
-              TO FIX: remove `multival` parameter, ensuring a `delim` value is given
+                #{name} no longer supports the `multival` parameter.
+                If a `delim` value is given, the transform will operate in multival mode
+                TO FIX: remove `multival` parameter, ensuring a `delim` value is given
               MSG
             end
 
             # Overridden to provide more informative/detailed ArgumentError messages for parameters that are
             #   removed after not having been deprecated very long.
-            def new(source:, target: nil, mapping:, fallback_val: :orig, delete_source: true, delim: nil,
-                    multival: nil, sep: nil)
+            def new(source:, mapping:, target: nil, fallback_val: :orig, delete_source: true, delim: nil,
+              multival: nil, sep: nil)
               instance = allocate
               fail(ArgumentError, sep_msg) if sep
               fail(ArgumentError, multival_msg) if multival
-              instance.send(:initialize, **{source: source, target: target, mapping: mapping, fallback_val: fallback_val,
-                                            delete_source: delete_source, delim: delim})
+              instance.send(:initialize, source: source, target: target, mapping: mapping, fallback_val: fallback_val,
+                delete_source: delete_source, delim: delim)
               instance
             end
 
             def sep_msg
               <<~MSG
-              #{self.name} no longer supports the `sep` parameter
-              TO FIX: change `sep` to `delim`"
+                #{name} no longer supports the `sep` parameter
+                TO FIX: change `sep` to `delim`"
               MSG
             end
           end
@@ -214,9 +214,10 @@ module Kiba
           #   a different target field is not given
           # @param delim [nil, String] if a value is given, turns on "multival" mode, splitting the whole field
           #   value on the string given (since 3.0.0)
-          def initialize(source:, target: nil, mapping:, fallback_val: :orig, delete_source: true, delim: nil)
+          def initialize(source:, mapping:, target: nil, fallback_val: :orig,
+            delete_source: true, delim: nil)
             @source = source
-            @target = target ? target : source
+            @target = target || source
             @mapping = mapping
             @fallback = fallback_val
             @del = delete_source
@@ -255,7 +256,7 @@ module Kiba
           end
 
           def get_fallback_vals(source_vals)
-            source_vals.map{ |val| get_fallback_val(val) }
+            source_vals.map { |val| get_fallback_val(val) }
           end
 
           def join_result(results)
@@ -265,12 +266,12 @@ module Kiba
           end
 
           def result(vals)
-            vals.map.with_index{ |v, i| mapping.fetch(v, fallback_val[i]) }
+            vals.map.with_index { |v, i| mapping.fetch(v, fallback_val[i]) }
           end
 
           def prep_vals(val)
             return [nil] if val.nil?
-            return [''] if val.empty?
+            return [""] if val.empty?
 
             multival ? val.split(delim, -1) : [val]
           end

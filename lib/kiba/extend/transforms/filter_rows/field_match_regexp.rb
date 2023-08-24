@@ -74,7 +74,8 @@ module Kiba
             validate_action_argument(action)
             @action = action
             @field = field
-            @match = ignore_case ? Regexp.new(match, Regexp::IGNORECASE) : Regexp.new(match)
+            @match = ignore_case ? Regexp.new(match,
+              Regexp::IGNORECASE) : Regexp.new(match)
           end
 
           # @param row [Hash{ Symbol => String, nil }]

@@ -128,13 +128,15 @@ module Kiba
           # @param delim [String, nil] if provided, replacement of individual empty values in a multivalue
           #   field will be performed after splitting on this string
           # @param treat_as_null [String, Array(String)] string(s) to treat as empty values
-          def initialize(fields:, value:, delim: nil, treat_as_null: '')
+          def initialize(fields:, value:, delim: nil, treat_as_null: "")
             @fields = [fields].flatten
             @value = value
             @delim = delim
             @treat_as_null = treat_as_null
-            @initial_getter = Helpers::FieldValueGetter.new(fields: fields, discard: [])
-            @replacement_getter = Helpers::FieldValueGetter.new(fields: fields, delim: delim)
+            @initial_getter = Helpers::FieldValueGetter.new(fields: fields,
+              discard: [])
+            @replacement_getter = Helpers::FieldValueGetter.new(fields: fields,
+              delim: delim)
           end
 
           # @param row [Hash{ Symbol => String, nil }]
@@ -146,29 +148,32 @@ module Kiba
 
           private
 
-          attr_reader :fields, :value, :delim, :treat_as_null, :initial_getter, :replacement_getter
+          attr_reader :fields, :value, :delim, :treat_as_null, :initial_getter,
+            :replacement_getter
 
           def is_empty?(val)
-            [nil, '', treat_as_null].flatten.any?(val)
+            [nil, "", treat_as_null].flatten.any?(val)
           end
 
           def replace_fully_empty_fields(row)
             initial_getter.call(row)
-              .select{ |field, value| is_empty?(value) }
+              .select { |field, value| is_empty?(value) }
               .keys
-              .each{ |field| row[field] = value }
+              .each { |field| row[field] = value }
           end
 
           def replace_empty_multivals(row, field, vals)
-            row[field] = vals.map{ |val| is_empty?(val) ? value : val }.join(delim)
+            row[field] = vals.map { |val|
+              is_empty?(val) ? value : val
+            }.join(delim)
           end
 
           def replace_multival_empty(row)
             replacement_getter.call(row)
-              .select{ |field, val| val[delim] }
-              .transform_values{ |val| val.split(delim, -1) }
-              .select{ |field, vals| vals.any?{ |mval| is_empty?(mval) } }
-              .each{ |field, vals| replace_empty_multivals(row, field, vals) }
+              .select { |field, val| val[delim] }
+              .transform_values { |val| val.split(delim, -1) }
+              .select { |field, vals| vals.any? { |mval| is_empty?(mval) } }
+              .each { |field, vals| replace_empty_multivals(row, field, vals) }
           end
         end
       end

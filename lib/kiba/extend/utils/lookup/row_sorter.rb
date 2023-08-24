@@ -86,7 +86,7 @@ module Kiba
         class RowSorter
           # @since 2.8.0.83
           class MissingSortFieldError < Kiba::Extend::Error; end
-          
+
           # @param on [Symbol] field on which to sort the rows
           # @param dir [:asc, :desc] sort direction
           # @param as [Symbol] method to call in order to convert field values for sorting
@@ -102,7 +102,7 @@ module Kiba
           def call(arr)
             fail MissingSortFieldError.new("Cannot sort on missing field: `#{sortfield}`") unless arr.first.key?(sortfield)
 
-            blanks_sep = arr.group_by{ |row| row[sortfield].blank? }
+            blanks_sep = arr.group_by { |row| row[sortfield].blank? }
 
             blank = blanks_sep[true]
             not_blank = blanks_sep[false]
@@ -110,7 +110,7 @@ module Kiba
             sorted = sorted_nonblanks(not_blank)
 
             arranged = arrange_sorted_rows(sorted)
-            
+
             add_blanks(arranged, blank)
           end
 
@@ -127,24 +127,24 @@ module Kiba
 
           def arrange_sorted_rows(sorted)
             asc = [sorted[Integer], sorted[String]]
-            ordered = sortdir == :asc ? asc : asc.reverse
+            ordered = (sortdir == :asc) ? asc : asc.reverse
             ordered.compact.flatten
           end
 
           def sorted_nonblanks(not_blank)
             return {Integer => [], String => []} if not_blank.nil?
-            
-            not_blank.map{ |row| { sortval: convert(row[sortfield]), row: row} }
-              .group_by{ |row| row[:sortval].class }
-              .map{ |klass, rows| [klass, sort(rows)] }
+
+            not_blank.map { |row| {sortval: convert(row[sortfield]), row: row} }
+              .group_by { |row| row[:sortval].class }
+              .map { |klass, rows| [klass, sort(rows)] }
               .to_h
-              .map{ |klass, rows| [klass, rows.map{ |row| row[:row] }] }
+              .map { |klass, rows| [klass, rows.map { |row| row[:row] }] }
               .to_h
           end
 
           def convert(val)
             return val unless sortas
-            
+
             case sortas
             when :to_i
               convert_to_i(val)
@@ -158,10 +158,10 @@ module Kiba
 
             val.to_i
           end
-          
+
           def sort(arr)
-            asc = arr.sort_by{ |row| row[:sortval] }
-            sortdir == :desc ? asc.reverse : asc
+            asc = arr.sort_by { |row| row[:sortval] }
+            (sortdir == :desc) ? asc.reverse : asc
           end
         end
       end

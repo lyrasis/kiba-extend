@@ -72,14 +72,15 @@ module Kiba
         # {:iname=>"Smith, R.J., Sr.", :direct=>"R. J. Smith, Sr."}
         # ```
         class ConvertInvertedToDirectForm
-
           # @param source [Symbol] field containing the inverted name to split
           # @param target [Symbol] field in which to write the direct form
           # @param nameparts [Array<Symbol>] field names for the split name parts. Must be provided in order:
           #   field for first/given name; field for middle name(s); field for family/sur/last name;
           #   field for suffix/name additions
           # @param keep_parts [Boolean] whether to keep nameparts fields used to generate direct form
-          def initialize(source:, target:, nameparts: %i[firstname middlename lastname suffix], keep_parts: true)
+          def initialize(source:, target:,
+            nameparts: %i[firstname middlename lastname
+              suffix], keep_parts: true)
             @source = source
             @target = target
             @nameparts = nameparts
@@ -88,9 +89,11 @@ module Kiba
             @lastname = nameparts[2]
             @suffix = nameparts[3]
             @keep_parts = keep_parts
-            @convert_getter = Helpers::FieldValueGetter.new(fields: [firstname, middlename, lastname])
+            @convert_getter = Helpers::FieldValueGetter.new(fields: [firstname,
+              middlename, lastname])
             @convertable_getter = Helpers::FieldValueGetter.new(fields: nameparts)
-            @splitter = Name::SplitInverted.new(source: source, targets: nameparts)
+            @splitter = Name::SplitInverted.new(source: source,
+              targets: nameparts)
           end
 
           # @param row [Hash{ Symbol => String, nil }]
@@ -101,7 +104,7 @@ module Kiba
             else
               do_not_convert(row)
             end
-            nameparts.each{ |field| row.delete(field) } unless keep_parts
+            nameparts.each { |field| row.delete(field) } unless keep_parts
             row
           end
 
@@ -113,14 +116,14 @@ module Kiba
           def convert(row)
             name = convert_getter.call(row)
               .values
-              .join(' ')
-            sfx = row.fetch(suffix, '')
+              .join(" ")
+            sfx = row.fetch(suffix, "")
             row[target] = sfx.blank? ? name : "#{name}, #{sfx}"
           end
 
           def convertable?(row)
             vals = convertable_getter.call(row)
-            return true unless vals.empty?
+            true unless vals.empty?
           end
 
           def do_not_convert(row)

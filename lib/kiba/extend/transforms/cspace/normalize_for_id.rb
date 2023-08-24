@@ -89,7 +89,7 @@ module Kiba
             val = row.fetch(source, nil)
             return row if val.blank?
 
-            row[target] = values(val).map{ |val| normalize(val) }.join(delim)
+            row[target] = values(val).map { |val| normalize(val) }.join(delim)
             row
           end
 

@@ -4,7 +4,6 @@ module Kiba
   module Extend
     module Transforms
       module Prepend
-
         # Adds the specified value to the specified field
         #
         # If target field value is blank, it is left blank
@@ -54,7 +53,8 @@ module Kiba
           # @param value [String] The value to be prepended
           # @param multival [Boolean] Whether prepend to multiple values
           # @param delim [String] for splitting value if `multival`
-          def initialize(field:, value:, multival: false, delim: Kiba::Extend.delim)
+          def initialize(field:, value:, multival: false,
+            delim: Kiba::Extend.delim)
             @field = field
             @value = value
             @multival = multival
@@ -67,7 +67,9 @@ module Kiba
             return row if fieldval.blank?
 
             fieldvals = multival ? fieldval.split(delim) : [fieldval]
-            row[field] = fieldvals.map { |fieldval| "#{value}#{fieldval}" }.join(delim)
+            row[field] = fieldvals.map { |fieldval|
+              "#{value}#{fieldval}"
+            }.join(delim)
             row
           end
 

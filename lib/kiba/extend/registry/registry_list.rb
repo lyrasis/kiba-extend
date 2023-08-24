@@ -10,7 +10,7 @@ module Kiba
       class RegistryList
         # @param args [Array<FileRegistryEntry>]
         def initialize(*args)
-          puts ''
+          puts ""
           list = args.empty? ? Kiba::Extend.registry.entries : args.flatten
           list.each { |entry| puts entry.summary }
         end

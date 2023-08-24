@@ -38,12 +38,14 @@ module Kiba
         #
         class ConstantValues
           def initialize(constantmap:)
-            @mergers = constantmap.map{ |target, value| Merge::ConstantValue.new(target: target, value: value) }
+            @mergers = constantmap.map { |target, value|
+              Merge::ConstantValue.new(target: target, value: value)
+            }
           end
 
           # @param row [Hash{ Symbol => String, nil }]
           def process(row)
-            mergers.each{ |merger| merger.process(row) }
+            mergers.each { |merger| merger.process(row) }
             row
           end
 

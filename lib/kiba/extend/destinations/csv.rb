@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'csv'
+require "csv"
 
 module Kiba
   module Extend
@@ -48,7 +48,7 @@ module Kiba
         #   in, to the right of the ones named here. **Set in registry entry's
         #   `dest_special_opts`**
         def initialize(filename:, csv_options: nil, headers: nil,
-                       initial_headers: [])
+          initial_headers: [])
           @filename = filename
           @csv_options = csv_options || {}
           @headers = headers
@@ -59,7 +59,7 @@ module Kiba
         def fields
           return [] unless File.exist?(filename)
 
-          csv ||= ::CSV.open(filename, 'r', **csv_options)
+          csv ||= ::CSV.open(filename, "r", **csv_options)
           hdrs = csv.shift.headers
           close
           hdrs
@@ -67,11 +67,14 @@ module Kiba
 
         # @private
         def write(row)
-          @csv ||= ::CSV.open(filename, 'wb', **csv_options)
+          @csv ||= ::CSV.open(filename, "wb", **csv_options)
           @headers ||= row.keys
           verify_initial_headers
           order_headers
-          @headers_written ||= (csv << headers; true)
+          @headers_written ||= begin
+            csv << headers
+            true
+          end
           csv << row.fetch_values(*@headers)
         end
 
@@ -83,7 +86,7 @@ module Kiba
         private
 
         def header_check_hash
-          @initial_headers.map{ |hdr| [hdr, headers.any?(hdr)] }.to_h
+          @initial_headers.map { |hdr| [hdr, headers.any?(hdr)] }.to_h
         end
 
         def initial_headers_present?
@@ -91,7 +94,7 @@ module Kiba
         end
 
         def missing_initial_headers
-          header_check_hash.reject{ |hdr, present| present }.keys
+          header_check_hash.reject { |hdr, present| present }.keys
         end
 
         def order_headers
@@ -108,7 +111,7 @@ module Kiba
           missing.each do |hdr|
             puts "WARNING: Output data does not contain specified initial header: #{hdr}"
           end
-          @initial_headers = @initial_headers - missing
+          @initial_headers -= missing
         end
       end
     end

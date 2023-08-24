@@ -9,7 +9,7 @@ module Kiba
         ::Extract = Kiba::Extend::Transforms::Extract
 
         # Extracts the values of the given fields to a single `:value` column
-        # 
+        #
         # Inserts a `:from_field` column recording original field name for the value
         #   in each row. This can be turned off, resulting in a single-column result.
         #
@@ -73,12 +73,12 @@ module Kiba
           end
 
           def process(row)
-            @fields.each{ |field| extract_field_value(row, field) }
+            @fields.each { |field| extract_field_value(row, field) }
             nil
           end
 
           def close
-            @rows.each{ |row| yield row }
+            @rows.each { |row| yield row }
           end
 
           private
@@ -90,8 +90,9 @@ module Kiba
             vals = @sep ? field_val.split(@sep) : [field_val]
             vals.each do |val|
               next if val.blank?
-              
-              new_row = @track ? { value: val, from_field: field } : { value: val }
+
+              new_row = @track ? {value: val,
+                                  from_field: field} : {value: val}
               @rows << new_row
             end
           end

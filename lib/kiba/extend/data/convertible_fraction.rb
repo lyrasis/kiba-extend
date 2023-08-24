@@ -5,18 +5,24 @@ module Kiba
     module Data
       # Value object encoding an extracted string fraction (e.g. '1 1/2') so it can be converted.
       #
-      # Can represent invalid/non-convertible "fractions" 
+      # Can represent invalid/non-convertible "fractions"
       class ConvertibleFraction
         include Comparable
-        
+
         attr_reader :whole, :fraction, :position
-        
+
         # @param whole [Integer] whole number preceding a fraction
         # @param fraction [String]
         # @param position [Range] indicates position of fractional data within original string
-        def initialize(whole: 0, fraction:, position:)
-          fail(TypeError, '`whole` must be an Integer') unless whole.is_a?(Integer)
-          fail(TypeError, '`position` must be a Range') unless position.is_a?(Range)
+        def initialize(fraction:, position:, whole: 0)
+          unless whole.is_a?(Integer)
+            fail(TypeError,
+              "`whole` must be an Integer")
+          end
+          unless position.is_a?(Range)
+            fail(TypeError,
+              "`position` must be a Range")
+          end
           @whole = whole.freeze
           @fraction = fraction.freeze
           @position = position.freeze
@@ -28,14 +34,14 @@ module Kiba
         def replace_in(val:, places: 4)
           return val unless convertible?
 
-          [prefix ? val[prefix] : '', to_s(places), val[suffix]].compact.join
+          [prefix ? val[prefix] : "", to_s(places), val[suffix]].compact.join
         end
 
         # @return [Float]
         def to_f
           return nil unless convertible?
 
-          ( Rational(fraction) + whole ).to_f
+          (Rational(fraction) + whole).to_f
         end
 
         # @param places [Integer]
@@ -43,7 +49,7 @@ module Kiba
         def to_s(places = 4)
           return nil unless convertible?
 
-          ( Rational(fraction) + whole ).round(+places).to_f.to_s
+          (Rational(fraction) + whole).round(+places).to_f.to_s
         end
 
         # @return [Boolean] whether the fraction is indeed convertible
@@ -63,15 +69,15 @@ module Kiba
         def <=>(other)
           position.first <=> other.position.first
         end
-        
+
         def hash
           [self.class, whole, fraction, position].hash
         end
-        
+
         def to_h
           {whole: whole, fraction: fraction, position: position}
         end
-        
+
         private
 
         def prefix
@@ -83,9 +89,7 @@ module Kiba
         def suffix
           position.max + 1..-1
         end
-
       end
     end
   end
 end
-

@@ -14,7 +14,8 @@ module Kiba
           # @param conditions [Hash] See [https://github.com/lyrasis/kiba-extend/blob/e5a77d4622334cd4f021ba3c4d7bf59f010472b2/spec/kiba/extend/utils/lookup_spec.rb#L477](RowSelector spec)
           #    for examples on how to use
           # @param result_type [Symbol<:str, :int>] form in which to return the resulting values
-          def initialize(lookup:, keycolumn:, targetfield:, conditions: {}, result_type: :str)
+          def initialize(lookup:, keycolumn:, targetfield:, conditions: {},
+            result_type: :str)
             @lookup = lookup
             @keycolumn = keycolumn
             @target = targetfield
@@ -35,7 +36,7 @@ module Kiba
               merge_rows = selector.call(
                 origrow: row,
                 mergerows: matches
-                )
+              )
               row[target] = finalize(merge_rows.size)
             end
             row
@@ -43,7 +44,8 @@ module Kiba
 
           private
 
-          attr_reader :lookup, :keycolumn, :target, :conditions, :result_type, :selector
+          attr_reader :lookup, :keycolumn, :target, :conditions, :result_type,
+            :selector
 
           def finalize(int)
             return int.to_s if result_type == :str

@@ -21,7 +21,8 @@ module Kiba
         def required
           return if File.exist?(@data.path)
 
-          %i[missing_creator_for_non_supplied_file creator_not_a_method].each do |err|
+          %i[missing_creator_for_non_supplied_file
+            creator_not_a_method].each do |err|
             raise NoDependencyCreatorError, @key if @data.errors.keys.any?(err)
           end
 

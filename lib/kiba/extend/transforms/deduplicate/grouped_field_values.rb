@@ -137,7 +137,7 @@ module Kiba
           #   {Kiba::Extend::Utils::StringNormalizer} with arguments:
           #   `mode: :plain, downcased: false` to values for comparison
           def initialize(on_field:, sep: nil, delim: nil, grouped_fields: [],
-                         ignore_case: false, normalized: false)
+            ignore_case: false, normalized: false)
             @field = on_field
             @other = grouped_fields
             @delim = usedelim(sepval: sep, delimval: delim, calledby: self)
@@ -177,14 +177,14 @@ module Kiba
             vals = val.split(delim, -1)
             cased = ignore_case ? vals.map(&:downcase) : vals
             if normalizer
-              cased.map{ |val| normalizer.call(val) }
+              cased.map { |val| normalizer.call(val) }
             else
               cased
             end
           end
 
           def delete_values(arr, to_delete)
-            to_delete.each{ |idx| arr.delete_at(idx) }
+            to_delete.each { |idx| arr.delete_at(idx) }
             arr.empty? ? nil : arr.join(delim)
           end
 
@@ -218,7 +218,7 @@ module Kiba
 
           def null_fields(row)
             [field, other].flatten
-              .each{ |fld| row[fld] = nil }
+              .each { |fld| row[fld] = nil }
           end
 
           def other_deletes(row, to_delete, fld, val)

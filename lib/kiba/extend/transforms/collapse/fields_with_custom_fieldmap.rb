@@ -165,7 +165,9 @@ module Kiba
 
           # @param row [Hash{ Symbol => String, nil }]
           def process(row)
-            fieldmap.each{ |target, sources| row[target] = compile_source_values(sources, row) }
+            fieldmap.each { |target, sources|
+              row[target] = compile_source_values(sources, row)
+            }
             delete_sources(row) if del
             row
           end
@@ -175,7 +177,7 @@ module Kiba
           attr_reader :fieldmap, :delim, :del
 
           def compile_source_values(sources, row)
-            sources.map{ |source| source_value(source, row) }
+            sources.map { |source| source_value(source, row) }
               .flatten
               .join(delim)
           end
@@ -183,17 +185,19 @@ module Kiba
           def source_value(source, row)
             if row.keys.any?(source)
               val = row[source]
-              return '' if val.blank?
+              return "" if val.blank?
               val.split(delim, -1)
             else
               add_single_warning("Source field `#{source}` missing; treating as nil value")
-              ''
+              ""
             end
           end
 
           def delete_sources(row)
             targets = fieldmap.keys
-            fieldmap.values.flatten.each{ |source| row.delete(source) unless targets.any?(source) }
+            fieldmap.values.flatten.each { |source|
+              row.delete(source) unless targets.any?(source)
+            }
           end
         end
       end

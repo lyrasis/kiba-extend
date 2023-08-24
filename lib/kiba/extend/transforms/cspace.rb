@@ -46,8 +46,8 @@ module Kiba
         #   substitution we need
         def self.shady_characters
           {
-            'ș' => 's',
-            't̕a' => 'ta'
+            "ș" => "s",
+            "t̕a" => "ta"
           }.freeze
         end
       end

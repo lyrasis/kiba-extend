@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 RSpec.describe Kiba::Extend::Utils::Lookup do
   rows = [
@@ -13,18 +13,18 @@ RSpec.describe Kiba::Extend::Utils::Lookup do
   before { generate_csv(rows) }
   after { File.delete(test_csv) if File.exist?(test_csv) }
 
-  describe '#csv_to_hash' do
+  describe "#csv_to_hash" do
     lookup_hash = {
-      '1' => [{ id: '1', val: 'a' }],
-      '2' => [{ id: '2', val: 'b' }],
-      '3' => [{ id: '3', val: 'c' },
-              { id: '3', val: 'd' }]
+      "1" => [{id: "1", val: "a"}],
+      "2" => [{id: "2", val: "b"}],
+      "3" => [{id: "3", val: "c"},
+        {id: "3", val: "d"}]
     }
 
-    it 'returns hash with key = keycolumn value and value = array of all rows w/that key ' do
+    it "returns hash with key = keycolumn value and value = array of all rows w/that key " do
       result = Lookup.csv_to_hash(file: test_csv,
-                                   csvopt: Kiba::Extend.csvopts,
-                                   keycolumn: :id)
+        csvopt: Kiba::Extend.csvopts,
+        keycolumn: :id)
       expect(result).to eq(lookup_hash)
     end
   end

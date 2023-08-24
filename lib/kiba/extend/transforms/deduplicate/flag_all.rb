@@ -51,7 +51,7 @@ module Kiba
             @on = on_field
             @in_field = in_field
             @deduper = {}
-            @no_val = explicit_no ? 'n' : ''
+            @no_val = explicit_no ? "n" : ""
             @rows = []
           end
 
@@ -66,7 +66,7 @@ module Kiba
           def close
             @rows.each do |row|
               val = row[on]
-              row[in_field] = deduper[val] > 1 ? 'y' : no_val
+              row[in_field] = (deduper[val] > 1) ? "y" : no_val
               yield row
             end
           end

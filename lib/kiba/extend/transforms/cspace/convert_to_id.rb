@@ -12,8 +12,8 @@ module Kiba
 
           # @param row [Hash{ Symbol => String, nil }]
           def process(row)
-            val = row.fetch(@source, '')
-            idval = val.gsub(/\W/, '')
+            val = row.fetch(@source, "")
+            idval = val.gsub(/\W/, "")
             row[@target] = "#{idval}#{XXhash.xxh32(idval)}"
             row
           end

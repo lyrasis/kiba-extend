@@ -95,8 +95,8 @@ module Kiba
           #   the processor has no way of knowing that another row in the source should be split into 10
           #   columns and thus it creates rows with different numbers of fields.
           # rubocop:disable Metrics/ParameterLists
-          def initialize(field:, sep:, delete_source: true, max_segments:, collapse_on: :right,
-                         warnfield: nil)
+          def initialize(field:, sep:, max_segments:, delete_source: true, collapse_on: :right,
+            warnfield: nil)
             @field = field
             @sep = sep
             @del = delete_source
@@ -104,7 +104,7 @@ module Kiba
             @collapser = method("process_#{collapse_on}_collapse")
             @warn = !warnfield.blank?
             @warnfield = warnfield ||= :warning
-            @warnvalue = 'max_segments less than total number of split segments'
+            @warnvalue = "max_segments less than total number of split segments"
           end
           # rubocop:enable Metrics/ParameterLists
 
@@ -118,7 +118,8 @@ module Kiba
 
           private
 
-          attr_reader :field, :sep, :del, :max, :collapser, :warn, :warnfield, :warnvalue
+          attr_reader :field, :sep, :del, :max, :collapser, :warn, :warnfield,
+            :warnvalue
 
           def add_new_fields(row)
             new_fields.each { |field| row[field] = nil }
@@ -141,7 +142,8 @@ module Kiba
 
             valsplit = val.split(sep)
 
-            exceeds_max?(valsplit) ? collapser.call(valsplit, row) : process_splits(valsplit, row)
+            exceeds_max?(valsplit) ? collapser.call(valsplit,
+              row) : process_splits(valsplit, row)
           end
 
           def exceeds_max?(valsplit)
@@ -157,7 +159,7 @@ module Kiba
           end
 
           def new_fields
-            (0..(max - 1)).entries.map{ |entry| "#{field}#{entry}".to_sym }
+            (0..(max - 1)).entries.map { |entry| "#{field}#{entry}".to_sym }
           end
 
           def process_left_collapse(valsplit, row)
@@ -183,7 +185,9 @@ module Kiba
           end
 
           def process_splits(valsplit, row)
-            valsplit.each_with_index{ |val, i| row["#{field}#{i}".to_sym] = val }
+            valsplit.each_with_index { |val, i|
+              row["#{field}#{i}".to_sym] = val
+            }
           end
 
           def strip_new_fields(row)
@@ -196,7 +200,7 @@ module Kiba
           end
 
           def to_collapse(valsplit)
-            (valsplit.length - max ) + 1
+            (valsplit.length - max) + 1
           end
 
           def to_iterate(valsplit)

@@ -9,7 +9,7 @@ module Kiba
         class Field
           class MissingFromFieldError < Kiba::Extend::Error
             def initialize(from, fields)
-              msg = "Cannot copy from nonexistent field `#{from}`\nExisting fields: #{fields.join(', ')}"
+              msg = "Cannot copy from nonexistent field `#{from}`\nExisting fields: #{fields.join(", ")}"
               super(msg)
             end
           end

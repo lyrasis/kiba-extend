@@ -130,10 +130,13 @@ module Kiba
           # @param delim [String] delimiter used to split/join field values
           # @param treat_as_null [nil, String, Array(String)] values aside from `nil` and `''` that should be
           #   treated as null/empty when removing empty field groups
-          def initialize(groups:, delim: Kiba::Extend.delim, treat_as_null: Kiba::Extend.nullvalue)
+          def initialize(groups:, delim: Kiba::Extend.delim,
+            treat_as_null: Kiba::Extend.nullvalue)
             @groups = groups
             @delim = delim
-            @null_vals = treat_as_null ? [treat_as_null].flatten.sort_by{ |v| v.length }.reverse : []
+            @null_vals = treat_as_null ? [treat_as_null].flatten.sort_by { |v|
+                                           v.length
+                                         }.reverse : []
             @delim_only_cleaner = Delete::DelimiterOnlyFieldValues.new(
               fields: groups.flatten,
               delim: delim,
@@ -151,7 +154,8 @@ module Kiba
           def process(row)
             delim_only_cleaner.process(row)
             groups.each_with_index do |group, idx|
-              process_group(row, group, evenness_checkers[idx], value_getters[idx])
+              process_group(row, group, evenness_checkers[idx],
+                value_getters[idx])
             end
 
             row
@@ -176,21 +180,25 @@ module Kiba
           end
 
           def delete_blank_indexes(row, field, vals, idxs)
-            idxs.each{ |idx| vals.delete_at(idx) }
+            idxs.each { |idx| vals.delete_at(idx) }
             val = vals.empty? ? nil : vals.join(delim)
             row[field] = val
           end
 
           def multi_field_blank_remover(row, field_vals)
-            split_vals = field_vals.transform_values{ |vals| vals.split(delim, -1) }
+            split_vals = field_vals.transform_values { |vals|
+              vals.split(delim, -1)
+            }
             idxs = empty_indexes(split_vals)
-            split_vals.each{ |field, vals| delete_blank_indexes(row, field, vals, idxs) }
+            split_vals.each { |field, vals|
+              delete_blank_indexes(row, field, vals, idxs)
+            }
           end
 
           def single_field_blank_remover(row, field_vals)
             field_vals.each do |field, vals|
               row[field] = vals.split(delim, -1)
-                .reject{ |val| empty_val?(val) }
+                .reject { |val| empty_val?(val) }
                 .join(delim)
             end
           end
@@ -200,28 +208,34 @@ module Kiba
             analyzer = setup_index_analyzer(prep)
             populate_index_analyzer(prep, analyzer)
             # reverse sort so we delete elements backward so as not to mess up index count
-            analyzer.select{ |idx, vals| vals.all?(:empty) }.keys.sort.reverse
+            analyzer.select { |idx, vals| vals.all?(:empty) }.keys.sort.reverse
           end
 
           def populate_index_analyzer(prepped_vals, analyzer)
             prepped_vals.values.each do |vals|
-              vals.each_with_index{ |val, idx| analyzer[idx] << val }
+              vals.each_with_index { |val, idx| analyzer[idx] << val }
             end
           end
 
           def setup_index_analyzer(prepped_vals)
             analyzer = {}
-            prepped_vals.first[1].each_with_index{ |_e, idx| analyzer[idx] = [] }
+            prepped_vals.first[1].each_with_index { |_e, idx|
+              analyzer[idx] = []
+            }
             analyzer
           end
 
           def prep_for_empty_index_identification(vals)
             vals.dup
-              .transform_values{ |vals| vals.map{ |val| empty_val?(val) ? :empty : :notempty } }
+              .transform_values { |vals|
+              vals.map { |val|
+                empty_val?(val) ? :empty : :notempty
+              }
+            }
           end
 
           def empty_val?(str)
-            [nil, '', null_vals].flatten.any?(str)
+            [nil, "", null_vals].flatten.any?(str)
           end
 
           def add_null_values(str)
@@ -229,8 +243,7 @@ module Kiba
 
             padfront = str.start_with?(@sep) ? "%NULLVALUE%#{str}" : str
             padend = padfront.end_with?(@sep) ? "#{padfront}%NULLVALUE%" : padfront
-            padded = padend.gsub("#{@sep}#{@sep}", "#{@sep}%NULLVALUE%#{@sep}")
-            padded
+            padend.gsub("#{@sep}#{@sep}", "#{@sep}%NULLVALUE%#{@sep}")
           end
         end
       end

@@ -4,7 +4,6 @@ module Kiba
   module Extend
     module Transforms
       module Fingerprint
-
         # Adds a base64 strict encoded hash to the target field. The value hashed is the values of
         #   the specified fields, joined into a string using the given delimiter
         #
@@ -70,7 +69,7 @@ module Kiba
           # @raise [DelimiterCollisionError] if `delim` conflicts with
           #   `Kiba::Extend.delim` or `Kiba::Extend.sgdelim`
           def initialize(fields:, target:, delim: "␟",
-                         override_app_delim_check: false)
+            override_app_delim_check: false)
             @override_app_delim_check = override_app_delim_check
             check_delim(delim)
             @fingerprinter = Kiba::Extend::Utils::FingerprintCreator.new(

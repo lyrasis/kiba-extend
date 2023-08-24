@@ -1,4 +1,4 @@
 # frozen_string_literal: true
 
-require 'yardspec'
+require "yardspec"
 Yardspec.define_examples

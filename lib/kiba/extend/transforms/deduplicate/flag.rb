@@ -58,15 +58,18 @@ module Kiba
             @on = on_field
             @in_field = in_field
             @using = using
-            raise NoUsingValueError, "#{self.class.name} `using` hash does not exist" unless @using
-            @no_val = explicit_no ? 'n' : ''
+            unless @using
+              raise NoUsingValueError,
+                "#{self.class.name} `using` hash does not exist"
+            end
+            @no_val = explicit_no ? "n" : ""
           end
 
           # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             val = row.fetch(on)
             if using.key?(val)
-              row[in_field] = 'y'
+              row[in_field] = "y"
             else
               using[val] = nil
               row[in_field] = no_val

@@ -4,7 +4,6 @@ module Kiba
   module Extend
     module Transforms
       module Delete
-
         # @note Only useful for multi-valued fields
         #
         # Deletes any empty values from the field. Supports `usenull` = true to treat the value of
@@ -77,12 +76,12 @@ module Kiba
             @fields = [fields].flatten
             @usenull = usenull
             if sep && delim
-              puts %Q[#{Kiba::Extend.warning_label}: Do not use both `sep` and `delim`. Prefer `delim`]
+              puts %(#{Kiba::Extend.warning_label}: Do not use both `sep` and `delim`. Prefer `delim`)
             elsif sep
-              puts %Q[#{Kiba::Extend.warning_label}: The `sep` keyword is being deprecated in a future version. Change it to `delim` in your ETL code.]
+              puts %(#{Kiba::Extend.warning_label}: The `sep` keyword is being deprecated in a future version. Change it to `delim` in your ETL code.)
               @delim = sep
             else
-              @delim = delim ? delim : Kiba::Extend.delim
+              @delim = delim || Kiba::Extend.delim
             end
           end
 
@@ -97,7 +96,7 @@ module Kiba
 
               row[field] = val.split(delim)
                 .compact
-                .reject{ |str| Helpers.empty?(str, usenull) }
+                .reject { |str| Helpers.empty?(str, usenull) }
                 .join(delim)
             end
             row

@@ -48,7 +48,7 @@ module Kiba
         # ```
 
         class First
-          def initialize(fields:, targets: [], delim:)
+          def initialize(fields:, delim:, targets: [])
             @fields = [fields].flatten
             @targets = targets
             @delim = delim
@@ -74,7 +74,7 @@ module Kiba
               return
             end
 
-            until equal_length? do
+            until equal_length?
               @targets << @fields[index]
             end
 

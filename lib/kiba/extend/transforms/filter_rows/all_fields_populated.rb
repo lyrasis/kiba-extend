@@ -77,9 +77,9 @@ module Kiba
 
             case action
             when :keep
-              return row if all_populated?(row)
+              row if all_populated?(row)
             when :reject
-              return row unless all_populated?(row)
+              row unless all_populated?(row)
             end
           end
 

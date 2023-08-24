@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'marc'
+require "marc"
 
 module Kiba
   module Extend
@@ -53,9 +53,8 @@ module Kiba
           # @param delim [String] used when joining multiple values from
           #   recurring subfield
           def initialize(tag:, subfields:,
-                         id_target: Kiba::Extend::Marc.id_target_field,
-                         delim: Kiba::Extend.delim
-                        )
+            id_target: Kiba::Extend::Marc.id_target_field,
+            delim: Kiba::Extend.delim)
             @tag = tag
             @subfields = subfields
             @id_target = id_target
@@ -67,10 +66,10 @@ module Kiba
           # @yieldparam row [Hash{ Symbol => String, nil }]
           def process(record)
             fields = select_fields(record, [tag])
-              .reject{ |fld| fld.codes.intersection(subfields).empty? }
+              .reject { |fld| fld.codes.intersection(subfields).empty? }
             return nil if fields.empty?
 
-            idhash = {id_target=>idextractor.call(record)}
+            idhash = {id_target => idextractor.call(record)}
 
             prepare_rows(fields, idhash).each do |row|
               yield row
@@ -84,21 +83,21 @@ module Kiba
           attr_reader :tag, :subfields, :id_target, :delim, :idextractor
 
           def prepare_rows(fields, idhash)
-            fields.map{ |fld| prepare_row(fld, idhash) }
+            fields.map { |fld| prepare_row(fld, idhash) }
           end
 
           def prepare_row(field, idhash)
-            row = {"full#{tag}".to_sym=>field.to_s}.merge(idhash)
+            row = {"full#{tag}".to_sym => field.to_s}.merge(idhash)
             subfields.each do |code|
               row["_#{tag}#{code}".to_sym] = sf_val(field, code)
             end
-            row.transform_values{ |val| val.blank? ? nil : val }
+            row.transform_values { |val| val.blank? ? nil : val }
           end
 
           def sf_val(field, code)
             field.subfields
-              .select{ |sf| sf.code == code }
-              .map{ |sf| sf.value }
+              .select { |sf| sf.code == code }
+              .map { |sf| sf.value }
               .join(delim)
           end
         end

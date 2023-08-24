@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require 'json'
-require 'pathname'
+require "json"
+require "pathname"
 
 module Kiba
   module Extend
@@ -68,7 +68,7 @@ module Kiba
         #   files in subdirectories
         # @param filesuffixes [Array<String>] to read in as
         #   JSON records. Include preceding period
-        def initialize(dirpath:, recursive: false, filesuffixes: ['.json'])
+        def initialize(dirpath:, recursive: false, filesuffixes: [".json"])
           @path = File.expand_path(dirpath)
           @recursive = recursive
           @filesuffixes = filesuffixes
@@ -103,9 +103,9 @@ module Kiba
 
         def parse_json(path)
           JSON.parse(File.read(path))
-            .transform_values{ |val| val.empty? ? nil : val }
-            .transform_keys{ |key| key.downcase.to_sym }
-        rescue StandardError
+            .transform_values { |val| val.empty? ? nil : val }
+            .transform_keys { |key| key.downcase.to_sym }
+        rescue
           nil
         end
 
@@ -115,7 +115,7 @@ module Kiba
         end
 
         def suffix_matches(paths)
-          paths.select{ |path| path.file? && filesuffixes.any?(path.extname) }
+          paths.select { |path| path.file? && filesuffixes.any?(path.extname) }
         end
       end
     end

@@ -33,12 +33,14 @@ module Kiba
           # @param fieldmap [Hash(Symbol => Symbol)] Keys are the `from` fields; values are the `to` fields
           def initialize(fieldmap:)
             @fieldmap = fieldmap
-            @renamers = fieldmap.map{ |from, to| Rename::Field.new(from: from, to: to) }
+            @renamers = fieldmap.map { |from, to|
+              Rename::Field.new(from: from, to: to)
+            }
           end
 
           # @param row [Hash{ Symbol => String, nil }]
           def process(row)
-            renamers.each{ |renamer| renamer.process(row) }
+            renamers.each { |renamer| renamer.process(row) }
             row
           end
 

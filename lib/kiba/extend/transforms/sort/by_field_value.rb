@@ -153,7 +153,7 @@ module Kiba
           # @param order [:asc, :desc] of sortable rows. This does *not* change
           #   where blank values are placed
           def initialize(field:, blanks: :last, delim: nil, mode: :smart,
-                         order: :asc)
+            order: :asc)
             @field = field
             @blanks = blanks
             @delim = delim
@@ -175,9 +175,9 @@ module Kiba
           end
 
           def close
-            rows[:blank].each{ |row| yield row } if blanks == :first
-            sorted.each{ |entry| yield entry[1] }
-            rows[:blank].each{ |row| yield row } if blanks == :last
+            rows[:blank].each { |row| yield row } if blanks == :first
+            sorted.each { |entry| yield entry[1] }
+            rows[:blank].each { |row| yield row } if blanks == :last
           end
 
           private
@@ -194,9 +194,9 @@ module Kiba
           end
 
           def convert(val, row)
-            if /^\d+$/ =~ val
+            if /^\d+$/.match?(val)
               rows[:numeric] << [val.to_i, row]
-            elsif /^\d+\.\d+$/ =~ val
+            elsif /^\d+\.\d+$/.match?(val)
               rows[:numeric] << [val.to_f, row]
             else
               rows[:string] << [val, row]
@@ -204,8 +204,8 @@ module Kiba
           end
 
           def sorted
-            rows[:string].sort_by!{ |entry| entry[0] }
-            rows[:numeric].sort_by!{ |entry| entry[0] }
+            rows[:string].sort_by! { |entry| entry[0] }
+            rows[:numeric].sort_by! { |entry| entry[0] }
             result = rows[:numeric] + rows[:string]
             return result if order == :asc
 

@@ -37,7 +37,7 @@ module Kiba
           # @return Nil
           def process(row)
             @keys = keys.merge(row.keys
-                        .map{ |key| [key, nil] }
+                        .map { |key| [key, nil] }
                         .to_h)
             @rows << row
             nil
@@ -61,7 +61,7 @@ module Kiba
             needed = allfields - row.keys
             return row if needed.empty?
 
-            row.merge(needed.map{ |field| [field, nil] }.to_h)
+            row.merge(needed.map { |field| [field, nil] }.to_h)
           end
         end
       end

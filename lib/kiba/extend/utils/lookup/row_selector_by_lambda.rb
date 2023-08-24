@@ -77,5 +77,3 @@ module Kiba
     end
   end
 end
-
-  

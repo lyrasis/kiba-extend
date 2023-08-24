@@ -1,17 +1,17 @@
 # frozen_string_literal: true
 
-require 'amazing_print'
-require 'active_support'
-require 'active_support/core_ext/object'
-require 'dry-configurable'
-require 'kiba'
-require 'kiba-common/sources/csv'
-require 'kiba-common/sources/enumerable'
-require 'kiba-common/destinations/csv'
-require 'kiba-common/destinations/lambda'
-require 'pry'
-require 'xxhash'
-require 'zeitwerk'
+require "amazing_print"
+require "active_support"
+require "active_support/core_ext/object"
+require "dry-configurable"
+require "kiba"
+require "kiba-common/sources/csv"
+require "kiba-common/sources/enumerable"
+require "kiba-common/destinations/csv"
+require "kiba-common/destinations/lambda"
+require "pry"
+require "xxhash"
+require "zeitwerk"
 
 # The Kiba ETL framework for Ruby.
 # `kiba-extend` extends only Kiba OSS. Kiba Pro features are not used.
@@ -37,6 +37,7 @@ module Kiba
   # Note that `:stripplus` combines the functionality of `:stripextra` and `:nulltonil`
   module Extend
     module_function
+
     extend Dry::Configurable
 
     # @return [String] path to this application's data directory (used
@@ -52,32 +53,35 @@ module Kiba
     end
 
     private def setup_loader
-              @loader = Zeitwerk::Loader.new
-              @loader.push_dir(
-                File.join(ke_dir, 'lib', 'kiba', 'extend'),
-                namespace: Kiba::Extend
-              )
-              @loader.inflector.inflect(
-                'normalize_for_id' => 'NormalizeForID',
-                'convert_to_id' => 'ConvertToID',
-                'version' => 'VERSION',
-                'csv' => 'CSV'
-              )
-              @loader.enable_reloading
-              @loader.setup
-              @loader.eager_load
-              @loader
-            end
+      @loader = Zeitwerk::Loader.new
+      @loader.push_dir(
+        File.join(ke_dir, "lib", "kiba", "extend"),
+        namespace: Kiba::Extend
+      )
+      @loader.inflector.inflect(
+        "normalize_for_id" => "NormalizeForID",
+        "convert_to_id" => "ConvertToID",
+        "version" => "VERSION",
+        "csv" => "CSV"
+      )
+      @loader.enable_reloading
+      @loader.setup
+      @loader.eager_load
+      @loader
+    end
 
     def reload!
       @loader.reload
     end
 
     # @return [Hash] default options used for CSV sources/destinations
-    setting :csvopts, default: { headers: true, header_converters: %i[symbol downcase] }, reader: true
+    setting :csvopts,
+      default: {headers: true, header_converters: %i[symbol downcase]}, reader: true
 
     # @return [Hash] default settings for Lambda destination
-    setting :lambdaopts, default: { on_write: ->(r) { accumulator << r } }, reader: true
+    setting :lambdaopts, default: {on_write: ->(r) {
+                                               accumulator << r
+                                             }}, reader: true
 
     # @return [String]
     # Default delimiter for splitting/joining values in multi-valued fields.
@@ -85,7 +89,7 @@ module Kiba
     # ```
     # 'a|b'.split(Kiba::Extend.delim) => ['a', 'b']
     # ```
-    setting :delim, default: '|', reader: true
+    setting :delim, default: "|", reader: true
 
     # @return [String]
     # Default subgrouping delimiter for splitting/joining values in multi-valued fields
@@ -96,33 +100,37 @@ module Kiba
     # sgdelim_split = delim_split.map{ |val| val.split(sgdelim) }
     # sgdelim_split => [['a', 'y'], ['b', 'z']]
     # ```
-    setting :sgdelim, default: '^^', reader: true
+    setting :sgdelim, default: "^^", reader: true
 
     # @return [String] default string to be treated as though it were a null/empty value.
-    setting :nullvalue, default: '%NULLVALUE%', reader: true
+    setting :nullvalue, default: "%NULLVALUE%", reader: true
 
     # @return [String]
     # Used to join nested namespaces and registered keys in FileRegistry. With namespace 'ns' and registered
     #   key 'foo': 'ns\__foo'. With parent namespace 'ns', child namespace 'child', and registered key 'foo':
     #   'ns\__child\__foo'
-    setting :registry_namespace_separator, default: '__', reader: true
+    setting :registry_namespace_separator, default: "__", reader: true
 
     # @!method source
     # Default source class for jobs. Must meet implementation criteria in [Kiba wiki](https://github.com/thbar/kiba/wiki/Implementing-ETL-sources)
-    setting :source, constructor: proc{ Kiba::Extend::Sources::CSV }, reader: true
+    setting :source, constructor: proc {
+                                    Kiba::Extend::Sources::CSV
+                                  }, reader: true
 
     # @!method destination
     # Default destination class for jobs. Must meet implementation criteria in [Kiba wiki](https://github.com/thbar/kiba/wiki/Implementing-ETL-destinations)
-    setting :destination, constructor: proc{ Kiba::Extend::Destinations::CSV }, reader: true
+    setting :destination, constructor: proc {
+                                         Kiba::Extend::Destinations::CSV
+                                       }, reader: true
 
     # @return [String] prefix for warnings from the ETL
-    setting :warning_label, default: 'KIBA WARNING', reader: true
+    setting :warning_label, default: "KIBA WARNING", reader: true
 
     # @return [Kiba::Extend::Registry::FileRegistry] A customized
     #   [dry-container](https://dry-rb.org/gems/dry-container/main/) for registering and resolving
     #   jobs
     setting :registry,
-      constructor: proc{ Kiba::Extend::Registry::FileRegistry.new },
+      constructor: proc { Kiba::Extend::Registry::FileRegistry.new },
       reader: true
 
     # @return [Symbol] the job definition module method expected to be present if you [define a registry
@@ -155,7 +163,7 @@ module Kiba
 
     # @return [:job, nil, anyValue]
     #
-    #Controls whether pre-job task is run
+    # Controls whether pre-job task is run
     #
     # - :job - runs pre-job task specified above whenever you invoke `thor run:job ...`. All dependency jobs
     #   required for the invoked job will be run. This mode is recommended during development when you want
@@ -190,13 +198,18 @@ module Kiba
 
     setting :job, reader: true do
       setting :show_me, default: Kiba::Extend.job_show_me, reader: true,
-        constructor: proc{ |name, value| Kiba::Extend.warn_unnested(name, value) }
+        constructor: proc { |name, value|
+                       Kiba::Extend.warn_unnested(name, value)
+                     }
       setting :tell_me, default: Kiba::Extend.job_tell_me, reader: true,
-        constructor: proc{ |name, value| Kiba::Extend.warn_unnested(name, value) }
+        constructor: proc { |name, value|
+                       Kiba::Extend.warn_unnested(name, value)
+                     }
       setting :verbosity, default: Kiba::Extend.job_verbosity, reader: true,
-        constructor: proc{ |name, value| Kiba::Extend.warn_unnested(name, value) }
+        constructor: proc { |name, value|
+                       Kiba::Extend.warn_unnested(name, value)
+                     }
     end
-
 
     # strips, collapses multiple spaces, removes terminal commas, strips again
     # removes "NULL"/treats as nilValue
@@ -204,15 +217,15 @@ module Kiba
       begin
         if s.nil?
           nil
-        elsif s == 'NULL'
+        elsif s == "NULL"
           nil
         else
           s.strip
-           .gsub(/  +/, ' ')
-           .sub(/,$/, '')
-           .sub(/^%(LINEBREAK|CRLF)%/, '')
-           .sub(/%(LINEBREAK|CRLF)%$/, '')
-           .strip
+            .gsub(/  +/, " ")
+            .sub(/,$/, "")
+            .sub(/^%(LINEBREAK|CRLF)%/, "")
+            .sub(/%(LINEBREAK|CRLF)%$/, "")
+            .strip
         end
       rescue ArgumentError
         s
@@ -226,10 +239,10 @@ module Kiba
           nil
         else
           s.strip
-            .gsub(/  +/, ' ')
-            .sub(/,$/, '')
-            .sub(/^%(LINEBREAK|CRLF)%/, '')
-            .sub(/%(LINEBREAK|CRLF)%$/, '')
+            .gsub(/  +/, " ")
+            .sub(/,$/, "")
+            .sub(/^%(LINEBREAK|CRLF)%/, "")
+            .sub(/%(LINEBREAK|CRLF)%$/, "")
             .strip
         end
       rescue ArgumentError
@@ -240,7 +253,7 @@ module Kiba
     # replaces any values that are a literal string NULL with a nil value
     CSV::Converters[:nulltonil] = lambda { |s|
       begin
-        if s == 'NULL'
+        if s == "NULL"
           nil
         else
           s
@@ -251,7 +264,6 @@ module Kiba
     }
   end
 end
-
 
 Kiba::Extend.loader
 # So we can call Kiba.job_segment

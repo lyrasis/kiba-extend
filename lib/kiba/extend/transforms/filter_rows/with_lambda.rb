@@ -81,9 +81,9 @@ module Kiba
 
             case action
             when :keep
-              return row if lambda.call(row)
+              row if lambda.call(row)
             when :reject
-              return row unless lambda.call(row)
+              row unless lambda.call(row)
             end
           end
 

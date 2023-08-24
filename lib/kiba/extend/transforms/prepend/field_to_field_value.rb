@@ -4,7 +4,6 @@ module Kiba
   module Extend
     module Transforms
       module Prepend
-
         # Adds the value of `prepended_field` to the beginning of the value(s) of the `target_field`
         #
         # If target field value is blank, it is left blank, even if there is a prepended field value.
@@ -113,7 +112,7 @@ module Kiba
           # Error raised if `FieldToFieldValue` is constructed with `mvdelim` blank and
           #   `multivalue_prepended_field` true
           class MissingDelimiterError < StandardError
-            MSG = 'You must provide an mvdelim string if multivalue_prepended_field is true'
+            MSG = "You must provide an mvdelim string if multivalue_prepended_field is true"
             def initialize(msg = MSG)
               super
             end
@@ -131,8 +130,8 @@ module Kiba
           # @raise [MissingDelimiterError] if constructed with multivalue_prepended_field true and
           #   no mvdelim value
           # rubocop:disable Metrics/ParameterLists
-          def initialize(target_field:, prepended_field:, sep: '', delete_prepended: false, mvdelim: '',
-                         multivalue_prepended_field: false)
+          def initialize(target_field:, prepended_field:, sep: "", delete_prepended: false, mvdelim: "",
+            multivalue_prepended_field: false)
             @field = target_field
             @prepend = prepended_field
             @sep = sep
@@ -152,7 +151,10 @@ module Kiba
 
             values = @mvdelim.blank? ? [field_val] : field_val.split(@mvdelim)
 
-            row[@field] = mv_prepend(row, prepend_val, values) if @multival_prepend
+            if @multival_prepend
+              row[@field] =
+                mv_prepend(row, prepend_val, values)
+            end
             return row if @multival_prepend
 
             row[@field] = sv_prepend(row, prepend_val, values)
@@ -163,13 +165,15 @@ module Kiba
 
           def sv_prepend(_row, prepend_val, field_vals)
             field_vals.map { |val| prepended_val(prepend_val, val) }
-                      .join(@mvdelim)
+              .join(@mvdelim)
           end
 
           def mv_prepend(_row, prepend_val, field_vals)
             prefixes = prepend_val.split(@mvdelim)
-            field_vals.each_with_index.map { |val, i| prepended_val(prefixes[i], val) }
-                      .join(@mvdelim)
+            field_vals.each_with_index.map { |val, i|
+              prepended_val(prefixes[i], val)
+            }
+              .join(@mvdelim)
           end
 
           def prepended_val(prefix, val)

@@ -12,12 +12,12 @@ module Kiba
           @hash = {}
         end
 
-        # @param record [Hash{Symbol => String}] 
+        # @param record [Hash{Symbol => String}]
         def add_record(record)
           key = record.fetch(keycolumn, nil)
           hash.key?(key) ? hash[key] << record : hash[key] = [record]
         end
-        
+
         private
 
         attr_reader :keycolumn
@@ -25,4 +25,3 @@ module Kiba
     end
   end
 end
-

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'bigdecimal'
+require "bigdecimal"
 
 module Kiba
   module Extend
@@ -26,7 +26,7 @@ module Kiba
             return if value.blank?
             return unless value.match?(/[Ee][-+]/)
 
-            row[field] = BigDecimal(value).to_s.sub(/\.0+$/, '')
+            row[field] = BigDecimal(value).to_s.sub(/\.0+$/, "")
             # "%f" % value
           end
         end

@@ -117,11 +117,13 @@ module Kiba
           # @param delim [String]
           # @param treat_as_null [nil, String, Array(String)] values to treat as though they were null in
           #   determining whether to delete the field value or not
-          def initialize(fields: :all, delim: Kiba::Extend.delim, treat_as_null: nil)
+          def initialize(fields: :all, delim: Kiba::Extend.delim,
+            treat_as_null: nil)
             @fields = [fields].flatten
             @delim = delim
             @treat_as_null = treat_as_null
-            @checker = Helpers::DelimOnlyChecker.new(delim: delim, treat_as_null: treat_as_null)
+            @checker = Helpers::DelimOnlyChecker.new(delim: delim,
+              treat_as_null: treat_as_null)
           end
 
           # @param row [Hash{ Symbol => String, nil }]
@@ -141,7 +143,7 @@ module Kiba
           end
 
           def process_fields(row)
-            fields.each{ |field| process_field(field, row) }
+            fields.each { |field| process_field(field, row) }
           end
         end
       end

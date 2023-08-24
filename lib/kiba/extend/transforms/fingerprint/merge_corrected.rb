@@ -4,7 +4,6 @@ module Kiba
   module Extend
     module Transforms
       module Fingerprint
-
         # With a lookup table derived from a job using {FlagChanged}, and a
         #   source table having a fingerprint field which can be used as a
         #   keycolumn for the lookup table, apply corrections from the lookup
@@ -102,7 +101,7 @@ module Kiba
           #   field is added indicating (y/n) whether corrections were merged
           #   into each row. If `nil`, no indicator column is added
           def initialize(keycolumn:, lookup:, todofield:, fieldmap: {},
-                         tag_affected_in: nil)
+            tag_affected_in: nil)
             @keycolumn = keycolumn
             @lookup = lookup
             @todofield = todofield
@@ -130,7 +129,7 @@ module Kiba
             lookup_rows = lookup[row[keycolumn]]
             return {} if lookup_rows.blank?
 
-            lookup_rows.reject{ |lkrow| lkrow[todofield].blank? }
+            lookup_rows.reject { |lkrow| lkrow[todofield].blank? }
           end
 
           def do_correction_steps(row, correction_steps)

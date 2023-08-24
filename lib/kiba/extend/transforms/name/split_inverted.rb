@@ -78,7 +78,9 @@ module Kiba
           #   field for suffix/name additions
           # @param fallback [Symbol] :all_nil will set all targets to nil. Given the name of one of the targets,
           #   will copy the source value into that field
-          def initialize(source:, targets: %i[firstname middlename lastname suffix], fallback: :all_nil)
+          def initialize(source:,
+            targets: %i[firstname middlename lastname
+              suffix], fallback: :all_nil)
             @source = source
             @targets = targets
             @firstname = targets[0]
@@ -87,14 +89,15 @@ module Kiba
             @suffix = targets[3]
             @fallback = fallback
             unless fallback == :all_nil || targets.any?(fallback)
-              raise ArgumentError, 'fallback must equal :all_nil or one of the target field names'
+              raise ArgumentError,
+                "fallback must equal :all_nil or one of the target field names"
             end
           end
 
           # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             create_nil_fields(row)
-            inverted = row.fetch(source, '')
+            inverted = row.fetch(source, "")
             if splittable?(inverted)
               split(inverted, row)
             else
@@ -104,10 +107,11 @@ module Kiba
 
           private
 
-          attr_reader :source, :targets, :firstname, :middlename, :lastname, :suffix, :fallback
+          attr_reader :source, :targets, :firstname, :middlename, :lastname,
+            :suffix, :fallback
 
           def create_nil_fields(row)
-            targets.each{ |field| row[field] = nil }
+            targets.each { |field| row[field] = nil }
           end
 
           def do_not_split(val, row)
@@ -118,7 +122,8 @@ module Kiba
           end
 
           def first_and_middle(val, row)
-            unspaced_initials?(val) ? smooshed_initials(val, row) : space_split(val, row)
+            unspaced_initials?(val) ? smooshed_initials(val,
+              row) : space_split(val, row)
           end
 
           def unspaced_initials?(val)
@@ -126,7 +131,7 @@ module Kiba
               /^([a-z]\.){2,}$/i,
               /^[A-Z]{2,3}$/
             ]
-            patterns.any?{ |pattern| pattern.match?(val) }
+            patterns.any? { |pattern| pattern.match?(val) }
           end
 
           def smooshed_initials(val, row)
@@ -141,24 +146,24 @@ module Kiba
           end
 
           def space_split(val, row)
-            sval = val.split(' ')
+            sval = val.split(" ")
             row[firstname] = sval.shift
-            row[middlename] = sval.join(' ') unless sval.empty?
+            row[middlename] = sval.join(" ") unless sval.empty?
           end
 
           def split(val, row)
-            sval = val.split(',').map(&:strip)
+            sval = val.split(",").map(&:strip)
             row[lastname] = sval.shift
             first_and_middle(sval.shift, row) unless sval.empty?
 
-            row[suffix] = sval.join(', ') unless sval.empty?
+            row[suffix] = sval.join(", ") unless sval.empty?
             row
           end
 
           def splittable?(val)
             return false unless val
 
-            true if val[',']
+            true if val[","]
           end
         end
       end

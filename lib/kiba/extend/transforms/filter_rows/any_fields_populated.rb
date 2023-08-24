@@ -80,9 +80,9 @@ module Kiba
 
             case action
             when :keep
-              return row if any_populated?(row)
+              row if any_populated?(row)
             when :reject
-              return row unless any_populated?(row)
+              row unless any_populated?(row)
             end
           end
 

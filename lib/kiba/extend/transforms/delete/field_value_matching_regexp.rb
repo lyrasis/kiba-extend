@@ -4,7 +4,6 @@ module Kiba
   module Extend
     module Transforms
       module Delete
-
         # Deletes full field value of all given fields that match the given regular expression pattern.
         #   You can control whether the regexp is case sensitive or not
         #
@@ -70,7 +69,8 @@ module Kiba
           # @param casesensitive [Boolean] match mode
           def initialize(fields:, match:, casesensitive: true)
             @fields = [fields].flatten
-            @match = casesensitive ? Regexp.new(match) : Regexp.new(match, Regexp::IGNORECASE)
+            @match = casesensitive ? Regexp.new(match) : Regexp.new(match,
+              Regexp::IGNORECASE)
           end
 
           # @param row [Hash{ Symbol => String, nil }]

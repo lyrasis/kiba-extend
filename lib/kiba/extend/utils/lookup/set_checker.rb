@@ -14,7 +14,7 @@ module Kiba
             case @check_type
             when :equality
               set[:matches].each do |pair|
-                chk = pair.select { |e| e.start_with?('mv') }
+                chk = pair.select { |e| e.start_with?("mv") }
                 if chk.empty?
                   bool << Lookup::PairEquality.new(
                     pair: pair,
@@ -26,7 +26,8 @@ module Kiba
                     check_type: :equality,
                     set: {
                       type: :any,
-                      matches: Lookup::MultivalPairs.new(pair: pair, row: row, mergerow: mergerow, sep: sep).result
+                      matches: Lookup::MultivalPairs.new(pair: pair, row: row,
+                        mergerow: mergerow, sep: sep).result
                     },
                     row: {}
                   )
@@ -62,5 +63,3 @@ module Kiba
     end
   end
 end
-
-  

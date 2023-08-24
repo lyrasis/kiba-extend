@@ -145,7 +145,7 @@ module Kiba
             split_vals = do_val_splits(orig_vals[false])
 
             if split_vals
-              split_vals.each{ |sval| yield other_field_vals.merge(sval) }
+              split_vals.each { |sval| yield other_field_vals.merge(sval) }
             else
               yield row
             end
@@ -161,14 +161,14 @@ module Kiba
           end
 
           def field_vals(row, fields)
-            fields.map{ |field| [field, row[field]] }
+            fields.map { |field| [field, row[field]] }
               .to_h
           end
 
           def get_orig_vals(row)
             field_vals(row, fields)
-              .group_by{ |field, val| val.blank? }
-              .transform_values{ |vals| vals.to_h }
+              .group_by { |field, val| val.blank? }
+              .transform_values { |vals| vals.to_h }
           end
 
           def handle_unpopulated_vals(vals, other_field_vals)
@@ -180,36 +180,36 @@ module Kiba
           def do_val_splits(vals)
             return unless vals
 
-            svals = vals.transform_values{ |val| val.split(delim, -1) }
-            vals.count == 1 ? single_val_split(svals) : multi_val_split(svals)
+            svals = vals.transform_values { |val| val.split(delim, -1) }
+            (vals.count == 1) ? single_val_split(svals) : multi_val_split(svals)
           end
 
           def single_val_split(vals)
             field = vals.keys.first
-            vals[field].map{ |val| {field=>val} }
+            vals[field].map { |val| {field => val} }
           end
 
           def multi_val_split(vals)
-            by_ct = vals.group_by{ |f, v| v.length }
-              .transform_values!{ |v| v.to_h }
+            by_ct = vals.group_by { |f, v| v.length }
+              .transform_values! { |v| v.to_h }
             max = by_ct.keys.max
             basefield = by_ct[max].keys.first
             basevals = by_ct[max][basefield]
             vals.delete(basefield)
 
-            basevals.map{ |val| row_for_val(basefield, val, vals) }
+            basevals.map { |val| row_for_val(basefield, val, vals) }
           end
 
           def row_for_val(basefield, val, vals)
-            {basefield=>val}.merge(next_values(vals))
+            {basefield => val}.merge(next_values(vals))
           end
 
           def next_values(vals)
-            nextval = vals.map{ |field, values| [field, values.shift] }
+            nextval = vals.map { |field, values| [field, values.shift] }
               .to_h
             return nextval unless placeholder
 
-            nextval.transform_values{ |val| val ? val : placeholder }
+            nextval.transform_values { |val| val || placeholder }
           end
         end
       end

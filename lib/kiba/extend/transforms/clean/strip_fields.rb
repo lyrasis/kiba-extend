@@ -66,7 +66,7 @@ module Kiba
           # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             finalize_fields(row)
-            fields.each{ |field| strip_field(field, row) }
+            fields.each { |field| strip_field(field, row) }
 
             row
           end
@@ -85,7 +85,7 @@ module Kiba
           def stripped(val)
             if delim && val[delim]
               val.split(delim)
-                .map{ |value| value.strip }
+                .map { |value| value.strip }
                 .join(delim)
             else
               val.strip

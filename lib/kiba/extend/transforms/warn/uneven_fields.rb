@@ -41,7 +41,8 @@ module Kiba
           def initialize(fields:, delim: Kiba::Extend.delim)
             @fields = [fields].flatten
             @delim = delim
-            @checker = Helpers::FieldEvennessChecker.new(fields: fields, delim: delim)
+            @checker = Helpers::FieldEvennessChecker.new(fields: fields,
+              delim: delim)
           end
 
           # @param row [Hash{ Symbol => String, nil }]
@@ -51,8 +52,10 @@ module Kiba
             chk_result = checker.call(row)
             return row if chk_result == :even
 
-            uneven = chk_result.map{ |field, val| "#{field}: #{val}" }.join('; ')
-            msg = "#{Kiba::Extend.warning_label}: Uneven values for #{fields.join('/')} in #{uneven}"
+            uneven = chk_result.map { |field, val|
+              "#{field}: #{val}"
+            }.join("; ")
+            msg = "#{Kiba::Extend.warning_label}: Uneven values for #{fields.join("/")} in #{uneven}"
             warn(msg)
             row
           end

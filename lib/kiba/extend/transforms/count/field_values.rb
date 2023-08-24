@@ -131,7 +131,8 @@ module Kiba
           # @param placeholder [String, NilValue] string that acts as a placeholder for empty value. If nil,
           #   nothing is used as a placeholder
           # @param count_empty [Boolean] whether empty placeholder values should be counted
-          def initialize(field:, target:, delim: Kiba::Extend.delim, placeholder: nil, count_empty: false)
+          def initialize(field:, target:, delim: Kiba::Extend.delim,
+            placeholder: nil, count_empty: false)
             @field = field
             @target = target
             @delim = delim
@@ -141,7 +142,7 @@ module Kiba
 
           # @param row [Hash{ Symbol => String, nil }]
           def process(row)
-            row[@target] = '0'
+            row[@target] = "0"
             val = row.fetch(@field, nil)
             return row unless val
 
@@ -163,7 +164,7 @@ module Kiba
           def handle_placeholder(vals)
             return vals unless @placeholder
 
-            vals.map{ |val| val.sub(/^#{@placeholder}$/, '') }
+            vals.map { |val| val.sub(/^#{@placeholder}$/, "") }
           end
         end
       end

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'reporter'
+require_relative "reporter"
 
 module Kiba
   module Extend
@@ -77,12 +77,12 @@ module Kiba
 
         def destinations
           @files[:destination].map { |config| file_config(config) }
-            .map{ |src| "destination #{src[:klass]}, **#{src[:args]}" }
+            .map { |src| "destination #{src[:klass]}, **#{src[:args]}" }
             .join("\n")
         end
 
         def file_config(config)
-          { klass: config.klass, args: config.args }
+          {klass: config.klass, args: config.args}
         end
 
         def handle_requirements
@@ -122,7 +122,7 @@ module Kiba
 
         def sources
           @files[:source].map { |config| file_config(config) }
-            .map{ |src| "source #{src[:klass]}, **#{src[:args]}" }
+            .map { |src| "source #{src[:klass]}, **#{src[:args]}" }
             .join("\n")
         end
 

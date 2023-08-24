@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'marc'
+require "marc"
 
 module Kiba
   module Extend
@@ -10,17 +10,17 @@ module Kiba
         # @param value [String]
         # @return [String]
         def call(value)
-          value.sub(/,$/, '')
+          value.sub(/,$/, "")
             .sub(/([^ .].)\.$/, '\1')
             .sub(/^\((.*)\)$/, '\1')
-            .sub(/ ?\((work|expression|manifestation|item)\)/, '')
-            .sub(/^comp$/i, 'compiler')
-            .sub(/^comp\. and ed$/i, 'compiler|editor')
-            .sub(/^ed$/, 'editor')
-            .sub(/^engr$/, 'engraver')
-            .sub(/^illus$/, 'illustrator')
-            .sub(/^pbl$/, 'publisher')
-            .sub(/^tr$/, 'translator')
+            .sub(/ ?\((work|expression|manifestation|item)\)/, "")
+            .sub(/^comp$/i, "compiler")
+            .sub(/^comp\. and ed$/i, "compiler|editor")
+            .sub(/^ed$/, "editor")
+            .sub(/^engr$/, "engraver")
+            .sub(/^illus$/, "illustrator")
+            .sub(/^pbl$/, "publisher")
+            .sub(/^tr$/, "translator")
             .sub(/^(engraver|architect|illustrator|publisher|stereotyper)s$/, '\1')
         end
       end

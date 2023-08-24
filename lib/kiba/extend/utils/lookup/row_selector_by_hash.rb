@@ -21,7 +21,7 @@ module Kiba
           def initialize(conditions: {}, sep: nil)
             @conditions = conditions
             @sep = sep
-            
+
             @toexclude = conditions[:exclude]
             @toinclude = conditions[:include]
           end
@@ -50,15 +50,15 @@ module Kiba
           def do_inclusions(origrow, rows)
             return rows unless toinclude
 
-            rows.select{ |row| include?(origrow, row) }
+            rows.select { |row| include?(origrow, row) }
           end
-          
+
           def get_first(rows)
-            return rows unless rows.length > 0 && toinclude && toinclude[:position] == 'first'
+            return rows unless rows.length > 0 && toinclude && toinclude[:position] == "first"
 
             [rows.first]
           end
-          
+
           def exclude?(row, mrow)
             bool = do_checks(toexclude, row, mrow)
             bool.flatten.any? ? true : false
@@ -75,25 +75,25 @@ module Kiba
               case chktype
               when :field_empty
                 bool << Lookup::CriteriaChecker.new(check_type: :emptiness, config: value, row: row,
-                                                    mergerow: mrow).result
+                  mergerow: mrow).result
               when :field_equal
                 bool << Lookup::CriteriaChecker.new(check_type: :equality, config: value, row: row,
-                                                    mergerow: mrow).result
+                  mergerow: mrow).result
               when :multival_field_equal
                 bool << Lookup::CriteriaChecker.new(check_type: :mvequality,
-                                                    config: value,
-                                                    row: row,
-                                                    mergerow: mrow,
-                                                    sep: sep).result
+                  config: value,
+                  row: row,
+                  mergerow: mrow,
+                  sep: sep).result
               when :field_include
                 bool << Lookup::CriteriaChecker.new(check_type: :inclusion, config: value, row: row,
-                                                    mergerow: mrow).result
+                  mergerow: mrow).result
               when :multival_field_include
                 bool << Lookup::CriteriaChecker.new(check_type: :mvinclusion,
-                                                    config: value,
-                                                    row: row,
-                                                    mergerow: mrow,
-                                                    sep: sep).result
+                  config: value,
+                  row: row,
+                  mergerow: mrow,
+                  sep: sep).result
               when :position
                 # do nothing
               end
@@ -105,5 +105,3 @@ module Kiba
     end
   end
 end
-
-  

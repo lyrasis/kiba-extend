@@ -1,19 +1,19 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-load 'lib/tasks/reg.thor'
+require "spec_helper"
+load "lib/tasks/reg.thor"
 
 RSpec.describe Reg do
   before(:context) do
     Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry
     prepare_registry
   end
-  after(:context){ Kiba::Extend.reset_config }
+  after(:context) { Kiba::Extend.reset_config }
 
-  context 'with tags' do
-    it 'lists tags' do
+  context "with tags" do
+    it "lists tags" do
       expected = "report\ntest\n"
-      expect{ subject.tags }.to output(expected).to_stdout
+      expect { subject.tags }.to output(expected).to_stdout
     end
   end
 end

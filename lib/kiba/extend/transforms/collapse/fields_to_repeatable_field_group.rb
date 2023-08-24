@@ -275,7 +275,11 @@ module Kiba
             @enforce_evenness = enforce_evenness
             @warn_if_uneven = warn_if_uneven
 
-            @srcfieldgroups = sources.map{ |source| targets.map{ |target| field_name(source, target) } }
+            @srcfieldgroups = sources.map { |source|
+              targets.map { |target|
+                field_name(source, target)
+              }
+            }
             @srcemptyreplacers = srcfieldgroups.map do |grp|
               Kiba::Extend::Transforms::Replace::EmptyFieldValues.new(
                 fields: grp,
@@ -293,32 +297,35 @@ module Kiba
             end
             @to_combine = targets.map do |target|
               [target,
-               Kiba::Extend::Transforms::Helpers::FieldValueGetter.new(
-                 fields: sources.map{ |src| field_name(src, target) },
-                 delim: delim,
-                 discard: []
-               )
-              ]
+                Kiba::Extend::Transforms::Helpers::FieldValueGetter.new(
+                  fields: sources.map { |src| field_name(src, target) },
+                  delim: delim,
+                  discard: []
+                )]
             end.to_h
             @field_group_cleaner = Delete::EmptyFieldGroups.new(
               groups: [targets],
               delim: delim,
               treat_as_null: empty_field_group_treat_as_null
-              )
-            @delim_only_cleaner = Delete::DelimiterOnlyFieldValues.new(fields: targets, delim: delim, treat_as_null: null_placeholder)
+            )
+            @delim_only_cleaner = Delete::DelimiterOnlyFieldValues.new(
+              fields: targets, delim: delim, treat_as_null: null_placeholder
+            )
             @empty_replacer = Kiba::Extend::Transforms::Replace::EmptyFieldValues.new(
               fields: targets,
               delim: delim,
               value: null_placeholder
-              )
+            )
           end
 
           def process(row)
-            srcemptyreplacers.each{ |replacer| replacer.process(row) }
+            srcemptyreplacers.each { |replacer| replacer.process(row) }
             if enforce_evenness
-              srceveners.each{ |e| e.process(row) }
+              srceveners.each { |e| e.process(row) }
             end
-            to_combine.each{ |target, getter| row[target] = getter.call(row).values.join(delim) }
+            to_combine.each { |target, getter|
+              row[target] = getter.call(row).values.join(delim)
+            }
             delete_sources(row)
             empty_replacer.process(row)
             field_group_cleaner.process(row) if empty_groups == :delete
@@ -335,7 +342,11 @@ module Kiba
             :to_combine, :empty_replacer
 
           def delete_sources(row)
-            targets.each{ |target| sources.each{ |src| row.delete("#{src}_#{target}".to_sym) } }
+            targets.each { |target|
+              sources.each { |src|
+                row.delete("#{src}_#{target}".to_sym)
+              }
+            }
           end
 
           def empty_field_group_treat_as_null

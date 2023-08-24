@@ -19,13 +19,15 @@ module Kiba
 
             vals = value_getter.call(row)
             max = max_value_ct(vals)
-            checked = vals.map{ |field, val| [field, val.split(delim, -1).length == max ? :even : :uneven] }
+            checked = vals.map { |field, val|
+              [field, (val.split(delim, -1).length == max) ? :even : :uneven]
+            }
               .to_h
             return :even if checked.values.all?(:even)
 
-            vals.select{ |field, value| checked[field] == :uneven }
+            vals.select { |field, value| checked[field] == :uneven }
           end
-          
+
           private
 
           attr_reader :fields, :delim, :value_getter
@@ -33,13 +35,15 @@ module Kiba
           def max_value_ct(vals)
             vals.dup
               .values
-              .map{ |val| val.split(delim, -1) }
+              .map { |val| val.split(delim, -1) }
               .map(&:length)
               .max
           end
-          
+
           def is_even?(source)
-            chk = valhash.map{ |_target, sources| sources[source].compact.length }
+            chk = valhash.map { |_target, sources|
+              sources[source].compact.length
+            }
               .uniq
             return true if chk.length == 1
 

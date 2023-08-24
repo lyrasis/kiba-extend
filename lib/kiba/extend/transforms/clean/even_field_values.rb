@@ -142,8 +142,10 @@ module Kiba
             @delim = delim
             @warn = warn
 
-            @value_getter = Helpers::FieldValueGetter.new(fields: fields, treat_as_null: treat_as_null, delim: delim)
-            @checker = Helpers::FieldEvennessChecker.new(fields: fields, delim: delim)
+            @value_getter = Helpers::FieldValueGetter.new(fields: fields,
+              treat_as_null: treat_as_null, delim: delim)
+            @checker = Helpers::FieldEvennessChecker.new(fields: fields,
+              delim: delim)
             @warner = Warn::UnevenFields.new(fields: fields, delim: delim)
           end
 
@@ -163,12 +165,13 @@ module Kiba
 
           private
 
-          attr_reader :fields, :treat_as_null, :evener, :delim, :warn, :value_getter, :checker, :warner
+          attr_reader :fields, :treat_as_null, :evener, :delim, :warn,
+            :value_getter, :checker, :warner
 
           def find_max_vals(row)
             value_getter.call(row)
               .values
-              .map{ |val| val.split(delim, -1) }
+              .map { |val| val.split(delim, -1) }
               .map(&:length)
               .max
           end
@@ -177,12 +180,12 @@ module Kiba
             vals = val.split(delim, -1)
             diff = max - vals.length
             pad = even_val(vals)
-            diff.times{ vals << pad }
+            diff.times { vals << pad }
             row[field] = vals.join(delim)
           end
 
           def pad_uneven_values(row, chk, max)
-            chk.each{ |field, val| pad_uneven_value(row, field, val, max) }
+            chk.each { |field, val| pad_uneven_value(row, field, val, max) }
           end
 
           def even_val(val_ary)

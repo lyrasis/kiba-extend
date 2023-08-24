@@ -7,7 +7,7 @@ module Kiba
         # @deprecated Use {Compare::FieldValues} instead.
         class CompareFieldsFlag
           def initialize(...)
-            warn('DEPRECATED TRANSFORM. Use Compare::FieldValues instead')
+            warn("DEPRECATED TRANSFORM. Use Compare::FieldValues instead")
             @xform = Compare::FieldValues.new(...)
           end
 

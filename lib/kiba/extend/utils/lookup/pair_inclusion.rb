@@ -9,20 +9,20 @@ module Kiba
 
           def initialize(pair:, row:, mergerow: {})
             comparison_type = :include
-            pair = pair.map { |e| e.split('::') }
+            pair = pair.map { |e| e.split("::") }
             # convert row or mergerow fieldnames to symbols
-            pair = pair.each { |arr| arr[1] = arr[1].to_sym if arr[0]['row'] }
+            pair = pair.each { |arr| arr[1] = arr[1].to_sym if arr[0]["row"] }
             # fetch or convert values for comparison
             pair = pair.map do |arr|
               case arr[0]
-              when 'row'
+              when "row"
                 row.fetch(arr[1], nil)
-              when 'mergerow'
+              when "mergerow"
                 mergerow.fetch(arr[1], nil)
-              when 'revalue'
+              when "revalue"
                 comparison_type = :match
                 Regexp.new(arr[1])
-              when 'value'
+              when "value"
                 arr[1]
               end
             end

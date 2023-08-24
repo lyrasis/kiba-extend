@@ -4,7 +4,6 @@ module Kiba
   module Extend
     module Transforms
       module Delete
-
         # Deletes field(s) passed in `fields` parameter.
         #
         # # Examples

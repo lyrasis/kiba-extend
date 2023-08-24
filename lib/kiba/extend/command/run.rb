@@ -5,6 +5,7 @@ module Kiba
     module Command
       module Run
         extend Runnable
+
         module_function
 
         # @param key [Symbol, String] registry key for job, i.e. prep__loan_purposes

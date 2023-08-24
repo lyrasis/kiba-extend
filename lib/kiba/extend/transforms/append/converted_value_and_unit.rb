@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'measured'
+require "measured"
 
 module Kiba
   module Extend
@@ -212,26 +212,26 @@ module Kiba
           #
           # Any custom conversions given are merged into this, so you can override the defaults
           Conversions = {
-            'inches' => 'centimeters',
-            'centimeters' => 'inches',
-            'feet' => 'meters',
-            'meters' => 'feet',
-            'kilograms' => 'pounds',
-            'pounds' => 'kilograms',
-            'ounces' => 'grams',
-            'grams' => 'ounces'
+            "inches" => "centimeters",
+            "centimeters" => "inches",
+            "feet" => "meters",
+            "meters" => "feet",
+            "kilograms" => "pounds",
+            "pounds" => "kilograms",
+            "ounces" => "grams",
+            "grams" => "ounces"
           }
 
           # Used internally. You cannot override these
           UnitTypes = {
-            'inches' => Measured::Length,
-            'centimeters' => Measured::Length,
-            'feet' => Measured::Length,
-            'meters' => Measured::Length,
-            'kilograms' => Measured::Weight,
-            'pounds' => Measured::Weight,
-            'ounces' => Measured::Weight,
-            'grams' => Measured::Weight
+            "inches" => Measured::Length,
+            "centimeters" => Measured::Length,
+            "feet" => Measured::Length,
+            "meters" => Measured::Length,
+            "kilograms" => Measured::Weight,
+            "pounds" => Measured::Weight,
+            "ounces" => Measured::Weight,
+            "grams" => Measured::Weight
           }
 
           # Convert the value of Measured::Unit.name to unit name expected by your application
@@ -239,14 +239,14 @@ module Kiba
           # By default, these are set up to output unit names as found in CollectionSpace's measurementunits option list.
           #   Override these by passing in `unit_names` parameter
           UnitNames = {
-            'cm' => 'centimeters',
-            'ft' => 'feet',
-            'g' => 'grams',
-            'in' => 'inches',
-            'kg' => 'kilograms',
-            'lb' => 'pounds',
-            'm' => 'meters',
-            'oz' => 'ounces'
+            "cm" => "centimeters",
+            "ft" => "feet",
+            "g" => "grams",
+            "in" => "inches",
+            "kg" => "kilograms",
+            "lb" => "pounds",
+            "m" => "meters",
+            "oz" => "ounces"
           }
 
           # @param value [Symbol] name of field containing measurement value
@@ -259,7 +259,7 @@ module Kiba
           # @note See the examples for how to set the `conversions`, `conversion_amounts`, and `unit_names`
           #   parameters
           def initialize(value:, unit:, places:, delim: Kiba::Extend.delim, conversions: {},
-                         conversion_amounts: {}, unit_names: {})
+            conversion_amounts: {}, unit_names: {})
             @value = value
             @unit = unit
             @places = places
@@ -288,7 +288,7 @@ module Kiba
             return row if measured == :failure
 
             converted = measured.convert_to(@conversions[unit])
-            conv_value = converted.value.to_f.round(@places).to_s.delete_suffix('.0')
+            conv_value = converted.value.to_f.round(@places).to_s.delete_suffix(".0")
             row[@value] = [value, conv_value].join(@delim)
             row[@unit] = [unit, unit_name(converted.unit)].join(@delim)
             row
@@ -306,7 +306,7 @@ module Kiba
             conversion = @conversions[name]
             return false unless conversion
 
-            @conversions = @conversions.merge({unit=>conversion})
+            @conversions = @conversions.merge({unit => conversion})
             true
           end
 
@@ -314,12 +314,12 @@ module Kiba
             system = measured_unit_system(unit)
             return false unless system
 
-            @types = @types.merge({unit=>system})
+            @types = @types.merge({unit => system})
             true
           end
 
           def clean(unit)
-            unit.delete_suffix('.').downcase
+            unit.delete_suffix(".").downcase
           end
 
           def configured_name(system, unit)
@@ -332,8 +332,8 @@ module Kiba
           end
 
           def configured_system_unit_names(system)
-            types = @types.select{ |_unit, type| type == system }.keys
-            @conversions.keys.select{ |unit| types.any?(unit) }
+            types = @types.select { |_unit, type| type == system }.keys
+            @conversions.keys.select { |unit| types.any?(unit) }
           end
 
           def convertable?(unit)
@@ -342,7 +342,9 @@ module Kiba
           end
 
           def customize_types(conversion_amounts)
-            conversion_amounts.keys.each{ |unit| @types[unit.to_s] = @converter }
+            conversion_amounts.keys.each { |unit|
+              @types[unit.to_s] = @converter
+            }
           end
 
           def known_conversion?(unit)
@@ -369,7 +371,8 @@ module Kiba
 
           def measured_unit_system(unit)
             unit_system = nil
-            [Measured::Length, Measured::Weight, Measured::Volume].each do |system|
+            [Measured::Length, Measured::Weight,
+              Measured::Volume].each do |system|
               return system if system.unit_names_with_aliases.any?(clean(unit))
             end
             unit_system
@@ -380,23 +383,24 @@ module Kiba
           end
 
           def not_convertable(unit, row)
-            puts %Q[#{Kiba::Extend.warning_label}: "#{unit}" cannot be converted to "#{@conversions[unit]}". Check your conversions parameter or configure a custom conversion_amounts parameter]
+            puts %(#{Kiba::Extend.warning_label}: "#{unit}" cannot be converted to "#{@conversions[unit]}". Check your conversions parameter or configure a custom conversion_amounts parameter)
             row
           end
 
           def set_up_custom_conversions(conversion_amounts)
             units_to_convert = conversion_amounts.keys
-            target_units = conversion_amounts.values.map{ |arr| arr[1] }
-            units_to_convert.each{ |unit| @types[unit.to_s] = @converter }
+            target_units = conversion_amounts.values.map { |arr| arr[1] }
+            units_to_convert.each { |unit| @types[unit.to_s] = @converter }
 
             builder = Measured::UnitSystemBuilder.new
 
             base_units = target_units - units_to_convert
-            base_units.each{ |unit| builder.unit(unit.to_sym) }
-            units_to_convert.each{ |unit| builder.unit(unit.to_sym, value: conversion_amounts[unit]) }
+            base_units.each { |unit| builder.unit(unit.to_sym) }
+            units_to_convert.each { |unit|
+              builder.unit(unit.to_sym, value: conversion_amounts[unit])
+            }
 
-
-            @converter =  Class.new(Measured::Measurable) do
+            @converter = Class.new(Measured::Measurable) do
               class << self
                 attr_reader :unit_system
               end
@@ -406,7 +410,7 @@ module Kiba
           end
 
           def type_conversions(conversions)
-            conversions.keys.each{ |ctype| known_unit_type?(ctype) }
+            conversions.keys.each { |ctype| known_unit_type?(ctype) }
           end
 
           def unit_name(unit)
@@ -422,15 +426,14 @@ module Kiba
           end
 
           def unknown_conversion(unit, row)
-            puts %Q[#{Kiba::Extend.warning_label}: Unknown conversion to perform for "#{unit}" in "#{@unit}" field. Configure conversions parameter]
+            puts %(#{Kiba::Extend.warning_label}: Unknown conversion to perform for "#{unit}" in "#{@unit}" field. Configure conversions parameter)
             row
           end
 
           def unknown_unit_type(unit, row)
-            puts %Q[#{Kiba::Extend.warning_label}: Unknown unit "#{unit}" in "#{@unit}" field. You may need to configure a custom unit. See example 3 in transform documentation]
+            puts %(#{Kiba::Extend.warning_label}: Unknown unit "#{unit}" in "#{@unit}" field. You may need to configure a custom unit. See example 3 in transform documentation)
             row
           end
-
         end
       end
     end

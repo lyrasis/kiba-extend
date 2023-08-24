@@ -76,7 +76,8 @@ module Kiba
           # @param sourcesep [String] Delimiter used to split source data into multiple values
           # @param targetsep [String] Delimiter used to join multiple values in target fields
           # @param delete_sources [Boolean] Whether to delete source fields after mapping them to target fields
-          def initialize(sourcefieldmap:, datafield:, typefield:, targetsep:, sourcesep: nil, delete_sources: true)
+          def initialize(sourcefieldmap:, datafield:, typefield:, targetsep:,
+            sourcesep: nil, delete_sources: true)
             @map = sourcefieldmap
             @df = datafield
             @tf = typefield

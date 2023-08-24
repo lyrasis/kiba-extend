@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'kiba/extend/transforms/helpers'
+require "kiba/extend/transforms/helpers"
 
 module Kiba
   module Extend
@@ -126,7 +126,8 @@ module Kiba
             @usenull = usenull
             @direction = direction
             nv = usenull ? Kiba::Extend.nullvalue : nil
-            @value_getter = Helpers::FieldValueGetter.new(fields: fields, delim: delim, treat_as_null: nv)
+            @value_getter = Helpers::FieldValueGetter.new(fields: fields,
+              delim: delim, treat_as_null: nv)
           end
 
           # @param row [Hash{ Symbol => String, nil }]
@@ -145,9 +146,11 @@ module Kiba
 
           def process_for_sort(val)
             if usenull
-              val.gsub(Kiba::Extend.nullvalue, 'zzzzzzzzzzzzzz').downcase.gsub(/[^[:alnum:][:space:]]/, '')
+              val.gsub(Kiba::Extend.nullvalue, "zzzzzzzzzzzzzz").downcase.gsub(
+                /[^[:alnum:][:space:]]/, ""
+              )
             else
-              val.downcase.gsub(/[^[:alnum:][:space:]]/, '')
+              val.downcase.gsub(/[^[:alnum:][:space:]]/, "")
             end
           end
 
@@ -217,10 +220,10 @@ module Kiba
           private
 
           def process_group(row, group)
-            thisgroup = group.map { |field| row.fetch(field, '') }
-              .map{ |val| @use_nullvalue ? add_null_values(val) : val  }
-              .map{ |val| val.nil? ? [] : " #{val} ".split(@sep) }
-              .map{ |arr| arr.map(&:strip) }
+            thisgroup = group.map { |field| row.fetch(field, "") }
+              .map { |val| @use_nullvalue ? add_null_values(val) : val }
+              .map { |val| val.nil? ? [] : " #{val} ".split(@sep) }
+              .map { |arr| arr.map(&:strip) }
 
             cts = thisgroup.map(&:size).uniq.reject(&:zero?)
 
@@ -231,17 +234,21 @@ module Kiba
             elsif cts.size.zero?
               # do nothing - all fields already blank
             else
-              thisgroup.first.each_with_index { |_element, i| to_delete << i if all_empty?(thisgroup, i) }
-              to_delete.sort.reverse.each do |i|
+              thisgroup.first.each_with_index { |_element, i|
+                to_delete << i if all_empty?(thisgroup, i)
+              }
+              to_delete.sort.reverse_each do |i|
                 thisgroup.each { |arr| arr.delete_at(i) }
               end
-              thisgroup.each_with_index { |arr, i| row[group[i]] = arr.empty? ? nil : arr.join(@sep) }
+              thisgroup.each_with_index { |arr, i|
+                row[group[i]] = arr.empty? ? nil : arr.join(@sep)
+              }
             end
           end
 
           def empty_val(str)
             return true if str.blank?
-            return true if str == '%NULLVALUE%' && @use_nullvalue
+            return true if str == "%NULLVALUE%" && @use_nullvalue
 
             false
           end
@@ -251,8 +258,7 @@ module Kiba
 
             padfront = str.start_with?(@sep) ? "%NULLVALUE%#{str}" : str
             padend = padfront.end_with?(@sep) ? "#{padfront}%NULLVALUE%" : padfront
-            padded = padend.gsub("#{@sep}#{@sep}", "#{@sep}%NULLVALUE%#{@sep}")
-            padded
+            padend.gsub("#{@sep}#{@sep}", "#{@sep}%NULLVALUE%#{@sep}")
           end
 
           def all_empty?(group, index)

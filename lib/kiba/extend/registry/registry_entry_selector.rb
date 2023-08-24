@@ -36,9 +36,8 @@ module Kiba
         # @return [Array<FileRegistryEntry>]
         def tagged_any(*args)
           tags = args.flatten.map(&:to_sym)
-          results = tags.inject([]) do |arr, arg|
+          results = tags.each_with_object([]) do |arg, arr|
             arr << tagged(arg)
-            arr
           end
           results.flatten.uniq
         end
