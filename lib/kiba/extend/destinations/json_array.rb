@@ -42,7 +42,7 @@ module Kiba
         # @param filename [String] path for writing JSON file
         def initialize(filename:)
           @json = []
-          @file = open(filename, "w")
+          @file = File.open(filename, "w")
         end
 
         # @private
