@@ -75,10 +75,6 @@ module Kiba
           puts ""
         end
 
-        def start_label
-          "->Starting dependency job"
-        end
-
         def desc_and_tags
           parts = [job_data.desc, tags].compact
           return if parts.empty?
@@ -105,7 +101,7 @@ module Kiba
         end
 
         def start_label
-          "Starting job"
+          @dependency ? "->Starting dependency job" : "Starting job"
         end
 
         def start_and_def

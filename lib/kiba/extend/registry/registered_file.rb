@@ -18,7 +18,7 @@ module Kiba
         # @!attribute [r] key
         #   @return [Symbol] The file's key in {FileRegistry} hash
         attr_reader :key, :data, :path, :dest_class, :dest_opt,
-          :dest_special_opts, :src_class, :src_opt, :supplied, :lookup_on,
+          :dest_special_opts, :src_opt, :supplied, :lookup_on,
           :desc
 
         # @param key [Symbol] the {Kiba::Extend::FileRegistry} lookup key
