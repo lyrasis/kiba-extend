@@ -266,7 +266,7 @@ module Kiba
               .map { |val| empty_val(val) ? nil : val }
               .uniq
               .compact
-            thesevals.empty? ? true : false
+            thesevals.empty?
           end
         end
       end

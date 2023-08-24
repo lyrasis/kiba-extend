@@ -126,7 +126,7 @@ module Kiba
             parts = value.split(", ")
             return false if parts.length == 1
 
-            nonsurname = parts[1..-1]
+            nonsurname = parts[1..]
               .join(", ")
             return true if start_with_title?(nonsurname)
             return true if is_initials?(nonsurname)

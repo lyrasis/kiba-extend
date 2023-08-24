@@ -119,7 +119,6 @@ module Kiba
           attr_reader :sortfield, :sortdir, :sortas, :blanks
 
           def add_blanks(notblank, blank)
-            sorted = notblank
             return [blank, notblank].compact.flatten if blanks == :first
 
             [notblank, blank].compact.flatten

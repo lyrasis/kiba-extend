@@ -141,7 +141,7 @@ module Kiba
               row[middlename] = sval[2]
             else
               row[firstname] = sval[0][0]
-              row[middlename] = sval[0][1..-1]
+              row[middlename] = sval[0][1..]
             end
           end
 

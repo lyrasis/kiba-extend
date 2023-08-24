@@ -30,7 +30,7 @@ module Kiba
 
             unless pair.include?(nil) && pair.include?("")
               # replace nil value with empty string for comparison
-              pair = pair.map { |e| e = e.nil? ? "" : e }
+              pair = pair.map { |e| e.nil? ? "" : e }
             end
 
             case comparison_type

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Kiba::Extend::Transforms::Helpers::DelimOnlyChecker do
   subject(:checker) { described_class.new(**params) }
 
@@ -60,7 +62,7 @@ RSpec.describe Kiba::Extend::Transforms::Helpers::DelimOnlyChecker do
           "|" => true,
           "#{nv}|#{nv}" => true,
           " #{nv} |#{nv}" => true,
-          "#{nv}" => true,
+          nv.to_s => true,
           "#{nv}|blah" => false,
           "" => true,
           nil => true,
@@ -87,7 +89,7 @@ RSpec.describe Kiba::Extend::Transforms::Helpers::DelimOnlyChecker do
           "NULL|#{nv}" => true,
           " #{nv} |#{nv}" => true,
           " #{nv} |NULL" => true,
-          "#{nv}" => true,
+          nv.to_s => true,
           "NULL" => true,
           "#{nv}|blah" => false,
           "" => true,

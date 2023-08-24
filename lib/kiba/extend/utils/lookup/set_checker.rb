@@ -53,9 +53,9 @@ module Kiba
 
             case @set_type
             when :any
-              @result = bool.any? ? true : false
+              @result = bool.any?
             when :all
-              @result = bool.any?(false) ? false : true
+              @result = !bool.any?(false)
             end
           end
         end

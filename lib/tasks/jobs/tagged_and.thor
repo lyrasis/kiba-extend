@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Jobs < Runnable
   desc "tagged_and",
     "List entries tagged with given tags, ANDed together, and optionally run them\t"

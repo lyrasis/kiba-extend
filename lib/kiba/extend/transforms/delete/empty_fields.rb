@@ -115,9 +115,9 @@ module Kiba
           #   `Kiba::Extend.delimiter`**
           def initialize(usenull: false, consider_blank: nil)
             @usenull = usenull
-            @consider_blank = consider_blank ? consider_blank.transform_values { |val|
-                                                 val.split(Kiba::Extend.delim)
-                                               } : nil
+            @consider_blank = consider_blank&.transform_values { |val|
+              val.split(Kiba::Extend.delim)
+            }
             @pop_fields = {}
             @rows = []
           end

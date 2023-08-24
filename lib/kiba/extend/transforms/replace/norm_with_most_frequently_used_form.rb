@@ -99,7 +99,7 @@ module Kiba
           def initialize(normfield:, nonnormfield:, target: nil)
             @normfield = normfield
             @nonnormfield = nonnormfield
-            @target = target ||= normfield
+            @target = target || normfield
             @data = {}
             @rows = []
             @lookup = {}

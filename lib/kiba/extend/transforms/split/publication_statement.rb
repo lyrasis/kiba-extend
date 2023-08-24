@@ -200,7 +200,7 @@ module Kiba
 
           def manufacture?(scanner)
             scanner.scan_until(/\(.*\)/)
-            scanner.eos? ? true : false
+            scanner.eos?
           end
 
           def man_handler(row, scanner:)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative "runnable"
 
 # Tasks that list jobs and optionally run them

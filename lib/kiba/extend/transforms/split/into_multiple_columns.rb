@@ -103,7 +103,7 @@ module Kiba
             @max = max_segments
             @collapser = method("process_#{collapse_on}_collapse")
             @warn = !warnfield.blank?
-            @warnfield = warnfield ||= :warning
+            @warnfield = warnfield || :warning
             @warnvalue = "max_segments less than total number of split segments"
           end
           # rubocop:enable Metrics/ParameterLists

@@ -171,7 +171,7 @@ module Kiba
             @delete = delete
             @compare = if_equal_to
             @multival = multival
-            @delim = delim ||= Kiba::Extend
+            @delim = delim || Kiba::Extend
             @group = grouped_fields
             @casesensitive = casesensitive
           end

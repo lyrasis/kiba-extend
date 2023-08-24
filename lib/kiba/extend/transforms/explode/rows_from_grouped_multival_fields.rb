@@ -130,7 +130,7 @@ module Kiba
           #   number of values in grouped fields are not equal
           def initialize(fields:, delim: nil, placeholder: nil)
             @fields = [fields].flatten
-            @delim = delim ||= Kiba::Extend.delim
+            @delim = delim || Kiba::Extend.delim
             @placeholder = placeholder
             @other_fields = nil
           end

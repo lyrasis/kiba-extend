@@ -131,7 +131,7 @@ module Kiba
           end
 
           def delete_nonfiling(val, nonfiling)
-            filing = val[(nonfiling.to_i)..-1]
+            filing = val[(nonfiling.to_i)..]
             upcase_first_filing_char ? upcase(filing) : filing
           end
 
@@ -139,7 +139,7 @@ module Kiba
             words = val.split(" ")
             firstword = words.shift
             remaining = words.join(" ")
-            letters = firstword.split("")
+            letters = firstword.chars
             letters.first.upcase!
             [letters.join, remaining].join(" ")
           end

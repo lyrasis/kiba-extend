@@ -40,7 +40,7 @@ RSpec.describe Kiba::Extend::Transforms::Marc::FieldLinkable do
 
       it "converts 880 tags to linked field tags" do
         expect(result.select { |fld| fld.tag == "880" }).to be_empty
-        expect(result.select { |fld| fld.tag == "100" }.length).to eq(2)
+        expect(result.count { |fld| fld.tag == "100" }).to eq(2)
       end
     end
 

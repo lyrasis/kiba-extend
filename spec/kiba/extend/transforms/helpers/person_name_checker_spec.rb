@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Kiba::Extend::Transforms::Helpers::PersonNameChecker do
   subject(:checker) { described_class.new(**params) }
 

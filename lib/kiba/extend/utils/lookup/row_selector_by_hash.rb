@@ -61,12 +61,12 @@ module Kiba
 
           def exclude?(row, mrow)
             bool = do_checks(toexclude, row, mrow)
-            bool.flatten.any? ? true : false
+            bool.flatten.any?
           end
 
           def include?(row, mrow)
             bool = do_checks(toinclude, row, mrow)
-            bool.include?(false) ? false : true
+            !bool.include?(false)
           end
 
           def do_checks(config, row, mrow)
