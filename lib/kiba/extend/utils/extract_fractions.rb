@@ -33,7 +33,9 @@ module Kiba
           scan(scanner, result)
           result.each do |fraction|
             unless fraction.convertible?
+              # rubocop:todo Layout/LineLength
               warn("#{self.class.name}: Unconvertible fraction: #{value[fraction.position]}")
+              # rubocop:enable Layout/LineLength
             end
           end
           result.sort.reverse
@@ -57,7 +59,9 @@ module Kiba
           fmatch = scanner.match?(fpattern)
           if whole_fraction_sep.any?(sep) && fmatch
             result << fraction.new(whole: whole_num,
+              # rubocop:todo Layout/LineLength
               fraction: scanner.scan(fpattern), position: startpos..scanner.pos - 1)
+            # rubocop:enable Layout/LineLength
           end
         end
 

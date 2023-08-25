@@ -62,7 +62,9 @@ RSpec.describe Kiba::Extend::Utils::Lookup::RowSorter do
         msg = "Cannot sort on missing field: `foo`"
         expect {
           result
+          # rubocop:todo Layout/LineLength
         }.to raise_error(Kiba::Extend::Utils::Lookup::RowSorter::MissingSortFieldError).with_message(msg)
+        # rubocop:enable Layout/LineLength
       end
     end
   end

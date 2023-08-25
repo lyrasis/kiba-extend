@@ -7,14 +7,24 @@ module Kiba
       module Take
         ::Take = Kiba::Extend::Transforms::Take
 
+        # rubocop:todo Layout/LineLength
         # Take the first value from given fields and put then in the given target fields.
+        # rubocop:enable Layout/LineLength
         #
+        # rubocop:todo Layout/LineLength
         # If no target fields are given, values in the original fields will be replaced with first values.
+        # rubocop:enable Layout/LineLength
         #
+        # rubocop:todo Layout/LineLength
         # If `nil` or `` are passed in as targets, the original field(s) corresponding to those targets
+        # rubocop:enable Layout/LineLength
+        # rubocop:todo Layout/LineLength
         #   will be replaced by their first values, while other targets will be created as new fields.
+        # rubocop:enable Layout/LineLength
         #
+        # rubocop:todo Layout/LineLength
         # The "first value" of a nil field is nil. The "first value" of an empty string field is an
+        # rubocop:enable Layout/LineLength
         #   empty string.
         #
         # # Examples

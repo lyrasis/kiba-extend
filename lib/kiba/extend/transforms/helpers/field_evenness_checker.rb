@@ -6,7 +6,9 @@ module Kiba
       module Helpers
         # @since 2.9.0
         #
+        # rubocop:todo Layout/LineLength
         # Given row and array of field names, checks whether fields have the same number of values
+        # rubocop:enable Layout/LineLength
         class FieldEvennessChecker
           def initialize(fields:, delim: Kiba::Extend.delim)
             @fields = [fields].flatten

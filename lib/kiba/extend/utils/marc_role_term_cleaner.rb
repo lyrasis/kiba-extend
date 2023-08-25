@@ -21,7 +21,9 @@ module Kiba
             .sub(/^illus$/, "illustrator")
             .sub(/^pbl$/, "publisher")
             .sub(/^tr$/, "translator")
+            # rubocop:todo Layout/LineLength
             .sub(/^(engraver|architect|illustrator|publisher|stereotyper)s$/, '\1')
+          # rubocop:enable Layout/LineLength
         end
       end
     end

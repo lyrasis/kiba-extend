@@ -31,7 +31,9 @@ module Kiba
           path.dirname
         end
 
+        # rubocop:todo Layout/LineLength
         # Used by FileRegistry.transform to add the key as an instance variable to each Entry
+        # rubocop:enable Layout/LineLength
         def set_key(key)
           @key = key
         end
@@ -57,7 +59,9 @@ module Kiba
 
         def summary_creator
           lines = []
+          # rubocop:todo Layout/LineLength
           arr = creator.to_s.delete_prefix("#<Method: ").delete_suffix(">").split(" ")
+          # rubocop:enable Layout/LineLength
           lines << "Job method: #{arr[0]}"
           lines << "Job defined at: #{arr[1]}"
           lines.map { |line| "#{summary_padding}#{line}" }.join("\n")

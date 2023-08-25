@@ -34,7 +34,9 @@ RSpec.describe Kiba::Extend::Transforms::Prepend::FieldToFieldValue do
     end
 
     it "raises MissingDelimiterError" do
+      # rubocop:todo Layout/LineLength
       msg = "You must provide an mvdelim string if multivalue_prepended_field is true"
+      # rubocop:enable Layout/LineLength
       expect { result }.to raise_error(msg)
     end
   end

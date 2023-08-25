@@ -41,7 +41,9 @@ RSpec.describe Kiba::Extend::Transforms::Rename::Fields do
     end
 
     it "returns row unchanged and warns", :aggregate_failures do
+      # rubocop:todo Layout/LineLength
       msg = "#{Kiba::Extend.warning_label}: Cannot rename field: `sex` does not exist in row"
+      # rubocop:enable Layout/LineLength
       expect_any_instance_of(Rename::Field).to receive(:warn).with(msg)
       expect(results).to eq(expected)
     end

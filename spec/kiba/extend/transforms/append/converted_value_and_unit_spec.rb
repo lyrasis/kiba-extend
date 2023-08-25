@@ -93,7 +93,9 @@ RSpec.describe Kiba::Extend::Transforms::Append::ConvertedValueAndUnit do
     end
   end
 
+  # rubocop:todo Layout/LineLength
   context "when unit alias known by Measured is given and conversion customized" do
+    # rubocop:enable Layout/LineLength
     let(:input) do
       [
         {value: "36", unit: "in."}
@@ -239,7 +241,9 @@ RSpec.describe Kiba::Extend::Transforms::Append::ConvertedValueAndUnit do
     end
 
     it "prints warning to STDOUT" do
+      # rubocop:todo Layout/LineLength
       msg = %(KIBA WARNING: Unknown conversion to perform for "yard" in "unit" field. Configure conversions parameter\n)
+      # rubocop:enable Layout/LineLength
       expect { result }.to output(msg).to_stdout
     end
   end
@@ -273,7 +277,9 @@ RSpec.describe Kiba::Extend::Transforms::Append::ConvertedValueAndUnit do
     end
 
     it "prints warning to STDOUT" do
+      # rubocop:todo Layout/LineLength
       msg = %(KIBA WARNING: "inches" cannot be converted to "grams". Check your conversions parameter or configure a custom conversion_amounts parameter\n)
+      # rubocop:enable Layout/LineLength
       expect { result }.to output(msg).to_stdout
     end
   end
@@ -307,7 +313,9 @@ RSpec.describe Kiba::Extend::Transforms::Append::ConvertedValueAndUnit do
     end
 
     it "prints warning to STDOUT" do
+      # rubocop:todo Layout/LineLength
       msg = %(KIBA WARNING: Unknown unit "step" in "unit" field. You may need to configure a custom unit. See example 3 in transform documentation\n)
+      # rubocop:enable Layout/LineLength
       expect { result }.to output(msg).to_stdout
     end
   end

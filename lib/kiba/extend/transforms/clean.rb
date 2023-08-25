@@ -11,7 +11,9 @@ module Kiba
 
         # Sorts the multiple values within a field alphabetically
         #
+        # rubocop:todo Layout/LineLength
         # @note This transformation does **NOT** sort the **ROWS** in a dataset. It sorts values within
+        # rubocop:enable Layout/LineLength
         #   individual fields of a row
         #
         # # Examples
@@ -33,7 +35,9 @@ module Kiba
         # Used in pipeline as:
         #
         # ```
+        # rubocop:todo Layout/LineLength
         #  transform Clean::AlphabetizeFieldValues, fields: %i[type], delim: ';', usenull: false,
+        # rubocop:enable Layout/LineLength
         #      direction: :asc
         # ```
         #
@@ -54,7 +58,9 @@ module Kiba
         # Used in pipeline as:
         #
         # ```
+        # rubocop:todo Layout/LineLength
         #  transform Clean::AlphabetizeFieldValues, fields: %i[type], delim: ';', usenull: false,
+        # rubocop:enable Layout/LineLength
         #      direction: :desc
         # ```
         #
@@ -75,7 +81,9 @@ module Kiba
         # Used in pipeline as:
         #
         # ```
+        # rubocop:todo Layout/LineLength
         #  transform Clean::AlphabetizeFieldValues, fields: %i[type], delim: ';', usenull: true,
+        # rubocop:enable Layout/LineLength
         #      direction: :asc
         # ```
         #
@@ -96,7 +104,9 @@ module Kiba
         # Used in pipeline as:
         #
         # ```
+        # rubocop:todo Layout/LineLength
         #  transform Clean::AlphabetizeFieldValues, fields: %i[type], delim: ';', usenull: true,
+        # rubocop:enable Layout/LineLength
         #      direction: :desc
         # ```
         #
@@ -118,8 +128,12 @@ module Kiba
 
           # @param fields [Array(Symbol)] names of fields to sort
           # @param delim [String] Character(s) on which to split field values
+          # rubocop:todo Layout/LineLength
           # @param usenull [Boolean] Whether to treat `Kiba::Extend.nullvalue` as a blank in processing
+          # rubocop:enable Layout/LineLength
+          # rubocop:todo Layout/LineLength
           # @param direction [:asc, :desc] Direction in which to sort field values
+          # rubocop:enable Layout/LineLength
           def initialize(fields:, delim:, usenull: false, direction: :asc)
             @fields = [fields].flatten
             @delim = delim
@@ -198,13 +212,21 @@ module Kiba
         end
 
         class EmptyFieldGroups
+          # rubocop:todo Layout/LineLength
           # @param groups [Array(Array(Symbol))] Each of the arrays inside groups should list all fields that are
+          # rubocop:enable Layout/LineLength
           #   part of a repeating field group or field subgroup
           # @param sep [String] delimiter used to split/join field values
+          # rubocop:todo Layout/LineLength
           # @param use_nullvalue [String, false] if a string, will insert that string before any sep at beginning
+          # rubocop:enable Layout/LineLength
+          # rubocop:todo Layout/LineLength
           #   of string, after any sep end of string, and between any two sep with nothing in between. It considers
+          # rubocop:enable Layout/LineLength
           #   thias a blank
+          # rubocop:todo Layout/LineLength
           #   value, so if all values in a field are %NULLVALUE%, the field will be nil-ed out.
+          # rubocop:enable Layout/LineLength
           def initialize(groups:, sep:, use_nullvalue: false)
             @groups = groups
             @sep = sep
@@ -257,7 +279,9 @@ module Kiba
             return str if str.nil?
 
             padfront = str.start_with?(@sep) ? "%NULLVALUE%#{str}" : str
+            # rubocop:todo Layout/LineLength
             padend = padfront.end_with?(@sep) ? "#{padfront}%NULLVALUE%" : padfront
+            # rubocop:enable Layout/LineLength
             padend.gsub("#{@sep}#{@sep}", "#{@sep}%NULLVALUE%#{@sep}")
           end
 

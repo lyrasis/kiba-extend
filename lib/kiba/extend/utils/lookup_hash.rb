@@ -6,7 +6,9 @@ module Kiba
       class LookupHash
         attr_reader :hash
 
+        # rubocop:todo Layout/LineLength
         # @param keycolumn [Symbol] field name on which rows are grouped/looked up
+        # rubocop:enable Layout/LineLength
         def initialize(keycolumn:)
           @keycolumn = keycolumn
           @hash = {}

@@ -109,7 +109,9 @@ module Kiba
           missing = missing_initial_headers
 
           missing.each do |hdr|
+            # rubocop:todo Layout/LineLength
             puts "WARNING: Output data does not contain specified initial header: #{hdr}"
+            # rubocop:enable Layout/LineLength
           end
           @initial_headers -= missing
         end

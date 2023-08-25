@@ -64,10 +64,14 @@ RSpec.describe "Kiba::Extend::Registry::Creator" do
       end
     end
 
+    # rubocop:todo Layout/LineLength
     context "when a Module not containing a `job` method, and no method given" do
+      # rubocop:enable Layout/LineLength
       let(:spec) { Helpers::Project::Unjobby }
       it "raises error" do
+        # rubocop:todo Layout/LineLength
         msg = "Helpers::Project::Unjobby passed as Registry::Creator, but does not define `job` method"
+        # rubocop:enable Layout/LineLength
         expect {
           creator
         }.to raise_error(
@@ -101,7 +105,9 @@ RSpec.describe "Kiba::Extend::Registry::Creator" do
         let(:spec) { {callee: "a string"} }
 
         it "raises error" do
+          # rubocop:todo Layout/LineLength
           msg = "Registry::Creator passed Hash with String `callee`. Give Method or Module instead."
+          # rubocop:enable Layout/LineLength
           expect {
             creator
           }.to raise_error(
@@ -116,7 +122,9 @@ RSpec.describe "Kiba::Extend::Registry::Creator" do
         }
 
         it "raises error" do
+          # rubocop:todo Layout/LineLength
           msg = "Registry::Creator passed Hash with String `args`. Give a Hash instead."
+          # rubocop:enable Layout/LineLength
           expect {
             creator
           }.to raise_error(
@@ -198,7 +206,9 @@ RSpec.describe "Kiba::Extend::Registry::Creator" do
       }
 
       it "returns expected string" do
+        # rubocop:todo Layout/LineLength
         expect(result).to eq("Helpers::Project::JobbyArg.job(shout: true, volume: 23)")
+        # rubocop:enable Layout/LineLength
       end
     end
   end

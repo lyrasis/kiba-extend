@@ -57,7 +57,9 @@ RSpec.describe Kiba::Extend::Transforms::Deduplicate::Flag do
     it "raises error" do
       expect {
         xform
+        # rubocop:todo Layout/LineLength
       }.to raise_error(Kiba::Extend::Transforms::Deduplicate::Flag::NoUsingValueError)
+      # rubocop:enable Layout/LineLength
     end
   end
 end

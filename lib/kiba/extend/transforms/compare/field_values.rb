@@ -5,7 +5,9 @@ module Kiba
     module Transforms
       module Compare
         # @since 2.7.1.62
+        # rubocop:todo Layout/LineLength
         # Compares values in the given fields and puts `same` or `diff` in the given target field.
+        # rubocop:enable Layout/LineLength
         #
         # # Examples
         #
@@ -46,7 +48,9 @@ module Kiba
         # Used in pipeline as:
         #
         # ```
+        # rubocop:todo Layout/LineLength
         #  transform Compare::FieldValues, fields: %i[id pid zid], target: :comp, downcase: false, strip: false
+        # rubocop:enable Layout/LineLength
         # ```
         #
         # Results in:
@@ -65,7 +69,9 @@ module Kiba
         # Used in pipeline as:
         #
         # ```
+        # rubocop:todo Layout/LineLength
         #  transform Compare::FieldValues, fields: %i[id pid zid], target: :comp, ignore_blank: true
+        # rubocop:enable Layout/LineLength
         # ```
         #
         # Results in:
@@ -82,12 +88,22 @@ module Kiba
         # ```
         #
         class FieldValues
+          # rubocop:todo Layout/LineLength
           # @param fields [Array<Symbol>] names of fields whose values will be compared
+          # rubocop:enable Layout/LineLength
+          # rubocop:todo Layout/LineLength
           # @param target [Symbol] new field in which to record comparison result
+          # rubocop:enable Layout/LineLength
+          # rubocop:todo Layout/LineLength
           # @param downcase [Boolean] whether to downcase all values for comparison. `false` results in a case sensitive
+          # rubocop:enable Layout/LineLength
           #   comparison. `true` results in a case insensitive comparison.
+          # rubocop:todo Layout/LineLength
           # @param strip [Boolean] whether to remove leading/trailing spaces prior to comparison
+          # rubocop:enable Layout/LineLength
+          # rubocop:todo Layout/LineLength
           # @param ignore_blank [Boolean] `true` drops empty or nil values from the comparison
+          # rubocop:enable Layout/LineLength
           def initialize(fields:, target:, downcase: true, strip: true,
             ignore_blank: false)
             @fields = [fields].flatten

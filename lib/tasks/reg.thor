@@ -5,7 +5,9 @@ require "thor"
 # registry tasks
 class Reg < Thor
   desc "list",
+    # rubocop:todo Layout/LineLength
     "List all entries in file registry with file key, path, description, and creator"
+  # rubocop:enable Layout/LineLength
   def list
     Kiba::Extend::Command::Reg.list
   end

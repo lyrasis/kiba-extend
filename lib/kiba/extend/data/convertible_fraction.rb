@@ -3,7 +3,9 @@
 module Kiba
   module Extend
     module Data
+      # rubocop:todo Layout/LineLength
       # Value object encoding an extracted string fraction (e.g. '1 1/2') so it can be converted.
+      # rubocop:enable Layout/LineLength
       #
       # Can represent invalid/non-convertible "fractions"
       class ConvertibleFraction
@@ -13,7 +15,9 @@ module Kiba
 
         # @param whole [Integer] whole number preceding a fraction
         # @param fraction [String]
+        # rubocop:todo Layout/LineLength
         # @param position [Range] indicates position of fractional data within original string
+        # rubocop:enable Layout/LineLength
         def initialize(fraction:, position:, whole: 0)
           unless whole.is_a?(Integer)
             fail(TypeError,
@@ -28,8 +32,12 @@ module Kiba
           @position = position.freeze
         end
 
+        # rubocop:todo Layout/LineLength
         # @param val [String] the value in which textual fraction will be replaced with a decimal
+        # rubocop:enable Layout/LineLength
+        # rubocop:todo Layout/LineLength
         # @param places [Integer] maximum number of decimal places to keep in the resulting decimal value
+        # rubocop:enable Layout/LineLength
         # @return [String]
         def replace_in(val:, places: 4)
           return val unless convertible?
@@ -62,7 +70,9 @@ module Kiba
         end
 
         def ==(other)
+          # rubocop:todo Layout/LineLength
           whole == other.whole && fraction == other.fraction && position == other.position
+          # rubocop:enable Layout/LineLength
         end
         alias_method :eql?, :==
 

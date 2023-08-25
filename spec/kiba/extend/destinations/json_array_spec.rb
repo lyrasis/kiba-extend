@@ -61,7 +61,9 @@ RSpec.describe Kiba::Extend::Destinations::JsonArray do
     end
 
     let(:expected) do
+      # rubocop:todo Layout/LineLength
       '[{"Archival_Object__title":"Image of Bob and Sue","Archival_Object__dates":[{"Archival_Object__dates__begin":"1987","Archival_Object__dates__label":"other","Archival_Object__dates__date_type":"inclusive"},{"Archival_Object__dates__end":"1989","Archival_Object__dates__label":"other","Archival_Object__dates__date_type":"inclusive"}]},{"Archival_Object__title":"Audio recording of a horse","Archival_Object__subjects":["/Subjects/1","/Subjects/2"]}]'
+      # rubocop:enable Layout/LineLength
     end
     it "produces JSON as expected" do
       expect(run_job(input, testfile)).to eq(expected)

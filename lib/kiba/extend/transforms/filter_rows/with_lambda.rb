@@ -6,7 +6,9 @@ module Kiba
       module FilterRows
         # @since 2.9.0
         #
+        # rubocop:todo Layout/LineLength
         # Keep or reject rows based on whether the arbitrary Lambda passed in evaluates to true/false
+        # rubocop:enable Layout/LineLength
         #
         # ## Examples
         #
@@ -66,7 +68,9 @@ module Kiba
           include ActionArgumentable
 
           # @param action [:keep, :reject] what to do with row matching criteria
+          # rubocop:todo Layout/LineLength
           # @param lambda [Lambda] with one parameter for row to be passed in through. The Lambda must evaulate
+          # rubocop:enable Layout/LineLength
           #   to/return `TrueClass` or `FalseClass`
           def initialize(action:, lambda:)
             validate_action_argument(action)

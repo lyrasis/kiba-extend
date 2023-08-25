@@ -60,7 +60,9 @@ module Kiba
           begin
             FileUtils.mkdir_p(val)
           rescue
+            # rubocop:todo Layout/LineLength
             msg = "PreJobTask cannot be run because :pre_job_task_backup_dir does not exist and cannot be created"
+            # rubocop:enable Layout/LineLength
             warn(msg)
             false
           else

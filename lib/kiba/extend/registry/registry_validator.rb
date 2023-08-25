@@ -5,7 +5,9 @@ module Kiba
     module Registry
       # Utility class to report on the validity of the FileRegistry.
       class RegistryValidator
+        # rubocop:todo Layout/LineLength
         # Prints to STDOUT a report of errors and warnings to inform needed development in project applications
+        # rubocop:enable Layout/LineLength
         def report
           puts ""
           report_validity

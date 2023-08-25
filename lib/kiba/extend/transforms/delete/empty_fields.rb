@@ -4,14 +4,22 @@ module Kiba
   module Extend
     module Transforms
       module Delete
+        # rubocop:todo Layout/LineLength
         # Removes fields/columns that contain no values. Supports treating `Kiba::Extend.nullvalue` as an empty value.
+        # rubocop:enable Layout/LineLength
+        # rubocop:todo Layout/LineLength
         #   Also supports specifying field-specific values that should be treated as though they are empty.
+        # rubocop:enable Layout/LineLength
         #
+        # rubocop:todo Layout/LineLength
         # @note This transform runs in memory, so for very large sources, it may take a long time or fail.
+        # rubocop:enable Layout/LineLength
         #
         # # Examples
         #
+        # rubocop:todo Layout/LineLength
         # The examples demonstrating `usenull` assume `Kiba::Extend.nullvalue` is set to `%NULLVALUE%`.
+        # rubocop:enable Layout/LineLength
         #
         # ## Basic usage
         #
@@ -80,7 +88,9 @@ module Kiba
         # Used in pipeline as:
         #
         # ```
+        # rubocop:todo Layout/LineLength
         # transform Delete::EmptyFields, consider_blank: {b: 'false', c: 'nope', e: "0#{Kiba::Extend.delim}false"}
+        # rubocop:enable Layout/LineLength
         # ```
         #
         # Input table:
@@ -106,12 +116,20 @@ module Kiba
         # ```
         #
         # ### Notes
+        # rubocop:todo Layout/LineLength
         # Field `c` is retained because `usenull: true` is not used. If that argument were given, only Field `a` would be returned.
+        # rubocop:enable Layout/LineLength
         #
         class EmptyFields
+          # rubocop:todo Layout/LineLength
           # @param usenull [Boolean] whether to treat `Kiba::Extend.nullvalue` as empty/blank value
+          # rubocop:enable Layout/LineLength
+          # rubocop:todo Layout/LineLength
           # @param consider_blank [Hash{Symbol=>Array<String>}] specifies field-specific value(s) that should be treated
+          # rubocop:enable Layout/LineLength
+          # rubocop:todo Layout/LineLength
           #   as blank/empty. **If multiple values should be considered blank for one field, join them using
+          # rubocop:enable Layout/LineLength
           #   `Kiba::Extend.delimiter`**
           def initialize(usenull: false, consider_blank: nil)
             @usenull = usenull

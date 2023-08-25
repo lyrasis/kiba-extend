@@ -42,7 +42,9 @@ RSpec.describe Kiba::Extend::Transforms::Count::MatchingRowsInLookup do
   end
 
   context "with default result_type (:str)" do
+    # rubocop:todo Layout/LineLength
     it "merges count of lookup rows to be merged into specified field as string" do
+      # rubocop:enable Layout/LineLength
       expected = [
         {id: "0", ct: "0"},
         {id: "1", ct: "1"},
@@ -63,7 +65,9 @@ RSpec.describe Kiba::Extend::Transforms::Count::MatchingRowsInLookup do
         result_type: :int
       }
     end
+    # rubocop:todo Layout/LineLength
     it "merges count of lookup rows to be merged into specified field as integer" do
+      # rubocop:enable Layout/LineLength
       expected = [
         {id: "0", ct: 0},
         {id: "1", ct: 1},

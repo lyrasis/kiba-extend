@@ -4,7 +4,9 @@ module Kiba
   module Extend
     module Transforms
       module FilterRows
+        # rubocop:todo Layout/LineLength
         # Keep or reject rows where the value of the specified field exactly matches the given value
+        # rubocop:enable Layout/LineLength
         #
         # ## Examples
         #
@@ -22,7 +24,9 @@ module Kiba
         # Used in pipeline as:
         #
         # ```
+        # rubocop:todo Layout/LineLength
         # transform FilterRows::FieldEqualTo, action: :keep, field: :val, value: 'N'
+        # rubocop:enable Layout/LineLength
         # ```
         #
         # Resulting data:
@@ -34,7 +38,9 @@ module Kiba
         # Used in pipeline as:
         #
         # ```
+        # rubocop:todo Layout/LineLength
         # transform FilterRows::FieldEqualTo, action: :reject, field: :val, value: 'N'
+        # rubocop:enable Layout/LineLength
         # ```
         #
         # Resulting data:

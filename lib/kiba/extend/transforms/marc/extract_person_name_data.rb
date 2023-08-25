@@ -11,7 +11,9 @@ module Kiba
         #
         # @example
         #   # =001  008001024-5
+        # rubocop:todo Layout/LineLength
         #   # =100  1\$6880-03$aGlinka, M. I.$q(Mikhail Ivanovich),$d1804-1857,$ecomposer.$4cmp
+        # rubocop:enable Layout/LineLength
         #   # =700  1\$aBrussilovsky, Alexandre,$eperformer # no 880
         #   # =880  1\$6100-03$aGlinka VERN,$ecomposer.$4cmp
         #   rec = get_marc_record(index: 9)

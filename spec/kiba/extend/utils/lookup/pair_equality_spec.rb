@@ -125,7 +125,9 @@ RSpec.describe Kiba::Extend::Utils::Lookup::PairEquality do
       end
     end
 
+    # rubocop:todo Layout/LineLength
     context "when row field exists but is blank and mergerow field does not exist" do
+      # rubocop:enable Layout/LineLength
       it "returns false" do
         obj = Lookup::PairEquality.new(
           pair: ["mergerow::a", "row::b"],

@@ -3,7 +3,9 @@
 module Kiba
   module Extend
     module Registry
+      # rubocop:todo Layout/LineLength
       # Utility class used by project applications to display information about a set of
+      # rubocop:enable Layout/LineLength
       #   registered files/jobs
       #
       # Puts to STDOUT

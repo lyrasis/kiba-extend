@@ -33,7 +33,9 @@ module Kiba
           #   role term value
           # @param delim [String] used when joining multiple values in a field
           def initialize(name_type:,
+            # rubocop:todo Layout/LineLength
             name_fields:, name_subfields:, role_code_subfields:, role_term_subfields:, id_target: Kiba::Extend::Marc.id_target_field,
+            # rubocop:enable Layout/LineLength
             name_target: Kiba::Extend::Marc.name_target,
             role_term_target: Kiba::Extend::Marc.role_term_target,
             role_code_target: Kiba::Extend::Marc.role_code_target,

@@ -2,7 +2,9 @@
 
 require "spec_helper"
 
+# rubocop:todo Layout/LineLength
 RSpec.describe Kiba::Extend::Transforms::Reshape::FieldsToFieldGroupWithConstant do
+  # rubocop:enable Layout/LineLength
   subject(:xform) { described_class.new(**params) }
   let(:delim) { "|" }
   let(:result) { input.map { |row| xform.process(row) } }

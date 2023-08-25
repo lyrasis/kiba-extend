@@ -8,7 +8,9 @@ module Kiba
         #
         # Merges the given constant values into the given target fields.
         #
+        # rubocop:todo Layout/LineLength
         # @note Uses {Kiba::Extend::Transforms::Merge::ConstantValue} to handle each pair in the `constantmap`, so
+        # rubocop:enable Layout/LineLength
         #   check its behavior as well.
         #
         # ## Example
@@ -32,8 +34,12 @@ module Kiba
         # Results in:
         #
         # ```
+        # rubocop:todo Layout/LineLength
         # {name: 'Weddy', species_common: 'guinea fowl', species_binomial: 'Numida meleagris' },
+        # rubocop:enable Layout/LineLength
+        # rubocop:todo Layout/LineLength
         # {name: 'Kernel', species: 'Numida meleagris', species_common: 'guinea fowl', species_binomial: 'Numida meleagris' }
+        # rubocop:enable Layout/LineLength
         # ```
         #
         class ConstantValues

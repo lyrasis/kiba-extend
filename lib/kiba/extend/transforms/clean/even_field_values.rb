@@ -6,12 +6,18 @@ module Kiba
       module Clean
         # @since 2.9.0
         #
+        # rubocop:todo Layout/LineLength
         # Ensures even field values across multiple fields (i.e. a field group) by appending some value to the end
+        # rubocop:enable Layout/LineLength
         #   of fields containing fewer values.
         #
+        # rubocop:todo Layout/LineLength
         # See explanation of "even fields" at {Kiba::Extend::Transforms::Warn::UnevenFields}
+        # rubocop:enable Layout/LineLength
         #
+        # rubocop:todo Layout/LineLength
         # This transform appends the value of `@evener` to field values as necessary to achieve
+        # rubocop:enable Layout/LineLength
         #   evenness across fields. So, with `evener: '%NULLVALUE%'`:
         #
         # ```
@@ -24,15 +30,21 @@ module Kiba
         #   {a_foo: 'af|%NULLVALUE%', a_bar: 'ab|%NULLVALUE%', a_baz: 'az|zz'}
         # ```
         #
+        # rubocop:todo Layout/LineLength
         # However, what if `af` and `ab` are intended to go with `zz` instead of `az`? Or what if, in this
+        # rubocop:enable Layout/LineLength
         #   situation, you really want:
         #
         # ```
         #  {a_foo: 'af|af', a_bar: 'ab|ab', a_baz: 'az|zz'}
         # ```
         #
+        # rubocop:todo Layout/LineLength
         # Only you can be sure, so, by default, you get a warning whenever a source gets padded to enforce
+        # rubocop:enable Layout/LineLength
+        # rubocop:todo Layout/LineLength
         #   evenness. You can disable warnings by including `warn: false` in your transform set-up.
+        # rubocop:enable Layout/LineLength
         #
         # ## Examples
         #
@@ -60,7 +72,9 @@ module Kiba
         # [
         #   {foo: 'a', bar: 'b', baz: 'c'},
         #   {foo: '', bar: nil, baz: 'c'},
+        # rubocop:todo Layout/LineLength
         #   {foo: 'a|a|a', bar: '|b|%NULLVALUE%', baz: 'c|%NULLVALUE%|%NULLVALUE%'}
+        # rubocop:enable Layout/LineLength
         # ]
         # ```
         #
@@ -79,7 +93,9 @@ module Kiba
         # Used as:
         #
         # ```
+        # rubocop:todo Layout/LineLength
         # transform Clean::EvenFieldValues, fields: %i[foo bar baz], delim: '|', evener: '%BLANK%'
+        # rubocop:enable Layout/LineLength
         # ```
         #
         # Results in:
@@ -92,7 +108,9 @@ module Kiba
         #
         # ### Custom evener (:value)
         #
+        # rubocop:todo Layout/LineLength
         # This setting causes the last value in the field before padding/evening the field  to be repeated
+        # rubocop:enable Layout/LineLength
         #   as necessary to achieve evenness across fields in the group.
         #
         # Source data:
@@ -108,7 +126,9 @@ module Kiba
         # Used as:
         #
         # ```
+        # rubocop:todo Layout/LineLength
         # transform Clean::EvenFieldValues, fields: %i[foo bar baz], delim: '|', evener: :value
+        # rubocop:enable Layout/LineLength
         # ```
         #
         # Results in:
@@ -121,14 +141,24 @@ module Kiba
         # ]
         # ```
         class EvenFieldValues
+          # rubocop:todo Layout/LineLength
           # @param fields [Array(Symbol)] fields across which to even field values
+          # rubocop:enable Layout/LineLength
+          # rubocop:todo Layout/LineLength
           # @param treat_as_null [nil, String, Array(String)] value(s) to treat as empty when determining if
+          # rubocop:enable Layout/LineLength
           #   the entire field is empty or not
+          # rubocop:todo Layout/LineLength
           # @param evener [String, :value] value used to even out uneven field values. If given a String, that
+          # rubocop:enable Layout/LineLength
+          # rubocop:todo Layout/LineLength
           #   string will be appended to even out fields. If `:value`, the **final** value in the field needing
+          # rubocop:enable Layout/LineLength
           #   evening will be repeated to even out the field.
           # @param delim [String] used to split/join multiple values in a field
+          # rubocop:todo Layout/LineLength
           # @param warn [Boolean] whether to print warning of uneven fields to STDOUT
+          # rubocop:enable Layout/LineLength
           def initialize(
             fields:,
             treat_as_null: Kiba::Extend.nullvalue,

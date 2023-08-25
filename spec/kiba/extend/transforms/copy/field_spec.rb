@@ -33,10 +33,14 @@ RSpec.describe Kiba::Extend::Transforms::Copy::Field do
     let(:transform) { described_class.new(from: :foo, to: :gender) }
 
     it "copies value of field to specified new field" do
+      # rubocop:todo Layout/LineLength
       msg = "Cannot copy from nonexistent field `foo`\nExisting fields: name, sex"
+      # rubocop:enable Layout/LineLength
       expect {
         result
+        # rubocop:todo Layout/LineLength
       }.to raise_error(Kiba::Extend::Transforms::Copy::Field::MissingFromFieldError).with_message(msg)
+      # rubocop:enable Layout/LineLength
     end
   end
 end

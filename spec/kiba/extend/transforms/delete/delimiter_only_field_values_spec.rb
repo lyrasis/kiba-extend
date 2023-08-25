@@ -47,7 +47,9 @@ RSpec.describe Kiba::Extend::Transforms::Delete::DelimiterOnlyFieldValues do
     end
   end
 
+  # rubocop:todo Layout/LineLength
   # tests that whole values are looked at and it isn't going to do weird replacements and mess up
+  # rubocop:enable Layout/LineLength
   #   unintended data
   context "with `treat_as_null: NULL`" do
     let(:params) { {fields: :all, delim: delim, treat_as_null: "NULL"} }

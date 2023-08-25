@@ -8,7 +8,9 @@ module Kiba
 
         module_function
 
+        # rubocop:todo Layout/LineLength
         # @param key [Symbol, String] registry key for job, i.e. prep__loan_purposes
+        # rubocop:enable Layout/LineLength
         def job(key)
           run_job(key)
         end

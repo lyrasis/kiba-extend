@@ -223,16 +223,22 @@ RSpec.describe "Kiba::Extend::Registry::FileRegistryEntry" do
       it "invalid as expected" do
         expect(entry.creator).to be_nil
         expect(entry.valid?).to be false
+        # rubocop:todo Layout/LineLength
         expect(entry.errors.key?("Kiba::Extend::Registry::Creator::TypeError")).to be true
+        # rubocop:enable Layout/LineLength
       end
     end
 
+    # rubocop:todo Layout/LineLength
     context "when a Module not containing a `job` method, and no method given" do
+      # rubocop:enable Layout/LineLength
       let(:data) { {path: path, creator: Helpers::Project::JoblessSection} }
       it "invalid as expected" do
         expect(entry.creator).to be_nil
         expect(entry.valid?).to be false
+        # rubocop:todo Layout/LineLength
         expect(entry.errors.key?("Kiba::Extend::Registry::Creator::JoblessModuleCreatorError")).to be true
+        # rubocop:enable Layout/LineLength
       end
     end
 

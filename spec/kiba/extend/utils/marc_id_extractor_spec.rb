@@ -13,7 +13,9 @@ RSpec.describe Kiba::Extend::Utils::MarcIdExtractor do
 
       it "raises ControlFieldsDoNotHaveSubfieldsError" do
         expect { xform }.to raise_error(
+          # rubocop:todo Layout/LineLength
           Kiba::Extend::Utils::MarcIdExtractor::ControlFieldsDoNotHaveSubfieldsError
+          # rubocop:enable Layout/LineLength
         )
       end
     end

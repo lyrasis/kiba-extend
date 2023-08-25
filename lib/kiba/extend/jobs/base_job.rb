@@ -92,7 +92,9 @@ module Kiba
 
         def prep_file(meth, key)
           meth.call(key)
+        # rubocop:todo Layout/LineLength
         rescue Kiba::Extend::Registry::FileRegistry::KeyNotRegisteredError => err
+          # rubocop:enable Layout/LineLength
           puts "JOB FAILED: TRANSFORM ERROR IN: #{err.calling_job}"
           err.info
           exit

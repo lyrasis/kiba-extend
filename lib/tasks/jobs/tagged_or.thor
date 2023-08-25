@@ -2,7 +2,9 @@
 
 class Jobs < Runnable
   desc "tagged_or",
+    # rubocop:todo Layout/LineLength
     "List entries tagged with given tags, ORed together, and optionally run them"
+  # rubocop:enable Layout/LineLength
   long_desc <<~LONG
     List entries tagged with given tags, ORed together, and optionally run them
 

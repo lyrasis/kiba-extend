@@ -21,7 +21,9 @@ RSpec.describe Kiba::Extend::Transforms::Collapse::FieldsWithCustomFieldmap do
       {person: nil, statusa: "acknowledged", date: "2020",
        personb: "jill", statusb: "requested", date2: nil,
        personc: "bill", statusc: "followup", date3: "2021"},
+      # rubocop:todo Layout/LineLength
       {person: "%NULLVALUE%|%NULLVALUE%", statusa: "acknowledged|approved", date: "2020|%NULLVALUE%",
+       # rubocop:enable Layout/LineLength
        personb: "jill", statusb: "requested", date2: nil,
        personc: "bill", statusc: "followup", date3: "2019"}
     ]
@@ -103,7 +105,9 @@ RSpec.describe Kiba::Extend::Transforms::Collapse::FieldsWithCustomFieldmap do
     let(:expected) { [{c: "c", z: "|b"}] }
 
     it "combines present source fields and warns" do
+      # rubocop:todo Layout/LineLength
       msg = "#{Kiba::Extend.warning_label}: Source field `a` missing; treating as nil value"
+      # rubocop:enable Layout/LineLength
       expect(xform).to receive(:warn).with(msg)
       expect(result).to eq(expected)
     end

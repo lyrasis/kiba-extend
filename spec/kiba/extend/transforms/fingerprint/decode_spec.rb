@@ -26,7 +26,9 @@ RSpec.describe Kiba::Extend::Transforms::Fingerprint::Decode do
 
     let(:expected) do
       [
+        # rubocop:todo Layout/LineLength
         {a: "ant", b: "bee", c: nil, d: "deer", e: "", fp: "YmVlOzs7bmlsOzs7ZGVlcjs7O2VtcHR5",
+         # rubocop:enable Layout/LineLength
          fp_b: "bee", fp_c: nil, fp_d: "deer", fp_e: ""}
       ]
     end
@@ -40,7 +42,9 @@ RSpec.describe Kiba::Extend::Transforms::Fingerprint::Decode do
     let(:transforms) do
       Kiba.job_segment do
         transform Fingerprint::Decode, fingerprint: :fp,
+          # rubocop:todo Layout/LineLength
           source_fields: %i[b c d e], delim: ";;;", prefix: "fp", delete_fp: true
+        # rubocop:enable Layout/LineLength
       end
     end
 
@@ -67,7 +71,9 @@ RSpec.describe Kiba::Extend::Transforms::Fingerprint::Decode do
     let(:transforms) do
       Kiba.job_segment do
         transform Fingerprint::Decode, fingerprint: :fp,
+          # rubocop:todo Layout/LineLength
           source_fields: %i[b c d e], delim: ";;;", prefix: "fp", delete_fp: true
+        # rubocop:enable Layout/LineLength
       end
     end
 

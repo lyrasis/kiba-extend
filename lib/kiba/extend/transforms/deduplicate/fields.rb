@@ -25,7 +25,9 @@ module Kiba
         # Used in pipeline as:
         #
         # ```
+        # rubocop:todo Layout/LineLength
         # transform Deduplicate::Fields, source: :x, targets: %i[y z], multival: true, sep: ';'
+        # rubocop:enable Layout/LineLength
         # ```
         #
         # Results in:
@@ -74,9 +76,15 @@ module Kiba
         # ```
         #
         class Fields
+          # rubocop:todo Layout/LineLength
           # @param source [Symbol] name of field containing value to remove from target fields
+          # rubocop:enable Layout/LineLength
+          # rubocop:todo Layout/LineLength
           # @param targets [Array<Symbol>] names of fields to remove source value(s) from
+          # rubocop:enable Layout/LineLength
+          # rubocop:todo Layout/LineLength
           # @param casesensitive [Boolean] whether matching should be case sensitive
+          # rubocop:enable Layout/LineLength
           # @param multival [Boolean] whether to treat as multi-valued
           # @param sep [String] used to split/join multi-val field values
           def initialize(source:, targets:, casesensitive: true,

@@ -110,7 +110,9 @@ RSpec.describe Kiba::Extend::Transforms::Helpers::FieldValueGetter do
       end
     end
 
+    # rubocop:todo Layout/LineLength
     context "with discard = [:empty] and treat_as_null = [%NULL%, %NULLVALUE%]" do
+      # rubocop:enable Layout/LineLength
       let(:params) {
         {fields: fields, delim: delim, discard: [:empty],
          treat_as_null: ["%NULL%", "%NULLVALUE%"]}
@@ -130,7 +132,9 @@ RSpec.describe Kiba::Extend::Transforms::Helpers::FieldValueGetter do
       end
     end
 
+    # rubocop:todo Layout/LineLength
     context "with discard = [:delim] and treat_as_null = [%NULL%, %NULLVALUE%]" do
+      # rubocop:enable Layout/LineLength
       let(:params) {
         {fields: fields, delim: delim, discard: [:delim],
          treat_as_null: ["%NULL%", "%NULLVALUE%"]}

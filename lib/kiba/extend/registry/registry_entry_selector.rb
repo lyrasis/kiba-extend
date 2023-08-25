@@ -3,7 +3,9 @@
 module Kiba
   module Extend
     module Registry
+      # rubocop:todo Layout/LineLength
       # Used in Rake tasks in project application to identify particular files/jobs
+      # rubocop:enable Layout/LineLength
       #   to run or display information about
       class RegistryEntrySelector
         # Registry entries created by a given class

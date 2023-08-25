@@ -5,14 +5,20 @@ module Kiba
     module Transforms
       # Mixin module providing `do_warnings` method for transforms.
       #
+      # rubocop:todo Layout/LineLength
       # If you have an input with 1000 rows missing an expected field, you don't want 1000 warnings to STDOUT, so
+      # rubocop:enable Layout/LineLength
       #   this handles ensuring a single warning will be sent
       #
       # ## Usage
       # Transform classes using this should: `include SingleWarnable`.
       #
+      # rubocop:todo Layout/LineLength
       # The `initialize` method of a transform using this mixin should call `setup_single_warning`. Then,
+      # rubocop:enable Layout/LineLength
+      # rubocop:todo Layout/LineLength
       #   `add_single_warning("The warning message")` can be used from anywhere else in the transform.
+      # rubocop:enable Layout/LineLength
       #
       # @since 2.8.0
       module SingleWarnable

@@ -5,13 +5,21 @@ module Kiba
     module Utils
       # Callable service object returning true/false
       #
+      # rubocop:todo Layout/LineLength
       # If row does not contain the specified field at all, the result is always false.
+      # rubocop:enable Layout/LineLength
       #
+      # rubocop:todo Layout/LineLength
       # A `nil` value for the specified field will match `''` (matchmode: :plain) or `'^$'`
+      # rubocop:enable Layout/LineLength
       #   (matchmode: :regexp)
       #
+      # rubocop:todo Layout/LineLength
       # `matchmode: :plain` (the default) tests for a full match. You can test for partial matches with
+      # rubocop:enable Layout/LineLength
+      # rubocop:todo Layout/LineLength
       #   `matchmode: :regex`. Wrapping a regex match with `^` and `$` anchors will force a full match
+      # rubocop:enable Layout/LineLength
       #   in regex match mode.
       #
       # ## Examples
@@ -62,11 +70,17 @@ module Kiba
       # {test: nil} => true,
       # {test: ''} => true,
       # {test: 'UNMAPPED'} => false,
+      # rubocop:todo Layout/LineLength
       # {test: '%NULL%'} => true, # gets converted to empty value prior to matching
+      # rubocop:enable Layout/LineLength
+      # rubocop:todo Layout/LineLength
       # {test: ' %NULL% '} => true # gets converted to empty value prior to matching
+      # rubocop:enable Layout/LineLength
       # ```
       #
+      # rubocop:todo Layout/LineLength
       # ### With params: `field: :test, match: '^$', treat_as_null: '%NULL%', matchmode: :regexp`
+      # rubocop:enable Layout/LineLength
       #
       # ```
       # {foo: 'bar'} => false,
@@ -94,7 +108,9 @@ module Kiba
       # {test: 'bar|baz'} => false
       # ```
       #
+      # rubocop:todo Layout/LineLength
       # ### With params: `field: :test, match: '^$', matchmode: :regex, delim: '|'`
+      # rubocop:enable Layout/LineLength
       #
       # ```
       # {test: 'foo|'} => true,
@@ -107,7 +123,9 @@ module Kiba
       # {test: '%NULL%|foo'} => false,
       # ```
       #
+      # rubocop:todo Layout/LineLength
       # ### With params: `field: :test, match: '', delim: '|', treat_as_null: '%NULL%'`
+      # rubocop:enable Layout/LineLength
       #
       # ```
       # {test: 'foo|%NULL%|bar'} => true,
@@ -116,7 +134,9 @@ module Kiba
       # {test: 'foo|  |bar'} => true
       # ```
       #
+      # rubocop:todo Layout/LineLength
       # ### With params: `field: :test, match: '', delim: '|', treat_as_null: '%NULL%', strip: false`
+      # rubocop:enable Layout/LineLength
       #
       # ```
       # {test: 'foo|%NULL%|bar'} => true,
@@ -135,7 +155,9 @@ module Kiba
       # {test: 'Foo'} => false,
       # ```
       #
+      # rubocop:todo Layout/LineLength
       # ### With params: `field: :test, match: '^fo+$', matchmode: :regex, delim: '|'`
+      # rubocop:enable Layout/LineLength
       #
       # ```
       # {test: 'foo'} => true,
@@ -144,7 +166,9 @@ module Kiba
       # {test: 'drink|food'} => false
       # ```
       #
+      # rubocop:todo Layout/LineLength
       # ### With params: `field: :test, match: '^fo+', matchmode: :regex, delim: '|', casesensitive: false`
+      # rubocop:enable Layout/LineLength
       #
       # ```
       # {test: 'foo'} => true,
@@ -153,7 +177,9 @@ module Kiba
       # {test: 'drink|food'} => true
       # ```
       #
+      # rubocop:todo Layout/LineLength
       # ### With params: `field: :test, match: 'Foo', delim: '|', multimode: :all`
+      # rubocop:enable Layout/LineLength
       #
       # ```
       # {foo: 'Foo'} => false,
@@ -172,7 +198,9 @@ module Kiba
       # {test: 'bar|baz'} => false
       # ```
       #
+      # rubocop:todo Layout/LineLength
       # ### With params: `field: :test, match: 'Foo', delim: '|', multimode: :allstrict`
+      # rubocop:enable Layout/LineLength
       #
       # ```
       # {foo: 'Foo'} => false,
@@ -194,17 +222,33 @@ module Kiba
       class FieldValueMatcher
         # @param field [Symbol] whose value to match
         # @param match [String] expresses the match criteria
+        # rubocop:todo Layout/LineLength
         # @param matchmode [:plain, :regex] If `:regex`, string is converted to a regular expression
+        # rubocop:enable Layout/LineLength
+        # rubocop:todo Layout/LineLength
         # @param delim [nil, String] if a String is given, triggers multivalue matching, where field value is
+        # rubocop:enable Layout/LineLength
         #    split and the match is run against each resulting value
+        # rubocop:todo Layout/LineLength
         # @param treat_as_null [nil, String] if given, the string will be converted to empty string for matching
+        # rubocop:enable Layout/LineLength
         # @param casesensitive [Boolean] whether match cares about case
+        # rubocop:todo Layout/LineLength
         # @param strip [Boolean] whether to strip individual values prior to matching
+        # rubocop:enable Layout/LineLength
+        # rubocop:todo Layout/LineLength
         # @param multimode [:any, :all, :allstrict] how a multivalue match is determined. If :any, result is true
+        # rubocop:enable Layout/LineLength
+        # rubocop:todo Layout/LineLength
         #   if any value matches. If :all, empty values are ignored and will return true if all populated values
+        # rubocop:enable Layout/LineLength
+        # rubocop:todo Layout/LineLength
         #   match. If :allstrict, empty values are not ignored and will return false if `match` value does not
+        # rubocop:enable Layout/LineLength
         #   match them (since 3.0.0)
+        # rubocop:todo Layout/LineLength
         def initialize(field:, match:, matchmode: :plain, delim: nil, treat_as_null: nil, casesensitive: true,
+          # rubocop:enable Layout/LineLength
           strip: true, multimode: :any)
           @field = field
           @delim = delim
@@ -212,7 +256,9 @@ module Kiba
           @matchmode = matchmode
           @nullval = treat_as_null
           @strip = strip
+          # rubocop:todo Layout/LineLength
           @match = (matchmode == :regexp) ? create_regexp_match(match) : create_plain_match(match)
+          # rubocop:enable Layout/LineLength
           @multimode = multimode
         end
 

@@ -2,7 +2,9 @@
 
 require "spec_helper"
 
+# rubocop:todo Layout/LineLength
 RSpec.describe Kiba::Extend::Transforms::Collapse::FieldsToRepeatableFieldGroup do
+  # rubocop:enable Layout/LineLength
   subject(:xform) { described_class.new(**params) }
   let(:params) { {sources: sources, targets: targets, delim: delim} }
   let(:sources) { %i[a b] }
@@ -59,7 +61,9 @@ RSpec.describe Kiba::Extend::Transforms::Collapse::FieldsToRepeatableFieldGroup 
     end
   end
 
+  # rubocop:todo Layout/LineLength
   context "with uneven fields and default enforce_evenness (true) and default empty_groups (:delete)" do
+    # rubocop:enable Layout/LineLength
     let(:sources) { %i[a b c d e] }
     let(:input) do
       [
@@ -84,7 +88,9 @@ RSpec.describe Kiba::Extend::Transforms::Collapse::FieldsToRepeatableFieldGroup 
 
     context "with custom null_placeholder (and custom even_val: :value)" do
       let(:params) {
+        # rubocop:todo Layout/LineLength
         {sources: sources, targets: targets, delim: delim, null_placeholder: "BLANK",
+         # rubocop:enable Layout/LineLength
          even_val: :value}
       }
       let(:expected) do
@@ -122,7 +128,9 @@ RSpec.describe Kiba::Extend::Transforms::Collapse::FieldsToRepeatableFieldGroup 
 
     context "with custom null_placeholder (and custom even_val: EVENED)" do
       let(:params) {
+        # rubocop:todo Layout/LineLength
         {sources: sources, targets: targets, delim: delim, null_placeholder: "BLANK",
+         # rubocop:enable Layout/LineLength
          even_val: "EVENED"}
       }
       let(:expected) do
@@ -140,7 +148,9 @@ RSpec.describe Kiba::Extend::Transforms::Collapse::FieldsToRepeatableFieldGroup 
     end
   end
 
+  # rubocop:todo Layout/LineLength
   context "with uneven fields and default enforce_evenness (true) and empty_groups = :retain" do
+    # rubocop:enable Layout/LineLength
     let(:sources) { %i[a b c d e] }
     let(:params) {
       {sources: sources, targets: targets, delim: delim, empty_groups: :retain}
@@ -165,7 +175,9 @@ RSpec.describe Kiba::Extend::Transforms::Collapse::FieldsToRepeatableFieldGroup 
     end
   end
 
+  # rubocop:todo Layout/LineLength
   context "with uneven fields and enforce_evenness: false and default empty_groups (:delete)" do
+    # rubocop:enable Layout/LineLength
     let(:sources) { %i[a b c d] }
     let(:params) {
       {sources: sources, targets: targets, delim: delim,

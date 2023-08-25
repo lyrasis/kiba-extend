@@ -10,7 +10,9 @@ RSpec.describe Kiba::Extend::Transforms::Merge::ConstantValueConditional do
   let(:fieldmap) { {reason: "gift", cost: "0"} }
   let(:condition) {
     ->(row) {
+      # rubocop:todo Layout/LineLength
       row[:note].is_a?(String) && row[:note].match?(/gift|donation/i) && row[:type] != "obj"
+      # rubocop:enable Layout/LineLength
     }
   }
   let(:input) do
@@ -47,7 +49,9 @@ RSpec.describe Kiba::Extend::Transforms::Merge::ConstantValueConditional do
       let(:condition) { ->(row) { row[:note] } }
 
       it "raises error" do
+        # rubocop:todo Layout/LineLength
         err = Kiba::Extend::Transforms::Merge::ConstantValueConditional::NonBooleanConditionError
+        # rubocop:enable Layout/LineLength
         expect { result }.to raise_error(err)
       end
     end
@@ -60,8 +64,12 @@ RSpec.describe Kiba::Extend::Transforms::Merge::ConstantValueConditional do
       }
 
       it "raises error" do
+        # rubocop:todo Layout/LineLength
         msg = %(Condition lambda throws error with row: {:note=>nil, :type=>"acq"})
+        # rubocop:enable Layout/LineLength
+        # rubocop:todo Layout/LineLength
         err = Kiba::Extend::Transforms::Merge::ConstantValueConditional::ConditionError
+        # rubocop:enable Layout/LineLength
         expect { result }.to raise_error(err, msg)
       end
     end

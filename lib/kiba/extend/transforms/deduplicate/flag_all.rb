@@ -6,11 +6,17 @@ module Kiba
       module Deduplicate
         # @since 2.9.0
         #
+        # rubocop:todo Layout/LineLength
         # Adds a field (specified as `in_field`) containing 'y' or 'n', indicating whether value of `on_field`
+        # rubocop:enable Layout/LineLength
         #   is a duplicate
         #
+        # rubocop:todo Layout/LineLength
         # In contrast with {Deduplicate::Flag}, where the first instance of a value in `on_field` is always
+        # rubocop:enable Layout/LineLength
+        # rubocop:todo Layout/LineLength
         #   marked `n`, with {Deduplicate::FlagAll}, **all rows containing a duplicate value in `on_field` are
+        # rubocop:enable Layout/LineLength
         #   marked `y`**.
         #
         # Input table:
@@ -28,7 +34,9 @@ module Kiba
         #
         # ```
         #   @deduper = {}
+        # rubocop:todo Layout/LineLength
         #   transform Deduplicate::FlagAll, on_field: :combined, in_field: :duplicate
+        # rubocop:enable Layout/LineLength
         # ```
         #
         # Results in:
@@ -45,7 +53,9 @@ module Kiba
         class FlagAll
           # @param on_field [Symbol] Field on which to deduplicate
           # @param in_field [Symbol] New field in which to add 'y' or 'n'
+          # rubocop:todo Layout/LineLength
           # @param explicit_no [Boolean] if false, `in_field` value for non-duplicate is left blank
+          # rubocop:enable Layout/LineLength
           #   use this transform
           def initialize(on_field:, in_field:, explicit_no: true)
             @on = on_field

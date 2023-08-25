@@ -80,7 +80,9 @@ RSpec.describe "Kiba::Extend::Registry::RegisteredDestination" do
           expect(result).to eq(expected)
         end
         it "warns about unsupported options" do
+          # rubocop:todo Layout/LineLength
           msg = "WARNING: Destination file :#{filekey} is called with special option :blah, which is unsupported by Kiba::Extend::Destinations::CSV\n"
+          # rubocop:enable Layout/LineLength
           expect { dest.args }.to output(msg).to_stdout
         end
       end

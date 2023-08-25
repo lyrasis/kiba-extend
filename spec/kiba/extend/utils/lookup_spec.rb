@@ -21,7 +21,9 @@ RSpec.describe Kiba::Extend::Utils::Lookup do
         {id: "3", val: "d"}]
     }
 
+    # rubocop:todo Layout/LineLength
     it "returns hash with key = keycolumn value and value = array of all rows w/that key " do
+      # rubocop:enable Layout/LineLength
       result = Lookup.csv_to_hash(file: test_csv,
         csvopt: Kiba::Extend.csvopts,
         keycolumn: :id)

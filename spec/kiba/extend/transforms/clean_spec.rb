@@ -27,7 +27,9 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
       context "when direction = :asc" do
         let(:transforms) do
           Kiba.job_segment do
+            # rubocop:todo Layout/LineLength
             transform Clean::AlphabetizeFieldValues, fields: %i[type], delim: ";", usenull: false,
+              # rubocop:enable Layout/LineLength
               direction: :asc
           end
         end
@@ -48,7 +50,9 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
         context "when direction = :desc" do
           let(:transforms) do
             Kiba.job_segment do
+              # rubocop:todo Layout/LineLength
               transform Clean::AlphabetizeFieldValues, fields: %i[type], delim: ";", usenull: false,
+                # rubocop:enable Layout/LineLength
                 direction: :desc
             end
           end
@@ -73,7 +77,9 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
       context "when direction = :asc" do
         let(:transforms) do
           Kiba.job_segment do
+            # rubocop:todo Layout/LineLength
             transform Clean::AlphabetizeFieldValues, fields: %i[type], delim: ";", usenull: true,
+              # rubocop:enable Layout/LineLength
               direction: :asc
           end
         end
@@ -95,7 +101,9 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
       context "when direction = :desc" do
         let(:transforms) do
           Kiba.job_segment do
+            # rubocop:todo Layout/LineLength
             transform Clean::AlphabetizeFieldValues, fields: %i[type], delim: ";", usenull: true,
+              # rubocop:enable Layout/LineLength
               direction: :desc
           end
         end
@@ -176,7 +184,9 @@ RSpec.describe Kiba::Extend::Transforms::Clean do
         ["1", "not;empty", "not;empty", "not;empty", "not;empty", "not;empty"],
         ["2", "not;", "not;", ";empty", "not;empty", ";empty"],
         ["3", ";", ";", ";empty", ";empty", ";empty"],
+        # rubocop:todo Layout/LineLength
         ["5", "%NULLVALUE%;%NULLVALUE%", "%NULLVALUE%;%NULLVALUE%", "not;empty", "%NULLVALUE%;empty",
+          # rubocop:enable Layout/LineLength
           "empty;%NULLVALUE%"],
         ["6", ";", ";", "%NULLVALUE%;empty", "%NULLVALUE%;empty",
           "%NULLVALUE%;empty"]

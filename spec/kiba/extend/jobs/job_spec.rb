@@ -92,7 +92,9 @@ RSpec.describe "Kiba::Extend::Jobs::Job" do
         missing_file = File.join(fixtures_dir, "base_job_missing.csv")
         creator = double
         Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry.new
+        # rubocop:todo Layout/LineLength
         entries = {base_lookup: {path: File.join(fixtures_dir, "base_job_lookup.csv"), supplied: true, lookup_on: :letter},
+                   # rubocop:enable Layout/LineLength
                    base_dest: {path: @dest_file,
                                creator: Helpers.method(:fake_creator_method)},
                    missing_src: {path: missing_file,

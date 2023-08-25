@@ -17,7 +17,9 @@ module Kiba
       #   such values are written out as text string versions of their Ruby
       #   representations. That is, your CSV field value might be:
       #
+      # rubocop:todo Layout/LineLength
       # `{"65"=>{"title"=>"C1", "file"=>"66.jp2"}, "67"=>{"title"=>"C2", "file"=>"67.jp2"}}`
+      # rubocop:enable Layout/LineLength
       #
       # If you need to work with such a value in subsequent jobs (i.e. reading
       #   the string back in from the CSV), you can do something like:

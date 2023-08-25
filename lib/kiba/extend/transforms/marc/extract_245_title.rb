@@ -12,19 +12,25 @@ module Kiba
         # @example Just 245
         #   # 245 13 $a Un sextuor pour piano et cordes en mi bémol majeur
         #   # $h [sound recording] ; $b Divertimento sur des thémes de la
+        # rubocop:todo Layout/LineLength
         #   # Somnanbula de Bellini ; Sérénade sur des thémes d'Anna Bolena de
+        # rubocop:enable Layout/LineLength
         #   # Donizetti / $c Mikhail Glinka.
         #   rec = get_marc_record(index: 9)
         #   xform = Marc::Extract245Title.new
         #   result = xform.process(rec)[:title]
+        # rubocop:todo Layout/LineLength
         #   expected = "Un sextuor pour piano et cordes en mi bémol majeur ; Divertimento sur des thémes de la Somnanbula de Bellini ; Sérénade sur des thémes d'Anna Bolena de Donizetti"
+        # rubocop:enable Layout/LineLength
         #   expect(result).to eq(expected)
         # @example Deleting non-filing characters
         #   # Same MARC data as above example
         #   rec = get_marc_record(index: 9)
         #   xform = Marc::Extract245Title.new(delete_non_filing: true)
         #   result = xform.process(rec)[:title]
+        # rubocop:todo Layout/LineLength
         #   expected = "sextuor pour piano et cordes en mi bémol majeur ; Divertimento sur des thémes de la Somnanbula de Bellini ; Sérénade sur des thémes d'Anna Bolena de Donizetti"
+        # rubocop:enable Layout/LineLength
         #   expect(result).to eq(expected)
         # @example Deleting non-filing characters and upcasing first char
         #   # Same MARC data as above example
@@ -34,10 +40,14 @@ module Kiba
         #     upcase_first_filing_char: true
         #   )
         #   result = xform.process(rec)[:title]
+        # rubocop:todo Layout/LineLength
         #   expected = "Sextuor pour piano et cordes en mi bémol majeur ; Divertimento sur des thémes de la Somnanbula de Bellini ; Sérénade sur des thémes d'Anna Bolena de Donizetti"
+        # rubocop:enable Layout/LineLength
         #   expect(result).to eq(expected)
         # @example 880 and Preferring vernacular
+        # rubocop:todo Layout/LineLength
         #   # 245 10 $6 880-02 $a Jidō shinri hen / $c Nihon Ryōshin Saikyōiku
+        # rubocop:enable Layout/LineLength
         #   #   Kyōkai hen.
         #   # 880 10 $6 245-02 $a 兒童心理篇 / $c 日本兩親再教育協會編.
         #   rec = get_marc_record(index: 6)

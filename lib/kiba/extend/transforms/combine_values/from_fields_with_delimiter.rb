@@ -38,7 +38,9 @@ module Kiba
         #     {index: 'Keet hatched'}
         #   ]
         #   expect(result).to eq(expected)
+        # rubocop:todo Layout/LineLength
         # @example With custom sources, target (with same name as a source field), and delim
+        # rubocop:enable Layout/LineLength
         #   # Used in pipeline as:
         #   # transform CombineValues::FromFieldsWithDelimiter,
         #   #  sources: %i[name sex],

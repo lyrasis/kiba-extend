@@ -4,7 +4,9 @@ module Kiba
   module Extend
     module Transforms
       module Merge
+        # rubocop:todo Layout/LineLength
         # Merges given value into the given target field in every row. Target field is added new. If it already exists,
+        # rubocop:enable Layout/LineLength
         #   values in target field are overridden by contant value.
         #
         # ## Examples
@@ -13,7 +15,9 @@ module Kiba
         #
         # ```
         # {name: 'Weddy', sex: 'm', source: 'adopted'},
+        # rubocop:todo Layout/LineLength
         # {name: 'Kernel', sex: 'f', source: 'adopted', species: 'Numida meleagris'}
+        # rubocop:enable Layout/LineLength
         # ```
         #
         # Used in pipeline as:
@@ -29,7 +33,9 @@ module Kiba
         # {name: 'Kernel', sex: 'f', source: 'adopted', species: 'guinea fowl'}
         # ```
         #
+        # rubocop:todo Layout/LineLength
         # A warning will be printed to STDOUT since the existing `species` value is overwritten in
+        # rubocop:enable Layout/LineLength
         #   the second row.
         class ConstantValue
           include SingleWarnable
@@ -44,7 +50,9 @@ module Kiba
           # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             unless row.fetch(target, nil).blank?
+              # rubocop:todo Layout/LineLength
               add_single_warning("Any values in existing `#{target}` field will be overwritten with `#{value}`")
+              # rubocop:enable Layout/LineLength
             end
 
             row[target] = value

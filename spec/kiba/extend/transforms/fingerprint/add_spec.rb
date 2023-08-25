@@ -28,7 +28,9 @@ RSpec.describe Kiba::Extend::Transforms::Fingerprint::Add do
     it "raises error" do
       expect {
         result
+        # rubocop:todo Layout/LineLength
       }.to raise_error(Kiba::Extend::Transforms::Fingerprint::DelimiterCollisionError)
+      # rubocop:enable Layout/LineLength
     end
 
     context "when override_app_delim_check = true" do
@@ -69,7 +71,9 @@ RSpec.describe Kiba::Extend::Transforms::Fingerprint::Add do
     it "raises error" do
       expect {
         result
+        # rubocop:todo Layout/LineLength
       }.to raise_error(Kiba::Extend::Transforms::Fingerprint::DelimiterInValueError)
+      # rubocop:enable Layout/LineLength
     end
   end
 

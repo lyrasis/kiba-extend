@@ -262,7 +262,9 @@ RSpec.describe Kiba::Extend::Transforms::Merge::MultiRowLookup do
         ]
       end
 
+      # rubocop:todo Layout/LineLength
       it "merges specified constant values into specified fields for each row merged" do
+        # rubocop:enable Layout/LineLength
         expect(result).to eq(expected)
       end
     end
@@ -381,7 +383,9 @@ RSpec.describe Kiba::Extend::Transforms::Merge::MultiRowLookup do
         end
       end
 
+      # rubocop:todo Layout/LineLength
       it "merges specified constant values into specified fields for each row merged" do
+        # rubocop:enable Layout/LineLength
         expect(result).to eq(expected)
       end
     end
@@ -410,7 +414,9 @@ RSpec.describe Kiba::Extend::Transforms::Merge::MultiRowLookup do
       msg = "Lookup value `lookup (Symbol)` must be a Hash"
       expect {
         result
+        # rubocop:todo Layout/LineLength
       }.to raise_error(Kiba::Extend::Transforms::Merge::MultiRowLookup::LookupTypeError).with_message(msg)
+      # rubocop:enable Layout/LineLength
     end
   end
 end

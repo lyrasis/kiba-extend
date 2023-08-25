@@ -54,7 +54,9 @@ module Kiba
           end
 
           def get_first(rows)
+            # rubocop:todo Layout/LineLength
             return rows unless rows.length > 0 && toinclude && toinclude[:position] == "first"
+            # rubocop:enable Layout/LineLength
 
             [rows.first]
           end
@@ -74,10 +76,14 @@ module Kiba
             config.each do |chktype, value|
               case chktype
               when :field_empty
+                # rubocop:todo Layout/LineLength
                 bool << Lookup::CriteriaChecker.new(check_type: :emptiness, config: value, row: row,
+                  # rubocop:enable Layout/LineLength
                   mergerow: mrow).result
               when :field_equal
+                # rubocop:todo Layout/LineLength
                 bool << Lookup::CriteriaChecker.new(check_type: :equality, config: value, row: row,
+                  # rubocop:enable Layout/LineLength
                   mergerow: mrow).result
               when :multival_field_equal
                 bool << Lookup::CriteriaChecker.new(check_type: :mvequality,
@@ -86,7 +92,9 @@ module Kiba
                   mergerow: mrow,
                   sep: sep).result
               when :field_include
+                # rubocop:todo Layout/LineLength
                 bool << Lookup::CriteriaChecker.new(check_type: :inclusion, config: value, row: row,
+                  # rubocop:enable Layout/LineLength
                   mergerow: mrow).result
               when :multival_field_include
                 bool << Lookup::CriteriaChecker.new(check_type: :mvinclusion,

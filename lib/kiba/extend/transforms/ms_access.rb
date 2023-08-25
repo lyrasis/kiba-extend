@@ -5,7 +5,9 @@ require "bigdecimal"
 module Kiba
   module Extend
     module Transforms
+      # rubocop:todo Layout/LineLength
       # Transformations that handle data formats/issues seen when exporting from Microsoft Access
+      # rubocop:enable Layout/LineLength
       module MsAccess
         ::MsAccess = Kiba::Extend::Transforms::MsAccess
         class ScientificNotationToNumberString
