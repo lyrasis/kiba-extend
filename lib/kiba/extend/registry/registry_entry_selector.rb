@@ -3,7 +3,9 @@
 module Kiba
   module Extend
     module Registry
+      # rubocop:todo Layout/LineLength
       # Used in Rake tasks in project application to identify particular files/jobs
+      # rubocop:enable Layout/LineLength
       #   to run or display information about
       class RegistryEntrySelector
         # Registry entries created by a given class
@@ -36,9 +38,8 @@ module Kiba
         # @return [Array<FileRegistryEntry>]
         def tagged_any(*args)
           tags = args.flatten.map(&:to_sym)
-          results = tags.inject([]) do |arr, arg|
+          results = tags.each_with_object([]) do |arg, arr|
             arr << tagged(arg)
-            arr
           end
           results.flatten.uniq
         end

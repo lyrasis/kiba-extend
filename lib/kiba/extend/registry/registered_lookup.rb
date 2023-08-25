@@ -1,12 +1,14 @@
 # frozen_string_literal: true
 
-require_relative 'registered_file'
-require_relative 'requirable_file'
+require_relative "registered_file"
+require_relative "requirable_file"
 
 module Kiba
   module Extend
     module Registry
+      # rubocop:todo Layout/LineLength
       # Value object representing a file registered in a {Kiba::Extend::FileRegistry} that is being
+      # rubocop:enable Layout/LineLength
       #   called into another job as a lookup table
       #
       # Assumes this file will be used to build a {Kiba::Extend::Lookup}
@@ -21,12 +23,18 @@ module Kiba
           end
         end
 
+        # rubocop:todo Layout/LineLength
         # Exception raised if {Kiba::Extend::FileRegistry} contains no lookup key for file
+        # rubocop:enable Layout/LineLength
         class NoLookupKeyError < NameError
           include Kiba::Extend::ErrMod
+          # rubocop:todo Layout/LineLength
           # @param filekey [Symbol] key not found in {Kiba::Extend::FileRegistry}
+          # rubocop:enable Layout/LineLength
           def initialize(filekey)
+            # rubocop:todo Layout/LineLength
             msg = "No lookup key column found for :#{filekey} in file registry hash"
+            # rubocop:enable Layout/LineLength
             super(msg)
           end
         end
@@ -34,9 +42,13 @@ module Kiba
         # Exception raised if the lookup key value for the file is not a Symbol
         class NonSymbolLookupKeyError < TypeError
           include Kiba::Extend::ErrMod
+          # rubocop:todo Layout/LineLength
           # @param filekey [Symbol] key not found in {Kiba::Extend::FileRegistry}
+          # rubocop:enable Layout/LineLength
           def initialize(filekey)
+            # rubocop:todo Layout/LineLength
             msg = "Lookup key found for :#{filekey} is not a Ruby Symbol. Prepend a : to the field name to fix."
+            # rubocop:enable Layout/LineLength
             super(msg)
           end
         end
@@ -57,7 +69,7 @@ module Kiba
         # Arguments for calling {Kiba::Extend::Lookup} with this file
         # @return [Hash]
         def args
-          { file: path, keycolumn: lookup_on }.merge(options)
+          {file: path, keycolumn: lookup_on}.merge(options)
         end
 
         def klass
@@ -68,9 +80,9 @@ module Kiba
 
         def options
           label = src_class.lookup_options_key
-          return {label=>src_opt} if src_opt
+          return {label => src_opt} if src_opt
 
-          {label=>src_class.default_file_options}
+          {label => src_class.default_file_options}
         end
       end
     end

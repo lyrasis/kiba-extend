@@ -7,7 +7,9 @@ module Kiba
       module Append
         ::Append = Kiba::Extend::Transforms::Append
 
+        # rubocop:todo Layout/LineLength
         # Adds the given field(s) to the row with nil value if they do not already exist in row
+        # rubocop:enable Layout/LineLength
         #
         # # Examples
         #
@@ -33,7 +35,9 @@ module Kiba
         # | zz | nil | nil | nil |
         # ```
         class NilFields
+          # rubocop:todo Layout/LineLength
           # @param fields [Array<Symbol>, Symbol] field name or list of field names to add
+          # rubocop:enable Layout/LineLength
           def initialize(fields:)
             @fields = [fields].flatten
           end
@@ -47,7 +51,9 @@ module Kiba
           end
         end
 
+        # rubocop:todo Layout/LineLength
         # Adds the given value to the end of value of the given field. Does not affect nil/empty field values
+        # rubocop:enable Layout/LineLength
         #
         # # Examples
         #

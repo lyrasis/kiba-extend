@@ -4,7 +4,9 @@ module Kiba
   module Extend
     module Transforms
       module FilterRows
+        # rubocop:todo Layout/LineLength
         # Keep or reject rows based on whether the given field is populated. Blank strings and nils count as
+        # rubocop:enable Layout/LineLength
         #   not populated.
         #
         # ## Examples

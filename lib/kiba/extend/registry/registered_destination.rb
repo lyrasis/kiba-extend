@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'registered_file'
+require_relative "registered_file"
 
 module Kiba
   module Extend
@@ -46,13 +46,13 @@ module Kiba
         private
 
         def dest_opts
-          return {dest_class.options_key=>dest_opt} if dest_opt
+          return {dest_class.options_key => dest_opt} if dest_opt
 
           dest_class.labeled_options
         end
 
         def simple_args
-          {dest_class.path_key=>path}.merge(dest_opts)
+          {dest_class.path_key => path}.merge(dest_opts)
         end
 
         def supported_special_opts

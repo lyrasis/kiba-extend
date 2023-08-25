@@ -4,15 +4,27 @@ module Kiba
   module Extend
     module Transforms
       module Deduplicate
+        # rubocop:todo Layout/LineLength
         # Given a field on which to deduplicate, removes duplicate rows from table
+        # rubocop:enable Layout/LineLength
         #
+        # rubocop:todo Layout/LineLength
         # Keeps the row with the first instance of the value in the deduplicating field
+        # rubocop:enable Layout/LineLength
         #
+        # rubocop:todo Layout/LineLength
         # Tip: Use {Kiba::Extend::Transforms::CombineValues::FromFieldsWithDelimiter} or
+        # rubocop:enable Layout/LineLength
+        # rubocop:todo Layout/LineLength
         #   {Kiba::Extend::Transforms::CombineValues::FullRecord} to create a combined field on which to deduplicate
+        # rubocop:enable Layout/LineLength
         #
+        # rubocop:todo Layout/LineLength
         # @note This transform runs in memory, so for very large sources, it may take a long time or fail. In this
+        # rubocop:enable Layout/LineLength
+        # rubocop:todo Layout/LineLength
         #   case, use a combination of {Flag} and {Kiba::Extend::Transforms::FilterRows::FieldEqualTo}
+        # rubocop:enable Layout/LineLength
         #
         # Input table:
         #
@@ -44,7 +56,9 @@ module Kiba
         # @since 2.2.0
         class Table
           # @param field [Symbol] name of field on which to deduplicate
+          # rubocop:todo Layout/LineLength
           # @param delete_field [Boolean] whether to delete the deduplication field after doing deduplication
+          # rubocop:enable Layout/LineLength
           def initialize(field:, delete_field: false)
             @field = field
             @deduper = {}

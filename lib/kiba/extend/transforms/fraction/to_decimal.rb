@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# rubocop:todo Layout/LineLength
 module Kiba
   module Extend
     module Transforms
@@ -104,11 +105,11 @@ module Kiba
           # @param delete_sources [Boolean] If `targets` are given, `fields` are deleted from row. Has no effect
           #   if no `targets` are given, or if the target for a field equals the field.
           def initialize(fields:,
-                         targets: nil,
-                         target_format: :string,
-                         places: 4,
-                         whole_fraction_sep: [' ', '-'],
-                         delete_sources: false)
+            targets: nil,
+            target_format: :string,
+            places: 4,
+            whole_fraction_sep: [" ", "-"],
+            delete_sources: false)
             @fields = [fields].flatten
             @targets = targets ? [targets].flatten : nil
             @target_format = target_format
@@ -119,14 +120,15 @@ module Kiba
 
           # @param row [Hash{ Symbol => String, nil }]
           def process(row)
-            fields.each{ |field| to_decimal(field, row) }
+            fields.each { |field| to_decimal(field, row) }
             delete_source_fields(row)
             row
           end
 
           private
 
-          attr_reader :fields, :targets, :target_format, :places, :delete_sources, :extractor
+          attr_reader :fields, :targets, :target_format, :places,
+            :delete_sources, :extractor
 
           def delete_source_fields(row)
             return unless delete_sources && targets
@@ -180,3 +182,4 @@ module Kiba
     end
   end
 end
+# rubocop:enable Layout/LineLength

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'marc'
+require "marc"
 
 module Kiba
   module Extend
@@ -26,14 +26,12 @@ module Kiba
           # @param record [MARC::Record]
           # @return [Hash{ Symbol => String, nil }]
           def process(record)
-            row = {id_target=>idextractor.call(record)}
-            row
+            {id_target => idextractor.call(record)}
           end
 
           private
 
           attr_reader :id_target, :idextractor
-
         end
       end
     end

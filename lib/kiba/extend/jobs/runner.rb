@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative 'reporter'
+require_relative "reporter"
 
 module Kiba
   module Extend
@@ -11,9 +11,13 @@ module Kiba
       #   which is why they are separated out into a module
       module Runner
         include Reporter
+        # rubocop:todo Layout/LineLength
         # Error raised if dependency file is still missing after we tried to run dependencies
+        # rubocop:enable Layout/LineLength
         class MissingDependencyError < Kiba::Extend::Error
+          # rubocop:todo Layout/LineLength
           # @param filekey [Symbol] key for which a file path was not found in {Kiba::Extend::FileRegistry}
+          # rubocop:enable Layout/LineLength
           def initialize(filekey, path)
             msg = "Cannot locate dependent file for #{filekey} at #{path}"
             super(msg)
@@ -25,7 +29,9 @@ module Kiba
           tell_me_decoration
         end
 
+        # rubocop:todo Layout/LineLength
         # Add lookup tables to the context as methods memoized to instance variables
+        # rubocop:enable Layout/LineLength
         def add_lookup(config)
           key_as_iv = "@#{config.key}".to_sym
 
@@ -77,12 +83,12 @@ module Kiba
 
         def destinations
           @files[:destination].map { |config| file_config(config) }
-            .map{ |src| "destination #{src[:klass]}, **#{src[:args]}" }
+            .map { |src| "destination #{src[:klass]}, **#{src[:args]}" }
             .join("\n")
         end
 
         def file_config(config)
-          { klass: config.klass, args: config.args }
+          {klass: config.klass, args: config.args}
         end
 
         def handle_requirements
@@ -122,7 +128,7 @@ module Kiba
 
         def sources
           @files[:source].map { |config| file_config(config) }
-            .map{ |src| "source #{src[:klass]}, **#{src[:args]}" }
+            .map { |src| "source #{src[:klass]}, **#{src[:args]}" }
             .join("\n")
         end
 

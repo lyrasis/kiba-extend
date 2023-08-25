@@ -1,25 +1,25 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 # rubocop:disable Metrics/BlockLength
-RSpec.describe 'Kiba::Extend::Jobs::JsonToCsvJob' do
+RSpec.describe "Kiba::Extend::Jobs::JsonToCsvJob" do
   subject(:job) do
     Kiba::Extend::Jobs::JsonToCsvJob.new(files: config, transformer: xforms)
   end
 
-  context 'with JsonDir source' do
+  context "with JsonDir source" do
     before(:context) do
       reg = Kiba::Extend::Registry::FileRegistry.new
       Kiba::Extend.config.registry = reg
-      @dest_file = File.join(fixtures_dir, 'json_to_csv_job_dest.csv')
+      @dest_file = File.join(fixtures_dir, "json_to_csv_job_dest.csv")
       FileUtils.rm(@dest_file) if File.exist?(@dest_file)
       entries = {
         json_dir_src: {
-          path: File.join(fixtures_dir, 'json_dir'),
+          path: File.join(fixtures_dir, "json_dir"),
           supplied: true,
           src_class: Kiba::Extend::Sources::JsonDir,
-          src_opt: {recursive: true, filesuffixes: ['.json', '.txt']}
+          src_opt: {recursive: true, filesuffixes: [".json", ".txt"]}
         },
         csv_dest: {
           path: @dest_file,
@@ -47,7 +47,7 @@ RSpec.describe 'Kiba::Extend::Jobs::JsonToCsvJob' do
       end
     end
 
-    it 'runs and produces expected result' do
+    it "runs and produces expected result" do
       job
       result = CSV.table(@dest_file)
       expect(result.size).to eq(4)

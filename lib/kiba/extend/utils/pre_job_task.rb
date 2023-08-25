@@ -7,11 +7,13 @@ module Kiba
         class << self
           def call
             use_setting = :pre_job_task_run
+            # rubocop:todo Layout/LineLength
             return unless Kiba::Extend.respond_to?(use_setting) && Kiba::Extend.send(use_setting)
-              
+            # rubocop:enable Layout/LineLength
+
             action = Kiba::Extend.pre_job_task_action
             return unless action && valid_action?(action)
-            
+
             case action
             when :backup then Kiba::Extend::Utils::PreJobBackupTask.call
             when :nuke then Kiba::Extend::Utils::PreJobNukeTask.call
@@ -19,11 +21,13 @@ module Kiba
           end
 
           private
-          
+
           def valid_action?(action_setting)
             return true if %i[backup nuke].any?(action_setting)
 
+            # rubocop:todo Layout/LineLength
             msg = "PreJobTask cannot be run because :pre_job_task_action is not :backup or :nuke"
+            # rubocop:enable Layout/LineLength
             warn(msg)
             false
           end
@@ -41,7 +45,7 @@ module Kiba
           dirs_setting = Kiba::Extend.pre_job_task_directories
           return unless valid_dirs?(dirs_setting)
 
-          @dirs = dirs_setting.select{ |dir| Dir.exist?(dir) }
+          @dirs = dirs_setting.select { |dir| Dir.exist?(dir) }
         end
 
         private
@@ -49,27 +53,35 @@ module Kiba
         attr_reader :dirs, :action, :mode
 
         def configured?(meth)
-          return true if Kiba::Extend.respond_to?(meth) unless Kiba::Extend.send(meth).nil?
+          unless Kiba::Extend.send(meth).nil?
+            return true if Kiba::Extend.respond_to?(meth)
+          end
 
+          # rubocop:todo Layout/LineLength
           msg = "PreJobTask cannot be run because no #{meth} setting is configured"
+          # rubocop:enable Layout/LineLength
           warn(msg)
           false
         end
 
         def valid_dirs?(dirs_setting)
           return false if dirs_setting.empty?
-          
-          nonexist = dirs_setting.reject{ |dir| Dir.exist?(dir) }
+
+          nonexist = dirs_setting.reject { |dir| Dir.exist?(dir) }
           return true if nonexist.empty?
 
           if nonexist == dirs_setting
+            # rubocop:todo Layout/LineLength
             msg = ["PreJobTask cannot be run because no :pre_job_task_directories exist:"]
-            nonexist.each{ |dir| msg << dir }
+            # rubocop:enable Layout/LineLength
+            nonexist.each { |dir| msg << dir }
             warn(msg.join("\n"))
             false
           else
+            # rubocop:todo Layout/LineLength
             msg = ["Some PreJobTask directories will be skipped they do not exist:"]
-            nonexist.each{ |dir| msg << dir }
+            # rubocop:enable Layout/LineLength
+            nonexist.each { |dir| msg << dir }
             warn(msg.join("\n"))
             true
           end

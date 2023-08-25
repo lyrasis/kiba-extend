@@ -1,11 +1,13 @@
 # frozen_string_literal: true
 
-require 'bigdecimal'
+require "bigdecimal"
 
 module Kiba
   module Extend
     module Transforms
+      # rubocop:todo Layout/LineLength
       # Transformations that handle data formats/issues seen when exporting from Microsoft Access
+      # rubocop:enable Layout/LineLength
       module MsAccess
         ::MsAccess = Kiba::Extend::Transforms::MsAccess
         class ScientificNotationToNumberString
@@ -26,7 +28,7 @@ module Kiba
             return if value.blank?
             return unless value.match?(/[Ee][-+]/)
 
-            row[field] = BigDecimal(value).to_s.sub(/\.0+$/, '')
+            row[field] = BigDecimal(value).to_s.sub(/\.0+$/, "")
             # "%f" % value
           end
         end

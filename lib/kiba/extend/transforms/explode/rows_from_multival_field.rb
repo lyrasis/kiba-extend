@@ -60,7 +60,7 @@ module Kiba
 
           # @param row [Hash{ Symbol => String, nil }]
           def process(row)
-            exploder.process(row){ |r| yield r }
+            exploder.process(row) { |r| yield r }
           end
 
           private

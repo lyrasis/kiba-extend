@@ -98,6 +98,7 @@ These changes are merged into the `main` branch, but have not been released. Aft
 === Dev
 * Adds `Kiba::Extend::ErrMod` module to be included into `Kiba::Extend`-specific error classes. This allows us to subclass each application-specific error to the semantically appropriate Ruby exception class, while retaining the ability to identify/scope/rescue only application-specific errors. (PR#138)
 * Add `:info` method to `Kiba::Extend::ErrMod` module, to print error type, message, and backtrace to STDOUT in a consistent way. (PR#141)
+* Set up https://github.com/standardrb/standard[standardrb] linting, with Kristina's standard (ha) minor overrides (PR#169)
 
 == Releases
 

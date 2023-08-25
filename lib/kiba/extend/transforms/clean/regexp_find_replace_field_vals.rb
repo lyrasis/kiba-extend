@@ -4,7 +4,6 @@ module Kiba
   module Extend
     module Transforms
       module Clean
-
         # Performs specified regular expression find/replace in the specified
         #   field(s)
         #
@@ -165,7 +164,9 @@ module Kiba
         #     {val: 'bats|bats', val_repl: 'bats|bat'}
         #   ]
         #   expect(result).to eq(expected)
+        # rubocop:todo Layout/LineLength
         # @example With `multival: true` and :sep (Compare to replacement value in previous example)
+        # rubocop:enable Layout/LineLength
         #   xform = Clean::RegexpFindReplaceFieldVals.new(
         #     fields: :val,
         #     find: 's$',
@@ -213,12 +214,12 @@ module Kiba
           #   field. New field name is same as old field name, with "_repl"
           #   suffix added
           def initialize(fields:, find:, replace:, casesensitive: true,
-                         multival: false, sep: nil, debug: false)
+            multival: false, sep: nil, debug: false)
             @fields = [fields].flatten
-            if casesensitive == true
-              @find = Regexp.new(find)
+            @find = if casesensitive == true
+              Regexp.new(find)
             else
-              @find = Regexp.new(find, Regexp::IGNORECASE)
+              Regexp.new(find, Regexp::IGNORECASE)
             end
             @replace = replace
             @debug = debug

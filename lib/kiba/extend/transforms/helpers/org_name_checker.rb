@@ -17,7 +17,7 @@ module Kiba
               added_patterns: [],
               family_is_org: false
             )
-              self.new(
+              new(
                 added_patterns: added_patterns,
                 family_is_org: family_is_org
               ).call(value)
@@ -60,27 +60,27 @@ module Kiba
           LIST
 
           DEFAULT_PATTERNS = [
-              / LLC/i,
-              / co$/i,
-              / corp$/i,
-              /\bdept$/i,
-              /\bdept\./i,
-              /\binc$/i,
-              /\binc\./i,
-              /^\w+ (?:&|and) \w+$/,
-              /^(\w+,? )+(?:&|and) \w+$/,
-              /'s$/,
-              /\b(inter|multi)?national\b/i,
-              / (network|project|services?)$/i,
-              /\.com$/,
-              /publish/i,
-              # term at beginning
-              /^#{TERMS}\b.+/ix,
-              # term between other terms
-              /.+\b#{TERMS}\b.+/ix,
-              # term at end
-              /.+\b#{TERMS}$/ix
-            ]
+            / LLC/i,
+            / co$/i,
+            / corp$/i,
+            /\bdept$/i,
+            /\bdept\./i,
+            /\binc$/i,
+            /\binc\./i,
+            /^\w+ (?:&|and) \w+$/,
+            /^(\w+,? )+(?:&|and) \w+$/,
+            /'s$/,
+            /\b(inter|multi)?national\b/i,
+            / (network|project|services?)$/i,
+            /\.com$/,
+            /publish/i,
+            # term at beginning
+            /^#{TERMS}\b.+/ix,
+            # term between other terms
+            /.+\b#{TERMS}\b.+/ix,
+            # term at end
+            /.+\b#{TERMS}$/ix
+          ]
 
           FAMILY_PATTERNS = [
             / famil(ies|y)/i

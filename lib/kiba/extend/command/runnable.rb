@@ -5,7 +5,7 @@ module Kiba
     module Command
       module Runnable
         module_function
-        
+
         def resolve_job(key)
           Kiba::Extend.registry.resolve(key)
         rescue Dry::Container::KeyError

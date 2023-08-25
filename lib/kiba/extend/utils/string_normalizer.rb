@@ -98,8 +98,8 @@ module Kiba
           #   handle weirdly internally
           # @param downcased [Boolean] whether to downcase result
           # @param str [String] to normalize
-          def call(mode: :plain, downcased: true, str:)
-            self.new(mode: mode, downcased: downcased).call(str)
+          def call(str:, mode: :plain, downcased: true)
+            new(mode: mode, downcased: downcased).call(str)
           end
         end
 
@@ -119,7 +119,7 @@ module Kiba
           end
           subs.each { |old, new| val = val.gsub(old, new) }
 
-          val = ActiveSupport::Inflector.transliterate(val).gsub(/\W/, '')
+          val = ActiveSupport::Inflector.transliterate(val).gsub(/\W/, "")
 
           downcased ? val.downcase : val
         end

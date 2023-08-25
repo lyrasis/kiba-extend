@@ -10,10 +10,10 @@ module Kiba
           case Kiba::Extend.job_verbosity
           when :verbose
             verbose_start
-            return
+            nil
           when :minimal
             minimal_start
-            return
+            nil
           else
             normal_start
           end
@@ -24,10 +24,10 @@ module Kiba
           case Kiba::Extend.job_verbosity
           when :verbose
             verbose_end
-            return
+            nil
           when :minimal
             minimal_end
-            return
+            nil
           else
             normal_end
           end
@@ -37,7 +37,7 @@ module Kiba
           puts "\n-=-=-=-=-=-=-=-=-=-=-=-"
           puts start_and_def
           puts desc_and_tags
-          puts ''
+          puts ""
           put_file_details
         end
 
@@ -45,7 +45,7 @@ module Kiba
           puts "\n-=-=-=-=-=-=-=-=-=-=-=-"
           puts start_and_def
           puts desc_and_tags
-          puts ''
+          puts ""
         end
 
         def minimal_start
@@ -57,45 +57,43 @@ module Kiba
           puts "\n#{job_data.key} complete (#{get_duration})"
           puts "#{row_report} written to #{job_data.path}"
           puts "NOTE: #{job_data.message.upcase}" if job_data.message
-          puts '-=-=-=-=-=-=-=-=-=-=-=-'
-          puts ''
+          puts "-=-=-=-=-=-=-=-=-=-=-=-"
+          puts ""
         end
 
         def normal_end
           puts "\n#{row_report} written to #{job_data.path} in #{get_duration}"
           puts "NOTE: #{job_data.message.upcase}" if job_data.message
-          puts '-=-=-=-=-=-=-=-=-=-=-=-'
-          puts ''
+          puts "-=-=-=-=-=-=-=-=-=-=-=-"
+          puts ""
         end
 
         # silent
         def minimal_end
           puts row_report
-          puts '-=-=-=-=-=-=-=-=-=-=-=-'
-          puts ''
-        end
-
-        def start_label
-          '->Starting dependency job'
+          puts "-=-=-=-=-=-=-=-=-=-=-=-"
+          puts ""
         end
 
         def desc_and_tags
           parts = [job_data.desc, tags].compact
           return if parts.empty?
 
-          parts.join(' -- ')
+          parts.join(" -- ")
         end
 
         def put_file_details
-          puts 'SOURCES'
+          puts "SOURCES"
           @files[:source].each { |src| puts "source #{src.klass} #{src.args}" }
-          puts 'DESTINATIONS'
-          @files[:destination].each { |dest| puts "destination #{dest.klass} #{dest.args}" }
+          puts "DESTINATIONS"
+          @files[:destination].each { |dest|
+            puts "destination #{dest.klass} #{dest.args}"
+          }
           if @files[:lookup]
-            puts 'LOOKUPS'
+            puts "LOOKUPS"
             @files[:lookup].each { |lkup| puts "lookup #{lkup.args}" }
           end
-          puts ''
+          puts ""
         end
 
         def row_report
@@ -103,18 +101,18 @@ module Kiba
         end
 
         def start_label
-          'Starting job'
+          @dependency ? "->Starting dependency job" : "Starting job"
         end
 
         def start_and_def
-          "#{start_label}: #{job_data.key} -- defined in: #{job_data.creator.to_s}"
+          "#{start_label}: #{job_data.key} -- defined in: #{job_data.creator}"
         end
 
         def tags
           tags = job_data.tags
           return unless tags
 
-          "tags: [#{tags.join(', ')}]"
+          "tags: [#{tags.join(", ")}]"
         end
 
         def get_duration

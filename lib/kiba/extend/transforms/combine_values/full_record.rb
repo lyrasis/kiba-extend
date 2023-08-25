@@ -87,8 +87,8 @@ module Kiba
           #   field name is the same as one of the source fields, the target
           #   field is not deleted.
           def initialize(target: :index, sep: nil, delim: nil,
-                         prepend_source_field_name: false,
-                         delete_sources: false)
+            prepend_source_field_name: false,
+            delete_sources: false)
             super
           end
         end

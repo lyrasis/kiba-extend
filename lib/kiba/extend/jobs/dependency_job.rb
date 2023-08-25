@@ -40,7 +40,7 @@ module Kiba
         end
 
         def start_label
-          '->Starting dependency job'
+          "->Starting dependency job"
         end
       end
     end

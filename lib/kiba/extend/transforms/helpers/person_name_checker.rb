@@ -26,7 +26,7 @@ module Kiba
               added_patterns: [],
               family_is_person: false
             )
-              self.new(
+              new(
                 added_patterns: added_patterns,
                 family_is_person: family_is_person
               ).call(value)
@@ -34,8 +34,7 @@ module Kiba
           end
 
           # rubocop:disable Layout/LineLength
-          DEFAULT_PATTERNS = [
-          ]
+          DEFAULT_PATTERNS = []
 
           ANTIPATTERNS = [
             /^\d/,
@@ -63,10 +62,9 @@ module Kiba
           # @param order [:direct, :inverted] expected order of names. Has no
           #   effect if `mode=:lenient`
           def initialize(added_patterns: [], family_is_person: false,
-                         name_lists: [File.join(Kiba::Extend.ke_dir, "data",
-                                                "us_names_1880-2022_gt100.txt")
-                                     ],
-                         mode: :strict, order: :inverted)
+            name_lists: [File.join(Kiba::Extend.ke_dir, "data",
+              "us_names_1880-2022_gt100.txt")],
+            mode: :strict, order: :inverted)
             base = DEFAULT_PATTERNS + added_patterns
             @patterns = family_is_person ? base + FAMILY_PATTERNS : base
             anti = ANTIPATTERNS
@@ -88,7 +86,7 @@ module Kiba
               value.match?(pattern)
             end
 
-            mode == :lenient ? lenient_check(value) : strict_check(value)
+            (mode == :lenient) ? lenient_check(value) : strict_check(value)
           end
 
           private
@@ -96,20 +94,20 @@ module Kiba
           attr_reader :patterns, :antipatterns, :names, :mode, :order
 
           def set_up_names(files)
-            files.map{ |file| File.readlines(file, chomp: true) }
+            files.map { |file| File.readlines(file, chomp: true) }
               .flatten
               .to_set
           end
 
           def lenient_check(value)
             value.split(" ")
-              .map{ |segment| segment.gsub(/\W/, "") }
-              .reject{ |segment| segment.length == 1 }
-              .any?{ |segment| names.member?(segment) }
+              .map { |segment| segment.gsub(/\W/, "") }
+              .reject { |segment| segment.length == 1 }
+              .any? { |segment| names.member?(segment) }
           end
 
           def strict_check(value)
-            order == :direct ? direct_check(value) : inverted_check(value)
+            (order == :direct) ? direct_check(value) : inverted_check(value)
           end
 
           def direct_check(value)
@@ -128,7 +126,7 @@ module Kiba
             parts = value.split(", ")
             return false if parts.length == 1
 
-            nonsurname = parts[1..-1]
+            nonsurname = parts[1..]
               .join(", ")
             return true if start_with_title?(nonsurname)
             return true if is_initials?(nonsurname)

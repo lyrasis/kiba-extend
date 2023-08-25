@@ -4,8 +4,9 @@ module Kiba
   module Extend
     module Transforms
       module Delete
-
+        # rubocop:todo Layout/LineLength
         # Deletes full field value of all given fields that match the given regular expression pattern.
+        # rubocop:enable Layout/LineLength
         #   You can control whether the regexp is case sensitive or not
         #
         # # Examples
@@ -26,7 +27,9 @@ module Kiba
         # Used in pipeline as:
         #
         # ```
+        # rubocop:todo Layout/LineLength
         # transform Delete::FieldValueMatchingRegexp, fields: %i[a b], match: 'xx+'
+        # rubocop:enable Layout/LineLength
         # ```
         #
         # Results in:
@@ -53,7 +56,9 @@ module Kiba
         # Used in pipeline as:
         #
         # ```
+        # rubocop:todo Layout/LineLength
         # transform Delete::FieldValueMatchingRegexp, fields: %i[a b], match: '^xx+', casesensitive: false
+        # rubocop:enable Layout/LineLength
         # ```
         #
         # Results in:
@@ -66,11 +71,14 @@ module Kiba
         #
         class FieldValueMatchingRegexp
           # @param fields [Array<Symbol>,Symbol] field(s) to delete from
+          # rubocop:todo Layout/LineLength
           # @param match [String] value to match. Is converted to a regular expression pattern via `Regexp.new(match)`
+          # rubocop:enable Layout/LineLength
           # @param casesensitive [Boolean] match mode
           def initialize(fields:, match:, casesensitive: true)
             @fields = [fields].flatten
-            @match = casesensitive ? Regexp.new(match) : Regexp.new(match, Regexp::IGNORECASE)
+            @match = casesensitive ? Regexp.new(match) : Regexp.new(match,
+              Regexp::IGNORECASE)
           end
 
           # @param row [Hash{ Symbol => String, nil }]

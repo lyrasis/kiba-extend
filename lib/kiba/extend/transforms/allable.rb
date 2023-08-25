@@ -3,11 +3,15 @@
 module Kiba
   module Extend
     module Transforms
+      # rubocop:todo Layout/LineLength
       # Mixin module providing `finalize_fields` method for transforms that accept `fields: :all`.
+      # rubocop:enable Layout/LineLength
       #
       # ## Usage
       #
+      # rubocop:todo Layout/LineLength
       # Any transform classes mixing in this module must have `fields` as an attr_reader
+      # rubocop:enable Layout/LineLength
       #
       # Set the `fields` instance variable from user input as follows:
       #
@@ -24,6 +28,7 @@ module Kiba
       # @since 2.8.0
       module Allable
         ::Allable = Kiba::Extend::Transforms::Allable
+
         module_function
 
         def all_fields(row)
@@ -31,17 +36,17 @@ module Kiba
           @fields_set = true
         end
         private_class_method :all_fields
-        
+
         def all_is_field
           @fields_set = true
         end
         private_class_method :all_is_field
-        
+
         def fields_set
           @fields_set
         end
         private_class_method :fields_set
-        
+
         def finalize_fields(row)
           if fields == [:all]
             row.key?(:all) ? all_is_field : all_fields(row)

@@ -9,21 +9,37 @@ module Kiba
       module Explode
         ::Explode = Kiba::Extend::Transforms::Explode
 
+        # rubocop:todo Layout/LineLength
         # This one is hard to succintly describe! Use it if you have specific fields grouped together in a row, and you want to abstract them so the fields are broader, and you reduce the number of fields.
+        # rubocop:enable Layout/LineLength
         #
+        # rubocop:todo Layout/LineLength
         # In the example, 3 fields in each row represent fruit names and 2 fields in each row represent colors. We want more rows, but each row should have only one fruit column and color column.
+        # rubocop:enable Layout/LineLength
         #
         # # Example
         #
         # Input table:
         #
         # ```
+        # rubocop:todo Layout/LineLength
         # | f1           | c1          | f2         | c2    | season | f3          |
+        # rubocop:enable Layout/LineLength
+        # rubocop:todo Layout/LineLength
         # |--------------+-------------+------------+-------+--------+-------------|
+        # rubocop:enable Layout/LineLength
+        # rubocop:todo Layout/LineLength
         # | strawberry   | red         | blueberry  | blue  | spring | cherry      |
+        # rubocop:enable Layout/LineLength
+        # rubocop:todo Layout/LineLength
         # | fig;honeydew | brown;green | watermelon | green | summer | nil         |
+        # rubocop:enable Layout/LineLength
+        # rubocop:todo Layout/LineLength
         # | nil          | nil         | nil        | nil   | winter | grapefruit  |
+        # rubocop:enable Layout/LineLength
+        # rubocop:todo Layout/LineLength
         # | nil          | nil         | nil        | nil   | autumn | nil         |
+        # rubocop:enable Layout/LineLength
         # ```
         #
         # Used in pipeline as:
@@ -54,11 +70,17 @@ module Kiba
         #
         # ## Things to notice
         #
+        # rubocop:todo Layout/LineLength
         # * The fact that some field values are multivalued is completely ignored
+        # rubocop:enable Layout/LineLength
         # * If all the values for a given remap group are blank, no row is added
+        # rubocop:todo Layout/LineLength
         # * Values in fields not included in `remap_groups` are copied to every row created
+        # rubocop:enable Layout/LineLength
         class ColumnsRemappedInNewRows
+          # rubocop:todo Layout/LineLength
           # @param remap_groups [Array(Array(Symbol))] The existing field groups that should be
+          # rubocop:enable Layout/LineLength
           def initialize(remap_groups:, map_to:)
             @groups = remap_groups
             @map = map_to
@@ -68,7 +90,9 @@ module Kiba
           def process(row)
             to_new_rows = new_row_groups(row)
             if to_new_rows.empty?
-              newrow = @map.map { |field| [field, nil] }.to_h.merge(other_fields(row))
+              newrow = @map.map { |field|
+                [field, nil]
+              }.to_h.merge(other_fields(row))
               yield(newrow)
             else
               to_new_rows.each do |grp_data|
@@ -98,7 +122,8 @@ module Kiba
         end
 
         class FieldValuesToNewRows
-          def initialize(target:, fields: [], multival: false, sep: ' ', keep_nil: false, keep_empty: false)
+          def initialize(target:, fields: [], multival: false, sep: " ",
+            keep_nil: false, keep_empty: false)
             @fields = [fields].flatten
             @target = target
             @multival = multival
@@ -116,14 +141,14 @@ module Kiba
             @fields.each do |field|
               val = row.fetch(field, nil)
               vals = if val.nil?
-                       [nil]
-                     elsif val.empty?
-                       ['']
-                     elsif @multival
-                       val.split(@sep, -1)
-                     else
-                       [val]
-                     end
+                [nil]
+              elsif val.empty?
+                [""]
+              elsif @multival
+                val.split(@sep, -1)
+              else
+                [val]
+              end
 
               vals.each do |val|
                 next if !@keep_nil && val.nil?

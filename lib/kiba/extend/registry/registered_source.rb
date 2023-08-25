@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-require_relative 'registered_file'
-require_relative 'requirable_file'
+require_relative "registered_file"
+require_relative "requirable_file"
 
 module Kiba
   module Extend
@@ -23,7 +23,7 @@ module Kiba
         # Arguments for calling Kiba Source class
         # @return [Hash]
         def args
-          {src_class.path_key=>path}.merge(src_opts)
+          {src_class.path_key => path}.merge(src_opts)
         end
 
         def klass
@@ -34,7 +34,7 @@ module Kiba
 
         def src_opts
           if src_opt && src_class.options_key
-            return {src_class.options_key => src_opt}
+            {src_class.options_key => src_opt}
           elsif src_opt
             src_opt
           else

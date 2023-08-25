@@ -4,7 +4,6 @@ module Kiba
   module Extend
     module Transforms
       module Prepend
-
         # Adds the specified value to the specified field
         #
         # If target field value is blank, it is left blank
@@ -31,9 +30,13 @@ module Kiba
         #
         # @example Treated as multivalue
         #   # Used in pipeline as:
+        # rubocop:todo Layout/LineLength
         #   # transform Prepend::ToFieldValue, field: :name, value: 'aka: ', multival: true, delim: '|'
+        # rubocop:enable Layout/LineLength
         #
+        # rubocop:todo Layout/LineLength
         #   xform = Prepend::ToFieldValue.new(field: :name, value: 'aka: ', multival: true, delim: '|')
+        # rubocop:enable Layout/LineLength
         #   input = [
         #       {name: 'Weddy'},
         #       {name: 'Kernel|Zipper'},
@@ -49,12 +52,15 @@ module Kiba
         #     ]
         #   expect(result).to eq(expected)
         class ToFieldValue
+          # rubocop:todo Layout/LineLength
           # @note `mvdelim` argument is deprecated and replaced by `multival` and `delim`
+          # rubocop:enable Layout/LineLength
           # @param field [Symbol] The field to prepend to
           # @param value [String] The value to be prepended
           # @param multival [Boolean] Whether prepend to multiple values
           # @param delim [String] for splitting value if `multival`
-          def initialize(field:, value:, multival: false, delim: Kiba::Extend.delim)
+          def initialize(field:, value:, multival: false,
+            delim: Kiba::Extend.delim)
             @field = field
             @value = value
             @multival = multival
@@ -67,7 +73,9 @@ module Kiba
             return row if fieldval.blank?
 
             fieldvals = multival ? fieldval.split(delim) : [fieldval]
-            row[field] = fieldvals.map { |fieldval| "#{value}#{fieldval}" }.join(delim)
+            row[field] = fieldvals.map { |fieldval|
+              "#{value}#{fieldval}"
+            }.join(delim)
             row
           end
 

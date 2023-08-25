@@ -6,7 +6,9 @@ module Kiba
       class Creator
         class HashCreatorArgsTypeError < Kiba::Extend::Error
           def initialize(args)
+            # rubocop:todo Layout/LineLength
             super("Registry::Creator passed Hash with #{args.class} `args`. Give a Hash instead.")
+            # rubocop:enable Layout/LineLength
           end
         end
       end

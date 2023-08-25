@@ -9,13 +9,21 @@ module Kiba
         ::Extract = Kiba::Extend::Transforms::Extract
 
         # Extracts the values of the given fields to a single `:value` column
-        # 
+        #
+        # rubocop:todo Layout/LineLength
         # Inserts a `:from_field` column recording original field name for the value
+        # rubocop:enable Layout/LineLength
+        # rubocop:todo Layout/LineLength
         #   in each row. This can be turned off, resulting in a single-column result.
+        # rubocop:enable Layout/LineLength
         #
+        # rubocop:todo Layout/LineLength
         # Optionally, if given `:sep` value, splits multi-val fields to separate rows.
+        # rubocop:enable Layout/LineLength
         #
+        # rubocop:todo Layout/LineLength
         # @note This will collapse any source data to a one or two column result. It runs in-memory,
+        # rubocop:enable Layout/LineLength
         #   so for very large sources, it may take a long time or fail
         #
         # Input table:
@@ -50,7 +58,9 @@ module Kiba
         # Used in pipeline as:
         #
         # ```
+        # rubocop:todo Layout/LineLength
         # transform Extract::Fields, fields: %i[foo bar], source_field_track: false
+        # rubocop:enable Layout/LineLength
         # ```
         #
         # Results in:
@@ -73,12 +83,12 @@ module Kiba
           end
 
           def process(row)
-            @fields.each{ |field| extract_field_value(row, field) }
+            @fields.each { |field| extract_field_value(row, field) }
             nil
           end
 
           def close
-            @rows.each{ |row| yield row }
+            @rows.each { |row| yield row }
           end
 
           private
@@ -90,8 +100,9 @@ module Kiba
             vals = @sep ? field_val.split(@sep) : [field_val]
             vals.each do |val|
               next if val.blank?
-              
-              new_row = @track ? { value: val, from_field: field } : { value: val }
+
+              new_row = @track ? {value: val,
+                                  from_field: field} : {value: val}
               @rows << new_row
             end
           end

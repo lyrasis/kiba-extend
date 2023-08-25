@@ -31,7 +31,9 @@ module Kiba
           path.dirname
         end
 
+        # rubocop:todo Layout/LineLength
         # Used by FileRegistry.transform to add the key as an instance variable to each Entry
+        # rubocop:enable Layout/LineLength
         def set_key(key)
           @key = key
         end
@@ -52,19 +54,21 @@ module Kiba
         def summary_first_line
           return key.to_s if tags.blank?
 
-          "#{key} -- tags: #{tags.join(', ')}"
+          "#{key} -- tags: #{tags.join(", ")}"
         end
 
         def summary_creator
           lines = []
-          arr = creator.to_s.delete_prefix('#<Method: ').delete_suffix('>').split(' ')
+          # rubocop:todo Layout/LineLength
+          arr = creator.to_s.delete_prefix("#<Method: ").delete_suffix(">").split(" ")
+          # rubocop:enable Layout/LineLength
           lines << "Job method: #{arr[0]}"
           lines << "Job defined at: #{arr[1]}"
-          lines.map{ |line| "#{summary_padding}#{line}" }.join("\n")
+          lines.map { |line| "#{summary_padding}#{line}" }.join("\n")
         end
 
         def summary_padding
-          '    '
+          "    "
         end
 
         # Whether the Entry is valid
@@ -84,7 +88,7 @@ module Kiba
         def allowed_settings
           instance_variables
             .map(&:to_s)
-            .map { |str| str.delete_prefix('@') }
+            .map { |str| str.delete_prefix("@") }
             .map(&:to_sym)
         end
 
@@ -95,7 +99,7 @@ module Kiba
         def assign_value(key, val)
           if allowed_setting?(key)
             if key == :dest_special_opts
-              val.transform_values!{ |v| v.is_a?(Proc) ? v.call : v }
+              val.transform_values! { |v| v.is_a?(Proc) ? v.call : v }
             elsif key == :creator
               val = set_up_creator(val)
             else
@@ -114,7 +118,7 @@ module Kiba
 
         def path_required?
           chk = [dest_class, src_class].map do |klass|
-              klass.requires_path?
+            klass.requires_path?
           end
           return false if chk.uniq == [false]
 
@@ -124,7 +128,7 @@ module Kiba
         def set_defaults
           @type = :file
           @creator = nil
-          @desc = ''
+          @desc = ""
           @dest_class = Kiba::Extend.destination
           @dest_opt = nil
           @dest_special_opts = nil
@@ -169,7 +173,7 @@ module Kiba
         end
 
         def validate_supplied_lookup
-          return if src_class.name.end_with?('CSV')
+          return if src_class.name.end_with?("CSV")
 
           @errors[:cannot_lookup_from_nonCSV_supplied_source] = nil
         end

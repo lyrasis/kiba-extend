@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require "spec_helper"
 
 RSpec.describe Kiba::Extend::Transforms::Count::MatchingRowsInLookup do
   before do
@@ -12,7 +12,7 @@ RSpec.describe Kiba::Extend::Transforms::Count::MatchingRowsInLookup do
 
   let(:rows) do
     [
-      ['id'],
+      ["id"],
       [0],
       [1],
       [2]
@@ -20,13 +20,16 @@ RSpec.describe Kiba::Extend::Transforms::Count::MatchingRowsInLookup do
   end
   let(:lookup_rows) do
     [
-      ['id'],
+      ["id"],
       [1],
       [2],
       [2]
     ]
   end
-  let(:lookup) { Lookup.csv_to_hash(file: lookup_csv, csvopt: Kiba::Extend.csvopts, keycolumn: :id) }
+  let(:lookup) {
+    Lookup.csv_to_hash(file: lookup_csv, csvopt: Kiba::Extend.csvopts,
+      keycolumn: :id)
+  }
   let(:xformopt) do
     {
       lookup: lookup,
@@ -38,19 +41,22 @@ RSpec.describe Kiba::Extend::Transforms::Count::MatchingRowsInLookup do
     generate_lookup_csv(lookup_rows)
   end
 
-  context 'with default result_type (:str)' do
-    it 'merges count of lookup rows to be merged into specified field as string' do
+  context "with default result_type (:str)" do
+    # rubocop:todo Layout/LineLength
+    it "merges count of lookup rows to be merged into specified field as string" do
+      # rubocop:enable Layout/LineLength
       expected = [
-        { id: '0', ct: '0' },
-        { id: '1', ct: '1' },
-        { id: '2', ct: '2' }
+        {id: "0", ct: "0"},
+        {id: "1", ct: "1"},
+        {id: "2", ct: "2"}
       ]
-      result = execute_job(filename: test_csv, xform: Count::MatchingRowsInLookup, xformopt: xformopt)
+      result = execute_job(filename: test_csv,
+        xform: Count::MatchingRowsInLookup, xformopt: xformopt)
       expect(result).to eq(expected)
     end
   end
 
-  context 'with result_type :int' do
+  context "with result_type :int" do
     let(:xformopt) do
       {
         lookup: lookup,
@@ -59,15 +65,17 @@ RSpec.describe Kiba::Extend::Transforms::Count::MatchingRowsInLookup do
         result_type: :int
       }
     end
-    it 'merges count of lookup rows to be merged into specified field as integer' do
+    # rubocop:todo Layout/LineLength
+    it "merges count of lookup rows to be merged into specified field as integer" do
+      # rubocop:enable Layout/LineLength
       expected = [
-        { id: '0', ct: 0 },
-        { id: '1', ct: 1 },
-        { id: '2', ct: 2 }
+        {id: "0", ct: 0},
+        {id: "1", ct: 1},
+        {id: "2", ct: 2}
       ]
-      result = execute_job(filename: test_csv, xform: Count::MatchingRowsInLookup, xformopt: xformopt)
+      result = execute_job(filename: test_csv,
+        xform: Count::MatchingRowsInLookup, xformopt: xformopt)
       expect(result).to eq(expected)
     end
   end
 end
-

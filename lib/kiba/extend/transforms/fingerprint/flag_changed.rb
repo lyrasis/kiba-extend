@@ -140,9 +140,9 @@ module Kiba
           #   fingerprint that should NOT compared/flagged
           # @param empty_equals_nil [Boolean] whether to treat blank and nil
           #   values as equal
-          def initialize(fingerprint:, source_fields:, target:, delim: '␟',
-                         prefix: 'fp', delete_fp: false, ignore_fields: [],
-                         empty_equals_nil: true)
+          def initialize(fingerprint:, source_fields:, target:, delim: "␟",
+            prefix: "fp", delete_fp: false, ignore_fields: [],
+            empty_equals_nil: true)
             @decoder = Decode.new(
               fingerprint: fingerprint,
               source_fields: source_fields,
@@ -172,13 +172,13 @@ module Kiba
           private
 
           attr_reader :decoder, :target, :empty_equals_nil, :source_fields,
-                      :target_fields
+            :target_fields
 
           def record_changes(row)
             source_fields.map.with_index do |field, idx|
               field_unchanged?(row, field, idx) ? nil : field
             end
-                         .compact
+              .compact
           end
 
           def field_unchanged?(row, field, idx)

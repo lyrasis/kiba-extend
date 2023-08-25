@@ -4,21 +4,37 @@ module Kiba
   module Extend
     module Utils
       module Lookup
+        # rubocop:todo Layout/LineLength
         # Sorts an array of rows on a given field, according to the given parameters
+        # rubocop:enable Layout/LineLength
         #
         # Currently this class can be used as an optional argument to
+        # rubocop:todo Layout/LineLength
         #   {Kiba::Extend::Transforms::Merge::MultiRowLookup}, if you need to ensure values from
+        # rubocop:enable Layout/LineLength
         #   multiple looked-up rows are merged in a particular order.
         #
+        # rubocop:todo Layout/LineLength
         # @note This class is **not** a transform to sort the rows in a job. It was not designed
+        # rubocop:enable Layout/LineLength
+        # rubocop:todo Layout/LineLength
         #   or tested with more than a few rows in any given #call. It may be possible to
+        # rubocop:enable Layout/LineLength
+        # rubocop:todo Layout/LineLength
         #   leverage this to create a `Sort::Rows` transform in the future, but it would be
+        # rubocop:enable Layout/LineLength
+        # rubocop:todo Layout/LineLength
         #   subject to the same types of performance issues present with any of the "hold all rows
+        # rubocop:enable Layout/LineLength
         #   in memory at the same time" transforms.
         #
         # Currently only supports sorting values as strings (the default) or as
+        # rubocop:todo Layout/LineLength
         #   integers (passing `as: :to_i`). If you need to sort by dates, you must add
+        # rubocop:enable Layout/LineLength
+        # rubocop:todo Layout/LineLength
         #   a column to your lookup table that expresses the date as an integer. For
+        # rubocop:enable Layout/LineLength
         #   simple/clean dates, something like this could work:
         #
         # ```
@@ -86,11 +102,15 @@ module Kiba
         class RowSorter
           # @since 2.8.0.83
           class MissingSortFieldError < Kiba::Extend::Error; end
-          
+
           # @param on [Symbol] field on which to sort the rows
           # @param dir [:asc, :desc] sort direction
+          # rubocop:todo Layout/LineLength
           # @param as [Symbol] method to call in order to convert field values for sorting
+          # rubocop:enable Layout/LineLength
+          # rubocop:todo Layout/LineLength
           # @param blanks [:first, :last] where to position blank values in the sorted list
+          # rubocop:enable Layout/LineLength
           def initialize(on:, dir: :asc, as: nil, blanks: :first)
             @sortfield = on
             @sortdir = dir
@@ -100,9 +120,11 @@ module Kiba
 
           # @param arr [Array<Hash>] array of rows to sort
           def call(arr)
+            # rubocop:todo Layout/LineLength
             fail MissingSortFieldError.new("Cannot sort on missing field: `#{sortfield}`") unless arr.first.key?(sortfield)
+            # rubocop:enable Layout/LineLength
 
-            blanks_sep = arr.group_by{ |row| row[sortfield].blank? }
+            blanks_sep = arr.group_by { |row| row[sortfield].blank? }
 
             blank = blanks_sep[true]
             not_blank = blanks_sep[false]
@@ -110,7 +132,7 @@ module Kiba
             sorted = sorted_nonblanks(not_blank)
 
             arranged = arrange_sorted_rows(sorted)
-            
+
             add_blanks(arranged, blank)
           end
 
@@ -119,7 +141,6 @@ module Kiba
           attr_reader :sortfield, :sortdir, :sortas, :blanks
 
           def add_blanks(notblank, blank)
-            sorted = notblank
             return [blank, notblank].compact.flatten if blanks == :first
 
             [notblank, blank].compact.flatten
@@ -127,24 +148,24 @@ module Kiba
 
           def arrange_sorted_rows(sorted)
             asc = [sorted[Integer], sorted[String]]
-            ordered = sortdir == :asc ? asc : asc.reverse
+            ordered = (sortdir == :asc) ? asc : asc.reverse
             ordered.compact.flatten
           end
 
           def sorted_nonblanks(not_blank)
             return {Integer => [], String => []} if not_blank.nil?
-            
-            not_blank.map{ |row| { sortval: convert(row[sortfield]), row: row} }
-              .group_by{ |row| row[:sortval].class }
-              .map{ |klass, rows| [klass, sort(rows)] }
+
+            not_blank.map { |row| {sortval: convert(row[sortfield]), row: row} }
+              .group_by { |row| row[:sortval].class }
+              .map { |klass, rows| [klass, sort(rows)] }
               .to_h
-              .map{ |klass, rows| [klass, rows.map{ |row| row[:row] }] }
+              .map { |klass, rows| [klass, rows.map { |row| row[:row] }] }
               .to_h
           end
 
           def convert(val)
             return val unless sortas
-            
+
             case sortas
             when :to_i
               convert_to_i(val)
@@ -158,10 +179,10 @@ module Kiba
 
             val.to_i
           end
-          
+
           def sort(arr)
-            asc = arr.sort_by{ |row| row[:sortval] }
-            sortdir == :desc ? asc.reverse : asc
+            asc = arr.sort_by { |row| row[:sortval] }
+            (sortdir == :desc) ? asc.reverse : asc
           end
         end
       end

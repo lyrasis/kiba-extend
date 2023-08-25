@@ -6,13 +6,14 @@ module Kiba
     # Configuration and shared methods for MARC data
     module Marc
       module_function
+
       extend Dry::Configurable
 
       # @return [Symbol] field in which the write the field tag value from
       #   which data was extracted when converting MARC data to Hash row
       setting :field_tag_target, default: :sourcefield, reader: true
       # @return [String] the MARC field tag from which id value is extracted
-      setting :id_tag, default: '001', reader: true
+      setting :id_tag, default: "001", reader: true
       # @return [Proc, nil] Code to perform any further selection from the Array
       #   of fields having the configured {id_tag}, after any given
       #   {id_subfield} and {id_subfield_selector} constraints have been
@@ -24,7 +25,7 @@ module Kiba
       #   The Proc should return an Array of MARC::ControlField or
       #   MARC::DataField objects.
       setting :id_field_selector,
-        default: ->(fields){ [fields.first] },
+        default: ->(fields) { [fields.first] },
         reader: true
       # @return [String] subfield of :id_tag field from which to extract
       #   id
@@ -45,7 +46,7 @@ module Kiba
       #
       # The Proc should return a String.
       setting :id_value_formatter,
-        default: ->(values){ values.first },
+        default: ->(values) { values.first },
         reader: true
       # @return [Symbol] field in which to write the MARC id value when
       #   converting MARC data to CSV row
@@ -141,7 +142,7 @@ module Kiba
       #   tag
       def linked_fields(record, tag)
         record.find_all do |field|
-          field.tag == '880' && field['6'].start_with?(tag)
+          field.tag == "880" && field["6"].start_with?(tag)
         end
       end
     end

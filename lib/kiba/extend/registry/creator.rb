@@ -3,16 +3,18 @@
 module Kiba
   module Extend
     module Registry
+      # rubocop:todo Layout/LineLength
       # Bundles up the logic/options of different ways of validating and calling registry entry creators
+      # rubocop:enable Layout/LineLength
       class Creator
         attr_reader :mod, :meth, :args
-        
+
         def initialize(spec)
           @spec = spec.is_a?(Proc) ? spec.call : spec
           @mod = nil
           @meth = nil
           @args = nil
-          set_vars  
+          set_vars
         end
 
         def call
@@ -27,11 +29,11 @@ module Kiba
           mod_meth = "#{mod}.#{meth}"
           return mod_meth unless args
 
-          arg_str = args.map{ |key, val| "#{key}: #{val}" }
-            .join(', ')
+          arg_str = args.map { |key, val| "#{key}: #{val}" }
+            .join(", ")
           "#{mod_meth}(#{arg_str})"
         end
-        
+
         private
 
         attr_reader :spec
@@ -39,7 +41,7 @@ module Kiba
         def args_type_ok?
           spec[:args].is_a?(Hash)
         end
-        
+
         def callee_ok?
           callee = spec[:callee]
           callee.is_a?(Method) || callee.is_a?(Module)
@@ -47,11 +49,11 @@ module Kiba
 
         def set_vars
           case spec.class.to_s
-          when 'Method'
+          when "Method"
             setup_method_spec
-          when 'Module'
+          when "Module"
             setup_module_spec
-          when 'Hash'
+          when "Hash"
             setup_hash_spec
           else
             raise TypeError.new(spec)
@@ -65,9 +67,11 @@ module Kiba
 
           @args = spec[:args]
           callee = spec[:callee]
+          # rubocop:todo Layout/LineLength
           callee.is_a?(Method) ? setup_method_spec(callee) : setup_module_spec(callee)
+          # rubocop:enable Layout/LineLength
         end
-        
+
         def setup_method_spec(using = spec)
           @meth = using.name
           @mod = using.receiver
@@ -75,12 +79,13 @@ module Kiba
 
         def setup_module_spec(using = spec)
           default_job_method = Kiba::Extend.default_job_method_name
+          # rubocop:todo Layout/LineLength
           raise JoblessModuleCreatorError.new(using) unless using.private_method_defined?(default_job_method)
+          # rubocop:enable Layout/LineLength
 
           @mod = using
           @meth = default_job_method
         end
-
       end
     end
   end

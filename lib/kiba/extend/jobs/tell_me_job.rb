@@ -1,15 +1,18 @@
 # frozen_string_literal: true
 
-require 'kiba/extend'
+require "kiba/extend"
 module Kiba
   module Extend
     module Jobs
+      # rubocop:todo Layout/LineLength
       # Mixin to activate having computer say (out loud!) that the job is complete
+      # rubocop:enable Layout/LineLength
       #
       # Useful for long-running jobs
       module TellMeJob
         def decorate
-          context.instance_variable_set(:@job_key, job_data.key.to_s.delete('_'))
+          context.instance_variable_set(:@job_key,
+            job_data.key.to_s.delete("_"))
           parse_job(control, context, [tell])
         end
 

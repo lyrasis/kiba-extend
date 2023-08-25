@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Kiba
   module Extend
     module Transforms
@@ -58,7 +60,7 @@ module Kiba
         #     {r1: ['a','b'], r2: ['foo','bar']}
         #   ]
         #   expect(result).to eq(expected)
-        # 
+        #
         # @example Empty array when fieldval is nil and delim is nil
         #   # Used in pipeline as:
         #   # transform StringValue::ToArray, fields: :r1, delim: nil
@@ -71,7 +73,7 @@ module Kiba
         #     {r1: [], r2: 'foo;bar'}
         #   ]
         #   expect(result).to eq(expected)
-        # 
+        #
         # @example Empty array when fieldval is nil
         #   # Used in pipeline as:
         #   # transform StringValue::ToArray, fields: :r1
@@ -100,10 +102,10 @@ module Kiba
           def process(row)
             fields.each do |field|
               fieldval = row[field]
-              if delim.nil?
-                row[field] = fieldval.nil? ? [] : [fieldval]
+              row[field] = if delim.nil?
+                fieldval.nil? ? [] : [fieldval]
               else
-                row[field] = fieldval.nil? ? [] : fieldval.split(delim)
+                fieldval.nil? ? [] : fieldval.split(delim)
               end
             end
 

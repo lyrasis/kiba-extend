@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'marc'
+require "marc"
 
 module Kiba
   module Extend
@@ -46,7 +46,7 @@ module Kiba
         def candidate_fields(record)
           if subfield
             candidates = fields_with_tag(record)
-              .select{ |fld| fld.codes.any?(subfield) }
+              .select { |fld| fld.codes.any?(subfield) }
             return candidates unless subfield_selector
 
             fields_with_eligible_subfields(candidates)
@@ -57,7 +57,7 @@ module Kiba
 
         def fields_with_eligible_subfields(fields)
           fields.select do |field|
-            test = field.subfields.select{ |sf|
+            test = field.subfields.select { |sf|
               sf.code == subfield && subfield_selector.call(sf.value)
             }
             !test.empty?
@@ -67,11 +67,11 @@ module Kiba
         def selected_subfields(subfields)
           return subfields unless subfield_selector
 
-          subfields.select{ |sf| subfield_selector.call(sf.value) }
+          subfields.select { |sf| subfield_selector.call(sf.value) }
         end
 
         def fields_with_tag(record)
-          record.find_all{ |field| field.tag == tag}
+          record.find_all { |field| field.tag == tag }
         end
 
         def get_selected_fields(fields)
@@ -81,9 +81,9 @@ module Kiba
         end
 
         def subfields(fields)
-          fields.map{ |field| field.subfields }
+          fields.map { |field| field.subfields }
             .flatten
-            .select{ |subf| subf.code == subfield }
+            .select { |subf| subf.code == subfield }
         end
 
         def get_values(fields)

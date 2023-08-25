@@ -40,11 +40,15 @@ module Kiba
           # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             unless row.key?(from)
+              # rubocop:todo Layout/LineLength
               add_single_warning("Cannot rename field: `#{from}` does not exist in row")
+              # rubocop:enable Layout/LineLength
               return row
             end
 
+            # rubocop:todo Layout/LineLength
             add_single_warning("Renaming `#{from}` to `#{to}` overwrites existing `#{to}` field data") if row.key?(to)
+            # rubocop:enable Layout/LineLength
 
             row[to] = row.fetch(from)
             row.delete(from)

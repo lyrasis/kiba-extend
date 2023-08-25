@@ -4,21 +4,32 @@ module Kiba
   module Extend
     module Transforms
       module Fingerprint
-
+        # rubocop:todo Layout/LineLength
         # Adds a base64 strict encoded hash to the target field. The value hashed is the values of
+        # rubocop:enable Layout/LineLength
         #   the specified fields, joined into a string using the given delimiter
         #
+        # rubocop:todo Layout/LineLength
         # @note The `delim` used for this transform must not conflict with your application/project delimiters.
+        # rubocop:enable Layout/LineLength
+        # rubocop:todo Layout/LineLength
         #   For example, if your `delim` setting (for multivalue fields) is `|`, this `delim` value should not
+        # rubocop:enable Layout/LineLength
+        # rubocop:todo Layout/LineLength
         #   equal or contain that character. Otherwise, the fingerprint decoder may get confused about what is
+        # rubocop:enable Layout/LineLength
+        # rubocop:todo Layout/LineLength
         #   a separate field vs. multiple values inside one field, and things will be a mess.
+        # rubocop:enable Layout/LineLength
         #
         # # Examples
         #
         # Used in pipeline as:
         #
         # ```
+        # rubocop:todo Layout/LineLength
         # transform Fingerprint::Add, fields: %i[b c d e], delim: ';;;', target: :fp
+        # rubocop:enable Layout/LineLength
         # ```
         #
         # Input table:
@@ -45,11 +56,17 @@ module Kiba
         # | ant | be;;;e | nil | deer |   |
         # ```
         #
+        # rubocop:todo Layout/LineLength
         # Results in an error because column b contains the fingerprint delimiter. If you tried to decode the
+        # rubocop:enable Layout/LineLength
+        # rubocop:todo Layout/LineLength
         #   resulting fingerprint, you would get too many columns and loss of data integrity
+        # rubocop:enable Layout/LineLength
         #
         # ## Notes
+        # rubocop:todo Layout/LineLength
         # Before field values are joined, the following substitutions are run on all field values:
+        # rubocop:enable Layout/LineLength
         #
         # - `''` is converted to the string `'empty'`
         # - `nil` is converted to the string `'nil'`
@@ -70,7 +87,7 @@ module Kiba
           # @raise [DelimiterCollisionError] if `delim` conflicts with
           #   `Kiba::Extend.delim` or `Kiba::Extend.sgdelim`
           def initialize(fields:, target:, delim: "␟",
-                         override_app_delim_check: false)
+            override_app_delim_check: false)
             @override_app_delim_check = override_app_delim_check
             check_delim(delim)
             @fingerprinter = Kiba::Extend::Utils::FingerprintCreator.new(

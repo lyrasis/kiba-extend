@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'marc'
+require "marc"
 
 module Kiba
   module Extend
@@ -10,9 +10,9 @@ module Kiba
         # @param value [String]
         # @return [String]
         def call(value)
-          value.sub(/,$/, '')
+          value.sub(/,$/, "")
             .sub(/([^ .].)\.$/, '\1')
-            .sub(/,\.?$/, '')
+            .sub(/,\.?$/, "")
         end
       end
     end

@@ -4,7 +4,7 @@ module Kiba
   module Extend
     module Utils
       module Lookup
-         class CriteriaChecker
+        class CriteriaChecker
           attr_reader :result, :type
 
           def initialize(check_type:, config:, row:, mergerow: {}, sep: nil)
@@ -27,9 +27,9 @@ module Kiba
 
             case @type
             when :any
-              @result = bool.any? ? true : false
+              @result = bool.any?
             when :all
-              @result = bool.any?(false) ? false : true
+              @result = !bool.any?(false)
             end
           end
         end

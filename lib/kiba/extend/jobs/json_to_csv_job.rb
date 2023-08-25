@@ -11,14 +11,20 @@ module Kiba
 
         def initial_transforms
           Kiba.job_segment do
-            transform { |r| @srcrows += 1; r }
+            transform { |r|
+              @srcrows += 1
+              r
+            }
           end
         end
 
         def final_transforms
           Kiba.job_segment do
             transform Clean::EnsureConsistentFields
-            transform { |r| @outrows += 1; r }
+            transform { |r|
+              @outrows += 1
+              r
+            }
           end
         end
 

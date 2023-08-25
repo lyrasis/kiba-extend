@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'marc'
+require "marc"
 
 module Kiba
   module Extend
@@ -93,7 +93,9 @@ module Kiba
                 id_subfield_selector: id_subfield_selector,
                 id_value_formatter: id_value_formatter
               }.compact
+              # rubocop:todo Layout/LineLength
               @idextractor = Kiba::Extend::Utils::MarcIdExtractor.new(**settings)
+              # rubocop:enable Layout/LineLength
             end
 
             # @param record [MARC::Record] to check for ID match

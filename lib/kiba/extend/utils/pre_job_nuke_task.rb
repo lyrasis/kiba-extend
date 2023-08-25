@@ -6,20 +6,19 @@ module Kiba
       class PreJobNukeTask < PreJobTask
         class << self
           def call
-            self.new.call
+            new.call
           end
         end
 
         def call
           return unless runnable?
-          
+
           dirs.each do |dir|
             puts "Deleting files from #{dir}..."
-            Dir.each_child(dir){ |f| FileUtils.rm("#{dir}/#{f}") }
+            Dir.each_child(dir) { |f| FileUtils.rm("#{dir}/#{f}") }
           end
         end
 
-        
         private
 
         def runnable?

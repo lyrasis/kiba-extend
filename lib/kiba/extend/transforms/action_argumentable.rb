@@ -6,6 +6,7 @@ module Kiba
       # Mixin module providing consistent validation of `action` argument
       module ActionArgumentable
         ::ActionArgumentable = Kiba::Extend::Transforms::ActionArgumentable
+
         module_function
 
         # @raise {Kiba::Extend::InvalidActionError} if action is not :keep

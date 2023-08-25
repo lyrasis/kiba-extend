@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'marc'
+require "marc"
 
 module Kiba
   module Extend
@@ -11,7 +11,9 @@ module Kiba
         #
         # @example
         #   # =001  008000714-7
+        # rubocop:todo Layout/LineLength
         #   # =711  2\$aAssociation of Child Psychology Annual Conference.$esponsor$evenue
+        # rubocop:enable Layout/LineLength
         #   rec = get_marc_record(index: 6)
         #   xform = Marc::ExtractMeetingNameData.new
         #   results = []
@@ -32,15 +34,14 @@ module Kiba
           #   role code value
           # @param role_term_subfields [Array<String>] subfields to extract as
           #   role term value
-          def initialize(name_type: 'meeting',
-                         name_fields: Kiba::Extend::Marc.meeting_data_tags,
-                         name_subfields:
-                         Kiba::Extend::Marc.meeting_name_part_subfields,
-                         role_code_subfields:
-                         Kiba::Extend::Marc.meeting_role_code_subfields,
-                         role_term_subfields:
-                         Kiba::Extend::Marc.meeting_role_term_subfields
-                        )
+          def initialize(name_type: "meeting",
+            name_fields: Kiba::Extend::Marc.meeting_data_tags,
+            name_subfields:
+            Kiba::Extend::Marc.meeting_name_part_subfields,
+            role_code_subfields:
+            Kiba::Extend::Marc.meeting_role_code_subfields,
+            role_term_subfields:
+            Kiba::Extend::Marc.meeting_role_term_subfields)
             super
           end
         end

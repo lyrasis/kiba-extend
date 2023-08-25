@@ -12,7 +12,7 @@ module Kiba
           elsif path.nil?
             labeled_options
           else
-            {path_key=>path}.merge(labeled_options)
+            {path_key => path}.merge(labeled_options)
           end
         end
 
@@ -21,13 +21,13 @@ module Kiba
         # @return Nil of no default file options are configured
         def default_file_options
           raise NotImplementedError,
-            ':default_file_options must be defined in extending class'
+            ":default_file_options must be defined in extending class"
         end
 
         # @return Hash of file options
         def labeled_options
           if options_key && default_file_options
-            {options_key=>default_file_options}
+            {options_key => default_file_options}
           else
             {}
           end
@@ -39,7 +39,7 @@ module Kiba
         # @return Nil if no file options may be passed
         def options_key
           raise NotImplementedError,
-            ':options_key must be defined in extending class'
+            ":options_key must be defined in extending class"
         end
 
         # @abstract
@@ -48,14 +48,14 @@ module Kiba
         # @return Nil if no path is required
         def path_key
           raise NotImplementedError,
-            ':path_key must be defined in extending class'
+            ":path_key must be defined in extending class"
         end
 
         # @abstract
         # @return Boolean whether path to file must be provided
         def requires_path?
           raise NotImplementedError,
-            ':requires_path? must be defined in extending class'
+            ":requires_path? must be defined in extending class"
         end
       end
     end

@@ -99,7 +99,7 @@ module Kiba
           def initialize(normfield:, nonnormfield:, target: nil)
             @normfield = normfield
             @nonnormfield = nonnormfield
-            @target = target ||= normfield
+            @target = target || normfield
             @data = {}
             @rows = []
             @lookup = {}
@@ -134,7 +134,7 @@ module Kiba
                 data[norm][orig] = 1
               end
             else
-              data[norm] = { orig => 1 }
+              data[norm] = {orig => 1}
             end
           end
 
@@ -145,8 +145,8 @@ module Kiba
           end
 
           def most_frequent(cts)
-            cts.max { |pair1, pair2| pair1[1] <=> pair2[1] }
-               .first
+            cts.max_by { |a| a[1] }
+              .first
           end
 
           def finalize(row)

@@ -1,12 +1,11 @@
 # frozen_string_literal: true
 
-require 'base64'
+require "base64"
 
 module Kiba
   module Extend
     module Transforms
       module Fingerprint
-
         # Decodes a fingerprint string and expands it into its source fields
         # @since 2.7.1.65
         #
@@ -36,9 +35,15 @@ module Kiba
         # Results in:
         #
         # ```
+        # rubocop:todo Layout/LineLength
         # | a   | b   | c   | d    | e | fp                               | fp_b | fp_c | fp_d | fp_e |
+        # rubocop:enable Layout/LineLength
+        # rubocop:todo Layout/LineLength
         # |-----+-----+-----+------+---+----------------------------------+------+------+------+------|
+        # rubocop:enable Layout/LineLength
+        # rubocop:todo Layout/LineLength
         # | ant | bee | nil | deer |   | YmVlOzs7bmlsOzs7ZGVlcjs7O2VtcHR5 | bee  | nil  | deer |      |
+        # rubocop:enable Layout/LineLength
         # ```
         #
         # Used in pipeline as:
@@ -73,7 +78,7 @@ module Kiba
           # @param delete_fp [Boolean] whether to delete the given fingerprint
           #   field
           def initialize(fingerprint:, source_fields:, delim: "␟", prefix: "fp",
-                         delete_fp: false)
+            delete_fp: false)
             @fingerprint = fingerprint
             @source_fields = source_fields
             @delim = delim
@@ -89,7 +94,7 @@ module Kiba
           # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             @row_ct += 1
-            target_fields.each{ |field| row[field] = nil }
+            target_fields.each { |field| row[field] = nil }
 
             fpval = row.fetch(fingerprint, nil)
             row.delete(fingerprint) if delete
@@ -113,7 +118,7 @@ module Kiba
 
           def decode(fp)
             Base64.strict_decode64(fp)
-            .force_encoding("UTF-8")
+              .force_encoding("UTF-8")
           end
 
           def split(decoded)
@@ -121,8 +126,8 @@ module Kiba
           end
 
           def reconstitute(parts)
-            parts.map{ |val| val == 'nil' ? nil : val }
-              .map{ |val| val == 'empty' ? '' : val }
+            parts.map { |val| (val == "nil") ? nil : val }
+              .map { |val| (val == "empty") ? "" : val }
           end
 
           # @param fieldvals [Array<String>]
@@ -133,13 +138,14 @@ module Kiba
             warn(
               "#{Kiba::Extend.warning_label}: ROW #{@row_ct}: Expected "\
                 "#{num_fields} fields from decoded fingerprint. Got "\
-                "#{result_length}")
+                "#{result_length}"
+            )
           end
 
           def safe_decoded_value(val)
             return val if val.blank?
 
-            val.force_encoding('UTF-8')
+            val.force_encoding("UTF-8")
           end
         end
       end

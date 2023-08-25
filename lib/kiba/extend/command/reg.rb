@@ -5,7 +5,7 @@ module Kiba
     module Command
       module Reg
         module_function
-        
+
         def list
           puts Kiba::Extend::Registry::RegistryList.new
         end
