@@ -2,11 +2,11 @@
 
 require "spec_helper"
 
-RSpec.describe Kiba::Extend::Transforms::SepDeprecatable do
-  class Xform
-    include Kiba::Extend::Transforms::SepDeprecatable
-  end
+class Xform
+  include Kiba::Extend::Transforms::SepDeprecatable
+end
 
+RSpec.describe Kiba::Extend::Transforms::SepDeprecatable do
   subject(:mod) { Xform.new }
 
   describe "#usedelim" do

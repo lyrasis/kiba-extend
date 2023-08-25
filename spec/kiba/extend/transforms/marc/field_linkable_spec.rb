@@ -3,13 +3,12 @@
 require "marc"
 require "spec_helper"
 
+class Xform
+  include Kiba::Extend::Transforms::Marc::FieldLinkable
+end
+
 RSpec.describe Kiba::Extend::Transforms::Marc::FieldLinkable do
-  class Xform
-    include Kiba::Extend::Transforms::Marc::FieldLinkable
-  end
-
   subject(:klass) { Xform.new }
-
   before(:each) { Kiba::Extend::Marc.config.field_tag_target = :sourcefield }
   after(:each) { Kiba::Extend::Marc.reset_config }
 

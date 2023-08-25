@@ -2,17 +2,27 @@
 
 require "spec_helper"
 
-RSpec.describe Kiba::Extend::Transforms::MultivalPlusDelimDeprecatable do
-  class Xform
-    include Kiba::Extend::Transforms::MultivalPlusDelimDeprecatable
+class Xform
+  include Kiba::Extend::Transforms::MultivalPlusDelimDeprecatable
 
-    attr_reader :multival
+  attr_reader :multival
 
-    def initialize(multival: omitted = true)
-      @multival = set_multival(multival, omitted, self)
-    end
+  def initialize(multival: omitted = true)
+    @multival = set_multival(multival, omitted, self)
   end
+end
 
+class Warner
+  include Kiba::Extend::Transforms::MultivalPlusDelimDeprecatable
+end
+
+class MultivalXform < Xform
+  def multival_default
+    true
+  end
+end
+
+RSpec.describe Kiba::Extend::Transforms::MultivalPlusDelimDeprecatable do
   subject(:mod) { Xform.new(**params) }
 
   context "with no multival" do
@@ -26,13 +36,7 @@ RSpec.describe Kiba::Extend::Transforms::MultivalPlusDelimDeprecatable do
 
   context "with multival: true" do
     let(:params) { {multival: true} }
-    let(:body) do
-      class Warner
-        include Kiba::Extend::Transforms::MultivalPlusDelimDeprecatable
-      end
-
-      "#{Warner.new.send(:warning_body)}\n"
-    end
+    let(:body) { "#{Warner.new.send(:warning_body)}\n" }
     let(:warning) { "#{Kiba::Extend.warning_label}:\n  Xform: #{body}" }
 
     it "returns expected" do
@@ -46,13 +50,7 @@ RSpec.describe Kiba::Extend::Transforms::MultivalPlusDelimDeprecatable do
 
   context "with multival: false" do
     let(:params) { {multival: false} }
-    let(:body) do
-      class Warner
-        include Kiba::Extend::Transforms::MultivalPlusDelimDeprecatable
-      end
-
-      "#{Warner.new.send(:warning_body)}\n"
-    end
+    let(:body) { "#{Warner.new.send(:warning_body)}\n" }
     let(:warning) { "#{Kiba::Extend.warning_label}:\n  Xform: #{body}" }
 
     it "returns expected" do
@@ -65,19 +63,9 @@ RSpec.describe Kiba::Extend::Transforms::MultivalPlusDelimDeprecatable do
   end
 
   context "when default multival value = true" do
-    before do
-      class Xform
-        def multival_default
-          true
-        end
-      end
-    end
-    after do
-      mod.class.remove_method(:multival_default)
-    end
-
     context "with no multival" do
       let(:params) { {} }
+      let(:mod) { MultivalXform.new(**params) }
 
       it "returns expected" do
         expect(mod.multival).to be true
