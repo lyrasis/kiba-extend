@@ -8,20 +8,18 @@
 # This runs only on pull requests because (1) no one should be pushing anything that can break tests
 #   to main!; and (2) I want to be able to push documentation-only changes to main without waiting for
 #   tests to run
-name: Run Rspec Tests
+name: Run rspec, then rubocop
 
 on:
   pull_request:
     branches: [ main ]
 
 jobs:
-  test:
-
+  test-and-lint:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         ruby-version: ['3.1.0']
-
     steps:
     - uses: actions/checkout@v3
     - name: Set up Ruby
@@ -33,3 +31,5 @@ jobs:
         bundler-cache: true # runs 'bundle install' and caches installed gems automatically
     - name: Run tests
       run: bundle exec rake
+    - name: Run rubocop
+      run: bundle exec rubocop
