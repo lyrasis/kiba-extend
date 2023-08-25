@@ -211,7 +211,7 @@ module Kiba
           # What unit the given unit will be converted to
           #
           # Any custom conversions given are merged into this, so you can override the defaults
-          Conversions = {
+          CONVERSIONS = {
             "inches" => "centimeters",
             "centimeters" => "inches",
             "feet" => "meters",
@@ -223,7 +223,7 @@ module Kiba
           }
 
           # Used internally. You cannot override these
-          UnitTypes = {
+          UNIT_TYPES = {
             "inches" => Measured::Length,
             "centimeters" => Measured::Length,
             "feet" => Measured::Length,
@@ -238,7 +238,7 @@ module Kiba
           #
           # By default, these are set up to output unit names as found in CollectionSpace's measurementunits option list.
           #   Override these by passing in `unit_names` parameter
-          UnitNames = {
+          UNIT_NAMES = {
             "cm" => "centimeters",
             "ft" => "feet",
             "g" => "grams",
@@ -264,10 +264,10 @@ module Kiba
             @unit = unit
             @places = places
             @delim = delim
-            @types = UnitTypes
-            @conversions = Conversions.merge(conversions)
+            @types = UNIT_TYPES
+            @conversions = CONVERSIONS.merge(conversions)
             type_conversions(conversions)
-            @unit_names = UnitNames.merge(unit_names)
+            @unit_names = UNIT_NAMES.merge(unit_names)
             unless conversion_amounts.empty?
               set_up_custom_conversions(conversion_amounts)
               customize_types(conversion_amounts)
