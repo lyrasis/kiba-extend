@@ -150,7 +150,7 @@ DEPENDENCIES
   rubocop
   rubocop-rspec
   simplecov
-  standard (~> 1.21)
+  standard
   yard (~> 0.9.34)
   yardspec (~> 0.2.0)
 
