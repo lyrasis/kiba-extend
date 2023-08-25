@@ -141,7 +141,7 @@
   <h2>Instance Attribute Summary</h2>
   
   <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="RegisteredFile.html" title="Kiba::Extend::Registry::RegisteredFile (class)">RegisteredFile</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="RegisteredFile.html#data-instance_method" title="Kiba::Extend::Registry::RegisteredFile#data (method)">#data</a></span>, <span class='object_link'><a href="RegisteredFile.html#desc-instance_method" title="Kiba::Extend::Registry::RegisteredFile#desc (method)">#desc</a></span>, <span class='object_link'><a href="RegisteredFile.html#dest_class-instance_method" title="Kiba::Extend::Registry::RegisteredFile#dest_class (method)">#dest_class</a></span>, <span class='object_link'><a href="RegisteredFile.html#dest_opt-instance_method" title="Kiba::Extend::Registry::RegisteredFile#dest_opt (method)">#dest_opt</a></span>, <span class='object_link'><a href="RegisteredFile.html#dest_special_opts-instance_method" title="Kiba::Extend::Registry::RegisteredFile#dest_special_opts (method)">#dest_special_opts</a></span>, <span class='object_link'><a href="RegisteredFile.html#key-instance_method" title="Kiba::Extend::Registry::RegisteredFile#key (method)">#key</a></span>, <span class='object_link'><a href="RegisteredFile.html#lookup_on-instance_method" title="Kiba::Extend::Registry::RegisteredFile#lookup_on (method)">#lookup_on</a></span>, <span class='object_link'><a href="RegisteredFile.html#path-instance_method" title="Kiba::Extend::Registry::RegisteredFile#path (method)">#path</a></span>, <span class='object_link'><a href="RegisteredFile.html#src_class-instance_method" title="Kiba::Extend::Registry::RegisteredFile#src_class (method)">#src_class</a></span>, <span class='object_link'><a href="RegisteredFile.html#src_opt-instance_method" title="Kiba::Extend::Registry::RegisteredFile#src_opt (method)">#src_opt</a></span>, <span class='object_link'><a href="RegisteredFile.html#supplied-instance_method" title="Kiba::Extend::Registry::RegisteredFile#supplied (method)">#supplied</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="RegisteredFile.html#data-instance_method" title="Kiba::Extend::Registry::RegisteredFile#data (method)">#data</a></span>, <span class='object_link'><a href="RegisteredFile.html#desc-instance_method" title="Kiba::Extend::Registry::RegisteredFile#desc (method)">#desc</a></span>, <span class='object_link'><a href="RegisteredFile.html#dest_class-instance_method" title="Kiba::Extend::Registry::RegisteredFile#dest_class (method)">#dest_class</a></span>, <span class='object_link'><a href="RegisteredFile.html#dest_opt-instance_method" title="Kiba::Extend::Registry::RegisteredFile#dest_opt (method)">#dest_opt</a></span>, <span class='object_link'><a href="RegisteredFile.html#dest_special_opts-instance_method" title="Kiba::Extend::Registry::RegisteredFile#dest_special_opts (method)">#dest_special_opts</a></span>, <span class='object_link'><a href="RegisteredFile.html#key-instance_method" title="Kiba::Extend::Registry::RegisteredFile#key (method)">#key</a></span>, <span class='object_link'><a href="RegisteredFile.html#lookup_on-instance_method" title="Kiba::Extend::Registry::RegisteredFile#lookup_on (method)">#lookup_on</a></span>, <span class='object_link'><a href="RegisteredFile.html#path-instance_method" title="Kiba::Extend::Registry::RegisteredFile#path (method)">#path</a></span>, <span class='object_link'><a href="RegisteredFile.html#src_opt-instance_method" title="Kiba::Extend::Registry::RegisteredFile#src_opt (method)">#src_opt</a></span>, <span class='object_link'><a href="RegisteredFile.html#supplied-instance_method" title="Kiba::Extend::Registry::RegisteredFile#supplied (method)">#supplied</a></span></p>
 
 
   
@@ -221,7 +221,7 @@
   
   
   <h3 class="inherited">Methods inherited from <span class='object_link'><a href="RegisteredFile.html" title="Kiba::Extend::Registry::RegisteredFile (class)">RegisteredFile</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="RegisteredFile.html#initialize-instance_method" title="Kiba::Extend::Registry::RegisteredFile#initialize (method)">#initialize</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="RegisteredFile.html#initialize-instance_method" title="Kiba::Extend::Registry::RegisteredFile#initialize (method)">#initialize</a></span>, <span class='object_link'><a href="RegisteredFile.html#src_class-instance_method" title="Kiba::Extend::Registry::RegisteredFile#src_class (method)">#src_class</a></span></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
@@ -295,7 +295,7 @@
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/registered_source.rb', line 25</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_args'>args</span>
-  <span class='lbrace'>{</span><span class='id identifier rubyid_src_class'>src_class</span><span class='period'>.</span><span class='id identifier rubyid_path_key'>path_key</span><span class='op'>=&gt;</span><span class='id identifier rubyid_path'>path</span><span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_src_opts'>src_opts</span><span class='rparen'>)</span>
+  <span class='lbrace'>{</span><span class='id identifier rubyid_src_class'>src_class</span><span class='period'>.</span><span class='id identifier rubyid_path_key'>path_key</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_path'>path</span><span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_src_opts'>src_opts</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -361,7 +361,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:10 2023 by
+  Generated on Fri Aug 25 01:03:16 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

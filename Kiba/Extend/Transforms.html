@@ -89,27 +89,37 @@
   <div class="discussion">
     <p>Namespace for modules that organize Kiba transforms.</p>
 
-<p>Note that a Kiba transform is just a class that implements a public <code>process</code> method that
+<p>rubocop:todo Layout/LineLength
+Note that a Kiba transform is just a class that implements a public <code>process</code> method that
+rubocop:enable Layout/LineLength
   takes a row as its parameter and returns the transformed row.</p>
 
 <p>Because all Kiba transforms require this, that method is
-  commented as &quot;private&quot; for the sake of creating non-repetitive documentation.</p>
+rubocop:todo Layout/LineLength
+  commented as &quot;private&quot; for the sake of creating non-repetitive documentation.
+rubocop:enable Layout/LineLength</p>
 
 <h2 id="notes-on-commonly-used-parameters-in-tranforms">Notes on commonly used parameters in tranforms</h2>
 
 <h3 id="fields">fields</h3>
 
-<p>Expects an Array of field names. The field names should be Symbols unless you have
+<p>rubocop:todo Layout/LineLength
+Expects an Array of field names. The field names should be Symbols unless you have
+rubocop:enable Layout/LineLength
   overridden the default CSV converter which symbolizes header values.</p>
 
 <p><code>transform My::Transform, fields: %i[title author]</code></p>
 
-<p>Since 2.5.2, you may also pass a single Symbol and it will be wrapped in an Array for you
+<p>rubocop:todo Layout/LineLength
+Since 2.5.2, you may also pass a single Symbol and it will be wrapped in an Array for you
+rubocop:enable Layout/LineLength
   automagically.</p>
 
 <p><code>transform My::Transform, fields: :title</code></p>
 
-<p>If a transform mixes in <span class='object_link'><a href="Transforms/Allable.html" title="Kiba::Extend::Transforms::Allable (module)">Allable</a></span>, then you can specify that it should be applied to all fields: </p>
+<p>rubocop:todo Layout/LineLength
+If a transform mixes in <span class='object_link'><a href="Transforms/Allable.html" title="Kiba::Extend::Transforms::Allable (module)">Allable</a></span>, then you can specify that it should be applied to all fields:
+rubocop:enable Layout/LineLength</p>
 
 <p><code>transform My::Transform, fields: :all</code></p>
 
@@ -141,7 +151,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:08 2023 by
+  Generated on Fri Aug 25 01:03:15 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

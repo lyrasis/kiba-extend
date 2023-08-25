@@ -104,21 +104,34 @@
     
   <div class="note notetag">
     <strong>Note:</strong>
-    <div class='inline'><p>The <code>delim</code> used for this transform must not conflict with your application/project delimiters.
-For example, if your <code>delim</code> setting (for multivalue fields) is <code>|</code>, this <code>delim</code> value should not
-equal or contain that character. Otherwise, the fingerprint decoder may get confused about what is
-a separate field vs. multiple values inside one field, and things will be a mess.</p>
+    <div class='inline'><p>The <code>delim</code> used for this transform must not conflict with your application/project delimiters.</p>
 </div>
   </div>
 
-<p>Adds a base64 strict encoded hash to the target field. The value hashed is the values of
+<p>rubocop:todo Layout/LineLength
+Adds a base64 strict encoded hash to the target field. The value hashed is the values of
+rubocop:enable Layout/LineLength
   the specified fields, joined into a string using the given delimiter</p>
+
+<p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+  For example, if your <code>delim</code> setting (for multivalue fields) is <code>|</code>, this <code>delim</code> value should not
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+  equal or contain that character. Otherwise, the fingerprint decoder may get confused about what is
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+  a separate field vs. multiple values inside one field, and things will be a mess.
+rubocop:enable Layout/LineLength</p>
 
 <h1 id="examples">Examples</h1>
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Fingerprint.html" title="Kiba::Extend::Transforms::Fingerprint (module)">Fingerprint</a></span></span><span class='op'>::</span><span class='const'>Add</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>b</span><span class='words_sep'> </span><span class='tstring_content'>c</span><span class='words_sep'> </span><span class='tstring_content'>d</span><span class='words_sep'> </span><span class='tstring_content'>e</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;;;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>target:</span> <span class='symbol'>:fp</span>
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+transform Fingerprint::Add, fields: %i[b c d e], delim: &#39;;;;&#39;, target: :fp
+rubocop:enable Layout/LineLength
 </code></pre>
 
 <p>Input table:</p>
@@ -142,12 +155,18 @@ a separate field vs. multiple values inside one field, and things will be a mess
 | ant | be;;;e | nil | deer |   |
 </code></pre>
 
-<p>Results in an error because column b contains the fingerprint delimiter. If you tried to decode the
-  resulting fingerprint, you would get too many columns and loss of data integrity</p>
+<p>rubocop:todo Layout/LineLength
+Results in an error because column b contains the fingerprint delimiter. If you tried to decode the
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+  resulting fingerprint, you would get too many columns and loss of data integrity
+rubocop:enable Layout/LineLength</p>
 
 <h2 id="notes">Notes</h2>
 
-<p>Before field values are joined, the following substitutions are run on all field values:</p>
+<p>rubocop:todo Layout/LineLength
+Before field values are joined, the following substitutions are run on all field values:
+rubocop:enable Layout/LineLength</p>
 
 <ul>
 <li><code>&#39;&#39;</code> is converted to the string <code>&#39;empty&#39;</code></li>
@@ -377,23 +396,23 @@ and could result in un-decodeable fingerprints.</p>
       <pre class="lines">
 
 
-72
-73
-74
-75
-76
-77
-78
-79
-80
-81
-82</pre>
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/add.rb', line 72</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/add.rb', line 89</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span><span class='comma'>,</span> <span class='label'>target:</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>␟</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-               <span class='label'>override_app_delim_check:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+  <span class='label'>override_app_delim_check:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='ivar'>@override_app_delim_check</span> <span class='op'>=</span> <span class='id identifier rubyid_override_app_delim_check'>override_app_delim_check</span>
   <span class='id identifier rubyid_check_delim'>check_delim</span><span class='lparen'>(</span><span class='id identifier rubyid_delim'>delim</span><span class='rparen'>)</span>
   <span class='ivar'>@fingerprinter</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Utils.html" title="Kiba::Extend::Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Utils/FingerprintCreator.html" title="Kiba::Extend::Utils::FingerprintCreator (class)">FingerprintCreator</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../Utils/FingerprintCreator.html#initialize-instance_method" title="Kiba::Extend::Utils::FingerprintCreator#initialize (method)">new</a></span></span><span class='lparen'>(</span>
@@ -487,14 +506,14 @@ generate a fingerprint contains the fingerprint delimiter</p>
       <pre class="lines">
 
 
-87
-88
-89
-90
-91</pre>
+104
+105
+106
+107
+108</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/add.rb', line 87</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/add.rb', line 104</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='ivar'>@row_num</span> <span class='op'>+=</span> <span class='int'>1</span>
@@ -511,7 +530,7 @@ generate a fingerprint contains the fingerprint delimiter</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:10 2023 by
+  Generated on Fri Aug 25 01:03:16 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

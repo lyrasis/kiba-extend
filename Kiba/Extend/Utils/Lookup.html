@@ -123,7 +123,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#csv_to_hash-instance_method" title="#csv_to_hash (instance method)">#<strong>csv_to_hash</strong>(file:, csvopt: Kiba::Extend.csvopts, keycolumn:)  &#x21d2; Object </a>
+      <a href="#csv_to_hash-instance_method" title="#csv_to_hash (instance method)">#<strong>csv_to_hash</strong>(file:, keycolumn:, csvopt: Kiba::Extend.csvopts)  &#x21d2; Object </a>
     
 
     
@@ -139,7 +139,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>creates hash with keycolumn value as key and array of csv-rows-as-hashes as the value.</p>
+    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength creates hash with keycolumn value as key and array of csv-rows-as-hashes as the value rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength.</p>
 </div></span>
   
 </li>
@@ -162,10 +162,7 @@
   
 
   
-    <span class="summary_desc"><strong>Deprecated.</strong> <div class='inline'><p>in 2.2.0. The original <code>csv_to_multi_hash</code> now has the name
-<code>csv_to_hash</code>. <code>csv_to_multi_hash</code> is now aliased to <code>csv_to_hash</code>. Since
-creating these methods, I never once needed to use the original <code>csv_to_hash</code>
-method. Any need for it can be met by the multi-hash implementation</p>
+    <span class="summary_desc"><strong>Deprecated.</strong> <div class='inline'><p>in 2.2.0. The original <code>csv_to_multi_hash</code> now has the name</p>
 </div></span>
   
 </li>
@@ -188,7 +185,7 @@ method. Any need for it can be met by the multi-hash implementation</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Turns any Enumerable where each item is a record/row hash into an expected lookup   hash via Utils::LookupHash.</p>
+    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength Turns any Enumerable where each item is a record/row hash into an expected lookup rubocop:enable Layout/LineLength   hash via Utils::LookupHash rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength.</p>
 </div></span>
   
 </li>
@@ -206,7 +203,7 @@ method. Any need for it can be met by the multi-hash implementation</p>
       <div class="method_details first">
   <h3 class="signature first" id="csv_to_hash-instance_method">
   
-    #<strong>csv_to_hash</strong>(file:, csvopt: Kiba::Extend.csvopts, keycolumn:)  &#x21d2; <tt>Object</tt> 
+    #<strong>csv_to_hash</strong>(file:, keycolumn:, csvopt: Kiba::Extend.csvopts)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -218,7 +215,11 @@ method. Any need for it can be met by the multi-hash implementation</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>creates hash with keycolumn value as key and array of csv-rows-as-hashes as the value</p>
+    <p>rubocop:todo Layout/LineLength
+creates hash with keycolumn value as key and array of csv-rows-as-hashes as the value
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength</p>
 
 
   </div>
@@ -283,18 +284,22 @@ method. Any need for it can be met by the multi-hash implementation</p>
       <pre class="lines">
 
 
-36
-37
-38
-39
-40</pre>
+50
+51
+52
+53
+54
+55
+56</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/lookup.rb', line 36</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/lookup.rb', line 50</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_csv_to_hash'>csv_to_hash</span><span class='lparen'>(</span><span class='label'>file:</span><span class='comma'>,</span> <span class='label'>csvopt:</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_csvopts'><span class='object_link'><a href="../../Extend.html#csvopts-class_method" title="Kiba::Extend.csvopts (method)">csvopts</a></span></span><span class='comma'>,</span> <span class='label'>keycolumn:</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_csv_to_hash'>csv_to_hash</span><span class='lparen'>(</span><span class='label'>file:</span><span class='comma'>,</span> <span class='label'>keycolumn:</span><span class='comma'>,</span> <span class='label'>csvopt:</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_csvopts'><span class='object_link'><a href="../../Extend.html#csvopts-class_method" title="Kiba::Extend.csvopts (method)">csvopts</a></span></span><span class='rparen'>)</span>
   <span class='id identifier rubyid_lookup'>lookup</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Utils.html" title="Kiba::Extend::Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="LookupHash.html" title="Kiba::Extend::Utils::LookupHash (class)">LookupHash</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="LookupHash.html#initialize-instance_method" title="Kiba::Extend::Utils::LookupHash#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>keycolumn:</span> <span class='id identifier rubyid_keycolumn'>keycolumn</span><span class='rparen'>)</span>
-  <span class='const'>CSV</span><span class='period'>.</span><span class='id identifier rubyid_foreach'>foreach</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_csvopt'>csvopt</span><span class='rparen'>)</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_lookup'>lookup</span><span class='period'>.</span><span class='id identifier rubyid_add_record'>add_record</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+  <span class='const'>CSV</span><span class='period'>.</span><span class='id identifier rubyid_foreach'>foreach</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_csvopt'>csvopt</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span>
+    <span class='id identifier rubyid_lookup'>lookup</span><span class='period'>.</span><span class='id identifier rubyid_add_record'>add_record</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span><span class='rparen'>)</span>
+  <span class='rbrace'>}</span>
   <span class='id identifier rubyid_lookup'>lookup</span><span class='period'>.</span><span class='id identifier rubyid_hash'>hash</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -313,10 +318,7 @@ method. Any need for it can be met by the multi-hash implementation</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <div class="note deprecated"><strong>Deprecated.</strong> <div class='inline'><p>in 2.2.0. The original <code>csv_to_multi_hash</code> now has the name
-<code>csv_to_hash</code>. <code>csv_to_multi_hash</code> is now aliased to <code>csv_to_hash</code>. Since
-creating these methods, I never once needed to use the original <code>csv_to_hash</code>
-method. Any need for it can be met by the multi-hash implementation</p>
+    <div class="note deprecated"><strong>Deprecated.</strong> <div class='inline'><p>in 2.2.0. The original <code>csv_to_multi_hash</code> now has the name</p>
 </div></div>
 
   <div class="note todo">
@@ -325,6 +327,15 @@ method. Any need for it can be met by the multi-hash implementation</p>
 </div>
   </div>
 
+<p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+  <code>csv_to_hash</code>. <code>csv_to_multi_hash</code> is now aliased to <code>csv_to_hash</code>. Since
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+  creating these methods, I never once needed to use the original <code>csv_to_hash</code>
+rubocop:enable Layout/LineLength
+  method. Any need for it can be met by the multi-hash implementation</p>
 
 
   </div>
@@ -338,17 +349,19 @@ method. Any need for it can be met by the multi-hash implementation</p>
       <pre class="lines">
 
 
-15
-16
-17
-18
-19</pre>
+21
+22
+23
+24
+25
+26</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/lookup.rb', line 15</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/lookup.rb', line 21</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_csv_to_hash_deprecated'>csv_to_hash_deprecated</span><span class='lparen'>(</span><span class='label'>file:</span><span class='comma'>,</span> <span class='label'>keycolumn:</span><span class='comma'>,</span> <span class='label'>csvopt:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span>
-  <span class='const'>CSV</span><span class='period'>.</span><span class='id identifier rubyid_foreach'>foreach</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='id identifier rubyid_csvopt'>csvopt</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each_with_object'>each_with_object</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='comma'>,</span> <span class='id identifier rubyid_memo'>memo</span><span class='op'>|</span>
+  <span class='const'>CSV</span><span class='period'>.</span><span class='id identifier rubyid_foreach'>foreach</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span><span class='comma'>,</span>
+    <span class='id identifier rubyid_csvopt'>csvopt</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each_with_object'>each_with_object</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='rbrace'>}</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_r'>r</span><span class='comma'>,</span> <span class='id identifier rubyid_memo'>memo</span><span class='op'>|</span>
     <span class='id identifier rubyid_memo'>memo</span><span class='lbracket'>[</span><span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_keycolumn'>keycolumn</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_r'>r</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -368,8 +381,12 @@ method. Any need for it can be met by the multi-hash implementation</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Turns any Enumerable where each item is a record/row hash into an expected lookup
-  hash via Utils::LookupHash</p>
+    <p>rubocop:todo Layout/LineLength
+Turns any Enumerable where each item is a record/row hash into an expected lookup
+rubocop:enable Layout/LineLength
+  hash via Utils::LookupHash
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength</p>
 
 
   </div>
@@ -417,18 +434,18 @@ method. Any need for it can be met by the multi-hash implementation</p>
       <pre class="lines">
 
 
-26
-27
-28
-29
-30</pre>
+36
+37
+38
+39
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/lookup.rb', line 26</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/lookup.rb', line 36</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_enum_to_hash'>enum_to_hash</span><span class='lparen'>(</span><span class='label'>enum:</span><span class='comma'>,</span> <span class='label'>keycolumn:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_lookup'>lookup</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Utils.html" title="Kiba::Extend::Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="LookupHash.html" title="Kiba::Extend::Utils::LookupHash (class)">LookupHash</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="LookupHash.html#initialize-instance_method" title="Kiba::Extend::Utils::LookupHash#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>keycolumn:</span> <span class='id identifier rubyid_keycolumn'>keycolumn</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_enum'>enum</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_lookup'>lookup</span><span class='period'>.</span><span class='id identifier rubyid_add_record'>add_record</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_enum'>enum</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_lookup'>lookup</span><span class='period'>.</span><span class='id identifier rubyid_add_record'>add_record</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
   <span class='id identifier rubyid_lookup'>lookup</span><span class='period'>.</span><span class='id identifier rubyid_hash'>hash</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -441,7 +458,7 @@ method. Any need for it can be met by the multi-hash implementation</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:08 2023 by
+  Generated on Fri Aug 25 01:03:15 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

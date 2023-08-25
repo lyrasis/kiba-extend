@@ -101,14 +101,24 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Take the first value from given fields and put then in the given target fields.</p>
+    <p>rubocop:todo Layout/LineLength
+Take the first value from given fields and put then in the given target fields.
+rubocop:enable Layout/LineLength</p>
 
-<p>If no target fields are given, values in the original fields will be replaced with first values.</p>
+<p>rubocop:todo Layout/LineLength
+If no target fields are given, values in the original fields will be replaced with first values.
+rubocop:enable Layout/LineLength</p>
 
-<p>If <code>nil</code> or `` are passed in as targets, the original field(s) corresponding to those targets
-  will be replaced by their first values, while other targets will be created as new fields.</p>
+<p>rubocop:todo Layout/LineLength
+If <code>nil</code> or `` are passed in as targets, the original field(s) corresponding to those targets
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+  will be replaced by their first values, while other targets will be created as new fields.
+rubocop:enable Layout/LineLength</p>
 
-<p>The &quot;first value&quot; of a nil field is nil. The &quot;first value&quot; of an empty string field is an
+<p>rubocop:todo Layout/LineLength
+The &quot;first value&quot; of a nil field is nil. The &quot;first value&quot; of an empty string field is an
+rubocop:enable Layout/LineLength
   empty string.</p>
 
 <h1 id="examples">Examples</h1>
@@ -162,7 +172,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(fields:, targets: [], delim:)  &#x21d2; First </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(fields:, delim:, targets: [])  &#x21d2; First </a>
     
 
     
@@ -215,7 +225,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(fields:, targets: [], delim:)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Take::First (class)">First</a></span></tt> 
+    #<strong>initialize</strong>(fields:, delim:, targets: [])  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Take::First (class)">First</a></span></tt> 
   
 
   
@@ -237,18 +247,18 @@
       <pre class="lines">
 
 
-51
-52
-53
-54
-55
-56
-57</pre>
+61
+62
+63
+64
+65
+66
+67</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/take.rb', line 51</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/take.rb', line 61</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span><span class='comma'>,</span> <span class='label'>targets:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>delim:</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span><span class='comma'>,</span> <span class='label'>delim:</span><span class='comma'>,</span> <span class='label'>targets:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fields'>fields</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
   <span class='ivar'>@targets</span> <span class='op'>=</span> <span class='id identifier rubyid_targets'>targets</span>
   <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_delim'>delim</span>
@@ -306,16 +316,16 @@
       <pre class="lines">
 
 
-60
-61
-62
-63
-64
-65
-66</pre>
+70
+71
+72
+73
+74
+75
+76</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/take.rb', line 60</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/take.rb', line 70</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='ivar'>@field_map</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='comma'>,</span> <span class='id identifier rubyid_target'>target</span><span class='op'>|</span>
@@ -334,7 +344,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:09 2023 by
+  Generated on Fri Aug 25 01:03:15 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

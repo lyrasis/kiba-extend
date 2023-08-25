@@ -125,9 +125,15 @@ See <span class='object_link'><a href="Add.html" title="Kiba::Extend::Transforms
 
 <p>Results in:</p>
 
-<pre class="code ruby"><code class="ruby">| a   | b   | c   | d    | e | fp                               | fp_b | fp_c | fp_d | fp_e |
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+| a   | b   | c   | d    | e | fp                               | fp_b | fp_c | fp_d | fp_e |
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
 |-----+-----+-----+------+---+----------------------------------+------+------+------+------|
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
 | ant | bee | nil | deer |   | YmVlOzs7bmlsOzs7ZGVlcjs7O2VtcHR5 | bee  | nil  | deer |      |
+rubocop:enable Layout/LineLength
 </code></pre>
 
 <p>Used in pipeline as:</p>
@@ -367,11 +373,6 @@ field</p>
       <pre class="lines">
 
 
-75
-76
-77
-78
-79
 80
 81
 82
@@ -379,13 +380,18 @@ field</p>
 84
 85
 86
-87</pre>
+87
+88
+89
+90
+91
+92</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/decode.rb', line 75</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/decode.rb', line 80</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fingerprint:</span><span class='comma'>,</span> <span class='label'>source_fields:</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>␟</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>prefix:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>fp</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-               <span class='label'>delete_fp:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+  <span class='label'>delete_fp:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='ivar'>@fingerprint</span> <span class='op'>=</span> <span class='id identifier rubyid_fingerprint'>fingerprint</span>
   <span class='ivar'>@source_fields</span> <span class='op'>=</span> <span class='id identifier rubyid_source_fields'>source_fields</span>
   <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_delim'>delim</span>
@@ -463,11 +469,6 @@ field</p>
       <pre class="lines">
 
 
-90
-91
-92
-93
-94
 95
 96
 97
@@ -480,14 +481,19 @@ field</p>
 104
 105
 106
-107</pre>
+107
+108
+109
+110
+111
+112</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/decode.rb', line 90</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/decode.rb', line 95</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='ivar'>@row_ct</span> <span class='op'>+=</span> <span class='int'>1</span>
-  <span class='id identifier rubyid_target_fields'>target_fields</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span> <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>nil</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_target_fields'>target_fields</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span> <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>nil</span> <span class='rbrace'>}</span>
 
   <span class='id identifier rubyid_fpval'>fpval</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_fingerprint'>fingerprint</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_fingerprint'>fingerprint</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_delete'>delete</span>
@@ -513,7 +519,7 @@ field</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:11 2023 by
+  Generated on Fri Aug 25 01:03:17 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

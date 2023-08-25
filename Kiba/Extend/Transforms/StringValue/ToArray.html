@@ -434,13 +434,13 @@ is nil, this will create an empty array.</p>
       <pre class="lines">
 
 
-95
-96
 97
-98</pre>
+98
+99
+100</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/string_value/to_array.rb', line 95</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/string_value/to_array.rb', line 97</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_delim'><span class='object_link'><a href="../../../Extend.html#delim-class_method" title="Kiba::Extend.delim (method)">delim</a></span></span><span class='rparen'>)</span>
   <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fields'>fields</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
@@ -497,12 +497,12 @@ is nil, this will create an empty array.</p>
       <pre class="lines">
 
 
-113
-114
-115</pre>
+115
+116
+117</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/string_value/to_array.rb', line 113</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/string_value/to_array.rb', line 115</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_delim'>delim</span>
   <span class='ivar'>@delim</span>
@@ -553,12 +553,12 @@ is nil, this will create an empty array.</p>
       <pre class="lines">
 
 
-113
-114
-115</pre>
+115
+116
+117</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/string_value/to_array.rb', line 113</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/string_value/to_array.rb', line 115</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fields'>fields</span>
   <span class='ivar'>@fields</span>
@@ -614,8 +614,6 @@ is nil, this will create an empty array.</p>
       <pre class="lines">
 
 
-100
-101
 102
 103
 104
@@ -625,18 +623,20 @@ is nil, this will create an empty array.</p>
 108
 109
 110
-111</pre>
+111
+112
+113</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/string_value/to_array.rb', line 100</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/string_value/to_array.rb', line 102</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_fields'>fields</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span>
     <span class='id identifier rubyid_fieldval'>fieldval</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_delim'>delim</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
-      <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_fieldval'>fieldval</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>?</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='op'>:</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fieldval'>fieldval</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_delim'>delim</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+      <span class='id identifier rubyid_fieldval'>fieldval</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>?</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='op'>:</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fieldval'>fieldval</span><span class='rbracket'>]</span>
     <span class='kw'>else</span>
-      <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_fieldval'>fieldval</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>?</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='op'>:</span> <span class='id identifier rubyid_fieldval'>fieldval</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='id identifier rubyid_delim'>delim</span><span class='rparen'>)</span>
+      <span class='id identifier rubyid_fieldval'>fieldval</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>?</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='op'>:</span> <span class='id identifier rubyid_fieldval'>fieldval</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='id identifier rubyid_delim'>delim</span><span class='rparen'>)</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
 
@@ -652,7 +652,7 @@ is nil, this will create an empty array.</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:11 2023 by
+  Generated on Fri Aug 25 01:03:17 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

@@ -101,19 +101,34 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Deletes empty value from each field in a field group if values in that position in each field in the
+    <p>rubocop:todo Layout/LineLength
+Deletes empty value from each field in a field group if values in that position in each field in the
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
   field group are empty. For example, if the 3rd value in grouped fields annotationType,
-  annotationDate, and annotationNote are all blank, then the 3rd value from each field is deleted.</p>
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+  annotationDate, and annotationNote are all blank, then the 3rd value from each field is deleted.
+rubocop:enable Layout/LineLength</p>
 
 <p>Features/behaviors:</p>
 
+<p>rubocop:todo Layout/LineLength</p>
+
 <ul>
 <li>aims to keep field groups even (See <span class='object_link'><a href="../Warn/UnevenFields.html" title="Kiba::Extend::Transforms::Warn::UnevenFields (class)">Warn::UnevenFields</a></span> for explanation of field group)
-evenness</li>
+rubocop:enable Layout/LineLength
+evenness
+rubocop:todo Layout/LineLength</li>
 <li>skips processing field groups found to be uneven, as it is impossible to know which
-value is intended to go with which other values across the field group</li>
-<li>converts fields considered empty to nil</li>
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+value is intended to go with which other values across the field group
+rubocop:enable Layout/LineLength</li>
+<li>converts fields considered empty to nil
+rubocop:todo Layout/LineLength</li>
 <li>considers delimiter-only fields to be empty. Runs <span class='object_link'><a href="DelimiterOnlyFieldValues.html" title="Kiba::Extend::Transforms::Delete::DelimiterOnlyFieldValues (class)">DelimiterOnlyFieldValues</a></span> to
+rubocop:enable Layout/LineLength
 clear them.</li>
 </ul>
 
@@ -121,29 +136,39 @@ clear them.</li>
 
 <p>Source data for both examples below:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='lbracket'>[</span>
-  <span class='lbrace'>{</span><span class='label'>aa:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>ab:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bb:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bc:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bd:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
-  <span class='lbrace'>{</span><span class='label'>aa:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>n|</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>ab:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>bb:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>|e</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bc:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>|n</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bd:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>|e</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
-  <span class='lbrace'>{</span><span class='label'>aa:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>n</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>ab:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bb:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>n</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bc:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>e</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bd:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>p</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
-  <span class='lbrace'>{</span><span class='label'>aa:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>n|e</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>ab:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>e|n</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bb:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>n|e</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bc:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>e|n</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bd:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ne|</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
-  <span class='lbrace'>{</span><span class='label'>aa:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>n|</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>ab:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>e|</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bb:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>|e</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bc:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>n|e</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bd:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>|e</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
-  <span class='lbrace'>{</span><span class='label'>aa:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>|</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>ab:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>|</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bb:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>e||n|</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bc:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>n||e|</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bd:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>e||p|</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
-  <span class='lbrace'>{</span><span class='label'>aa:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>ab:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bb:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%|%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bc:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>bd:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>|</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
-  <span class='lbrace'>{</span><span class='label'>aa:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>|</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>ab:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bb:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%|</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bc:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%|%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bd:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%|a</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
-  <span class='lbrace'>{</span><span class='label'>aa:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>|</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>ab:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bb:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%|</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bc:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%|NULL</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bd:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%|a</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
-<span class='rbracket'>]</span>
+<pre class="code ruby"><code class="ruby">[
+  {aa: &#39;&#39;, ab: &#39;&#39;, bb: &#39;&#39;, bc: &#39;&#39;, bd: &#39;&#39;},
+  {aa: &#39;n|&#39;, ab: nil, bb: &#39;|e&#39;, bc: &#39;|n&#39;, bd: &#39;|e&#39;},
+  {aa: &#39;n&#39;, ab: &#39;&#39;, bb: &#39;n&#39;, bc: &#39;e&#39;, bd: &#39;p&#39;},
+  {aa: &#39;n|e&#39;, ab: &#39;e|n&#39;, bb: &#39;n|e&#39;, bc: &#39;e|n&#39;, bd: &#39;ne|&#39;},
+  {aa: &#39;n|&#39;, ab: &#39;e|&#39;, bb: &#39;|e&#39;, bc: &#39;n|e&#39;, bd: &#39;|e&#39;},
+  {aa: &#39;|&#39;, ab: &#39;|&#39;, bb: &#39;e||n|&#39;, bc: &#39;n||e|&#39;, bd: &#39;e||p|&#39;},
+rubocop:todo Layout/LineLength
+  {aa: &#39;%NULLVALUE%&#39;, ab: &#39;%NULLVALUE%&#39;, bb: &#39;%NULLVALUE%|%NULLVALUE%&#39;, bc: nil, bd: &#39;|&#39;},
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+  {aa: &#39;|&#39;, ab: &#39;&#39;, bb: &#39;%NULLVALUE%|&#39;, bc: &#39;%NULLVALUE%|%NULLVALUE%&#39;, bd: &#39;%NULLVALUE%|a&#39;},
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+  {aa: &#39;|&#39;, ab: &#39;&#39;, bb: &#39;%NULLVALUE%|&#39;, bc: &#39;%NULLVALUE%|NULL&#39;, bd: &#39;%NULLVALUE%|a&#39;}
+rubocop:enable Layout/LineLength
+]
 </code></pre>
 
 <p>Value of <code>Kiba::Extend.nullvalue</code> is <code>%NULLVALUE%</code>.</p>
 
 <h3 id="default-behavior">Default behavior</h3>
 
-<p>By default, this transform considers the value of <code>Kiba::Extend.nullvalue</code> to represent an empty
+<p>rubocop:todo Layout/LineLength
+By default, this transform considers the value of <code>Kiba::Extend.nullvalue</code> to represent an empty
+rubocop:enable Layout/LineLength
   value.</p>
 
 <p>Used in job as:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Delete.html" title="Kiba::Extend::Transforms::Delete (module)">Delete</a></span></span><span class='op'>::</span><span class='const'>EmptyFieldGroups</span><span class='comma'>,</span> <span class='label'>groups:</span> <span class='lbracket'>[</span><span class='qsymbols_beg'>%i[</span><span class='tstring_content'>aa</span><span class='words_sep'> </span><span class='tstring_content'>ab</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>bb</span><span class='words_sep'> </span><span class='tstring_content'>bc</span><span class='words_sep'> </span><span class='tstring_content'>bd</span><span class='tstring_end'>]</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>|</span><span class='tstring_end'>&#39;</span></span>
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+transform Delete::EmptyFieldGroups, groups: [%i[aa ab], %i[bb bc bd]], delim: &#39;|&#39;
+rubocop:enable Layout/LineLength
 </code></pre>
 
 <p>Results in:</p>
@@ -163,8 +188,12 @@ clear them.</li>
 
 <h3 id="treat-multiple-strings-as-empty">Treat multiple strings as empty</h3>
 
-<p>Note that the array given for <code>treat_as_null</code> here overrides the default value of that
+<p>rubocop:todo Layout/LineLength
+Note that the array given for <code>treat_as_null</code> here overrides the default value of that
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
   parameter. If you want the value of <code>Kiba::Extend.nullvalue</code> to be one of the included
+rubocop:enable Layout/LineLength
   values, you must specify it in the array given.</p>
 
 <p>Used in job as:</p>
@@ -202,17 +231,23 @@ clear them.</li>
 
 <p>Results in:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='lbracket'>[</span>
-  <span class='lbrace'>{</span><span class='label'>aa:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>ab:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>bb:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>bc:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>bd:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
-  <span class='lbrace'>{</span><span class='label'>aa:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>n</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>ab:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>bb:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>e</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bc:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>n</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bd:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>e</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
-  <span class='lbrace'>{</span><span class='label'>aa:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>n</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>ab:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>bb:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>n</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bc:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>e</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bd:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>p</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
-  <span class='lbrace'>{</span><span class='label'>aa:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>n|e</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>ab:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>e|n</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bb:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>n|e</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bc:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>e|n</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bd:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ne|</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
-  <span class='lbrace'>{</span><span class='label'>aa:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>n</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>ab:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>e</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bb:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>|e</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bc:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>n|e</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bd:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>|e</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
-  <span class='lbrace'>{</span><span class='label'>aa:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>ab:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>bb:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>e|n</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bc:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>n|e</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bd:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>e|p</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
-  <span class='lbrace'>{</span><span class='label'>aa:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>ab:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bb:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%|%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bc:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>bd:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
-  <span class='lbrace'>{</span><span class='label'>aa:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>ab:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>bb:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%|</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bc:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%|%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bd:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%|a</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
-  <span class='lbrace'>{</span><span class='label'>aa:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>ab:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>bb:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%|</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bc:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%|NULL</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bd:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%|a</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
-<span class='rbracket'>]</span>
+<pre class="code ruby"><code class="ruby">[
+  {aa: nil, ab: nil, bb: nil, bc: nil, bd: nil},
+  {aa: &#39;n&#39;, ab: nil, bb: &#39;e&#39;, bc: &#39;n&#39;, bd: &#39;e&#39;},
+  {aa: &#39;n&#39;, ab: nil, bb: &#39;n&#39;, bc: &#39;e&#39;, bd: &#39;p&#39;},
+  {aa: &#39;n|e&#39;, ab: &#39;e|n&#39;, bb: &#39;n|e&#39;, bc: &#39;e|n&#39;, bd: &#39;ne|&#39;},
+  {aa: &#39;n&#39;, ab: &#39;e&#39;, bb: &#39;|e&#39;, bc: &#39;n|e&#39;, bd: &#39;|e&#39;},
+  {aa: nil, ab: nil, bb: &#39;e|n&#39;, bc: &#39;n|e&#39;, bd: &#39;e|p&#39;},
+rubocop:todo Layout/LineLength
+  {aa: &#39;%NULLVALUE%&#39;, ab: &#39;%NULLVALUE%&#39;, bb: &#39;%NULLVALUE%|%NULLVALUE%&#39;, bc: nil, bd: nil},
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+  {aa: nil, ab: nil, bb: &#39;%NULLVALUE%|&#39;, bc: &#39;%NULLVALUE%|%NULLVALUE%&#39;, bd: &#39;%NULLVALUE%|a&#39;},
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+  {aa: nil, ab: nil, bb: &#39;%NULLVALUE%|&#39;, bc: &#39;%NULLVALUE%|NULL&#39;, bd: &#39;%NULLVALUE%|a&#39;}
+rubocop:enable Layout/LineLength
+]
 </code></pre>
 
 
@@ -270,7 +305,7 @@ clear them.</li>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A new instance of EmptyFieldGroups.</p>
+    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength   part of a repeating field group or field subgroup rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength   treated as null/empty when removing empty field groups.</p>
 </div></span>
   
 </li>
@@ -315,7 +350,12 @@ clear them.</li>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of EmptyFieldGroups.</p>
+    <p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+  part of a repeating field group or field subgroup
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+  treated as null/empty when removing empty field groups</p>
 
 
   </div>
@@ -334,8 +374,7 @@ clear them.</li>
       
       
         &mdash;
-        <div class='inline'><p>Each of the arrays inside groups should list all fields that are
-part of a repeating field group or field subgroup</p>
+        <div class='inline'><p>Each of the arrays inside groups should list all fields that are</p>
 </div>
       
     </li>
@@ -369,8 +408,7 @@ part of a repeating field group or field subgroup</p>
       
       
         &mdash;
-        <div class='inline'><p>values aside from <code>nil</code> and <code>&#39;&#39;</code> that should be
-treated as null/empty when removing empty field groups</p>
+        <div class='inline'><p>values aside from <code>nil</code> and <code>&#39;&#39;</code> that should be</p>
 </div>
       
     </li>
@@ -399,30 +437,36 @@ treated as null/empty when removing empty field groups</p>
       <pre class="lines">
 
 
-133
-134
-135
-136
-137
-138
-139
-140
-141
-142
-143
-144
-145
-146
-147
-148</pre>
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/empty_field_groups.rb', line 133</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/empty_field_groups.rb', line 171</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>groups:</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_delim'><span class='object_link'><a href="../../../Extend.html#delim-class_method" title="Kiba::Extend.delim (method)">delim</a></span></span><span class='comma'>,</span> <span class='label'>treat_as_null:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_nullvalue'><span class='object_link'><a href="../../../Extend.html#nullvalue-class_method" title="Kiba::Extend.nullvalue (method)">nullvalue</a></span></span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>groups:</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_delim'><span class='object_link'><a href="../../../Extend.html#delim-class_method" title="Kiba::Extend.delim (method)">delim</a></span></span><span class='comma'>,</span>
+  <span class='label'>treat_as_null:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_nullvalue'><span class='object_link'><a href="../../../Extend.html#nullvalue-class_method" title="Kiba::Extend.nullvalue (method)">nullvalue</a></span></span><span class='rparen'>)</span>
   <span class='ivar'>@groups</span> <span class='op'>=</span> <span class='id identifier rubyid_groups'>groups</span>
   <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_delim'>delim</span>
-  <span class='ivar'>@null_vals</span> <span class='op'>=</span> <span class='id identifier rubyid_treat_as_null'>treat_as_null</span> <span class='op'>?</span> <span class='lbracket'>[</span><span class='id identifier rubyid_treat_as_null'>treat_as_null</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_reverse'>reverse</span> <span class='op'>:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='ivar'>@null_vals</span> <span class='op'>=</span> <span class='id identifier rubyid_treat_as_null'>treat_as_null</span> <span class='op'>?</span> <span class='lbracket'>[</span><span class='id identifier rubyid_treat_as_null'>treat_as_null</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span>
+                                 <span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
+                               <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_reverse'>reverse</span> <span class='op'>:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
   <span class='ivar'>@delim_only_cleaner</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Delete.html" title="Kiba::Extend::Transforms::Delete (module)">Delete</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DelimiterOnlyFieldValues.html" title="Kiba::Extend::Transforms::Delete::DelimiterOnlyFieldValues (class)">DelimiterOnlyFieldValues</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="DelimiterOnlyFieldValues.html#initialize-instance_method" title="Kiba::Extend::Transforms::Delete::DelimiterOnlyFieldValues#initialize (method)">new</a></span></span><span class='lparen'>(</span>
     <span class='label'>fields:</span> <span class='id identifier rubyid_groups'>groups</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='comma'>,</span>
     <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='comma'>,</span>
@@ -501,22 +545,24 @@ treated as null/empty when removing empty field groups</p>
       <pre class="lines">
 
 
-151
-152
-153
-154
-155
-156
-157
-158</pre>
+192
+193
+194
+195
+196
+197
+198
+199
+200</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/empty_field_groups.rb', line 151</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/empty_field_groups.rb', line 192</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_delim_only_cleaner'>delim_only_cleaner</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_groups'>groups</span><span class='period'>.</span><span class='id identifier rubyid_each_with_index'>each_with_index</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_group'>group</span><span class='comma'>,</span> <span class='id identifier rubyid_idx'>idx</span><span class='op'>|</span>
-    <span class='id identifier rubyid_process_group'>process_group</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='comma'>,</span> <span class='id identifier rubyid_group'>group</span><span class='comma'>,</span> <span class='id identifier rubyid_evenness_checkers'>evenness_checkers</span><span class='lbracket'>[</span><span class='id identifier rubyid_idx'>idx</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='id identifier rubyid_value_getters'>value_getters</span><span class='lbracket'>[</span><span class='id identifier rubyid_idx'>idx</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_process_group'>process_group</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='comma'>,</span> <span class='id identifier rubyid_group'>group</span><span class='comma'>,</span> <span class='id identifier rubyid_evenness_checkers'>evenness_checkers</span><span class='lbracket'>[</span><span class='id identifier rubyid_idx'>idx</span><span class='rbracket'>]</span><span class='comma'>,</span>
+      <span class='id identifier rubyid_value_getters'>value_getters</span><span class='lbracket'>[</span><span class='id identifier rubyid_idx'>idx</span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
   <span class='id identifier rubyid_row'>row</span>
@@ -531,7 +577,7 @@ treated as null/empty when removing empty field groups</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:12 2023 by
+  Generated on Fri Aug 25 01:03:17 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

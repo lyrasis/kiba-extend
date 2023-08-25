@@ -458,7 +458,9 @@ a value in <code>id_values</code></p>
 94
 95
 96
-97</pre>
+97
+98
+99</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/marc/filter_records/by_id.rb', line 77</span>
@@ -482,8 +484,10 @@ a value in <code>id_values</code></p>
     <span class='label'>id_subfield_selector:</span> <span class='id identifier rubyid_id_subfield_selector'>id_subfield_selector</span><span class='comma'>,</span>
     <span class='label'>id_value_formatter:</span> <span class='id identifier rubyid_id_value_formatter'>id_value_formatter</span>
   <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span>
-  <span class='ivar'>@idextractor</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Utils.html" title="Kiba::Extend::Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Utils/MarcIdExtractor.html" title="Kiba::Extend::Utils::MarcIdExtractor (class)">MarcIdExtractor</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../../Utils/MarcIdExtractor.html#initialize-instance_method" title="Kiba::Extend::Utils::MarcIdExtractor#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='op'>**</span><span class='id identifier rubyid_settings'>settings</span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
+  <span class='comment'># rubocop:todo Layout/LineLength
+</span>  <span class='ivar'>@idextractor</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Utils.html" title="Kiba::Extend::Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Utils/MarcIdExtractor.html" title="Kiba::Extend::Utils::MarcIdExtractor (class)">MarcIdExtractor</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../../Utils/MarcIdExtractor.html#initialize-instance_method" title="Kiba::Extend::Utils::MarcIdExtractor#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='op'>**</span><span class='id identifier rubyid_settings'>settings</span><span class='rparen'>)</span>
+  <span class='comment'># rubocop:enable Layout/LineLength
+</span><span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -590,18 +594,18 @@ a value in <code>id_values</code></p>
       <pre class="lines">
 
 
-102
-103
 104
 105
 106
 107
 108
 109
-110</pre>
+110
+111
+112</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/marc/filter_records/by_id.rb', line 102</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/marc/filter_records/by_id.rb', line 104</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='rparen'>)</span>
   <span class='kw'>case</span> <span class='id identifier rubyid_action'>action</span>
@@ -622,7 +626,7 @@ a value in <code>id_values</code></p>
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:12 2023 by
+  Generated on Fri Aug 25 01:03:18 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

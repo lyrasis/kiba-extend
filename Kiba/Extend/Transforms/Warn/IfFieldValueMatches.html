@@ -106,16 +106,24 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Prints single warning to STDOUT if the value of the given field matches the given value in
+    <p>rubocop:todo Layout/LineLength
+Prints single warning to STDOUT if the value of the given field matches the given value in
+rubocop:enable Layout/LineLength
   any rows</p>
 
-<p>Useful if you have skipped mapping/setting up transforms for certain values in an initial/staging
+<p>rubocop:todo Layout/LineLength
+Useful if you have skipped mapping/setting up transforms for certain values in an initial/staging
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
   data set, but need to ensure you will notice if later/production data includes new values
+rubocop:enable Layout/LineLength
   that need attention.</p>
 
 <p><a href="https://github.com/lyrasis/kiba-tms/blob/8c0122ddb3e085bb7146df432cd1754e24e86c41/lib/kiba/tms/jobs/loans/prep.rb#L53-L55" target="_parent" title="Publicly available example of use in kiba-tms">Publicly available example of use in kiba-tms</a></p>
 
-<p>Uses <span class='object_link'><a href="../../Utils/FieldValueMatcher.html" title="Kiba::Extend::Utils::FieldValueMatcher (class)">Utils::FieldValueMatcher</a></span> to determine whether value matches. See that class&#39; documentation
+<p>rubocop:todo Layout/LineLength
+Uses <span class='object_link'><a href="../../Utils/FieldValueMatcher.html" title="Kiba::Extend::Utils::FieldValueMatcher (class)">Utils::FieldValueMatcher</a></span> to determine whether value matches. See that class&#39; documentation
+rubocop:enable Layout/LineLength
   for examples</p>
 
 <p>This transform warns if <span class='object_link'><a href="../../Utils/FieldValueMatcher.html" title="Kiba::Extend::Utils::FieldValueMatcher (class)">Utils::FieldValueMatcher</a></span> finds a match.</p>
@@ -175,7 +183,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A new instance of IfFieldValueMatches.</p>
+    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength    split and the match is run against each resulting value rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength.</p>
 </div></span>
   
 </li>
@@ -231,7 +239,18 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of IfFieldValueMatches.</p>
+    <p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+   split and the match is run against each resulting value
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength</p>
 
 
   </div>
@@ -239,6 +258,104 @@
 <div class="tags">
   <p class="tag_title">Parameters:</p>
 <ul class="param">
+  
+    <li>
+      
+        <span class='name'>field</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>whose value to match</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>match</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>expresses the match criteria</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>matchmode</span>
+      
+      
+        <span class='type'>(<tt>:plain</tt>, <tt>:regex</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>:plain</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>If <code>:regex</code>, string is converted to a regular expression</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>delim</span>
+      
+      
+        <span class='type'>(<tt>nil</tt>, <tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>if a String is given, triggers multivalue matching, where field value is</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>treat_as_null</span>
+      
+      
+        <span class='type'>(<tt>nil</tt>, <tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>if given, the string will be converted to empty string for matching</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>casesensitive</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>true</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>whether match cares about case</p>
+</div>
+      
+    </li>
   
     <li>
       
@@ -298,29 +415,35 @@
       <pre class="lines">
 
 
-34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44</pre>
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/warn/if_field_value_matches.rb', line 34</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/warn/if_field_value_matches.rb', line 53</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>field:</span><span class='comma'>,</span> <span class='label'>match:</span><span class='comma'>,</span> <span class='label'>matchmode:</span> <span class='symbol'>:plain</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>treat_as_null:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>casesensitive:</span> <span class='kw'>true</span><span class='comma'>,</span>
-              <span class='label'>strip:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>multimode:</span> <span class='symbol'>:any</span><span class='rparen'>)</span>
+  <span class='comment'># rubocop:enable Layout/LineLength
+</span>  <span class='label'>strip:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>multimode:</span> <span class='symbol'>:any</span><span class='rparen'>)</span>
   <span class='ivar'>@field</span> <span class='op'>=</span> <span class='id identifier rubyid_field'>field</span>
   <span class='ivar'>@match</span> <span class='op'>=</span> <span class='id identifier rubyid_match'>match</span>
   <span class='ivar'>@matcher</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Utils.html" title="Kiba::Extend::Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Utils/FieldValueMatcher.html" title="Kiba::Extend::Utils::FieldValueMatcher (class)">FieldValueMatcher</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../Utils/FieldValueMatcher.html#initialize-instance_method" title="Kiba::Extend::Utils::FieldValueMatcher#initialize (method)">new</a></span></span><span class='lparen'>(</span>
     <span class='label'>field:</span> <span class='id identifier rubyid_field'>field</span><span class='comma'>,</span> <span class='label'>match:</span> <span class='id identifier rubyid_match'>match</span><span class='comma'>,</span> <span class='label'>matchmode:</span> <span class='id identifier rubyid_matchmode'>matchmode</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='comma'>,</span>
-    <span class='label'>treat_as_null:</span> <span class='id identifier rubyid_treat_as_null'>treat_as_null</span><span class='comma'>,</span> <span class='label'>casesensitive:</span> <span class='id identifier rubyid_casesensitive'>casesensitive</span><span class='comma'>,</span> <span class='label'>strip:</span> <span class='id identifier rubyid_strip'>strip</span><span class='comma'>,</span>
-    <span class='label'>multimode:</span> <span class='id identifier rubyid_multimode'>multimode</span>
+    <span class='comment'># rubocop:todo Layout/LineLength
+</span>    <span class='label'>treat_as_null:</span> <span class='id identifier rubyid_treat_as_null'>treat_as_null</span><span class='comma'>,</span> <span class='label'>casesensitive:</span> <span class='id identifier rubyid_casesensitive'>casesensitive</span><span class='comma'>,</span> <span class='label'>strip:</span> <span class='id identifier rubyid_strip'>strip</span><span class='comma'>,</span>
+    <span class='comment'># rubocop:enable Layout/LineLength
+</span>    <span class='label'>multimode:</span> <span class='id identifier rubyid_multimode'>multimode</span>
   <span class='rparen'>)</span>
   <span class='id identifier rubyid_setup_single_warning'>setup_single_warning</span>
 <span class='kw'>end</span></pre>
@@ -390,19 +513,19 @@
       <pre class="lines">
 
 
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56</pre>
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/warn/if_field_value_matches.rb', line 47</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/warn/if_field_value_matches.rb', line 69</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_row'>row</span> <span class='kw'>unless</span> <span class='id identifier rubyid_single_warnings'>single_warnings</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -424,7 +547,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:12 2023 by
+  Generated on Fri Aug 25 01:03:18 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

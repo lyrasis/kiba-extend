@@ -480,7 +480,7 @@ where blank values are placed</p>
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/sort/by_field_value.rb', line 155</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>field:</span><span class='comma'>,</span> <span class='label'>blanks:</span> <span class='symbol'>:last</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>mode:</span> <span class='symbol'>:smart</span><span class='comma'>,</span>
-               <span class='label'>order:</span> <span class='symbol'>:asc</span><span class='rparen'>)</span>
+  <span class='label'>order:</span> <span class='symbol'>:asc</span><span class='rparen'>)</span>
   <span class='ivar'>@field</span> <span class='op'>=</span> <span class='id identifier rubyid_field'>field</span>
   <span class='ivar'>@blanks</span> <span class='op'>=</span> <span class='id identifier rubyid_blanks'>blanks</span>
   <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_delim'>delim</span>
@@ -525,9 +525,9 @@ where blank values are placed</p>
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/sort/by_field_value.rb', line 177</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_close'>close</span>
-  <span class='id identifier rubyid_rows'>rows</span><span class='lbracket'>[</span><span class='symbol'>:blank</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='kw'>yield</span> <span class='id identifier rubyid_row'>row</span> <span class='rbrace'>}</span> <span class='kw'>if</span> <span class='id identifier rubyid_blanks'>blanks</span> <span class='op'>==</span> <span class='symbol'>:first</span>
-  <span class='id identifier rubyid_sorted'>sorted</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_entry'>entry</span><span class='op'>|</span> <span class='kw'>yield</span> <span class='id identifier rubyid_entry'>entry</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
-  <span class='id identifier rubyid_rows'>rows</span><span class='lbracket'>[</span><span class='symbol'>:blank</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='kw'>yield</span> <span class='id identifier rubyid_row'>row</span> <span class='rbrace'>}</span> <span class='kw'>if</span> <span class='id identifier rubyid_blanks'>blanks</span> <span class='op'>==</span> <span class='symbol'>:last</span>
+  <span class='id identifier rubyid_rows'>rows</span><span class='lbracket'>[</span><span class='symbol'>:blank</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='kw'>yield</span> <span class='id identifier rubyid_row'>row</span> <span class='rbrace'>}</span> <span class='kw'>if</span> <span class='id identifier rubyid_blanks'>blanks</span> <span class='op'>==</span> <span class='symbol'>:first</span>
+  <span class='id identifier rubyid_sorted'>sorted</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_entry'>entry</span><span class='op'>|</span> <span class='kw'>yield</span> <span class='id identifier rubyid_entry'>entry</span><span class='lbracket'>[</span><span class='int'>1</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_rows'>rows</span><span class='lbracket'>[</span><span class='symbol'>:blank</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='kw'>yield</span> <span class='id identifier rubyid_row'>row</span> <span class='rbrace'>}</span> <span class='kw'>if</span> <span class='id identifier rubyid_blanks'>blanks</span> <span class='op'>==</span> <span class='symbol'>:last</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -607,7 +607,7 @@ where blank values are placed</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:11 2023 by
+  Generated on Fri Aug 25 01:03:17 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

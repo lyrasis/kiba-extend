@@ -101,12 +101,22 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Deletes value in <code>delete</code> field if that value matches value in <code>if_equal_to</code> field. Opinionated treatment
+    <p>rubocop:todo Layout/LineLength
+Deletes value in <code>delete</code> field if that value matches value in <code>if_equal_to</code> field. Opinionated treatment
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
   of multivalued fields described below. Case sensitive or insensitive matching options. Can also delete
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
   associated field values (by position) in additional grouped fields. This is useful, for example,
-  in maintaining the integrity of grouped/subgrouped multivalue fields in CollectionSpace.</p>
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+  in maintaining the integrity of grouped/subgrouped multivalue fields in CollectionSpace.
+rubocop:enable Layout/LineLength</p>
 
-<p><strong>Note that the value of the <code>if_equal_to</code> field is never modified by this transform.</strong></p>
+<p>rubocop:todo Layout/LineLength
+<strong>Note that the value of the <code>if_equal_to</code> field is never modified by this transform.</strong>
+rubocop:enable Layout/LineLength</p>
 
 <h1 id="examples">Examples</h1>
 
@@ -122,7 +132,9 @@
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Delete.html" title="Kiba::Extend::Transforms::Delete (module)">Delete</a></span></span><span class='op'>::</span><span class='const'>FieldValueIfEqualsOtherField</span><span class='comma'>,</span> <span class='label'>delete:</span> <span class='symbol'>:del</span><span class='comma'>,</span> <span class='label'>if_equal_to:</span> <span class='symbol'>:compare</span>
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+transform Delete::FieldValueIfEqualsOtherField, delete: :del, if_equal_to: :compare
+rubocop:enable Layout/LineLength
 </code></pre>
 
 <p>Results in:</p>
@@ -137,11 +149,15 @@
 
 <p>The first row is left alone because a != b.</p>
 
-<p>In the second row, c is deleted from <code>del</code> because the value of <code>compare</code> is also c.</p>
+<p>rubocop:todo Layout/LineLength
+In the second row, c is deleted from <code>del</code> because the value of <code>compare</code> is also c.
+rubocop:enable Layout/LineLength</p>
 
 <h2 id="complex-example">Complex example</h2>
 
-<p>This introduces handling of multivalued grouped fields with case insensitive matching.</p>
+<p>rubocop:todo Layout/LineLength
+This introduces handling of multivalued grouped fields with case insensitive matching.
+rubocop:enable Layout/LineLength</p>
 
 <p>Used in pipeline as:</p>
 
@@ -180,22 +196,32 @@
 
 <h4 id="row-1">Row 1</h4>
 
-<p><strong>If <code>compare</code> is a single value, all individual values in <code>del</code> are compared to the single <code>compare</code> value.</strong></p>
+<p>rubocop:todo Layout/LineLength
+<strong>If <code>compare</code> is a single value, all individual values in <code>del</code> are compared to the single <code>compare</code> value.</strong>
+rubocop:enable Layout/LineLength</p>
 
-<p>In <code>del</code> field, elements 1 (C) and 3 (c) are case-insensitive matches on the value in <code>compare</code>. Thus,
+<p>rubocop:todo Layout/LineLength
+In <code>del</code> field, elements 1 (C) and 3 (c) are case-insensitive matches on the value in <code>compare</code>. Thus,
+rubocop:enable Layout/LineLength
   elements 1 and 3 are removed from <code>del</code> and both grouped fields.</p>
 
 <h4 id="row-2">Row 2</h4>
 
-<p><strong>If <code>compare</code> has multiple values, the values of <code>del</code> and <code>compare</code> are compared positionally.</strong></p>
+<p>rubocop:todo Layout/LineLength
+<strong>If <code>compare</code> has multiple values, the values of <code>del</code> and <code>compare</code> are compared positionally.</strong>
+rubocop:enable Layout/LineLength</p>
 
-<p>Element 0 is a match (a in both). Element 1 is not (b != z). Element 2 is a match (c in both).</p>
+<p>rubocop:todo Layout/LineLength
+Element 0 is a match (a in both). Element 1 is not (b != z). Element 2 is a match (c in both).
+rubocop:enable Layout/LineLength</p>
 
 <p>Elements 0 and 2 are removed <code>del</code> and all grouped fields.</p>
 
 <h4 id="row-3">Row 3</h4>
 
-<p><code>compare</code> is multivalued, so <code>del</code> is compared positionally against <code>compare</code>, though <code>del</code> (and
+<p>rubocop:todo Layout/LineLength
+<code>compare</code> is multivalued, so <code>del</code> is compared positionally against <code>compare</code>, though <code>del</code> (and
+rubocop:enable Layout/LineLength
   the grouped fields) are single valued.</p>
 
 <p>When all values are removed from a field, <code>nil</code> is returned.</p>
@@ -206,11 +232,15 @@
 
 <h4 id="row-5">Row 5</h4>
 
-<p>a = a, so a (Element 0) is removed from <code>del</code>. Element 0 is then removed from the grouped fields.</p>
+<p>rubocop:todo Layout/LineLength
+a = a, so a (Element 0) is removed from <code>del</code>. Element 0 is then removed from the grouped fields.
+rubocop:enable Layout/LineLength</p>
 
 <h2 id="group-length-mismatch-ragged-groups">Group length mismatch: ragged groups</h2>
 
-<p>This introduces handling of multivalued grouped fields if fields grouped together have differnt numbers of
+<p>rubocop:todo Layout/LineLength
+This introduces handling of multivalued grouped fields if fields grouped together have differnt numbers of
+rubocop:enable Layout/LineLength
   values.</p>
 
 <p>Used in pipeline as:</p>
@@ -238,20 +268,32 @@
 | A;d;e | c       | y;w;u | e;g;h |
 </code></pre>
 
-<p>And a warning printed to STDOUT, which may trigger you to examine the input data:</p>
+<p>rubocop:todo Layout/LineLength
+And a warning printed to STDOUT, which may trigger you to examine the input data:
+rubocop:enable Layout/LineLength</p>
 
-<pre class="code ruby"><code class="ruby">KIBA WARNING: One or more grouped fields (grpa, grpb) has different number of values than the others
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+KIBA WARNING: One or more grouped fields (grpa, grpb) has different number of values than the others
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
 in {:del=&gt;&quot;A;d;e&quot;, :compare=&gt;&quot;c&quot;, :grpa=&gt;&quot;y;x;w;u&quot;, :grpb=&gt;&quot;e;f;g;h;i&quot;}
+rubocop:enable Layout/LineLength
 </code></pre>
 
-<p><strong>If <code>del</code> had 4 elements and one or more of the grouped fields had a different number of elements,
-  this would be handled similarly, with a slightly different warning.</strong></p>
+<p>rubocop:todo Layout/LineLength
+<strong>If <code>del</code> had 4 elements and one or more of the grouped fields had a different number of elements,
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+  this would be handled similarly, with a slightly different warning.</strong>
+rubocop:enable Layout/LineLength</p>
 
 <h3 id="notes">Notes</h3>
 
 <p><code>grpa</code> has 4 values, while <code>grpb</code> has 5.</p>
 
-<p>Elements 1 and 4 from <code>del</code> match <code>compare</code>, so they are deleted. Those elements are also deleted from
+<p>rubocop:todo Layout/LineLength
+Elements 1 and 4 from <code>del</code> match <code>compare</code>, so they are deleted. Those elements are also deleted from
+rubocop:enable Layout/LineLength
   the grouped fields if present.</p>
 
 
@@ -294,7 +336,7 @@ in {:del=&gt;&quot;A;d;e&quot;, :compare=&gt;&quot;c&quot;, :grpa=&gt;&quot;y;x;
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A new instance of FieldValueIfEqualsOtherField.</p>
+    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength.</p>
 </div></span>
   
 </li>
@@ -339,7 +381,14 @@ in {:del=&gt;&quot;A;d;e&quot;, :compare=&gt;&quot;c&quot;, :grpa=&gt;&quot;y;x;
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of FieldValueIfEqualsOtherField.</p>
+    <p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength</p>
 
 
   </div>
@@ -455,23 +504,25 @@ in {:del=&gt;&quot;A;d;e&quot;, :compare=&gt;&quot;c&quot;, :grpa=&gt;&quot;y;x;
       <pre class="lines">
 
 
-170
-171
-172
-173
-174
-175
-176
-177</pre>
+219
+220
+221
+222
+223
+224
+225
+226
+227</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/field_value_if_equals_other_field.rb', line 170</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/field_value_if_equals_other_field.rb', line 219</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>delete:</span><span class='comma'>,</span> <span class='label'>if_equal_to:</span><span class='comma'>,</span> <span class='label'>multival:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>grouped_fields:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>casesensitive:</span> <span class='kw'>true</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>delete:</span><span class='comma'>,</span> <span class='label'>if_equal_to:</span><span class='comma'>,</span> <span class='label'>multival:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+  <span class='label'>grouped_fields:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>casesensitive:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='ivar'>@delete</span> <span class='op'>=</span> <span class='id identifier rubyid_delete'>delete</span>
   <span class='ivar'>@compare</span> <span class='op'>=</span> <span class='id identifier rubyid_if_equal_to'>if_equal_to</span>
   <span class='ivar'>@multival</span> <span class='op'>=</span> <span class='id identifier rubyid_multival'>multival</span>
-  <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_delim'>delim</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span>
+  <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_delim'>delim</span> <span class='op'>||</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span>
   <span class='ivar'>@group</span> <span class='op'>=</span> <span class='id identifier rubyid_grouped_fields'>grouped_fields</span>
   <span class='ivar'>@casesensitive</span> <span class='op'>=</span> <span class='id identifier rubyid_casesensitive'>casesensitive</span>
 <span class='kw'>end</span></pre>
@@ -526,30 +577,30 @@ in {:del=&gt;&quot;A;d;e&quot;, :compare=&gt;&quot;c&quot;, :grpa=&gt;&quot;y;x;
       <pre class="lines">
 
 
-180
-181
-182
-183
-184
-185
-186
-187
-188
-189
-190
-191
-192
-193
-194
-195
-196
-197
-198
-199
-200</pre>
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/field_value_if_equals_other_field.rb', line 180</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/field_value_if_equals_other_field.rb', line 230</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_del_val'>del_val</span> <span class='op'>=</span> <span class='id identifier rubyid_prepare_val'>prepare_val</span><span class='lparen'>(</span><span class='id identifier rubyid_delete'>delete</span><span class='comma'>,</span> <span class='id identifier rubyid_row'>row</span><span class='comma'>,</span> <span class='symbol'>:compare</span><span class='rparen'>)</span>
@@ -557,18 +608,18 @@ in {:del=&gt;&quot;A;d;e&quot;, :compare=&gt;&quot;c&quot;, :grpa=&gt;&quot;y;x;
   <span class='kw'>return</span> <span class='id identifier rubyid_row'>row</span> <span class='kw'>if</span> <span class='id identifier rubyid_compare_val'>compare_val</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>||</span> <span class='id identifier rubyid_del_val'>del_val</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
 
   <span class='id identifier rubyid_compare_method'>compare_method</span> <span class='op'>=</span> <span class='id identifier rubyid_get_compare_method'>get_compare_method</span><span class='lparen'>(</span><span class='id identifier rubyid_del_val'>del_val</span><span class='comma'>,</span> <span class='id identifier rubyid_compare_val'>compare_val</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_to_delete'>to_delete</span> <span class='op'>=</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='id identifier rubyid_compare_method'>compare_method</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_del_val'>del_val</span><span class='comma'>,</span> <span class='id identifier rubyid_compare_val'>compare_val</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_to_delete'>to_delete</span> <span class='op'>=</span> <span class='id identifier rubyid_method'>method</span><span class='lparen'>(</span><span class='id identifier rubyid_compare_method'>compare_method</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_del_val'>del_val</span><span class='comma'>,</span> <span class='id identifier rubyid_compare_val'>compare_val</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_row'>row</span> <span class='kw'>if</span> <span class='id identifier rubyid_to_delete'>to_delete</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
 
   <span class='id identifier rubyid_orig_del_val'>orig_del_val</span> <span class='op'>=</span> <span class='id identifier rubyid_prepare_val'>prepare_val</span><span class='lparen'>(</span><span class='id identifier rubyid_delete'>delete</span><span class='comma'>,</span> <span class='id identifier rubyid_row'>row</span><span class='comma'>,</span> <span class='symbol'>:final</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_delete'>delete</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_do_deletes'>do_deletes</span><span class='lparen'>(</span><span class='id identifier rubyid_to_delete'>to_delete</span><span class='comma'>,</span> <span class='id identifier rubyid_orig_del_val'>orig_del_val</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_row'>row</span> <span class='kw'>unless</span> <span class='id identifier rubyid_grouped?'>grouped?</span>
 
-  <span class='id identifier rubyid_grouped'>grouped</span> <span class='op'>=</span> <span class='id identifier rubyid_group'>group</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span> <span class='id identifier rubyid_prepare_val'>prepare_val</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='comma'>,</span> <span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_grouped'>grouped</span> <span class='op'>=</span> <span class='id identifier rubyid_group'>group</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span> <span class='id identifier rubyid_prepare_val'>prepare_val</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='comma'>,</span> <span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
   <span class='id identifier rubyid_validation'>validation</span> <span class='op'>=</span> <span class='id identifier rubyid_validate_groups'>validate_groups</span><span class='lparen'>(</span><span class='id identifier rubyid_grouped'>grouped</span><span class='comma'>,</span> <span class='id identifier rubyid_orig_del_val'>orig_del_val</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_report_group_issue'>report_group_issue</span><span class='lparen'>(</span><span class='id identifier rubyid_validation'>validation</span><span class='comma'>,</span> <span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_validation'>validation</span> <span class='op'>==</span> <span class='symbol'>:valid</span>
-  <span class='id identifier rubyid_grouped'>grouped</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_grp'>grp</span><span class='op'>|</span> <span class='id identifier rubyid_do_deletes'>do_deletes</span><span class='lparen'>(</span><span class='id identifier rubyid_to_delete'>to_delete</span><span class='comma'>,</span> <span class='id identifier rubyid_grp'>grp</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
-    <span class='period'>.</span><span class='id identifier rubyid_each_with_index'>each_with_index</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_grp'>grp</span><span class='comma'>,</span> <span class='id identifier rubyid_i'>i</span><span class='op'>|</span> <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_group'>group</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_grp'>grp</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_grouped'>grouped</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_grp'>grp</span><span class='op'>|</span> <span class='id identifier rubyid_do_deletes'>do_deletes</span><span class='lparen'>(</span><span class='id identifier rubyid_to_delete'>to_delete</span><span class='comma'>,</span> <span class='id identifier rubyid_grp'>grp</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+    <span class='period'>.</span><span class='id identifier rubyid_each_with_index'>each_with_index</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_grp'>grp</span><span class='comma'>,</span> <span class='id identifier rubyid_i'>i</span><span class='op'>|</span> <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_group'>group</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_grp'>grp</span> <span class='rbrace'>}</span>
 
   <span class='id identifier rubyid_row'>row</span>
 <span class='kw'>end</span></pre>
@@ -582,7 +633,7 @@ in {:del=&gt;&quot;A;d;e&quot;, :compare=&gt;&quot;c&quot;, :grpa=&gt;&quot;y;x;
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:13 2023 by
+  Generated on Fri Aug 25 01:03:19 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

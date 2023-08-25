@@ -120,7 +120,9 @@
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Deduplicate.html" title="Kiba::Extend::Transforms::Deduplicate (module)">Deduplicate</a></span></span><span class='op'>::</span><span class='const'>Fields</span><span class='comma'>,</span> <span class='label'>source:</span> <span class='symbol'>:x</span><span class='comma'>,</span> <span class='label'>targets:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>y</span><span class='words_sep'> </span><span class='tstring_content'>z</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>multival:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;</span><span class='tstring_end'>&#39;</span></span>
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+transform Deduplicate::Fields, source: :x, targets: %i[y z], multival: true, sep: &#39;;&#39;
+rubocop:enable Layout/LineLength
 </code></pre>
 
 <p>Results in:</p>
@@ -204,7 +206,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A new instance of Fields.</p>
+    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength.</p>
 </div></span>
   
 </li>
@@ -249,7 +251,12 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of Fields.</p>
+    <p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength</p>
 
 
   </div>
@@ -348,18 +355,20 @@
       <pre class="lines">
 
 
-82
-83
-84
-85
-86
-87
-88</pre>
+90
+91
+92
+93
+94
+95
+96
+97</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/fields.rb', line 82</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/fields.rb', line 90</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>source:</span><span class='comma'>,</span> <span class='label'>targets:</span><span class='comma'>,</span> <span class='label'>casesensitive:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>multival:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_delim'><span class='object_link'><a href="../../../Extend.html#delim-class_method" title="Kiba::Extend.delim (method)">delim</a></span></span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>source:</span><span class='comma'>,</span> <span class='label'>targets:</span><span class='comma'>,</span> <span class='label'>casesensitive:</span> <span class='kw'>true</span><span class='comma'>,</span>
+  <span class='label'>multival:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_delim'><span class='object_link'><a href="../../../Extend.html#delim-class_method" title="Kiba::Extend.delim (method)">delim</a></span></span><span class='rparen'>)</span>
   <span class='ivar'>@source</span> <span class='op'>=</span> <span class='id identifier rubyid_source'>source</span>
   <span class='ivar'>@targets</span> <span class='op'>=</span> <span class='id identifier rubyid_targets'>targets</span>
   <span class='ivar'>@casesensitive</span> <span class='op'>=</span> <span class='id identifier rubyid_casesensitive'>casesensitive</span>
@@ -417,15 +426,6 @@
       <pre class="lines">
 
 
-91
-92
-93
-94
-95
-96
-97
-98
-99
 100
 101
 102
@@ -450,10 +450,26 @@
 121
 122
 123
-124</pre>
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/fields.rb', line 91</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/fields.rb', line 100</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_sourceval'>sourceval</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='ivar'>@source</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span>
@@ -462,12 +478,15 @@
   <span class='id identifier rubyid_targetvals'>targetvals</span> <span class='op'>=</span> <span class='ivar'>@targets</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_target'>target</span><span class='op'>|</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_row'>row</span> <span class='kw'>if</span> <span class='id identifier rubyid_targetvals'>targetvals</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
 
-  <span class='id identifier rubyid_sourceval'>sourceval</span> <span class='op'>=</span> <span class='ivar'>@multival</span> <span class='op'>?</span> <span class='id identifier rubyid_sourceval'>sourceval</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='ivar'>@sep</span><span class='comma'>,</span> <span class='op'>-</span><span class='int'>1</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:strip</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='lbracket'>[</span><span class='id identifier rubyid_sourceval'>sourceval</span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_sourceval'>sourceval</span> <span class='op'>=</span> <span class='ivar'>@multival</span> <span class='op'>?</span> <span class='id identifier rubyid_sourceval'>sourceval</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='ivar'>@sep</span><span class='comma'>,</span>
+    <span class='op'>-</span><span class='int'>1</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:strip</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='lbracket'>[</span><span class='id identifier rubyid_sourceval'>sourceval</span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_targetvals'>targetvals</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ivar'>@multival</span>
-                 <span class='id identifier rubyid_targetvals'>targetvals</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_val'>val</span><span class='op'>|</span> <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='ivar'>@sep</span><span class='comma'>,</span> <span class='op'>-</span><span class='int'>1</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:strip</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
-               <span class='kw'>else</span>
-                 <span class='id identifier rubyid_targetvals'>targetvals</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_val'>val</span><span class='op'>|</span> <span class='lbracket'>[</span><span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
-               <span class='kw'>end</span>
+    <span class='id identifier rubyid_targetvals'>targetvals</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_val'>val</span><span class='op'>|</span>
+      <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='ivar'>@sep</span><span class='comma'>,</span> <span class='op'>-</span><span class='int'>1</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:strip</span><span class='rparen'>)</span>
+    <span class='rbrace'>}</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_targetvals'>targetvals</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_val'>val</span><span class='op'>|</span> <span class='lbracket'>[</span><span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
+  <span class='kw'>end</span>
 
   <span class='kw'>if</span> <span class='id identifier rubyid_sourceval'>sourceval</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
     <span class='id identifier rubyid_targetvals'>targetvals</span> <span class='op'>=</span> <span class='id identifier rubyid_targetvals'>targetvals</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_vals'>vals</span><span class='op'>|</span> <span class='id identifier rubyid_vals'>vals</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:blank?</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -475,14 +494,18 @@
     <span class='id identifier rubyid_targetvals'>targetvals</span> <span class='op'>=</span> <span class='id identifier rubyid_targetvals'>targetvals</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_vals'>vals</span><span class='op'>|</span> <span class='id identifier rubyid_vals'>vals</span> <span class='op'>-</span> <span class='id identifier rubyid_sourceval'>sourceval</span> <span class='rbrace'>}</span>
   <span class='kw'>else</span>
     <span class='id identifier rubyid_sourceval'>sourceval</span> <span class='op'>=</span> <span class='id identifier rubyid_sourceval'>sourceval</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:downcase</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_targetvals'>targetvals</span> <span class='op'>=</span> <span class='id identifier rubyid_targetvals'>targetvals</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_vals'>vals</span><span class='op'>|</span> <span class='id identifier rubyid_vals'>vals</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_val'>val</span><span class='op'>|</span> <span class='id identifier rubyid_sourceval'>sourceval</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span><span class='rparen'>)</span> <span class='rbrace'>}</span> <span class='rbrace'>}</span>
+    <span class='id identifier rubyid_targetvals'>targetvals</span> <span class='op'>=</span> <span class='id identifier rubyid_targetvals'>targetvals</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_vals'>vals</span><span class='op'>|</span>
+      <span class='id identifier rubyid_vals'>vals</span><span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_val'>val</span><span class='op'>|</span>
+        <span class='id identifier rubyid_sourceval'>sourceval</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span><span class='rparen'>)</span>
+      <span class='rbrace'>}</span>
+    <span class='rbrace'>}</span>
   <span class='kw'>end</span>
 
   <span class='id identifier rubyid_targetvals'>targetvals</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='ivar'>@multival</span>
-                 <span class='id identifier rubyid_targetvals'>targetvals</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_vals'>vals</span><span class='op'>|</span> <span class='id identifier rubyid_vals'>vals</span><span class='op'>&amp;.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='ivar'>@sep</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
-               <span class='kw'>else</span>
-                 <span class='id identifier rubyid_targetvals'>targetvals</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:first</span><span class='rparen'>)</span>
-               <span class='kw'>end</span>
+    <span class='id identifier rubyid_targetvals'>targetvals</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_vals'>vals</span><span class='op'>|</span> <span class='id identifier rubyid_vals'>vals</span><span class='op'>&amp;.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='ivar'>@sep</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_targetvals'>targetvals</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:first</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
   <span class='id identifier rubyid_targetvals'>targetvals</span> <span class='op'>=</span> <span class='id identifier rubyid_targetvals'>targetvals</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_val'>val</span><span class='op'>|</span> <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span> <span class='op'>?</span> <span class='kw'>nil</span> <span class='op'>:</span> <span class='id identifier rubyid_val'>val</span> <span class='rbrace'>}</span>
 
   <span class='id identifier rubyid_targetvals'>targetvals</span><span class='period'>.</span><span class='id identifier rubyid_each_with_index'>each_with_index</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_val'>val</span><span class='comma'>,</span> <span class='id identifier rubyid_i'>i</span><span class='op'>|</span> <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='ivar'>@targets</span><span class='lbracket'>[</span><span class='id identifier rubyid_i'>i</span><span class='rbracket'>]</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_val'>val</span> <span class='rbrace'>}</span>
@@ -499,7 +522,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:11 2023 by
+  Generated on Fri Aug 25 01:03:17 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

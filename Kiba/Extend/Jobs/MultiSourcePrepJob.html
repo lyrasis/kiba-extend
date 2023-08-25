@@ -112,8 +112,12 @@
 </div>
   </div>
 
-<p>After this job has completed processing, it adds the list of resulting fields to the
-  given helper</p>
+<p>rubocop:todo Layout/LineLength
+After this job has completed processing, it adds the list of resulting fields to the
+rubocop:enable Layout/LineLength
+  given helper
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength</p>
 
 
   </div>
@@ -192,7 +196,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A new instance of MultiSourcePrepJob.</p>
+    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength.</p>
 </div></span>
   
 </li>
@@ -265,7 +269,10 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of MultiSourcePrepJob.</p>
+    <p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength</p>
 
 
   </div>
@@ -361,21 +368,25 @@
       <pre class="lines">
 
 
-31
-32
-33
-34
-35
-36
-37</pre>
+43
+44
+45
+46
+47
+48
+49
+50
+51</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/multi_source_prep_job.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/multi_source_prep_job.rb', line 43</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>files:</span><span class='comma'>,</span> <span class='label'>transformer:</span><span class='comma'>,</span> <span class='label'>helper:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="MultiSourcePrepJob/WrongDestinationTypeError.html" title="Kiba::Extend::Jobs::MultiSourcePrepJob::WrongDestinationTypeError (class)">WrongDestinationTypeError</a></span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_valid_destination?'>valid_destination?</span><span class='lparen'>(</span><span class='id identifier rubyid_files'>files</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="MultiSourcePrepJob/WrongHelperTypeError.html" title="Kiba::Extend::Jobs::MultiSourcePrepJob::WrongHelperTypeError (class)">WrongHelperTypeError</a></span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_helper'>helper</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Utils.html" title="Kiba::Extend::Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Utils/MultiSourceNormalizer.html" title="Kiba::Extend::Utils::MultiSourceNormalizer (class)">MultiSourceNormalizer</a></span></span><span class='rparen'>)</span>
- 
+  <span class='comment'># rubocop:todo Layout/LineLength
+</span>  <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="MultiSourcePrepJob/WrongHelperTypeError.html" title="Kiba::Extend::Jobs::MultiSourcePrepJob::WrongHelperTypeError (class)">WrongHelperTypeError</a></span></span> <span class='kw'>unless</span> <span class='id identifier rubyid_helper'>helper</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Utils.html" title="Kiba::Extend::Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Utils/MultiSourceNormalizer.html" title="Kiba::Extend::Utils::MultiSourceNormalizer (class)">MultiSourceNormalizer</a></span></span><span class='rparen'>)</span>
+  <span class='comment'># rubocop:enable Layout/LineLength
+</span>
   <span class='ivar'>@helperobj</span> <span class='op'>=</span> <span class='id identifier rubyid_helper'>helper</span>
   <span class='kw'>super</span><span class='lparen'>(</span><span class='label'>files:</span> <span class='id identifier rubyid_files'>files</span><span class='comma'>,</span> <span class='label'>transformer:</span> <span class='id identifier rubyid_transformer'>transformer</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
@@ -390,7 +401,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:10 2023 by
+  Generated on Fri Aug 25 01:03:16 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

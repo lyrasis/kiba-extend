@@ -101,7 +101,9 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Adds a specified value to new target field for every value found in <code>on_field</code></p>
+    <p>rubocop:todo Layout/LineLength
+Adds a specified value to new target field for every value found in <code>on_field</code>
+rubocop:enable Layout/LineLength</p>
 
 <h1 id="examples">Examples</h1>
 
@@ -121,8 +123,10 @@
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby"> <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Merge.html" title="Kiba::Extend::Transforms::Merge (module)">Merge</a></span></span><span class='op'>::</span><span class='const'>MultivalueConstant</span><span class='comma'>,</span> <span class='label'>on_field:</span> <span class='symbol'>:name</span><span class='comma'>,</span> <span class='label'>target:</span> <span class='symbol'>:species</span><span class='comma'>,</span> <span class='label'>value:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>guinea fowl</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
-   <span class='label'>placeholder:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>NULL</span><span class='tstring_end'>&#39;</span></span>
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+ transform Merge::MultivalueConstant, on_field: :name, target: :species, value: &#39;guinea fowl&#39;, sep: &#39;;&#39;,
+rubocop:enable Layout/LineLength
+   placeholder: &#39;NULL&#39;
 </code></pre>
 
 <p>Results in:</p>
@@ -179,7 +183,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A new instance of MultivalueConstant.</p>
+    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength.</p>
 </div></span>
   
 </li>
@@ -224,7 +228,12 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of MultivalueConstant.</p>
+    <p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength</p>
 
 
   </div>
@@ -317,16 +326,16 @@
       <pre class="lines">
 
 
-53
-54
-55
-56
-57
-58
-59</pre>
+63
+64
+65
+66
+67
+68
+69</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/merge/multivalue_constant.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/merge/multivalue_constant.rb', line 63</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>on_field:</span><span class='comma'>,</span> <span class='label'>target:</span><span class='comma'>,</span> <span class='label'>value:</span><span class='comma'>,</span> <span class='label'>sep:</span><span class='comma'>,</span> <span class='label'>placeholder:</span><span class='rparen'>)</span>
   <span class='ivar'>@on_field</span> <span class='op'>=</span> <span class='id identifier rubyid_on_field'>on_field</span>
@@ -386,16 +395,6 @@
       <pre class="lines">
 
 
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
 72
 73
 74
@@ -404,10 +403,20 @@
 77
 78
 79
-80</pre>
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/merge/multivalue_constant.rb', line 62</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/merge/multivalue_constant.rb', line 72</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_field_val'>field_val</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='ivar'>@on_field</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span>
@@ -419,10 +428,10 @@
   <span class='id identifier rubyid_merge_vals'>merge_vals</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_field_val'>field_val</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='ivar'>@sep</span><span class='comma'>,</span> <span class='op'>-</span><span class='int'>1</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_field_val'>field_val</span><span class='op'>|</span>
     <span class='id identifier rubyid_merge_vals'>merge_vals</span> <span class='op'>&lt;&lt;</span> <span class='kw'>if</span> <span class='id identifier rubyid_field_val'>field_val</span> <span class='op'>==</span> <span class='ivar'>@placeholder</span> <span class='op'>||</span> <span class='id identifier rubyid_field_val'>field_val</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
-                    <span class='ivar'>@placeholder</span>
-                  <span class='kw'>else</span>
-                    <span class='ivar'>@value</span>
-                  <span class='kw'>end</span>
+      <span class='ivar'>@placeholder</span>
+    <span class='kw'>else</span>
+      <span class='ivar'>@value</span>
+    <span class='kw'>end</span>
   <span class='kw'>end</span>
 
   <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='ivar'>@target</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_merge_vals'>merge_vals</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='ivar'>@sep</span><span class='rparen'>)</span>
@@ -438,7 +447,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:12 2023 by
+  Generated on Fri Aug 25 01:03:18 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

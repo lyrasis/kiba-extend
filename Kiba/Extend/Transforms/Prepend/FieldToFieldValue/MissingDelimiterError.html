@@ -103,7 +103,9 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Error raised if <code>FieldToFieldValue</code> is constructed with <code>mvdelim</code> blank and
+    <p>rubocop:todo Layout/LineLength
+Error raised if <code>FieldToFieldValue</code> is constructed with <code>mvdelim</code> blank and
+rubocop:enable Layout/LineLength
   <code>multivalue_prepended_field</code> true</p>
 
 
@@ -122,9 +124,19 @@
     <dl class="constants">
       
         <dt id="MSG-constant" class="">MSG =
-          
+          <div class="docstring">
+  <div class="discussion">
+    <p>rubocop:todo Layout/LineLength</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>You must provide an mvdelim string if multivalue_prepended_field is true</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>You must provide an mvdelim string if multivalue_prepended_field is true</span><span class='tstring_end'>&quot;</span></span></pre></dd>
       
     </dl>
   
@@ -162,7 +174,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A new instance of MissingDelimiterError.</p>
+    <span class="summary_desc"><div class='inline'><p>rubocop:enable Layout/LineLength.</p>
 </div></span>
   
 </li>
@@ -186,7 +198,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of MissingDelimiterError.</p>
+    <p>rubocop:enable Layout/LineLength</p>
 
 
   </div>
@@ -200,12 +212,12 @@
       <pre class="lines">
 
 
-117
-118
-119</pre>
+142
+143
+144</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/prepend/field_to_field_value.rb', line 117</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/prepend/field_to_field_value.rb', line 142</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_msg'>msg</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="#MSG-constant" title="Kiba::Extend::Transforms::Prepend::FieldToFieldValue::MissingDelimiterError::MSG (constant)">MSG</a></span></span><span class='rparen'>)</span>
   <span class='kw'>super</span>
@@ -221,7 +233,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:12 2023 by
+  Generated on Fri Aug 25 01:03:18 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

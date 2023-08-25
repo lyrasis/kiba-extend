@@ -104,14 +104,19 @@
     
   <div class="note notetag">
     <strong>Note:</strong>
-    <div class='inline'><p>This is NOT safe for use with groupings of fields whose multi-values are expected
-to be the same length</p>
+    <div class='inline'><p>This is NOT safe for use with groupings of fields whose multi-values are expected</p>
 </div>
   </div>
 
 <p>Removes duplicate values within the given field(s)</p>
 
-<p>Processes one field at a time. Splits value on sep, and keeps only the unique values</p>
+<p>rubocop:todo Layout/LineLength
+Processes one field at a time. Splits value on sep, and keeps only the unique values
+rubocop:enable Layout/LineLength</p>
+
+<p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+  to be the same length</p>
 
 <p>Input table:</p>
 
@@ -178,7 +183,7 @@ to be the same length</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A new instance of FieldValues.</p>
+    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength.</p>
 </div></span>
   
 </li>
@@ -223,7 +228,8 @@ to be the same length</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of FieldValues.</p>
+    <p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength</p>
 
 
   </div>
@@ -271,13 +277,13 @@ to be the same length</p>
       <pre class="lines">
 
 
-45
-46
-47
-48</pre>
+51
+52
+53
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/field_values.rb', line 45</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/field_values.rb', line 51</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span><span class='comma'>,</span> <span class='label'>sep:</span><span class='rparen'>)</span>
   <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fields'>fields</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
@@ -334,16 +340,16 @@ to be the same length</p>
       <pre class="lines">
 
 
-51
-52
-53
-54
-55
-56
-57</pre>
+57
+58
+59
+60
+61
+62
+63</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/field_values.rb', line 51</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/field_values.rb', line 57</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='ivar'>@fields</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span>
@@ -362,7 +368,7 @@ to be the same length</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:12 2023 by
+  Generated on Fri Aug 25 01:03:17 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

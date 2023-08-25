@@ -104,63 +104,128 @@
     
   <div class="note notetag">
     <strong>Note:</strong>
-    <div class='inline'><p>Makes many egregiously oversimplified Western assumptions. Do not trust it to split all names
-properly in all cases. Handles only the most common English language name patterns.</p>
+    <div class='inline'><p>Makes many egregiously oversimplified Western assumptions. Do not trust it to split all names</p>
 </div>
   </div>
 
-<p>Splits an inverted name form into name parts and uses the parts to form a direct-entry name</p>
+<p>rubocop:todo Layout/LineLength
+Splits an inverted name form into name parts and uses the parts to form a direct-entry name
+rubocop:enable Layout/LineLength</p>
+
+<p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+  properly in all cases. Handles only the most common English language name patterns.
+rubocop:enable Layout/LineLength</p>
 
 <h1 id="examples">Examples</h1>
 
-<p>In these examples, you can see the inverted name in the <code>:iname</code> field of each row.</p>
+<p>rubocop:todo Layout/LineLength
+In these examples, you can see the inverted name in the <code>:iname</code> field of each row.
+rubocop:enable Layout/LineLength</p>
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby"> <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Name.html" title="Kiba::Extend::Transforms::Name (module)">Name</a></span></span><span class='op'>::</span><span class='const'>ConvertInvertedToDirectForm</span><span class='comma'>,</span> <span class='label'>source:</span> <span class='symbol'>:iname</span><span class='comma'>,</span> <span class='label'>target:</span> <span class='symbol'>:direct</span>
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+ transform Name::ConvertInvertedToDirectForm, source: :iname, target: :direct
+rubocop:enable Layout/LineLength
 </code></pre>
 
 <p>Results in:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, Robert</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Robert</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:direct</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Robert Smith</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, Robert J.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Robert</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>J.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:direct</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Robert J. Smith</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith-Jones, Robert J.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Robert</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>J.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith-Jones</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:direct</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Robert J. Smith-Jones</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, Robert James</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Robert</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>James</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:direct</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Robert James Smith</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, R. James</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>R.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>James</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:direct</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>R. James Smith</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, Robert (Bob)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Robert</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>(Bob)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:direct</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Robert (Bob) Smith</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, Robert James (Bob)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Robert</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>James (Bob)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:direct</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Robert James (Bob) Smith</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, R. J.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>R.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>J.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:direct</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>R. J. Smith</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, R.J.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>R.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>J.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:direct</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>R. J. Smith</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, R J</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>R</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>J</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:direct</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>R J Smith</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, RJ</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>R</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>J</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:direct</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>R J Smith</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, RJR</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>R</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>JR</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:direct</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>R JR Smith</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, RJRR</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>RJRR</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:direct</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>RJRR Smith</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, R.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>R.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:direct</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>R. Smith</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:direct</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, Robert, Jr.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Robert</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Jr.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:direct</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Robert Smith, Jr.</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, R.J., Sr.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>R.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>J.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Sr.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:direct</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>R. J. Smith, Sr.</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, R. J., Sr.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>R.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>J.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Sr.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:direct</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>R. J. Smith, Sr.</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>R.J. Smith &amp; Co.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:direct</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>R.J. Smith &amp; Co.</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, James, Robert &amp; Co.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>James</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Robert &amp; Co.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:direct</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>James Smith, Robert &amp; Co.</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Robert \&quot;Bob\&quot; Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:direct</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Robert \&quot;Bob\&quot; Smith</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:direct</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:direct</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:foo</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bar</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:direct</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='rbrace'>}</span>
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, Robert&quot;, :firstname=&gt;&quot;Robert&quot;, :middlename=&gt;nil, :lastname=&gt;&quot;Smith&quot;, :suffix=&gt;nil, :direct=&gt;&quot;Robert Smith&quot;}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, Robert J.&quot;, :firstname=&gt;&quot;Robert&quot;, :middlename=&gt;&quot;J.&quot;, :lastname=&gt;&quot;Smith&quot;, :suffix=&gt;nil, :direct=&gt;&quot;Robert J. Smith&quot;}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith-Jones, Robert J.&quot;, :firstname=&gt;&quot;Robert&quot;, :middlename=&gt;&quot;J.&quot;, :lastname=&gt;&quot;Smith-Jones&quot;, :suffix=&gt;nil, :direct=&gt;&quot;Robert J. Smith-Jones&quot;}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, Robert James&quot;, :firstname=&gt;&quot;Robert&quot;, :middlename=&gt;&quot;James&quot;, :lastname=&gt;&quot;Smith&quot;, :suffix=&gt;nil, :direct=&gt;&quot;Robert James Smith&quot;}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, R. James&quot;, :firstname=&gt;&quot;R.&quot;, :middlename=&gt;&quot;James&quot;, :lastname=&gt;&quot;Smith&quot;, :suffix=&gt;nil, :direct=&gt;&quot;R. James Smith&quot;}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, Robert (Bob)&quot;, :firstname=&gt;&quot;Robert&quot;, :middlename=&gt;&quot;(Bob)&quot;, :lastname=&gt;&quot;Smith&quot;, :suffix=&gt;nil, :direct=&gt;&quot;Robert (Bob) Smith&quot;}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, Robert James (Bob)&quot;, :firstname=&gt;&quot;Robert&quot;, :middlename=&gt;&quot;James (Bob)&quot;, :lastname=&gt;&quot;Smith&quot;, :suffix=&gt;nil, :direct=&gt;&quot;Robert James (Bob) Smith&quot;}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, R. J.&quot;, :firstname=&gt;&quot;R.&quot;, :middlename=&gt;&quot;J.&quot;, :lastname=&gt;&quot;Smith&quot;, :suffix=&gt;nil, :direct=&gt;&quot;R. J. Smith&quot;}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, R.J.&quot;, :firstname=&gt;&quot;R.&quot;, :middlename=&gt;&quot;J.&quot;, :lastname=&gt;&quot;Smith&quot;, :suffix=&gt;nil, :direct=&gt;&quot;R. J. Smith&quot;}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, R J&quot;, :firstname=&gt;&quot;R&quot;, :middlename=&gt;&quot;J&quot;, :lastname=&gt;&quot;Smith&quot;, :suffix=&gt;nil, :direct=&gt;&quot;R J Smith&quot;}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, RJ&quot;, :firstname=&gt;&quot;R&quot;, :middlename=&gt;&quot;J&quot;, :lastname=&gt;&quot;Smith&quot;, :suffix=&gt;nil, :direct=&gt;&quot;R J Smith&quot;}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, RJR&quot;, :firstname=&gt;&quot;R&quot;, :middlename=&gt;&quot;JR&quot;, :lastname=&gt;&quot;Smith&quot;, :suffix=&gt;nil, :direct=&gt;&quot;R JR Smith&quot;}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, RJRR&quot;, :firstname=&gt;&quot;RJRR&quot;, :middlename=&gt;nil, :lastname=&gt;&quot;Smith&quot;, :suffix=&gt;nil, :direct=&gt;&quot;RJRR Smith&quot;}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, R.&quot;, :firstname=&gt;&quot;R.&quot;, :middlename=&gt;nil, :lastname=&gt;&quot;Smith&quot;, :suffix=&gt;nil, :direct=&gt;&quot;R. Smith&quot;}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith&quot;, :firstname=&gt;nil, :middlename=&gt;nil, :lastname=&gt;nil, :suffix=&gt;nil, :direct=&gt;&quot;Smith&quot;}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, Robert, Jr.&quot;, :firstname=&gt;&quot;Robert&quot;, :middlename=&gt;nil, :lastname=&gt;&quot;Smith&quot;, :suffix=&gt;&quot;Jr.&quot;, :direct=&gt;&quot;Robert Smith, Jr.&quot;}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, R.J., Sr.&quot;, :firstname=&gt;&quot;R.&quot;, :middlename=&gt;&quot;J.&quot;, :lastname=&gt;&quot;Smith&quot;, :suffix=&gt;&quot;Sr.&quot;, :direct=&gt;&quot;R. J. Smith, Sr.&quot;}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, R. J., Sr.&quot;, :firstname=&gt;&quot;R.&quot;, :middlename=&gt;&quot;J.&quot;, :lastname=&gt;&quot;Smith&quot;, :suffix=&gt;&quot;Sr.&quot;, :direct=&gt;&quot;R. J. Smith, Sr.&quot;}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;R.J. Smith &amp; Co.&quot;, :firstname=&gt;nil, :middlename=&gt;nil, :lastname=&gt;nil, :suffix=&gt;nil, :direct=&gt;&quot;R.J. Smith &amp; Co.&quot;}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, James, Robert &amp; Co.&quot;, :firstname=&gt;&quot;James&quot;, :middlename=&gt;nil, :lastname=&gt;&quot;Smith&quot;, :suffix=&gt;&quot;Robert &amp; Co.&quot;, :direct=&gt;&quot;James Smith, Robert &amp; Co.&quot;}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Robert \&quot;Bob\&quot; Smith&quot;, :firstname=&gt;nil, :middlename=&gt;nil, :lastname=&gt;nil, :suffix=&gt;nil, :direct=&gt;&quot;Robert \&quot;Bob\&quot; Smith&quot;}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;&quot;, :firstname=&gt;nil, :middlename=&gt;nil, :lastname=&gt;nil, :suffix=&gt;nil, :direct=&gt;&quot;&quot;}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;nil, :firstname=&gt;nil, :middlename=&gt;nil, :lastname=&gt;nil, :suffix=&gt;nil, :direct=&gt;nil}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:foo=&gt;&quot;bar&quot;, :firstname=&gt;nil, :middlename=&gt;nil, :lastname=&gt;nil, :suffix=&gt;nil, :direct=&gt;nil}
+rubocop:enable Layout/LineLength
 </code></pre>
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby"> <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Name.html" title="Kiba::Extend::Transforms::Name (module)">Name</a></span></span><span class='op'>::</span><span class='const'>ConvertInvertedToDirectForm</span><span class='comma'>,</span> <span class='label'>source:</span> <span class='symbol'>:iname</span><span class='comma'>,</span> <span class='label'>target:</span> <span class='symbol'>:direct</span><span class='comma'>,</span> <span class='label'>nameparts:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>f</span><span class='words_sep'> </span><span class='tstring_content'>m</span><span class='words_sep'> </span><span class='tstring_content'>l</span><span class='words_sep'> </span><span class='tstring_content'>s</span><span class='tstring_end'>]</span></span>
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+ transform Name::ConvertInvertedToDirectForm, source: :iname, target: :direct, nameparts: %i[f m l s]
+rubocop:enable Layout/LineLength
 </code></pre>
 
 <p>Results in:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, R.J., Sr.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:direct</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>R. J. Smith, Sr.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:f</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>R.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:l</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:m</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>J.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:s</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Sr.</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, R.J., Sr.&quot;, :direct=&gt;&quot;R. J. Smith, Sr.&quot;, :f=&gt;&quot;R.&quot;, :l=&gt;&quot;Smith&quot;, :m=&gt;&quot;J.&quot;, :s=&gt;&quot;Sr.&quot;}
+rubocop:enable Layout/LineLength
 </code></pre>
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby"> <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Name.html" title="Kiba::Extend::Transforms::Name (module)">Name</a></span></span><span class='op'>::</span><span class='const'>ConvertInvertedToDirectForm</span><span class='comma'>,</span> <span class='label'>source:</span> <span class='symbol'>:iname</span><span class='comma'>,</span> <span class='label'>target:</span> <span class='symbol'>:direct</span><span class='comma'>,</span> <span class='label'>keep_parts:</span> <span class='kw'>false</span>
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+ transform Name::ConvertInvertedToDirectForm, source: :iname, target: :direct, keep_parts: false
+rubocop:enable Layout/LineLength
 </code></pre>
 
 <p>Results in:</p>
@@ -207,7 +272,7 @@ properly in all cases. Handles only the most common English language name patter
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(source:, target:, nameparts: %i[firstname middlename lastname suffix], keep_parts: true)  &#x21d2; ConvertInvertedToDirectForm </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(source:, target:, nameparts: %i[firstname middlename lastname               suffix], keep_parts: true)  &#x21d2; ConvertInvertedToDirectForm </a>
     
 
     
@@ -223,7 +288,7 @@ properly in all cases. Handles only the most common English language name patter
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A new instance of ConvertInvertedToDirectForm.</p>
+    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength   field for first/given name; field for middle name(s); field for family/sur/last name; rubocop:enable Layout/LineLength   field for suffix/name additions rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength.</p>
 </div></span>
   
 </li>
@@ -260,7 +325,8 @@ properly in all cases. Handles only the most common English language name patter
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(source:, target:, nameparts: %i[firstname middlename lastname suffix], keep_parts: true)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Name::ConvertInvertedToDirectForm (class)">ConvertInvertedToDirectForm</a></span></tt> 
+    #<strong>initialize</strong>(source:, target:, nameparts: %i[firstname middlename lastname
+              suffix], keep_parts: true)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Name::ConvertInvertedToDirectForm (class)">ConvertInvertedToDirectForm</a></span></tt> 
   
 
   
@@ -268,7 +334,14 @@ properly in all cases. Handles only the most common English language name patter
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of ConvertInvertedToDirectForm.</p>
+    <p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+  field for first/given name; field for middle name(s); field for family/sur/last name;
+rubocop:enable Layout/LineLength
+  field for suffix/name additions
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength</p>
 
 
   </div>
@@ -315,13 +388,12 @@ properly in all cases. Handles only the most common English language name patter
         <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>%i[firstname middlename lastname suffix]</tt>)</em>
+        <em class="default">(defaults to: <tt>%i[firstname middlename lastname
+              suffix]</tt>)</em>
       
       
         &mdash;
-        <div class='inline'><p>field names for the split name parts. Must be provided in order:
-field for first/given name; field for middle name(s); field for family/sur/last name;
-field for suffix/name additions</p>
+        <div class='inline'><p>field names for the split name parts. Must be provided in order:</p>
 </div>
       
     </li>
@@ -367,24 +439,32 @@ field for suffix/name additions</p>
       <pre class="lines">
 
 
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92
-93
-94</pre>
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/name/convert_inverted_to_direct_form.rb', line 82</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/name/convert_inverted_to_direct_form.rb', line 151</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>source:</span><span class='comma'>,</span> <span class='label'>target:</span><span class='comma'>,</span> <span class='label'>nameparts:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>firstname</span><span class='words_sep'> </span><span class='tstring_content'>middlename</span><span class='words_sep'> </span><span class='tstring_content'>lastname</span><span class='words_sep'> </span><span class='tstring_content'>suffix</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>keep_parts:</span> <span class='kw'>true</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>source:</span><span class='comma'>,</span> <span class='label'>target:</span><span class='comma'>,</span>
+  <span class='label'>nameparts:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>firstname</span><span class='words_sep'> </span><span class='tstring_content'>middlename</span><span class='words_sep'> </span><span class='tstring_content'>lastname</span><span class='words_sep'>
+    </span><span class='tstring_content'>suffix</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>keep_parts:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='ivar'>@source</span> <span class='op'>=</span> <span class='id identifier rubyid_source'>source</span>
   <span class='ivar'>@target</span> <span class='op'>=</span> <span class='id identifier rubyid_target'>target</span>
   <span class='ivar'>@nameparts</span> <span class='op'>=</span> <span class='id identifier rubyid_nameparts'>nameparts</span>
@@ -393,9 +473,13 @@ field for suffix/name additions</p>
   <span class='ivar'>@lastname</span> <span class='op'>=</span> <span class='id identifier rubyid_nameparts'>nameparts</span><span class='lbracket'>[</span><span class='int'>2</span><span class='rbracket'>]</span>
   <span class='ivar'>@suffix</span> <span class='op'>=</span> <span class='id identifier rubyid_nameparts'>nameparts</span><span class='lbracket'>[</span><span class='int'>3</span><span class='rbracket'>]</span>
   <span class='ivar'>@keep_parts</span> <span class='op'>=</span> <span class='id identifier rubyid_keep_parts'>keep_parts</span>
-  <span class='ivar'>@convert_getter</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Helpers.html" title="Kiba::Extend::Transforms::Helpers (module)">Helpers</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Helpers/FieldValueGetter.html" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter (class)">FieldValueGetter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Helpers/FieldValueGetter.html#initialize-instance_method" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='lbracket'>[</span><span class='id identifier rubyid_firstname'>firstname</span><span class='comma'>,</span> <span class='id identifier rubyid_middlename'>middlename</span><span class='comma'>,</span> <span class='id identifier rubyid_lastname'>lastname</span><span class='rbracket'>]</span><span class='rparen'>)</span>
-  <span class='ivar'>@convertable_getter</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Helpers.html" title="Kiba::Extend::Transforms::Helpers (module)">Helpers</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Helpers/FieldValueGetter.html" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter (class)">FieldValueGetter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Helpers/FieldValueGetter.html#initialize-instance_method" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='id identifier rubyid_nameparts'>nameparts</span><span class='rparen'>)</span>
-  <span class='ivar'>@splitter</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Name.html" title="Kiba::Extend::Transforms::Name (module)">Name</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="SplitInverted.html" title="Kiba::Extend::Transforms::Name::SplitInverted (class)">SplitInverted</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="SplitInverted.html#initialize-instance_method" title="Kiba::Extend::Transforms::Name::SplitInverted#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>source:</span> <span class='id identifier rubyid_source'>source</span><span class='comma'>,</span> <span class='label'>targets:</span> <span class='id identifier rubyid_nameparts'>nameparts</span><span class='rparen'>)</span>
+  <span class='ivar'>@convert_getter</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Helpers.html" title="Kiba::Extend::Transforms::Helpers (module)">Helpers</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Helpers/FieldValueGetter.html" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter (class)">FieldValueGetter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Helpers/FieldValueGetter.html#initialize-instance_method" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='lbracket'>[</span><span class='id identifier rubyid_firstname'>firstname</span><span class='comma'>,</span>
+    <span class='id identifier rubyid_middlename'>middlename</span><span class='comma'>,</span> <span class='id identifier rubyid_lastname'>lastname</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='comment'># rubocop:todo Layout/LineLength
+</span>  <span class='ivar'>@convertable_getter</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Helpers.html" title="Kiba::Extend::Transforms::Helpers (module)">Helpers</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Helpers/FieldValueGetter.html" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter (class)">FieldValueGetter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Helpers/FieldValueGetter.html#initialize-instance_method" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='id identifier rubyid_nameparts'>nameparts</span><span class='rparen'>)</span>
+  <span class='comment'># rubocop:enable Layout/LineLength
+</span>  <span class='ivar'>@splitter</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Name.html" title="Kiba::Extend::Transforms::Name (module)">Name</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="SplitInverted.html" title="Kiba::Extend::Transforms::Name::SplitInverted (class)">SplitInverted</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="SplitInverted.html#initialize-instance_method" title="Kiba::Extend::Transforms::Name::SplitInverted#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>source:</span> <span class='id identifier rubyid_source'>source</span><span class='comma'>,</span>
+    <span class='label'>targets:</span> <span class='id identifier rubyid_nameparts'>nameparts</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -463,19 +547,19 @@ field for suffix/name additions</p>
       <pre class="lines">
 
 
-97
-98
-99
-100
-101
-102
-103
-104
-105
-106</pre>
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/name/convert_inverted_to_direct_form.rb', line 97</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/name/convert_inverted_to_direct_form.rb', line 172</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_splitter'>splitter</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
@@ -484,7 +568,7 @@ field for suffix/name additions</p>
   <span class='kw'>else</span>
     <span class='id identifier rubyid_do_not_convert'>do_not_convert</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
-  <span class='id identifier rubyid_nameparts'>nameparts</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='rparen'>)</span> <span class='rbrace'>}</span> <span class='kw'>unless</span> <span class='id identifier rubyid_keep_parts'>keep_parts</span>
+  <span class='id identifier rubyid_nameparts'>nameparts</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='rparen'>)</span> <span class='rbrace'>}</span> <span class='kw'>unless</span> <span class='id identifier rubyid_keep_parts'>keep_parts</span>
   <span class='id identifier rubyid_row'>row</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -497,7 +581,7 @@ field for suffix/name additions</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:13 2023 by
+  Generated on Fri Aug 25 01:03:19 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

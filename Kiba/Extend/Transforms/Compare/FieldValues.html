@@ -101,7 +101,9 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Compares values in the given fields and puts <code>same</code> or <code>diff</code> in the given target field.</p>
+    <p>rubocop:todo Layout/LineLength
+Compares values in the given fields and puts <code>same</code> or <code>diff</code> in the given target field.
+rubocop:enable Layout/LineLength</p>
 
 <h1 id="examples">Examples</h1>
 
@@ -138,7 +140,9 @@
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby"> <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Compare.html" title="Kiba::Extend::Transforms::Compare (module)">Compare</a></span></span><span class='op'>::</span><span class='const'>FieldValues</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>id</span><span class='words_sep'> </span><span class='tstring_content'>pid</span><span class='words_sep'> </span><span class='tstring_content'>zid</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>target:</span> <span class='symbol'>:comp</span><span class='comma'>,</span> <span class='label'>downcase:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>strip:</span> <span class='kw'>false</span>
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+ transform Compare::FieldValues, fields: %i[id pid zid], target: :comp, downcase: false, strip: false
+rubocop:enable Layout/LineLength
 </code></pre>
 
 <p>Results in:</p>
@@ -155,7 +159,9 @@
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby"> <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Compare.html" title="Kiba::Extend::Transforms::Compare (module)">Compare</a></span></span><span class='op'>::</span><span class='const'>FieldValues</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>id</span><span class='words_sep'> </span><span class='tstring_content'>pid</span><span class='words_sep'> </span><span class='tstring_content'>zid</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>target:</span> <span class='symbol'>:comp</span><span class='comma'>,</span> <span class='label'>ignore_blank:</span> <span class='kw'>true</span>
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+ transform Compare::FieldValues, fields: %i[id pid zid], target: :comp, ignore_blank: true
+rubocop:enable Layout/LineLength
 </code></pre>
 
 <p>Results in:</p>
@@ -225,7 +231,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A new instance of FieldValues.</p>
+    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength   comparison.</p>
 </div></span>
   
 </li>
@@ -270,7 +276,17 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of FieldValues.</p>
+    <p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+  comparison. <code>true</code> results in a case insensitive comparison.
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength</p>
 
 
   </div>
@@ -321,8 +337,7 @@
       
       
         &mdash;
-        <div class='inline'><p>whether to downcase all values for comparison. <code>false</code> results in a case sensitive
-comparison. <code>true</code> results in a case insensitive comparison.</p>
+        <div class='inline'><p>whether to downcase all values for comparison. <code>false</code> results in a case sensitive</p>
 </div>
       
     </li>
@@ -385,18 +400,20 @@ comparison. <code>true</code> results in a case insensitive comparison.</p>
       <pre class="lines">
 
 
-91
-92
-93
-94
-95
-96
-97</pre>
+107
+108
+109
+110
+111
+112
+113
+114</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/compare/field_values.rb', line 91</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/compare/field_values.rb', line 107</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span><span class='comma'>,</span> <span class='label'>target:</span><span class='comma'>,</span> <span class='label'>downcase:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>strip:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>ignore_blank:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span><span class='comma'>,</span> <span class='label'>target:</span><span class='comma'>,</span> <span class='label'>downcase:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>strip:</span> <span class='kw'>true</span><span class='comma'>,</span>
+  <span class='label'>ignore_blank:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fields'>fields</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
   <span class='ivar'>@target</span> <span class='op'>=</span> <span class='id identifier rubyid_target'>target</span>
   <span class='ivar'>@strip</span> <span class='op'>=</span> <span class='id identifier rubyid_strip'>strip</span>
@@ -469,36 +486,36 @@ comparison. <code>true</code> results in a case insensitive comparison.</p>
       <pre class="lines">
 
 
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113</pre>
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/compare/field_values.rb', line 100</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/compare/field_values.rb', line 117</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='ivar'>@target</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>diff</span><span class='tstring_end'>&#39;</span></span>
+  <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='ivar'>@target</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>diff</span><span class='tstring_end'>&quot;</span></span>
   <span class='id identifier rubyid_values'>values</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
   <span class='ivar'>@fields</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span>
-    <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
-    <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+    <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_dup'>dup</span>
+    <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
     <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span> <span class='kw'>if</span> <span class='ivar'>@downcase</span>
     <span class='id identifier rubyid_value'>value</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_strip'>strip</span> <span class='kw'>if</span> <span class='ivar'>@strip</span>
     <span class='id identifier rubyid_values'>values</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_value'>value</span>
   <span class='kw'>end</span>
   <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_reject!'>reject!</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:blank?</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='ivar'>@ignore_blank</span>
-  <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='ivar'>@target</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>same</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>==</span> <span class='int'>1</span> <span class='op'>||</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+  <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='ivar'>@target</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>same</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>==</span> <span class='int'>1</span> <span class='op'>||</span> <span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
   <span class='id identifier rubyid_row'>row</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -511,7 +528,7 @@ comparison. <code>true</code> results in a case insensitive comparison.</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:11 2023 by
+  Generated on Fri Aug 25 01:03:17 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

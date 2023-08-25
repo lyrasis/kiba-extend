@@ -101,7 +101,9 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Renames multiple fields at once, given a fieldmap where key is <code>from</code> field and value is <code>to</code> field</p>
+    <p>rubocop:todo Layout/LineLength
+Renames multiple fields at once, given a fieldmap where key is <code>from</code> field and value is <code>to</code> field
+rubocop:enable Layout/LineLength</p>
 
 <h1 id="examples">Examples</h1>
 
@@ -177,7 +179,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A new instance of Fields.</p>
+    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength.</p>
 </div></span>
   
 </li>
@@ -222,7 +224,8 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of Fields.</p>
+    <p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength</p>
 
 
   </div>
@@ -270,17 +273,21 @@
       <pre class="lines">
 
 
-34
-35
-36
-37</pre>
+38
+39
+40
+41
+42
+43</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/rename/fields.rb', line 34</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/rename/fields.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fieldmap:</span><span class='rparen'>)</span>
   <span class='ivar'>@fieldmap</span> <span class='op'>=</span> <span class='id identifier rubyid_fieldmap'>fieldmap</span>
-  <span class='ivar'>@renamers</span> <span class='op'>=</span> <span class='id identifier rubyid_fieldmap'>fieldmap</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_from'>from</span><span class='comma'>,</span> <span class='id identifier rubyid_to'>to</span><span class='op'>|</span> <span class='const'><span class='object_link'><a href="../Rename.html" title="Kiba::Extend::Transforms::Rename (module)">Rename</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Field.html" title="Kiba::Extend::Transforms::Rename::Field (class)">Field</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Field.html#initialize-instance_method" title="Kiba::Extend::Transforms::Rename::Field#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>from:</span> <span class='id identifier rubyid_from'>from</span><span class='comma'>,</span> <span class='label'>to:</span> <span class='id identifier rubyid_to'>to</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+  <span class='ivar'>@renamers</span> <span class='op'>=</span> <span class='id identifier rubyid_fieldmap'>fieldmap</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_from'>from</span><span class='comma'>,</span> <span class='id identifier rubyid_to'>to</span><span class='op'>|</span>
+    <span class='const'><span class='object_link'><a href="../Rename.html" title="Kiba::Extend::Transforms::Rename (module)">Rename</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Field.html" title="Kiba::Extend::Transforms::Rename::Field (class)">Field</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Field.html#initialize-instance_method" title="Kiba::Extend::Transforms::Rename::Field#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>from:</span> <span class='id identifier rubyid_from'>from</span><span class='comma'>,</span> <span class='label'>to:</span> <span class='id identifier rubyid_to'>to</span><span class='rparen'>)</span>
+  <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -348,16 +355,16 @@
       <pre class="lines">
 
 
-40
-41
-42
-43</pre>
+46
+47
+48
+49</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/rename/fields.rb', line 40</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/rename/fields.rb', line 46</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_renamers'>renamers</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_renamer'>renamer</span><span class='op'>|</span> <span class='id identifier rubyid_renamer'>renamer</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_renamers'>renamers</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_renamer'>renamer</span><span class='op'>|</span> <span class='id identifier rubyid_renamer'>renamer</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
   <span class='id identifier rubyid_row'>row</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -370,7 +377,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:10 2023 by
+  Generated on Fri Aug 25 01:03:16 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

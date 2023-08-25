@@ -106,8 +106,12 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Keep or reject rows where the value of the specified field matches the given regular expression.
+    <p>rubocop:todo Layout/LineLength
+Keep or reject rows where the value of the specified field matches the given regular expression.
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
   Matches across the entire field value. I.e. a multivalued field is not split into segments which
+rubocop:enable Layout/LineLength
   are each tested for a match.</p>
 
 <h2 id="examples">Examples</h2>
@@ -124,7 +128,9 @@
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../FilterRows.html" title="Kiba::Extend::Transforms::FilterRows (module)">FilterRows</a></span></span><span class='op'>::</span><span class='const'>FieldMatchRegexp</span><span class='comma'>,</span> <span class='label'>action:</span> <span class='symbol'>:keep</span><span class='comma'>,</span> <span class='label'>field:</span> <span class='symbol'>:val</span><span class='comma'>,</span> <span class='label'>match:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>^N</span><span class='tstring_end'>&#39;</span></span>
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+transform FilterRows::FieldMatchRegexp, action: :keep, field: :val, match: &#39;^N&#39;
+rubocop:enable Layout/LineLength
 </code></pre>
 
 <p>Resulting data:</p>
@@ -136,7 +142,9 @@
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../FilterRows.html" title="Kiba::Extend::Transforms::FilterRows (module)">FilterRows</a></span></span><span class='op'>::</span><span class='const'>FieldMatchRegexp</span><span class='comma'>,</span> <span class='label'>action:</span> <span class='symbol'>:keep</span><span class='comma'>,</span> <span class='label'>field:</span> <span class='symbol'>:val</span><span class='comma'>,</span> <span class='label'>match:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>^N</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>ignore_case:</span> <span class='kw'>true</span>
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+transform FilterRows::FieldMatchRegexp, action: :keep, field: :val, match: &#39;^N&#39;, ignore_case: true
+rubocop:enable Layout/LineLength
 </code></pre>
 
 <p>Resulting data:</p>
@@ -149,7 +157,9 @@
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../FilterRows.html" title="Kiba::Extend::Transforms::FilterRows (module)">FilterRows</a></span></span><span class='op'>::</span><span class='const'>FieldMatchRegexp</span><span class='comma'>,</span> <span class='label'>action:</span> <span class='symbol'>:reject</span><span class='comma'>,</span> <span class='label'>field:</span> <span class='symbol'>:val</span><span class='comma'>,</span> <span class='label'>match:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>^N</span><span class='tstring_end'>&#39;</span></span>
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+transform FilterRows::FieldMatchRegexp, action: :reject, field: :val, match: &#39;^N&#39;
+rubocop:enable Layout/LineLength
 </code></pre>
 
 <p>Resulting data:</p>
@@ -199,7 +209,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A new instance of FieldMatchRegexp.</p>
+    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength.</p>
 </div></span>
   
 </li>
@@ -250,7 +260,8 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of FieldMatchRegexp.</p>
+    <p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength</p>
 
 
   </div>
@@ -330,21 +341,23 @@
       <pre class="lines">
 
 
-73
-74
-75
-76
-77
-78</pre>
+85
+86
+87
+88
+89
+90
+91</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/filter_rows/field_match_regexp.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/filter_rows/field_match_regexp.rb', line 85</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>action:</span><span class='comma'>,</span> <span class='label'>field:</span><span class='comma'>,</span> <span class='label'>match:</span><span class='comma'>,</span> <span class='label'>ignore_case:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_validate_action_argument'>validate_action_argument</span><span class='lparen'>(</span><span class='id identifier rubyid_action'>action</span><span class='rparen'>)</span>
   <span class='ivar'>@action</span> <span class='op'>=</span> <span class='id identifier rubyid_action'>action</span>
   <span class='ivar'>@field</span> <span class='op'>=</span> <span class='id identifier rubyid_field'>field</span>
-  <span class='ivar'>@match</span> <span class='op'>=</span> <span class='id identifier rubyid_ignore_case'>ignore_case</span> <span class='op'>?</span> <span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_match'>match</span><span class='comma'>,</span> <span class='const'>Regexp</span><span class='op'>::</span><span class='const'>IGNORECASE</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_match'>match</span><span class='rparen'>)</span>
+  <span class='ivar'>@match</span> <span class='op'>=</span> <span class='id identifier rubyid_ignore_case'>ignore_case</span> <span class='op'>?</span> <span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_match'>match</span><span class='comma'>,</span>
+    <span class='const'>Regexp</span><span class='op'>::</span><span class='const'>IGNORECASE</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='const'>Regexp</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_match'>match</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -397,19 +410,19 @@
       <pre class="lines">
 
 
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90</pre>
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/filter_rows/field_match_regexp.rb', line 81</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/filter_rows/field_match_regexp.rb', line 94</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_val'>val</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='rparen'>)</span>
@@ -431,7 +444,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:12 2023 by
+  Generated on Fri Aug 25 01:03:18 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

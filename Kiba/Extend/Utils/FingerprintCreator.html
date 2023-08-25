@@ -156,7 +156,8 @@
   
 
   
-    <span class="summary_desc"><div class='inline'></div></span>
+    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength   caught by <span class='object_link'><a href="../Transforms/Fingerprint/Add.html" title="Kiba::Extend::Transforms::Fingerprint::Add (class)">Transforms::Fingerprint::Add</a></span> and triggers raising of a more informative error rubocop:enable Layout/LineLength   to the user.</p>
+</div></span>
   
 </li>
 
@@ -180,7 +181,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A new instance of FingerprintCreator.</p>
+    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength.</p>
 </div></span>
   
 </li>
@@ -203,7 +204,8 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of FingerprintCreator.</p>
+    <p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength</p>
 
 
   </div>
@@ -266,19 +268,23 @@
       <pre class="lines">
 
 
-13
-14
 15
 16
-17</pre>
+17
+18
+19
+20
+21</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/fingerprint_creator.rb', line 13</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/fingerprint_creator.rb', line 15</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span><span class='comma'>,</span> <span class='label'>delim:</span><span class='rparen'>)</span>
   <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fields'>fields</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
   <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_delim'>delim</span>
-  <span class='ivar'>@value_getter</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Transforms.html" title="Kiba::Extend::Transforms (module)">Transforms</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Transforms/Helpers.html" title="Kiba::Extend::Transforms::Helpers (module)">Helpers</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Transforms/Helpers/FieldValueGetter.html" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter (class)">FieldValueGetter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Transforms/Helpers/FieldValueGetter.html#initialize-instance_method" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='id identifier rubyid_fields'>fields</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='comma'>,</span> <span class='label'>discard:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='ivar'>@value_getter</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Transforms.html" title="Kiba::Extend::Transforms (module)">Transforms</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Transforms/Helpers.html" title="Kiba::Extend::Transforms::Helpers (module)">Helpers</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Transforms/Helpers/FieldValueGetter.html" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter (class)">FieldValueGetter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Transforms/Helpers/FieldValueGetter.html#initialize-instance_method" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+    <span class='label'>fields:</span> <span class='id identifier rubyid_fields'>fields</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='comma'>,</span> <span class='label'>discard:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+  <span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -303,7 +309,13 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    
+    <p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+  caught by <span class='object_link'><a href="../Transforms/Fingerprint/Add.html" title="Kiba::Extend::Transforms::Fingerprint::Add (class)">Transforms::Fingerprint::Add</a></span> and triggers raising of a more informative error
+rubocop:enable Layout/LineLength
+  to the user</p>
+
 
   </div>
 </div>
@@ -320,9 +332,7 @@
       
       
         &mdash;
-        <div class='inline'><p>if any of the field values in the row contain the delim. This error is
-caught by <span class='object_link'><a href="../Transforms/Fingerprint/Add.html" title="Kiba::Extend::Transforms::Fingerprint::Add (class)">Transforms::Fingerprint::Add</a></span> and triggers raising of a more informative error
-to the user</p>
+        <div class='inline'><p>if any of the field values in the row contain the delim. This error is</p>
 </div>
       
     </li>
@@ -350,20 +360,20 @@ to the user</p>
       <pre class="lines">
 
 
-22
-23
-24
-25
-26
-27</pre>
+30
+31
+32
+33
+34
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/fingerprint_creator.rb', line 22</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/fingerprint_creator.rb', line 30</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_values'>values</span> <span class='op'>=</span> <span class='id identifier rubyid_value_getter'>value_getter</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span>
   <span class='id identifier rubyid_check_values'>check_values</span><span class='lparen'>(</span><span class='id identifier rubyid_values'>values</span><span class='rparen'>)</span>
-  
+
   <span class='const'>Base64</span><span class='period'>.</span><span class='id identifier rubyid_strict_encode64'>strict_encode64</span><span class='lparen'>(</span><span class='id identifier rubyid_hashable_values'>hashable_values</span><span class='lparen'>(</span><span class='id identifier rubyid_values'>values</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='id identifier rubyid_delim'>delim</span><span class='rparen'>)</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -376,7 +386,7 @@ to the user</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:10 2023 by
+  Generated on Fri Aug 25 01:03:16 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

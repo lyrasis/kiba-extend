@@ -106,24 +106,36 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Converts any value in given field(s) to nil if that value is <code>empty?</code>, or consists only
-  of the specified delimiter, <code>treat_as_null</code> value(s), and, optionally, spaces.</p>
+    <p>rubocop:todo Layout/LineLength
+Converts any value in given field(s) to nil if that value is <code>empty?</code>, or consists only
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+  of the specified delimiter, <code>treat_as_null</code> value(s), and, optionally, spaces.
+rubocop:enable Layout/LineLength</p>
 
-<p>See also <span class='object_link'><a href="../Helpers/DelimOnlyChecker.html" title="Kiba::Extend::Transforms::Helpers::DelimOnlyChecker (class)">Helpers::DelimOnlyChecker</a></span>, which is used by this transform.</p>
+<p>rubocop:todo Layout/LineLength
+See also <span class='object_link'><a href="../Helpers/DelimOnlyChecker.html" title="Kiba::Extend::Transforms::Helpers::DelimOnlyChecker (class)">Helpers::DelimOnlyChecker</a></span>, which is used by this transform.
+rubocop:enable Layout/LineLength</p>
 
 <h2 id="examples">Examples</h2>
 
 <h3 id="default">Default</h3>
 
-<p>Deletes delimiter-only field values from all fields. No strings except <code>&#39;&#39;</code> (empty string) are
-  treated as null. <strong>This assumes your project has set <code>Kiba::Extend.delim</code> to equal <code>|</code>.</strong></p>
+<p>rubocop:todo Layout/LineLength
+Deletes delimiter-only field values from all fields. No strings except <code>&#39;&#39;</code> (empty string) are
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+  treated as null. <strong>This assumes your project has set <code>Kiba::Extend.delim</code> to equal <code>|</code>.</strong>
+rubocop:enable Layout/LineLength</p>
 
 <p>Source data:</p>
 
 <pre class="code ruby"><code class="ruby">[
   {foo: &#39;a| b&#39;, bar: &#39; | &#39;, baz: &#39;&#39;},
   {foo: nil, bar: &#39;|&#39;, baz: &#39; |b&#39;},
+rubocop:todo Layout/LineLength
   {foo: %NULLVALUE%, bar: &quot;%NULLVALUE%|%NULLVALUE%&quot;, baz: &quot;%NULLVALUE%| %NULLVALUE%&quot;},
+rubocop:enable Layout/LineLength
   {foo: &#39;NULL&#39;, bar: &quot;NULL |%NULLVALUE%&quot;, baz: &quot;NULL| NULL&quot;},
 ]
 </code></pre>
@@ -138,16 +150,23 @@
 <pre class="code ruby"><code class="ruby">[
   {foo: &#39;a| b&#39;, bar: nil, baz: nil},
   {foo: nil, bar: nil, baz: &#39; |b&#39;},
+rubocop:todo Layout/LineLength
   {foo: %NULLVALUE%, bar: &quot;%NULLVALUE%|%NULLVALUE%&quot;, baz: &quot;%NULLVALUE%| %NULLVALUE%&quot;},
+rubocop:enable Layout/LineLength
   {foo: &#39;NULL&#39;, bar: &quot;NULL |%NULLVALUE%&quot;, baz: &quot;NULL| NULL&quot;},
 ]
 </code></pre>
 
 <h3 id="with-non-default-delim-and-treat_as_null-parameters">With non-default <code>delim</code> and <code>treat_as_null</code> parameters</h3>
 
+<p>rubocop:todo Layout/LineLength</p>
+
 <blockquote>
 <p><strong>NOTE</strong>: The replacements done to determine whether or not a value is delimiter-only are not
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
   applied to the remaining field values. Otherwise, we&#39;d see the <code>%NULLVALUE%</code>s in the results
+rubocop:enable Layout/LineLength
   transformed to <code>%VALUE%</code>.</p>
 </blockquote>
 
@@ -156,14 +175,18 @@
 <pre class="code ruby"><code class="ruby">[
   {foo: &#39;a; b&#39;, bar: &#39; ; &#39;, baz: &#39;&#39;},
   {foo: nil, bar: &#39;;&#39;, baz: &#39; ;b&#39;},
+rubocop:todo Layout/LineLength
   {foo: %NULLVALUE%, bar: &quot;%NULLVALUE%;%NULLVALUE%&quot;, baz: &quot;%NULLVALUE%; %NULLVALUE%&quot;},
+rubocop:enable Layout/LineLength
   {foo: &#39;NULL&#39;, bar: &quot;NULL ;%NULLVALUE%&quot;, baz: &quot;NULL; NULL&quot;},
 ]
 </code></pre>
 
 <p>Setup:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Delete.html" title="Kiba::Extend::Transforms::Delete (module)">Delete</a></span></span><span class='op'>::</span><span class='const'>DelimiterOnlyFieldValues</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>treat_as_null:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>NULL</span><span class='tstring_end'>&#39;</span></span>
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+transform Delete::DelimiterOnlyFieldValues, delim: &#39;;&#39;, treat_as_null: &#39;NULL&#39;
+rubocop:enable Layout/LineLength
 </code></pre>
 
 <p>Result:</p>
@@ -171,7 +194,9 @@
 <pre class="code ruby"><code class="ruby">[
   {foo: &#39;a; b&#39;, bar: nil, baz: nil},
   {foo: nil, bar: nil, baz: &#39; ;b&#39;},
+rubocop:todo Layout/LineLength
   {foo: %NULLVALUE%, bar: &quot;%NULLVALUE%;%NULLVALUE%&quot;, baz: &quot;%NULLVALUE%; %NULLVALUE%&quot;},
+rubocop:enable Layout/LineLength
   {foo: nil, bar: &quot; ;%NULLVALUE%&quot;, baz: nil},
 ]
 </code></pre>
@@ -183,14 +208,18 @@
 <pre class="code ruby"><code class="ruby">[
   {foo: &#39;a| b&#39;, bar: &#39; | &#39;, baz: &#39;&#39;},
   {foo: nil, bar: &#39;|&#39;, baz: &#39; |b&#39;},
+rubocop:todo Layout/LineLength
   {foo: %NULLVALUE%, bar: &quot;%NULLVALUE%|%NULLVALUE%&quot;, baz: &quot;%NULLVALUE%| %NULLVALUE%&quot;},
+rubocop:enable Layout/LineLength
   {foo: &#39;%NULL%&#39;, bar: &quot;%NULL% |%NULLVALUE%&quot;, baz: &quot;%NULL%| %NULL%&quot;},
 ]
 </code></pre>
 
 <p>Setup:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Delete.html" title="Kiba::Extend::Transforms::Delete (module)">Delete</a></span></span><span class='op'>::</span><span class='const'>DelimiterOnlyFieldValues</span><span class='comma'>,</span> <span class='label'>treat_as_null:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULL%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+transform Delete::DelimiterOnlyFieldValues, treat_as_null: [&#39;%NULL%&#39;, &#39;%NULLVALUE%&#39;]
+rubocop:enable Layout/LineLength
 </code></pre>
 
 <p>Result:</p>
@@ -258,7 +287,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A new instance of DelimiterOnlyFieldValues.</p>
+    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength   <span class='object_link'><a href="../../Transforms.html" title="Kiba::Extend::Transforms (module)">Kiba::Extend::Transforms</a></span> for more on fields parameter.</p>
 </div></span>
   
 </li>
@@ -309,7 +338,12 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of DelimiterOnlyFieldValues.</p>
+    <p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+  <span class='object_link'><a href="../../Transforms.html" title="Kiba::Extend::Transforms (module)">Kiba::Extend::Transforms</a></span> for more on fields parameter.
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+  determining whether to delete the field value or not</p>
 
 
   </div>
@@ -330,8 +364,7 @@
       
       
         &mdash;
-        <div class='inline'><p>in which to delete delimiter-only-values. See
-<span class='object_link'><a href="../../Transforms.html" title="Kiba::Extend::Transforms (module)">Kiba::Extend::Transforms</a></span> for more on fields parameter.</p>
+        <div class='inline'><p>in which to delete delimiter-only-values. See</p>
 </div>
       
     </li>
@@ -361,8 +394,7 @@
       
       
         &mdash;
-        <div class='inline'><p>values to treat as though they were null in
-determining whether to delete the field value or not</p>
+        <div class='inline'><p>values to treat as though they were null in</p>
 </div>
       
     </li>
@@ -391,21 +423,25 @@ determining whether to delete the field value or not</p>
       <pre class="lines">
 
 
-120
-121
-122
-123
-124
-125</pre>
+152
+153
+154
+155
+156
+157
+158
+159</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/delimiter_only_field_values.rb', line 120</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/delimiter_only_field_values.rb', line 152</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='symbol'>:all</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_delim'><span class='object_link'><a href="../../../Extend.html#delim-class_method" title="Kiba::Extend.delim (method)">delim</a></span></span><span class='comma'>,</span> <span class='label'>treat_as_null:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='symbol'>:all</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_delim'><span class='object_link'><a href="../../../Extend.html#delim-class_method" title="Kiba::Extend.delim (method)">delim</a></span></span><span class='comma'>,</span>
+  <span class='label'>treat_as_null:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fields'>fields</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
   <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_delim'>delim</span>
   <span class='ivar'>@treat_as_null</span> <span class='op'>=</span> <span class='id identifier rubyid_treat_as_null'>treat_as_null</span>
-  <span class='ivar'>@checker</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Helpers.html" title="Kiba::Extend::Transforms::Helpers (module)">Helpers</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Helpers/DelimOnlyChecker.html" title="Kiba::Extend::Transforms::Helpers::DelimOnlyChecker (class)">DelimOnlyChecker</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Helpers/DelimOnlyChecker.html#initialize-instance_method" title="Kiba::Extend::Transforms::Helpers::DelimOnlyChecker#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='comma'>,</span> <span class='label'>treat_as_null:</span> <span class='id identifier rubyid_treat_as_null'>treat_as_null</span><span class='rparen'>)</span>
+  <span class='ivar'>@checker</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Helpers.html" title="Kiba::Extend::Transforms::Helpers (module)">Helpers</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Helpers/DelimOnlyChecker.html" title="Kiba::Extend::Transforms::Helpers::DelimOnlyChecker (class)">DelimOnlyChecker</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Helpers/DelimOnlyChecker.html#initialize-instance_method" title="Kiba::Extend::Transforms::Helpers::DelimOnlyChecker#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='comma'>,</span>
+    <span class='label'>treat_as_null:</span> <span class='id identifier rubyid_treat_as_null'>treat_as_null</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -473,14 +509,14 @@ determining whether to delete the field value or not</p>
       <pre class="lines">
 
 
-128
-129
-130
-131
-132</pre>
+162
+163
+164
+165
+166</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/delimiter_only_field_values.rb', line 128</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/delimiter_only_field_values.rb', line 162</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_finalize_fields'>finalize_fields</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_fields_set'>fields_set</span>
@@ -497,7 +533,7 @@ determining whether to delete the field value or not</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:13 2023 by
+  Generated on Fri Aug 25 01:03:18 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

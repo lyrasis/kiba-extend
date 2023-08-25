@@ -236,7 +236,8 @@
 26
 27
 28
-29</pre>
+29
+30</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/requirable_file.rb', line 21</span>
@@ -244,7 +245,8 @@
 <span class='kw'>def</span> <span class='id identifier rubyid_required'>required</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span><span class='lparen'>(</span><span class='ivar'>@data</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
 
-  <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>missing_creator_for_non_supplied_file</span><span class='words_sep'> </span><span class='tstring_content'>creator_not_a_method</span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_err'>err</span><span class='op'>|</span>
+  <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>missing_creator_for_non_supplied_file</span><span class='words_sep'>
+    </span><span class='tstring_content'>creator_not_a_method</span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_err'>err</span><span class='op'>|</span>
     <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="RequirableFile/NoDependencyCreatorError.html" title="Kiba::Extend::Registry::RequirableFile::NoDependencyCreatorError (class)">NoDependencyCreatorError</a></span></span><span class='comma'>,</span> <span class='ivar'>@key</span> <span class='kw'>if</span> <span class='ivar'>@data</span><span class='period'>.</span><span class='id identifier rubyid_errors'>errors</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span><span class='lparen'>(</span><span class='id identifier rubyid_err'>err</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
@@ -260,7 +262,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:09 2023 by
+  Generated on Fri Aug 25 01:03:15 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

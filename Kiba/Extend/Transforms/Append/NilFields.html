@@ -101,7 +101,9 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Adds the given field(s) to the row with nil value if they do not already exist in row</p>
+    <p>rubocop:todo Layout/LineLength
+Adds the given field(s) to the row with nil value if they do not already exist in row
+rubocop:enable Layout/LineLength</p>
 
 <h1 id="examples">Examples</h1>
 
@@ -164,7 +166,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A new instance of NilFields.</p>
+    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength.</p>
 </div></span>
   
 </li>
@@ -209,7 +211,8 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of NilFields.</p>
+    <p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength</p>
 
 
   </div>
@@ -242,12 +245,12 @@
       <pre class="lines">
 
 
-37
-38
-39</pre>
+41
+42
+43</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/append.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/append.rb', line 41</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span><span class='rparen'>)</span>
   <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fields'>fields</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
@@ -303,15 +306,15 @@
       <pre class="lines">
 
 
-42
-43
-44
-45
 46
-47</pre>
+47
+48
+49
+50
+51</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/append.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/append.rb', line 46</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='ivar'>@fields</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span>
@@ -329,7 +332,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:09 2023 by
+  Generated on Fri Aug 25 01:03:15 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

@@ -101,10 +101,14 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Deletes full field value of all given fields that contain the given string. You can control
+    <p>rubocop:todo Layout/LineLength
+Deletes full field value of all given fields that contain the given string. You can control
+rubocop:enable Layout/LineLength
   whether match is case sensitive or not.</p>
 
-<p>To be clear, <strong>contain = a partial match</strong>. Use <span class='object_link'><a href="FieldValueMatchingRegexp.html" title="Kiba::Extend::Transforms::Delete::FieldValueMatchingRegexp (class)">FieldValueMatchingRegexp</a></span> with anchors to
+<p>rubocop:todo Layout/LineLength
+To be clear, <strong>contain = a partial match</strong>. Use <span class='object_link'><a href="FieldValueMatchingRegexp.html" title="Kiba::Extend::Transforms::Delete::FieldValueMatchingRegexp (class)">FieldValueMatchingRegexp</a></span> with anchors to
+rubocop:enable Layout/LineLength
   trigger deletion via a full match.</p>
 
 <h1 id="examples">Examples</h1>
@@ -123,7 +127,9 @@
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Delete.html" title="Kiba::Extend::Transforms::Delete (module)">Delete</a></span></span><span class='op'>::</span><span class='const'>FieldValueContainingString</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>a</span><span class='words_sep'> </span><span class='tstring_content'>b</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>match:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>xxxx</span><span class='tstring_end'>&#39;</span></span>
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+transform Delete::FieldValueContainingString, fields: %i[a b], match: &#39;xxxx&#39;
+rubocop:enable Layout/LineLength
 </code></pre>
 
 <p>Results in:</p>
@@ -147,7 +153,9 @@
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Delete.html" title="Kiba::Extend::Transforms::Delete (module)">Delete</a></span></span><span class='op'>::</span><span class='const'>FieldValueContainingString</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='symbol'>:b</span><span class='comma'>,</span> <span class='label'>match:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>xxxx</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>casesensitive:</span> <span class='kw'>false</span>
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+transform Delete::FieldValueContainingString, fields: :b, match: &#39;xxxx&#39;, casesensitive: false
+rubocop:enable Layout/LineLength
 </code></pre>
 
 <p>Results in:</p>
@@ -307,14 +315,14 @@
       <pre class="lines">
 
 
-74
-75
-76
-77
-78</pre>
+81
+82
+83
+84
+85</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/field_value_containing_string.rb', line 74</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/field_value_containing_string.rb', line 81</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span><span class='comma'>,</span> <span class='label'>match:</span><span class='comma'>,</span> <span class='label'>casesensitive:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fields'>fields</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
@@ -372,20 +380,20 @@
       <pre class="lines">
 
 
-81
-82
-83
-84
-85
-86
-87
 88
 89
 90
-91</pre>
+91
+92
+93
+94
+95
+96
+97
+98</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/field_value_containing_string.rb', line 81</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/field_value_containing_string.rb', line 88</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_fields'>fields</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span>
@@ -408,7 +416,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:13 2023 by
+  Generated on Fri Aug 25 01:03:19 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

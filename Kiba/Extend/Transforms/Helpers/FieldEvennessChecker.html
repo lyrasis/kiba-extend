@@ -101,7 +101,9 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Given row and array of field names, checks whether fields have the same number of values</p>
+    <p>rubocop:todo Layout/LineLength
+Given row and array of field names, checks whether fields have the same number of values
+rubocop:enable Layout/LineLength</p>
 
 
   </div>
@@ -232,14 +234,14 @@
       <pre class="lines">
 
 
-11
-12
 13
 14
-15</pre>
+15
+16
+17</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/helpers/field_evenness_checker.rb', line 11</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/helpers/field_evenness_checker.rb', line 13</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_delim'><span class='object_link'><a href="../../../Extend.html#delim-class_method" title="Kiba::Extend.delim (method)">delim</a></span></span><span class='rparen'>)</span>
   <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fields'>fields</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
@@ -297,8 +299,6 @@
       <pre class="lines">
 
 
-17
-18
 19
 20
 21
@@ -307,21 +307,27 @@
 24
 25
 26
-27</pre>
+27
+28
+29
+30
+31</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/helpers/field_evenness_checker.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/helpers/field_evenness_checker.rb', line 19</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='symbol'>:even</span> <span class='kw'>if</span> <span class='id identifier rubyid_fields'>fields</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>==</span> <span class='int'>1</span>
 
   <span class='id identifier rubyid_vals'>vals</span> <span class='op'>=</span> <span class='id identifier rubyid_value_getter'>value_getter</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_max'>max</span> <span class='op'>=</span> <span class='id identifier rubyid_max_value_ct'>max_value_ct</span><span class='lparen'>(</span><span class='id identifier rubyid_vals'>vals</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_checked'>checked</span> <span class='op'>=</span> <span class='id identifier rubyid_vals'>vals</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='comma'>,</span> <span class='id identifier rubyid_val'>val</span><span class='op'>|</span> <span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='comma'>,</span> <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='id identifier rubyid_delim'>delim</span><span class='comma'>,</span> <span class='op'>-</span><span class='int'>1</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>==</span> <span class='id identifier rubyid_max'>max</span> <span class='op'>?</span> <span class='symbol'>:even</span> <span class='op'>:</span> <span class='symbol'>:uneven</span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_checked'>checked</span> <span class='op'>=</span> <span class='id identifier rubyid_vals'>vals</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='comma'>,</span> <span class='id identifier rubyid_val'>val</span><span class='op'>|</span>
+    <span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='comma'>,</span> <span class='lparen'>(</span><span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='id identifier rubyid_delim'>delim</span><span class='comma'>,</span> <span class='op'>-</span><span class='int'>1</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>==</span> <span class='id identifier rubyid_max'>max</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='symbol'>:even</span> <span class='op'>:</span> <span class='symbol'>:uneven</span><span class='rbracket'>]</span>
+  <span class='rbrace'>}</span>
     <span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span>
   <span class='kw'>return</span> <span class='symbol'>:even</span> <span class='kw'>if</span> <span class='id identifier rubyid_checked'>checked</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_all?'>all?</span><span class='lparen'>(</span><span class='symbol'>:even</span><span class='rparen'>)</span>
 
-  <span class='id identifier rubyid_vals'>vals</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='op'>|</span> <span class='id identifier rubyid_checked'>checked</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='symbol'>:uneven</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_vals'>vals</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='op'>|</span> <span class='id identifier rubyid_checked'>checked</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='symbol'>:uneven</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -333,7 +339,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:12 2023 by
+  Generated on Fri Aug 25 01:03:18 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

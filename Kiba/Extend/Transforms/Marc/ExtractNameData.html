@@ -260,7 +260,7 @@
   <span class='ivar'>@extractors</span> <span class='op'>=</span> <span class='lbracket'>[</span>
     <span class='const'><span class='object_link'><a href="../Marc.html" title="Kiba::Extend::Transforms::Marc (module)">Marc</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="ExtractPersonNameData.html" title="Kiba::Extend::Transforms::Marc::ExtractPersonNameData (class)">ExtractPersonNameData</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="ExtractPersonNameData.html#initialize-instance_method" title="Kiba::Extend::Transforms::Marc::ExtractPersonNameData#initialize (method)">new</a></span></span><span class='comma'>,</span>
     <span class='const'><span class='object_link'><a href="../Marc.html" title="Kiba::Extend::Transforms::Marc (module)">Marc</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="ExtractOrgNameData.html" title="Kiba::Extend::Transforms::Marc::ExtractOrgNameData (class)">ExtractOrgNameData</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="ExtractOrgNameData.html#initialize-instance_method" title="Kiba::Extend::Transforms::Marc::ExtractOrgNameData#initialize (method)">new</a></span></span><span class='comma'>,</span>
-    <span class='const'><span class='object_link'><a href="../Marc.html" title="Kiba::Extend::Transforms::Marc (module)">Marc</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="ExtractMeetingNameData.html" title="Kiba::Extend::Transforms::Marc::ExtractMeetingNameData (class)">ExtractMeetingNameData</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="ExtractMeetingNameData.html#initialize-instance_method" title="Kiba::Extend::Transforms::Marc::ExtractMeetingNameData#initialize (method)">new</a></span></span><span class='comma'>,</span>
+    <span class='const'><span class='object_link'><a href="../Marc.html" title="Kiba::Extend::Transforms::Marc (module)">Marc</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="ExtractMeetingNameData.html" title="Kiba::Extend::Transforms::Marc::ExtractMeetingNameData (class)">ExtractMeetingNameData</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="ExtractMeetingNameData.html#initialize-instance_method" title="Kiba::Extend::Transforms::Marc::ExtractMeetingNameData#initialize (method)">new</a></span></span>
   <span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -329,9 +329,9 @@
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_rows'>rows</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_extractors'>extractors</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_extractor'>extractor</span><span class='op'>|</span>
-    <span class='id identifier rubyid_extractor'>extractor</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='rparen'>)</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_rows'>rows</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_row'>row</span> <span class='rbrace'>}</span>
+    <span class='id identifier rubyid_extractor'>extractor</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_rows'>rows</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_row'>row</span> <span class='rbrace'>}</span>
   <span class='kw'>end</span>
-  <span class='id identifier rubyid_rows'>rows</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='kw'>yield</span> <span class='id identifier rubyid_row'>row</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_rows'>rows</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='kw'>yield</span> <span class='id identifier rubyid_row'>row</span> <span class='rbrace'>}</span>
   <span class='kw'>nil</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -344,7 +344,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:11 2023 by
+  Generated on Fri Aug 25 01:03:17 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

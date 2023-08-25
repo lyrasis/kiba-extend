@@ -109,12 +109,15 @@
     
   <div class="note notetag">
     <strong>Note:</strong>
-    <div class='inline'><p>This transformation does <strong>NOT</strong> sort the <strong>ROWS</strong> in a dataset. It sorts values within
-individual fields of a row</p>
+    <div class='inline'><p>This transformation does <strong>NOT</strong> sort the <strong>ROWS</strong> in a dataset. It sorts values within</p>
 </div>
   </div>
 
 <p>Sorts the multiple values within a field alphabetically</p>
+
+<p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+  individual fields of a row</p>
 
 <h1 id="examples">Examples</h1>
 
@@ -133,8 +136,10 @@ individual fields of a row</p>
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby"> <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Clean.html" title="Kiba::Extend::Transforms::Clean (module)">Clean</a></span></span><span class='op'>::</span><span class='const'>AlphabetizeFieldValues</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>type</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>usenull:</span> <span class='kw'>false</span><span class='comma'>,</span>
-     <span class='label'>direction:</span> <span class='symbol'>:asc</span>
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+ transform Clean::AlphabetizeFieldValues, fields: %i[type], delim: &#39;;&#39;, usenull: false,
+rubocop:enable Layout/LineLength
+     direction: :asc
 </code></pre>
 
 <p>Results in:</p>
@@ -152,8 +157,10 @@ individual fields of a row</p>
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby"> <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Clean.html" title="Kiba::Extend::Transforms::Clean (module)">Clean</a></span></span><span class='op'>::</span><span class='const'>AlphabetizeFieldValues</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>type</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>usenull:</span> <span class='kw'>false</span><span class='comma'>,</span>
-     <span class='label'>direction:</span> <span class='symbol'>:desc</span>
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+ transform Clean::AlphabetizeFieldValues, fields: %i[type], delim: &#39;;&#39;, usenull: false,
+rubocop:enable Layout/LineLength
+     direction: :desc
 </code></pre>
 
 <p>Results in:</p>
@@ -171,8 +178,10 @@ individual fields of a row</p>
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby"> <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Clean.html" title="Kiba::Extend::Transforms::Clean (module)">Clean</a></span></span><span class='op'>::</span><span class='const'>AlphabetizeFieldValues</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>type</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>usenull:</span> <span class='kw'>true</span><span class='comma'>,</span>
-     <span class='label'>direction:</span> <span class='symbol'>:asc</span>
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+ transform Clean::AlphabetizeFieldValues, fields: %i[type], delim: &#39;;&#39;, usenull: true,
+rubocop:enable Layout/LineLength
+     direction: :asc
 </code></pre>
 
 <p>Results in:</p>
@@ -190,8 +199,10 @@ individual fields of a row</p>
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby"> <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Clean.html" title="Kiba::Extend::Transforms::Clean (module)">Clean</a></span></span><span class='op'>::</span><span class='const'>AlphabetizeFieldValues</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>type</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>usenull:</span> <span class='kw'>true</span><span class='comma'>,</span>
-     <span class='label'>direction:</span> <span class='symbol'>:desc</span>
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+ transform Clean::AlphabetizeFieldValues, fields: %i[type], delim: &#39;;&#39;, usenull: true,
+rubocop:enable Layout/LineLength
+     direction: :desc
 </code></pre>
 
 <p>Results in:</p>
@@ -247,7 +258,7 @@ individual fields of a row</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A new instance of AlphabetizeFieldValues.</p>
+    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength.</p>
 </div></span>
   
 </li>
@@ -303,7 +314,10 @@ individual fields of a row</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of AlphabetizeFieldValues.</p>
+    <p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength</p>
 
 
   </div>
@@ -385,17 +399,18 @@ individual fields of a row</p>
       <pre class="lines">
 
 
-123
-124
-125
-126
-127
-128
-129
-130</pre>
+137
+138
+139
+140
+141
+142
+143
+144
+145</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/clean.rb', line 123</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/clean.rb', line 137</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span><span class='comma'>,</span> <span class='label'>delim:</span><span class='comma'>,</span> <span class='label'>usenull:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>direction:</span> <span class='symbol'>:asc</span><span class='rparen'>)</span>
   <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fields'>fields</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
@@ -403,7 +418,8 @@ individual fields of a row</p>
   <span class='ivar'>@usenull</span> <span class='op'>=</span> <span class='id identifier rubyid_usenull'>usenull</span>
   <span class='ivar'>@direction</span> <span class='op'>=</span> <span class='id identifier rubyid_direction'>direction</span>
   <span class='id identifier rubyid_nv'>nv</span> <span class='op'>=</span> <span class='id identifier rubyid_usenull'>usenull</span> <span class='op'>?</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_nullvalue'><span class='object_link'><a href="../../../Extend.html#nullvalue-class_method" title="Kiba::Extend.nullvalue (method)">nullvalue</a></span></span> <span class='op'>:</span> <span class='kw'>nil</span>
-  <span class='ivar'>@value_getter</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Helpers.html" title="Kiba::Extend::Transforms::Helpers (module)">Helpers</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Helpers/FieldValueGetter.html" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter (class)">FieldValueGetter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Helpers/FieldValueGetter.html#initialize-instance_method" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='id identifier rubyid_fields'>fields</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='comma'>,</span> <span class='label'>treat_as_null:</span> <span class='id identifier rubyid_nv'>nv</span><span class='rparen'>)</span>
+  <span class='ivar'>@value_getter</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Helpers.html" title="Kiba::Extend::Transforms::Helpers (module)">Helpers</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Helpers/FieldValueGetter.html" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter (class)">FieldValueGetter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Helpers/FieldValueGetter.html#initialize-instance_method" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='id identifier rubyid_fields'>fields</span><span class='comma'>,</span>
+    <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='comma'>,</span> <span class='label'>treat_as_null:</span> <span class='id identifier rubyid_nv'>nv</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -456,17 +472,17 @@ individual fields of a row</p>
       <pre class="lines">
 
 
-133
-134
-135
-136
-137
-138
-139
-140</pre>
+148
+149
+150
+151
+152
+153
+154
+155</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/clean.rb', line 133</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/clean.rb', line 148</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_value_getter'>value_getter</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='comma'>,</span> <span class='id identifier rubyid_val'>val</span><span class='op'>|</span>
@@ -486,7 +502,7 @@ individual fields of a row</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:09 2023 by
+  Generated on Fri Aug 25 01:03:15 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

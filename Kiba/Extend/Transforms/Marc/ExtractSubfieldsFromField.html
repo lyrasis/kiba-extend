@@ -345,7 +345,6 @@ recurring subfield</p>
       <pre class="lines">
 
 
-55
 56
 57
 58
@@ -357,12 +356,11 @@ recurring subfield</p>
 64</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/marc/extract_subfields_from_field.rb', line 55</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/marc/extract_subfields_from_field.rb', line 56</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>tag:</span><span class='comma'>,</span> <span class='label'>subfields:</span><span class='comma'>,</span>
-               <span class='label'>id_target:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Marc.html" title="Kiba::Extend::Marc (module)">Marc</a></span></span><span class='period'>.</span><span class='id identifier rubyid_id_target_field'><span class='object_link'><a href="../../Marc.html#id_target_field-class_method" title="Kiba::Extend::Marc.id_target_field (method)">id_target_field</a></span></span><span class='comma'>,</span>
-               <span class='label'>delim:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_delim'><span class='object_link'><a href="../../../Extend.html#delim-class_method" title="Kiba::Extend.delim (method)">delim</a></span></span>
-              <span class='rparen'>)</span>
+  <span class='label'>id_target:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Marc.html" title="Kiba::Extend::Marc (module)">Marc</a></span></span><span class='period'>.</span><span class='id identifier rubyid_id_target_field'><span class='object_link'><a href="../../Marc.html#id_target_field-class_method" title="Kiba::Extend::Marc.id_target_field (method)">id_target_field</a></span></span><span class='comma'>,</span>
+  <span class='label'>delim:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_delim'><span class='object_link'><a href="../../../Extend.html#delim-class_method" title="Kiba::Extend.delim (method)">delim</a></span></span><span class='rparen'>)</span>
   <span class='ivar'>@tag</span> <span class='op'>=</span> <span class='id identifier rubyid_tag'>tag</span>
   <span class='ivar'>@subfields</span> <span class='op'>=</span> <span class='id identifier rubyid_subfields'>subfields</span>
   <span class='ivar'>@id_target</span> <span class='op'>=</span> <span class='id identifier rubyid_id_target'>id_target</span>
@@ -469,10 +467,10 @@ recurring subfield</p>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_fields'>fields</span> <span class='op'>=</span> <span class='id identifier rubyid_select_fields'>select_fields</span><span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='id identifier rubyid_tag'>tag</span><span class='rbracket'>]</span><span class='rparen'>)</span>
-    <span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_fld'>fld</span><span class='op'>|</span> <span class='id identifier rubyid_fld'>fld</span><span class='period'>.</span><span class='id identifier rubyid_codes'>codes</span><span class='period'>.</span><span class='id identifier rubyid_intersection'>intersection</span><span class='lparen'>(</span><span class='id identifier rubyid_subfields'>subfields</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='rbrace'>}</span>
+    <span class='period'>.</span><span class='id identifier rubyid_reject'>reject</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_fld'>fld</span><span class='op'>|</span> <span class='id identifier rubyid_fld'>fld</span><span class='period'>.</span><span class='id identifier rubyid_codes'>codes</span><span class='period'>.</span><span class='id identifier rubyid_intersection'>intersection</span><span class='lparen'>(</span><span class='id identifier rubyid_subfields'>subfields</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span> <span class='rbrace'>}</span>
   <span class='kw'>return</span> <span class='kw'>nil</span> <span class='kw'>if</span> <span class='id identifier rubyid_fields'>fields</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
 
-  <span class='id identifier rubyid_idhash'>idhash</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='id identifier rubyid_id_target'>id_target</span><span class='op'>=&gt;</span><span class='id identifier rubyid_idextractor'>idextractor</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='rparen'>)</span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_idhash'>idhash</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='id identifier rubyid_id_target'>id_target</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_idextractor'>idextractor</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='rparen'>)</span><span class='rbrace'>}</span>
 
   <span class='id identifier rubyid_prepare_rows'>prepare_rows</span><span class='lparen'>(</span><span class='id identifier rubyid_fields'>fields</span><span class='comma'>,</span> <span class='id identifier rubyid_idhash'>idhash</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span>
     <span class='kw'>yield</span> <span class='id identifier rubyid_row'>row</span>
@@ -490,7 +488,7 @@ recurring subfield</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:13 2023 by
+  Generated on Fri Aug 25 01:03:18 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

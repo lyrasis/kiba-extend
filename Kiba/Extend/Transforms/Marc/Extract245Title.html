@@ -104,6 +104,36 @@
     <p>Extract title fields from 245 (and/or linked 880) fields, along with
   :marcid value</p>
 
+<p>rubocop:todo Layout/LineLength
+  # Somnanbula de Bellini ; Sérénade sur des thémes d&#39;Anna Bolena de
+rubocop:enable Layout/LineLength
+  # Donizetti / $c Mikhail Glinka.
+  rec = get_marc_record(index: 9)
+  xform = Marc::Extract245Title.new
+  result = xform.process(rec)[:title]
+rubocop:todo Layout/LineLength
+  expected = &quot;Un sextuor pour piano et cordes en mi bémol majeur ; Divertimento sur des thémes de la Somnanbula de Bellini ; Sérénade sur des thémes d&#39;Anna Bolena de Donizetti&quot;
+rubocop:enable Layout/LineLength
+  expect(result).to eq(expected)
+rubocop:todo Layout/LineLength
+  expected = &quot;sextuor pour piano et cordes en mi bémol majeur ; Divertimento sur des thémes de la Somnanbula de Bellini ; Sérénade sur des thémes d&#39;Anna Bolena de Donizetti&quot;
+rubocop:enable Layout/LineLength
+  expect(result).to eq(expected)
+rubocop:todo Layout/LineLength
+  expected = &quot;Sextuor pour piano et cordes en mi bémol majeur ; Divertimento sur des thémes de la Somnanbula de Bellini ; Sérénade sur des thémes d&#39;Anna Bolena de Donizetti&quot;
+rubocop:enable Layout/LineLength
+  expect(result).to eq(expected)
+rubocop:todo Layout/LineLength
+  # 245 10 $6 880-02 $a Jidō shinri hen / $c Nihon Ryōshin Saikyōiku
+rubocop:enable Layout/LineLength
+  #   Kyōkai hen.
+  # 880 10 $6 245-02 $a 兒童心理篇 / $c 日本兩親再教育協會編.
+  rec = get_marc_record(index: 6)
+  xform = Marc::Extract245Title.new
+  result = xform.process(rec)[:title]
+  expected = &#39;兒童心理篇&#39;
+  expect(result).to eq(expected)</p>
+
 
   </div>
 </div>
@@ -117,14 +147,7 @@
 </div></p>
       
       <pre class="example code"><code><span class='comment'># 245 13 $a Un sextuor pour piano et cordes en mi bémol majeur
-</span><span class='comment'># $h [sound recording] ; $b Divertimento sur des thémes de la
-</span><span class='comment'># Somnanbula de Bellini ; Sérénade sur des thémes d&#39;Anna Bolena de
-</span><span class='comment'># Donizetti / $c Mikhail Glinka.
-</span><span class='id identifier rubyid_rec'>rec</span> <span class='op'>=</span> <span class='id identifier rubyid_get_marc_record'>get_marc_record</span><span class='lparen'>(</span><span class='label'>index:</span> <span class='int'>9</span><span class='rparen'>)</span>
-<span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Marc.html" title="Kiba::Extend::Transforms::Marc (module)">Marc</a></span></span><span class='op'>::</span><span class='const'>Extract245Title</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Marc::Extract245Title#initialize (method)">new</a></span></span>
-<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_rec'>rec</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='symbol'>:title</span><span class='rbracket'>]</span>
-<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Un sextuor pour piano et cordes en mi bémol majeur ; Divertimento sur des thémes de la Somnanbula de Bellini ; Sérénade sur des thémes d&#39;Anna Bolena de Donizetti</span><span class='tstring_end'>&quot;</span></span>
-<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+</span><span class='comment'># $h [sound recording] ; $b Divertimento sur des thémes de la</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Deleting non-filing characters</p>
@@ -133,9 +156,7 @@
       <pre class="example code"><code><span class='comment'># Same MARC data as above example
 </span><span class='id identifier rubyid_rec'>rec</span> <span class='op'>=</span> <span class='id identifier rubyid_get_marc_record'>get_marc_record</span><span class='lparen'>(</span><span class='label'>index:</span> <span class='int'>9</span><span class='rparen'>)</span>
 <span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Marc.html" title="Kiba::Extend::Transforms::Marc (module)">Marc</a></span></span><span class='op'>::</span><span class='const'>Extract245Title</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Marc::Extract245Title#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>delete_non_filing:</span> <span class='kw'>true</span><span class='rparen'>)</span>
-<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_rec'>rec</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='symbol'>:title</span><span class='rbracket'>]</span>
-<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sextuor pour piano et cordes en mi bémol majeur ; Divertimento sur des thémes de la Somnanbula de Bellini ; Sérénade sur des thémes d&#39;Anna Bolena de Donizetti</span><span class='tstring_end'>&quot;</span></span>
-<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_rec'>rec</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='symbol'>:title</span><span class='rbracket'>]</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>Deleting non-filing characters and upcasing first char</p>
@@ -147,22 +168,13 @@
   <span class='label'>delete_non_filing:</span> <span class='kw'>true</span><span class='comma'>,</span>
   <span class='label'>upcase_first_filing_char:</span> <span class='kw'>true</span>
 <span class='rparen'>)</span>
-<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_rec'>rec</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='symbol'>:title</span><span class='rbracket'>]</span>
-<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Sextuor pour piano et cordes en mi bémol majeur ; Divertimento sur des thémes de la Somnanbula de Bellini ; Sérénade sur des thémes d&#39;Anna Bolena de Donizetti</span><span class='tstring_end'>&quot;</span></span>
-<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_rec'>rec</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='symbol'>:title</span><span class='rbracket'>]</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>880 and Preferring vernacular</p>
 </div></p>
       
-      <pre class="example code"><code><span class='comment'># 245 10 $6 880-02 $a Jidō shinri hen / $c Nihon Ryōshin Saikyōiku
-</span><span class='comment'>#   Kyōkai hen.
-</span><span class='comment'># 880 10 $6 245-02 $a 兒童心理篇 / $c 日本兩親再教育協會編.
-</span><span class='id identifier rubyid_rec'>rec</span> <span class='op'>=</span> <span class='id identifier rubyid_get_marc_record'>get_marc_record</span><span class='lparen'>(</span><span class='label'>index:</span> <span class='int'>6</span><span class='rparen'>)</span>
-<span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Marc.html" title="Kiba::Extend::Transforms::Marc (module)">Marc</a></span></span><span class='op'>::</span><span class='const'>Extract245Title</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Marc::Extract245Title#initialize (method)">new</a></span></span>
-<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_rec'>rec</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='symbol'>:title</span><span class='rbracket'>]</span>
-<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>兒童心理篇</span><span class='tstring_end'>&#39;</span></span>
-<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+      <pre class="example code"><code></code></pre>
     
       
         <p class="example_title"><div class='inline'><p>880 and not preferring vernacular</p>
@@ -417,34 +429,32 @@ deleted. Has no effect if you are not deleting non-filing chars.</p>
       <pre class="lines">
 
 
-74
-75
-76
-77
-78
-79
-80
-81
-82
-83
 84
 85
 86
 87
 88
-89</pre>
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/marc/extract_245_title.rb', line 74</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/marc/extract_245_title.rb', line 84</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>id_target:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Marc.html" title="Kiba::Extend::Marc (module)">Marc</a></span></span><span class='period'>.</span><span class='id identifier rubyid_id_target_field'><span class='object_link'><a href="../../Marc.html#id_target_field-class_method" title="Kiba::Extend::Marc.id_target_field (method)">id_target_field</a></span></span><span class='comma'>,</span>
-               <span class='label'>title_target:</span> <span class='symbol'>:title</span><span class='comma'>,</span>
-               <span class='label'>title_subfields:</span>
-               <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Marc.html" title="Kiba::Extend::Marc (module)">Marc</a></span></span><span class='period'>.</span><span class='id identifier rubyid_title_part_subfields'><span class='object_link'><a href="../../Marc.html#title_part_subfields-class_method" title="Kiba::Extend::Marc.title_part_subfields (method)">title_part_subfields</a></span></span><span class='comma'>,</span>
-               <span class='label'>delim:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_delim'><span class='object_link'><a href="../../../Extend.html#delim-class_method" title="Kiba::Extend.delim (method)">delim</a></span></span><span class='comma'>,</span>
-               <span class='label'>delete_non_filing:</span> <span class='kw'>false</span><span class='comma'>,</span>
-               <span class='label'>upcase_first_filing_char:</span> <span class='kw'>false</span>
-              <span class='rparen'>)</span>
+  <span class='label'>title_target:</span> <span class='symbol'>:title</span><span class='comma'>,</span>
+  <span class='label'>title_subfields:</span>
+  <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Marc.html" title="Kiba::Extend::Marc (module)">Marc</a></span></span><span class='period'>.</span><span class='id identifier rubyid_title_part_subfields'><span class='object_link'><a href="../../Marc.html#title_part_subfields-class_method" title="Kiba::Extend::Marc.title_part_subfields (method)">title_part_subfields</a></span></span><span class='comma'>,</span>
+  <span class='label'>delim:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_delim'><span class='object_link'><a href="../../../Extend.html#delim-class_method" title="Kiba::Extend.delim (method)">delim</a></span></span><span class='comma'>,</span>
+  <span class='label'>delete_non_filing:</span> <span class='kw'>false</span><span class='comma'>,</span>
+  <span class='label'>upcase_first_filing_char:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='ivar'>@id_target</span> <span class='op'>=</span> <span class='id identifier rubyid_id_target'>id_target</span>
   <span class='ivar'>@title_target</span> <span class='op'>=</span> <span class='id identifier rubyid_title_target'>title_target</span>
   <span class='ivar'>@title_subfields</span> <span class='op'>=</span> <span class='id identifier rubyid_title_subfields'>title_subfields</span>
@@ -532,19 +542,19 @@ deleted. Has no effect if you are not deleting non-filing chars.</p>
       <pre class="lines">
 
 
-93
-94
-95
-96
-97
-98</pre>
+102
+103
+104
+105
+106
+107</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/marc/extract_245_title.rb', line 93</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/marc/extract_245_title.rb', line 102</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_id'>id</span> <span class='op'>=</span> <span class='id identifier rubyid_idextractor'>idextractor</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_row'>row</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='id identifier rubyid_id_target'>id_target</span><span class='op'>=&gt;</span><span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_row'>row</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='id identifier rubyid_id_target'>id_target</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span>
   <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_title_target'>title_target</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_title_value'>title_value</span><span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_row'>row</span>
 <span class='kw'>end</span></pre>
@@ -558,7 +568,7 @@ deleted. Has no effect if you are not deleting non-filing chars.</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:11 2023 by
+  Generated on Fri Aug 25 01:03:17 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

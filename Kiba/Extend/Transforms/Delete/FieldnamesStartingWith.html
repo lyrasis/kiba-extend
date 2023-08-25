@@ -249,12 +249,12 @@ string, the field will be deleted</p>
       <pre class="lines">
 
 
+33
 34
-35
-36</pre>
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/fieldnames_starting_with.rb', line 34</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/fieldnames_starting_with.rb', line 33</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>prefix:</span><span class='rparen'>)</span>
   <span class='ivar'>@prefix</span> <span class='op'>=</span> <span class='id identifier rubyid_prefix'>prefix</span>
@@ -310,6 +310,7 @@ string, the field will be deleted</p>
       <pre class="lines">
 
 
+38
 39
 40
 41
@@ -317,11 +318,10 @@ string, the field will be deleted</p>
 43
 44
 45
-46
-47</pre>
+46</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/fieldnames_starting_with.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/fieldnames_starting_with.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span>
@@ -342,7 +342,7 @@ string, the field will be deleted</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:13 2023 by
+  Generated on Fri Aug 25 01:03:18 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

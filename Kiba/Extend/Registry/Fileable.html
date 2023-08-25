@@ -346,7 +346,7 @@
   <span class='kw'>elsif</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
     <span class='id identifier rubyid_labeled_options'>labeled_options</span>
   <span class='kw'>else</span>
-    <span class='lbrace'>{</span><span class='id identifier rubyid_path_key'>path_key</span><span class='op'>=&gt;</span><span class='id identifier rubyid_path'>path</span><span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_labeled_options'>labeled_options</span><span class='rparen'>)</span>
+    <span class='lbrace'>{</span><span class='id identifier rubyid_path_key'>path_key</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_path'>path</span><span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_labeled_options'>labeled_options</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -450,7 +450,7 @@
 
 <span class='kw'>def</span> <span class='id identifier rubyid_default_file_options'>default_file_options</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>NotImplementedError</span><span class='comma'>,</span>
-    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>:default_file_options must be defined in extending class</span><span class='tstring_end'>&#39;</span></span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>:default_file_options must be defined in extending class</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -527,7 +527,7 @@
 
 <span class='kw'>def</span> <span class='id identifier rubyid_labeled_options'>labeled_options</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_options_key'>options_key</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_default_file_options'>default_file_options</span>
-    <span class='lbrace'>{</span><span class='id identifier rubyid_options_key'>options_key</span><span class='op'>=&gt;</span><span class='id identifier rubyid_default_file_options'>default_file_options</span><span class='rbrace'>}</span>
+    <span class='lbrace'>{</span><span class='id identifier rubyid_options_key'>options_key</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_default_file_options'>default_file_options</span><span class='rbrace'>}</span>
   <span class='kw'>else</span>
     <span class='lbrace'>{</span><span class='rbrace'>}</span>
   <span class='kw'>end</span>
@@ -634,7 +634,7 @@ file options may be passed</p>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_options_key'>options_key</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>NotImplementedError</span><span class='comma'>,</span>
-    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>:options_key must be defined in extending class</span><span class='tstring_end'>&#39;</span></span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>:options_key must be defined in extending class</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -738,7 +738,7 @@ is required</p>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_path_key'>path_key</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>NotImplementedError</span><span class='comma'>,</span>
-    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>:path_key must be defined in extending class</span><span class='tstring_end'>&#39;</span></span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>:path_key must be defined in extending class</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -829,7 +829,7 @@ is required</p>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_requires_path?'>requires_path?</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>NotImplementedError</span><span class='comma'>,</span>
-    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>:requires_path? must be defined in extending class</span><span class='tstring_end'>&#39;</span></span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>:requires_path? must be defined in extending class</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -841,7 +841,7 @@ is required</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:08 2023 by
+  Generated on Fri Aug 25 01:03:15 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

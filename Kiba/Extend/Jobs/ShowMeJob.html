@@ -88,14 +88,21 @@
     
   <div class="note notetag">
     <strong>Note:</strong>
-    <div class='inline'><p>Using settings/command line parameter to set <code>:show_me</code> to true will print the final
-result of the job to STDOUT. If you need to see the result at some specific point in your
-chain of transformations, you need to add the two lines in the <code>show</code> <code>job_segment</code> below
-to your transforms where you want the display to happen</p>
+    <div class='inline'><p>Using settings/command line parameter to set <code>:show_me</code> to true will print the final</p>
 </div>
   </div>
 
 <p>Mixin to activate Common::DSLExtensions::ShowMe</p>
+
+<p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+  result of the job to STDOUT. If you need to see the result at some specific point in your
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+  chain of transformations, you need to add the two lines in the <code>show</code> <code>job_segment</code> below
+rubocop:enable Layout/LineLength
+  to your transforms where you want the display to happen</p>
 
 
   </div>
@@ -225,12 +232,12 @@ to your transforms where you want the display to happen</p>
       <pre class="lines">
 
 
-15
-16
-17</pre>
+21
+22
+23</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/show_me_job.rb', line 15</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/show_me_job.rb', line 21</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_decorate'>decorate</span>
   <span class='id identifier rubyid_parse_job'>parse_job</span><span class='lparen'>(</span><span class='id identifier rubyid_control'>control</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='id identifier rubyid_show'>show</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -279,15 +286,15 @@ to your transforms where you want the display to happen</p>
       <pre class="lines">
 
 
-19
-20
-21
-22
-23
-24</pre>
+25
+26
+27
+28
+29
+30</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/show_me_job.rb', line 19</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/show_me_job.rb', line 25</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_show'>show</span>
   <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='period'>.</span><span class='id identifier rubyid_job_segment'><span class='object_link'><a href="JobSegmenter.html#job_segment-instance_method" title="Kiba::Extend::Jobs::JobSegmenter#job_segment (method)">job_segment</a></span></span> <span class='kw'>do</span>
@@ -305,7 +312,7 @@ to your transforms where you want the display to happen</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:08 2023 by
+  Generated on Fri Aug 25 01:03:15 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

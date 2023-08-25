@@ -101,18 +101,22 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Merge constant value into one or more fields, based on the values of other fields in the row</p>
+    <p>rubocop:todo Layout/LineLength
+Merge constant value into one or more fields, based on the values of other fields in the row
+rubocop:enable Layout/LineLength</p>
 
 <h2 id="examples">Examples</h2>
 
 <p>Used in job as:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_condition'>condition</span> <span class='op'>=</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='kw'>do</span>
-  <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='symbol'>:note</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>String</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='symbol'>:note</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>gift|donation</span><span class='regexp_end'>/i</span></span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='symbol'>:type</span><span class='rbracket'>]</span> <span class='op'>!=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>obj</span><span class='tstring_end'>&#39;</span></span>
-<span class='kw'>end</span>
-<span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Merge.html" title="Kiba::Extend::Transforms::Merge (module)">Merge</a></span></span><span class='op'>::</span><span class='const'>ConstantValueConditional</span><span class='comma'>,</span>
-  <span class='label'>fieldmap:</span> <span class='lbrace'>{</span> <span class='label'>reason:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>gift</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>cost:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>0</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span><span class='comma'>,</span>
-  <span class='label'>condition:</span> <span class='id identifier rubyid_condition'>condition</span>
+<pre class="code ruby"><code class="ruby">condition = -&gt;(row) do
+rubocop:todo Layout/LineLength
+  row[:note].is_a?(String) &amp;&amp; row[:note].match?(/gift|donation/i) &amp;&amp; row[:type] != &#39;obj&#39;
+rubocop:enable Layout/LineLength
+end
+transform Merge::ConstantValueConditional,
+  fieldmap: { reason: &#39;gift&#39;, cost: &#39;0&#39; },
+  condition: condition
 </code></pre>
 
 <p>With input:</p>
@@ -120,7 +124,9 @@
 <pre class="code ruby"><code class="ruby">{note: &#39;Gift&#39;, type: &#39;acq&#39;},
 {reason: &#39;donation&#39;, note: &#39;Was a donation&#39;, type: &#39;acq&#39;},
 {note: &#39;Was a donation&#39;, type: &#39;obj&#39;},
+rubocop:todo Layout/LineLength
 {reason: &#39;purchase&#39;, cost: &#39;100&#39;, note: &#39;Purchased from Someone&#39;, type: &#39;acq&#39;},
+rubocop:enable Layout/LineLength
 {note: &#39;&#39;, type: &#39;acq&#39;},
 {note: nil, type: &#39;acq&#39;}
 </code></pre>
@@ -130,30 +136,47 @@
 <pre class="code ruby"><code class="ruby">{reason: &#39;gift&#39;, cost: &#39;0&#39;, note: &#39;Gift&#39;, type: &#39;acq&#39;},
 {reason: &#39;gift&#39;, cost: &#39;0&#39;, note: &#39;Was a donation&#39;, type: &#39;acq&#39;},
 {reason: nil, cost: nil, note: &#39;Was a donation&#39;, type: &#39;obj&#39;},
+rubocop:todo Layout/LineLength
 {reason: &#39;purchase&#39;, cost: &#39;100&#39;, note: &#39;Purchased from Someone&#39;, type: &#39;acq&#39;},
+rubocop:enable Layout/LineLength
 {reason: nil, cost: nil, note: &#39;&#39;, type: &#39;acq&#39;},
 {reason: nil, cost: nil, note: nil, type: &#39;acq&#39;}
 </code></pre>
 
 <p>Note that:</p>
 
+<p>rubocop:todo Layout/LineLength</p>
+
 <ul>
-<li><code>reason</code> and <code>cost</code> constants are merged into matching first row, though no <code>reason</code> or <code>cost</code> field existed in input</li>
-<li>existing <code>reason</code> value is overwritten in matching second row, and new <code>cost</code> field + value added</li>
+<li><code>reason</code> and <code>cost</code> constants are merged into matching first row, though no <code>reason</code> or <code>cost</code> field existed in input
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength</li>
+<li>existing <code>reason</code> value is overwritten in matching second row, and new <code>cost</code> field + value added
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength</li>
 <li>nil <code>reason</code> and <code>cost</code> fields added to non-matching third row (on the principle of always emitting rows with
-the same fields, so as to be writable to CSV)</li>
-<li>existing <code>reason</code> and <code>cost</code> values in non-matching fourth row returned as-is</li>
+rubocop:enable Layout/LineLength
+the same fields, so as to be writable to CSV)
+rubocop:todo Layout/LineLength</li>
+<li>existing <code>reason</code> and <code>cost</code> values in non-matching fourth row returned as-is
+rubocop:enable Layout/LineLength</li>
 </ul>
 
-<p>Also note that the <code>condition</code> lambda checks that the value of <code>note</code> is a String before calling <code>match?</code> on it.
-  Otherwise, the lambda will throw an error on the last row, wher the value of <code>note</code> is nil.</p>
+<p>rubocop:todo Layout/LineLength
+Also note that the <code>condition</code> lambda checks that the value of <code>note</code> is a String before calling <code>match?</code> on it.
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+  Otherwise, the lambda will throw an error on the last row, wher the value of <code>note</code> is nil.
+rubocop:enable Layout/LineLength</p>
 
 <p>Here&#39;s what that looks like:</p>
 
 <p>Used in job as:</p>
 
 <pre class="code ruby"><code class="ruby">condition = -&gt;(row) do
+rubocop:todo Layout/LineLength
   row[:note].is_a?(row[:note].match?(/gift|donation/i) &amp;&amp; row[:type] != &#39;obj&#39; }
+rubocop:enable Layout/LineLength
 end
 transform Merge::ConstantValueConditional,
   fieldmap: { reason: &#39;gift&#39;, cost: &#39;0&#39; },
@@ -162,15 +185,25 @@ transform Merge::ConstantValueConditional,
 
 <p>Will cause:</p>
 
-<pre class="code ruby"><code class="ruby">Kiba::Extend::Transforms::Merge::ConstantValueConditional::ConditionError: Condition lambda throws error with row: {:note=&gt;nil, :type=&gt;&quot;acq&quot;}
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+Kiba::Extend::Transforms::Merge::ConstantValueConditional::ConditionError: Condition lambda throws error with row: {:note=&gt;nil, :type=&gt;&quot;acq&quot;}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
 from /Users/kristina/code/mig/kiba-extend/lib/kiba/extend/transforms/merge/constant_value_conditional.rb:77:in `rescue in condition_met?&#39;
+rubocop:enable Layout/LineLength
 Caused by NoMethodError: undefined method `match?&#39; for nil:NilClass
+rubocop:todo Layout/LineLength
       let(:condition){ -&gt;(row){ row[:note].match?(/gift|donation/i) &amp;&amp; row[:type] != &#39;obj&#39; } }
+rubocop:enable Layout/LineLength
                                             ^^^^^^^
 </code></pre>
 
-<p>Finally, note that the <code>condition</code> lambda must return a true/false value, indicating whether the constant(s)
-  should be merged into the given row. If the lambda returns something else, it will throw an error:</p>
+<p>rubocop:todo Layout/LineLength
+Finally, note that the <code>condition</code> lambda must return a true/false value, indicating whether the constant(s)
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+  should be merged into the given row. If the lambda returns something else, it will throw an error:
+rubocop:enable Layout/LineLength</p>
 
 <p>Used in job as:</p>
 
@@ -182,7 +215,9 @@ Caused by NoMethodError: undefined method `match?&#39; for nil:NilClass
 
 <p>Will cause:</p>
 
-<pre class="code ruby"><code class="ruby">Kiba::Extend::Transforms::Merge::ConstantValueConditional::NonBooleanConditionError: `condition` lambda must return true or false
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+Kiba::Extend::Transforms::Merge::ConstantValueConditional::NonBooleanConditionError: `condition` lambda must return true or false
+rubocop:enable Layout/LineLength
 </code></pre>
 
 
@@ -235,7 +270,7 @@ Caused by NoMethodError: undefined method `match?&#39; for nil:NilClass
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A new instance of ConstantValueConditional.</p>
+    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength   The lambda function should return true or false (i.e. whether the constant should be merged into the row).</p>
 </div></span>
   
 </li>
@@ -280,7 +315,15 @@ Caused by NoMethodError: undefined method `match?&#39; for nil:NilClass
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of ConstantValueConditional.</p>
+    <p>rubocop:todo Layout/LineLength
+  The lambda function should return true or false (i.e. whether the constant should be merged into the row).
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+  This is purposefully named differently from the <code>conditions</code> parameter used on transforms that leverage
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+  <span class='object_link'><a href="../../Utils/Lookup/RowSelectorByLambda.html" title="Kiba::Extend::Utils::Lookup::RowSelectorByLambda (class)">Utils::Lookup::RowSelectorByLambda</a></span> to select from multiple rows.
+rubocop:enable Layout/LineLength</p>
 
 
   </div>
@@ -310,10 +353,7 @@ Caused by NoMethodError: undefined method `match?&#39; for nil:NilClass
       
       
         &mdash;
-        <div class='inline'><p>A lambda Proc is expected.
-The lambda function should return true or false (i.e. whether the constant should be merged into the row).
-This is purposefully named differently from the <code>conditions</code> parameter used on transforms that leverage
-<span class='object_link'><a href="../../Utils/Lookup/RowSelectorByLambda.html" title="Kiba::Extend::Utils::Lookup::RowSelectorByLambda (class)">Utils::Lookup::RowSelectorByLambda</a></span> to select from multiple rows.</p>
+        <div class='inline'><p>A lambda Proc is expected.</p>
 </div>
       
     </li>
@@ -327,13 +367,13 @@ This is purposefully named differently from the <code>conditions</code> paramete
       <pre class="lines">
 
 
-114
-115
-116
-117</pre>
+154
+155
+156
+157</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/merge/constant_value_conditional.rb', line 114</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/merge/constant_value_conditional.rb', line 154</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fieldmap:</span><span class='comma'>,</span> <span class='label'>condition:</span><span class='rparen'>)</span>
   <span class='ivar'>@fieldmap</span> <span class='op'>=</span> <span class='id identifier rubyid_fieldmap'>fieldmap</span>
@@ -390,23 +430,27 @@ This is purposefully named differently from the <code>conditions</code> paramete
       <pre class="lines">
 
 
-120
-121
-122
-123
-124
-125
-126
-127</pre>
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/merge/constant_value_conditional.rb', line 120</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/merge/constant_value_conditional.rb', line 160</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_condition_met?'>condition_met?</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
     <span class='ivar'>@fieldmap</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='op'>|</span> <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_target'>target</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span> <span class='rbrace'>}</span>
   <span class='kw'>else</span>
-    <span class='ivar'>@fieldmap</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='id identifier rubyid__value'>_value</span><span class='op'>|</span> <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_target'>target</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_target'>target</span><span class='rbracket'>]</span> <span class='op'>?</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='kw'>nil</span> <span class='rbrace'>}</span>
+    <span class='ivar'>@fieldmap</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='id identifier rubyid__value'>_value</span><span class='op'>|</span>
+      <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_target'>target</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_target'>target</span><span class='rbracket'>]</span> <span class='op'>?</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='kw'>nil</span>
+    <span class='rbrace'>}</span>
   <span class='kw'>end</span>
   <span class='id identifier rubyid_row'>row</span>
 <span class='kw'>end</span></pre>
@@ -420,7 +464,7 @@ This is purposefully named differently from the <code>conditions</code> paramete
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:13 2023 by
+  Generated on Fri Aug 25 01:03:18 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

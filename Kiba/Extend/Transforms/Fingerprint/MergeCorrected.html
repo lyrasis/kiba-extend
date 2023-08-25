@@ -421,20 +421,20 @@ into each row. If <code>nil</code>, no indicator column is added</p>
       <pre class="lines">
 
 
+103
 104
 105
 106
 107
 108
 109
-110
-111</pre>
+110</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/merge_corrected.rb', line 104</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/merge_corrected.rb', line 103</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>keycolumn:</span><span class='comma'>,</span> <span class='label'>lookup:</span><span class='comma'>,</span> <span class='label'>todofield:</span><span class='comma'>,</span> <span class='label'>fieldmap:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span>
-               <span class='label'>tag_affected_in:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='label'>tag_affected_in:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@keycolumn</span> <span class='op'>=</span> <span class='id identifier rubyid_keycolumn'>keycolumn</span>
   <span class='ivar'>@lookup</span> <span class='op'>=</span> <span class='id identifier rubyid_lookup'>lookup</span>
   <span class='ivar'>@todofield</span> <span class='op'>=</span> <span class='id identifier rubyid_todofield'>todofield</span>
@@ -507,6 +507,7 @@ into each row. If <code>nil</code>, no indicator column is added</p>
       <pre class="lines">
 
 
+113
 114
 115
 116
@@ -514,11 +515,10 @@ into each row. If <code>nil</code>, no indicator column is added</p>
 118
 119
 120
-121
-122</pre>
+121</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/merge_corrected.rb', line 114</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/merge_corrected.rb', line 113</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_tag_affected_in'>tag_affected_in</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>n</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_tag_affected_in'>tag_affected_in</span>
@@ -539,7 +539,7 @@ into each row. If <code>nil</code>, no indicator column is added</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:12 2023 by
+  Generated on Fri Aug 25 01:03:18 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

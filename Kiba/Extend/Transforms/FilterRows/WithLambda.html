@@ -106,7 +106,9 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Keep or reject rows based on whether the arbitrary Lambda passed in evaluates to true/false</p>
+    <p>rubocop:todo Layout/LineLength
+Keep or reject rows based on whether the arbitrary Lambda passed in evaluates to true/false
+rubocop:enable Layout/LineLength</p>
 
 <h2 id="examples">Examples</h2>
 
@@ -227,7 +229,7 @@ the first row of data passed to the <code>process</code> method</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A new instance of WithLambda.</p>
+    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength   to/return <code>TrueClass</code> or <code>FalseClass</code>.</p>
 </div></span>
   
 </li>
@@ -278,7 +280,9 @@ the first row of data passed to the <code>process</code> method</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of WithLambda.</p>
+    <p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+  to/return <code>TrueClass</code> or <code>FalseClass</code></p>
 
 
   </div>
@@ -312,8 +316,7 @@ the first row of data passed to the <code>process</code> method</p>
       
       
         &mdash;
-        <div class='inline'><p>with one parameter for row to be passed in through. The Lambda must evaulate
-to/return <code>TrueClass</code> or <code>FalseClass</code></p>
+        <div class='inline'><p>with one parameter for row to be passed in through. The Lambda must evaulate</p>
 </div>
       
     </li>
@@ -342,15 +345,15 @@ to/return <code>TrueClass</code> or <code>FalseClass</code></p>
       <pre class="lines">
 
 
-71
-72
-73
-74
 75
-76</pre>
+76
+77
+78
+79
+80</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/filter_rows/with_lambda.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/filter_rows/with_lambda.rb', line 75</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>action:</span><span class='comma'>,</span> <span class='label'>lambda:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_validate_action_argument'>validate_action_argument</span><span class='lparen'>(</span><span class='id identifier rubyid_action'>action</span><span class='rparen'>)</span>
@@ -424,28 +427,28 @@ to/return <code>TrueClass</code> or <code>FalseClass</code></p>
       <pre class="lines">
 
 
-79
-80
-81
-82
 83
 84
 85
 86
 87
-88</pre>
+88
+89
+90
+91
+92</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/filter_rows/with_lambda.rb', line 79</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/filter_rows/with_lambda.rb', line 83</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_test_lambda'>test_lambda</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_lambda_tested'>lambda_tested</span>
 
   <span class='kw'>case</span> <span class='id identifier rubyid_action'>action</span>
   <span class='kw'>when</span> <span class='symbol'>:keep</span>
-    <span class='kw'>return</span> <span class='id identifier rubyid_row'>row</span> <span class='kw'>if</span> <span class='id identifier rubyid_lambda'>lambda</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_row'>row</span> <span class='kw'>if</span> <span class='id identifier rubyid_lambda'>lambda</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='kw'>when</span> <span class='symbol'>:reject</span>
-    <span class='kw'>return</span> <span class='id identifier rubyid_row'>row</span> <span class='kw'>unless</span> <span class='id identifier rubyid_lambda'>lambda</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_row'>row</span> <span class='kw'>unless</span> <span class='id identifier rubyid_lambda'>lambda</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -458,7 +461,7 @@ to/return <code>TrueClass</code> or <code>FalseClass</code></p>
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:12 2023 by
+  Generated on Fri Aug 25 01:03:17 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

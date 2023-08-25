@@ -392,7 +392,7 @@ form of normalized value will be entered</p>
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>normfield:</span><span class='comma'>,</span> <span class='label'>nonnormfield:</span><span class='comma'>,</span> <span class='label'>target:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@normfield</span> <span class='op'>=</span> <span class='id identifier rubyid_normfield'>normfield</span>
   <span class='ivar'>@nonnormfield</span> <span class='op'>=</span> <span class='id identifier rubyid_nonnormfield'>nonnormfield</span>
-  <span class='ivar'>@target</span> <span class='op'>=</span> <span class='id identifier rubyid_target'>target</span> <span class='op'>||=</span> <span class='id identifier rubyid_normfield'>normfield</span>
+  <span class='ivar'>@target</span> <span class='op'>=</span> <span class='id identifier rubyid_target'>target</span> <span class='op'>||</span> <span class='id identifier rubyid_normfield'>normfield</span>
   <span class='ivar'>@data</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
   <span class='ivar'>@rows</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
   <span class='ivar'>@lookup</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -486,7 +486,7 @@ form of normalized value will be entered</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:13 2023 by
+  Generated on Fri Aug 25 01:03:19 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

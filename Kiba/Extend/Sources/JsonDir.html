@@ -133,7 +133,9 @@ as the last step before writing out rows</p>
   such values are written out as text string versions of their Ruby
   representations. That is, your CSV field value might be:</p>
 
-<p><code>{&quot;65&quot;=&gt;{&quot;title&quot;=&gt;&quot;C1&quot;, &quot;file&quot;=&gt;&quot;66.jp2&quot;}, &quot;67&quot;=&gt;{&quot;title&quot;=&gt;&quot;C2&quot;, &quot;file&quot;=&gt;&quot;67.jp2&quot;}}</code></p>
+<p>rubocop:todo Layout/LineLength
+<code>{&quot;65&quot;=&gt;{&quot;title&quot;=&gt;&quot;C1&quot;, &quot;file&quot;=&gt;&quot;66.jp2&quot;}, &quot;67&quot;=&gt;{&quot;title&quot;=&gt;&quot;C2&quot;, &quot;file&quot;=&gt;&quot;67.jp2&quot;}}</code>
+rubocop:enable Layout/LineLength</p>
 
 <p>If you need to work with such a value in subsequent jobs (i.e. reading
   the string back in from the CSV), you can do something like:</p>
@@ -292,7 +294,7 @@ as the last step before writing out rows</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(dirpath:, recursive: false, filesuffixes: [&#39;.json&#39;])  &#x21d2; JsonDir </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(dirpath:, recursive: false, filesuffixes: [&quot;.json&quot;])  &#x21d2; JsonDir </a>
     
 
     
@@ -345,7 +347,7 @@ as the last step before writing out rows</p>
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(dirpath:, recursive: false, filesuffixes: [&#39;.json&#39;])  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Sources::JsonDir (class)">JsonDir</a></span></tt> 
+    #<strong>initialize</strong>(dirpath:, recursive: false, filesuffixes: [&quot;.json&quot;])  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Sources::JsonDir (class)">JsonDir</a></span></tt> 
   
 
   
@@ -403,7 +405,7 @@ files in subdirectories</p>
         <span class='type'>(<tt>Array&lt;String&gt;</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>[&#39;.json&#39;]</tt>)</em>
+        <em class="default">(defaults to: <tt>[&quot;.json&quot;]</tt>)</em>
       
       
         &mdash;
@@ -422,16 +424,16 @@ JSON records. Include preceding period</p>
       <pre class="lines">
 
 
-71
-72
 73
 74
-75</pre>
+75
+76
+77</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/sources/json_dir.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/sources/json_dir.rb', line 73</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>dirpath:</span><span class='comma'>,</span> <span class='label'>recursive:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>filesuffixes:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>.json</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>dirpath:</span><span class='comma'>,</span> <span class='label'>recursive:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>filesuffixes:</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>.json</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='ivar'>@path</span> <span class='op'>=</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='id identifier rubyid_dirpath'>dirpath</span><span class='rparen'>)</span>
   <span class='ivar'>@recursive</span> <span class='op'>=</span> <span class='id identifier rubyid_recursive'>recursive</span>
   <span class='ivar'>@filesuffixes</span> <span class='op'>=</span> <span class='id identifier rubyid_filesuffixes'>filesuffixes</span>
@@ -463,12 +465,12 @@ JSON records. Include preceding period</p>
       <pre class="lines">
 
 
-49
-50
-51</pre>
+51
+52
+53</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/sources/json_dir.rb', line 49</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/sources/json_dir.rb', line 51</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_default_file_options'>default_file_options</span>
   <span class='kw'>nil</span>
@@ -493,12 +495,12 @@ JSON records. Include preceding period</p>
       <pre class="lines">
 
 
-53
-54
-55</pre>
+55
+56
+57</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/sources/json_dir.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/sources/json_dir.rb', line 55</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_options_key'>options_key</span>
   <span class='kw'>nil</span>
@@ -523,12 +525,12 @@ JSON records. Include preceding period</p>
       <pre class="lines">
 
 
-57
-58
-59</pre>
+59
+60
+61</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/sources/json_dir.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/sources/json_dir.rb', line 59</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_path_key'>path_key</span>
   <span class='symbol'>:dirpath</span>
@@ -575,12 +577,12 @@ JSON records. Include preceding period</p>
       <pre class="lines">
 
 
-61
-62
-63</pre>
+63
+64
+65</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/sources/json_dir.rb', line 61</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/sources/json_dir.rb', line 63</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_requires_path?'>requires_path?</span>
   <span class='kw'>true</span>
@@ -647,8 +649,6 @@ and a warning is written to STDOUT</p>
       <pre class="lines">
 
 
-80
-81
 82
 83
 84
@@ -656,10 +656,12 @@ and a warning is written to STDOUT</p>
 86
 87
 88
-89</pre>
+89
+90
+91</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/sources/json_dir.rb', line 80</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/sources/json_dir.rb', line 82</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_each'>each</span>
   <span class='id identifier rubyid_file_list'>file_list</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_path'>path</span><span class='op'>|</span>
@@ -681,7 +683,7 @@ and a warning is written to STDOUT</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:09 2023 by
+  Generated on Fri Aug 25 01:03:15 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

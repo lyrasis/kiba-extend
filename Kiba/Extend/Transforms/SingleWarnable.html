@@ -92,15 +92,21 @@
   <div class="discussion">
     <p>Mixin module providing <code>do_warnings</code> method for transforms.</p>
 
-<p>If you have an input with 1000 rows missing an expected field, you don&#39;t want 1000 warnings to STDOUT, so
+<p>rubocop:todo Layout/LineLength
+If you have an input with 1000 rows missing an expected field, you don&#39;t want 1000 warnings to STDOUT, so
+rubocop:enable Layout/LineLength
   this handles ensuring a single warning will be sent</p>
 
 <h2 id="usage">Usage</h2>
 
 <p>Transform classes using this should: <code>include SingleWarnable</code>.</p>
 
-<p>The <code>initialize</code> method of a transform using this mixin should call <code>setup_single_warning</code>. Then,
-  <code>add_single_warning(&quot;The warning message&quot;)</code> can be used from anywhere else in the transform.</p>
+<p>rubocop:todo Layout/LineLength
+The <code>initialize</code> method of a transform using this mixin should call <code>setup_single_warning</code>. Then,
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+  <code>add_single_warning(&quot;The warning message&quot;)</code> can be used from anywhere else in the transform.
+rubocop:enable Layout/LineLength</p>
 
 
   </div>
@@ -208,12 +214,12 @@
       <pre class="lines">
 
 
-36
-37
-38</pre>
+42
+43
+44</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/single_warnable.rb', line 36</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/single_warnable.rb', line 42</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_single_warnings'>single_warnings</span>
   <span class='ivar'>@single_warnings</span>
@@ -228,7 +234,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:09 2023 by
+  Generated on Fri Aug 25 01:03:15 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

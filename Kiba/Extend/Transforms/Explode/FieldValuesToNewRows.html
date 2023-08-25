@@ -117,7 +117,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(target:, fields: [], multival: false, sep: &#39; &#39;, keep_nil: false, keep_empty: false)  &#x21d2; FieldValuesToNewRows </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(target:, fields: [], multival: false, sep: &quot; &quot;, keep_nil: false, keep_empty: false)  &#x21d2; FieldValuesToNewRows </a>
     
 
     
@@ -170,7 +170,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(target:, fields: [], multival: false, sep: &#39; &#39;, keep_nil: false, keep_empty: false)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Explode::FieldValuesToNewRows (class)">FieldValuesToNewRows</a></span></tt> 
+    #<strong>initialize</strong>(target:, fields: [], multival: false, sep: &quot; &quot;, keep_nil: false, keep_empty: false)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Explode::FieldValuesToNewRows (class)">FieldValuesToNewRows</a></span></tt> 
   
 
   
@@ -192,19 +192,21 @@
       <pre class="lines">
 
 
-101
-102
-103
-104
-105
-106
-107
-108</pre>
+125
+126
+127
+128
+129
+130
+131
+132
+133</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/explode.rb', line 101</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/explode.rb', line 125</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>target:</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>multival:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> </span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>keep_nil:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>keep_empty:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>target:</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>multival:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+  <span class='label'>keep_nil:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>keep_empty:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fields'>fields</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
   <span class='ivar'>@target</span> <span class='op'>=</span> <span class='id identifier rubyid_target'>target</span>
   <span class='ivar'>@multival</span> <span class='op'>=</span> <span class='id identifier rubyid_multival'>multival</span>
@@ -239,39 +241,39 @@
       <pre class="lines">
 
 
-110
-111
-112
-113
-114
-115
-116
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126
-127
-128
-129
-130
-131
-132
-133
-134
 135
 136
 137
 138
-139</pre>
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/explode.rb', line 110</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/explode.rb', line 135</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_rows'>rows</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -282,14 +284,14 @@
   <span class='ivar'>@fields</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span>
     <span class='id identifier rubyid_val'>val</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_vals'>vals</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
-             <span class='lbracket'>[</span><span class='kw'>nil</span><span class='rbracket'>]</span>
-           <span class='kw'>elsif</span> <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
-             <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
-           <span class='kw'>elsif</span> <span class='ivar'>@multival</span>
-             <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='ivar'>@sep</span><span class='comma'>,</span> <span class='op'>-</span><span class='int'>1</span><span class='rparen'>)</span>
-           <span class='kw'>else</span>
-             <span class='lbracket'>[</span><span class='id identifier rubyid_val'>val</span><span class='rbracket'>]</span>
-           <span class='kw'>end</span>
+      <span class='lbracket'>[</span><span class='kw'>nil</span><span class='rbracket'>]</span>
+    <span class='kw'>elsif</span> <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+      <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+    <span class='kw'>elsif</span> <span class='ivar'>@multival</span>
+      <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='ivar'>@sep</span><span class='comma'>,</span> <span class='op'>-</span><span class='int'>1</span><span class='rparen'>)</span>
+    <span class='kw'>else</span>
+      <span class='lbracket'>[</span><span class='id identifier rubyid_val'>val</span><span class='rbracket'>]</span>
+    <span class='kw'>end</span>
 
     <span class='id identifier rubyid_vals'>vals</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_val'>val</span><span class='op'>|</span>
       <span class='kw'>next</span> <span class='kw'>if</span> <span class='op'>!</span><span class='ivar'>@keep_nil</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -313,7 +315,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:09 2023 by
+  Generated on Fri Aug 25 01:03:16 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

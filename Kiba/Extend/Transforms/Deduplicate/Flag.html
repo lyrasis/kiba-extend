@@ -101,18 +101,30 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Adds a field (<code>in_field</code>) containing &#39;y&#39; or &#39;n&#39;, indicating whether value of <code>on_field</code> is a duplicate</p>
+    <p>rubocop:todo Layout/LineLength
+Adds a field (<code>in_field</code>) containing &#39;y&#39; or &#39;n&#39;, indicating whether value of <code>on_field</code> is a duplicate
+rubocop:enable Layout/LineLength</p>
 
-<p>The first instance of a value in <code>on_field</code> is always marked <code>n</code>. Subsequent rows containing the same
+<p>rubocop:todo Layout/LineLength
+The first instance of a value in <code>on_field</code> is always marked <code>n</code>. Subsequent rows containing the same
+rubocop:enable Layout/LineLength
   value will be marked &#39;y&#39;</p>
 
-<p>Use this transform if you need to retain/report on what will be treated as a duplicate. Use
+<p>rubocop:todo Layout/LineLength
+Use this transform if you need to retain/report on what will be treated as a duplicate. Use
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
   <span class='object_link'><a href="../FilterRows/FieldEqualTo.html" title="Kiba::Extend::Transforms::FilterRows::FieldEqualTo (class)">FilterRows::FieldEqualTo</a></span> to extract only the duplicate rows and/or to
+rubocop:enable Layout/LineLength
   keep only the non-duplicate rows.</p>
 
-<p>Use <span class='object_link'><a href="FlagAll.html" title="Kiba::Extend::Transforms::Deduplicate::FlagAll (class)">FlagAll</a></span> if you need all rows containing duplicate values flagged <code>y</code>.</p>
+<p>rubocop:todo Layout/LineLength
+Use <span class='object_link'><a href="FlagAll.html" title="Kiba::Extend::Transforms::Deduplicate::FlagAll (class)">FlagAll</a></span> if you need all rows containing duplicate values flagged <code>y</code>.
+rubocop:enable Layout/LineLength</p>
 
-<p>To delete duplicates all in one step, use <span class='object_link'><a href="Table.html" title="Kiba::Extend::Transforms::Deduplicate::Table (class)">Table</a></span></p>
+<p>rubocop:todo Layout/LineLength
+To delete duplicates all in one step, use <span class='object_link'><a href="Table.html" title="Kiba::Extend::Transforms::Deduplicate::Table (class)">Table</a></span>
+rubocop:enable Layout/LineLength</p>
 
 <p>Input table:</p>
 
@@ -126,8 +138,10 @@
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby">  <span class='ivar'>@deduper</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
-  <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Deduplicate.html" title="Kiba::Extend::Transforms::Deduplicate (module)">Deduplicate</a></span></span><span class='op'>::</span><span class='const'>Flag</span><span class='comma'>,</span> <span class='label'>on_field:</span> <span class='symbol'>:combined</span><span class='comma'>,</span> <span class='label'>in_field:</span> <span class='symbol'>:duplicate</span><span class='comma'>,</span> <span class='label'>using:</span> <span class='ivar'>@deduper</span>
+<pre class="code ruby"><code class="ruby">  @deduper = {}
+rubocop:todo Layout/LineLength
+  transform Deduplicate::Flag, on_field: :combined, in_field: :duplicate, using: @deduper
+rubocop:enable Layout/LineLength
 </code></pre>
 
 <p>Results in:</p>
@@ -190,7 +204,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A new instance of Flag.</p>
+    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength   use this transform.</p>
 </div></span>
   
 </li>
@@ -235,7 +249,11 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of Flag.</p>
+    <p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+  use this transform</p>
 
 
   </div>
@@ -301,27 +319,13 @@
       
       
         &mdash;
-        <div class='inline'><p>if false, <code>in_field</code> value for non-duplicate is left blank
-use this transform</p>
+        <div class='inline'><p>if false, <code>in_field</code> value for non-duplicate is left blank</p>
 </div>
       
     </li>
   
 </ul>
 
-<p class="tag_title">Raises:</p>
-<ul class="raise">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt><span class='object_link'><a href="Flag/NoUsingValueError.html" title="Kiba::Extend::Transforms::Deduplicate::Flag::NoUsingValueError (class)">NoUsingValueError</a></span></tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
 
 </div><table class="source_code">
   <tr>
@@ -329,23 +333,29 @@ use this transform</p>
       <pre class="lines">
 
 
-57
-58
-59
-60
-61
-62
-63</pre>
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/flag.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/flag.rb', line 75</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>on_field:</span><span class='comma'>,</span> <span class='label'>in_field:</span><span class='comma'>,</span> <span class='label'>using:</span><span class='comma'>,</span> <span class='label'>explicit_no:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='ivar'>@on</span> <span class='op'>=</span> <span class='id identifier rubyid_on_field'>on_field</span>
   <span class='ivar'>@in_field</span> <span class='op'>=</span> <span class='id identifier rubyid_in_field'>in_field</span>
   <span class='ivar'>@using</span> <span class='op'>=</span> <span class='id identifier rubyid_using'>using</span>
-  <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Flag/NoUsingValueError.html" title="Kiba::Extend::Transforms::Deduplicate::Flag::NoUsingValueError (class)">NoUsingValueError</a></span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'> `using` hash does not exist</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>unless</span> <span class='ivar'>@using</span>
-  <span class='ivar'>@no_val</span> <span class='op'>=</span> <span class='id identifier rubyid_explicit_no'>explicit_no</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>n</span><span class='tstring_end'>&#39;</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+  <span class='kw'>unless</span> <span class='ivar'>@using</span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="Flag/NoUsingValueError.html" title="Kiba::Extend::Transforms::Deduplicate::Flag::NoUsingValueError (class)">NoUsingValueError</a></span></span><span class='comma'>,</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'> `using` hash does not exist</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
+  <span class='ivar'>@no_val</span> <span class='op'>=</span> <span class='id identifier rubyid_explicit_no'>explicit_no</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>n</span><span class='tstring_end'>&quot;</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -398,24 +408,24 @@ use this transform</p>
       <pre class="lines">
 
 
-66
-67
-68
-69
-70
-71
-72
-73
-74
-75</pre>
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/flag.rb', line 66</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/flag.rb', line 87</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_val'>val</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_on'>on</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_using'>using</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='id identifier rubyid_val'>val</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_in_field'>in_field</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>y</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_in_field'>in_field</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>y</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>else</span>
     <span class='id identifier rubyid_using'>using</span><span class='lbracket'>[</span><span class='id identifier rubyid_val'>val</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>nil</span>
     <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_in_field'>in_field</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_no_val'>no_val</span>
@@ -432,7 +442,7 @@ use this transform</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:10 2023 by
+  Generated on Fri Aug 25 01:03:16 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

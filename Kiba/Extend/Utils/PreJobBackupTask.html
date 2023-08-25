@@ -250,7 +250,7 @@
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span>
   <span class='id identifier rubyid_setting'>setting</span> <span class='op'>=</span> <span class='symbol'>:pre_job_task_backup_dir</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_configured?'>configured?</span><span class='lparen'>(</span><span class='id identifier rubyid_setting'>setting</span><span class='rparen'>)</span>
-  
+
   <span class='id identifier rubyid_backup_setting'>backup_setting</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_setting'>setting</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_valid_backup?'>valid_backup?</span><span class='lparen'>(</span><span class='id identifier rubyid_backup_setting'>backup_setting</span><span class='rparen'>)</span>
 
@@ -294,7 +294,7 @@
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/pre_job_backup_task.rb', line 8</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span>
-  <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span>
+  <span class='id identifier rubyid_new'>new</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -334,7 +334,7 @@
 <span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_runnable?'>runnable?</span>
 
-  <span class='id identifier rubyid_dirs'>dirs</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_dir'>dir</span><span class='op'>|</span> <span class='id identifier rubyid_backup'>backup</span><span class='lparen'>(</span><span class='id identifier rubyid_dir'>dir</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_dirs'>dirs</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_dir'>dir</span><span class='op'>|</span> <span class='id identifier rubyid_backup'>backup</span><span class='lparen'>(</span><span class='id identifier rubyid_dir'>dir</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -346,7 +346,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:10 2023 by
+  Generated on Fri Aug 25 01:03:16 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

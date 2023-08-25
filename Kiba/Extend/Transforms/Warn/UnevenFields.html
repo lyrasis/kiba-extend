@@ -106,32 +106,52 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Prints warning to STDOUT for each row having uneven values in the given fields</p>
+    <p>rubocop:todo Layout/LineLength
+Prints warning to STDOUT for each row having uneven values in the given fields
+rubocop:enable Layout/LineLength</p>
 
 <h2 id="what-is-meant-by-even-fields">What is meant by &quot;Even fields&quot;?</h2>
 
-<p>When a field group is even, each field in the group contains the same number of values. For
+<p>rubocop:todo Layout/LineLength
+When a field group is even, each field in the group contains the same number of values. For
+rubocop:enable Layout/LineLength
   example:</p>
 
 <p><code>{foo: &#39;af|bf|cf&#39;, bar: &#39;ab|bb|cb&#39;, baz: &#39;az|bz|cz&#39;}</code></p>
 
-<p>Depending on your application, an uneven field group may or may not be a concern:</p>
+<p>rubocop:todo Layout/LineLength
+Depending on your application, an uneven field group may or may not be a concern:
+rubocop:enable Layout/LineLength</p>
 
 <p><code>{foo: &#39;af|bf|cf&#39;, bar: &#39;ab|bb|cb&#39;, baz: &#39;az|zz|bz|cz&#39;}</code></p>
 
-<p><code>foo</code> and <code>bar</code> both have 3 values, while <code>baz</code> has 4. The assumption of a repeating
+<p>rubocop:todo Layout/LineLength
+<code>foo</code> and <code>bar</code> both have 3 values, while <code>baz</code> has 4. The assumption of a repeating
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
   field group is: <code>foo[0]</code> goes with <code>bar[0]</code> goes with <code>baz[0]</code>, so having an extra value in
+rubocop:enable Layout/LineLength
   <code>baz</code> is a problem if you expect <code>bf</code>, <code>bb</code>, and <code>bz</code> to line up.</p>
 
-<p>Note that the following is considered to be even, because we ignore fields that have no
+<p>rubocop:todo Layout/LineLength
+Note that the following is considered to be even, because we ignore fields that have no
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
   value at all, and, though <code>baz</code> only has two values non-null values, the position of
+rubocop:enable Layout/LineLength
   the null value in the middle is clearly indicated:</p>
 
 <p><code>{foo: &#39;af|bf|cf&#39;, bar: nil, baz: &#39;az||cz&#39;}</code></p>
 
-<p>Several transforms have the option to automatically pad uneven value fields so that the overall
+<p>rubocop:todo Layout/LineLength
+Several transforms have the option to automatically pad uneven value fields so that the overall
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
   field group is even. However, there&#39;s no foolproof way to do this that will be correct for all
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
   applications, so you should be able to get warnings for all instances of unevenness, in order
+rubocop:enable Layout/LineLength
   to check your data is being transformed as expected.</p>
 
 
@@ -189,7 +209,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A new instance of UnevenFields.</p>
+    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength.</p>
 </div></span>
   
 </li>
@@ -245,7 +265,8 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of UnevenFields.</p>
+    <p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength</p>
 
 
   </div>
@@ -310,19 +331,21 @@
       <pre class="lines">
 
 
-41
-42
-43
-44
-45</pre>
+63
+64
+65
+66
+67
+68</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/warn/uneven_fields.rb', line 41</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/warn/uneven_fields.rb', line 63</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_delim'><span class='object_link'><a href="../../../Extend.html#delim-class_method" title="Kiba::Extend.delim (method)">delim</a></span></span><span class='rparen'>)</span>
   <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fields'>fields</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
   <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_delim'>delim</span>
-  <span class='ivar'>@checker</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Helpers.html" title="Kiba::Extend::Transforms::Helpers (module)">Helpers</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Helpers/FieldEvennessChecker.html" title="Kiba::Extend::Transforms::Helpers::FieldEvennessChecker (class)">FieldEvennessChecker</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Helpers/FieldEvennessChecker.html#initialize-instance_method" title="Kiba::Extend::Transforms::Helpers::FieldEvennessChecker#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='id identifier rubyid_fields'>fields</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='rparen'>)</span>
+  <span class='ivar'>@checker</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Helpers.html" title="Kiba::Extend::Transforms::Helpers (module)">Helpers</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Helpers/FieldEvennessChecker.html" title="Kiba::Extend::Transforms::Helpers::FieldEvennessChecker (class)">FieldEvennessChecker</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Helpers/FieldEvennessChecker.html#initialize-instance_method" title="Kiba::Extend::Transforms::Helpers::FieldEvennessChecker#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='id identifier rubyid_fields'>fields</span><span class='comma'>,</span>
+    <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -390,20 +413,24 @@
       <pre class="lines">
 
 
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58</pre>
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/warn/uneven_fields.rb', line 48</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/warn/uneven_fields.rb', line 71</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_row'>row</span> <span class='kw'>if</span> <span class='id identifier rubyid_fields'>fields</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>==</span> <span class='int'>1</span>
@@ -411,9 +438,13 @@
   <span class='id identifier rubyid_chk_result'>chk_result</span> <span class='op'>=</span> <span class='id identifier rubyid_checker'>checker</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_row'>row</span> <span class='kw'>if</span> <span class='id identifier rubyid_chk_result'>chk_result</span> <span class='op'>==</span> <span class='symbol'>:even</span>
 
-  <span class='id identifier rubyid_uneven'>uneven</span> <span class='op'>=</span> <span class='id identifier rubyid_chk_result'>chk_result</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='comma'>,</span> <span class='id identifier rubyid_val'>val</span><span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_field'>field</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_val'>val</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>; </span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_msg'>msg</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_warning_label'><span class='object_link'><a href="../../../Extend.html#warning_label-class_method" title="Kiba::Extend.warning_label (method)">warning_label</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>: Uneven values for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_fields'>fields</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>/</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'> in </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_uneven'>uneven</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-  <span class='id identifier rubyid_warn'>warn</span><span class='lparen'>(</span><span class='id identifier rubyid_msg'>msg</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_uneven'>uneven</span> <span class='op'>=</span> <span class='id identifier rubyid_chk_result'>chk_result</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='comma'>,</span> <span class='id identifier rubyid_val'>val</span><span class='op'>|</span>
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_field'>field</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_val'>val</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>; </span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='comment'># rubocop:todo Layout/LineLength
+</span>  <span class='id identifier rubyid_msg'>msg</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_warning_label'><span class='object_link'><a href="../../../Extend.html#warning_label-class_method" title="Kiba::Extend.warning_label (method)">warning_label</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>: Uneven values for </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_fields'>fields</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>/</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='embexpr_end'>}</span><span class='tstring_content'> in </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_uneven'>uneven</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='comment'># rubocop:enable Layout/LineLength
+</span>  <span class='id identifier rubyid_warn'>warn</span><span class='lparen'>(</span><span class='id identifier rubyid_msg'>msg</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_row'>row</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -426,7 +457,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:11 2023 by
+  Generated on Fri Aug 25 01:03:17 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

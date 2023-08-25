@@ -101,12 +101,18 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Ensures even field values across multiple fields (i.e. a field group) by appending some value to the end
+    <p>rubocop:todo Layout/LineLength
+Ensures even field values across multiple fields (i.e. a field group) by appending some value to the end
+rubocop:enable Layout/LineLength
   of fields containing fewer values.</p>
 
-<p>See explanation of &quot;even fields&quot; at <span class='object_link'><a href="../Warn/UnevenFields.html" title="Kiba::Extend::Transforms::Warn::UnevenFields (class)">Warn::UnevenFields</a></span></p>
+<p>rubocop:todo Layout/LineLength
+See explanation of &quot;even fields&quot; at <span class='object_link'><a href="../Warn/UnevenFields.html" title="Kiba::Extend::Transforms::Warn::UnevenFields (class)">Warn::UnevenFields</a></span>
+rubocop:enable Layout/LineLength</p>
 
-<p>This transform appends the value of <code>@evener</code> to field values as necessary to achieve
+<p>rubocop:todo Layout/LineLength
+This transform appends the value of <code>@evener</code> to field values as necessary to achieve
+rubocop:enable Layout/LineLength
   evenness across fields. So, with <code>evener: &#39;%NULLVALUE%&#39;</code>:</p>
 
 <pre class="code ruby"><code class="ruby"> <span class='lbrace'>{</span><span class='label'>a_foo:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>af</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_bar:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ab</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_baz:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>az|zz</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
@@ -117,14 +123,20 @@
 <pre class="code ruby"><code class="ruby">  <span class='lbrace'>{</span><span class='label'>a_foo:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>af|%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_bar:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ab|%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_baz:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>az|zz</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
 </code></pre>
 
-<p>However, what if <code>af</code> and <code>ab</code> are intended to go with <code>zz</code> instead of <code>az</code>? Or what if, in this
+<p>rubocop:todo Layout/LineLength
+However, what if <code>af</code> and <code>ab</code> are intended to go with <code>zz</code> instead of <code>az</code>? Or what if, in this
+rubocop:enable Layout/LineLength
   situation, you really want:</p>
 
 <pre class="code ruby"><code class="ruby"> <span class='lbrace'>{</span><span class='label'>a_foo:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>af|af</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_bar:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ab|ab</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_baz:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>az|zz</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
 </code></pre>
 
-<p>Only you can be sure, so, by default, you get a warning whenever a source gets padded to enforce
-  evenness. You can disable warnings by including <code>warn: false</code> in your transform set-up.</p>
+<p>rubocop:todo Layout/LineLength
+Only you can be sure, so, by default, you get a warning whenever a source gets padded to enforce
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+  evenness. You can disable warnings by including <code>warn: false</code> in your transform set-up.
+rubocop:enable Layout/LineLength</p>
 
 <h2 id="examples">Examples</h2>
 
@@ -146,11 +158,13 @@
 
 <p>Results in:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='lbracket'>[</span>
-  <span class='lbrace'>{</span><span class='label'>foo:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bar:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>b</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>baz:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>c</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
-  <span class='lbrace'>{</span><span class='label'>foo:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bar:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>baz:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>c</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
-  <span class='lbrace'>{</span><span class='label'>foo:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a|a|a</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>bar:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>|b|%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>baz:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>c|%NULLVALUE%|%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
-<span class='rbracket'>]</span>
+<pre class="code ruby"><code class="ruby">[
+  {foo: &#39;a&#39;, bar: &#39;b&#39;, baz: &#39;c&#39;},
+  {foo: &#39;&#39;, bar: nil, baz: &#39;c&#39;},
+rubocop:todo Layout/LineLength
+  {foo: &#39;a|a|a&#39;, bar: &#39;|b|%NULLVALUE%&#39;, baz: &#39;c|%NULLVALUE%|%NULLVALUE%&#39;}
+rubocop:enable Layout/LineLength
+]
 </code></pre>
 
 <p><strong>NOTE:</strong> nil or empty field values are skipped altogether</p>
@@ -166,7 +180,9 @@
 
 <p>Used as:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Clean.html" title="Kiba::Extend::Transforms::Clean (module)">Clean</a></span></span><span class='op'>::</span><span class='const'>EvenFieldValues</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>foo</span><span class='words_sep'> </span><span class='tstring_content'>bar</span><span class='words_sep'> </span><span class='tstring_content'>baz</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>|</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>evener:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%BLANK%</span><span class='tstring_end'>&#39;</span></span>
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+transform Clean::EvenFieldValues, fields: %i[foo bar baz], delim: &#39;|&#39;, evener: &#39;%BLANK%&#39;
+rubocop:enable Layout/LineLength
 </code></pre>
 
 <p>Results in:</p>
@@ -178,7 +194,9 @@
 
 <h3 id="custom-evener-value">Custom evener (:value)</h3>
 
-<p>This setting causes the last value in the field before padding/evening the field  to be repeated
+<p>rubocop:todo Layout/LineLength
+This setting causes the last value in the field before padding/evening the field  to be repeated
+rubocop:enable Layout/LineLength
   as necessary to achieve evenness across fields in the group.</p>
 
 <p>Source data:</p>
@@ -192,7 +210,9 @@
 
 <p>Used as:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Clean.html" title="Kiba::Extend::Transforms::Clean (module)">Clean</a></span></span><span class='op'>::</span><span class='const'>EvenFieldValues</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>foo</span><span class='words_sep'> </span><span class='tstring_content'>bar</span><span class='words_sep'> </span><span class='tstring_content'>baz</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>|</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>evener:</span> <span class='symbol'>:value</span>
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+transform Clean::EvenFieldValues, fields: %i[foo bar baz], delim: &#39;|&#39;, evener: :value
+rubocop:enable Layout/LineLength
 </code></pre>
 
 <p>Results in:</p>
@@ -259,7 +279,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A new instance of EvenFieldValues.</p>
+    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength   the entire field is empty or not rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength   string will be appended to even out fields.</p>
 </div></span>
   
 </li>
@@ -304,7 +324,19 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of EvenFieldValues.</p>
+    <p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+  the entire field is empty or not
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+  string will be appended to even out fields. If <code>:value</code>, the <strong>final</strong> value in the field needing
+rubocop:enable Layout/LineLength
+  evening will be repeated to even out the field.
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength</p>
 
 
   </div>
@@ -340,8 +372,7 @@
       
       
         &mdash;
-        <div class='inline'><p>value(s) to treat as empty when determining if
-the entire field is empty or not</p>
+        <div class='inline'><p>value(s) to treat as empty when determining if</p>
 </div>
       
     </li>
@@ -358,9 +389,7 @@ the entire field is empty or not</p>
       
       
         &mdash;
-        <div class='inline'><p>value used to even out uneven field values. If given a String, that
-string will be appended to even out fields. If <code>:value</code>, the <strong>final</strong> value in the field needing
-evening will be repeated to even out the field.</p>
+        <div class='inline'><p>value used to even out uneven field values. If given a String, that</p>
 </div>
       
     </li>
@@ -423,26 +452,28 @@ evening will be repeated to even out the field.</p>
       <pre class="lines">
 
 
-132
-133
-134
-135
-136
-137
-138
-139
-140
-141
-142
-143
-144
-145
-146
-147
-148</pre>
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/clean/even_field_values.rb', line 132</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/clean/even_field_values.rb', line 162</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span>
   <span class='label'>fields:</span><span class='comma'>,</span>
@@ -457,8 +488,10 @@ evening will be repeated to even out the field.</p>
   <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_delim'>delim</span>
   <span class='ivar'>@warn</span> <span class='op'>=</span> <span class='id identifier rubyid_warn'>warn</span>
 
-  <span class='ivar'>@value_getter</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Helpers.html" title="Kiba::Extend::Transforms::Helpers (module)">Helpers</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Helpers/FieldValueGetter.html" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter (class)">FieldValueGetter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Helpers/FieldValueGetter.html#initialize-instance_method" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='id identifier rubyid_fields'>fields</span><span class='comma'>,</span> <span class='label'>treat_as_null:</span> <span class='id identifier rubyid_treat_as_null'>treat_as_null</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='rparen'>)</span>
-  <span class='ivar'>@checker</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Helpers.html" title="Kiba::Extend::Transforms::Helpers (module)">Helpers</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Helpers/FieldEvennessChecker.html" title="Kiba::Extend::Transforms::Helpers::FieldEvennessChecker (class)">FieldEvennessChecker</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Helpers/FieldEvennessChecker.html#initialize-instance_method" title="Kiba::Extend::Transforms::Helpers::FieldEvennessChecker#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='id identifier rubyid_fields'>fields</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='rparen'>)</span>
+  <span class='ivar'>@value_getter</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Helpers.html" title="Kiba::Extend::Transforms::Helpers (module)">Helpers</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Helpers/FieldValueGetter.html" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter (class)">FieldValueGetter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Helpers/FieldValueGetter.html#initialize-instance_method" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='id identifier rubyid_fields'>fields</span><span class='comma'>,</span>
+    <span class='label'>treat_as_null:</span> <span class='id identifier rubyid_treat_as_null'>treat_as_null</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='rparen'>)</span>
+  <span class='ivar'>@checker</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Helpers.html" title="Kiba::Extend::Transforms::Helpers (module)">Helpers</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Helpers/FieldEvennessChecker.html" title="Kiba::Extend::Transforms::Helpers::FieldEvennessChecker (class)">FieldEvennessChecker</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Helpers/FieldEvennessChecker.html#initialize-instance_method" title="Kiba::Extend::Transforms::Helpers::FieldEvennessChecker#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='id identifier rubyid_fields'>fields</span><span class='comma'>,</span>
+    <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='rparen'>)</span>
   <span class='ivar'>@warner</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Warn.html" title="Kiba::Extend::Transforms::Warn (module)">Warn</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Warn/UnevenFields.html" title="Kiba::Extend::Transforms::Warn::UnevenFields (class)">UnevenFields</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Warn/UnevenFields.html#initialize-instance_method" title="Kiba::Extend::Transforms::Warn::UnevenFields#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='id identifier rubyid_fields'>fields</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -527,21 +560,21 @@ evening will be repeated to even out the field.</p>
       <pre class="lines">
 
 
-151
-152
-153
-154
-155
-156
-157
-158
-159
-160
-161
-162</pre>
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/clean/even_field_values.rb', line 151</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/clean/even_field_values.rb', line 183</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_row'>row</span> <span class='kw'>if</span> <span class='id identifier rubyid_fields'>fields</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='op'>==</span> <span class='int'>1</span>
@@ -565,7 +598,7 @@ evening will be repeated to even out the field.</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:11 2023 by
+  Generated on Fri Aug 25 01:03:17 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

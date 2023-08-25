@@ -85,7 +85,9 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Mixin to activate having computer say (out loud!) that the job is complete</p>
+    <p>rubocop:todo Layout/LineLength
+Mixin to activate having computer say (out loud!) that the job is complete
+rubocop:enable Layout/LineLength</p>
 
 <p>Useful for long-running jobs</p>
 
@@ -217,16 +219,18 @@
       <pre class="lines">
 
 
-11
-12
 13
-14</pre>
+14
+15
+16
+17</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/tell_me_job.rb', line 11</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/tell_me_job.rb', line 13</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_decorate'>decorate</span>
-  <span class='id identifier rubyid_context'>context</span><span class='period'>.</span><span class='id identifier rubyid_instance_variable_set'>instance_variable_set</span><span class='lparen'>(</span><span class='symbol'>:@job_key</span><span class='comma'>,</span> <span class='id identifier rubyid_job_data'>job_data</span><span class='period'>.</span><span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>_</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_context'>context</span><span class='period'>.</span><span class='id identifier rubyid_instance_variable_set'>instance_variable_set</span><span class='lparen'>(</span><span class='symbol'>:@job_key</span><span class='comma'>,</span>
+    <span class='id identifier rubyid_job_data'>job_data</span><span class='period'>.</span><span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>_</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_parse_job'>parse_job</span><span class='lparen'>(</span><span class='id identifier rubyid_control'>control</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='id identifier rubyid_tell'>tell</span><span class='rbracket'>]</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -273,16 +277,16 @@
       <pre class="lines">
 
 
-16
-17
-18
 19
 20
 21
-22</pre>
+22
+23
+24
+25</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/tell_me_job.rb', line 16</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/tell_me_job.rb', line 19</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_tell'>tell</span>
   <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='period'>.</span><span class='id identifier rubyid_job_segment'><span class='object_link'><a href="JobSegmenter.html#job_segment-instance_method" title="Kiba::Extend::Jobs::JobSegmenter#job_segment (method)">job_segment</a></span></span> <span class='kw'>do</span>
@@ -301,7 +305,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:08 2023 by
+  Generated on Fri Aug 25 01:03:15 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

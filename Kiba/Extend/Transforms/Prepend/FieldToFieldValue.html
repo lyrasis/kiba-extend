@@ -101,16 +101,22 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Adds the value of <code>prepended_field</code> to the beginning of the value(s) of the <code>target_field</code></p>
+    <p>rubocop:todo Layout/LineLength
+Adds the value of <code>prepended_field</code> to the beginning of the value(s) of the <code>target_field</code>
+rubocop:enable Layout/LineLength</p>
 
-<p>If target field value is blank, it is left blank, even if there is a prepended field value.
+<p>rubocop:todo Layout/LineLength
+If target field value is blank, it is left blank, even if there is a prepended field value.
+rubocop:enable Layout/LineLength
   If there is no value in prepended field, target field is left as-is</p>
 
 <h1 id="examples">Examples</h1>
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Prepend.html" title="Kiba::Extend::Transforms::Prepend (module)">Prepend</a></span></span><span class='op'>::</span><span class='const'>FieldToFieldValue</span><span class='comma'>,</span> <span class='label'>target_field:</span> <span class='symbol'>:a</span><span class='comma'>,</span> <span class='label'>prepended_field:</span> <span class='symbol'>:b</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>: </span><span class='tstring_end'>&#39;</span></span>
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+transform Prepend::FieldToFieldValue, target_field: :a, prepended_field: :b, sep: &#39;: &#39;
+rubocop:enable Layout/LineLength
 </code></pre>
 
 <p>Input table:</p>
@@ -141,8 +147,12 @@
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Prepend.html" title="Kiba::Extend::Transforms::Prepend (module)">Prepend</a></span></span><span class='op'>::</span><span class='const'>FieldToFieldValue</span><span class='comma'>,</span> <span class='label'>target_field:</span> <span class='symbol'>:a</span><span class='comma'>,</span> <span class='label'>prepended_field:</span> <span class='symbol'>:b</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>: </span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
-                                       <span class='label'>delete_prepended:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>mvdelim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;</span><span class='tstring_end'>&#39;</span></span>
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+transform Prepend::FieldToFieldValue, target_field: :a, prepended_field: :b, sep: &#39;: &#39;,
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+                                       delete_prepended: true, mvdelim: &#39;;&#39;
+rubocop:enable Layout/LineLength
 </code></pre>
 
 <p>Input table:</p>
@@ -171,15 +181,25 @@
 | ;u;v: t              |
 </code></pre>
 
-<p><strong>This probably introduces extra unexpected <code>mvdelim</code> strings in the result.</strong>
+<p>rubocop:todo Layout/LineLength
+<strong>This probably introduces extra unexpected <code>mvdelim</code> strings in the result.</strong>
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
   If <code>prepended_field</code> contains the <code>mvdelim</code> character, you probably want to set
+rubocop:enable Layout/LineLength
   <code>multivalue_prepended_field: true</code>.</p>
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Prepend.html" title="Kiba::Extend::Transforms::Prepend (module)">Prepend</a></span></span><span class='op'>::</span><span class='const'>FieldToFieldValue</span><span class='comma'>,</span> <span class='label'>target_field:</span> <span class='symbol'>:a</span><span class='comma'>,</span> <span class='label'>prepended_field:</span> <span class='symbol'>:b</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>: </span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
-                                       <span class='label'>delete_prepended:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>mvdelim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
-                                       <span class='label'>multivalue_prepended_field:</span> <span class='kw'>true</span>
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+transform Prepend::FieldToFieldValue, target_field: :a, prepended_field: :b, sep: &#39;: &#39;,
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+                                       delete_prepended: true, mvdelim: &#39;;&#39;,
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+                                       multivalue_prepended_field: true
+rubocop:enable Layout/LineLength
 </code></pre>
 
 <p>Results in:</p>
@@ -195,7 +215,9 @@
 | ;v: t          |
 </code></pre>
 
-<p>If there are more <code>target_field</code> values than <code>prepend_field</code> values after they are split,
+<p>rubocop:todo Layout/LineLength
+If there are more <code>target_field</code> values than <code>prepend_field</code> values after they are split,
+rubocop:enable Layout/LineLength
   nothing is prepended to remaining <code>target_field</code> values.</p>
 
 
@@ -232,7 +254,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(target_field:, prepended_field:, sep: &#39;&#39;, delete_prepended: false, mvdelim: &#39;&#39;, multivalue_prepended_field: false)  &#x21d2; FieldToFieldValue </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(target_field:, prepended_field:, sep: &quot;&quot;, delete_prepended: false, mvdelim: &quot;&quot;, multivalue_prepended_field: false)  &#x21d2; FieldToFieldValue </a>
     
 
     
@@ -248,7 +270,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>rubocop:disable Metrics/ParameterLists.</p>
+    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength   after prepending rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength   before prepending.</p>
 </div></span>
   
 </li>
@@ -285,7 +307,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(target_field:, prepended_field:, sep: &#39;&#39;, delete_prepended: false, mvdelim: &#39;&#39;, multivalue_prepended_field: false)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Prepend::FieldToFieldValue (class)">FieldToFieldValue</a></span></tt> 
+    #<strong>initialize</strong>(target_field:, prepended_field:, sep: &quot;&quot;, delete_prepended: false, mvdelim: &quot;&quot;, multivalue_prepended_field: false)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Prepend::FieldToFieldValue (class)">FieldToFieldValue</a></span></tt> 
   
 
   
@@ -293,7 +315,26 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>rubocop:disable Metrics/ParameterLists</p>
+    <p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+  after prepending
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+  before prepending. If empty string, behaves as a single value field
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+  as multivalued
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+  no mvdelim value
+rubocop:disable Metrics/ParameterLists
+rubocop:todo Layout/LineLength</p>
 
 
   </div>
@@ -340,7 +381,7 @@
         <span class='type'>(<tt>String</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>&#39;&#39;</tt>)</em>
+        <em class="default">(defaults to: <tt>&quot;&quot;</tt>)</em>
       
       
         &mdash;
@@ -361,8 +402,7 @@
       
       
         &mdash;
-        <div class='inline'><p>Whether or not to delete the prepended_field column
-after prepending</p>
+        <div class='inline'><p>Whether or not to delete the prepended_field column</p>
 </div>
       
     </li>
@@ -375,12 +415,11 @@ after prepending</p>
         <span class='type'>(<tt>String</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>&#39;&#39;</tt>)</em>
+        <em class="default">(defaults to: <tt>&quot;&quot;</tt>)</em>
       
       
         &mdash;
-        <div class='inline'><p>Character(s) on which to split multiple values in target field
-before prepending. If empty string, behaves as a single value field</p>
+        <div class='inline'><p>Character(s) on which to split multiple values in target field</p>
 </div>
       
     </li>
@@ -397,8 +436,7 @@ before prepending. If empty string, behaves as a single value field</p>
       
       
         &mdash;
-        <div class='inline'><p>Whether prepended field should be treated
-as multivalued</p>
+        <div class='inline'><p>Whether prepended field should be treated</p>
 </div>
       
     </li>
@@ -416,8 +454,7 @@ as multivalued</p>
       
       
         &mdash;
-        <div class='inline'><p>if constructed with multivalue_prepended_field true and
-no mvdelim value</p>
+        <div class='inline'><p>if constructed with multivalue_prepended_field true and</p>
 </div>
       
     </li>
@@ -430,22 +467,24 @@ no mvdelim value</p>
       <pre class="lines">
 
 
-134
-135
-136
-137
-138
-139
-140
-141
-142
-143</pre>
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/prepend/field_to_field_value.rb', line 134</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/prepend/field_to_field_value.rb', line 174</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>target_field:</span><span class='comma'>,</span> <span class='label'>prepended_field:</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>delete_prepended:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>mvdelim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
-               <span class='label'>multivalue_prepended_field:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>target_field:</span><span class='comma'>,</span> <span class='label'>prepended_field:</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>delete_prepended:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>mvdelim:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+  <span class='comment'># rubocop:enable Layout/LineLength
+</span>  <span class='label'>multivalue_prepended_field:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='ivar'>@field</span> <span class='op'>=</span> <span class='id identifier rubyid_target_field'>target_field</span>
   <span class='ivar'>@prepend</span> <span class='op'>=</span> <span class='id identifier rubyid_prepended_field'>prepended_field</span>
   <span class='ivar'>@sep</span> <span class='op'>=</span> <span class='id identifier rubyid_sep'>sep</span>
@@ -505,23 +544,26 @@ no mvdelim value</p>
       <pre class="lines">
 
 
-147
-148
-149
-150
-151
-152
-153
-154
-155
-156
-157
-158
-159
-160</pre>
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/prepend/field_to_field_value.rb', line 147</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/prepend/field_to_field_value.rb', line 188</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_field_val'>field_val</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='ivar'>@field</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span>
@@ -531,7 +573,10 @@ no mvdelim value</p>
 
   <span class='id identifier rubyid_values'>values</span> <span class='op'>=</span> <span class='ivar'>@mvdelim</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span> <span class='op'>?</span> <span class='lbracket'>[</span><span class='id identifier rubyid_field_val'>field_val</span><span class='rbracket'>]</span> <span class='op'>:</span> <span class='id identifier rubyid_field_val'>field_val</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='ivar'>@mvdelim</span><span class='rparen'>)</span>
 
-  <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='ivar'>@field</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_mv_prepend'>mv_prepend</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='comma'>,</span> <span class='id identifier rubyid_prepend_val'>prepend_val</span><span class='comma'>,</span> <span class='id identifier rubyid_values'>values</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='ivar'>@multival_prepend</span>
+  <span class='kw'>if</span> <span class='ivar'>@multival_prepend</span>
+    <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='ivar'>@field</span><span class='rbracket'>]</span> <span class='op'>=</span>
+      <span class='id identifier rubyid_mv_prepend'>mv_prepend</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='comma'>,</span> <span class='id identifier rubyid_prepend_val'>prepend_val</span><span class='comma'>,</span> <span class='id identifier rubyid_values'>values</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_row'>row</span> <span class='kw'>if</span> <span class='ivar'>@multival_prepend</span>
 
   <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='ivar'>@field</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_sv_prepend'>sv_prepend</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='comma'>,</span> <span class='id identifier rubyid_prepend_val'>prepend_val</span><span class='comma'>,</span> <span class='id identifier rubyid_values'>values</span><span class='rparen'>)</span>
@@ -547,7 +592,7 @@ no mvdelim value</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:12 2023 by
+  Generated on Fri Aug 25 01:03:18 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

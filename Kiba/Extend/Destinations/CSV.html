@@ -619,7 +619,7 @@ in, to the right of the ones named here. <strong>Set in registry entry&#39;s
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 50</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>filename:</span><span class='comma'>,</span> <span class='label'>csv_options:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>headers:</span> <span class='kw'>nil</span><span class='comma'>,</span>
-               <span class='label'>initial_headers:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='label'>initial_headers:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='ivar'>@filename</span> <span class='op'>=</span> <span class='id identifier rubyid_filename'>filename</span>
   <span class='ivar'>@csv_options</span> <span class='op'>=</span> <span class='id identifier rubyid_csv_options'>csv_options</span> <span class='op'>||</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
   <span class='ivar'>@headers</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span>
@@ -1033,12 +1033,12 @@ in, to the right of the ones named here. <strong>Set in registry entry&#39;s
       <pre class="lines">
 
 
-79
-80
-81</pre>
+82
+83
+84</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 79</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 82</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_close'>close</span>
   <span class='id identifier rubyid_csv'>csv</span><span class='op'>&amp;.</span><span class='id identifier rubyid_close'>close</span>
@@ -1100,7 +1100,7 @@ in, to the right of the ones named here. <strong>Set in registry entry&#39;s
 <span class='kw'>def</span> <span class='id identifier rubyid_fields'>fields</span>
   <span class='kw'>return</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='kw'>unless</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='rparen'>)</span>
 
-  <span class='id identifier rubyid_csv'>csv</span> <span class='op'>||=</span> <span class='op'>::</span><span class='const'>CSV</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>r</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_csv_options'>csv_options</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_csv'>csv</span> <span class='op'>||=</span> <span class='op'>::</span><span class='const'>CSV</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>r</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_csv_options'>csv_options</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_hdrs'>hdrs</span> <span class='op'>=</span> <span class='id identifier rubyid_csv'>csv</span><span class='period'>.</span><span class='id identifier rubyid_shift'>shift</span><span class='period'>.</span><span class='id identifier rubyid_headers'>headers</span>
   <span class='id identifier rubyid_close'>close</span>
   <span class='id identifier rubyid_hdrs'>hdrs</span>
@@ -1132,17 +1132,23 @@ in, to the right of the ones named here. <strong>Set in registry entry&#39;s
 73
 74
 75
-76</pre>
+76
+77
+78
+79</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 69</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
-  <span class='ivar'>@csv</span> <span class='op'>||=</span> <span class='op'>::</span><span class='const'>CSV</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>wb</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_csv_options'>csv_options</span><span class='rparen'>)</span>
+  <span class='ivar'>@csv</span> <span class='op'>||=</span> <span class='op'>::</span><span class='const'>CSV</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>wb</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_csv_options'>csv_options</span><span class='rparen'>)</span>
   <span class='ivar'>@headers</span> <span class='op'>||=</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span>
   <span class='id identifier rubyid_verify_initial_headers'>verify_initial_headers</span>
   <span class='id identifier rubyid_order_headers'>order_headers</span>
-  <span class='ivar'>@headers_written</span> <span class='op'>||=</span> <span class='lparen'>(</span><span class='id identifier rubyid_csv'>csv</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_headers'>headers</span><span class='semicolon'>;</span> <span class='kw'>true</span><span class='rparen'>)</span>
+  <span class='ivar'>@headers_written</span> <span class='op'>||=</span> <span class='kw'>begin</span>
+    <span class='id identifier rubyid_csv'>csv</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_headers'>headers</span>
+    <span class='kw'>true</span>
+  <span class='kw'>end</span>
   <span class='id identifier rubyid_csv'>csv</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_fetch_values'>fetch_values</span><span class='lparen'>(</span><span class='op'>*</span><span class='ivar'>@headers</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -1155,7 +1161,7 @@ in, to the right of the ones named here. <strong>Set in registry entry&#39;s
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:09 2023 by
+  Generated on Fri Aug 25 01:03:15 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

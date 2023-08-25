@@ -165,7 +165,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A new instance of NonSymbolLookupKeyError.</p>
+    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength.</p>
 </div></span>
   
 </li>
@@ -200,7 +200,8 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of NonSymbolLookupKeyError.</p>
+    <p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength</p>
 
 
   </div>
@@ -248,17 +249,21 @@
       <pre class="lines">
 
 
-38
-39
-40
-41</pre>
+48
+49
+50
+51
+52
+53</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/registered_lookup.rb', line 38</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/registered_lookup.rb', line 48</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_filekey'>filekey</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_msg'>msg</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Lookup key found for :</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_filekey'>filekey</span><span class='embexpr_end'>}</span><span class='tstring_content'> is not a Ruby Symbol. Prepend a : to the field name to fix.</span><span class='tstring_end'>&quot;</span></span>
-  <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_msg'>msg</span><span class='rparen'>)</span>
+  <span class='comment'># rubocop:todo Layout/LineLength
+</span>  <span class='id identifier rubyid_msg'>msg</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Lookup key found for :</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_filekey'>filekey</span><span class='embexpr_end'>}</span><span class='tstring_content'> is not a Ruby Symbol. Prepend a : to the field name to fix.</span><span class='tstring_end'>&quot;</span></span>
+  <span class='comment'># rubocop:enable Layout/LineLength
+</span>  <span class='kw'>super</span><span class='lparen'>(</span><span class='id identifier rubyid_msg'>msg</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -271,7 +276,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:10 2023 by
+  Generated on Fri Aug 25 01:03:16 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

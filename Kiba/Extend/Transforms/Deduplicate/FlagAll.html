@@ -101,11 +101,17 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Adds a field (specified as <code>in_field</code>) containing &#39;y&#39; or &#39;n&#39;, indicating whether value of <code>on_field</code>
+    <p>rubocop:todo Layout/LineLength
+Adds a field (specified as <code>in_field</code>) containing &#39;y&#39; or &#39;n&#39;, indicating whether value of <code>on_field</code>
+rubocop:enable Layout/LineLength
   is a duplicate</p>
 
-<p>In contrast with <span class='object_link'><a href="Flag.html" title="Kiba::Extend::Transforms::Deduplicate::Flag (class)">Flag</a></span>, where the first instance of a value in <code>on_field</code> is always
+<p>rubocop:todo Layout/LineLength
+In contrast with <span class='object_link'><a href="Flag.html" title="Kiba::Extend::Transforms::Deduplicate::Flag (class)">Flag</a></span>, where the first instance of a value in <code>on_field</code> is always
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
   marked <code>n</code>, with <span class='object_link'><a href="" title="Kiba::Extend::Transforms::Deduplicate::FlagAll (class)">FlagAll</a></span>, <strong>all rows containing a duplicate value in <code>on_field</code> are
+rubocop:enable Layout/LineLength
   marked <code>y</code></strong>.</p>
 
 <p>Input table:</p>
@@ -120,8 +126,10 @@
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby">  <span class='ivar'>@deduper</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
-  <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Deduplicate.html" title="Kiba::Extend::Transforms::Deduplicate (module)">Deduplicate</a></span></span><span class='op'>::</span><span class='const'>FlagAll</span><span class='comma'>,</span> <span class='label'>on_field:</span> <span class='symbol'>:combined</span><span class='comma'>,</span> <span class='label'>in_field:</span> <span class='symbol'>:duplicate</span>
+<pre class="code ruby"><code class="ruby">  @deduper = {}
+rubocop:todo Layout/LineLength
+  transform Deduplicate::FlagAll, on_field: :combined, in_field: :duplicate
+rubocop:enable Layout/LineLength
 </code></pre>
 
 <p>Results in:</p>
@@ -211,7 +219,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A new instance of FlagAll.</p>
+    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength   use this transform.</p>
 </div></span>
   
 </li>
@@ -256,7 +264,9 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of FlagAll.</p>
+    <p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+  use this transform</p>
 
 
   </div>
@@ -307,8 +317,7 @@
       
       
         &mdash;
-        <div class='inline'><p>if false, <code>in_field</code> value for non-duplicate is left blank
-use this transform</p>
+        <div class='inline'><p>if false, <code>in_field</code> value for non-duplicate is left blank</p>
 </div>
       
     </li>
@@ -337,22 +346,22 @@ use this transform</p>
       <pre class="lines">
 
 
-50
-51
-52
-53
-54
-55
-56</pre>
+60
+61
+62
+63
+64
+65
+66</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/flag_all.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/flag_all.rb', line 60</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>on_field:</span><span class='comma'>,</span> <span class='label'>in_field:</span><span class='comma'>,</span> <span class='label'>explicit_no:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='ivar'>@on</span> <span class='op'>=</span> <span class='id identifier rubyid_on_field'>on_field</span>
   <span class='ivar'>@in_field</span> <span class='op'>=</span> <span class='id identifier rubyid_in_field'>in_field</span>
   <span class='ivar'>@deduper</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
-  <span class='ivar'>@no_val</span> <span class='op'>=</span> <span class='id identifier rubyid_explicit_no'>explicit_no</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>n</span><span class='tstring_end'>&#39;</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span>
+  <span class='ivar'>@no_val</span> <span class='op'>=</span> <span class='id identifier rubyid_explicit_no'>explicit_no</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>n</span><span class='tstring_end'>&quot;</span></span> <span class='op'>:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span>
   <span class='ivar'>@rows</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -406,21 +415,21 @@ use this transform</p>
       <pre class="lines">
 
 
-66
-67
-68
-69
-70
-71
-72</pre>
+76
+77
+78
+79
+80
+81
+82</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/flag_all.rb', line 66</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/flag_all.rb', line 76</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_close'>close</span>
   <span class='ivar'>@rows</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span>
     <span class='id identifier rubyid_val'>val</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_on'>on</span><span class='rbracket'>]</span>
-    <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_in_field'>in_field</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_deduper'>deduper</span><span class='lbracket'>[</span><span class='id identifier rubyid_val'>val</span><span class='rbracket'>]</span> <span class='op'>&gt;</span> <span class='int'>1</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>y</span><span class='tstring_end'>&#39;</span></span> <span class='op'>:</span> <span class='id identifier rubyid_no_val'>no_val</span>
+    <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_in_field'>in_field</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_deduper'>deduper</span><span class='lbracket'>[</span><span class='id identifier rubyid_val'>val</span><span class='rbracket'>]</span> <span class='op'>&gt;</span> <span class='int'>1</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>y</span><span class='tstring_end'>&quot;</span></span> <span class='op'>:</span> <span class='id identifier rubyid_no_val'>no_val</span>
     <span class='kw'>yield</span> <span class='id identifier rubyid_row'>row</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -483,15 +492,15 @@ use this transform</p>
       <pre class="lines">
 
 
-59
-60
-61
-62
-63
-64</pre>
+69
+70
+71
+72
+73
+74</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/flag_all.rb', line 59</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/flag_all.rb', line 69</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_val'>val</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_on'>on</span><span class='rbracket'>]</span>
@@ -509,7 +518,7 @@ use this transform</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:11 2023 by
+  Generated on Fri Aug 25 01:03:17 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

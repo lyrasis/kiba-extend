@@ -101,7 +101,9 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Takes multiple fields like :workphone, :homephone, :mobilephone and produces two new fields like :phone and :phonetype where :phonetype depends on the original field taken from</p>
+    <p>rubocop:todo Layout/LineLength
+Takes multiple fields like :workphone, :homephone, :mobilephone and produces two new fields like :phone and :phonetype where :phonetype depends on the original field taken from
+rubocop:enable Layout/LineLength</p>
 
 <h1 id="examples">Examples</h1>
 
@@ -128,12 +130,24 @@
 
 <p>Results in:</p>
 
-<pre class="code ruby"><code class="ruby">| work | home     | mobile | other | phone           | phonetype | name |
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+| work | home     | mobile | other | phone           | phonetype | name |
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
 |------+----------+--------+-------|-----------------+-----------+------|
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
 | 123  | 456      | 789    | 897   | 456^123^789^897 | h^b^m^    | Sue  |
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
 |      | 987;555  |        | 253   | 987^555^253     | h^h^      | Bob  |
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
 | nil  |          |        | nil   | nil             | nil       | Mae  |
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
 | 654  | 321      | 257    |       | 321^654^257     | h^b^m     | Sid  |
+rubocop:enable Layout/LineLength
 </code></pre>
 
 <p>Used in pipeline as:</p>
@@ -158,8 +172,10 @@
 <h2 id="notice">Notice</h2>
 
 <ul>
-<li>The number of values in <code>phone</code> and <code>phonetype</code> are kept even</li>
-<li>The data in the target fields is in the order of the keys in the <code>sourcefieldmap</code>: home, work, mobile, other.</li>
+<li>The number of values in <code>phone</code> and <code>phonetype</code> are kept even
+rubocop:todo Layout/LineLength</li>
+<li>The data in the target fields is in the order of the keys in the <code>sourcefieldmap</code>: home, work, mobile, other.
+rubocop:enable Layout/LineLength</li>
 </ul>
 
 
@@ -217,7 +233,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A new instance of FieldsToTypedFieldPair.</p>
+    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength.</p>
 </div></span>
   
 </li>
@@ -262,7 +278,18 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of FieldsToTypedFieldPair.</p>
+    <p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength</p>
 
 
   </div>
@@ -389,19 +416,21 @@
       <pre class="lines">
 
 
-79
-80
-81
-82
-83
-84
-85
-86</pre>
+107
+108
+109
+110
+111
+112
+113
+114
+115</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/collapse/fields_to_typed_field_pair.rb', line 79</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/collapse/fields_to_typed_field_pair.rb', line 107</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>sourcefieldmap:</span><span class='comma'>,</span> <span class='label'>datafield:</span><span class='comma'>,</span> <span class='label'>typefield:</span><span class='comma'>,</span> <span class='label'>targetsep:</span><span class='comma'>,</span> <span class='label'>sourcesep:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>delete_sources:</span> <span class='kw'>true</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>sourcefieldmap:</span><span class='comma'>,</span> <span class='label'>datafield:</span><span class='comma'>,</span> <span class='label'>typefield:</span><span class='comma'>,</span> <span class='label'>targetsep:</span><span class='comma'>,</span>
+  <span class='label'>sourcesep:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>delete_sources:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='ivar'>@map</span> <span class='op'>=</span> <span class='id identifier rubyid_sourcefieldmap'>sourcefieldmap</span>
   <span class='ivar'>@df</span> <span class='op'>=</span> <span class='id identifier rubyid_datafield'>datafield</span>
   <span class='ivar'>@tf</span> <span class='op'>=</span> <span class='id identifier rubyid_typefield'>typefield</span>
@@ -475,27 +504,27 @@
       <pre class="lines">
 
 
-89
-90
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100
-101
-102
-103
-104
-105
-106</pre>
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/collapse/fields_to_typed_field_pair.rb', line 89</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/collapse/fields_to_typed_field_pair.rb', line 118</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_data'>data</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -525,7 +554,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:13 2023 by
+  Generated on Fri Aug 25 01:03:18 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

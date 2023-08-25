@@ -103,13 +103,21 @@
   <div class="discussion">
     <p>Callable service object returning true/false</p>
 
-<p>If row does not contain the specified field at all, the result is always false.</p>
+<p>rubocop:todo Layout/LineLength
+If row does not contain the specified field at all, the result is always false.
+rubocop:enable Layout/LineLength</p>
 
-<p>A <code>nil</code> value for the specified field will match <code>&#39;&#39;</code> (matchmode: :plain) or <code>&#39;^$&#39;</code>
+<p>rubocop:todo Layout/LineLength
+A <code>nil</code> value for the specified field will match <code>&#39;&#39;</code> (matchmode: :plain) or <code>&#39;^$&#39;</code>
+rubocop:enable Layout/LineLength
   (matchmode: :regexp)</p>
 
-<p><code>matchmode: :plain</code> (the default) tests for a full match. You can test for partial matches with
+<p>rubocop:todo Layout/LineLength
+<code>matchmode: :plain</code> (the default) tests for a full match. You can test for partial matches with
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
   <code>matchmode: :regex</code>. Wrapping a regex match with <code>^</code> and <code>$</code> anchors will force a full match
+rubocop:enable Layout/LineLength
   in regex match mode.</p>
 
 <h2 id="examples">Examples</h2>
@@ -155,11 +163,19 @@
 {test: nil} =&gt; true,
 {test: &#39;&#39;} =&gt; true,
 {test: &#39;UNMAPPED&#39;} =&gt; false,
+rubocop:todo Layout/LineLength
 {test: &#39;%NULL%&#39;} =&gt; true, # gets converted to empty value prior to matching
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
 {test: &#39; %NULL% &#39;} =&gt; true # gets converted to empty value prior to matching
+rubocop:enable Layout/LineLength
 </code></pre>
 
+<p>rubocop:todo Layout/LineLength</p>
+
 <h3 id="with-params-field-test-match-treat_as_null-null-matchmode-regexp">With params: <code>field: :test, match: &#39;^$&#39;, treat_as_null: &#39;%NULL%&#39;, matchmode: :regexp</code></h3>
+
+<p>rubocop:enable Layout/LineLength</p>
 
 <pre class="code ruby"><code class="ruby">{foo: &#39;bar&#39;} =&gt; false,
 {test: nil} =&gt; true,
@@ -185,7 +201,11 @@
 {test: &#39;bar|baz&#39;} =&gt; false
 </code></pre>
 
+<p>rubocop:todo Layout/LineLength</p>
+
 <h3 id="with-params-field-test-match-matchmode-regex-delim">With params: <code>field: :test, match: &#39;^$&#39;, matchmode: :regex, delim: &#39;|&#39;</code></h3>
+
+<p>rubocop:enable Layout/LineLength</p>
 
 <pre class="code ruby"><code class="ruby">{test: &#39;foo|&#39;} =&gt; true,
 {test: &#39;foo||foo&#39;} =&gt; true,
@@ -197,7 +217,11 @@
 {test: &#39;%NULL%|foo&#39;} =&gt; false,
 </code></pre>
 
+<p>rubocop:todo Layout/LineLength</p>
+
 <h3 id="with-params-field-test-match-delim-treat_as_null-null">With params: <code>field: :test, match: &#39;&#39;, delim: &#39;|&#39;, treat_as_null: &#39;%NULL%&#39;</code></h3>
+
+<p>rubocop:enable Layout/LineLength</p>
 
 <pre class="code ruby"><code class="ruby">{test: &#39;foo|%NULL%|bar&#39;} =&gt; true,
 {test: &#39;foo||bar&#39;} =&gt; true,
@@ -205,7 +229,11 @@
 {test: &#39;foo|  |bar&#39;} =&gt; true
 </code></pre>
 
+<p>rubocop:todo Layout/LineLength</p>
+
 <h3 id="with-params-field-test-match-delim-treat_as_null-null-strip-false">With params: <code>field: :test, match: &#39;&#39;, delim: &#39;|&#39;, treat_as_null: &#39;%NULL%&#39;, strip: false</code></h3>
+
+<p>rubocop:enable Layout/LineLength</p>
 
 <pre class="code ruby"><code class="ruby">{test: &#39;foo|%NULL%|bar&#39;} =&gt; true,
 {test: &#39;foo||bar&#39;} =&gt; true,
@@ -222,7 +250,11 @@
 {test: &#39;Foo&#39;} =&gt; false,
 </code></pre>
 
+<p>rubocop:todo Layout/LineLength</p>
+
 <h3 id="with-params-field-test-match-fo-matchmode-regex-delim">With params: <code>field: :test, match: &#39;^fo+$&#39;, matchmode: :regex, delim: &#39;|&#39;</code></h3>
+
+<p>rubocop:enable Layout/LineLength</p>
 
 <pre class="code ruby"><code class="ruby">{test: &#39;foo&#39;} =&gt; true,
 {test: &#39;foo|bar&#39;} =&gt; true,
@@ -230,7 +262,11 @@
 {test: &#39;drink|food&#39;} =&gt; false
 </code></pre>
 
+<p>rubocop:todo Layout/LineLength</p>
+
 <h3 id="with-params-field-test-match-fo-matchmode-regex-delim-casesensitive-false">With params: <code>field: :test, match: &#39;^fo+&#39;, matchmode: :regex, delim: &#39;|&#39;, casesensitive: false</code></h3>
+
+<p>rubocop:enable Layout/LineLength</p>
 
 <pre class="code ruby"><code class="ruby">{test: &#39;foo&#39;} =&gt; true,
 {test: &#39;foo|bar&#39;} =&gt; true,
@@ -238,7 +274,11 @@
 {test: &#39;drink|food&#39;} =&gt; true
 </code></pre>
 
+<p>rubocop:todo Layout/LineLength</p>
+
 <h3 id="with-params-field-test-match-foo-delim-multimode-all">With params: <code>field: :test, match: &#39;Foo&#39;, delim: &#39;|&#39;, multimode: :all</code></h3>
+
+<p>rubocop:enable Layout/LineLength</p>
 
 <pre class="code ruby"><code class="ruby">{foo: &#39;Foo&#39;} =&gt; false,
 {test: nil} =&gt; false,
@@ -256,7 +296,11 @@
 {test: &#39;bar|baz&#39;} =&gt; false
 </code></pre>
 
+<p>rubocop:todo Layout/LineLength</p>
+
 <h3 id="with-params-field-test-match-foo-delim-multimode-allstrict">With params: <code>field: :test, match: &#39;Foo&#39;, delim: &#39;|&#39;, multimode: :allstrict</code></h3>
+
+<p>rubocop:enable Layout/LineLength</p>
 
 <pre class="code ruby"><code class="ruby">{foo: &#39;Foo&#39;} =&gt; false,
 {test: nil} =&gt; false,
@@ -336,7 +380,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A new instance of FieldValueMatcher.</p>
+    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength    split and the match is run against each resulting value rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength   if any value matches.</p>
 </div></span>
   
 </li>
@@ -359,7 +403,25 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of FieldValueMatcher.</p>
+    <p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+   split and the match is run against each resulting value
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+  if any value matches. If :all, empty values are ignored and will return true if all populated values
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+  match. If :allstrict, empty values are not ignored and will return false if <code>match</code> value does not
+rubocop:enable Layout/LineLength
+  match them (since 3.0.0)
+rubocop:todo Layout/LineLength</p>
 
 
   </div>
@@ -427,8 +489,7 @@
       
       
         &mdash;
-        <div class='inline'><p>if a String is given, triggers multivalue matching, where field value is
-split and the match is run against each resulting value</p>
+        <div class='inline'><p>if a String is given, triggers multivalue matching, where field value is</p>
 </div>
       
     </li>
@@ -496,10 +557,7 @@ split and the match is run against each resulting value</p>
       
       
         &mdash;
-        <div class='inline'><p>how a multivalue match is determined. If :any, result is true
-if any value matches. If :all, empty values are ignored and will return true if all populated values
-match. If :allstrict, empty values are not ignored and will return false if <code>match</code> value does not
-match them (since 3.0.0)</p>
+        <div class='inline'><p>how a multivalue match is determined. If :any, result is true</p>
 </div>
       
     </li>
@@ -513,31 +571,37 @@ match them (since 3.0.0)</p>
       <pre class="lines">
 
 
-207
-208
-209
-210
-211
-212
-213
-214
-215
-216
-217</pre>
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/field_value_matcher.rb', line 207</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/field_value_matcher.rb', line 250</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>field:</span><span class='comma'>,</span> <span class='label'>match:</span><span class='comma'>,</span> <span class='label'>matchmode:</span> <span class='symbol'>:plain</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>treat_as_null:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>casesensitive:</span> <span class='kw'>true</span><span class='comma'>,</span>
-               <span class='label'>strip:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>multimode:</span> <span class='symbol'>:any</span><span class='rparen'>)</span>
+  <span class='comment'># rubocop:enable Layout/LineLength
+</span>  <span class='label'>strip:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>multimode:</span> <span class='symbol'>:any</span><span class='rparen'>)</span>
   <span class='ivar'>@field</span> <span class='op'>=</span> <span class='id identifier rubyid_field'>field</span>
   <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_delim'>delim</span>
   <span class='ivar'>@casesensitive</span> <span class='op'>=</span> <span class='id identifier rubyid_casesensitive'>casesensitive</span>
   <span class='ivar'>@matchmode</span> <span class='op'>=</span> <span class='id identifier rubyid_matchmode'>matchmode</span>
   <span class='ivar'>@nullval</span> <span class='op'>=</span> <span class='id identifier rubyid_treat_as_null'>treat_as_null</span>
   <span class='ivar'>@strip</span> <span class='op'>=</span> <span class='id identifier rubyid_strip'>strip</span>
-  <span class='ivar'>@match</span> <span class='op'>=</span> <span class='id identifier rubyid_matchmode'>matchmode</span> <span class='op'>==</span> <span class='symbol'>:regexp</span> <span class='op'>?</span> <span class='id identifier rubyid_create_regexp_match'>create_regexp_match</span><span class='lparen'>(</span><span class='id identifier rubyid_match'>match</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='id identifier rubyid_create_plain_match'>create_plain_match</span><span class='lparen'>(</span><span class='id identifier rubyid_match'>match</span><span class='rparen'>)</span>
-  <span class='ivar'>@multimode</span> <span class='op'>=</span> <span class='id identifier rubyid_multimode'>multimode</span>
+  <span class='comment'># rubocop:todo Layout/LineLength
+</span>  <span class='ivar'>@match</span> <span class='op'>=</span> <span class='lparen'>(</span><span class='id identifier rubyid_matchmode'>matchmode</span> <span class='op'>==</span> <span class='symbol'>:regexp</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_create_regexp_match'>create_regexp_match</span><span class='lparen'>(</span><span class='id identifier rubyid_match'>match</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='id identifier rubyid_create_plain_match'>create_plain_match</span><span class='lparen'>(</span><span class='id identifier rubyid_match'>match</span><span class='rparen'>)</span>
+  <span class='comment'># rubocop:enable Layout/LineLength
+</span>  <span class='ivar'>@multimode</span> <span class='op'>=</span> <span class='id identifier rubyid_multimode'>multimode</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -590,15 +654,15 @@ match them (since 3.0.0)</p>
       <pre class="lines">
 
 
-220
-221
-222
-223
-224
-225</pre>
+266
+267
+268
+269
+270
+271</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/field_value_matcher.rb', line 220</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/field_value_matcher.rb', line 266</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='rparen'>)</span>
@@ -616,7 +680,7 @@ match them (since 3.0.0)</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:10 2023 by
+  Generated on Fri Aug 25 01:03:16 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

@@ -91,20 +91,45 @@
 
 <h2 id="choosing-between-similar-transforms">Choosing between similar transforms</h2>
 
+<p>rubocop:todo Layout/LineLength</p>
+
 <ul>
 <li><span class='object_link'><a href="Deduplicate/Flag.html" title="Kiba::Extend::Transforms::Deduplicate::Flag (class)">Flag</a></span> - Keeps all rows. The first row with a duplicate value is <strong>not</strong> marked as
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
 a duplicate. Subsequent rows with the same value are marked as duplicates. Use to non-destructively
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
 identify what will be kept/lost in a deduplication process, so you set up subsequent jobs to
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
 (a) report dropped non-unique rows; and (b) process the unique (non-duplicate) rows. Works one row
-at a time, so there is no performance implication due to source size.</li>
+rubocop:enable Layout/LineLength
+at a time, so there is no performance implication due to source size.
+rubocop:todo Layout/LineLength</li>
 <li><span class='object_link'><a href="Deduplicate/FlagAll.html" title="Kiba::Extend::Transforms::Deduplicate::FlagAll (class)">FlagAll</a></span> - Keeps all rows. All rows with a duplicate value are marked as duplicates.
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
 This is most helpful if you are wanting to review all duplicate values in a result together, or if
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
 you need to, in a subsequent step, filter out all values that are not unique. Holds all rows in
-memory while processing, so may be slow or even fail with very large source data.</li>
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+memory while processing, so may be slow or even fail with very large source data.
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength</li>
 <li><span class='object_link'><a href="Deduplicate/Table.html" title="Kiba::Extend::Transforms::Deduplicate::Table (class)">Table</a></span> - Destructive! Removes rows. Keeps only the first row of any rows with the same
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
 value in the specified field. Holds all rows in memory while processing, so may be slow or even fail
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
 with very large source data. Equivalent to running <span class='object_link'><a href="Deduplicate/Flag.html" title="Kiba::Extend::Transforms::Deduplicate::Flag (class)">Flag</a></span> followed by
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
 <span class='object_link'><a href="FilterRows/FieldEqualTo.html" title="Kiba::Extend::Transforms::FilterRows::FieldEqualTo (class)">FilterRows::FieldEqualTo</a></span> (to reject duplicate rows), which should be used if size of source data
+rubocop:enable Layout/LineLength
 is a problem.</li>
 </ul>
 
@@ -136,7 +161,7 @@ is a problem.</li>
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:09 2023 by
+  Generated on Fri Aug 25 01:03:15 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

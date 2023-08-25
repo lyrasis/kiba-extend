@@ -205,10 +205,6 @@
       <pre class="lines">
 
 
-32
-33
-34
-35
 36
 37
 38
@@ -218,10 +214,14 @@
 42
 43
 44
-45</pre>
+45
+46
+47
+48
+49</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/pre_job_task.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/pre_job_task.rb', line 36</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_configured?'>configured?</span><span class='lparen'>(</span><span class='symbol'>:pre_job_task_mode</span><span class='rparen'>)</span>
@@ -235,7 +235,7 @@
   <span class='id identifier rubyid_dirs_setting'>dirs_setting</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_pre_job_task_directories'><span class='object_link'><a href="../../Extend.html#pre_job_task_directories-class_method" title="Kiba::Extend.pre_job_task_directories (method)">pre_job_task_directories</a></span></span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_valid_dirs?'>valid_dirs?</span><span class='lparen'>(</span><span class='id identifier rubyid_dirs_setting'>dirs_setting</span><span class='rparen'>)</span>
 
-  <span class='ivar'>@dirs</span> <span class='op'>=</span> <span class='id identifier rubyid_dirs_setting'>dirs_setting</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_dir'>dir</span><span class='op'>|</span> <span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span><span class='lparen'>(</span><span class='id identifier rubyid_dir'>dir</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+  <span class='ivar'>@dirs</span> <span class='op'>=</span> <span class='id identifier rubyid_dirs_setting'>dirs_setting</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_dir'>dir</span><span class='op'>|</span> <span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span><span class='lparen'>(</span><span class='id identifier rubyid_dir'>dir</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -275,18 +275,22 @@
 16
 17
 18
-19</pre>
+19
+20
+21</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/pre_job_task.rb', line 8</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span>
   <span class='id identifier rubyid_use_setting'>use_setting</span> <span class='op'>=</span> <span class='symbol'>:pre_job_task_run</span>
-  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='id identifier rubyid_use_setting'>use_setting</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_use_setting'>use_setting</span><span class='rparen'>)</span>
-    
+  <span class='comment'># rubocop:todo Layout/LineLength
+</span>  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='id identifier rubyid_use_setting'>use_setting</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_use_setting'>use_setting</span><span class='rparen'>)</span>
+  <span class='comment'># rubocop:enable Layout/LineLength
+</span>
   <span class='id identifier rubyid_action'>action</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_pre_job_task_action'><span class='object_link'><a href="../../Extend.html#pre_job_task_action-class_method" title="Kiba::Extend.pre_job_task_action (method)">pre_job_task_action</a></span></span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_action'>action</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_valid_action?'>valid_action?</span><span class='lparen'>(</span><span class='id identifier rubyid_action'>action</span><span class='rparen'>)</span>
-  
+
   <span class='kw'>case</span> <span class='id identifier rubyid_action'>action</span>
   <span class='kw'>when</span> <span class='symbol'>:backup</span> <span class='kw'>then</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Utils.html" title="Kiba::Extend::Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="PreJobBackupTask.html" title="Kiba::Extend::Utils::PreJobBackupTask (class)">PreJobBackupTask</a></span></span><span class='period'>.</span><span class='id identifier rubyid_call'><span class='object_link'><a href="PreJobBackupTask.html#call-class_method" title="Kiba::Extend::Utils::PreJobBackupTask.call (method)">call</a></span></span>
   <span class='kw'>when</span> <span class='symbol'>:nuke</span> <span class='kw'>then</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Utils.html" title="Kiba::Extend::Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="PreJobNukeTask.html" title="Kiba::Extend::Utils::PreJobNukeTask (class)">PreJobNukeTask</a></span></span><span class='period'>.</span><span class='id identifier rubyid_call'><span class='object_link'><a href="PreJobNukeTask.html#call-class_method" title="Kiba::Extend::Utils::PreJobNukeTask.call (method)">call</a></span></span>
@@ -302,7 +306,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:09 2023 by
+  Generated on Fri Aug 25 01:03:16 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

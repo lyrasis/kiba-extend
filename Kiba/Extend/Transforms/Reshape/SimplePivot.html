@@ -104,17 +104,22 @@
     
   <div class="note notetag">
     <strong>Note:</strong>
-    <div class='inline'><p>This transformation runs in memory, so it may bog down or crash on extremely large
-data sources</p>
+    <div class='inline'><p>This transformation runs in memory, so it may bog down or crash on extremely large</p>
 </div>
   </div>
 
   <div class="note notetag">
     <strong>Note:</strong>
-    <div class='inline'><p>This transformation has some pretty strong assumptions and limitations that can be
-quite destructive, so examine the example below carefully.</p>
+    <div class='inline'><p>This transformation has some pretty strong assumptions and limitations that can be</p>
 </div>
   </div>
+
+<p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+  data sources
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+  quite destructive, so examine the example below carefully.</p>
 
 <h1 id="examples">Examples</h1>
 
@@ -156,18 +161,35 @@ quite destructive, so examine the example below carefully.</p>
 
 <p><strong>NOTE</strong></p>
 
+<p>rubocop:todo Layout/LineLength</p>
+
 <ul>
-<li>A new column has been created for each unique value in the <code>field_to_columns</code> field</li>
-<li>A single row has been generated for each unique value in the <code>field_to_rows</code> field</li>
-<li>The value from the <code>field_to_col_vals</code> field is in the appropriate column</li>
+<li>A new column has been created for each unique value in the <code>field_to_columns</code> field
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength</li>
+<li>A single row has been generated for each unique value in the <code>field_to_rows</code> field
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength</li>
+<li>The value from the <code>field_to_col_vals</code> field is in the appropriate column
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength</li>
 <li>When more than one row has the same values for <code>field_to_columns</code> and <code>field_to_rows</code>,
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
 the value of the last row processed&#39;s <code>field_to_col_vals</code> will be used (we get Fred, Corp.
-instead of Fred, Inc.</li>
+rubocop:enable Layout/LineLength
+instead of Fred, Inc.
+rubocop:todo Layout/LineLength</li>
 <li>Only data from the three involved fields is kept! Note that the <code>unrelated</code> field from
-the input has been lost</li>
+rubocop:enable Layout/LineLength
+the input has been lost
+rubocop:todo Layout/LineLength</li>
 <li>Rows lacking a value for any of the three fields will be skipped, in terms of populating
-the dynamically created column (see the Ghost examples)</li>
+rubocop:enable Layout/LineLength
+the dynamically created column (see the Ghost examples)
+rubocop:todo Layout/LineLength</li>
 <li>However, a dynamically created column will still be created even if it is given no data
+rubocop:enable Layout/LineLength
 (See issues example)</li>
 </ul>
 
@@ -233,7 +255,7 @@ the dynamically created column (see the Ghost examples)</li>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A new instance of SimplePivot.</p>
+    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength   values in this field) rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength.</p>
 </div></span>
   
 </li>
@@ -278,7 +300,13 @@ the dynamically created column (see the Ghost examples)</li>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of SimplePivot.</p>
+    <p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+  values in this field)
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength</p>
 
 
   </div>
@@ -312,8 +340,7 @@ the dynamically created column (see the Ghost examples)</li>
       
       
         &mdash;
-        <div class='inline'><p>field whose values will generate the result rows (data is collapsed on
-values in this field)</p>
+        <div class='inline'><p>field whose values will generate the result rows (data is collapsed on</p>
 </div>
       
     </li>
@@ -342,16 +369,16 @@ values in this field)</p>
       <pre class="lines">
 
 
-74
-75
-76
-77
-78
-79
-80</pre>
+102
+103
+104
+105
+106
+107
+108</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/reshape/simple_pivot.rb', line 74</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/reshape/simple_pivot.rb', line 102</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>field_to_columns:</span><span class='comma'>,</span> <span class='label'>field_to_rows:</span><span class='comma'>,</span> <span class='label'>field_to_col_vals:</span><span class='rparen'>)</span>
   <span class='ivar'>@col_field</span> <span class='op'>=</span> <span class='id identifier rubyid_field_to_columns'>field_to_columns</span>
@@ -387,25 +414,29 @@ values in this field)</p>
       <pre class="lines">
 
 
-88
-89
-90
-91
-92
-93
-94
-95
-96</pre>
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/reshape/simple_pivot.rb', line 88</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/reshape/simple_pivot.rb', line 116</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_close'>close</span>
   <span class='ivar'>@rows</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_fieldval'>fieldval</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='op'>|</span>
     <span class='id identifier rubyid_row'>row</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='ivar'>@row_field</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_fieldval'>fieldval</span><span class='rbrace'>}</span>
     <span class='id identifier rubyid_row'>row</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_row_fields'>row_fields</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
-    <span class='ivar'>@columns</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span> <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>nil</span> <span class='kw'>unless</span> <span class='id identifier rubyid_row_fields'>row_fields</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+    <span class='ivar'>@columns</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span>
+      <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>nil</span> <span class='kw'>unless</span> <span class='id identifier rubyid_row_fields'>row_fields</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='rparen'>)</span>
+    <span class='rbrace'>}</span>
     <span class='kw'>yield</span> <span class='id identifier rubyid_row'>row</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -453,13 +484,13 @@ values in this field)</p>
       <pre class="lines">
 
 
-83
-84
-85
-86</pre>
+111
+112
+113
+114</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/reshape/simple_pivot.rb', line 83</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/reshape/simple_pivot.rb', line 111</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_gather_column_field'>gather_column_field</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
@@ -475,7 +506,7 @@ values in this field)</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:11 2023 by
+  Generated on Fri Aug 25 01:03:17 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

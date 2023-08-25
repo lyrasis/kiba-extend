@@ -108,7 +108,9 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Value object representing a file registered in a FileRegistry that is being
+    <p>rubocop:todo Layout/LineLength
+Value object representing a file registered in a FileRegistry that is being
+rubocop:enable Layout/LineLength
   called into another job as a lookup table</p>
 
 <p>Assumes this file will be used to build a Lookup</p>
@@ -153,7 +155,7 @@
   <h2>Instance Attribute Summary</h2>
   
   <h3 class="inherited">Attributes inherited from <span class='object_link'><a href="RegisteredFile.html" title="Kiba::Extend::Registry::RegisteredFile (class)">RegisteredFile</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="RegisteredFile.html#data-instance_method" title="Kiba::Extend::Registry::RegisteredFile#data (method)">#data</a></span>, <span class='object_link'><a href="RegisteredFile.html#desc-instance_method" title="Kiba::Extend::Registry::RegisteredFile#desc (method)">#desc</a></span>, <span class='object_link'><a href="RegisteredFile.html#dest_class-instance_method" title="Kiba::Extend::Registry::RegisteredFile#dest_class (method)">#dest_class</a></span>, <span class='object_link'><a href="RegisteredFile.html#dest_opt-instance_method" title="Kiba::Extend::Registry::RegisteredFile#dest_opt (method)">#dest_opt</a></span>, <span class='object_link'><a href="RegisteredFile.html#dest_special_opts-instance_method" title="Kiba::Extend::Registry::RegisteredFile#dest_special_opts (method)">#dest_special_opts</a></span>, <span class='object_link'><a href="RegisteredFile.html#key-instance_method" title="Kiba::Extend::Registry::RegisteredFile#key (method)">#key</a></span>, <span class='object_link'><a href="RegisteredFile.html#lookup_on-instance_method" title="Kiba::Extend::Registry::RegisteredFile#lookup_on (method)">#lookup_on</a></span>, <span class='object_link'><a href="RegisteredFile.html#path-instance_method" title="Kiba::Extend::Registry::RegisteredFile#path (method)">#path</a></span>, <span class='object_link'><a href="RegisteredFile.html#src_class-instance_method" title="Kiba::Extend::Registry::RegisteredFile#src_class (method)">#src_class</a></span>, <span class='object_link'><a href="RegisteredFile.html#src_opt-instance_method" title="Kiba::Extend::Registry::RegisteredFile#src_opt (method)">#src_opt</a></span>, <span class='object_link'><a href="RegisteredFile.html#supplied-instance_method" title="Kiba::Extend::Registry::RegisteredFile#supplied (method)">#supplied</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="RegisteredFile.html#data-instance_method" title="Kiba::Extend::Registry::RegisteredFile#data (method)">#data</a></span>, <span class='object_link'><a href="RegisteredFile.html#desc-instance_method" title="Kiba::Extend::Registry::RegisteredFile#desc (method)">#desc</a></span>, <span class='object_link'><a href="RegisteredFile.html#dest_class-instance_method" title="Kiba::Extend::Registry::RegisteredFile#dest_class (method)">#dest_class</a></span>, <span class='object_link'><a href="RegisteredFile.html#dest_opt-instance_method" title="Kiba::Extend::Registry::RegisteredFile#dest_opt (method)">#dest_opt</a></span>, <span class='object_link'><a href="RegisteredFile.html#dest_special_opts-instance_method" title="Kiba::Extend::Registry::RegisteredFile#dest_special_opts (method)">#dest_special_opts</a></span>, <span class='object_link'><a href="RegisteredFile.html#key-instance_method" title="Kiba::Extend::Registry::RegisteredFile#key (method)">#key</a></span>, <span class='object_link'><a href="RegisteredFile.html#lookup_on-instance_method" title="Kiba::Extend::Registry::RegisteredFile#lookup_on (method)">#lookup_on</a></span>, <span class='object_link'><a href="RegisteredFile.html#path-instance_method" title="Kiba::Extend::Registry::RegisteredFile#path (method)">#path</a></span>, <span class='object_link'><a href="RegisteredFile.html#src_opt-instance_method" title="Kiba::Extend::Registry::RegisteredFile#src_opt (method)">#src_opt</a></span>, <span class='object_link'><a href="RegisteredFile.html#supplied-instance_method" title="Kiba::Extend::Registry::RegisteredFile#supplied (method)">#supplied</a></span></p>
 
 
   
@@ -254,7 +256,12 @@
   
   
   
-  <div id="constructor_details" class="method_details_list">
+  
+  
+  
+  <h3 class="inherited">Methods inherited from <span class='object_link'><a href="RegisteredFile.html" title="Kiba::Extend::Registry::RegisteredFile (class)">RegisteredFile</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="RegisteredFile.html#src_class-instance_method" title="Kiba::Extend::Registry::RegisteredFile#src_class (method)">#src_class</a></span></p>
+<div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
     <div class="method_details first">
@@ -331,19 +338,19 @@
       <pre class="lines">
 
 
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55</pre>
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/registered_lookup.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/registered_lookup.rb', line 58</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>key:</span><span class='comma'>,</span> <span class='label'>data:</span><span class='rparen'>)</span>
   <span class='kw'>super</span>
@@ -420,15 +427,15 @@
       <pre class="lines">
 
 
-59
-60
-61</pre>
+71
+72
+73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/registered_lookup.rb', line 59</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/registered_lookup.rb', line 71</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_args'>args</span>
-  <span class='lbrace'>{</span> <span class='label'>file:</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='label'>keycolumn:</span> <span class='id identifier rubyid_lookup_on'>lookup_on</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
+  <span class='lbrace'>{</span><span class='label'>file:</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='label'>keycolumn:</span> <span class='id identifier rubyid_lookup_on'>lookup_on</span><span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -474,12 +481,12 @@
       <pre class="lines">
 
 
-63
-64
-65</pre>
+75
+76
+77</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/registered_lookup.rb', line 63</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/registered_lookup.rb', line 75</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_klass'>klass</span>
   <span class='id identifier rubyid_src_class'>src_class</span>
@@ -494,7 +501,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:10 2023 by
+  Generated on Fri Aug 25 01:03:16 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

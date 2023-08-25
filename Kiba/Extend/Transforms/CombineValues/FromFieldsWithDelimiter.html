@@ -122,6 +122,35 @@
 <p>Blank/nil values are dropped. If <code>prepend_source_field_name = true</code>,
   names of blank/nil fields are omitted</p>
 
+<p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+  # Used in pipeline as:
+  # transform CombineValues::FromFieldsWithDelimiter,
+  #  sources: %i[name sex],
+  #  target: :name,
+  #  delim: &quot;, &quot;
+  xform = CombineValues::FromFieldsWithDelimiter.new(
+    sources: %i[name sex],
+    target: :name,
+    delim: &quot;, &quot;
+  )
+  input = [
+    &quot;Weddy&quot;, sex: &quot;m&quot;, source: &quot;adopted&quot;,
+    &quot;hatched&quot;, sex: &quot;f&quot;, name: &quot;Niblet&quot;,
+    &quot;&quot;, sex: &quot;m&quot;, name: &quot;Tiresias&quot;,
+    &quot;Keet&quot;, sex: nil, source: &quot;hatched&quot;,
+    &quot;&quot;, sex: nil, source: &quot;na&quot;
+  ]
+  result = input.map{ |row| xform.process(row) }
+  expected = [
+    &quot;Weddy, m&quot;, source: &quot;adopted&quot;,
+    &quot;Niblet, f&quot;, source: &quot;hatched&quot;,
+    &quot;Tiresias, m&quot;, source: &quot;&quot;,
+    &quot;Keet&quot;, source: &quot;hatched&quot;,
+    nil, source: &quot;na&quot;
+  ]
+  expect(result).to eq(expected)</p>
+
 
   </div>
 </div>
@@ -156,32 +185,7 @@
         <p class="example_title"><div class='inline'><p>With custom sources, target (with same name as a source field), and delim</p>
 </div></p>
       
-      <pre class="example code"><code><span class='comment'># Used in pipeline as:
-</span><span class='comment'># transform CombineValues::FromFieldsWithDelimiter,
-</span><span class='comment'>#  sources: %i[name sex],
-</span><span class='comment'>#  target: :name,
-</span><span class='comment'>#  delim: &quot;, &quot;
-</span><span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../CombineValues.html" title="Kiba::Extend::Transforms::CombineValues (module)">CombineValues</a></span></span><span class='op'>::</span><span class='const'>FromFieldsWithDelimiter</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::CombineValues::FromFieldsWithDelimiter#initialize (method)">new</a></span></span><span class='lparen'>(</span>
-  <span class='label'>sources:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>name</span><span class='words_sep'> </span><span class='tstring_content'>sex</span><span class='tstring_end'>]</span></span><span class='comma'>,</span>
-  <span class='label'>target:</span> <span class='symbol'>:name</span><span class='comma'>,</span>
-  <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>, </span><span class='tstring_end'>&quot;</span></span>
-<span class='rparen'>)</span>
-<span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='lbracket'>[</span>
-  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Weddy</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>sex:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>m</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>source:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>adopted</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
-  <span class='lbrace'>{</span><span class='label'>source:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hatched</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>sex:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>f</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Niblet</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
-  <span class='lbrace'>{</span><span class='label'>source:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>sex:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>m</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Tiresias</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
-  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Keet</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>sex:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>source:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hatched</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
-  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>sex:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>source:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>na</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-<span class='rbracket'>]</span>
-<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
-<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='lbracket'>[</span>
-  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Weddy, m</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>source:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>adopted</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
-  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Niblet, f</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>source:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hatched</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
-  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Tiresias, m</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>source:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
-  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Keet</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>source:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>hatched</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
-  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>source:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>na</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-<span class='rbracket'>]</span>
-<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+      <pre class="example code"><code></code></pre>
     
   </div>
 
@@ -415,8 +419,6 @@ field is not deleted.</p>
       <pre class="lines">
 
 
-86
-87
 88
 89
 90
@@ -427,13 +429,15 @@ field is not deleted.</p>
 95
 96
 97
-98</pre>
+98
+99
+100</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/combine_values/from_fields_with_delimiter.rb', line 86</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/combine_values/from_fields_with_delimiter.rb', line 88</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>sources:</span> <span class='symbol'>:all</span><span class='comma'>,</span> <span class='label'>target:</span> <span class='symbol'>:index</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='kw'>nil</span><span class='comma'>,</span>
-               <span class='label'>prepend_source_field_name:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>delete_sources:</span> <span class='kw'>true</span><span class='rparen'>)</span>
+  <span class='label'>prepend_source_field_name:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>delete_sources:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_sources'>sources</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
   <span class='ivar'>@target</span> <span class='op'>=</span> <span class='id identifier rubyid_target'>target</span>
   <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_usedelim'>usedelim</span><span class='lparen'>(</span>
@@ -482,8 +486,6 @@ field is not deleted.</p>
       <pre class="lines">
 
 
-101
-102
 103
 104
 105
@@ -501,10 +503,12 @@ field is not deleted.</p>
 117
 118
 119
-120</pre>
+120
+121
+122</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/combine_values/from_fields_with_delimiter.rb', line 101</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/combine_values/from_fields_with_delimiter.rb', line 103</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_finalize_fields'>finalize_fields</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_fields_set'>fields_set</span>
@@ -536,7 +540,7 @@ field is not deleted.</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:13 2023 by
+  Generated on Fri Aug 25 01:03:19 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

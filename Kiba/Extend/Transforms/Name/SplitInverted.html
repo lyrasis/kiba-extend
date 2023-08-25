@@ -104,16 +104,23 @@
     
   <div class="note notetag">
     <strong>Note:</strong>
-    <div class='inline'><p>Makes many egregiously oversimplified Western assumptions. Do not trust it to split all names
-properly in all cases. Handles only the most common English language name patterns.</p>
+    <div class='inline'><p>Makes many egregiously oversimplified Western assumptions. Do not trust it to split all names</p>
 </div>
   </div>
 
 <p>Splits an inverted name form into name parts.</p>
 
+<p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+  properly in all cases. Handles only the most common English language name patterns.
+rubocop:enable Layout/LineLength</p>
+
 <h1 id="examples">Examples</h1>
 
-<p>In these examples, you can see the inverted name in the <code>:iname</code> field of each row.</p>
+<p>rubocop:todo Layout/LineLength
+In these examples, you can see the inverted name in the <code>:iname</code> field of each row.
+rubocop:enable Layout/LineLength</p>
 
 <p>Used in pipeline as:</p>
 
@@ -122,30 +129,78 @@ properly in all cases. Handles only the most common English language name patter
 
 <p>Results in:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, Robert</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Robert</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, Robert J.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Robert</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>J.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith-Jones, Robert J.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Robert</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>J.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith-Jones</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, Robert James</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Robert</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>James</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, R. James</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>R.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>James</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, Robert (Bob)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Robert</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>(Bob)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, Robert James (Bob)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Robert</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>James (Bob)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, R. J.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>R.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>J.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, R.J.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>R.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>J.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, R J</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>R</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>J</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, RJ</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>R</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>J</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, RJR</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>R</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>JR</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, RJRR</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>RJRR</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, R.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>R.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, Robert, Jr.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Robert</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Jr.</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, R.J., Sr.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>R.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>J.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Sr.</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, R. J., Sr.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>R.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>J.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Sr.</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>R.J. Smith &amp; Co.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, James, Robert &amp; Co.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>James</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Robert &amp; Co.</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Robert \&quot;Bob\&quot; Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='rbrace'>}</span>
-<span class='lbrace'>{</span><span class='symbol'>:foo</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bar</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='rbrace'>}</span>
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, Robert&quot;, :firstname=&gt;&quot;Robert&quot;, :middlename=&gt;nil, :lastname=&gt;&quot;Smith&quot;, :suffix=&gt;nil}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, Robert J.&quot;, :firstname=&gt;&quot;Robert&quot;, :middlename=&gt;&quot;J.&quot;, :lastname=&gt;&quot;Smith&quot;, :suffix=&gt;nil}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith-Jones, Robert J.&quot;, :firstname=&gt;&quot;Robert&quot;, :middlename=&gt;&quot;J.&quot;, :lastname=&gt;&quot;Smith-Jones&quot;, :suffix=&gt;nil}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, Robert James&quot;, :firstname=&gt;&quot;Robert&quot;, :middlename=&gt;&quot;James&quot;, :lastname=&gt;&quot;Smith&quot;, :suffix=&gt;nil}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, R. James&quot;, :firstname=&gt;&quot;R.&quot;, :middlename=&gt;&quot;James&quot;, :lastname=&gt;&quot;Smith&quot;, :suffix=&gt;nil}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, Robert (Bob)&quot;, :firstname=&gt;&quot;Robert&quot;, :middlename=&gt;&quot;(Bob)&quot;, :lastname=&gt;&quot;Smith&quot;, :suffix=&gt;nil}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, Robert James (Bob)&quot;, :firstname=&gt;&quot;Robert&quot;, :middlename=&gt;&quot;James (Bob)&quot;, :lastname=&gt;&quot;Smith&quot;, :suffix=&gt;nil}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, R. J.&quot;, :firstname=&gt;&quot;R.&quot;, :middlename=&gt;&quot;J.&quot;, :lastname=&gt;&quot;Smith&quot;, :suffix=&gt;nil}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, R.J.&quot;, :firstname=&gt;&quot;R.&quot;, :middlename=&gt;&quot;J.&quot;, :lastname=&gt;&quot;Smith&quot;, :suffix=&gt;nil}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, R J&quot;, :firstname=&gt;&quot;R&quot;, :middlename=&gt;&quot;J&quot;, :lastname=&gt;&quot;Smith&quot;, :suffix=&gt;nil}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, RJ&quot;, :firstname=&gt;&quot;R&quot;, :middlename=&gt;&quot;J&quot;, :lastname=&gt;&quot;Smith&quot;, :suffix=&gt;nil}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, RJR&quot;, :firstname=&gt;&quot;R&quot;, :middlename=&gt;&quot;JR&quot;, :lastname=&gt;&quot;Smith&quot;, :suffix=&gt;nil}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, RJRR&quot;, :firstname=&gt;&quot;RJRR&quot;, :middlename=&gt;nil, :lastname=&gt;&quot;Smith&quot;, :suffix=&gt;nil}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, R.&quot;, :firstname=&gt;&quot;R.&quot;, :middlename=&gt;nil, :lastname=&gt;&quot;Smith&quot;, :suffix=&gt;nil}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith&quot;, :firstname=&gt;nil, :middlename=&gt;nil, :lastname=&gt;nil, :suffix=&gt;nil}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, Robert, Jr.&quot;, :firstname=&gt;&quot;Robert&quot;, :middlename=&gt;nil, :lastname=&gt;&quot;Smith&quot;, :suffix=&gt;&quot;Jr.&quot;}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, R.J., Sr.&quot;, :firstname=&gt;&quot;R.&quot;, :middlename=&gt;&quot;J.&quot;, :lastname=&gt;&quot;Smith&quot;, :suffix=&gt;&quot;Sr.&quot;}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, R. J., Sr.&quot;, :firstname=&gt;&quot;R.&quot;, :middlename=&gt;&quot;J.&quot;, :lastname=&gt;&quot;Smith&quot;, :suffix=&gt;&quot;Sr.&quot;}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;R.J. Smith &amp; Co.&quot;, :firstname=&gt;nil, :middlename=&gt;nil, :lastname=&gt;nil, :suffix=&gt;nil}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, James, Robert &amp; Co.&quot;, :firstname=&gt;&quot;James&quot;, :middlename=&gt;nil, :lastname=&gt;&quot;Smith&quot;, :suffix=&gt;&quot;Robert &amp; Co.&quot;}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Robert \&quot;Bob\&quot; Smith&quot;, :firstname=&gt;nil, :middlename=&gt;nil, :lastname=&gt;nil, :suffix=&gt;nil}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;&quot;, :firstname=&gt;nil, :middlename=&gt;nil, :lastname=&gt;nil, :suffix=&gt;nil}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:iname=&gt;nil, :firstname=&gt;nil, :middlename=&gt;nil, :lastname=&gt;nil, :suffix=&gt;nil}
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+{:foo=&gt;&quot;bar&quot;, :firstname=&gt;nil, :middlename=&gt;nil, :lastname=&gt;nil, :suffix=&gt;nil}
+rubocop:enable Layout/LineLength
 </code></pre>
 
 <p>Used in pipeline as:</p>
@@ -155,7 +210,9 @@ properly in all cases. Handles only the most common English language name patter
 
 <p>Results in:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith, R.J., Sr.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:f</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>R.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:l</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:m</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>J.</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:s</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Sr.</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith, R.J., Sr.&quot;, :f=&gt;&quot;R.&quot;, :l=&gt;&quot;Smith&quot;, :m=&gt;&quot;J.&quot;, :s=&gt;&quot;Sr.&quot;}
+rubocop:enable Layout/LineLength
 </code></pre>
 
 <p>Used in pipeline as:</p>
@@ -165,7 +222,9 @@ properly in all cases. Handles only the most common English language name patter
 
 <p>Results in:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='lbrace'>{</span><span class='symbol'>:iname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:firstname</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:lastname</span><span class='op'>=&gt;</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Smith</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='symbol'>:middlename</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='comma'>,</span> <span class='symbol'>:suffix</span><span class='op'>=&gt;</span><span class='kw'>nil</span><span class='rbrace'>}</span>
+<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
+{:iname=&gt;&quot;Smith&quot;, :firstname=&gt;nil, :lastname=&gt;&quot;Smith&quot;, :middlename=&gt;nil, :suffix=&gt;nil}
+rubocop:enable Layout/LineLength
 </code></pre>
 
 
@@ -207,7 +266,7 @@ properly in all cases. Handles only the most common English language name patter
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(source:, targets: %i[firstname middlename lastname suffix], fallback: :all_nil)  &#x21d2; SplitInverted </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(source:, targets: %i[firstname middlename lastname               suffix], fallback: :all_nil)  &#x21d2; SplitInverted </a>
     
 
     
@@ -223,7 +282,7 @@ properly in all cases. Handles only the most common English language name patter
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A new instance of SplitInverted.</p>
+    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength   field for first/given name; field for middle name(s); field for family/sur/last name; rubocop:enable Layout/LineLength   field for suffix/name additions rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength   will copy the source value into that field.</p>
 </div></span>
   
 </li>
@@ -260,7 +319,8 @@ properly in all cases. Handles only the most common English language name patter
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(source:, targets: %i[firstname middlename lastname suffix], fallback: :all_nil)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Name::SplitInverted (class)">SplitInverted</a></span></tt> 
+    #<strong>initialize</strong>(source:, targets: %i[firstname middlename lastname
+              suffix], fallback: :all_nil)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Name::SplitInverted (class)">SplitInverted</a></span></tt> 
   
 
   
@@ -268,7 +328,15 @@ properly in all cases. Handles only the most common English language name patter
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of SplitInverted.</p>
+    <p>rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+rubocop:todo Layout/LineLength
+  field for first/given name; field for middle name(s); field for family/sur/last name;
+rubocop:enable Layout/LineLength
+  field for suffix/name additions
+rubocop:todo Layout/LineLength
+rubocop:enable Layout/LineLength
+  will copy the source value into that field</p>
 
 
   </div>
@@ -300,13 +368,12 @@ properly in all cases. Handles only the most common English language name patter
         <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>%i[firstname middlename lastname suffix]</tt>)</em>
+        <em class="default">(defaults to: <tt>%i[firstname middlename lastname
+              suffix]</tt>)</em>
       
       
         &mdash;
-        <div class='inline'><p>field names for the split name parts. Must be provided in order:
-field for first/given name; field for middle name(s); field for family/sur/last name;
-field for suffix/name additions</p>
+        <div class='inline'><p>field names for the split name parts. Must be provided in order:</p>
 </div>
       
     </li>
@@ -323,8 +390,7 @@ field for suffix/name additions</p>
       
       
         &mdash;
-        <div class='inline'><p>:all_nil will set all targets to nil. Given the name of one of the targets,
-will copy the source value into that field</p>
+        <div class='inline'><p>:all_nil will set all targets to nil. Given the name of one of the targets,</p>
 </div>
       
     </li>
@@ -353,23 +419,28 @@ will copy the source value into that field</p>
       <pre class="lines">
 
 
-81
-82
-83
-84
-85
-86
-87
-88
-89
-90
-91
-92</pre>
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/name/split_inverted.rb', line 81</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/name/split_inverted.rb', line 145</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>source:</span><span class='comma'>,</span> <span class='label'>targets:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>firstname</span><span class='words_sep'> </span><span class='tstring_content'>middlename</span><span class='words_sep'> </span><span class='tstring_content'>lastname</span><span class='words_sep'> </span><span class='tstring_content'>suffix</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>fallback:</span> <span class='symbol'>:all_nil</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>source:</span><span class='comma'>,</span>
+  <span class='label'>targets:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>firstname</span><span class='words_sep'> </span><span class='tstring_content'>middlename</span><span class='words_sep'> </span><span class='tstring_content'>lastname</span><span class='words_sep'>
+    </span><span class='tstring_content'>suffix</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>fallback:</span> <span class='symbol'>:all_nil</span><span class='rparen'>)</span>
   <span class='ivar'>@source</span> <span class='op'>=</span> <span class='id identifier rubyid_source'>source</span>
   <span class='ivar'>@targets</span> <span class='op'>=</span> <span class='id identifier rubyid_targets'>targets</span>
   <span class='ivar'>@firstname</span> <span class='op'>=</span> <span class='id identifier rubyid_targets'>targets</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
@@ -378,7 +449,8 @@ will copy the source value into that field</p>
   <span class='ivar'>@suffix</span> <span class='op'>=</span> <span class='id identifier rubyid_targets'>targets</span><span class='lbracket'>[</span><span class='int'>3</span><span class='rbracket'>]</span>
   <span class='ivar'>@fallback</span> <span class='op'>=</span> <span class='id identifier rubyid_fallback'>fallback</span>
   <span class='kw'>unless</span> <span class='id identifier rubyid_fallback'>fallback</span> <span class='op'>==</span> <span class='symbol'>:all_nil</span> <span class='op'>||</span> <span class='id identifier rubyid_targets'>targets</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span><span class='lparen'>(</span><span class='id identifier rubyid_fallback'>fallback</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>fallback must equal :all_nil or one of the target field names</span><span class='tstring_end'>&#39;</span></span>
+    <span class='id identifier rubyid_raise'>raise</span> <span class='const'>ArgumentError</span><span class='comma'>,</span>
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>fallback must equal :all_nil or one of the target field names</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -447,22 +519,22 @@ will copy the source value into that field</p>
       <pre class="lines">
 
 
-95
-96
-97
-98
-99
-100
-101
-102
-103</pre>
+162
+163
+164
+165
+166
+167
+168
+169
+170</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/name/split_inverted.rb', line 95</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/name/split_inverted.rb', line 162</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_create_nil_fields'>create_nil_fields</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_inverted'>inverted</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_source'>source</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_inverted'>inverted</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_source'>source</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_splittable?'>splittable?</span><span class='lparen'>(</span><span class='id identifier rubyid_inverted'>inverted</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='id identifier rubyid_inverted'>inverted</span><span class='comma'>,</span> <span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='kw'>else</span>
@@ -479,7 +551,7 @@ will copy the source value into that field</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:11 2023 by
+  Generated on Fri Aug 25 01:03:17 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

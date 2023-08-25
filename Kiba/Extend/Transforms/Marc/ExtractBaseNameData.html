@@ -155,7 +155,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(name_type:, id_target: Kiba::Extend::Marc.id_target_field, name_target: Kiba::Extend::Marc.name_target, role_term_target: Kiba::Extend::Marc.role_term_target, role_code_target: Kiba::Extend::Marc.role_code_target, field_tag_target: Kiba::Extend::Marc.field_tag_target, name_type_target: Kiba::Extend::Marc.name_type_target, name_fields:, name_subfields:, role_code_subfields:, role_term_subfields:, delim: Kiba::Extend.delim)  &#x21d2; ExtractBaseNameData </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(name_type:, name_fields:, name_subfields:, role_code_subfields:, role_term_subfields:, id_target: Kiba::Extend::Marc.id_target_field, name_target: Kiba::Extend::Marc.name_target, role_term_target: Kiba::Extend::Marc.role_term_target, role_code_target: Kiba::Extend::Marc.role_code_target, field_tag_target: Kiba::Extend::Marc.field_tag_target, name_type_target: Kiba::Extend::Marc.name_type_target, delim: Kiba::Extend.delim)  &#x21d2; ExtractBaseNameData </a>
     
 
     
@@ -219,7 +219,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(name_type:, id_target: Kiba::Extend::Marc.id_target_field, name_target: Kiba::Extend::Marc.name_target, role_term_target: Kiba::Extend::Marc.role_term_target, role_code_target: Kiba::Extend::Marc.role_code_target, field_tag_target: Kiba::Extend::Marc.field_tag_target, name_type_target: Kiba::Extend::Marc.name_type_target, name_fields:, name_subfields:, role_code_subfields:, role_term_subfields:, delim: Kiba::Extend.delim)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Marc::ExtractBaseNameData (class)">ExtractBaseNameData</a></span></tt> 
+    #<strong>initialize</strong>(name_type:, name_fields:, name_subfields:, role_code_subfields:, role_term_subfields:, id_target: Kiba::Extend::Marc.id_target_field, name_target: Kiba::Extend::Marc.name_target, role_term_target: Kiba::Extend::Marc.role_term_target, role_code_target: Kiba::Extend::Marc.role_code_target, field_tag_target: Kiba::Extend::Marc.field_tag_target, name_type_target: Kiba::Extend::Marc.name_type_target, delim: Kiba::Extend.delim)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Marc::ExtractBaseNameData (class)">ExtractBaseNameData</a></span></tt> 
   
 
   
@@ -489,23 +489,21 @@ role term value</p>
 57
 58
 59
-60
-61</pre>
+60</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/marc/extract_base_name_data.rb', line 35</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>name_type:</span><span class='comma'>,</span>
-               <span class='label'>id_target:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Marc.html" title="Kiba::Extend::Marc (module)">Marc</a></span></span><span class='period'>.</span><span class='id identifier rubyid_id_target_field'><span class='object_link'><a href="../../Marc.html#id_target_field-class_method" title="Kiba::Extend::Marc.id_target_field (method)">id_target_field</a></span></span><span class='comma'>,</span>
-               <span class='label'>name_target:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Marc.html" title="Kiba::Extend::Marc (module)">Marc</a></span></span><span class='period'>.</span><span class='id identifier rubyid_name_target'><span class='object_link'><a href="../../Marc.html#name_target-class_method" title="Kiba::Extend::Marc.name_target (method)">name_target</a></span></span><span class='comma'>,</span>
-               <span class='label'>role_term_target:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Marc.html" title="Kiba::Extend::Marc (module)">Marc</a></span></span><span class='period'>.</span><span class='id identifier rubyid_role_term_target'><span class='object_link'><a href="../../Marc.html#role_term_target-class_method" title="Kiba::Extend::Marc.role_term_target (method)">role_term_target</a></span></span><span class='comma'>,</span>
-               <span class='label'>role_code_target:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Marc.html" title="Kiba::Extend::Marc (module)">Marc</a></span></span><span class='period'>.</span><span class='id identifier rubyid_role_code_target'><span class='object_link'><a href="../../Marc.html#role_code_target-class_method" title="Kiba::Extend::Marc.role_code_target (method)">role_code_target</a></span></span><span class='comma'>,</span>
-               <span class='label'>field_tag_target:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Marc.html" title="Kiba::Extend::Marc (module)">Marc</a></span></span><span class='period'>.</span><span class='id identifier rubyid_field_tag_target'><span class='object_link'><a href="../../Marc.html#field_tag_target-class_method" title="Kiba::Extend::Marc.field_tag_target (method)">field_tag_target</a></span></span><span class='comma'>,</span>
-               <span class='label'>name_type_target:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Marc.html" title="Kiba::Extend::Marc (module)">Marc</a></span></span><span class='period'>.</span><span class='id identifier rubyid_name_type_target'><span class='object_link'><a href="../../Marc.html#name_type_target-class_method" title="Kiba::Extend::Marc.name_type_target (method)">name_type_target</a></span></span><span class='comma'>,</span>
-               <span class='label'>name_fields:</span><span class='comma'>,</span> <span class='label'>name_subfields:</span><span class='comma'>,</span> <span class='label'>role_code_subfields:</span><span class='comma'>,</span>
-               <span class='label'>role_term_subfields:</span><span class='comma'>,</span>
-               <span class='label'>delim:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_delim'><span class='object_link'><a href="../../../Extend.html#delim-class_method" title="Kiba::Extend.delim (method)">delim</a></span></span>
-              <span class='rparen'>)</span>
+  <span class='comment'># rubocop:todo Layout/LineLength
+</span>  <span class='label'>name_fields:</span><span class='comma'>,</span> <span class='label'>name_subfields:</span><span class='comma'>,</span> <span class='label'>role_code_subfields:</span><span class='comma'>,</span> <span class='label'>role_term_subfields:</span><span class='comma'>,</span> <span class='label'>id_target:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Marc.html" title="Kiba::Extend::Marc (module)">Marc</a></span></span><span class='period'>.</span><span class='id identifier rubyid_id_target_field'><span class='object_link'><a href="../../Marc.html#id_target_field-class_method" title="Kiba::Extend::Marc.id_target_field (method)">id_target_field</a></span></span><span class='comma'>,</span>
+  <span class='comment'># rubocop:enable Layout/LineLength
+</span>  <span class='label'>name_target:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Marc.html" title="Kiba::Extend::Marc (module)">Marc</a></span></span><span class='period'>.</span><span class='id identifier rubyid_name_target'><span class='object_link'><a href="../../Marc.html#name_target-class_method" title="Kiba::Extend::Marc.name_target (method)">name_target</a></span></span><span class='comma'>,</span>
+  <span class='label'>role_term_target:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Marc.html" title="Kiba::Extend::Marc (module)">Marc</a></span></span><span class='period'>.</span><span class='id identifier rubyid_role_term_target'><span class='object_link'><a href="../../Marc.html#role_term_target-class_method" title="Kiba::Extend::Marc.role_term_target (method)">role_term_target</a></span></span><span class='comma'>,</span>
+  <span class='label'>role_code_target:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Marc.html" title="Kiba::Extend::Marc (module)">Marc</a></span></span><span class='period'>.</span><span class='id identifier rubyid_role_code_target'><span class='object_link'><a href="../../Marc.html#role_code_target-class_method" title="Kiba::Extend::Marc.role_code_target (method)">role_code_target</a></span></span><span class='comma'>,</span>
+  <span class='label'>field_tag_target:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Marc.html" title="Kiba::Extend::Marc (module)">Marc</a></span></span><span class='period'>.</span><span class='id identifier rubyid_field_tag_target'><span class='object_link'><a href="../../Marc.html#field_tag_target-class_method" title="Kiba::Extend::Marc.field_tag_target (method)">field_tag_target</a></span></span><span class='comma'>,</span>
+  <span class='label'>name_type_target:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Marc.html" title="Kiba::Extend::Marc (module)">Marc</a></span></span><span class='period'>.</span><span class='id identifier rubyid_name_type_target'><span class='object_link'><a href="../../Marc.html#name_type_target-class_method" title="Kiba::Extend::Marc.name_type_target (method)">name_type_target</a></span></span><span class='comma'>,</span>
+  <span class='label'>delim:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_delim'><span class='object_link'><a href="../../../Extend.html#delim-class_method" title="Kiba::Extend.delim (method)">delim</a></span></span><span class='rparen'>)</span>
   <span class='ivar'>@name_type</span> <span class='op'>=</span> <span class='id identifier rubyid_name_type'>name_type</span>
   <span class='ivar'>@id_target</span> <span class='op'>=</span> <span class='id identifier rubyid_id_target'>id_target</span>
   <span class='ivar'>@name_target</span> <span class='op'>=</span> <span class='id identifier rubyid_name_target'>name_target</span>
@@ -601,16 +599,16 @@ role term value</p>
       <pre class="lines">
 
 
+64
 65
 66
 67
 68
 69
-70
-71</pre>
+70</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/marc/extract_base_name_data.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/marc/extract_base_name_data.rb', line 64</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_prepare_rows'>prepare_rows</span><span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span>
@@ -629,7 +627,7 @@ role term value</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 24 21:34:12 2023 by
+  Generated on Fri Aug 25 01:03:18 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>
