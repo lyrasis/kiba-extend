@@ -86,9 +86,9 @@ module Kiba
           puts "SOURCES"
           @files[:source].each { |src| puts "source #{src.klass} #{src.args}" }
           puts "DESTINATIONS"
-          @files[:destination].each { |dest|
+          @files[:destination].each do |dest|
             puts "destination #{dest.klass} #{dest.args}"
-          }
+          end
           if @files[:lookup]
             puts "LOOKUPS"
             @files[:lookup].each { |lkup| puts "lookup #{lkup.args}" }

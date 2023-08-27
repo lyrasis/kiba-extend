@@ -94,13 +94,13 @@ RSpec.describe Kiba::Extend::Transforms::Name::SplitInverted do
   end
 
   context "with custom targets" do
-    let(:klass) {
+    let(:klass) do
       Name::SplitInverted.new(source: :iname, targets: %i[f m l s])
-    }
+    end
     let(:row) { {iname: "Smith, R.J., Sr."} }
-    let(:expected) {
+    let(:expected) do
       {iname: "Smith, R.J., Sr.", f: "R.", l: "Smith", m: "J.", s: "Sr."}
-    }
+    end
 
     it "transforms as expected" do
       puts expected
@@ -111,10 +111,10 @@ RSpec.describe Kiba::Extend::Transforms::Name::SplitInverted do
   context "with custom fallback" do
     let(:klass) { Name::SplitInverted.new(source: :iname, fallback: :lastname) }
     let(:row) { {iname: "Smith"} }
-    let(:expected) {
+    let(:expected) do
       {iname: "Smith", firstname: nil, lastname: "Smith", middlename: nil,
        suffix: nil}
-    }
+    end
 
     it "transforms as expected" do
       puts expected

@@ -30,9 +30,9 @@ RSpec.describe Kiba::Extend::Utils::Lookup::RowSorter do
     end
 
     context "with asc, as integer, blanks first" do
-      let(:klass) {
+      let(:klass) do
         described_class.new(on: on, dir: dir, blanks: blanks, as: :to_i)
-      }
+      end
 
       it "sorts as expected" do
         expect(result).to eq([nil, "", "1", "10", "11", "25", "100", "XR3"])
@@ -60,10 +60,10 @@ RSpec.describe Kiba::Extend::Utils::Lookup::RowSorter do
 
       it "raises error" do
         msg = "Cannot sort on missing field: `foo`"
-        expect {
+        expect do
           result
           # rubocop:todo Layout/LineLength
-        }.to raise_error(Kiba::Extend::Utils::Lookup::RowSorter::MissingSortFieldError).with_message(msg)
+        end.to raise_error(Kiba::Extend::Utils::Lookup::RowSorter::MissingSortFieldError).with_message(msg)
         # rubocop:enable Layout/LineLength
       end
     end

@@ -73,9 +73,9 @@ module Kiba
             return row if fieldval.blank?
 
             fieldvals = multival ? fieldval.split(delim) : [fieldval]
-            row[field] = fieldvals.map { |fieldval|
+            row[field] = fieldvals.map do |fieldval|
               "#{value}#{fieldval}"
-            }.join(delim)
+            end.join(delim)
             row
           end
 

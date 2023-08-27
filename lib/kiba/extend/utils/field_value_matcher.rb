@@ -309,9 +309,9 @@ module Kiba
           compacted = arrayed.map { |val| val.nil? ? "" : val }
           stripped = strip ? compacted.map(&:strip) : compacted
           nulled = if nullval
-            stripped.map { |val|
+            stripped.map do |val|
               (val == nullval) ? "" : val
-            }
+            end
           else
             stripped
           end

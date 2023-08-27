@@ -10,19 +10,19 @@ module Kiba
         def initial_transforms
           Kiba.job_segment do
             transform { |r| r.to_h }
-            transform { |r|
+            transform do |r|
               @srcrows += 1
               r
-            }
+            end
           end
         end
 
         def final_transforms
           Kiba.job_segment do
-            transform { |r|
+            transform do |r|
               @outrows += 1
               r
-            }
+            end
           end
         end
 

@@ -161,9 +161,9 @@ module Kiba
             if condition_met?(row)
               @fieldmap.each { |target, value| row[target] = value }
             else
-              @fieldmap.each { |target, _value|
+              @fieldmap.each do |target, _value|
                 row[target] = row[target] ? row.fetch(target) : nil
-              }
+              end
             end
             row
           end

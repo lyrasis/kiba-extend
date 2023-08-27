@@ -4,10 +4,10 @@ require "spec_helper"
 
 RSpec.describe Kiba::Extend::Transforms::Merge::MultiRowLookup do
   let(:accumulator) { [] }
-  let(:test_job) {
+  let(:test_job) do
     Helpers::TestJob.new(input: input, accumulator: accumulator,
       transforms: transforms)
-  }
+  end
   let(:result) { test_job.accumulator }
 
   context "when multikey = false (default)" do
@@ -292,10 +292,10 @@ RSpec.describe Kiba::Extend::Transforms::Merge::MultiRowLookup do
       ]
     end
 
-    let(:lookup) {
+    let(:lookup) do
       Lookup.csv_to_multi_hash(file: lookup_csv, csvopt: Kiba::Extend.csvopts,
         keycolumn: :single)
-    }
+    end
 
     let(:transforms) do
       Kiba.job_segment do
@@ -412,10 +412,10 @@ RSpec.describe Kiba::Extend::Transforms::Merge::MultiRowLookup do
 
     it "raises error" do
       msg = "Lookup value `lookup (Symbol)` must be a Hash"
-      expect {
+      expect do
         result
         # rubocop:todo Layout/LineLength
-      }.to raise_error(Kiba::Extend::Transforms::Merge::MultiRowLookup::LookupTypeError).with_message(msg)
+      end.to raise_error(Kiba::Extend::Transforms::Merge::MultiRowLookup::LookupTypeError).with_message(msg)
       # rubocop:enable Layout/LineLength
     end
   end

@@ -4,10 +4,10 @@ require "spec_helper"
 
 RSpec.describe Kiba::Extend::Transforms::Append do
   let(:accumulator) { [] }
-  let(:test_job) {
+  let(:test_job) do
     Helpers::TestJob.new(input: input, accumulator: accumulator,
       transforms: transforms)
-  }
+  end
   let(:result) { test_job.accumulator }
 
   describe "NilFields" do

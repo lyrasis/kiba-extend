@@ -10,22 +10,22 @@ end
 RSpec.describe "Kiba::Extend::Registry::RequirableFile" do
   let(:filekey) { :fkey }
   let(:path) { File.join("spec", "fixtures", "fkey.csv") }
-  let(:default) {
+  let(:default) do
     {path: path, creator: Helpers.method(:fake_creator_method)}
-  }
-  let(:klass) {
+  end
+  let(:klass) do
     TestClass.new(key: filekey,
       data: Kiba::Extend::Registry::FileRegistryEntry.new(data))
-  }
+  end
 
   context "when called without creator" do
     let(:data) { {path: path} }
     it "raises NoDependencyCreatorError" do
       msg = "No creator method found for :#{filekey} in file registry"
-      expect {
+      expect do
         TestClass.new(key: filekey,
           data: Kiba::Extend::Registry::FileRegistryEntry.new(data)).required
-      }.to raise_error(
+      end.to raise_error(
         Kiba::Extend::Registry::RequirableFile::NoDependencyCreatorError, msg
       )
     end

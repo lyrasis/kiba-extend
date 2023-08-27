@@ -3,18 +3,18 @@
 require "spec_helper"
 
 RSpec.describe Kiba::Extend::Transforms::Merge::ConstantValueConditional do
-  subject(:merger) {
+  subject(:merger) do
     described_class.new(fieldmap: fieldmap, condition: condition)
-  }
+  end
 
   let(:fieldmap) { {reason: "gift", cost: "0"} }
-  let(:condition) {
+  let(:condition) do
     ->(row) {
       # rubocop:todo Layout/LineLength
       row[:note].is_a?(String) && row[:note].match?(/gift|donation/i) && row[:type] != "obj"
       # rubocop:enable Layout/LineLength
     }
-  }
+  end
   let(:input) do
     [
       {note: "Gift", type: "acq"},
@@ -57,11 +57,11 @@ RSpec.describe Kiba::Extend::Transforms::Merge::ConstantValueConditional do
     end
 
     context "with condition lambda that throws an error" do
-      let(:condition) {
+      let(:condition) do
         ->(row) {
           row[:note].match?(/gift|donation/i) && row[:type] != "obj"
         }
-      }
+      end
 
       it "raises error" do
         # rubocop:todo Layout/LineLength

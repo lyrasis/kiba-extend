@@ -31,9 +31,9 @@ RSpec.describe Kiba::Extend::Transforms::Replace::EmptyFieldValues do
   end
 
   context "plain/single value with treat_as_null" do
-    let(:params) {
+    let(:params) do
       {fields: %i[name sex], value: "%NULLVALUE%", treat_as_null: "%NULL%"}
-    }
+    end
     let(:expected) do
       [
         {species: "guineafowl", name: "%NULLVALUE%", sex: "%NULLVALUE%"},
@@ -67,10 +67,10 @@ RSpec.describe Kiba::Extend::Transforms::Replace::EmptyFieldValues do
   end
 
   context "multi value with treat_as_null" do
-    let(:params) {
+    let(:params) do
       {fields: %i[name sex], value: "%NULLVALUE%", delim: "|",
        treat_as_null: "%NULL%"}
-    }
+    end
     let(:expected) do
       [
         {species: "guineafowl", name: "%NULLVALUE%", sex: "%NULLVALUE%"},
@@ -89,13 +89,13 @@ RSpec.describe Kiba::Extend::Transforms::Replace::EmptyFieldValues do
 
   context "with array of treat_as_nulls" do
     let(:input) { [{species: "guineafowl", name: "%NADA%", sex: "%NULL%"}] }
-    let(:params) {
+    let(:params) do
       {fields: %i[name sex], value: "%NULLVALUE%",
        treat_as_null: ["%NADA%", "%NULL%"]}
-    }
-    let(:expected) {
+    end
+    let(:expected) do
       [{species: "guineafowl", name: "%NULLVALUE%", sex: "%NULLVALUE%"}]
-    }
+    end
 
     it "replaces empty field values in specified field(s) with given string" do
       expect(result).to eq(expected)

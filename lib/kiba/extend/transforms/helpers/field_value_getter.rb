@@ -26,9 +26,9 @@ module Kiba
             @fields = [fields].flatten
             @delim = delim
             @discard = discard
-            @null_vals = treat_as_null ? [treat_as_null].flatten.sort_by { |v|
+            @null_vals = treat_as_null ? [treat_as_null].flatten.sort_by do |v|
                                            v.length
-                                         }.reverse : []
+                                         end.reverse : []
             @delim_only_checker = DelimOnlyChecker.new(delim: delim,
               treat_as_null: treat_as_null, blank_result: false)
           end
@@ -71,9 +71,9 @@ module Kiba
           end
 
           def replace_nulls_in_val(val)
-            null_vals.each { |nv|
+            null_vals.each do |nv|
               val.nil? ? val : val = val.gsub(nv, "").strip
-            }
+            end
             val
           end
         end

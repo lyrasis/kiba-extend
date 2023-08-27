@@ -26,10 +26,10 @@ RSpec.describe Kiba::Extend::Transforms::Count::MatchingRowsInLookup do
       [2]
     ]
   end
-  let(:lookup) {
+  let(:lookup) do
     Lookup.csv_to_hash(file: lookup_csv, csvopt: Kiba::Extend.csvopts,
       keycolumn: :id)
-  }
+  end
   let(:xformopt) do
     {
       lookup: lookup,

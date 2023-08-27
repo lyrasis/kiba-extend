@@ -188,11 +188,11 @@ RSpec.describe "Kiba::Extend::Registry::FileRegistryEntry" do
     end
 
     context "when un-written source/dest" do
-      let(:data) {
+      let(:data) do
         {src_class: Kiba::Extend::Sources::Enumerable,
          dest_class: Kiba::Extend::Destinations::Lambda,
          supplied: true}
-      }
+      end
       it "valid as expected" do
         expect(entry.path).to be_nil
         expect(entry.valid?).to be true
@@ -250,22 +250,22 @@ RSpec.describe "Kiba::Extend::Registry::FileRegistryEntry" do
     end
 
     context "when a Proc returning valid job" do
-      let(:data) {
+      let(:data) do
         {path: path, creator: proc {
                                 Helpers::Project::JoblessSection.send(:procable)
                               }}
-      }
+      end
       it "valid as expected" do
         expect(entry.valid?).to be true
       end
     end
 
     context "when a Proc returning invalid job" do
-      let(:data) {
+      let(:data) do
         {path: path, creator: proc {
                                 Helpers::Project::JoblessSection
                               }}
-      }
+      end
       it "valid as expected" do
         expect(entry.valid?).to be false
       end

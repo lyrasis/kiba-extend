@@ -341,11 +341,11 @@ module Kiba
             @enforce_evenness = enforce_evenness
             @warn_if_uneven = warn_if_uneven
 
-            @srcfieldgroups = sources.map { |source|
-              targets.map { |target|
+            @srcfieldgroups = sources.map do |source|
+              targets.map do |target|
                 field_name(source, target)
-              }
-            }
+              end
+            end
             @srcemptyreplacers = srcfieldgroups.map do |grp|
               Kiba::Extend::Transforms::Replace::EmptyFieldValues.new(
                 fields: grp,
@@ -391,9 +391,9 @@ module Kiba
             if enforce_evenness
               srceveners.each { |e| e.process(row) }
             end
-            to_combine.each { |target, getter|
+            to_combine.each do |target, getter|
               row[target] = getter.call(row).values.join(delim)
-            }
+            end
             delete_sources(row)
             empty_replacer.process(row)
             field_group_cleaner.process(row) if empty_groups == :delete
@@ -412,11 +412,11 @@ module Kiba
             :to_combine, :empty_replacer
 
           def delete_sources(row)
-            targets.each { |target|
-              sources.each { |src|
+            targets.each do |target|
+              sources.each do |src|
                 row.delete("#{src}_#{target}".to_sym)
-              }
-            }
+              end
+            end
           end
 
           def empty_field_group_treat_as_null

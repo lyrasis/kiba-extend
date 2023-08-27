@@ -34,9 +34,9 @@ RSpec.describe Kiba::Extend::Utils::Lookup::RowSelectorByLambda do
     context "when using orig and mergerows" do
       let(:conditions) do
         ->(origrow, mergerows) {
-          mergerows.select { |row|
+          mergerows.select do |row|
             row[:treatment] == origrow[:source]
-          }
+          end
         }
       end
 

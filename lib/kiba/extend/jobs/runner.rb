@@ -35,7 +35,7 @@ module Kiba
         def add_lookup(config)
           key_as_iv = "@#{config.key}".to_sym
 
-          context.define_singleton_method(config.key) {
+          context.define_singleton_method(config.key) do
             if instance_variable_defined?(key_as_iv)
               instance_variable_get(key_as_iv)
             else
@@ -44,7 +44,7 @@ module Kiba
                 Lookup.csv_to_hash(**config.args.compact)
               )
             end
-          }
+          end
         end
 
         # This stuff does not get handled by parsing source code

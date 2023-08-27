@@ -40,10 +40,10 @@ module Kiba
             blank_result: true)
             @delim = delim
             # rubocop:todo Layout/LineLength
-            @nullvals = treat_as_null.nil? ? nil : [treat_as_null].flatten.sort_by { |val|
+            @nullvals = treat_as_null.nil? ? nil : [treat_as_null].flatten.sort_by do |val|
                                                      # rubocop:enable Layout/LineLength
                                                      val.length
-                                                   }.reverse
+                                                   end.reverse
             @blank_result = blank_result
           end
 

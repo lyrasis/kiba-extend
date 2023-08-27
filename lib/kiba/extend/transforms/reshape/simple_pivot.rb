@@ -118,9 +118,9 @@ module Kiba
               row = {@row_field => fieldval}
               row = row.merge(data)
               row_fields = row.keys.freeze
-              @columns.keys.each { |field|
+              @columns.keys.each do |field|
                 row[field] = nil unless row_fields.any?(field)
-              }
+              end
               yield row
             end
           end

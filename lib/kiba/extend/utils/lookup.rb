@@ -49,9 +49,9 @@ module Kiba
         # rubocop:enable Layout/LineLength
         def csv_to_hash(file:, keycolumn:, csvopt: Kiba::Extend.csvopts)
           lookup = Kiba::Extend::Utils::LookupHash.new(keycolumn: keycolumn)
-          CSV.foreach(File.expand_path(file), **csvopt) { |row|
+          CSV.foreach(File.expand_path(file), **csvopt) do |row|
             lookup.add_record(row.to_h)
-          }
+          end
           lookup.hash
         end
 

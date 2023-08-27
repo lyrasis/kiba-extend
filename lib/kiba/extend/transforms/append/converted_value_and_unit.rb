@@ -371,9 +371,9 @@ module Kiba
           end
 
           def customize_types(conversion_amounts)
-            conversion_amounts.keys.each { |unit|
+            conversion_amounts.keys.each do |unit|
               @types[unit.to_s] = @converter
-            }
+            end
           end
 
           def known_conversion?(unit)
@@ -427,9 +427,9 @@ module Kiba
 
             base_units = target_units - units_to_convert
             base_units.each { |unit| builder.unit(unit.to_sym) }
-            units_to_convert.each { |unit|
+            units_to_convert.each do |unit|
               builder.unit(unit.to_sym, value: conversion_amounts[unit])
-            }
+            end
 
             @converter = Class.new(Measured::Measurable) do
               class << self

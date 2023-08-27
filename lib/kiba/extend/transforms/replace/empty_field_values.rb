@@ -189,9 +189,9 @@ module Kiba
           end
 
           def replace_empty_multivals(row, field, vals)
-            row[field] = vals.map { |val|
+            row[field] = vals.map do |val|
               is_empty?(val) ? value : val
-            }.join(delim)
+            end.join(delim)
           end
 
           def replace_multival_empty(row)

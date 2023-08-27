@@ -256,15 +256,15 @@ module Kiba
             elsif cts.size.zero?
               # do nothing - all fields already blank
             else
-              thisgroup.first.each_with_index { |_element, i|
+              thisgroup.first.each_with_index do |_element, i|
                 to_delete << i if all_empty?(thisgroup, i)
-              }
+              end
               to_delete.sort.reverse_each do |i|
                 thisgroup.each { |arr| arr.delete_at(i) }
               end
-              thisgroup.each_with_index { |arr, i|
+              thisgroup.each_with_index do |arr, i|
                 row[group[i]] = arr.empty? ? nil : arr.join(@sep)
-              }
+              end
             end
           end
 

@@ -38,19 +38,19 @@ module Kiba
         private_class_method def keep_fields(field_vals, discard, delim,
           usenull)
           if usenull
-            field_vals = field_vals.transform_values { |val|
+            field_vals = field_vals.transform_values do |val|
               val.gsub(Kiba::Extend.nullvalue, "")
-            }
+            end
           end
           if discard.any?(:empty)
-            field_vals = field_vals.reject { |_field, val|
+            field_vals = field_vals.reject do |_field, val|
               val.empty?
-            }
+            end
           end
           if discard.any?(:delim)
-            field_vals = field_vals.reject { |_field, val|
+            field_vals = field_vals.reject do |_field, val|
               delim_only?(val, delim)
-            }
+            end
           end
           field_vals.keys
         end

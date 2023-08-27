@@ -113,9 +113,9 @@ module Kiba
         end
 
         def make_missing_directories
-          @entries.select(&:valid?).map(&:dir).uniq.each { |dir|
+          @entries.select(&:valid?).map(&:dir).uniq.each do |dir|
             dir.mkdir unless dir.exist?
-          }
+          end
         end
 
         def populate_entries
@@ -130,9 +130,9 @@ module Kiba
         end
 
         def verify_supplied_files_exist
-          @entries.select { |entry|
+          @entries.select do |entry|
             entry.supplied
-          }.map(&:path).uniq.each do |file|
+          end.map(&:path).uniq.each do |file|
             next if file.exist?
 
             # rubocop:todo Layout/LineLength

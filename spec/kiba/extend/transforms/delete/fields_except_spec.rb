@@ -9,10 +9,10 @@ RSpec.describe Kiba::Extend::Transforms::Delete::Fields do
     ]
   end
   let(:accumulator) { [] }
-  let(:test_job) {
+  let(:test_job) do
     Helpers::TestJob.new(input: input, accumulator: accumulator,
       transforms: transforms)
-  }
+  end
   let(:result) { test_job.accumulator }
 
   context "with multiple fields in array" do
@@ -109,9 +109,9 @@ RSpec.describe Kiba::Extend::Transforms::Delete::Fields do
     end
 
     it "puts raises MissingKeywordArgumentError" do
-      expect {
+      expect do
         result
-      }.to raise_error(Delete::FieldsExcept::MissingKeywordArgumentError)
+      end.to raise_error(Delete::FieldsExcept::MissingKeywordArgumentError)
     end
   end
 end
