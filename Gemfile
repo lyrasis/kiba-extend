@@ -10,19 +10,16 @@ group :documentation do
 end
 
 group :development, :test do
-  gem "bundler", "~> 2.3"
   gem "byebug", "~>11.0"
   gem "pry", "~> 0.14"
   gem "rake", "~> 13.0"
   gem "rspec"
-  gem "rubocop"
-  gem "rubocop-rspec"
-  gem "standard", require: false
+  gem "almost_standard", github: "kspurgin/almost_standard", branch: "main"
 end
 
 group :test do
   gem "simplecov", require: false
   gem "yardspec", "~> 0.2.0"
 end
-# Specify your gem's dependencies in kiba-extend.gemspec
+
 gemspec
