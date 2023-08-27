@@ -46,9 +46,9 @@ RSpec.describe Kiba::Extend::Transforms::Delete::EmptyFieldGroups do
   end
 
   context "with array of treat_as_empty values: [%NULLVALUE%, NULL]" do
-    let(:params) {
+    let(:params) do
       {groups: groups, delim: delim, treat_as_null: ["NULL", "%NULLVALUE%"]}
-    }
+    end
     let(:expected) do
       [
         {aa: nil, ab: nil, bb: nil, bc: nil, bd: nil},

@@ -68,9 +68,9 @@ RSpec.describe Kiba::Extend::Utils::Fieldset do
     end
 
     context "with null_placeholder set" do
-      let(:fieldset) {
+      let(:fieldset) do
         described_class.new(fields: fields, null_placeholder: "NULL")
-      }
+      end
 
       it "joins hash values" do
         fieldset.populate(rows)

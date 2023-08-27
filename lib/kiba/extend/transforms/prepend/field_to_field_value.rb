@@ -212,9 +212,9 @@ module Kiba
 
           def mv_prepend(_row, prepend_val, field_vals)
             prefixes = prepend_val.split(@mvdelim)
-            field_vals.each_with_index.map { |val, i|
+            field_vals.each_with_index.map do |val, i|
               prepended_val(prefixes[i], val)
-            }
+            end
               .join(@mvdelim)
           end
 

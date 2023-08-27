@@ -37,9 +37,9 @@ RSpec.describe Kiba::Extend::Transforms::Helpers::FieldValueGetter do
     end
 
     context "with treat_as_null = %NULLVALUE%" do
-      let(:params) {
+      let(:params) do
         {fields: fields, delim: delim, treat_as_null: "%NULLVALUE%"}
-      }
+      end
       let(:expected) do
         {
           d: "foo",
@@ -53,9 +53,9 @@ RSpec.describe Kiba::Extend::Transforms::Helpers::FieldValueGetter do
     end
 
     context "with treat_as_null = [%NULL%, %NULLVALUE%]" do
-      let(:params) {
+      let(:params) do
         {fields: fields, delim: delim, treat_as_null: ["%NULL%", "%NULLVALUE%"]}
-      }
+      end
       let(:expected) do
         {
           d: "foo"
@@ -68,10 +68,10 @@ RSpec.describe Kiba::Extend::Transforms::Helpers::FieldValueGetter do
     end
 
     context "with discard = [] and treat_as_null = [%NULL%, %NULLVALUE%]" do
-      let(:params) {
+      let(:params) do
         {fields: fields, delim: delim, discard: [],
          treat_as_null: ["%NULL%", "%NULLVALUE%"]}
-      }
+      end
       let(:expected) do
         {
           a: nil,
@@ -90,10 +90,10 @@ RSpec.describe Kiba::Extend::Transforms::Helpers::FieldValueGetter do
     end
 
     context "with discard = [:nil] and treat_as_null = [%NULL%, %NULLVALUE%]" do
-      let(:params) {
+      let(:params) do
         {fields: fields, delim: delim, discard: [:nil],
          treat_as_null: ["%NULL%", "%NULLVALUE%"]}
-      }
+      end
       let(:expected) do
         {
           b: "",
@@ -113,10 +113,10 @@ RSpec.describe Kiba::Extend::Transforms::Helpers::FieldValueGetter do
     # rubocop:todo Layout/LineLength
     context "with discard = [:empty] and treat_as_null = [%NULL%, %NULLVALUE%]" do
       # rubocop:enable Layout/LineLength
-      let(:params) {
+      let(:params) do
         {fields: fields, delim: delim, discard: [:empty],
          treat_as_null: ["%NULL%", "%NULLVALUE%"]}
-      }
+      end
       let(:expected) do
         {
           a: nil,
@@ -135,10 +135,10 @@ RSpec.describe Kiba::Extend::Transforms::Helpers::FieldValueGetter do
     # rubocop:todo Layout/LineLength
     context "with discard = [:delim] and treat_as_null = [%NULL%, %NULLVALUE%]" do
       # rubocop:enable Layout/LineLength
-      let(:params) {
+      let(:params) do
         {fields: fields, delim: delim, discard: [:delim],
          treat_as_null: ["%NULL%", "%NULLVALUE%"]}
-      }
+      end
       let(:expected) do
         {
           a: nil,

@@ -4,11 +4,11 @@ RSpec.describe Kiba::Extend::Transforms::Helpers::DelimOnlyChecker do
   subject(:checker) { described_class.new(**params) }
 
   describe "#call" do
-    let(:results) {
-      expectations.keys.map { |val|
+    let(:results) do
+      expectations.keys.map do |val|
         [val, checker.call(val)]
-      }.to_h
-    }
+      end.to_h
+    end
 
     context "with `delim: |, treat_as_null: nil`" do
       let(:params) { {delim: "|", treat_as_null: nil} }
@@ -76,9 +76,9 @@ RSpec.describe Kiba::Extend::Transforms::Helpers::DelimOnlyChecker do
     end
 
     context "with `delim: |, treat_as_null: array of nullvalues`" do
-      let(:params) {
+      let(:params) do
         {delim: "|", treat_as_null: [Kiba::Extend.nullvalue, "NULL"]}
-      }
+      end
       let(:expectations) do
         nv = Kiba::Extend.nullvalue
         {

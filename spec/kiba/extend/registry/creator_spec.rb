@@ -50,9 +50,9 @@ RSpec.describe "Kiba::Extend::Registry::Creator" do
       let(:spec) { "a string" }
       it "raises error" do
         msg = "Registry::Creator cannot be called with String (a string)"
-        expect {
+        expect do
           creator
-        }.to raise_error(Kiba::Extend::Registry::Creator::TypeError, msg)
+        end.to raise_error(Kiba::Extend::Registry::Creator::TypeError, msg)
       end
     end
 
@@ -64,17 +64,14 @@ RSpec.describe "Kiba::Extend::Registry::Creator" do
       end
     end
 
-    # rubocop:todo Layout/LineLength
-    context "when a Module not containing a `job` method, and no method given" do
-      # rubocop:enable Layout/LineLength
+    context "when a Module has no `job` method, and no method given" do
       let(:spec) { Helpers::Project::Unjobby }
       it "raises error" do
-        # rubocop:todo Layout/LineLength
-        msg = "Helpers::Project::Unjobby passed as Registry::Creator, but does not define `job` method"
-        # rubocop:enable Layout/LineLength
-        expect {
+        msg = "Helpers::Project::Unjobby passed as Registry::Creator, but "\
+          "does not define `job` method"
+        expect do
           creator
-        }.to raise_error(
+        end.to raise_error(
           Kiba::Extend::Registry::Creator::JoblessModuleCreatorError, msg
         )
       end
@@ -94,10 +91,12 @@ RSpec.describe "Kiba::Extend::Registry::Creator" do
 
         it "raises error" do
           msg = "Registry::Creator passed Hash with no `callee` key"
-          expect {
+          expect do
             creator
-          }.to raise_error(Kiba::Extend::Registry::Creator::HashCreatorKeyError,
-            msg)
+          end.to raise_error(
+            Kiba::Extend::Registry::Creator::HashCreatorKeyError,
+            msg
+          )
         end
       end
 
@@ -105,38 +104,36 @@ RSpec.describe "Kiba::Extend::Registry::Creator" do
         let(:spec) { {callee: "a string"} }
 
         it "raises error" do
-          # rubocop:todo Layout/LineLength
-          msg = "Registry::Creator passed Hash with String `callee`. Give Method or Module instead."
-          # rubocop:enable Layout/LineLength
-          expect {
+          msg = "Registry::Creator passed Hash with String `callee`. Give "\
+            "Method or Module instead."
+          expect do
             creator
-          }.to raise_error(
+          end.to raise_error(
             Kiba::Extend::Registry::Creator::HashCreatorCalleeError, msg
           )
         end
       end
 
       context "with args that is not a Hash" do
-        let(:spec) {
+        let(:spec) do
           {callee: Helpers::Project::JobbyArg, args: "another string"}
-        }
+        end
 
         it "raises error" do
-          # rubocop:todo Layout/LineLength
-          msg = "Registry::Creator passed Hash with String `args`. Give a Hash instead."
-          # rubocop:enable Layout/LineLength
-          expect {
+          msg = "Registry::Creator passed Hash with String `args`. Give a "\
+            "Hash instead."
+          expect do
             creator
-          }.to raise_error(
+          end.to raise_error(
             Kiba::Extend::Registry::Creator::HashCreatorArgsTypeError, msg
           )
         end
       end
 
       context "with good callee and args" do
-        let(:spec) {
+        let(:spec) do
           {callee: Helpers::Project::JobbyArg, args: {shout: true}}
-        }
+        end
 
         it "sets instance vars as expected", :aggregate_failures do
           expect(creator.mod).to eq(Helpers::Project::JobbyArg)
@@ -170,10 +167,10 @@ RSpec.describe "Kiba::Extend::Registry::Creator" do
 
     context "with args" do
       context "with method" do
-        let(:spec) {
+        let(:spec) do
           {callee: Helpers::Project::UnjobbyArg.method(:prep),
            args: {shout: true}}
-        }
+        end
 
         it "calls as expected" do
           expect(result).to eq("PREPPED")
@@ -201,14 +198,13 @@ RSpec.describe "Kiba::Extend::Registry::Creator" do
     end
 
     context "with args" do
-      let(:spec) {
+      let(:spec) do
         {callee: Helpers::Project::JobbyArg, args: {shout: true, volume: 23}}
-      }
+      end
 
       it "returns expected string" do
-        # rubocop:todo Layout/LineLength
-        expect(result).to eq("Helpers::Project::JobbyArg.job(shout: true, volume: 23)")
-        # rubocop:enable Layout/LineLength
+        msg = "Helpers::Project::JobbyArg.job(shout: true, volume: 23)"
+        expect(result).to eq(msg)
       end
     end
   end

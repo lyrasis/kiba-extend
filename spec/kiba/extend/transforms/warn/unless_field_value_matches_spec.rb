@@ -102,9 +102,9 @@ RSpec.describe Kiba::Extend::Transforms::Warn::UnlessFieldValueMatches do
       end
 
       context "when delim (multi value)" do
-        let(:params) {
+        let(:params) do
           {field: field, match: match, delim: delim, matchmode: :regex}
-        }
+        end
 
         context "without value match" do
           let(:row) { {test: "food|another"} }

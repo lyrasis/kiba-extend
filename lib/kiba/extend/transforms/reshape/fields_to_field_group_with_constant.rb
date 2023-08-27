@@ -378,9 +378,9 @@ module Kiba
             split = val.split(delim, -1)
             return unless split.any? { |val| val.blank? }
 
-            row[field] = split.map { |val|
+            row[field] = split.map do |val|
               val.blank? ? treat_as_null : val
-            }.join(delim)
+            end.join(delim)
           end
         end
       end

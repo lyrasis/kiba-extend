@@ -223,9 +223,9 @@ module Kiba
           end
 
           def process_splits(valsplit, row)
-            valsplit.each_with_index { |val, i|
+            valsplit.each_with_index do |val, i|
               row["#{field}#{i}".to_sym] = val
-            }
+            end
           end
 
           def strip_new_fields(row)

@@ -37,9 +37,9 @@ module Kiba
           # rubocop:enable Layout/LineLength
           def initialize(fieldmap:)
             @fieldmap = fieldmap
-            @renamers = fieldmap.map { |from, to|
+            @renamers = fieldmap.map do |from, to|
               Rename::Field.new(from: from, to: to)
-            }
+            end
           end
 
           # @param row [Hash{ Symbol => String, nil }]

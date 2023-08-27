@@ -15,9 +15,9 @@ RSpec.describe Kiba::Extend::Transforms::FilterRows::FieldEqualTo do
       {val: nil}
     ]
   end
-  let(:transform) {
+  let(:transform) do
     described_class.new(action: action, field: field, value: value)
-  }
+  end
   let(:result) { input.map { |row| transform.process(row) }.compact }
 
   context "with action: :keep" do

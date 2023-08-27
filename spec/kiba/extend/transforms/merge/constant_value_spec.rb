@@ -3,9 +3,9 @@
 require "spec_helper"
 
 RSpec.describe Kiba::Extend::Transforms::Merge::ConstantValue do
-  let(:transform) {
+  let(:transform) do
     described_class.new(target: :species, value: "guinea fowl")
-  }
+  end
 
   let(:results) { rows.map { |row| transform.process(row) } }
   let(:expected) do

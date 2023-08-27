@@ -205,9 +205,9 @@ module Kiba
 
           # @param row [Hash{ Symbol => String, nil }]
           def process(row)
-            fieldmap.each { |target, sources|
+            fieldmap.each do |target, sources|
               row[target] = compile_source_values(sources, row)
-            }
+            end
             delete_sources(row) if del
             row
           end
@@ -237,9 +237,9 @@ module Kiba
 
           def delete_sources(row)
             targets = fieldmap.keys
-            fieldmap.values.flatten.each { |source|
+            fieldmap.values.flatten.each do |source|
               row.delete(source) unless targets.any?(source)
-            }
+            end
           end
         end
       end

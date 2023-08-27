@@ -11,10 +11,10 @@ RSpec.describe Kiba::Extend::Transforms::Fingerprint::Add do
     ]
   end
   let(:accumulator) { [] }
-  let(:test_job) {
+  let(:test_job) do
     Helpers::TestJob.new(input: input, accumulator: accumulator,
       transforms: transforms)
-  }
+  end
   let(:result) { test_job.accumulator }
 
   context "when delimiter matches possible field value delimiters" do
@@ -26,10 +26,10 @@ RSpec.describe Kiba::Extend::Transforms::Fingerprint::Add do
     end
 
     it "raises error" do
-      expect {
+      expect do
         result
         # rubocop:todo Layout/LineLength
-      }.to raise_error(Kiba::Extend::Transforms::Fingerprint::DelimiterCollisionError)
+      end.to raise_error(Kiba::Extend::Transforms::Fingerprint::DelimiterCollisionError)
       # rubocop:enable Layout/LineLength
     end
 
@@ -69,10 +69,10 @@ RSpec.describe Kiba::Extend::Transforms::Fingerprint::Add do
     end
 
     it "raises error" do
-      expect {
+      expect do
         result
         # rubocop:todo Layout/LineLength
-      }.to raise_error(Kiba::Extend::Transforms::Fingerprint::DelimiterInValueError)
+      end.to raise_error(Kiba::Extend::Transforms::Fingerprint::DelimiterInValueError)
       # rubocop:enable Layout/LineLength
     end
   end

@@ -133,9 +133,9 @@ module Kiba
           #   `Kiba::Extend.delimiter`**
           def initialize(usenull: false, consider_blank: nil)
             @usenull = usenull
-            @consider_blank = consider_blank&.transform_values { |val|
+            @consider_blank = consider_blank&.transform_values do |val|
               val.split(Kiba::Extend.delim)
-            }
+            end
             @pop_fields = {}
             @rows = []
           end
@@ -161,9 +161,9 @@ module Kiba
           attr_reader :pop_fields, :rows, :usenull, :consider_blank
 
           def populate_tracker(row)
-            prepare(row).each { |field, val|
+            prepare(row).each do |field, val|
               pop_fields[field] = nil unless val.blank?
-            }
+            end
             rows << row
           end
 
@@ -185,9 +185,9 @@ module Kiba
           def strip_nulls(row)
             return row unless usenull
 
-            row.transform_values { |val|
+            row.transform_values do |val|
               Helpers.empty?(val, usenull) ? "" : val
-            }
+            end
           end
         end
       end

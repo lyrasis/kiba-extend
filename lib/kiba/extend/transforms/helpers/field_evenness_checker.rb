@@ -21,9 +21,9 @@ module Kiba
 
             vals = value_getter.call(row)
             max = max_value_ct(vals)
-            checked = vals.map { |field, val|
+            checked = vals.map do |field, val|
               [field, (val.split(delim, -1).length == max) ? :even : :uneven]
-            }
+            end
               .to_h
             return :even if checked.values.all?(:even)
 
@@ -43,9 +43,9 @@ module Kiba
           end
 
           def is_even?(source)
-            chk = valhash.map { |_target, sources|
+            chk = valhash.map do |_target, sources|
               sources[source].compact.length
-            }
+            end
               .uniq
             return true if chk.length == 1
 

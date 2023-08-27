@@ -7,14 +7,14 @@ RSpec.describe Kiba::Extend::Transforms::Replace::FieldValueWithStaticMapping do
 
   describe ".new" do
     context "with multival" do
-      let(:params) {
+      let(:params) do
         {source: :color, target: :fullcol, mapping: {}, multival: true}
-      }
+      end
 
       it "raises error" do
-        expect {
+        expect do
           xform
-        }.to raise_error(ArgumentError, described_class.multival_msg)
+        end.to raise_error(ArgumentError, described_class.multival_msg)
       end
     end
 
@@ -86,10 +86,10 @@ RSpec.describe Kiba::Extend::Transforms::Replace::FieldValueWithStaticMapping do
       end
 
       context "when delete_source false" do
-        let(:params) {
+        let(:params) do
           {source: :color, target: :fullcol, mapping: mapping,
            delete_source: false}
-        }
+        end
 
         it "transforms as expected" do
           expected = [
@@ -131,9 +131,9 @@ RSpec.describe Kiba::Extend::Transforms::Replace::FieldValueWithStaticMapping do
       end
 
       context "and :fallback_val = :nil" do
-        let(:params) {
+        let(:params) do
           {source: :color, mapping: mapping, delim: "|", fallback_val: :nil}
-        }
+        end
         let(:expected) do
           [
             {name: "Vern", color: nil},
@@ -150,9 +150,9 @@ RSpec.describe Kiba::Extend::Transforms::Replace::FieldValueWithStaticMapping do
       end
 
       context "and :fallback_val = `nope`" do
-        let(:params) {
+        let(:params) do
           {source: :color, mapping: mapping, delim: "|", fallback_val: "nope"}
-        }
+        end
         let(:expected) do
           [
             {name: "Vern", color: "nope"},

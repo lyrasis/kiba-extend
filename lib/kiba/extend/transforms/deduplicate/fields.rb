@@ -107,9 +107,9 @@ module Kiba
             sourceval = @multival ? sourceval.split(@sep,
               -1).map(&:strip) : [sourceval.strip]
             targetvals = if @multival
-              targetvals.map { |val|
+              targetvals.map do |val|
                 val.split(@sep, -1).map(&:strip)
-              }
+              end
             else
               targetvals.map { |val| [val.strip] }
             end
@@ -120,11 +120,11 @@ module Kiba
               targetvals = targetvals.map { |vals| vals - sourceval }
             else
               sourceval = sourceval.map(&:downcase)
-              targetvals = targetvals.map { |vals|
-                vals.reject { |val|
+              targetvals = targetvals.map do |vals|
+                vals.reject do |val|
                   sourceval.include?(val.downcase)
-                }
-              }
+                end
+              end
             end
 
             targetvals = if @multival

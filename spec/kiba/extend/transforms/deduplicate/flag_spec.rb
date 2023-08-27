@@ -35,9 +35,9 @@ RSpec.describe Kiba::Extend::Transforms::Deduplicate::Flag do
   end
 
   context "with explicit no value = false" do
-    let(:params) {
+    let(:params) do
       {on_field: onfield, in_field: infield, using: deduper, explicit_no: false}
-    }
+    end
     let(:expected) do
       [
         {id: "1", x: "a", d: ""},
@@ -55,10 +55,10 @@ RSpec.describe Kiba::Extend::Transforms::Deduplicate::Flag do
   context "without `using` hash" do
     let(:deduper) { nil }
     it "raises error" do
-      expect {
+      expect do
         xform
         # rubocop:todo Layout/LineLength
-      }.to raise_error(Kiba::Extend::Transforms::Deduplicate::Flag::NoUsingValueError)
+      end.to raise_error(Kiba::Extend::Transforms::Deduplicate::Flag::NoUsingValueError)
       # rubocop:enable Layout/LineLength
     end
   end

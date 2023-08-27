@@ -13,12 +13,9 @@ Gem::Specification.new do |spec|
   spec.license = "MIT"
 
   spec.required_ruby_version = ">=3.1.0"
-  # rubocop:todo Layout/LineLength
-  # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
-  # rubocop:enable Layout/LineLength
-  # rubocop:todo Layout/LineLength
-  # to allow pushing to a single host or delete this section to allow pushing to any host.
-  # rubocop:enable Layout/LineLength
+  # Prevent pushing this gem to RubyGems.org. To allow pushes either set the
+  #   'allowed_push_host' to allow pushing to a single host or delete this
+  #   section to allow pushing to any host.
   if spec.respond_to?(:metadata)
     spec.metadata["allowed_push_host"] = "TODO: Set to 'http://mygemserver.com'"
 
@@ -31,13 +28,12 @@ Gem::Specification.new do |spec|
   end
 
   # Specify which files should be added to the gem when it is released.
-  # rubocop:todo Layout/LineLength
-  # The `git ls-files -z` loads the files in the RubyGem that have been added into git.
-  # rubocop:enable Layout/LineLength
+  # The `git ls-files -z` loads the files in the RubyGem that have been added
+  #   into git.
   spec.files = Dir.chdir(File.expand_path(__dir__)) do
-    `git ls-files -z`.split("\x0").reject { |f|
+    `git ls-files -z`.split("\x0").reject do |f|
       f.match(%r{^(test|spec|features)/})
-    }
+    end
   end
   spec.bindir = "exe"
   spec.executables = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }

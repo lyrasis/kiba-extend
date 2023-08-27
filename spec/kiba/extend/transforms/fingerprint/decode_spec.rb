@@ -10,10 +10,10 @@ RSpec.describe Kiba::Extend::Transforms::Fingerprint::Decode do
     ]
   end
   let(:accumulator) { [] }
-  let(:test_job) {
+  let(:test_job) do
     Helpers::TestJob.new(input: input, accumulator: accumulator,
       transforms: transforms)
-  }
+  end
   let(:result) { test_job.accumulator }
 
   context "with defaults" do

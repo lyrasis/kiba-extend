@@ -4,13 +4,13 @@ require "spec_helper"
 
 # rubocop:disable Metrics/BlockLength
 RSpec.describe "Kiba::Extend::Jobs::TestingJob" do
-  let(:test_job) {
+  let(:test_job) do
     Kiba::Extend::Jobs::TestingJob.new(files: test_job_config,
       transformer: test_job_transforms)
-  }
-  let(:test_job_config) {
+  end
+  let(:test_job_config) do
     {source: src, destination: dest, lookup: [[lkup1, :foo], [lkup2, :baz]]}
-  }
+  end
   let(:src) { [{foo: 1, bar: 2}, {foo: 3, bar: 4}] }
   let(:dest) { [] }
   let(:lkup1) { [{foo: 1, baz: "a"}, {foo: 3, baz: "c"}] }

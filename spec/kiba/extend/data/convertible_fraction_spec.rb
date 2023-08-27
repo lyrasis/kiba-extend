@@ -12,9 +12,9 @@ RSpec.describe Kiba::Extend::Data::ConvertibleFraction do
       let(:params) { {whole: "1", fraction: "3/4", position: 2..4} }
 
       it "raises TypeError" do
-        expect {
+        expect do
           result
-        }.to raise_error(TypeError, "`whole` must be an Integer")
+        end.to raise_error(TypeError, "`whole` must be an Integer")
       end
     end
 
@@ -22,9 +22,9 @@ RSpec.describe Kiba::Extend::Data::ConvertibleFraction do
       let(:params) { {whole: 1, fraction: "3/4", position: 2} }
 
       it "raises TypeError" do
-        expect {
+        expect do
           result
-        }.to raise_error(TypeError, "`position` must be a Range")
+        end.to raise_error(TypeError, "`position` must be a Range")
       end
     end
   end
@@ -51,9 +51,9 @@ RSpec.describe Kiba::Extend::Data::ConvertibleFraction do
       }
     end
     let(:results) do
-      expectations.keys.map { |arr|
+      expectations.keys.map do |arr|
         klass.new(**arr[0]).replace_in(val: arr[1])
-      }
+      end
     end
     let(:expected) { expectations.values }
 
@@ -145,9 +145,9 @@ RSpec.describe Kiba::Extend::Data::ConvertibleFraction do
       }
     end
     let(:results) do
-      expectations.keys.map { |pair|
+      expectations.keys.map do |pair|
         klass.new(**pair[0]) == klass.new(**pair[1])
-      }
+      end
     end
     let(:expected) { expectations.values }
 
@@ -179,9 +179,9 @@ RSpec.describe Kiba::Extend::Data::ConvertibleFraction do
       }
     end
     let(:results) do
-      expectations.keys.map { |pair|
+      expectations.keys.map do |pair|
         klass.new(**pair[0]).hash == klass.new(**pair[1]).hash
-      }
+      end
     end
     let(:expected) { expectations.values }
 

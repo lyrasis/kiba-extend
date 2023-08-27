@@ -102,9 +102,9 @@ RSpec.describe Kiba::Extend::Utils::FieldValueMatcher do
     # rubocop:todo Layout/LineLength
     context %(with field: :test, match: '^$', treat_as_null: '%NULL%', matchmode: :regexp) do
       # rubocop:enable Layout/LineLength
-      let(:params) {
+      let(:params) do
         {field: :test, match: "^$", treat_as_null: "%NULL%", matchmode: :regexp}
-      }
+      end
       let(:expectations) do
         {
           {foo: "bar"} => false,
@@ -174,9 +174,9 @@ RSpec.describe Kiba::Extend::Utils::FieldValueMatcher do
     # rubocop:todo Layout/LineLength
     context %(when field: :test, match: match, delim: '|', multimode: :allstrict) do
       # rubocop:enable Layout/LineLength
-      let(:params) {
+      let(:params) do
         {field: :test, match: "Foo", delim: "|", multimode: :allstrict}
-      }
+      end
       let(:expectations) do
         {
           {foo: "Foo"} => false,
@@ -202,9 +202,9 @@ RSpec.describe Kiba::Extend::Utils::FieldValueMatcher do
     end
 
     context %(when field: :test, match: '^$', matchmode: :regex, delim: '|') do
-      let(:params) {
+      let(:params) do
         {field: :test, match: "^$", matchmode: :regex, delim: "|"}
-      }
+      end
       let(:expectations) do
         {
           {test: "foo|"} => true,
@@ -226,9 +226,9 @@ RSpec.describe Kiba::Extend::Utils::FieldValueMatcher do
     # rubocop:todo Layout/LineLength
     context %(when field: :test, match: '', delim: '|', treat_as_null: '%NULL%') do
       # rubocop:enable Layout/LineLength
-      let(:params) {
+      let(:params) do
         {field: :test, match: "", delim: "|", treat_as_null: "%NULL%"}
-      }
+      end
       let(:expectations) do
         {
           {test: ""} => true,
@@ -249,10 +249,10 @@ RSpec.describe Kiba::Extend::Utils::FieldValueMatcher do
     # rubocop:todo Layout/LineLength
     context %(when field: :test, match: '', delim: '|', treat_as_null: '%NULL%', strip: false) do
       # rubocop:enable Layout/LineLength
-      let(:params) {
+      let(:params) do
         {field: :test, match: "", delim: "|", treat_as_null: "%NULL%",
          strip: false}
-      }
+      end
       let(:expectations) do
         {
           {test: "foo|%NULL%|bar"} => true,
@@ -287,9 +287,9 @@ RSpec.describe Kiba::Extend::Utils::FieldValueMatcher do
     # rubocop:todo Layout/LineLength
     context %(with field: :test, match: '^fo+$', matchmode: :regex, delim: '|') do
       # rubocop:enable Layout/LineLength
-      let(:params) {
+      let(:params) do
         {field: :test, match: "^fo+$", matchmode: :regex, delim: "|"}
-      }
+      end
       let(:expectations) do
         {
           {test: "foo"} => true,
@@ -307,10 +307,10 @@ RSpec.describe Kiba::Extend::Utils::FieldValueMatcher do
     # rubocop:todo Layout/LineLength
     context %(with field: :test, match: '^fo+$', matchmode: :regex, delim: '|', multimode: :all) do
       # rubocop:enable Layout/LineLength
-      let(:params) {
+      let(:params) do
         {field: :test, match: "^fo+$", matchmode: :regex, delim: "|",
          multimode: :all}
-      }
+      end
       let(:expectations) do
         {
           {test: "foo"} => true,
@@ -329,10 +329,10 @@ RSpec.describe Kiba::Extend::Utils::FieldValueMatcher do
     # rubocop:todo Layout/LineLength
     context %(with field: :test, match: '^fo+', matchmode: :regex, delim: '|', casesensitive: false) do
       # rubocop:enable Layout/LineLength
-      let(:params) {
+      let(:params) do
         {field: :test, match: "^fo+", matchmode: :regex, delim: "|",
          casesensitive: false}
-      }
+      end
       let(:expectations) do
         {
           {test: "foo"} => true,

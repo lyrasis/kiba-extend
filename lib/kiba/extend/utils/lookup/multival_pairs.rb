@@ -16,21 +16,21 @@ module Kiba
             pair = pair.map do |arr|
               case arr[0]
               when "row"
-                [row.fetch(arr[1], "")].map { |e|
+                [row.fetch(arr[1], "")].map do |e|
                   (e.nil? || e.empty?) ? "%comparenothing%" : e
-                }
+                end
               when "mvrow"
-                row.fetch(arr[1], "").split(sep).map { |e|
+                row.fetch(arr[1], "").split(sep).map do |e|
                   (e.nil? || e.empty?) ? "%comparenothing%" : e
-                }
+                end
               when "mergerow"
-                [mergerow.fetch(arr[1], "")].map { |e|
+                [mergerow.fetch(arr[1], "")].map do |e|
                   (e.nil? || e.empty?) ? "%comparenothing%" : e
-                }
+                end
               when "mvmergerow"
-                mergerow.fetch(arr[1], "").split(sep).map { |e|
+                mergerow.fetch(arr[1], "").split(sep).map do |e|
                   (e.nil? || e.empty?) ? "%comparenothing%" : e
-                }
+                end
               when "revalue"
                 "revalue::#{arr[1]}"
               when "value"
@@ -38,9 +38,9 @@ module Kiba
               end
             end
             pair[0].product(pair[1]).each do |mvpair|
-              @result << mvpair.map { |e|
+              @result << mvpair.map do |e|
                 e.start_with?("revalue") ? e : "value::#{e}"
-              }
+              end
             end
           end
         end

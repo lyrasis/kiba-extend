@@ -57,9 +57,9 @@ module Kiba
 
         def fields_with_eligible_subfields(fields)
           fields.select do |field|
-            test = field.subfields.select { |sf|
+            test = field.subfields.select do |sf|
               sf.code == subfield && subfield_selector.call(sf.value)
-            }
+            end
             !test.empty?
           end
         end

@@ -74,9 +74,9 @@ module Kiba
             chk_result = checker.call(row)
             return row if chk_result == :even
 
-            uneven = chk_result.map { |field, val|
+            uneven = chk_result.map do |field, val|
               "#{field}: #{val}"
-            }.join("; ")
+            end.join("; ")
             # rubocop:todo Layout/LineLength
             msg = "#{Kiba::Extend.warning_label}: Uneven values for #{fields.join("/")} in #{uneven}"
             # rubocop:enable Layout/LineLength

@@ -13,9 +13,9 @@ RSpec.describe Kiba::Extend::Transforms::Split::IntoMultipleColumns do
       let(:params) { {field: :summary, sep: ":"} }
 
       it "raises ArgumentError with expected message" do
-        expect {
+        expect do
           xform.process(row)
-        }.to raise_error(ArgumentError,
+        end.to raise_error(ArgumentError,
           "missing keyword: :max_segments")
       end
     end
@@ -75,9 +75,9 @@ RSpec.describe Kiba::Extend::Transforms::Split::IntoMultipleColumns do
           {summary: nil}
         ]
       end
-      let(:params) {
+      let(:params) do
         {field: :summary, sep: ":", max_segments: 3, warnfield: :warn}
-      }
+      end
 
       it "collapses on right and adds warning to warnfield" do
         expected = [
@@ -103,9 +103,9 @@ RSpec.describe Kiba::Extend::Transforms::Split::IntoMultipleColumns do
           {summary: nil}
         ]
       end
-      let(:params) {
+      let(:params) do
         {field: :summary, sep: ":", max_segments: 3, collapse_on: :left}
-      }
+      end
 
       it "collapses on left" do
         expected = [
@@ -128,9 +128,9 @@ RSpec.describe Kiba::Extend::Transforms::Split::IntoMultipleColumns do
         ]
       end
 
-      let(:params) {
+      let(:params) do
         {field: :name, sep: ",", max_segments: 2, collapse_on: :right}
-      }
+      end
 
       it "collapses on right" do
         expected = [
@@ -151,9 +151,9 @@ RSpec.describe Kiba::Extend::Transforms::Split::IntoMultipleColumns do
         ]
       end
 
-      let(:params) {
+      let(:params) do
         {field: :name, sep: ",", max_segments: 2, collapse_on: :left}
-      }
+      end
 
       it "collapses on left" do
         expected = [

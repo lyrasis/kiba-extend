@@ -44,9 +44,9 @@ module Kiba
         #
         class ConstantValues
           def initialize(constantmap:)
-            @mergers = constantmap.map { |target, value|
+            @mergers = constantmap.map do |target, value|
               Merge::ConstantValue.new(target: target, value: value)
-            }
+            end
           end
 
           # @param row [Hash{ Symbol => String, nil }]

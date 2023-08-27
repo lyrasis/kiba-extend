@@ -3,9 +3,9 @@
 require "spec_helper"
 
 RSpec.describe Kiba::Extend::Transforms::Name::ConvertInvertedToDirectForm do
-  let(:klass) {
+  let(:klass) do
     Name::ConvertInvertedToDirectForm.new(source: :iname, target: :direct)
-  }
+  end
 
   let(:rows) do
     [
@@ -110,17 +110,17 @@ RSpec.describe Kiba::Extend::Transforms::Name::ConvertInvertedToDirectForm do
   end
 
   context "with custom nameparts" do
-    let(:klass) {
+    let(:klass) do
       Name::ConvertInvertedToDirectForm.new(source: :iname, target: :direct,
         nameparts: %i[f m l s])
-    }
+    end
     let(:row) { {iname: "Smith, R.J., Sr."} }
-    let(:expected) {
+    let(:expected) do
       # rubocop:todo Layout/LineLength
       {iname: "Smith, R.J., Sr.", direct: "R. J. Smith, Sr.", f: "R.", l: "Smith",
        # rubocop:enable Layout/LineLength
        m: "J.", s: "Sr."}
-    }
+    end
 
     it "transforms as expected" do
       expect(klass.process(row)).to eq(expected)
@@ -128,10 +128,10 @@ RSpec.describe Kiba::Extend::Transforms::Name::ConvertInvertedToDirectForm do
   end
 
   context "with keep_parts false" do
-    let(:klass) {
+    let(:klass) do
       Name::ConvertInvertedToDirectForm.new(source: :iname, target: :direct,
         keep_parts: false)
-    }
+    end
     let(:row) { {iname: "Smith, R.J., Sr."} }
     let(:expected) { {iname: "Smith, R.J., Sr.", direct: "R. J. Smith, Sr."} }
 

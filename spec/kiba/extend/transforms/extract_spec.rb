@@ -4,10 +4,10 @@ require "spec_helper"
 
 RSpec.describe Kiba::Extend::Transforms::Extract do
   let(:accumulator) { [] }
-  let(:testjob) {
+  let(:testjob) do
     Helpers::TestJob.new(input: input, accumulator: accumulator,
       transforms: transforms)
-  }
+  end
 
   describe "Fields" do
     let(:input) do

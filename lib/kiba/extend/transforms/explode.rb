@@ -90,9 +90,9 @@ module Kiba
           def process(row)
             to_new_rows = new_row_groups(row)
             if to_new_rows.empty?
-              newrow = @map.map { |field|
+              newrow = @map.map do |field|
                 [field, nil]
-              }.to_h.merge(other_fields(row))
+              end.to_h.merge(other_fields(row))
               yield(newrow)
             else
               to_new_rows.each do |grp_data|

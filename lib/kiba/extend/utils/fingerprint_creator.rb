@@ -40,12 +40,12 @@ module Kiba
 
         def check_values(values)
           # rubocop:todo Layout/LineLength
-          raise Kiba::Extend::Utils::DelimInValueFingerprintError if values.compact.any? { |val|
+          raise Kiba::Extend::Utils::DelimInValueFingerprintError if values.compact.any? do |val|
                                                                        # rubocop:enable Layout/LineLength
                                                                        # rubocop:todo Layout/LineLength
                                                                        val[delim]
                                                                        # rubocop:enable Layout/LineLength
-                                                                     }
+                                                                     end
         end
 
         def hashable_values(values)

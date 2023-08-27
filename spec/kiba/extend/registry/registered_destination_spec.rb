@@ -54,10 +54,10 @@ RSpec.describe "Kiba::Extend::Registry::RegisteredDestination" do
     context "with extra options" do
       context "when extra option is allowed for destination class" do
         let(:extra) { {initial_headers: %i[a b]} }
-        let(:data) {
+        let(:data) do
           {path: path, dest_class: Kiba::Extend::Destinations::CSV,
            dest_special_opts: extra}
-        }
+        end
         let(:expected) do
           {filename: path, csv_options: Kiba::Extend.csvopts,
            initial_headers: %i[a b]}
@@ -69,10 +69,10 @@ RSpec.describe "Kiba::Extend::Registry::RegisteredDestination" do
 
       context "when extra option is not defined for destination class" do
         let(:extra) { {blah: %i[a b]} }
-        let(:data) {
+        let(:data) do
           {path: path, dest_class: Kiba::Extend::Destinations::CSV,
            dest_special_opts: extra}
-        }
+        end
         let(:expected) do
           {filename: path, csv_options: Kiba::Extend.csvopts}
         end

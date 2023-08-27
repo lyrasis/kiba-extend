@@ -172,9 +172,9 @@ module Kiba
             treat_as_null: Kiba::Extend.nullvalue)
             @groups = groups
             @delim = delim
-            @null_vals = treat_as_null ? [treat_as_null].flatten.sort_by { |v|
+            @null_vals = treat_as_null ? [treat_as_null].flatten.sort_by do |v|
                                            v.length
-                                         }.reverse : []
+                                         end.reverse : []
             @delim_only_cleaner = Delete::DelimiterOnlyFieldValues.new(
               fields: groups.flatten,
               delim: delim,
@@ -224,13 +224,13 @@ module Kiba
           end
 
           def multi_field_blank_remover(row, field_vals)
-            split_vals = field_vals.transform_values { |vals|
+            split_vals = field_vals.transform_values do |vals|
               vals.split(delim, -1)
-            }
+            end
             idxs = empty_indexes(split_vals)
-            split_vals.each { |field, vals|
+            split_vals.each do |field, vals|
               delete_blank_indexes(row, field, vals, idxs)
-            }
+            end
           end
 
           def single_field_blank_remover(row, field_vals)
@@ -259,19 +259,19 @@ module Kiba
 
           def setup_index_analyzer(prepped_vals)
             analyzer = {}
-            prepped_vals.first[1].each_with_index { |_e, idx|
+            prepped_vals.first[1].each_with_index do |_e, idx|
               analyzer[idx] = []
-            }
+            end
             analyzer
           end
 
           def prep_for_empty_index_identification(vals)
             vals.dup
-              .transform_values { |vals|
-              vals.map { |val|
+              .transform_values do |vals|
+              vals.map do |val|
                 empty_val?(val) ? :empty : :notempty
-              }
-            }
+              end
+            end
           end
 
           def empty_val?(str)
