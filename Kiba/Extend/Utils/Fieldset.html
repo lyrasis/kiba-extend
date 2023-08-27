@@ -492,9 +492,9 @@
 <span class='kw'>def</span> <span class='id identifier rubyid_join_values'>join_values</span><span class='lparen'>(</span><span class='id identifier rubyid_delim'>delim</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_hash'>hash</span><span class='period'>.</span><span class='id identifier rubyid_transform_values!'>transform_values!</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_vals'>vals</span><span class='op'>|</span>
     <span class='id identifier rubyid_placeholdered'>placeholdered</span> <span class='op'>=</span> <span class='kw'>if</span> <span class='id identifier rubyid_null_placeholder'>null_placeholder</span>
-      <span class='id identifier rubyid_vals'>vals</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_val'>val</span><span class='op'>|</span>
+      <span class='id identifier rubyid_vals'>vals</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_val'>val</span><span class='op'>|</span>
         <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>?</span> <span class='id identifier rubyid_null_placeholder'>null_placeholder</span> <span class='op'>:</span> <span class='id identifier rubyid_val'>val</span>
-      <span class='rbrace'>}</span>
+      <span class='kw'>end</span>
     <span class='kw'>else</span>
       <span class='id identifier rubyid_vals'>vals</span>
     <span class='kw'>end</span>
@@ -579,7 +579,7 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Aug 25 15:11:37 2023 by
+  Generated on Sun Aug 27 01:12:08 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

@@ -464,9 +464,9 @@ rubocop:enable Layout/LineLength
   <span class='label'>treat_as_null:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_nullvalue'><span class='object_link'><a href="../../../Extend.html#nullvalue-class_method" title="Kiba::Extend.nullvalue (method)">nullvalue</a></span></span><span class='rparen'>)</span>
   <span class='ivar'>@groups</span> <span class='op'>=</span> <span class='id identifier rubyid_groups'>groups</span>
   <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_delim'>delim</span>
-  <span class='ivar'>@null_vals</span> <span class='op'>=</span> <span class='id identifier rubyid_treat_as_null'>treat_as_null</span> <span class='op'>?</span> <span class='lbracket'>[</span><span class='id identifier rubyid_treat_as_null'>treat_as_null</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span>
+  <span class='ivar'>@null_vals</span> <span class='op'>=</span> <span class='id identifier rubyid_treat_as_null'>treat_as_null</span> <span class='op'>?</span> <span class='lbracket'>[</span><span class='id identifier rubyid_treat_as_null'>treat_as_null</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span>
                                  <span class='id identifier rubyid_v'>v</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
-                               <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_reverse'>reverse</span> <span class='op'>:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
+                               <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_reverse'>reverse</span> <span class='op'>:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
   <span class='ivar'>@delim_only_cleaner</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Delete.html" title="Kiba::Extend::Transforms::Delete (module)">Delete</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="DelimiterOnlyFieldValues.html" title="Kiba::Extend::Transforms::Delete::DelimiterOnlyFieldValues (class)">DelimiterOnlyFieldValues</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="DelimiterOnlyFieldValues.html#initialize-instance_method" title="Kiba::Extend::Transforms::Delete::DelimiterOnlyFieldValues#initialize (method)">new</a></span></span><span class='lparen'>(</span>
     <span class='label'>fields:</span> <span class='id identifier rubyid_groups'>groups</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='comma'>,</span>
     <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='comma'>,</span>
@@ -577,7 +577,7 @@ rubocop:enable Layout/LineLength
 </div>
 
       <div id="footer">
-  Generated on Fri Aug 25 15:11:40 2023 by
+  Generated on Sun Aug 27 01:12:11 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

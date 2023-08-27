@@ -434,9 +434,9 @@ rubocop:enable Layout/LineLength</p>
     <span class='id identifier rubyid_row'>row</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='ivar'>@row_field</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_fieldval'>fieldval</span><span class='rbrace'>}</span>
     <span class='id identifier rubyid_row'>row</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_row_fields'>row_fields</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_freeze'>freeze</span>
-    <span class='ivar'>@columns</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span>
+    <span class='ivar'>@columns</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span>
       <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>nil</span> <span class='kw'>unless</span> <span class='id identifier rubyid_row_fields'>row_fields</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='rparen'>)</span>
-    <span class='rbrace'>}</span>
+    <span class='kw'>end</span>
     <span class='kw'>yield</span> <span class='id identifier rubyid_row'>row</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -506,7 +506,7 @@ rubocop:enable Layout/LineLength</p>
 </div>
 
       <div id="footer">
-  Generated on Fri Aug 25 15:11:39 2023 by
+  Generated on Sun Aug 27 01:12:10 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

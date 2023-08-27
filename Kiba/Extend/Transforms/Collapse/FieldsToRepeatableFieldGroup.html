@@ -754,11 +754,11 @@ should print warnings about uneven field groups to STDOUT</p>
   <span class='ivar'>@enforce_evenness</span> <span class='op'>=</span> <span class='id identifier rubyid_enforce_evenness'>enforce_evenness</span>
   <span class='ivar'>@warn_if_uneven</span> <span class='op'>=</span> <span class='id identifier rubyid_warn_if_uneven'>warn_if_uneven</span>
 
-  <span class='ivar'>@srcfieldgroups</span> <span class='op'>=</span> <span class='id identifier rubyid_sources'>sources</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_source'>source</span><span class='op'>|</span>
-    <span class='id identifier rubyid_targets'>targets</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_target'>target</span><span class='op'>|</span>
+  <span class='ivar'>@srcfieldgroups</span> <span class='op'>=</span> <span class='id identifier rubyid_sources'>sources</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_source'>source</span><span class='op'>|</span>
+    <span class='id identifier rubyid_targets'>targets</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_target'>target</span><span class='op'>|</span>
       <span class='id identifier rubyid_field_name'>field_name</span><span class='lparen'>(</span><span class='id identifier rubyid_source'>source</span><span class='comma'>,</span> <span class='id identifier rubyid_target'>target</span><span class='rparen'>)</span>
-    <span class='rbrace'>}</span>
-  <span class='rbrace'>}</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
   <span class='ivar'>@srcemptyreplacers</span> <span class='op'>=</span> <span class='id identifier rubyid_srcfieldgroups'>srcfieldgroups</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_grp'>grp</span><span class='op'>|</span>
     <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Transforms.html" title="Kiba::Extend::Transforms (module)">Transforms</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Replace.html" title="Kiba::Extend::Transforms::Replace (module)">Replace</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Replace/EmptyFieldValues.html" title="Kiba::Extend::Transforms::Replace::EmptyFieldValues (class)">EmptyFieldValues</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Replace/EmptyFieldValues.html#initialize-instance_method" title="Kiba::Extend::Transforms::Replace::EmptyFieldValues#initialize (method)">new</a></span></span><span class='lparen'>(</span>
       <span class='label'>fields:</span> <span class='id identifier rubyid_grp'>grp</span><span class='comma'>,</span>
@@ -872,9 +872,9 @@ should print warnings about uneven field groups to STDOUT</p>
   <span class='kw'>if</span> <span class='id identifier rubyid_enforce_evenness'>enforce_evenness</span>
     <span class='id identifier rubyid_srceveners'>srceveners</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_e'>e</span><span class='op'>|</span> <span class='id identifier rubyid_e'>e</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
   <span class='kw'>end</span>
-  <span class='id identifier rubyid_to_combine'>to_combine</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='id identifier rubyid_getter'>getter</span><span class='op'>|</span>
+  <span class='id identifier rubyid_to_combine'>to_combine</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='id identifier rubyid_getter'>getter</span><span class='op'>|</span>
     <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_target'>target</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_getter'>getter</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='id identifier rubyid_delim'>delim</span><span class='rparen'>)</span>
-  <span class='rbrace'>}</span>
+  <span class='kw'>end</span>
   <span class='id identifier rubyid_delete_sources'>delete_sources</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_empty_replacer'>empty_replacer</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_field_group_cleaner'>field_group_cleaner</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_empty_groups'>empty_groups</span> <span class='op'>==</span> <span class='symbol'>:delete</span>
@@ -891,7 +891,7 @@ should print warnings about uneven field groups to STDOUT</p>
 </div>
 
       <div id="footer">
-  Generated on Fri Aug 25 15:11:42 2023 by
+  Generated on Sun Aug 27 01:12:12 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

@@ -374,9 +374,9 @@ rubocop:enable Layout/LineLength</p>
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_to_new_rows'>to_new_rows</span> <span class='op'>=</span> <span class='id identifier rubyid_new_row_groups'>new_row_groups</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_to_new_rows'>to_new_rows</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
-    <span class='id identifier rubyid_newrow'>newrow</span> <span class='op'>=</span> <span class='ivar'>@map</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span>
+    <span class='id identifier rubyid_newrow'>newrow</span> <span class='op'>=</span> <span class='ivar'>@map</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span>
       <span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rbracket'>]</span>
-    <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_other_fields'>other_fields</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span><span class='rparen'>)</span>
+    <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_other_fields'>other_fields</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span><span class='rparen'>)</span>
     <span class='kw'>yield</span><span class='lparen'>(</span><span class='id identifier rubyid_newrow'>newrow</span><span class='rparen'>)</span>
   <span class='kw'>else</span>
     <span class='id identifier rubyid_to_new_rows'>to_new_rows</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_grp_data'>grp_data</span><span class='op'>|</span>
@@ -396,7 +396,7 @@ rubocop:enable Layout/LineLength</p>
 </div>
 
       <div id="footer">
-  Generated on Fri Aug 25 15:11:37 2023 by
+  Generated on Sun Aug 27 01:12:09 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

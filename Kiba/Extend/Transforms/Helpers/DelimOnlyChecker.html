@@ -349,10 +349,10 @@ rubocop:enable Layout/LineLength</p>
   <span class='label'>blank_result:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_delim'>delim</span>
   <span class='comment'># rubocop:todo Layout/LineLength
-</span>  <span class='ivar'>@nullvals</span> <span class='op'>=</span> <span class='id identifier rubyid_treat_as_null'>treat_as_null</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>?</span> <span class='kw'>nil</span> <span class='op'>:</span> <span class='lbracket'>[</span><span class='id identifier rubyid_treat_as_null'>treat_as_null</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_val'>val</span><span class='op'>|</span>
+</span>  <span class='ivar'>@nullvals</span> <span class='op'>=</span> <span class='id identifier rubyid_treat_as_null'>treat_as_null</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='op'>?</span> <span class='kw'>nil</span> <span class='op'>:</span> <span class='lbracket'>[</span><span class='id identifier rubyid_treat_as_null'>treat_as_null</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_val'>val</span><span class='op'>|</span>
                                            <span class='comment'># rubocop:enable Layout/LineLength
 </span>                                           <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span>
-                                         <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_reverse'>reverse</span>
+                                         <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_reverse'>reverse</span>
   <span class='ivar'>@blank_result</span> <span class='op'>=</span> <span class='id identifier rubyid_blank_result'>blank_result</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -545,7 +545,7 @@ rubocop:enable Layout/LineLength</p>
 </div>
 
       <div id="footer">
-  Generated on Fri Aug 25 15:11:40 2023 by
+  Generated on Sun Aug 27 01:12:11 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

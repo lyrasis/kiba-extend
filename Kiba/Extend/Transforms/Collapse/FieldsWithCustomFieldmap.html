@@ -571,9 +571,9 @@ rubocop:enable Layout/LineLength</p>
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/collapse/fields_with_custom_fieldmap.rb', line 207</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_fieldmap'>fieldmap</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='id identifier rubyid_sources'>sources</span><span class='op'>|</span>
+  <span class='id identifier rubyid_fieldmap'>fieldmap</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='id identifier rubyid_sources'>sources</span><span class='op'>|</span>
     <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_target'>target</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_compile_source_values'>compile_source_values</span><span class='lparen'>(</span><span class='id identifier rubyid_sources'>sources</span><span class='comma'>,</span> <span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
-  <span class='rbrace'>}</span>
+  <span class='kw'>end</span>
   <span class='id identifier rubyid_delete_sources'>delete_sources</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_del'>del</span>
   <span class='id identifier rubyid_row'>row</span>
 <span class='kw'>end</span></pre>
@@ -587,7 +587,7 @@ rubocop:enable Layout/LineLength</p>
 </div>
 
       <div id="footer">
-  Generated on Fri Aug 25 15:11:41 2023 by
+  Generated on Sun Aug 27 01:12:12 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

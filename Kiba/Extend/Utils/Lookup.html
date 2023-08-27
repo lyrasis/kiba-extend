@@ -297,9 +297,9 @@ rubocop:enable Layout/LineLength</p>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_csv_to_hash'>csv_to_hash</span><span class='lparen'>(</span><span class='label'>file:</span><span class='comma'>,</span> <span class='label'>keycolumn:</span><span class='comma'>,</span> <span class='label'>csvopt:</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_csvopts'><span class='object_link'><a href="../../Extend.html#csvopts-class_method" title="Kiba::Extend.csvopts (method)">csvopts</a></span></span><span class='rparen'>)</span>
   <span class='id identifier rubyid_lookup'>lookup</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Utils.html" title="Kiba::Extend::Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="LookupHash.html" title="Kiba::Extend::Utils::LookupHash (class)">LookupHash</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="LookupHash.html#initialize-instance_method" title="Kiba::Extend::Utils::LookupHash#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>keycolumn:</span> <span class='id identifier rubyid_keycolumn'>keycolumn</span><span class='rparen'>)</span>
-  <span class='const'>CSV</span><span class='period'>.</span><span class='id identifier rubyid_foreach'>foreach</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_csvopt'>csvopt</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span>
+  <span class='const'>CSV</span><span class='period'>.</span><span class='id identifier rubyid_foreach'>foreach</span><span class='lparen'>(</span><span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_expand_path'>expand_path</span><span class='lparen'>(</span><span class='id identifier rubyid_file'>file</span><span class='rparen'>)</span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_csvopt'>csvopt</span><span class='rparen'>)</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span>
     <span class='id identifier rubyid_lookup'>lookup</span><span class='period'>.</span><span class='id identifier rubyid_add_record'>add_record</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span><span class='rparen'>)</span>
-  <span class='rbrace'>}</span>
+  <span class='kw'>end</span>
   <span class='id identifier rubyid_lookup'>lookup</span><span class='period'>.</span><span class='id identifier rubyid_hash'>hash</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -458,7 +458,7 @@ rubocop:enable Layout/LineLength</p>
 </div>
 
       <div id="footer">
-  Generated on Fri Aug 25 15:11:37 2023 by
+  Generated on Sun Aug 27 01:12:08 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

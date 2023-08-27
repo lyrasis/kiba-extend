@@ -285,9 +285,9 @@ rubocop:enable Layout/LineLength</p>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fieldmap:</span><span class='rparen'>)</span>
   <span class='ivar'>@fieldmap</span> <span class='op'>=</span> <span class='id identifier rubyid_fieldmap'>fieldmap</span>
-  <span class='ivar'>@renamers</span> <span class='op'>=</span> <span class='id identifier rubyid_fieldmap'>fieldmap</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_from'>from</span><span class='comma'>,</span> <span class='id identifier rubyid_to'>to</span><span class='op'>|</span>
+  <span class='ivar'>@renamers</span> <span class='op'>=</span> <span class='id identifier rubyid_fieldmap'>fieldmap</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_from'>from</span><span class='comma'>,</span> <span class='id identifier rubyid_to'>to</span><span class='op'>|</span>
     <span class='const'><span class='object_link'><a href="../Rename.html" title="Kiba::Extend::Transforms::Rename (module)">Rename</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Field.html" title="Kiba::Extend::Transforms::Rename::Field (class)">Field</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Field.html#initialize-instance_method" title="Kiba::Extend::Transforms::Rename::Field#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>from:</span> <span class='id identifier rubyid_from'>from</span><span class='comma'>,</span> <span class='label'>to:</span> <span class='id identifier rubyid_to'>to</span><span class='rparen'>)</span>
-  <span class='rbrace'>}</span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -377,7 +377,7 @@ rubocop:enable Layout/LineLength</p>
 </div>
 
       <div id="footer">
-  Generated on Fri Aug 25 15:11:38 2023 by
+  Generated on Sun Aug 27 01:12:09 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

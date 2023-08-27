@@ -280,9 +280,9 @@ rubocop:enable Layout/LineLength
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/merge/constant_values.rb', line 46</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>constantmap:</span><span class='rparen'>)</span>
-  <span class='ivar'>@mergers</span> <span class='op'>=</span> <span class='id identifier rubyid_constantmap'>constantmap</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
+  <span class='ivar'>@mergers</span> <span class='op'>=</span> <span class='id identifier rubyid_constantmap'>constantmap</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
     <span class='const'><span class='object_link'><a href="../Merge.html" title="Kiba::Extend::Transforms::Merge (module)">Merge</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="ConstantValue.html" title="Kiba::Extend::Transforms::Merge::ConstantValue (class)">ConstantValue</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="ConstantValue.html#initialize-instance_method" title="Kiba::Extend::Transforms::Merge::ConstantValue#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>target:</span> <span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='label'>value:</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
-  <span class='rbrace'>}</span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -372,7 +372,7 @@ rubocop:enable Layout/LineLength
 </div>
 
       <div id="footer">
-  Generated on Fri Aug 25 15:11:39 2023 by
+  Generated on Sun Aug 27 01:12:10 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>
