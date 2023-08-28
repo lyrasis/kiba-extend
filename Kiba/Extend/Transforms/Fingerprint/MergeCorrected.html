@@ -163,6 +163,44 @@ transform after running this, and before writing output.</p>
 <span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
     
       
+        <p class="example_title"><div class='inline'><p>With tag_affected_in</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='comment'># Used in pipeline as:
+</span><span class='comment'># transform Fingerprint::MergeCorrected,
+</span><span class='comment'>#   keycolumn: :fp,
+</span><span class='comment'>#   lookup: lookup,
+</span><span class='comment'>#   todofield: :corrected,
+</span><span class='comment'>#   tag_affected_in: :corr
+</span><span class='id identifier rubyid_lookup'>lookup</span> <span class='op'>=</span> <span class='lbrace'>{</span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1</span><span class='tstring_end'>&quot;</span></span><span class='op'>=&gt;</span><span class='lbracket'>[</span><span class='lbrace'>{</span><span class='label'>key:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>apps</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>corrected:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>a|b</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='rbracket'>]</span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2</span><span class='tstring_end'>&quot;</span></span><span class='op'>=&gt;</span><span class='lbracket'>[</span><span class='lbrace'>{</span><span class='label'>key:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>apple</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bee</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>corrected:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>b</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+        <span class='lbrace'>{</span><span class='label'>key:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>apples</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bee</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>corrected:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>a</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='rbracket'>]</span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>3</span><span class='tstring_end'>&quot;</span></span><span class='op'>=&gt;</span><span class='lbracket'>[</span><span class='lbrace'>{</span><span class='label'>key:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>3</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>apple</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>bees</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>corrected:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='rbracket'>]</span>
+<span class='rbrace'>}</span>
+<span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Fingerprint.html" title="Kiba::Extend::Transforms::Fingerprint (module)">Fingerprint</a></span></span><span class='op'>::</span><span class='const'>MergeCorrected</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Fingerprint::MergeCorrected#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+  <span class='label'>keycolumn:</span> <span class='symbol'>:fp</span><span class='comma'>,</span>
+  <span class='label'>lookup:</span> <span class='id identifier rubyid_lookup'>lookup</span><span class='comma'>,</span>
+  <span class='label'>todofield:</span> <span class='symbol'>:corrected</span><span class='comma'>,</span>
+  <span class='label'>tag_affected_in:</span> <span class='symbol'>:corr</span>
+<span class='rparen'>)</span>
+<span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>fp:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ant</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bear</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>fp:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ant</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bear</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>fp:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>3</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ant</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bear</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>fp:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>4</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ant</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bear</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>StreamingRunner</span><span class='period'>.</span><span class='id identifier rubyid_transform_stream'>transform_stream</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='id identifier rubyid_xform'>xform</span><span class='rparen'>)</span>
+  <span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_row'>row</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>fp:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>1</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>apps</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>corr:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>y</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>fp:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>2</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>apples</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bee</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>corr:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>y</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>fp:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>3</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ant</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bear</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>corr:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>n</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>fp:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>4</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ant</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bear</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>corr:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>n</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
+      
         <p class="example_title"><div class='inline'><p>With fieldmap and tag_affected_in</p>
 </div></p>
       
@@ -421,17 +459,17 @@ into each row. If <code>nil</code>, no indicator column is added</p>
       <pre class="lines">
 
 
-103
-104
-105
-106
-107
-108
-109
-110</pre>
+139
+140
+141
+142
+143
+144
+145
+146</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/merge_corrected.rb', line 103</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/merge_corrected.rb', line 139</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>keycolumn:</span><span class='comma'>,</span> <span class='label'>lookup:</span><span class='comma'>,</span> <span class='label'>todofield:</span><span class='comma'>,</span> <span class='label'>fieldmap:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span>
   <span class='label'>tag_affected_in:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
@@ -507,18 +545,18 @@ into each row. If <code>nil</code>, no indicator column is added</p>
       <pre class="lines">
 
 
-113
-114
-115
-116
-117
-118
-119
-120
-121</pre>
+149
+150
+151
+152
+153
+154
+155
+156
+157</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/merge_corrected.rb', line 113</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/merge_corrected.rb', line 149</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_tag_affected_in'>tag_affected_in</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>n</span><span class='tstring_end'>&quot;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_tag_affected_in'>tag_affected_in</span>
@@ -539,7 +577,7 @@ into each row. If <code>nil</code>, no indicator column is added</p>
 </div>
 
       <div id="footer">
-  Generated on Sun Aug 27 01:12:11 2023 by
+  Generated on Mon Aug 28 21:54:19 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>
