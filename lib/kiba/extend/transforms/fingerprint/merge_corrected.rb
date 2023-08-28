@@ -48,6 +48,42 @@ module Kiba
         #     {fp: "4", a: 'ant', b: 'bear'},
         #   ]
         #   expect(result).to eq(expected)
+        #
+        # @example With tag_affected_in
+        #   # Used in pipeline as:
+        #   # transform Fingerprint::MergeCorrected,
+        #   #   keycolumn: :fp,
+        #   #   lookup: lookup,
+        #   #   todofield: :corrected,
+        #   #   tag_affected_in: :corr
+        #   lookup = {
+        #     "1"=>[{key: "1", a: "apps", b: nil, corrected: "a|b"}],
+        #     "2"=>[{key: "2", a: "apple", b: "bee", corrected: "b"},
+        #           {key: "2", a: "apples", b: "bee", corrected: "a"}],
+        #     "3"=>[{key: "3", a: "apple", b: "bees", corrected: nil}]
+        #   }
+        #   xform = Fingerprint::MergeCorrected.new(
+        #     keycolumn: :fp,
+        #     lookup: lookup,
+        #     todofield: :corrected,
+        #     tag_affected_in: :corr
+        #   )
+        #   input = [
+        #     {fp: "1", a: 'ant', b: 'bear'},
+        #     {fp: "2", a: 'ant', b: 'bear'},
+        #     {fp: "3", a: 'ant', b: 'bear'},
+        #     {fp: "4", a: 'ant', b: 'bear'},
+        #   ]
+        #   result = Kiba::StreamingRunner.transform_stream(input, xform)
+        #     .map{ |row| row }
+        #   expected = [
+        #     {fp: "1", a: 'apps', b: nil, corr: "y"},
+        #     {fp: "2", a: 'apples', b: 'bee', corr: "y"},
+        #     {fp: "3", a: 'ant', b: 'bear', corr: "n"},
+        #     {fp: "4", a: 'ant', b: 'bear', corr: "n"},
+        #   ]
+        #   expect(result).to eq(expected)
+        #
         # @example With fieldmap and tag_affected_in
         #   # Used in pipeline as:
         #   # transform Fingerprint::MergeCorrected,
