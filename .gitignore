@@ -4,6 +4,7 @@
 /docs
 /coverage/
 /pkg/
+/.ruby-version
 /spec/reports/
 /spec/tmp/
 /tmp/
@@ -15,5 +16,4 @@
 **/.~lock*coverage
 **/.DS_Store
 spec/fixtures/*.mrk
-.rubocop-https---raw-githubusercontent-com-kspurgin-code-quality-main-configurations-rubocop-standard-override-yml
-.rubocop-https---raw-githubusercontent-com-kspurgin-code-quality-main-configurations-rubocop-standard-yml
+.rubocop-https*
