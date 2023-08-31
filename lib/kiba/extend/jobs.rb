@@ -6,81 +6,70 @@ module Kiba
   module Extend
     # Reusable, composable patterns for jobs
     #
-    # rubocop:todo Layout/LineLength
-    # Heretofore, I have been repeating tons of code/logic for setting up a job in migration code:
-    # rubocop:enable Layout/LineLength
+    # Heretofore, I have been repeating tons of code/logic for setting up a job
+    #   in migration code:
     #
     # - Defining sources/destinations, @srcrows, @outrows
     # - Changing CSV rows to hashes (initial transforms)
     # - Changing hashes back to CSV rows
     # - Calling postprocessing
     #
-    # rubocop:todo Layout/LineLength
-    # Most of this never changes, and when it does there is way too much tedious work in a given migration
-    # rubocop:enable Layout/LineLength
-    #   to make it consistent across all jobs.
+    # Most of this never changes, and when it does there is way too much tedious
+    #   work in a given migration to make it consistent across all jobs.
     #
-    # rubocop:todo Layout/LineLength
-    # This is an attempt to dry up calling jobs and make it possible to test them via RSpec
-    # rubocop:enable Layout/LineLength
+    # This is an attempt to dry up calling jobs and make it possible to test
+    #   them via RSpec
     #
     # Running `Kiba.parse` to define a job generates a
-    #   {https://github.com/thbar/kiba/blob/master/lib/kiba/control.rb Kiba::Control}
-    # rubocop:todo Layout/LineLength
-    #   object, which is a wrapper bundling together: pre_processes, config, sources, transforms, destinations, and
-    # rubocop:enable Layout/LineLength
+    #   {https://github.com/thbar/kiba/blob/master/lib/kiba/control.rb
+    #   Kiba::Control}
+    #   object, which is a wrapper bundling together: pre_processes, config,
+    #   sources, transforms, destinations, and
     #   post_processes.
     #
-    # rubocop:todo Layout/LineLength
-    # As described {https://github.com/thbar/kiba/wiki/Implementing-pre-and-post-processors here}, pre_ and post_
-    # rubocop:enable Layout/LineLength
-    # rubocop:todo Layout/LineLength
-    #   processors get called once per ETL run---either before or after the ETL starts working through the source
-    # rubocop:enable Layout/LineLength
-    #   rows
+    # As described
+    #   {https://github.com/thbar/kiba/wiki/Implementing-pre-and-post-processors
+    #   here}, pre_ and post_processors get called once per ETL run---either
+    #   before or after the ETL starts working through the source rows
     #
-    # rubocop:todo Layout/LineLength
-    # This Kiba::Control object created by Kiba.parse is generated with a particular Kiba::Context, and
-    # rubocop:enable Layout/LineLength
-    # rubocop:todo Layout/LineLength
-    #   once created, you cannot get access to or manipulate variables or configuration that the entire
-    # rubocop:enable Layout/LineLength
-    #   job needs to know about.
+    # This Kiba::Control object created by Kiba.parse is generated with a
+    #   particular Kiba::Context, and once created, you cannot get access to or
+    #   manipulate variables or configuration that the entire job needs to know
+    #   about.
     #
-    # rubocop:todo Layout/LineLength
-    # What Kiba::Extend::Jobs adds is the ability to set up reusable initial_transformers and final_transformers.
-    # rubocop:enable Layout/LineLength
-    # rubocop:todo Layout/LineLength
-    #   Basically, job templates where just the meat of the transformations change.
-    # rubocop:enable Layout/LineLength
+    # What Kiba::Extend::Jobs adds is the ability to set up reusable
+    #   initial_transformers and final_transformers. Basically, job templates
+    #   where just the meat of the transformations change.
     #
-    # rubocop:todo Layout/LineLength
-    # `files` is the configuration of destination, source, and lookup files the job will use. It is a Hash, with
-    # rubocop:enable Layout/LineLength
-    #   the following format:
+    # `files` is the configuration of destination, source, and lookup files the
+    #   job will use. It is a Hash, with the following format:
     #
-    # rubocop:todo Layout/LineLength
-    #  { source: [registry_key, registry_key], destination: [registry_key], lookup: [registry_key] }
-    # rubocop:enable Layout/LineLength
+    #  ```
+    # { source: [registry_key, registry_key],
+    #    destination: [registry_key],
+    #    lookup: [registry_key]
+    # }
+    # ```
     #
-    #  { source: [registry_key, registry_key], destination: [registry_key]}
+    # OR
     #
-    # rubocop:todo Layout/LineLength
-    # `source` and `destination` must each have at least one registry key. `lookup` may be omitted, or it may
-    # rubocop:enable Layout/LineLength
-    #   be included with one or more registry keys
+    # ```
+    #  { source: [registry_key, registry_key],
+    #    destination: [registry_key]
+    #  }
+    # ```
     #
-    # rubocop:todo Layout/LineLength
-    # `transformer` is a sequence of data transformations that could theoretically be called with interchangable
-    # rubocop:enable Layout/LineLength
-    #   input/output settings (i.e. `materials`).
+    # `source` and `destination` must each have at least one registry key.
+    #   `lookup` may be omitted, or it may be included with one or more registry
+    #   keys
     #
-    # rubocop:todo Layout/LineLength
-    # In project code, instead of defining an entire job in a `Kiba.parse` block, you will define a
-    # rubocop:enable Layout/LineLength
-    # rubocop:todo Layout/LineLength
-    #   `Kiba.job_segment` block containing just the transforms unique to that job.
-    # rubocop:enable Layout/LineLength
+    # `transformer` is a sequence of data transformations that could
+    #   theoretically be called with interchangable input/output settings
+    #   (i.e. `materials`).
+    #
+    # In project code, instead of defining an entire job in a `Kiba.parse`
+    #   block, you will define a `Kiba.job_segment` block containing just the
+    #   transforms unique to that job.
     #
     # @since 2.2.0
     module Jobs

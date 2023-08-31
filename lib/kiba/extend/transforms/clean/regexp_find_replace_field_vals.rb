@@ -164,9 +164,8 @@ module Kiba
         #     {val: 'bats|bats', val_repl: 'bats|bat'}
         #   ]
         #   expect(result).to eq(expected)
-        # rubocop:todo Layout/LineLength
-        # @example With `multival: true` and :sep (Compare to replacement value in previous example)
-        # rubocop:enable Layout/LineLength
+        #
+        # @example With `multival: true` and :sep
         #   xform = Clean::RegexpFindReplaceFieldVals.new(
         #     fields: :val,
         #     find: 's$',

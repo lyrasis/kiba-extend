@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "reporter"
-
 module Kiba
   module Extend
     module Jobs
@@ -11,13 +9,11 @@ module Kiba
       #   which is why they are separated out into a module
       module Runner
         include Reporter
-        # rubocop:todo Layout/LineLength
-        # Error raised if dependency file is still missing after we tried to run dependencies
-        # rubocop:enable Layout/LineLength
+        # Error raised if dependency file is still missing after we tried to run
+        #   dependencies
         class MissingDependencyError < Kiba::Extend::Error
-          # rubocop:todo Layout/LineLength
-          # @param filekey [Symbol] key for which a file path was not found in {Kiba::Extend::FileRegistry}
-          # rubocop:enable Layout/LineLength
+          # @param filekey [Symbol] key for which a file path was not found in
+          #   {Kiba::Extend::FileRegistry}
           def initialize(filekey, path)
             msg = "Cannot locate dependent file for #{filekey} at #{path}"
             super(msg)
@@ -29,9 +25,8 @@ module Kiba
           tell_me_decoration
         end
 
-        # rubocop:todo Layout/LineLength
-        # Add lookup tables to the context as methods memoized to instance variables
-        # rubocop:enable Layout/LineLength
+        # Add lookup tables to the context as methods memoized to instance
+        #   variables
         def add_lookup(config)
           key_as_iv = "@#{config.key}".to_sym
 
