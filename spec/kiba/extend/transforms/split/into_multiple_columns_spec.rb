@@ -30,9 +30,8 @@ RSpec.describe Kiba::Extend::Transforms::Split::IntoMultipleColumns do
       end
       let(:params) { {field: :summary, sep: ":", max_segments: 2} }
 
-      # rubocop:todo Layout/LineLength
-      it "fills in blank field before @sep with empty string and empty extra columns to the right with nil" do
-        # rubocop:enable Layout/LineLength
+      it "fills in blank field before @sep with empty string and empty extra "\
+        "columns to the right with nil" do
         expected = [
           {summary0: "a", summary1: "b"},
           {summary0: "c", summary1: nil},
@@ -64,9 +63,8 @@ RSpec.describe Kiba::Extend::Transforms::Split::IntoMultipleColumns do
       end
     end
 
-    # rubocop:todo Layout/LineLength
-    context "when longest split value (5) > max_segments (3) and warnfield given" do
-      # rubocop:enable Layout/LineLength
+    context "when longest split value (5) > max_segments (3) and warnfield "\
+      "given" do
       let(:rows) do
         [
           {summary: "a:b:c:d:e"},
@@ -92,9 +90,8 @@ RSpec.describe Kiba::Extend::Transforms::Split::IntoMultipleColumns do
       end
     end
 
-    # rubocop:todo Layout/LineLength
-    context "when longest split value (5) > max_segments (3) and collapse_on :left" do
-      # rubocop:enable Layout/LineLength
+    context "when longest split value (5) > max_segments (3) and "\
+      "collapse_on :left" do
       let(:rows) do
         [
           {summary: "a:b:c:d:e"},
@@ -118,9 +115,8 @@ RSpec.describe Kiba::Extend::Transforms::Split::IntoMultipleColumns do
       end
     end
 
-    # rubocop:todo Layout/LineLength
-    context "when longest split value (4) > max segments (2) and collapses_on :right" do
-      # rubocop:enable Layout/LineLength
+    context "when longest split value (4) > max segments (2) and "\
+      "collapses_on :right" do
       let(:rows) do
         [
           {name: "Barrow, David Brown, Jr., 1931-"},
@@ -141,9 +137,8 @@ RSpec.describe Kiba::Extend::Transforms::Split::IntoMultipleColumns do
       end
     end
 
-    # rubocop:todo Layout/LineLength
-    context "when longest split value (4) > max segments (2) and collapses_on :left" do
-      # rubocop:enable Layout/LineLength
+    context "when longest split value (4) > max segments (2) and "\
+      "collapses_on :left" do
       let(:rows) do
         [
           {name: "Barrow, David Brown, Jr., 1931-"},

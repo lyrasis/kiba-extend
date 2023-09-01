@@ -9,9 +9,8 @@ RSpec.describe Kiba::Extend::Utils::MarcNameCleaner do
     it "returns expected" do
       expectations = {
         "Kirmse, Marguerite, 1885-1954," => "Kirmse, Marguerite, 1885-1954",
-        # rubocop:todo Layout/LineLength
-        "Stowe, Harriet Beecher, 1811-1896." => "Stowe, Harriet Beecher, 1811-1896",
-        # rubocop:enable Layout/LineLength
+        "Stowe, Harriet Beecher, 1811-1896." =>
+          "Stowe, Harriet Beecher, 1811-1896",
         "Authors Club (New York, N.Y.)" => "Authors Club (New York, N.Y.)",
         "Thomas, Alan G." => "Thomas, Alan G.",
         "Okes, Nicholas,." => "Okes, Nicholas"
