@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:todo Layout/LineLength
+
 module Kiba
   module Extend
     module Transforms
@@ -38,9 +40,7 @@ module Kiba
         #     {index: 'Keet hatched'}
         #   ]
         #   expect(result).to eq(expected)
-        # rubocop:todo Layout/LineLength
         # @example With custom sources, target (with same name as a source field), and delim
-        # rubocop:enable Layout/LineLength
         #   # Used in pipeline as:
         #   # transform CombineValues::FromFieldsWithDelimiter,
         #   #  sources: %i[name sex],
@@ -129,3 +129,4 @@ module Kiba
     end
   end
 end
+# rubocop:enable Layout/LineLength

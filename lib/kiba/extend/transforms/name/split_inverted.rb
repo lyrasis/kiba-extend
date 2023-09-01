@@ -1,23 +1,19 @@
 # frozen_string_literal: true
 
+# rubocop:todo Layout/LineLength
+
 module Kiba
   module Extend
     module Transforms
       module Name
         # Splits an inverted name form into name parts.
         #
-        # rubocop:todo Layout/LineLength
         # @note Makes many egregiously oversimplified Western assumptions. Do not trust it to split all names
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         #   properly in all cases. Handles only the most common English language name patterns.
-        # rubocop:enable Layout/LineLength
         #
         # # Examples
         #
-        # rubocop:todo Layout/LineLength
         # In these examples, you can see the inverted name in the `:iname` field of each row.
-        # rubocop:enable Layout/LineLength
         #
         # Used in pipeline as:
         #
@@ -28,78 +24,30 @@ module Kiba
         # Results in:
         #
         # ```
-        # rubocop:todo Layout/LineLength
         # {:iname=>"Smith, Robert", :firstname=>"Robert", :middlename=>nil, :lastname=>"Smith", :suffix=>nil}
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         # {:iname=>"Smith, Robert J.", :firstname=>"Robert", :middlename=>"J.", :lastname=>"Smith", :suffix=>nil}
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         # {:iname=>"Smith-Jones, Robert J.", :firstname=>"Robert", :middlename=>"J.", :lastname=>"Smith-Jones", :suffix=>nil}
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         # {:iname=>"Smith, Robert James", :firstname=>"Robert", :middlename=>"James", :lastname=>"Smith", :suffix=>nil}
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         # {:iname=>"Smith, R. James", :firstname=>"R.", :middlename=>"James", :lastname=>"Smith", :suffix=>nil}
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         # {:iname=>"Smith, Robert (Bob)", :firstname=>"Robert", :middlename=>"(Bob)", :lastname=>"Smith", :suffix=>nil}
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         # {:iname=>"Smith, Robert James (Bob)", :firstname=>"Robert", :middlename=>"James (Bob)", :lastname=>"Smith", :suffix=>nil}
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         # {:iname=>"Smith, R. J.", :firstname=>"R.", :middlename=>"J.", :lastname=>"Smith", :suffix=>nil}
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         # {:iname=>"Smith, R.J.", :firstname=>"R.", :middlename=>"J.", :lastname=>"Smith", :suffix=>nil}
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         # {:iname=>"Smith, R J", :firstname=>"R", :middlename=>"J", :lastname=>"Smith", :suffix=>nil}
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         # {:iname=>"Smith, RJ", :firstname=>"R", :middlename=>"J", :lastname=>"Smith", :suffix=>nil}
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         # {:iname=>"Smith, RJR", :firstname=>"R", :middlename=>"JR", :lastname=>"Smith", :suffix=>nil}
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         # {:iname=>"Smith, RJRR", :firstname=>"RJRR", :middlename=>nil, :lastname=>"Smith", :suffix=>nil}
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         # {:iname=>"Smith, R.", :firstname=>"R.", :middlename=>nil, :lastname=>"Smith", :suffix=>nil}
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         # {:iname=>"Smith", :firstname=>nil, :middlename=>nil, :lastname=>nil, :suffix=>nil}
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         # {:iname=>"Smith, Robert, Jr.", :firstname=>"Robert", :middlename=>nil, :lastname=>"Smith", :suffix=>"Jr."}
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         # {:iname=>"Smith, R.J., Sr.", :firstname=>"R.", :middlename=>"J.", :lastname=>"Smith", :suffix=>"Sr."}
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         # {:iname=>"Smith, R. J., Sr.", :firstname=>"R.", :middlename=>"J.", :lastname=>"Smith", :suffix=>"Sr."}
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         # {:iname=>"R.J. Smith & Co.", :firstname=>nil, :middlename=>nil, :lastname=>nil, :suffix=>nil}
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         # {:iname=>"Smith, James, Robert & Co.", :firstname=>"James", :middlename=>nil, :lastname=>"Smith", :suffix=>"Robert & Co."}
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         # {:iname=>"Robert \"Bob\" Smith", :firstname=>nil, :middlename=>nil, :lastname=>nil, :suffix=>nil}
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         # {:iname=>"", :firstname=>nil, :middlename=>nil, :lastname=>nil, :suffix=>nil}
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         # {:iname=>nil, :firstname=>nil, :middlename=>nil, :lastname=>nil, :suffix=>nil}
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         # {:foo=>"bar", :firstname=>nil, :middlename=>nil, :lastname=>nil, :suffix=>nil}
-        # rubocop:enable Layout/LineLength
         # ```
         #
         # Used in pipeline as:
@@ -111,9 +59,7 @@ module Kiba
         # Results in:
         #
         # ```
-        # rubocop:todo Layout/LineLength
         # {:iname=>"Smith, R.J., Sr.", :f=>"R.", :l=>"Smith", :m=>"J.", :s=>"Sr."}
-        # rubocop:enable Layout/LineLength
         # ```
         #
         # Used in pipeline as:
@@ -125,22 +71,14 @@ module Kiba
         # Results in:
         #
         # ```
-        # rubocop:todo Layout/LineLength
         # {:iname=>"Smith", :firstname=>nil, :lastname=>"Smith", :middlename=>nil, :suffix=>nil}
-        # rubocop:enable Layout/LineLength
         # ```
         class SplitInverted
           # @param source [Symbol] field containing the inverted name to split
-          # rubocop:todo Layout/LineLength
           # @param targets [Array<Symbol>] field names for the split name parts. Must be provided in order:
-          # rubocop:enable Layout/LineLength
-          # rubocop:todo Layout/LineLength
           #   field for first/given name; field for middle name(s); field for family/sur/last name;
-          # rubocop:enable Layout/LineLength
           #   field for suffix/name additions
-          # rubocop:todo Layout/LineLength
           # @param fallback [Symbol] :all_nil will set all targets to nil. Given the name of one of the targets,
-          # rubocop:enable Layout/LineLength
           #   will copy the source value into that field
           def initialize(source:,
             targets: %i[firstname middlename lastname
@@ -234,3 +172,4 @@ module Kiba
     end
   end
 end
+# rubocop:enable Layout/LineLength

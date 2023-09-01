@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:todo Layout/LineLength
+
 require "base64"
 
 module Kiba
@@ -9,9 +11,7 @@ module Kiba
       # @since 2.7.1.65
       class FingerprintCreator
         # @param fields [Array<Symbol>] fields used to build the fingerprint
-        # rubocop:todo Layout/LineLength
         # @param delim [String] to separate field values when fields are joined for hashing
-        # rubocop:enable Layout/LineLength
         def initialize(fields:, delim:)
           @fields = [fields].flatten
           @delim = delim
@@ -20,12 +20,8 @@ module Kiba
           )
         end
 
-        # rubocop:todo Layout/LineLength
         # @raise [DelimInValueFingerprintError] if any of the field values in the row contain the delim. This error is
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         #   caught by {Kiba::Extend::Transforms::Fingerprint::Add} and triggers raising of a more informative error
-        # rubocop:enable Layout/LineLength
         #   to the user
         def call(row)
           values = value_getter.call(row).values
@@ -39,12 +35,8 @@ module Kiba
         attr_reader :fields, :delim, :value_getter
 
         def check_values(values)
-          # rubocop:todo Layout/LineLength
           raise Kiba::Extend::Utils::DelimInValueFingerprintError if values.compact.any? do |val|
-                                                                       # rubocop:enable Layout/LineLength
-                                                                       # rubocop:todo Layout/LineLength
                                                                        val[delim]
-                                                                       # rubocop:enable Layout/LineLength
                                                                      end
         end
 
@@ -64,3 +56,4 @@ module Kiba
     end
   end
 end
+# rubocop:enable Layout/LineLength

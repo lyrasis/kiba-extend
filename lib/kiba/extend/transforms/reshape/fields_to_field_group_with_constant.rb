@@ -1,20 +1,16 @@
 # frozen_string_literal: true
 
+# rubocop:todo Layout/LineLength
+
 module Kiba
   module Extend
     module Transforms
       module Reshape
         # @since 2.9.0
         #
-        # rubocop:todo Layout/LineLength
         # Convenience transform to rename one or more fields and add a field with a constant value,
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         #   by default ensuring explicit empty field values and field evenness expected in
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         #   field groups. Runs the following other transforms, which you will want to understand
-        # rubocop:enable Layout/LineLength
         #   before using this one:
         #
         # - {Rename::Fields}
@@ -40,9 +36,7 @@ module Kiba
         # ]
         # ```
         #
-        # rubocop:todo Layout/LineLength
         # Value of `Kiba::Extend.nullvalue` = `'%NULLVALUE%'`. Value of `Kiba::Extend.delim` = `'|'`.
-        # rubocop:enable Layout/LineLength
         #
         # ### Default behavior
         #
@@ -63,19 +57,11 @@ module Kiba
         #   {a_type: 'a thing', a_note: nil, a_date: '2022'},
         #   {a_type: 'a thing', a_note: 'foo', a_date: nil},
         #   {a_type: nil, a_note: nil, a_date: nil},
-        # rubocop:todo Layout/LineLength
         #   {a_type: 'a thing|a thing|a thing', a_note: 'foo|bar|baz', a_date: '2022|2021|%NULLVALUE%'},
-        # rubocop:enable Layout/LineLength
         #   {a_type: 'a thing|a thing', a_note: 'foo|bar', a_date: nil},
-        # rubocop:todo Layout/LineLength
         #   {a_type: 'a thing|a thing|a thing', a_note: 'foo|bar|baz', a_date: '2022|%NULLVALUE%|2021'},
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         #   {a_type: 'a thing|a thing|a thing', a_note: '%NULLVALUE%|bar|baz', a_date: '2022|2021|%NULLVALUE%'},
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         #   {a_type: 'a thing|a thing|a thing', a_note: 'foo|bar|%NULLVALUE%', a_date: '2022|2021|%NULLVALUE%'}
-        # rubocop:enable Layout/LineLength
         # ]
         # ```
         #
@@ -99,25 +85,15 @@ module Kiba
         #   {a_type: 'a thing', a_note: nil, a_date: '2022'},
         #   {a_type: 'a thing', a_note: 'foo', a_date: nil},
         #   {a_type: nil, a_note: nil, a_date: nil},
-        # rubocop:todo Layout/LineLength
         #   {a_type: 'a thing|a thing|a thing', a_note: 'foo|bar|baz', a_date: '2022|2021|%BLANK%'},
-        # rubocop:enable Layout/LineLength
         #   {a_type: 'a thing|a thing', a_note: 'foo|bar', a_date: nil},
-        # rubocop:todo Layout/LineLength
         #   {a_type: 'a thing|a thing|a thing', a_note: 'foo|bar|baz', a_date: '2022|%BLANK%|2021'},
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         #   {a_type: 'a thing|a thing|a thing', a_note: '%BLANK%|bar|baz', a_date: '2022|2021|%BLANK%'},
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         #   {a_type: 'a thing|a thing|a thing', a_note: 'foo|bar|%BLANK%', a_date: '2022|2021|%BLANK%'}
-        # rubocop:enable Layout/LineLength
         # ]
         # ```
         #
-        # rubocop:todo Layout/LineLength
         # ### With `evener: :value` (repeat final value of field to even out field values)
-        # rubocop:enable Layout/LineLength
         #
         # Used in job as:
         #
@@ -137,19 +113,11 @@ module Kiba
         #   {a_type: 'a thing', a_note: nil, a_date: '2022'},
         #   {a_type: 'a thing', a_note: 'foo', a_date: nil},
         #   {a_type: nil, a_note: nil, a_date: nil},
-        # rubocop:todo Layout/LineLength
         #   {a_type: 'a thing|a thing|a thing', a_note: 'foo|bar|baz', a_date: '2022|2021|2021'},
-        # rubocop:enable Layout/LineLength
         #   {a_type: 'a thing|a thing', a_note: 'foo|bar', a_date: nil},
-        # rubocop:todo Layout/LineLength
         #   {a_type: 'a thing|a thing|a thing', a_note: 'foo|bar|baz', a_date: '2022|%NULLVALUE%|2021'},
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         #   {a_type: 'a thing|a thing|a thing', a_note: '%NULLVALUE%|bar|baz', a_date: '2022|2021|2021'},
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         #   {a_type: 'a thing|a thing|a thing', a_note: 'foo|bar|%NULLVALUE%', a_date: '2022|2021|2021'}
-        # rubocop:enable Layout/LineLength
         # ]
         # ```
         #
@@ -173,19 +141,11 @@ module Kiba
         #   {a_type: 'a thing', a_note: nil, a_date: '2022'},
         #   {a_type: 'a thing', a_note: 'foo', a_date: nil},
         #   {a_type: nil, a_note: nil, a_date: nil},
-        # rubocop:todo Layout/LineLength
         #   {a_type: 'a thing|a thing|a thing', a_note: 'foo|bar|baz', a_date: '2022|2021'},
-        # rubocop:enable Layout/LineLength
         #   {a_type: 'a thing|a thing', a_note: 'foo|bar', a_date: nil},
-        # rubocop:todo Layout/LineLength
         #   {a_type: 'a thing|a thing|a thing', a_note: 'foo|bar|baz', a_date: '2022|%NULLVALUE%|2021'},
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         #   {a_type: 'a thing|a thing|a thing', a_note: '%NULLVALUE%|bar|baz', a_date: '2022|2021'},
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         #   {a_type: 'a thing|a thing|a thing', a_note: 'foo|bar|%NULLVALUE%', a_date: '2022|2021'}
-        # rubocop:enable Layout/LineLength
         # ]
         # ```
         #
@@ -210,68 +170,32 @@ module Kiba
         #   {a_type: 'a thing', a_note: nil, a_date: '2022'},
         #   {a_type: 'a thing', a_note: 'foo', a_date: nil},
         #   {a_type: nil, a_note: nil, a_date: nil},
-        # rubocop:todo Layout/LineLength
         #   {a_type: 'a thing|a thing|a thing', a_note: 'foo|bar|baz', a_date: '2022|2021|%NULL%'},
-        # rubocop:enable Layout/LineLength
         #   {a_type: 'a thing|a thing', a_note: 'foo|bar', a_date: nil},
-        # rubocop:todo Layout/LineLength
         #   {a_type: 'a thing|a thing|a thing', a_note: 'foo|bar|baz', a_date: '2022||2021'},
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         #   {a_type: 'a thing|a thing|a thing', a_note: '|bar|baz', a_date: '2022|2021|%NULL%'},
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         #   {a_type: 'a thing|a thing|a thing', a_note: 'foo|bar|', a_date: '2022|2021|%NULL%'}
-        # rubocop:enable Layout/LineLength
         # ]
         # ```
         class FieldsToFieldGroupWithConstant
-          # rubocop:todo Layout/LineLength
           # @param fieldmap [Hash{Symbol => Symbol}] map for renaming existing fields. Keys: existing field
-          # rubocop:enable Layout/LineLength
           #   names. Values: new field names. Forwarded to {Rename::Fields}
-          # rubocop:todo Layout/LineLength
           # @param constant_target [Symbol] new field that will be added to contain constant value
-          # rubocop:enable Layout/LineLength
           # @param constant_value [String] value used to populate constant field
-          # rubocop:todo Layout/LineLength
           # @param replace_empty [Boolean] whether to run {Replace::EmptyFieldValues}
-          # rubocop:enable Layout/LineLength
-          # rubocop:todo Layout/LineLength
           # @param treat_as_null [nil, String, Array(String)] value(s) to be treated as empty when replacing
-          # rubocop:enable Layout/LineLength
-          # rubocop:todo Layout/LineLength
           #   empty field values and deleting empty field groups. If `nil`, '' will be used. **NOTE:** If you
-          # rubocop:enable Layout/LineLength
-          # rubocop:todo Layout/LineLength
           #   need different `treat_as_null` values for replacing empty field values and deleting empty field
-          # rubocop:enable Layout/LineLength
-          # rubocop:todo Layout/LineLength
           #   groups, use {Replace::EmptyFieldValues} separately in your job before you use this transform.
-          # rubocop:enable Layout/LineLength
-          # rubocop:todo Layout/LineLength
           # @param enforce_evenness [Boolean] whether to pad field values to ensure all resulting fields have
-          # rubocop:enable Layout/LineLength
           #   the same number of values
-          # rubocop:todo Layout/LineLength
           # @param evener [String, :value, nil] value used to even out uneven field values. If given a String,
-          # rubocop:enable Layout/LineLength
-          # rubocop:todo Layout/LineLength
           #   that string will be appended to even out fields. If `nil`, the value of `treat_as_null` will be
-          # rubocop:enable Layout/LineLength
-          # rubocop:todo Layout/LineLength
           #   used. If `:value`, the **final** value in the field will be repeated to even out the field.
-          # rubocop:enable Layout/LineLength
-          # rubocop:todo Layout/LineLength
           # @param uneven_warning [Boolean] whether to print warnings about uneven field groups to STDOUT
-          # rubocop:enable Layout/LineLength
-          # rubocop:todo Layout/LineLength
           # @param remove_empty_groups [Boolean] whether to run {Delete::EmptyFieldGroups} before finalizing row
-          # rubocop:enable Layout/LineLength
           # @param delim [String] used to split/join multiple values in a field
-          # rubocop:todo Layout/LineLength
           def initialize(fieldmap:, constant_target:, constant_value:, delim: Kiba::Extend.delim,
-            # rubocop:enable Layout/LineLength
             replace_empty: true, treat_as_null: Kiba::Extend.nullvalue,
             enforce_evenness: true, evener: nil, uneven_warning: true,
             remove_empty_groups: true)
@@ -287,13 +211,9 @@ module Kiba
             @uneven_warning = uneven_warning
             @remove_empty_groups = remove_empty_groups
 
-            # rubocop:todo Layout/LineLength
             @empty_replacer = Replace::EmptyFieldValues.new(fields: @renamed, value: treat_as_null, delim: delim,
-              # rubocop:enable Layout/LineLength
               treat_as_null: treat_as_null)
-            # rubocop:todo Layout/LineLength
             @even_xform = Clean::EvenFieldValues.new(fields: @renamed, evener: @evener, delim: delim,
-              # rubocop:enable Layout/LineLength
               warn: uneven_warning)
             @group_cleaner = Delete::EmptyFieldGroups.new(
               groups: [[renamed,
@@ -387,3 +307,4 @@ module Kiba
     end
   end
 end
+# rubocop:enable Layout/LineLength

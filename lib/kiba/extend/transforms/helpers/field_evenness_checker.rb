@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
+# rubocop:todo Layout/LineLength
+
 module Kiba
   module Extend
     module Transforms
       module Helpers
         # @since 2.9.0
         #
-        # rubocop:todo Layout/LineLength
         # Given row and array of field names, checks whether fields have the same number of values
-        # rubocop:enable Layout/LineLength
         class FieldEvennessChecker
           def initialize(fields:, delim: Kiba::Extend.delim)
             @fields = [fields].flatten
@@ -56,3 +56,4 @@ module Kiba
     end
   end
 end
+# rubocop:enable Layout/LineLength

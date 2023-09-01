@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:todo Layout/LineLength
+
 module Kiba
   module Extend
     module Transforms
@@ -8,18 +10,10 @@ module Kiba
         #
         # Service object to return whether given values are "delimiter only".
         #
-        # rubocop:todo Layout/LineLength
         # **NOTE:** By default, "delimiter only" is `true` if a value is `nil` or `empty?`. It is also true
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         #   if the value consists of only the given `delim` and, optionally, any spaces. If given one or more
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         #   `treat_as_null` values, it is true if the value consists of those "null" strings, the given
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         #   delimiter, and spaces only. If you specify `blank_result: false`, then values that are `nil` or
-        # rubocop:enable Layout/LineLength
         #   `empty?` will not count as "delimiter only"
         class DelimOnlyChecker
           class << self
@@ -30,18 +24,12 @@ module Kiba
           end
 
           # @param delim [String]
-          # rubocop:todo Layout/LineLength
           # @param treat_as_null [nil, String, Array(String)] value(s) to treat as though they are null
-          # rubocop:enable Layout/LineLength
-          # rubocop:todo Layout/LineLength
           # @param blank_result [Boolean] what to return for values that are `nil?` or `empty?`
-          # rubocop:enable Layout/LineLength
           def initialize(delim: Kiba::Extend.delim, treat_as_null: nil,
             blank_result: true)
             @delim = delim
-            # rubocop:todo Layout/LineLength
             @nullvals = treat_as_null.nil? ? nil : [treat_as_null].flatten.sort_by do |val|
-                                                     # rubocop:enable Layout/LineLength
                                                      val.length
                                                    end.reverse
             @blank_result = blank_result
@@ -74,3 +62,4 @@ module Kiba
     end
   end
 end
+# rubocop:enable Layout/LineLength

@@ -1,17 +1,15 @@
 # frozen_string_literal: true
 
+# rubocop:todo Layout/LineLength
+
 module Kiba
   module Extend
     module Transforms
       module Delete
-        # rubocop:todo Layout/LineLength
         # Deletes full field value of all given fields that contain the given string. You can control
-        # rubocop:enable Layout/LineLength
         #   whether match is case sensitive or not.
         #
-        # rubocop:todo Layout/LineLength
         # To be clear, **contain = a partial match**. Use {FieldValueMatchingRegexp} with anchors to
-        # rubocop:enable Layout/LineLength
         #   trigger deletion via a full match.
         #
         # # Examples
@@ -32,9 +30,7 @@ module Kiba
         # Used in pipeline as:
         #
         # ```
-        # rubocop:todo Layout/LineLength
         # transform Delete::FieldValueContainingString, fields: %i[a b], match: 'xxxx'
-        # rubocop:enable Layout/LineLength
         # ```
         #
         # Results in:
@@ -61,9 +57,7 @@ module Kiba
         # Used in pipeline as:
         #
         # ```
-        # rubocop:todo Layout/LineLength
         # transform Delete::FieldValueContainingString, fields: :b, match: 'xxxx', casesensitive: false
-        # rubocop:enable Layout/LineLength
         # ```
         #
         # Results in:
@@ -105,3 +99,4 @@ module Kiba
     end
   end
 end
+# rubocop:enable Layout/LineLength

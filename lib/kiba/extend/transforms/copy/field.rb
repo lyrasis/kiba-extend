@@ -1,21 +1,17 @@
 # frozen_string_literal: true
 
+# rubocop:todo Layout/LineLength
+
 module Kiba
   module Extend
     module Transforms
       module Copy
-        # rubocop:todo Layout/LineLength
         # Copy the value of a field to another field. If `to` field does not yet exist, it is created. Otherwise, it is overwritten with the copied value.
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         # @todo Add `safe_copy` parameter that will prevent overwrite of existing data in `to`
-        # rubocop:enable Layout/LineLength
         class Field
           class MissingFromFieldError < Kiba::Extend::Error
             def initialize(from, fields)
-              # rubocop:todo Layout/LineLength
               msg = "Cannot copy from nonexistent field `#{from}`\nExisting fields: #{fields.join(", ")}"
-              # rubocop:enable Layout/LineLength
               super(msg)
             end
           end
@@ -43,3 +39,4 @@ module Kiba
     end
   end
 end
+# rubocop:enable Layout/LineLength

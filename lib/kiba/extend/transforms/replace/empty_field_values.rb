@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:todo Layout/LineLength
+
 module Kiba
   module Extend
     module Transforms
@@ -8,9 +10,7 @@ module Kiba
         #
         # Replace empty field values the given value
         #
-        # rubocop:todo Layout/LineLength
         # Works on single or multivalue fields. Can be given a `treat_as_null` value to count as empty.
-        # rubocop:enable Layout/LineLength
         #
         # ## Examples
         #
@@ -30,9 +30,7 @@ module Kiba
         # Used as:
         #
         # ```
-        # rubocop:todo Layout/LineLength
         # transform Replace::EmptyFieldValues, fields: %i[name sex], value: '%NULLVALUE%'
-        # rubocop:enable Layout/LineLength
         # ```
         #
         # Results in:
@@ -51,9 +49,7 @@ module Kiba
         # Using same source data as above, and transform set up as:
         #
         # ```
-        # rubocop:todo Layout/LineLength
         # transform Replace::EmptyFieldValues, fields: %i[name sex], value: '%NULLVALUE%',
-        # rubocop:enable Layout/LineLength
         #   treat_as_null: '%NULL%'
         # ```
         #
@@ -73,9 +69,7 @@ module Kiba
         # Using same source data as above, and transform set up as:
         #
         # ```
-        # rubocop:todo Layout/LineLength
         # transform Replace::EmptyFieldValues, fields: %i[name sex], delim: '|', value: '%NULLVALUE%'
-        # rubocop:enable Layout/LineLength
         # ```
         #
         # Results in:
@@ -84,12 +78,8 @@ module Kiba
         # [
         #   {species: 'guineafowl', name: '%NULLVALUE%', sex: '%NULLVALUE%' },
         #   {species: 'guineafowl', name: '%NULL%', sex: '%NULL%'},
-        # rubocop:todo Layout/LineLength
         #   {species: 'guineafowl', name: 'Weddy|%NULLVALUE%|Grimace|%NULLVALUE%', sex: '%NULLVALUE%'},
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         #   {species: 'guineafowl', name: '%NULLVALUE%|Weddy|Grimace|%NULLVALUE%', sex: '%NULL%|m|m|%NULLVALUE%'}
-        # rubocop:enable Layout/LineLength
         # ]
         # ```
         #
@@ -98,9 +88,7 @@ module Kiba
         # Using same source data as above, and transform set up as:
         #
         # ```
-        # rubocop:todo Layout/LineLength
         # transform Replace::EmptyFieldValues, fields: %i[name sex], delim: '|', value: '%NULLVALUE%',
-        # rubocop:enable Layout/LineLength
         #   treat_as_null: '%NULL%'
         # ```
         #
@@ -110,12 +98,8 @@ module Kiba
         # [
         #   {species: 'guineafowl', name: '%NULLVALUE%', sex: '%NULLVALUE%' },
         #   {species: 'guineafowl', name: '%NULLVALUE%', sex: '%NULLVALUE%'},
-        # rubocop:todo Layout/LineLength
         #   {species: 'guineafowl', name: 'Weddy|%NULLVALUE%|Grimace|%NULLVALUE%', sex: '%NULLVALUE%'},
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         #   {species: 'guineafowl', name: '%NULLVALUE%|Weddy|Grimace|%NULLVALUE%', sex: '%NULLVALUE%|m|m|%NULLVALUE%'}
-        # rubocop:enable Layout/LineLength
         # ]
         # ```
         #
@@ -129,9 +113,7 @@ module Kiba
         # ]
         #
         # ```
-        # rubocop:todo Layout/LineLength
         # transform Replace::EmptyFieldValues, fields: %i[name sex], value: '%NULLVALUE%',
-        # rubocop:enable Layout/LineLength
         #   treat_as_null: ['%NULL%', '%NADA%']
         # ```
         #
@@ -143,17 +125,11 @@ module Kiba
         # ]
         # ```
         class EmptyFieldValues
-          # rubocop:todo Layout/LineLength
           # @param fields [Array(Symbol), Symbol] in which to perform replacements
-          # rubocop:enable Layout/LineLength
           # @param value [String] replaces the empty value(s)
-          # rubocop:todo Layout/LineLength
           # @param delim [String, nil] if provided, replacement of individual empty values in a multivalue
-          # rubocop:enable Layout/LineLength
           #   field will be performed after splitting on this string
-          # rubocop:todo Layout/LineLength
           # @param treat_as_null [String, Array(String)] string(s) to treat as empty values
-          # rubocop:enable Layout/LineLength
           def initialize(fields:, value:, delim: nil, treat_as_null: "")
             @fields = [fields].flatten
             @value = value
@@ -206,3 +182,4 @@ module Kiba
     end
   end
 end
+# rubocop:enable Layout/LineLength

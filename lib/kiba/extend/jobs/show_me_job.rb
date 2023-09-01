@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:todo Layout/LineLength
+
 require "kiba-common/dsl_extensions/show_me"
 
 module Kiba
@@ -7,15 +9,9 @@ module Kiba
     module Jobs
       # Mixin to activate {Kiba::Common::DSLExtensions::ShowMe}
       #
-      # rubocop:todo Layout/LineLength
       # @note Using settings/command line parameter to set `:show_me` to true will print the final
-      # rubocop:enable Layout/LineLength
-      # rubocop:todo Layout/LineLength
       #   result of the job to STDOUT. If you need to see the result at some specific point in your
-      # rubocop:enable Layout/LineLength
-      # rubocop:todo Layout/LineLength
       #   chain of transformations, you need to add the two lines in the `show` `job_segment` below
-      # rubocop:enable Layout/LineLength
       #   to your transforms where you want the display to happen
       module ShowMeJob
         def decorate
@@ -32,3 +28,4 @@ module Kiba
     end
   end
 end
+# rubocop:enable Layout/LineLength

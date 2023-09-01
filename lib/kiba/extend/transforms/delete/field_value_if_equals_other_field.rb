@@ -1,25 +1,17 @@
 # frozen_string_literal: true
 
+# rubocop:todo Layout/LineLength
+
 module Kiba
   module Extend
     module Transforms
       module Delete
-        # rubocop:todo Layout/LineLength
         # Deletes value in `delete` field if that value matches value in `if_equal_to` field. Opinionated treatment
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         #   of multivalued fields described below. Case sensitive or insensitive matching options. Can also delete
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         #   associated field values (by position) in additional grouped fields. This is useful, for example,
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         #   in maintaining the integrity of grouped/subgrouped multivalue fields in CollectionSpace.
-        # rubocop:enable Layout/LineLength
         #
-        # rubocop:todo Layout/LineLength
         # **Note that the value of the `if_equal_to` field is never modified by this transform.**
-        # rubocop:enable Layout/LineLength
         #
         # # Examples
         # ## Simple example
@@ -36,9 +28,7 @@ module Kiba
         # Used in pipeline as:
         #
         # ```
-        # rubocop:todo Layout/LineLength
         # transform Delete::FieldValueIfEqualsOtherField, delete: :del, if_equal_to: :compare
-        # rubocop:enable Layout/LineLength
         # ```
         #
         # Results in:
@@ -54,15 +44,11 @@ module Kiba
         #
         # The first row is left alone because a != b.
         #
-        # rubocop:todo Layout/LineLength
         # In the second row, c is deleted from `del` because the value of `compare` is also c.
-        # rubocop:enable Layout/LineLength
         #
         # ## Complex example
         #
-        # rubocop:todo Layout/LineLength
         # This introduces handling of multivalued grouped fields with case insensitive matching.
-        # rubocop:enable Layout/LineLength
         #
         # Used in pipeline as:
         #
@@ -102,30 +88,20 @@ module Kiba
         #
         # ### Notes
         # #### Row 1
-        # rubocop:todo Layout/LineLength
         # **If `compare` is a single value, all individual values in `del` are compared to the single `compare` value.**
-        # rubocop:enable Layout/LineLength
         #
-        # rubocop:todo Layout/LineLength
         # In `del` field, elements 1 (C) and 3 (c) are case-insensitive matches on the value in `compare`. Thus,
-        # rubocop:enable Layout/LineLength
         #   elements 1 and 3 are removed from `del` and both grouped fields.
         #
         # #### Row 2
-        # rubocop:todo Layout/LineLength
         # **If `compare` has multiple values, the values of `del` and `compare` are compared positionally.**
-        # rubocop:enable Layout/LineLength
         #
-        # rubocop:todo Layout/LineLength
         # Element 0 is a match (a in both). Element 1 is not (b != z). Element 2 is a match (c in both).
-        # rubocop:enable Layout/LineLength
         #
         # Elements 0 and 2 are removed `del` and all grouped fields.
         #
         # #### Row 3
-        # rubocop:todo Layout/LineLength
         # `compare` is multivalued, so `del` is compared positionally against `compare`, though `del` (and
-        # rubocop:enable Layout/LineLength
         #   the grouped fields) are single valued.
         #
         # When all values are removed from a field, `nil` is returned.
@@ -134,15 +110,11 @@ module Kiba
         # a != b, so row is returned unmodified.
         #
         # #### Row 5
-        # rubocop:todo Layout/LineLength
         # a = a, so a (Element 0) is removed from `del`. Element 0 is then removed from the grouped fields.
-        # rubocop:enable Layout/LineLength
         #
         # ## Group length mismatch: ragged groups
         #
-        # rubocop:todo Layout/LineLength
         # This introduces handling of multivalued grouped fields if fields grouped together have differnt numbers of
-        # rubocop:enable Layout/LineLength
         #   values.
         #
         # Used in pipeline as:
@@ -173,48 +145,28 @@ module Kiba
         # | A;d;e | c       | y;w;u | e;g;h |
         # ```
         #
-        # rubocop:todo Layout/LineLength
         # And a warning printed to STDOUT, which may trigger you to examine the input data:
-        # rubocop:enable Layout/LineLength
         #
         # ```
-        # rubocop:todo Layout/LineLength
         # KIBA WARNING: One or more grouped fields (grpa, grpb) has different number of values than the others
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         # in {:del=>"A;d;e", :compare=>"c", :grpa=>"y;x;w;u", :grpb=>"e;f;g;h;i"}
-        # rubocop:enable Layout/LineLength
         # ```
         #
-        # rubocop:todo Layout/LineLength
         # **If `del` had 4 elements and one or more of the grouped fields had a different number of elements,
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         #   this would be handled similarly, with a slightly different warning.**
-        # rubocop:enable Layout/LineLength
         #
         # ### Notes
         # `grpa` has 4 values, while `grpb` has 5.
         #
-        # rubocop:todo Layout/LineLength
         # Elements 1 and 4 from `del` match `compare`, so they are deleted. Those elements are also deleted from
-        # rubocop:enable Layout/LineLength
         #   the grouped fields if present.
         #
         class FieldValueIfEqualsOtherField
           # @param delete [Symbol] field from which values will be deleted
-          # rubocop:todo Layout/LineLength
           # @param if_equal_to [Symbol] field the `delete` values will be compared to. In other words, the "other field"
-          # rubocop:enable Layout/LineLength
-          # rubocop:todo Layout/LineLength
           # @param multival [Boolean] whether to split field values for comparison
-          # rubocop:enable Layout/LineLength
-          # rubocop:todo Layout/LineLength
           # @param delim [String] on which to split if `multival`. Defaults to `Kiba::Extend.delim` if not provided.
-          # rubocop:enable Layout/LineLength
-          # rubocop:todo Layout/LineLength
           # @param grouped_fields [Array<Symbol>] field(s) from which positionally corresponding values should also be removed
-          # rubocop:enable Layout/LineLength
           # @param casesensitive [Boolean] matching mode
           def initialize(delete:, if_equal_to:, multival: false, delim: nil,
             grouped_fields: [], casesensitive: true)
@@ -305,13 +257,9 @@ module Kiba
             grpfields = group.join(", ")
             case validation
             when :ragged_group_length
-              # rubocop:todo Layout/LineLength
               msg = "One or more grouped fields (#{grpfields}) has different number of values than the others"
-              # rubocop:enable Layout/LineLength
             when :orig_vs_group_length_mismatch
-              # rubocop:todo Layout/LineLength
               msg = "Grouped fields (#{grpfields}) have different number of values than #{delete} field"
-              # rubocop:enable Layout/LineLength
             end
             puts %(#{Kiba::Extend.warning_label}: #{msg} in #{row})
           end
@@ -329,3 +277,4 @@ module Kiba
     end
   end
 end
+# rubocop:enable Layout/LineLength

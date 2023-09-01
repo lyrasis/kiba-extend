@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:todo Layout/LineLength
+
 require "marc"
 
 module Kiba
@@ -11,9 +13,7 @@ module Kiba
         #
         # @example
         #   # =001  008000714-7
-        # rubocop:todo Layout/LineLength
         #   # =711  2\$aAssociation of Child Psychology Annual Conference.$esponsor$evenue
-        # rubocop:enable Layout/LineLength
         #   rec = get_marc_record(index: 6)
         #   xform = Marc::ExtractMeetingNameData.new
         #   results = []
@@ -49,3 +49,4 @@ module Kiba
     end
   end
 end
+# rubocop:enable Layout/LineLength

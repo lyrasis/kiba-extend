@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:todo Layout/LineLength
+
 module Kiba
   module Extend
     module Transforms
@@ -30,13 +32,9 @@ module Kiba
         #
         # @example Treated as multivalue
         #   # Used in pipeline as:
-        # rubocop:todo Layout/LineLength
         #   # transform Prepend::ToFieldValue, field: :name, value: 'aka: ', multival: true, delim: '|'
-        # rubocop:enable Layout/LineLength
         #
-        # rubocop:todo Layout/LineLength
         #   xform = Prepend::ToFieldValue.new(field: :name, value: 'aka: ', multival: true, delim: '|')
-        # rubocop:enable Layout/LineLength
         #   input = [
         #       {name: 'Weddy'},
         #       {name: 'Kernel|Zipper'},
@@ -52,9 +50,7 @@ module Kiba
         #     ]
         #   expect(result).to eq(expected)
         class ToFieldValue
-          # rubocop:todo Layout/LineLength
           # @note `mvdelim` argument is deprecated and replaced by `multival` and `delim`
-          # rubocop:enable Layout/LineLength
           # @param field [Symbol] The field to prepend to
           # @param value [String] The value to be prepended
           # @param multival [Boolean] Whether prepend to multiple values
@@ -87,3 +83,4 @@ module Kiba
     end
   end
 end
+# rubocop:enable Layout/LineLength
