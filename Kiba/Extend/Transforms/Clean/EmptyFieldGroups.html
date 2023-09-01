@@ -133,7 +133,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength   part of a repeating field group or field subgroup rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength   of string, after any sep end of string, and between any two sep with nothing in between.</p>
+    <span class="summary_desc"><div class='inline'><p>A new instance of EmptyFieldGroups.</p>
 </div></span>
   
 </li>
@@ -178,18 +178,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-  part of a repeating field group or field subgroup
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  of string, after any sep end of string, and between any two sep with nothing in between. It considers
-rubocop:enable Layout/LineLength
-  thias a blank
-rubocop:todo Layout/LineLength
-  value, so if all values in a field are %NULLVALUE%, the field will be nil-ed out.
-rubocop:enable Layout/LineLength</p>
+    <p>Returns a new instance of EmptyFieldGroups.</p>
 
 
   </div>
@@ -208,7 +197,9 @@ rubocop:enable Layout/LineLength</p>
       
       
         &mdash;
-        <div class='inline'><p>Each of the arrays inside groups should list all fields that are</p>
+        <div class='inline'><p>Each of the arrays inside
+groups should list all fields that are part of a repeating field
+group or field subgroup</p>
 </div>
       
     </li>
@@ -240,7 +231,11 @@ rubocop:enable Layout/LineLength</p>
       
       
         &mdash;
-        <div class='inline'><p>if a string, will insert that string before any sep at beginning</p>
+        <div class='inline'><p>if a string, will insert that
+string before any sep at beginning of string, after any sep end of
+string, and between any two sep with nothing in between. It
+considers this a blank value, so if all values in a field are
+%NULLVALUE%, the field will be nil-ed out.</p>
 </div>
       
     </li>
@@ -254,14 +249,14 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-230
-231
-232
-233
-234</pre>
+224
+225
+226
+227
+228</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/clean.rb', line 230</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/clean.rb', line 224</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>groups:</span><span class='comma'>,</span> <span class='label'>sep:</span><span class='comma'>,</span> <span class='label'>use_nullvalue:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='ivar'>@groups</span> <span class='op'>=</span> <span class='id identifier rubyid_groups'>groups</span>
@@ -319,13 +314,13 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-237
-238
-239
-240</pre>
+231
+232
+233
+234</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/clean.rb', line 237</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/clean.rb', line 231</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='ivar'>@groups</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_group'>group</span><span class='op'>|</span> <span class='id identifier rubyid_process_group'>process_group</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='comma'>,</span> <span class='id identifier rubyid_group'>group</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -341,7 +336,7 @@ rubocop:enable Layout/LineLength</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Aug 28 21:54:16 2023 by
+  Generated on Fri Sep  1 02:53:02 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

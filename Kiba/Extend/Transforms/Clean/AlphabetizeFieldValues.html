@@ -109,15 +109,12 @@
     
   <div class="note notetag">
     <strong>Note:</strong>
-    <div class='inline'><p>This transformation does <strong>NOT</strong> sort the <strong>ROWS</strong> in a dataset. It sorts values within</p>
+    <div class='inline'><p>This transformation does <strong>NOT</strong> sort the <strong>ROWS</strong> in a dataset.
+It sorts values within individual fields of a row</p>
 </div>
   </div>
 
 <p>Sorts the multiple values within a field alphabetically</p>
-
-<p>rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-  individual fields of a row</p>
 
 <h1 id="examples">Examples</h1>
 
@@ -136,10 +133,11 @@ rubocop:enable Layout/LineLength
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
- transform Clean::AlphabetizeFieldValues, fields: %i[type], delim: &#39;;&#39;, usenull: false,
-rubocop:enable Layout/LineLength
-     direction: :asc
+<pre class="code ruby"><code class="ruby"> <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Clean.html" title="Kiba::Extend::Transforms::Clean (module)">Clean</a></span></span><span class='op'>::</span><span class='const'>AlphabetizeFieldValues</span><span class='comma'>,</span>
+   <span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>type</span><span class='tstring_end'>]</span></span><span class='comma'>,</span>
+   <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>usenull:</span> <span class='kw'>false</span><span class='comma'>,</span>
+   <span class='label'>direction:</span> <span class='symbol'>:asc</span>
 </code></pre>
 
 <p>Results in:</p>
@@ -157,10 +155,11 @@ rubocop:enable Layout/LineLength
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
- transform Clean::AlphabetizeFieldValues, fields: %i[type], delim: &#39;;&#39;, usenull: false,
-rubocop:enable Layout/LineLength
-     direction: :desc
+<pre class="code ruby"><code class="ruby"> <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Clean.html" title="Kiba::Extend::Transforms::Clean (module)">Clean</a></span></span><span class='op'>::</span><span class='const'>AlphabetizeFieldValues</span><span class='comma'>,</span>
+   <span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>type</span><span class='tstring_end'>]</span></span><span class='comma'>,</span>
+   <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>usenull:</span> <span class='kw'>false</span><span class='comma'>,</span>
+   <span class='label'>direction:</span> <span class='symbol'>:desc</span>
 </code></pre>
 
 <p>Results in:</p>
@@ -178,10 +177,11 @@ rubocop:enable Layout/LineLength
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
- transform Clean::AlphabetizeFieldValues, fields: %i[type], delim: &#39;;&#39;, usenull: true,
-rubocop:enable Layout/LineLength
-     direction: :asc
+<pre class="code ruby"><code class="ruby"> <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Clean.html" title="Kiba::Extend::Transforms::Clean (module)">Clean</a></span></span><span class='op'>::</span><span class='const'>AlphabetizeFieldValues</span><span class='comma'>,</span>
+   <span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>type</span><span class='tstring_end'>]</span></span><span class='comma'>,</span>
+   <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>usenull:</span> <span class='kw'>true</span><span class='comma'>,</span>
+   <span class='label'>direction:</span> <span class='symbol'>:asc</span>
 </code></pre>
 
 <p>Results in:</p>
@@ -199,10 +199,11 @@ rubocop:enable Layout/LineLength
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
- transform Clean::AlphabetizeFieldValues, fields: %i[type], delim: &#39;;&#39;, usenull: true,
-rubocop:enable Layout/LineLength
-     direction: :desc
+<pre class="code ruby"><code class="ruby"> <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Clean.html" title="Kiba::Extend::Transforms::Clean (module)">Clean</a></span></span><span class='op'>::</span><span class='const'>AlphabetizeFieldValues</span><span class='comma'>,</span>
+   <span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>type</span><span class='tstring_end'>]</span></span><span class='comma'>,</span>
+   <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>usenull:</span> <span class='kw'>true</span><span class='comma'>,</span>
+   <span class='label'>direction:</span> <span class='symbol'>:desc</span>
 </code></pre>
 
 <p>Results in:</p>
@@ -258,7 +259,7 @@ rubocop:enable Layout/LineLength
   
 
   
-    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength.</p>
+    <span class="summary_desc"><div class='inline'><p>A new instance of AlphabetizeFieldValues.</p>
 </div></span>
   
 </li>
@@ -314,10 +315,7 @@ rubocop:enable Layout/LineLength
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength</p>
+    <p>Returns a new instance of AlphabetizeFieldValues.</p>
 
 
   </div>
@@ -368,7 +366,8 @@ rubocop:enable Layout/LineLength</p>
       
       
         &mdash;
-        <div class='inline'><p>Whether to treat <code>Kiba::Extend.nullvalue</code> as a blank in processing</p>
+        <div class='inline'><p>Whether to treat <code>Kiba::Extend.nullvalue</code>
+as a blank in processing</p>
 </div>
       
     </li>
@@ -385,7 +384,8 @@ rubocop:enable Layout/LineLength</p>
       
       
         &mdash;
-        <div class='inline'><p>Direction in which to sort field values</p>
+        <div class='inline'><p>Direction in which to sort field
+values</p>
 </div>
       
     </li>
@@ -502,7 +502,7 @@ rubocop:enable Layout/LineLength</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Aug 28 21:54:16 2023 by
+  Generated on Fri Sep  1 02:53:02 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

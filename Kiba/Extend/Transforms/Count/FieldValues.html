@@ -101,24 +101,16 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-Adds the given field(s) to the row with nil value if they do not already exist in row
-rubocop:enable Layout/LineLength</p>
+    <p>Adds the given field(s) to the row with nil value if they do not already exist in row</p>
 
 <h1 id="examples">Examples</h1>
 
-<p>rubocop:todo Layout/LineLength
-Input table is not shown separately. It is just <code>name</code> column of the results tables shown below. The blank
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  value in name indicates an empty Ruby String object. The nil indicates a Ruby NilValue object.
-rubocop:enable Layout/LineLength</p>
+<p>Input table is not shown separately. It is just <code>name</code> column of the results tables shown below. The blank
+  value in name indicates an empty Ruby String object. The nil indicates a Ruby NilValue object.</p>
 
 <h2 id="example-1">Example 1</h2>
 
-<p>rubocop:todo Layout/LineLength
-No placeholder value is given, so &quot;NULL&quot; is treated as a string value. <code>count_empty</code> defaults to false, so
-rubocop:enable Layout/LineLength
+<p>No placeholder value is given, so &quot;NULL&quot; is treated as a string value. <code>count_empty</code> defaults to false, so
   empty values are not counted.</p>
 
 <p>Used in pipeline as:</p>
@@ -144,21 +136,15 @@ rubocop:enable Layout/LineLength
 
 <h2 id="example-2">Example 2</h2>
 
-<p>rubocop:todo Layout/LineLength
-No placeholder value is given, so &quot;NULL&quot; is treated as a string value. <code>count_empty</code> is true, so
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
+<p>No placeholder value is given, so &quot;NULL&quot; is treated as a string value. <code>count_empty</code> is true, so
   empty values are counted. Note that fully empty field values are not counted, but when a
-rubocop:enable Layout/LineLength
   delimiter is present, any empty values delimited by it are counted.</p>
 
 <p>These options are functionally equivalent to those shown in example 4.</p>
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
- transform Count::FieldValues, field: :name, target: :ct, delim: &#39;;&#39;, count_empty: true
-rubocop:enable Layout/LineLength
+<pre class="code ruby"><code class="ruby"> <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Count.html" title="Kiba::Extend::Transforms::Count (module)">Count</a></span></span><span class='op'>::</span><span class='const'>FieldValues</span><span class='comma'>,</span> <span class='label'>field:</span> <span class='symbol'>:name</span><span class='comma'>,</span> <span class='label'>target:</span> <span class='symbol'>:ct</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>count_empty:</span> <span class='kw'>true</span>
 </code></pre>
 
 <p>Results in:</p>
@@ -179,18 +165,12 @@ rubocop:enable Layout/LineLength
 
 <h2 id="example-3">Example 3</h2>
 
-<p>rubocop:todo Layout/LineLength
-Placeholder value is given, so &quot;NULL&quot; is treated as an empty value. <code>count_empty</code> default to false, so empty
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  values, including any values that equal the given placeholder value, are not counted.
-rubocop:enable Layout/LineLength</p>
+<p>Placeholder value is given, so &quot;NULL&quot; is treated as an empty value. <code>count_empty</code> default to false, so empty
+  values, including any values that equal the given placeholder value, are not counted.</p>
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
- transform Count::FieldValues, field: :name, target: :ct, delim: &#39;;&#39;, placeholder: &#39;NULL&#39;
-rubocop:enable Layout/LineLength
+<pre class="code ruby"><code class="ruby"> <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Count.html" title="Kiba::Extend::Transforms::Count (module)">Count</a></span></span><span class='op'>::</span><span class='const'>FieldValues</span><span class='comma'>,</span> <span class='label'>field:</span> <span class='symbol'>:name</span><span class='comma'>,</span> <span class='label'>target:</span> <span class='symbol'>:ct</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>placeholder:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>NULL</span><span class='tstring_end'>&#39;</span></span>
 </code></pre>
 
 <p>Results in:</p>
@@ -211,21 +191,15 @@ rubocop:enable Layout/LineLength
 
 <h2 id="example-4">Example 4</h2>
 
-<p>rubocop:todo Layout/LineLength
-Placeholder value is given, so &quot;NULL&quot; is treated as an empty value. <code>count_empty</code> is true, so
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
+<p>Placeholder value is given, so &quot;NULL&quot; is treated as an empty value. <code>count_empty</code> is true, so
   empty values are counted. Note that fully empty field values are not counted, but when a
-rubocop:enable Layout/LineLength
   delimiter is present, any empty values delimited by it are counted.</p>
 
 <p>These options are functionally equivalent to those shown in example 2.</p>
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
- transform Count::FieldValues, field: :name, target: :ct, delim: &#39;;&#39;, placeholder: &#39;NULL&#39;, count_empty: true
-rubocop:enable Layout/LineLength
+<pre class="code ruby"><code class="ruby"> <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Count.html" title="Kiba::Extend::Transforms::Count (module)">Count</a></span></span><span class='op'>::</span><span class='const'>FieldValues</span><span class='comma'>,</span> <span class='label'>field:</span> <span class='symbol'>:name</span><span class='comma'>,</span> <span class='label'>target:</span> <span class='symbol'>:ct</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>placeholder:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>NULL</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>count_empty:</span> <span class='kw'>true</span>
 </code></pre>
 
 <p>Results in:</p>
@@ -284,7 +258,7 @@ rubocop:enable Layout/LineLength
   
 
   
-    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength   nothing is used as a placeholder rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength.</p>
+    <span class="summary_desc"><div class='inline'><p>A new instance of FieldValues.</p>
 </div></span>
   
 </li>
@@ -329,11 +303,7 @@ rubocop:enable Layout/LineLength
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-  nothing is used as a placeholder
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength</p>
+    <p>Returns a new instance of FieldValues.</p>
 
 
   </div>
@@ -401,7 +371,8 @@ rubocop:enable Layout/LineLength</p>
       
       
         &mdash;
-        <div class='inline'><p>string that acts as a placeholder for empty value. If nil,</p>
+        <div class='inline'><p>string that acts as a placeholder for empty value. If nil,
+nothing is used as a placeholder</p>
 </div>
       
     </li>
@@ -432,17 +403,17 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-164
-165
-166
-167
-168
-169
-170
-171</pre>
+136
+137
+138
+139
+140
+141
+142
+143</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/count/field_values.rb', line 164</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/count/field_values.rb', line 136</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>field:</span><span class='comma'>,</span> <span class='label'>target:</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_delim'><span class='object_link'><a href="../../../Extend.html#delim-class_method" title="Kiba::Extend.delim (method)">delim</a></span></span><span class='comma'>,</span>
   <span class='label'>placeholder:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>count_empty:</span> <span class='kw'>false</span><span class='rparen'>)</span>
@@ -503,19 +474,19 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-174
-175
-176
-177
-178
-179
-180
-181
-182
-183</pre>
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/count/field_values.rb', line 174</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/count/field_values.rb', line 146</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='ivar'>@target</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0</span><span class='tstring_end'>&quot;</span></span>
@@ -537,7 +508,7 @@ rubocop:enable Layout/LineLength</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Aug 28 21:54:18 2023 by
+  Generated on Fri Sep  1 02:53:03 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

@@ -106,13 +106,9 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-Combines values from multiple columns together as specified in fieldmap parameter.
-rubocop:enable Layout/LineLength</p>
+    <p>Combines values from multiple columns together as specified in fieldmap parameter.</p>
 
-<p>rubocop:todo Layout/LineLength
-If you are collapsing fields into target fields that are part of repeatable field groups,
-rubocop:enable Layout/LineLength
+<p>If you are collapsing fields into target fields that are part of repeatable field groups,
   <span class='object_link'><a href="FieldsToRepeatableFieldGroup.html" title="Kiba::Extend::Transforms::Collapse::FieldsToRepeatableFieldGroup (class)">FieldsToRepeatableFieldGroup</a></span> may be more appropriate.</p>
 
 <p>Target field name can be the same as an existing field name.</p>
@@ -121,25 +117,23 @@ rubocop:enable Layout/LineLength
 
 <p>Input table:</p>
 
-<pre class="code ruby"><code class="ruby">[
-  {person: &#39;&#39;, statusa: &#39;&#39;, date: &#39;&#39;,
-   personb: &#39;&#39;, statusb: &#39;&#39;, date2: &#39;&#39;,
-   personc: &#39;&#39;, statusc: &#39;&#39;, date3: &#39;&#39;},
-  {person: &#39;jim&#39;, statusa: &#39;approved&#39;, date: &#39;2020&#39;,
-   personb: &#39;bill&#39;, statusb: &#39;requested&#39;, date2: &#39;2019&#39;,
-   personc: &#39;terri&#39;, statusc: &#39;authorized&#39;, date3: &#39;2018&#39;},
-  {person: &#39;jim|mavis&#39;, statusa: &#39;approved|&#39;, date: &#39;2020|2021&#39;,
-   personb: &#39;bill&#39;, statusb: &#39;requested&#39;, date2: &#39;2019&#39;,
-   personc: &#39;terri&#39;, statusc: &#39;authorized&#39;, date3: &#39;2018&#39;},
-  {person: nil, statusa: &#39;acknowledged&#39;, date: &#39;2020&#39;,
-   personb: &#39;jill&#39;, statusb: &#39;requested&#39;, date2: nil,
-   personc: &#39;bill&#39;, statusc: &#39;followup&#39;, date3: &#39;2021&#39;},
-rubocop:todo Layout/LineLength
-  {person: &#39;%NULLVALUE%|%NULLVALUE%&#39;, statusa: &#39;acknowledged|approved&#39;, date: &#39;2020|%NULLVALUE%&#39;,
-rubocop:enable Layout/LineLength
-   personb: &#39;jill&#39;, statusb: &#39;requested&#39;, date2: nil,
-   personc: &#39;bill&#39;, statusc: &#39;followup&#39;, date3: &#39;2019&#39;}
-]
+<pre class="code ruby"><code class="ruby"><span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>person:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>statusa:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>date:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>personb:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>statusb:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>date2:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>personc:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>statusc:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>date3:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>person:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>jim</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>statusa:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>approved</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>date:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2020</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>personb:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bill</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>statusb:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>requested</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>date2:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2019</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>personc:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>terri</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>statusc:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>authorized</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>date3:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2018</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>person:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>jim|mavis</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>statusa:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>approved|</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>date:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2020|2021</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>personb:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bill</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>statusb:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>requested</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>date2:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2019</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>personc:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>terri</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>statusc:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>authorized</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>date3:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2018</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>person:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>statusa:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>acknowledged</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>date:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2020</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>personb:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>jill</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>statusb:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>requested</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>date2:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+   <span class='label'>personc:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bill</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>statusc:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>followup</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>date3:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2021</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>person:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%|%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>statusa:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>acknowledged|approved</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>date:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2020|%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>personb:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>jill</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>statusb:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>requested</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>date2:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+   <span class='label'>personc:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bill</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>statusc:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>followup</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>date3:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2019</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
 </code></pre>
 
 <p>Used in pipeline as:</p>
@@ -180,31 +174,17 @@ rubocop:enable Layout/LineLength
 
 <h2 id="note">NOTE</h2>
 
-<p>rubocop:todo Layout/LineLength
-If it is important that the number of values in each target column match in each row, depending on the
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
+<p>If it is important that the number of values in each target column match in each row, depending on the
   situation, you may need to employ %NULLVALUE% or other placeholder value to ensure this. For example,
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
   contrast row 3 and 4 of the example. Row 3 works because an empty column value gets treated as a
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
   single value. Thus, it sees 3 person, status, and statusdate values, even though one person and one
-rubocop:enable Layout/LineLength
   date value are nil.</p>
 
 <p>If the person column of row 4 were like this:</p>
 
-<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
-| person  | statusa               | date | personb | statusb   | date2 | personc | statusc    | date3 |
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
+<pre class="code ruby"><code class="ruby">| person  | statusa               | date | personb | statusb   | date2 | personc | statusc    | date3 |
 |---------|-----------------------|------|---------|-----------|-------|---------|------------|-------|
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
 | nil     | acknowledged|approved | 2020 | jill    | requested | nil   | bill    | followup   |  2019 |
-rubocop:enable Layout/LineLength
 </code></pre>
 
 <p>Then output would be:</p>
@@ -214,14 +194,10 @@ rubocop:enable Layout/LineLength
 | |jill|bill | followup|acknowledged|approved|requested | 2020||2019 |
 </code></pre>
 
-<p>rubocop:todo Layout/LineLength
-Depending on your requirements, this could be problematic because you now have 3 values in person and
-rubocop:enable Layout/LineLength
+<p>Depending on your requirements, this could be problematic because you now have 3 values in person and
   statusdate, but 4 values in status</p>
 
-<p>rubocop:todo Layout/LineLength
-Otherwise, you can collapse fields in whatever way you like. For example, used in pipeline as:
-rubocop:enable Layout/LineLength</p>
+<p>Otherwise, you can collapse fields in whatever way you like. For example, used in pipeline as:</p>
 
 <pre class="code ruby"><code class="ruby"> <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Collapse.html" title="Kiba::Extend::Transforms::Collapse (module)">Collapse</a></span></span><span class='op'>::</span><span class='const'>FieldsWithCustomFieldmap</span><span class='comma'>,</span>
    <span class='label'>fieldmap:</span> <span class='lbrace'>{</span>
@@ -260,21 +236,13 @@ rubocop:enable Layout/LineLength</p>
 <h1 id="more-on-fieldmap-parameter">More on <code>fieldmap</code> parameter</h1>
 
 <ul>
-<li><code>fieldmap</code> is a Hash
-rubocop:todo Layout/LineLength</li>
+<li><code>fieldmap</code> is a Hash</li>
 <li>Each key is a target field, given as a Symbol, into which values from multiple other fields will be
-rubocop:enable Layout/LineLength
-combined
-rubocop:todo Layout/LineLength</li>
+combined</li>
 <li>Each value is an Array of Symbols. Each element of the array is a source field that will be mapped
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
 into the target field given as key. Order of source fields in this array controls the order in which
-rubocop:enable Layout/LineLength
-the source fields are combined.
-rubocop:todo Layout/LineLength</li>
-<li>There must be an equal number of source fields given in each source field Array
-rubocop:enable Layout/LineLength</li>
+the source fields are combined.</li>
+<li>There must be an equal number of source fields given in each source field Array</li>
 </ul>
 
 
@@ -332,7 +300,7 @@ rubocop:enable Layout/LineLength</li>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength   target fields.</p>
+    <span class="summary_desc"><div class='inline'><p>A new instance of FieldsWithCustomFieldmap.</p>
 </div></span>
   
 </li>
@@ -388,16 +356,7 @@ rubocop:enable Layout/LineLength</li>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  target fields. See above for fuller explanation of Hash format expectations
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  target columns. <strong>If a target column is the same as a source column, it will not be deleted.</strong>
-rubocop:enable Layout/LineLength</p>
+    <p>Returns a new instance of FieldsWithCustomFieldmap.</p>
 
 
   </div>
@@ -416,7 +375,8 @@ rubocop:enable Layout/LineLength</p>
       
       
         &mdash;
-        <div class='inline'><p>Instructions on how to combine source fields into</p>
+        <div class='inline'><p>Instructions on how to combine source fields into
+target fields. See above for fuller explanation of Hash format expectations</p>
 </div>
       
     </li>
@@ -448,7 +408,8 @@ rubocop:enable Layout/LineLength</p>
       
       
         &mdash;
-        <div class='inline'><p>Whether to delete source columns after values have been combined in</p>
+        <div class='inline'><p>Whether to delete source columns after values have been combined in
+target columns. <strong>If a target column is the same as a source column, it will not be deleted.</strong></p>
 </div>
       
     </li>
@@ -477,15 +438,15 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-199
-200
-201
-202
-203
-204</pre>
+161
+162
+163
+164
+165
+166</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/collapse/fields_with_custom_fieldmap.rb', line 199</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/collapse/fields_with_custom_fieldmap.rb', line 161</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fieldmap:</span><span class='comma'>,</span> <span class='label'>delim:</span><span class='comma'>,</span> <span class='label'>delete_sources:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='ivar'>@fieldmap</span> <span class='op'>=</span> <span class='id identifier rubyid_fieldmap'>fieldmap</span>
@@ -559,16 +520,16 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-207
-208
-209
-210
-211
-212
-213</pre>
+169
+170
+171
+172
+173
+174
+175</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/collapse/fields_with_custom_fieldmap.rb', line 207</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/collapse/fields_with_custom_fieldmap.rb', line 169</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_fieldmap'>fieldmap</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='id identifier rubyid_sources'>sources</span><span class='op'>|</span>
@@ -587,7 +548,7 @@ rubocop:enable Layout/LineLength</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Aug 28 21:54:20 2023 by
+  Generated on Fri Sep  1 02:53:06 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

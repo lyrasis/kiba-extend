@@ -230,7 +230,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength Add lookup tables to the context as methods memoized to instance variables rubocop:enable Layout/LineLength.</p>
+    <span class="summary_desc"><div class='inline'><p>Add lookup tables to the context as methods memoized to instance   variables.</p>
 </div></span>
   
 </li>
@@ -561,14 +561,14 @@
       <pre class="lines">
 
 
-51
-52
-53
-54
-55</pre>
+46
+47
+48
+49
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 51</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 46</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_config'>add_config</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -619,13 +619,13 @@
       <pre class="lines">
 
 
-27
-28
-29
-30</pre>
+23
+24
+25
+26</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 23</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_decoration'>add_decoration</span>
   <span class='id identifier rubyid_show_me_decoration'>show_me_decoration</span>
@@ -675,12 +675,12 @@
       <pre class="lines">
 
 
-57
-58
-59</pre>
+52
+53
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 52</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_destinations'>add_destinations</span>
   <span class='id identifier rubyid_context'>context</span><span class='period'>.</span><span class='id identifier rubyid_instance_eval'>instance_eval</span><span class='lparen'>(</span><span class='id identifier rubyid_destinations'>destinations</span><span class='rparen'>)</span>
@@ -701,9 +701,8 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-Add lookup tables to the context as methods memoized to instance variables
-rubocop:enable Layout/LineLength</p>
+    <p>Add lookup tables to the context as methods memoized to instance
+  variables</p>
 
 
   </div>
@@ -732,6 +731,11 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
+30
+31
+32
+33
+34
 35
 36
 37
@@ -740,15 +744,10 @@ rubocop:enable Layout/LineLength</p>
 40
 41
 42
-43
-44
-45
-46
-47
-48</pre>
+43</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 30</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_lookup'>add_lookup</span><span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_key_as_iv'>key_as_iv</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>@</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_key'>key</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
@@ -808,12 +807,12 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-61
-62
-63</pre>
+56
+57
+58</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 61</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 56</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_sources'>add_sources</span>
   <span class='id identifier rubyid_context'>context</span><span class='period'>.</span><span class='id identifier rubyid_instance_eval'>instance_eval</span><span class='lparen'>(</span><span class='id identifier rubyid_sources'>sources</span><span class='rparen'>)</span>
@@ -862,18 +861,18 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
+60
+61
+62
+63
+64
 65
 66
 67
-68
-69
-70
-71
-72
-73</pre>
+68</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 60</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_assemble_control'>assemble_control</span>
   <span class='id identifier rubyid_lookups_to_memoized_methods'>lookups_to_memoized_methods</span> <span class='kw'>if</span> <span class='ivar'>@files</span><span class='lbracket'>[</span><span class='symbol'>:lookup</span><span class='rbracket'>]</span>
@@ -928,17 +927,17 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
+70
+71
+72
+73
+74
 75
 76
-77
-78
-79
-80
-81
-82</pre>
+77</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 75</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 70</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_check_requirements'>check_requirements</span>
   <span class='lbracket'>[</span><span class='ivar'>@files</span><span class='lbracket'>[</span><span class='symbol'>:source</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='ivar'>@files</span><span class='lbracket'>[</span><span class='symbol'>:lookup</span><span class='rbracket'>]</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_data'>data</span><span class='op'>|</span>
@@ -992,14 +991,14 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-84
-85
-86
-87
-88</pre>
+79
+80
+81
+82
+83</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 84</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 79</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_destinations'>destinations</span>
   <span class='ivar'>@files</span><span class='lbracket'>[</span><span class='symbol'>:destination</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_config'>config</span><span class='op'>|</span> <span class='id identifier rubyid_file_config'>file_config</span><span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -1050,12 +1049,12 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-90
-91
-92</pre>
+85
+86
+87</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 90</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 85</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_file_config'>file_config</span><span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='rparen'>)</span>
   <span class='lbrace'>{</span><span class='label'>klass:</span> <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_klass'>klass</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_args'>args</span><span class='rbrace'>}</span>
@@ -1104,6 +1103,11 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
+89
+90
+91
+92
+93
 94
 95
 96
@@ -1114,15 +1118,10 @@ rubocop:enable Layout/LineLength</p>
 101
 102
 103
-104
-105
-106
-107
-108
-109</pre>
+104</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 94</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 89</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_handle_requirements'>handle_requirements</span>
   <span class='lbracket'>[</span><span class='ivar'>@files</span><span class='lbracket'>[</span><span class='symbol'>:source</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='ivar'>@files</span><span class='lbracket'>[</span><span class='symbol'>:lookup</span><span class='rbracket'>]</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span>
@@ -1184,14 +1183,14 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-111
-112
-113
-114
-115</pre>
+106
+107
+108
+109
+110</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 111</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 106</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_lookups_to_memoized_methods'>lookups_to_memoized_methods</span>
   <span class='ivar'>@files</span><span class='lbracket'>[</span><span class='symbol'>:lookup</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_config'>config</span><span class='op'>|</span>
@@ -1243,12 +1242,12 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-118
-119
-120</pre>
+113
+114
+115</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 118</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 113</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parse_job_segments'>parse_job_segments</span>
   <span class='id identifier rubyid_parse_job'>parse_job</span><span class='lparen'>(</span><span class='id identifier rubyid_control'>control</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='id identifier rubyid_pre_process'>pre_process</span><span class='comma'>,</span> <span class='id identifier rubyid_transform'>transform</span><span class='comma'>,</span> <span class='id identifier rubyid_post_process'>post_process</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -1297,15 +1296,15 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-122
-123
-124
-125
-126
-127</pre>
+117
+118
+119
+120
+121
+122</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 122</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 117</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_show_me_decoration'>show_me_decoration</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_job_show_me'><span class='object_link'><a href="../../Extend.html#job_show_me-class_method" title="Kiba::Extend.job_show_me (method)">job_show_me</a></span></span>
@@ -1357,14 +1356,14 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-129
-130
-131
-132
-133</pre>
+124
+125
+126
+127
+128</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 129</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 124</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sources'>sources</span>
   <span class='ivar'>@files</span><span class='lbracket'>[</span><span class='symbol'>:source</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_config'>config</span><span class='op'>|</span> <span class='id identifier rubyid_file_config'>file_config</span><span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -1415,15 +1414,15 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-135
-136
-137
-138
-139
-140</pre>
+130
+131
+132
+133
+134
+135</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 135</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 130</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_tell_me_decoration'>tell_me_decoration</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_job_tell_me'><span class='object_link'><a href="../../Extend.html#job_tell_me-class_method" title="Kiba::Extend.job_tell_me (method)">job_tell_me</a></span></span>
@@ -1475,12 +1474,12 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-142
-143
-144</pre>
+137
+138
+139</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 142</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 137</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_transform'>transform</span>
   <span class='lbracket'>[</span><span class='id identifier rubyid_initial_transforms'>initial_transforms</span><span class='comma'>,</span> <span class='ivar'>@transformer</span><span class='comma'>,</span> <span class='id identifier rubyid_final_transforms'>final_transforms</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
@@ -1495,7 +1494,7 @@ rubocop:enable Layout/LineLength</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Aug 28 21:54:15 2023 by
+  Generated on Fri Sep  1 02:53:01 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

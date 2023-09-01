@@ -101,9 +101,7 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-Renames multiple fields at once, given a fieldmap where key is <code>from</code> field and value is <code>to</code> field
-rubocop:enable Layout/LineLength</p>
+    <p>Renames multiple fields at once, given a fieldmap where key is <code>from</code> field and value is <code>to</code> field</p>
 
 <h1 id="examples">Examples</h1>
 
@@ -179,7 +177,7 @@ rubocop:enable Layout/LineLength</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength.</p>
+    <span class="summary_desc"><div class='inline'><p>A new instance of Fields.</p>
 </div></span>
   
 </li>
@@ -224,8 +222,7 @@ rubocop:enable Layout/LineLength</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength</p>
+    <p>Returns a new instance of Fields.</p>
 
 
   </div>
@@ -273,15 +270,15 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
+36
+37
 38
 39
 40
-41
-42
-43</pre>
+41</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/rename/fields.rb', line 38</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/rename/fields.rb', line 36</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fieldmap:</span><span class='rparen'>)</span>
   <span class='ivar'>@fieldmap</span> <span class='op'>=</span> <span class='id identifier rubyid_fieldmap'>fieldmap</span>
@@ -355,13 +352,13 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
+44
+45
 46
-47
-48
-49</pre>
+47</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/rename/fields.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/rename/fields.rb', line 44</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_renamers'>renamers</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_renamer'>renamer</span><span class='op'>|</span> <span class='id identifier rubyid_renamer'>renamer</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -377,7 +374,7 @@ rubocop:enable Layout/LineLength</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Aug 28 21:54:17 2023 by
+  Generated on Fri Sep  1 02:53:03 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

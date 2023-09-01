@@ -102,9 +102,7 @@
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
     <p>Splits field into multiple fields, based on sep
-rubocop:todo Layout/LineLength
-New columns use the original field name, and add number to end (:field0, :field1, etc)
-rubocop:enable Layout/LineLength</p>
+New columns use the original field name, and add number to end (:field0, :field1, etc)</p>
 
 <h1 id="example-1">Example 1</h1>
 
@@ -119,9 +117,7 @@ rubocop:enable Layout/LineLength</p>
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
-transform Split::IntoMultipleColumns, field: :summary, sep: &#39;:&#39;, max_segments: 2
-rubocop:enable Layout/LineLength
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Split.html" title="Kiba::Extend::Transforms::Split (module)">Split</a></span></span><span class='op'>::</span><span class='const'>IntoMultipleColumns</span><span class='comma'>,</span> <span class='label'>field:</span> <span class='symbol'>:summary</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>:</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>max_segments:</span> <span class='int'>2</span>
 </code></pre>
 
 <p>Results in:</p>
@@ -147,40 +143,24 @@ rubocop:enable Layout/LineLength
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
-transform Split::IntoMultipleColumns, field: :summary, sep: &#39;:&#39;, max_segments: 3,
-rubocop:enable Layout/LineLength
-  collapse_on: :left, warnfield: :warnme
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Split.html" title="Kiba::Extend::Transforms::Split (module)">Split</a></span></span><span class='op'>::</span><span class='const'>IntoMultipleColumns</span><span class='comma'>,</span> <span class='label'>field:</span> <span class='symbol'>:summary</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>:</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>max_segments:</span> <span class='int'>3</span><span class='comma'>,</span>
+  <span class='label'>collapse_on:</span> <span class='symbol'>:left</span><span class='comma'>,</span> <span class='label'>warnfield:</span> <span class='symbol'>:warnme</span>
 </code></pre>
 
 <p>Results in:</p>
 
-<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
-| summary0 | summary1 | summary2 | warnme                                                |
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
+<pre class="code ruby"><code class="ruby">| summary0 | summary1 | summary2 | warnme                                                |
 |----------------------------------------------------------------------------------------|
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
 | a:b:c    | d        | e        | max_segments less than total number of split segments |
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
 | f        | g        | nil      | nil                                                   |
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
 |          | nil      | nil      | nil                                                   |
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
 | nil      | nil      | nil      | nil                                                   |
-rubocop:enable Layout/LineLength
 </code></pre>
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
-transform Split::IntoMultipleColumns, field: :summary, sep: &#39;:&#39;, max_segments: 3,
-rubocop:enable Layout/LineLength
-  collapse_on: :right
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Split.html" title="Kiba::Extend::Transforms::Split (module)">Split</a></span></span><span class='op'>::</span><span class='const'>IntoMultipleColumns</span><span class='comma'>,</span> <span class='label'>field:</span> <span class='symbol'>:summary</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>:</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>max_segments:</span> <span class='int'>3</span><span class='comma'>,</span>
+  <span class='label'>collapse_on:</span> <span class='symbol'>:right</span>
 </code></pre>
 
 <p>Results in:</p>
@@ -233,7 +213,7 @@ rubocop:enable Layout/LineLength
   
 
   
-    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength   <code>field</code> value into (i.e. max number of columns to create from this one column).</p>
+    <span class="summary_desc"><div class='inline'><p>A new instance of IntoMultipleColumns.</p>
 </div></span>
   
 </li>
@@ -281,33 +261,14 @@ rubocop:enable Layout/LineLength
     
   <div class="note notetag">
     <strong>Note:</strong>
-    <div class='inline'><p>Since 2.0.0, the <code>max_segments</code> parameter is required. This is due to the row-by-row way</p>
+    <div class='inline'><p>Since 2.0.0, the <code>max_segments</code> parameter is required. This is due to the row-by-row way
+in which Kiba processes data. When processing one row that would be split into 2 columns,
+the processor has no way of knowing that another row in the source should be split into 10
+columns and thus it creates rows with different numbers of fields.</p>
 </div>
   </div>
 
-<p>rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  <code>field</code> value into (i.e. max number of columns to create from this one column).
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-  if there are more than max_segments
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  in which Kiba processes data. When processing one row that would be split into 2 columns,
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  the processor has no way of knowing that another row in the source should be split into 10
-rubocop:enable Layout/LineLength
-  columns and thus it creates rows with different numbers of fields.
-rubocop:disable Metrics/ParameterLists
-rubocop:todo Layout/LineLength</p>
+<p>Returns a new instance of IntoMultipleColumns.</p>
 
 
   </div>
@@ -373,7 +334,8 @@ rubocop:todo Layout/LineLength</p>
       
       
         &mdash;
-        <div class='inline'><p>Specification of the maximum number of segments to split</p>
+        <div class='inline'><p>Specification of the maximum number of segments to split
+<code>field</code> value into (i.e. max number of columns to create from this one column).</p>
 </div>
       
     </li>
@@ -390,7 +352,8 @@ rubocop:todo Layout/LineLength</p>
       
       
         &mdash;
-        <div class='inline'><p>Which end of the split array to join remaining split values</p>
+        <div class='inline'><p>Which end of the split array to join remaining split values
+if there are more than max_segments</p>
 </div>
       
     </li>
@@ -421,25 +384,23 @@ rubocop:todo Layout/LineLength</p>
       <pre class="lines">
 
 
-135
-136
-137
-138
-139
-140
-141
-142
-143
-144
-145
-146</pre>
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/split/into_multiple_columns.rb', line 135</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/split/into_multiple_columns.rb', line 99</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>field:</span><span class='comma'>,</span> <span class='label'>sep:</span><span class='comma'>,</span> <span class='label'>max_segments:</span><span class='comma'>,</span> <span class='label'>delete_source:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>collapse_on:</span> <span class='symbol'>:right</span><span class='comma'>,</span>
-  <span class='comment'># rubocop:enable Layout/LineLength
-</span>  <span class='label'>warnfield:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='label'>warnfield:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@field</span> <span class='op'>=</span> <span class='id identifier rubyid_field'>field</span>
   <span class='ivar'>@sep</span> <span class='op'>=</span> <span class='id identifier rubyid_sep'>sep</span>
   <span class='ivar'>@del</span> <span class='op'>=</span> <span class='id identifier rubyid_delete_source'>delete_source</span>
@@ -500,15 +461,15 @@ rubocop:todo Layout/LineLength</p>
       <pre class="lines">
 
 
-150
-151
-152
-153
-154
-155</pre>
+112
+113
+114
+115
+116
+117</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/split/into_multiple_columns.rb', line 150</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/split/into_multiple_columns.rb', line 112</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_add_new_fields'>add_new_fields</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
@@ -526,7 +487,7 @@ rubocop:todo Layout/LineLength</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Aug 28 21:54:19 2023 by
+  Generated on Fri Sep  1 02:53:05 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

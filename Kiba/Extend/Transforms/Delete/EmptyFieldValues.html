@@ -113,9 +113,7 @@
 </div>
   </div>
 
-<p>rubocop:todo Layout/LineLength
-Deletes any empty values from the field. Supports <code>usenull</code> = true to treat the value of
-rubocop:enable Layout/LineLength
+<p>Deletes any empty values from the field. Supports <code>usenull</code> = true to treat the value of
   <code>Kiba::Extend.nullvalue</code> as empty</p>
 
 <h1 id="examples">Examples</h1>
@@ -153,9 +151,7 @@ rubocop:enable Layout/LineLength
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
-transform Delete::EmptyFieldValues, fields: [:data], sep: &#39;;&#39;, usenull: true
-rubocop:enable Layout/LineLength
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Delete.html" title="Kiba::Extend::Transforms::Delete (module)">Delete</a></span></span><span class='op'>::</span><span class='const'>EmptyFieldValues</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='lbracket'>[</span><span class='symbol'>:data</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>usenull:</span> <span class='kw'>true</span>
 </code></pre>
 
 <p>Results in:</p>
@@ -211,7 +207,7 @@ rubocop:enable Layout/LineLength
   
 
   
-    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength.</p>
+    <span class="summary_desc"><div class='inline'><p>A new instance of EmptyFieldValues.</p>
 </div></span>
   
 </li>
@@ -269,10 +265,7 @@ rubocop:enable Layout/LineLength
 </div>
   </div>
 
-<p>rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength</p>
+<p>Returns a new instance of EmptyFieldValues.</p>
 
 
   </div>
@@ -356,38 +349,30 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
+77
+78
+79
+80
+81
+82
 83
 84
 85
 86
 87
-88
-89
-90
-91
-92
-93
-94
-95
-96
-97
-98</pre>
+88</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/empty_field_values.rb', line 83</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/empty_field_values.rb', line 77</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>usenull:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fields'>fields</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
   <span class='ivar'>@usenull</span> <span class='op'>=</span> <span class='id identifier rubyid_usenull'>usenull</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_sep'>sep</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_delim'>delim</span>
-    <span class='comment'># rubocop:todo Layout/LineLength
-</span>    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>%(</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_warning_label'><span class='object_link'><a href="../../../Extend.html#warning_label-class_method" title="Kiba::Extend.warning_label (method)">warning_label</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>: Do not use both `sep` and `delim`. Prefer `delim`</span><span class='tstring_end'>)</span></span>
-    <span class='comment'># rubocop:enable Layout/LineLength
-</span>  <span class='kw'>elsif</span> <span class='id identifier rubyid_sep'>sep</span>
-    <span class='comment'># rubocop:todo Layout/LineLength
-</span>    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>%(</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_warning_label'><span class='object_link'><a href="../../../Extend.html#warning_label-class_method" title="Kiba::Extend.warning_label (method)">warning_label</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>: The `sep` keyword is being deprecated in a future version. Change it to `delim` in your ETL code.</span><span class='tstring_end'>)</span></span>
-    <span class='comment'># rubocop:enable Layout/LineLength
-</span>    <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_sep'>sep</span>
+    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>%(</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_warning_label'><span class='object_link'><a href="../../../Extend.html#warning_label-class_method" title="Kiba::Extend.warning_label (method)">warning_label</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>: Do not use both `sep` and `delim`. Prefer `delim`</span><span class='tstring_end'>)</span></span>
+  <span class='kw'>elsif</span> <span class='id identifier rubyid_sep'>sep</span>
+    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>%(</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_warning_label'><span class='object_link'><a href="../../../Extend.html#warning_label-class_method" title="Kiba::Extend.warning_label (method)">warning_label</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>: The `sep` keyword is being deprecated in a future version. Change it to `delim` in your ETL code.</span><span class='tstring_end'>)</span></span>
+    <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_sep'>sep</span>
   <span class='kw'>else</span>
     <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_delim'>delim</span> <span class='op'>||</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_delim'><span class='object_link'><a href="../../../Extend.html#delim-class_method" title="Kiba::Extend.delim (method)">delim</a></span></span>
   <span class='kw'>end</span>
@@ -443,23 +428,23 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
 102
 103
 104
-105
-106
-107
-108
-109
-110
-111
-112
-113
-114
-115</pre>
+105</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/empty_field_values.rb', line 102</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/empty_field_values.rb', line 92</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_finalize_fields'>finalize_fields</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_fields_set'>fields_set</span>
@@ -485,7 +470,7 @@ rubocop:enable Layout/LineLength</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Aug 28 21:54:19 2023 by
+  Generated on Fri Sep  1 02:53:04 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

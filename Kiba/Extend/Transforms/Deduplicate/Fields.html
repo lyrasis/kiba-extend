@@ -120,9 +120,7 @@
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
-transform Deduplicate::Fields, source: :x, targets: %i[y z], multival: true, sep: &#39;;&#39;
-rubocop:enable Layout/LineLength
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Deduplicate.html" title="Kiba::Extend::Transforms::Deduplicate (module)">Deduplicate</a></span></span><span class='op'>::</span><span class='const'>Fields</span><span class='comma'>,</span> <span class='label'>source:</span> <span class='symbol'>:x</span><span class='comma'>,</span> <span class='label'>targets:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>y</span><span class='words_sep'> </span><span class='tstring_content'>z</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>multival:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;</span><span class='tstring_end'>&#39;</span></span>
 </code></pre>
 
 <p>Results in:</p>
@@ -206,7 +204,7 @@ rubocop:enable Layout/LineLength
   
 
   
-    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength.</p>
+    <span class="summary_desc"><div class='inline'><p>A new instance of Fields.</p>
 </div></span>
   
 </li>
@@ -251,12 +249,7 @@ rubocop:enable Layout/LineLength
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength</p>
+    <p>Returns a new instance of Fields.</p>
 
 
   </div>
@@ -355,17 +348,17 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
+84
+85
+86
+87
+88
+89
 90
-91
-92
-93
-94
-95
-96
-97</pre>
+91</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/fields.rb', line 90</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/fields.rb', line 84</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>source:</span><span class='comma'>,</span> <span class='label'>targets:</span><span class='comma'>,</span> <span class='label'>casesensitive:</span> <span class='kw'>true</span><span class='comma'>,</span>
   <span class='label'>multival:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_delim'><span class='object_link'><a href="../../../Extend.html#delim-class_method" title="Kiba::Extend.delim (method)">delim</a></span></span><span class='rparen'>)</span>
@@ -426,6 +419,12 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
+94
+95
+96
+97
+98
+99
 100
 101
 102
@@ -460,16 +459,10 @@ rubocop:enable Layout/LineLength</p>
 131
 132
 133
-134
-135
-136
-137
-138
-139
-140</pre>
+134</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/fields.rb', line 100</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/fields.rb', line 94</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_sourceval'>sourceval</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='ivar'>@source</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span>
@@ -522,7 +515,7 @@ rubocop:enable Layout/LineLength</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Aug 28 21:54:18 2023 by
+  Generated on Fri Sep  1 02:53:03 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

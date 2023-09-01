@@ -101,30 +101,18 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-Adds a field (<code>in_field</code>) containing &#39;y&#39; or &#39;n&#39;, indicating whether value of <code>on_field</code> is a duplicate
-rubocop:enable Layout/LineLength</p>
+    <p>Adds a field (<code>in_field</code>) containing &#39;y&#39; or &#39;n&#39;, indicating whether value of <code>on_field</code> is a duplicate</p>
 
-<p>rubocop:todo Layout/LineLength
-The first instance of a value in <code>on_field</code> is always marked <code>n</code>. Subsequent rows containing the same
-rubocop:enable Layout/LineLength
+<p>The first instance of a value in <code>on_field</code> is always marked <code>n</code>. Subsequent rows containing the same
   value will be marked &#39;y&#39;</p>
 
-<p>rubocop:todo Layout/LineLength
-Use this transform if you need to retain/report on what will be treated as a duplicate. Use
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
+<p>Use this transform if you need to retain/report on what will be treated as a duplicate. Use
   <span class='object_link'><a href="../FilterRows/FieldEqualTo.html" title="Kiba::Extend::Transforms::FilterRows::FieldEqualTo (class)">FilterRows::FieldEqualTo</a></span> to extract only the duplicate rows and/or to
-rubocop:enable Layout/LineLength
   keep only the non-duplicate rows.</p>
 
-<p>rubocop:todo Layout/LineLength
-Use <span class='object_link'><a href="FlagAll.html" title="Kiba::Extend::Transforms::Deduplicate::FlagAll (class)">FlagAll</a></span> if you need all rows containing duplicate values flagged <code>y</code>.
-rubocop:enable Layout/LineLength</p>
+<p>Use <span class='object_link'><a href="FlagAll.html" title="Kiba::Extend::Transforms::Deduplicate::FlagAll (class)">FlagAll</a></span> if you need all rows containing duplicate values flagged <code>y</code>.</p>
 
-<p>rubocop:todo Layout/LineLength
-To delete duplicates all in one step, use <span class='object_link'><a href="Table.html" title="Kiba::Extend::Transforms::Deduplicate::Table (class)">Table</a></span>
-rubocop:enable Layout/LineLength</p>
+<p>To delete duplicates all in one step, use <span class='object_link'><a href="Table.html" title="Kiba::Extend::Transforms::Deduplicate::Table (class)">Table</a></span></p>
 
 <p>Input table:</p>
 
@@ -138,10 +126,8 @@ rubocop:enable Layout/LineLength</p>
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby">  @deduper = {}
-rubocop:todo Layout/LineLength
-  transform Deduplicate::Flag, on_field: :combined, in_field: :duplicate, using: @deduper
-rubocop:enable Layout/LineLength
+<pre class="code ruby"><code class="ruby">  <span class='ivar'>@deduper</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Deduplicate.html" title="Kiba::Extend::Transforms::Deduplicate (module)">Deduplicate</a></span></span><span class='op'>::</span><span class='const'>Flag</span><span class='comma'>,</span> <span class='label'>on_field:</span> <span class='symbol'>:combined</span><span class='comma'>,</span> <span class='label'>in_field:</span> <span class='symbol'>:duplicate</span><span class='comma'>,</span> <span class='label'>using:</span> <span class='ivar'>@deduper</span>
 </code></pre>
 
 <p>Results in:</p>
@@ -204,7 +190,7 @@ rubocop:enable Layout/LineLength
   
 
   
-    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength   use this transform.</p>
+    <span class="summary_desc"><div class='inline'><p>A new instance of Flag.</p>
 </div></span>
   
 </li>
@@ -249,11 +235,7 @@ rubocop:enable Layout/LineLength
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-  use this transform</p>
+    <p>Returns a new instance of Flag.</p>
 
 
   </div>
@@ -319,7 +301,8 @@ rubocop:enable Layout/LineLength
       
       
         &mdash;
-        <div class='inline'><p>if false, <code>in_field</code> value for non-duplicate is left blank</p>
+        <div class='inline'><p>if false, <code>in_field</code> value for non-duplicate is left blank
+use this transform</p>
 </div>
       
     </li>
@@ -333,19 +316,19 @@ rubocop:enable Layout/LineLength
       <pre class="lines">
 
 
-75
-76
-77
-78
-79
-80
-81
-82
-83
-84</pre>
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/flag.rb', line 75</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/flag.rb', line 59</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>on_field:</span><span class='comma'>,</span> <span class='label'>in_field:</span><span class='comma'>,</span> <span class='label'>using:</span><span class='comma'>,</span> <span class='label'>explicit_no:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='ivar'>@on</span> <span class='op'>=</span> <span class='id identifier rubyid_on_field'>on_field</span>
@@ -408,19 +391,19 @@ rubocop:enable Layout/LineLength
       <pre class="lines">
 
 
-87
-88
-89
-90
-91
-92
-93
-94
-95
-96</pre>
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/flag.rb', line 87</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/flag.rb', line 71</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_val'>val</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_on'>on</span><span class='rparen'>)</span>
@@ -442,7 +425,7 @@ rubocop:enable Layout/LineLength
 </div>
 
       <div id="footer">
-  Generated on Mon Aug 28 21:54:17 2023 by
+  Generated on Fri Sep  1 02:53:03 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

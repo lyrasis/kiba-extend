@@ -101,9 +101,7 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-Compares values in the given fields and puts <code>same</code> or <code>diff</code> in the given target field.
-rubocop:enable Layout/LineLength</p>
+    <p>Compares values in the given fields and puts <code>same</code> or <code>diff</code> in the given target field.</p>
 
 <h1 id="examples">Examples</h1>
 
@@ -140,9 +138,7 @@ rubocop:enable Layout/LineLength</p>
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
- transform Compare::FieldValues, fields: %i[id pid zid], target: :comp, downcase: false, strip: false
-rubocop:enable Layout/LineLength
+<pre class="code ruby"><code class="ruby"> <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Compare.html" title="Kiba::Extend::Transforms::Compare (module)">Compare</a></span></span><span class='op'>::</span><span class='const'>FieldValues</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>id</span><span class='words_sep'> </span><span class='tstring_content'>pid</span><span class='words_sep'> </span><span class='tstring_content'>zid</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>target:</span> <span class='symbol'>:comp</span><span class='comma'>,</span> <span class='label'>downcase:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>strip:</span> <span class='kw'>false</span>
 </code></pre>
 
 <p>Results in:</p>
@@ -159,9 +155,7 @@ rubocop:enable Layout/LineLength
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
- transform Compare::FieldValues, fields: %i[id pid zid], target: :comp, ignore_blank: true
-rubocop:enable Layout/LineLength
+<pre class="code ruby"><code class="ruby"> <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Compare.html" title="Kiba::Extend::Transforms::Compare (module)">Compare</a></span></span><span class='op'>::</span><span class='const'>FieldValues</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>id</span><span class='words_sep'> </span><span class='tstring_content'>pid</span><span class='words_sep'> </span><span class='tstring_content'>zid</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>target:</span> <span class='symbol'>:comp</span><span class='comma'>,</span> <span class='label'>ignore_blank:</span> <span class='kw'>true</span>
 </code></pre>
 
 <p>Results in:</p>
@@ -231,7 +225,7 @@ rubocop:enable Layout/LineLength
   
 
   
-    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength   comparison.</p>
+    <span class="summary_desc"><div class='inline'><p>A new instance of FieldValues.</p>
 </div></span>
   
 </li>
@@ -276,17 +270,7 @@ rubocop:enable Layout/LineLength
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-  comparison. <code>true</code> results in a case insensitive comparison.
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength</p>
+    <p>Returns a new instance of FieldValues.</p>
 
 
   </div>
@@ -337,7 +321,8 @@ rubocop:enable Layout/LineLength</p>
       
       
         &mdash;
-        <div class='inline'><p>whether to downcase all values for comparison. <code>false</code> results in a case sensitive</p>
+        <div class='inline'><p>whether to downcase all values for comparison. <code>false</code> results in a case sensitive
+comparison. <code>true</code> results in a case insensitive comparison.</p>
 </div>
       
     </li>
@@ -400,17 +385,17 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-107
-108
-109
-110
-111
-112
-113
-114</pre>
+93
+94
+95
+96
+97
+98
+99
+100</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/compare/field_values.rb', line 107</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/compare/field_values.rb', line 93</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span><span class='comma'>,</span> <span class='label'>target:</span><span class='comma'>,</span> <span class='label'>downcase:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>strip:</span> <span class='kw'>true</span><span class='comma'>,</span>
   <span class='label'>ignore_blank:</span> <span class='kw'>false</span><span class='rparen'>)</span>
@@ -486,23 +471,23 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126
-127
-128
-129
-130</pre>
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/compare/field_values.rb', line 117</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/compare/field_values.rb', line 103</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='ivar'>@target</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>diff</span><span class='tstring_end'>&quot;</span></span>
@@ -528,7 +513,7 @@ rubocop:enable Layout/LineLength</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Aug 28 21:54:18 2023 by
+  Generated on Fri Sep  1 02:53:04 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

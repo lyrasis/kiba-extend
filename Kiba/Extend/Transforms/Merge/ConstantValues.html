@@ -104,15 +104,12 @@
     
   <div class="note notetag">
     <strong>Note:</strong>
-    <div class='inline'><p>Uses <span class='object_link'><a href="ConstantValue.html" title="Kiba::Extend::Transforms::Merge::ConstantValue (class)">ConstantValue</a></span> to handle each pair in the <code>constantmap</code>, so</p>
+    <div class='inline'><p>Uses <span class='object_link'><a href="ConstantValue.html" title="Kiba::Extend::Transforms::Merge::ConstantValue (class)">ConstantValue</a></span> to handle each pair in the <code>constantmap</code>, so
+check its behavior as well.</p>
 </div>
   </div>
 
 <p>Merges the given constant values into the given target fields.</p>
-
-<p>rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-  check its behavior as well.</p>
 
 <h2 id="example">Example</h2>
 
@@ -133,12 +130,8 @@ rubocop:enable Layout/LineLength
 
 <p>Results in:</p>
 
-<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
-{name: &#39;Weddy&#39;, species_common: &#39;guinea fowl&#39;, species_binomial: &#39;Numida meleagris&#39; },
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
+<pre class="code ruby"><code class="ruby">{name: &#39;Weddy&#39;, species_common: &#39;guinea fowl&#39;, species_binomial: &#39;Numida meleagris&#39; },
 {name: &#39;Kernel&#39;, species: &#39;Numida meleagris&#39;, species_common: &#39;guinea fowl&#39;, species_binomial: &#39;Numida meleagris&#39; }
-rubocop:enable Layout/LineLength
 </code></pre>
 
 
@@ -270,14 +263,14 @@ rubocop:enable Layout/LineLength
       <pre class="lines">
 
 
-46
-47
-48
-49
-50</pre>
+42
+43
+44
+45
+46</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/merge/constant_values.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/merge/constant_values.rb', line 42</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>constantmap:</span><span class='rparen'>)</span>
   <span class='ivar'>@mergers</span> <span class='op'>=</span> <span class='id identifier rubyid_constantmap'>constantmap</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='op'>|</span>
@@ -350,13 +343,13 @@ rubocop:enable Layout/LineLength
       <pre class="lines">
 
 
-53
-54
-55
-56</pre>
+49
+50
+51
+52</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/merge/constant_values.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/merge/constant_values.rb', line 49</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_mergers'>mergers</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_merger'>merger</span><span class='op'>|</span> <span class='id identifier rubyid_merger'>merger</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -372,7 +365,7 @@ rubocop:enable Layout/LineLength
 </div>
 
       <div id="footer">
-  Generated on Mon Aug 28 21:54:18 2023 by
+  Generated on Fri Sep  1 02:53:04 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

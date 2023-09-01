@@ -101,22 +101,12 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-Deletes value in <code>delete</code> field if that value matches value in <code>if_equal_to</code> field. Opinionated treatment
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
+    <p>Deletes value in <code>delete</code> field if that value matches value in <code>if_equal_to</code> field. Opinionated treatment
   of multivalued fields described below. Case sensitive or insensitive matching options. Can also delete
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
   associated field values (by position) in additional grouped fields. This is useful, for example,
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  in maintaining the integrity of grouped/subgrouped multivalue fields in CollectionSpace.
-rubocop:enable Layout/LineLength</p>
+  in maintaining the integrity of grouped/subgrouped multivalue fields in CollectionSpace.</p>
 
-<p>rubocop:todo Layout/LineLength
-<strong>Note that the value of the <code>if_equal_to</code> field is never modified by this transform.</strong>
-rubocop:enable Layout/LineLength</p>
+<p><strong>Note that the value of the <code>if_equal_to</code> field is never modified by this transform.</strong></p>
 
 <h1 id="examples">Examples</h1>
 
@@ -132,9 +122,7 @@ rubocop:enable Layout/LineLength</p>
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
-transform Delete::FieldValueIfEqualsOtherField, delete: :del, if_equal_to: :compare
-rubocop:enable Layout/LineLength
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Delete.html" title="Kiba::Extend::Transforms::Delete (module)">Delete</a></span></span><span class='op'>::</span><span class='const'>FieldValueIfEqualsOtherField</span><span class='comma'>,</span> <span class='label'>delete:</span> <span class='symbol'>:del</span><span class='comma'>,</span> <span class='label'>if_equal_to:</span> <span class='symbol'>:compare</span>
 </code></pre>
 
 <p>Results in:</p>
@@ -149,15 +137,11 @@ rubocop:enable Layout/LineLength
 
 <p>The first row is left alone because a != b.</p>
 
-<p>rubocop:todo Layout/LineLength
-In the second row, c is deleted from <code>del</code> because the value of <code>compare</code> is also c.
-rubocop:enable Layout/LineLength</p>
+<p>In the second row, c is deleted from <code>del</code> because the value of <code>compare</code> is also c.</p>
 
 <h2 id="complex-example">Complex example</h2>
 
-<p>rubocop:todo Layout/LineLength
-This introduces handling of multivalued grouped fields with case insensitive matching.
-rubocop:enable Layout/LineLength</p>
+<p>This introduces handling of multivalued grouped fields with case insensitive matching.</p>
 
 <p>Used in pipeline as:</p>
 
@@ -196,32 +180,22 @@ rubocop:enable Layout/LineLength</p>
 
 <h4 id="row-1">Row 1</h4>
 
-<p>rubocop:todo Layout/LineLength
-<strong>If <code>compare</code> is a single value, all individual values in <code>del</code> are compared to the single <code>compare</code> value.</strong>
-rubocop:enable Layout/LineLength</p>
+<p><strong>If <code>compare</code> is a single value, all individual values in <code>del</code> are compared to the single <code>compare</code> value.</strong></p>
 
-<p>rubocop:todo Layout/LineLength
-In <code>del</code> field, elements 1 (C) and 3 (c) are case-insensitive matches on the value in <code>compare</code>. Thus,
-rubocop:enable Layout/LineLength
+<p>In <code>del</code> field, elements 1 (C) and 3 (c) are case-insensitive matches on the value in <code>compare</code>. Thus,
   elements 1 and 3 are removed from <code>del</code> and both grouped fields.</p>
 
 <h4 id="row-2">Row 2</h4>
 
-<p>rubocop:todo Layout/LineLength
-<strong>If <code>compare</code> has multiple values, the values of <code>del</code> and <code>compare</code> are compared positionally.</strong>
-rubocop:enable Layout/LineLength</p>
+<p><strong>If <code>compare</code> has multiple values, the values of <code>del</code> and <code>compare</code> are compared positionally.</strong></p>
 
-<p>rubocop:todo Layout/LineLength
-Element 0 is a match (a in both). Element 1 is not (b != z). Element 2 is a match (c in both).
-rubocop:enable Layout/LineLength</p>
+<p>Element 0 is a match (a in both). Element 1 is not (b != z). Element 2 is a match (c in both).</p>
 
 <p>Elements 0 and 2 are removed <code>del</code> and all grouped fields.</p>
 
 <h4 id="row-3">Row 3</h4>
 
-<p>rubocop:todo Layout/LineLength
-<code>compare</code> is multivalued, so <code>del</code> is compared positionally against <code>compare</code>, though <code>del</code> (and
-rubocop:enable Layout/LineLength
+<p><code>compare</code> is multivalued, so <code>del</code> is compared positionally against <code>compare</code>, though <code>del</code> (and
   the grouped fields) are single valued.</p>
 
 <p>When all values are removed from a field, <code>nil</code> is returned.</p>
@@ -232,15 +206,11 @@ rubocop:enable Layout/LineLength
 
 <h4 id="row-5">Row 5</h4>
 
-<p>rubocop:todo Layout/LineLength
-a = a, so a (Element 0) is removed from <code>del</code>. Element 0 is then removed from the grouped fields.
-rubocop:enable Layout/LineLength</p>
+<p>a = a, so a (Element 0) is removed from <code>del</code>. Element 0 is then removed from the grouped fields.</p>
 
 <h2 id="group-length-mismatch-ragged-groups">Group length mismatch: ragged groups</h2>
 
-<p>rubocop:todo Layout/LineLength
-This introduces handling of multivalued grouped fields if fields grouped together have differnt numbers of
-rubocop:enable Layout/LineLength
+<p>This introduces handling of multivalued grouped fields if fields grouped together have differnt numbers of
   values.</p>
 
 <p>Used in pipeline as:</p>
@@ -268,32 +238,20 @@ rubocop:enable Layout/LineLength
 | A;d;e | c       | y;w;u | e;g;h |
 </code></pre>
 
-<p>rubocop:todo Layout/LineLength
-And a warning printed to STDOUT, which may trigger you to examine the input data:
-rubocop:enable Layout/LineLength</p>
+<p>And a warning printed to STDOUT, which may trigger you to examine the input data:</p>
 
-<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
-KIBA WARNING: One or more grouped fields (grpa, grpb) has different number of values than the others
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
+<pre class="code ruby"><code class="ruby">KIBA WARNING: One or more grouped fields (grpa, grpb) has different number of values than the others
 in {:del=&gt;&quot;A;d;e&quot;, :compare=&gt;&quot;c&quot;, :grpa=&gt;&quot;y;x;w;u&quot;, :grpb=&gt;&quot;e;f;g;h;i&quot;}
-rubocop:enable Layout/LineLength
 </code></pre>
 
-<p>rubocop:todo Layout/LineLength
-<strong>If <code>del</code> had 4 elements and one or more of the grouped fields had a different number of elements,
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  this would be handled similarly, with a slightly different warning.</strong>
-rubocop:enable Layout/LineLength</p>
+<p><strong>If <code>del</code> had 4 elements and one or more of the grouped fields had a different number of elements,
+  this would be handled similarly, with a slightly different warning.</strong></p>
 
 <h3 id="notes">Notes</h3>
 
 <p><code>grpa</code> has 4 values, while <code>grpb</code> has 5.</p>
 
-<p>rubocop:todo Layout/LineLength
-Elements 1 and 4 from <code>del</code> match <code>compare</code>, so they are deleted. Those elements are also deleted from
-rubocop:enable Layout/LineLength
+<p>Elements 1 and 4 from <code>del</code> match <code>compare</code>, so they are deleted. Those elements are also deleted from
   the grouped fields if present.</p>
 
 
@@ -336,7 +294,7 @@ rubocop:enable Layout/LineLength
   
 
   
-    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength.</p>
+    <span class="summary_desc"><div class='inline'><p>A new instance of FieldValueIfEqualsOtherField.</p>
 </div></span>
   
 </li>
@@ -381,14 +339,7 @@ rubocop:enable Layout/LineLength
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength</p>
+    <p>Returns a new instance of FieldValueIfEqualsOtherField.</p>
 
 
   </div>
@@ -504,18 +455,18 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-219
-220
-221
-222
-223
-224
-225
-226
-227</pre>
+171
+172
+173
+174
+175
+176
+177
+178
+179</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/field_value_if_equals_other_field.rb', line 219</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/field_value_if_equals_other_field.rb', line 171</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>delete:</span><span class='comma'>,</span> <span class='label'>if_equal_to:</span><span class='comma'>,</span> <span class='label'>multival:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='kw'>nil</span><span class='comma'>,</span>
   <span class='label'>grouped_fields:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>casesensitive:</span> <span class='kw'>true</span><span class='rparen'>)</span>
@@ -577,30 +528,30 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-230
-231
-232
-233
-234
-235
-236
-237
-238
-239
-240
-241
-242
-243
-244
-245
-246
-247
-248
-249
-250</pre>
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/field_value_if_equals_other_field.rb', line 230</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/field_value_if_equals_other_field.rb', line 182</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_del_val'>del_val</span> <span class='op'>=</span> <span class='id identifier rubyid_prepare_val'>prepare_val</span><span class='lparen'>(</span><span class='id identifier rubyid_delete'>delete</span><span class='comma'>,</span> <span class='id identifier rubyid_row'>row</span><span class='comma'>,</span> <span class='symbol'>:compare</span><span class='rparen'>)</span>
@@ -633,7 +584,7 @@ rubocop:enable Layout/LineLength</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Aug 28 21:54:20 2023 by
+  Generated on Fri Sep  1 02:53:06 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

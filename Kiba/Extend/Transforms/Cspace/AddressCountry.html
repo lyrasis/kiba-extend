@@ -125,26 +125,6 @@ set. Just add required values to the LOOKUP and make a pull request.</p>
 data (triggered by last row)</li>
 </ul>
 
-<p>rubocop:todo Layout/LineLength
-  xform = Cspace::AddressCountry.new(source: :country, keep_orig: false)
-rubocop:enable Layout/LineLength
-  input = [
-    &#39;Viet Nam&#39;,
-    &#39;Shangri-La&#39;,
-    &#39;&#39;,
-    nil,
-    &#39;bar&#39;
-  ]
-  result = input.map{ |row| xform.process(row) }
-  expected = [
-   &#39;VN&#39;,
-   nil,
-   &#39;&#39;,
-   nil,
-   &#39;bar&#39;, addresscountry: nil
-  ]
-  expect(result).to eq(expected)</p>
-
 
   </div>
 </div>
@@ -192,7 +172,24 @@ rubocop:enable Layout/LineLength
       <pre class="example code"><code><span class='comment'># Used in pipeline as:
 </span><span class='comment'># transform Cspace::AddressCountry,
 </span><span class='comment'>#   source: :country,
-</span><span class='comment'>#   keep_orig: false</span></code></pre>
+</span><span class='comment'>#   keep_orig: false
+</span><span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Cspace.html" title="Kiba::Extend::Transforms::Cspace (module)">Cspace</a></span></span><span class='op'>::</span><span class='const'>AddressCountry</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Cspace::AddressCountry#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>source:</span> <span class='symbol'>:country</span><span class='comma'>,</span> <span class='label'>keep_orig:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>country:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Viet Nam</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>country:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Shangri-La</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>country:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>country:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>foo:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bar</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+ <span class='lbrace'>{</span><span class='label'>addresscountry:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>VN</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+ <span class='lbrace'>{</span><span class='label'>addresscountry:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+ <span class='lbrace'>{</span><span class='label'>addresscountry:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+ <span class='lbrace'>{</span><span class='label'>addresscountry:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+ <span class='lbrace'>{</span><span class='label'>foo:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bar</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>addresscountry:</span> <span class='kw'>nil</span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
     
       
         <p class="example_title"><div class='inline'><p><code>keep_orig</code></p>
@@ -523,10 +520,8 @@ rubocop:enable Layout/LineLength
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>United Arab Emirates (the)</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>AE</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>United Kingdom</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>GB</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>United Kingdom (UK)</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>GB</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-  <span class='comment'># rubocop:todo Layout/LineLength
-</span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>United Kingdom of Great Britain and Northern Ireland (the)</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>GB</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-  <span class='comment'># rubocop:enable Layout/LineLength
-</span>  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>United States</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>US</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>United Kingdom of Great Britain and Northern Ireland (the)</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>GB</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>United States</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>US</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>United States of America</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>US</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>United States of America (the)</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>US</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>United States Minor Outlying Islands (the)</span><span class='tstring_end'>&quot;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>UM</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
@@ -742,16 +737,16 @@ mapping</p>
       <pre class="lines">
 
 
+380
+381
 382
 383
 384
 385
-386
-387
-388</pre>
+386</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/cspace/address_country.rb', line 382</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/cspace/address_country.rb', line 380</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>source:</span> <span class='symbol'>:addresscountry</span><span class='comma'>,</span> <span class='label'>target:</span> <span class='symbol'>:addresscountry</span><span class='comma'>,</span>
   <span class='label'>keep_orig:</span> <span class='kw'>true</span><span class='rparen'>)</span>
@@ -826,13 +821,13 @@ mapping</p>
       <pre class="lines">
 
 
+389
+390
 391
-392
-393
-394</pre>
+392</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/cspace/address_country.rb', line 391</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/cspace/address_country.rb', line 389</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_target'>target</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>nil</span> <span class='kw'>unless</span> <span class='id identifier rubyid_in_place?'>in_place?</span>
@@ -848,7 +843,7 @@ mapping</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Aug 28 21:54:18 2023 by
+  Generated on Fri Sep  1 02:53:04 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

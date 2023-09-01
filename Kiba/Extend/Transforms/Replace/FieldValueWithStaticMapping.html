@@ -101,13 +101,9 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-Looks up value of <code>source</code> field in given <code>mapping</code> Hash. Replaces orignal value with the result.
-rubocop:enable Layout/LineLength</p>
+    <p>Looks up value of <code>source</code> field in given <code>mapping</code> Hash. Replaces orignal value with the result.</p>
 
-<p>rubocop:todo Layout/LineLength
-Optional: put result in new <code>target</code> field; look up multiple values from a multivalue source field,
-rubocop:enable Layout/LineLength
+<p>Optional: put result in new <code>target</code> field; look up multiple values from a multivalue source field,
   provide a fallback value if source value is not found in mapping</p>
 
 <h2 id="examples">Examples</h2>
@@ -140,9 +136,7 @@ rubocop:enable Layout/LineLength
 
 <p>Using:</p>
 
-<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
-transform Replace::FieldValueWithStaticMapping, source: :color, mapping: mapping
-rubocop:enable Layout/LineLength
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Replace.html" title="Kiba::Extend::Transforms::Replace (module)">Replace</a></span></span><span class='op'>::</span><span class='const'>FieldValueWithStaticMapping</span><span class='comma'>,</span> <span class='label'>source:</span> <span class='symbol'>:color</span><span class='comma'>,</span> <span class='label'>mapping:</span> <span class='id identifier rubyid_mapping'>mapping</span>
 </code></pre>
 
 <p>Results in:</p>
@@ -162,9 +156,7 @@ rubocop:enable Layout/LineLength
 
 <p>Using:</p>
 
-<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
-transform Replace::FieldValueWithStaticMapping, source: :color, target: :fullcol, mapping: mapping
-rubocop:enable Layout/LineLength
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Replace.html" title="Kiba::Extend::Transforms::Replace (module)">Replace</a></span></span><span class='op'>::</span><span class='const'>FieldValueWithStaticMapping</span><span class='comma'>,</span> <span class='label'>source:</span> <span class='symbol'>:color</span><span class='comma'>,</span> <span class='label'>target:</span> <span class='symbol'>:fullcol</span><span class='comma'>,</span> <span class='label'>mapping:</span> <span class='id identifier rubyid_mapping'>mapping</span>
 </code></pre>
 
 <p>Results in (showing first row only):</p>
@@ -326,7 +318,7 @@ rubocop:enable Layout/LineLength
   
 
   
-    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength Overridden to provide more informative/detailed ArgumentError messages for parameters that are rubocop:enable Layout/LineLength   removed after not having been deprecated very long.</p>
+    <span class="summary_desc"><div class='inline'><p>Overridden to provide more informative/detailed ArgumentError messages for parameters that are   removed after not having been deprecated very long.</p>
 </div></span>
   
 </li>
@@ -382,7 +374,7 @@ rubocop:enable Layout/LineLength
   
 
   
-    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength   in mapping rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength   a different target field is not given rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength   value on the string given (since 3.0.0).</p>
+    <span class="summary_desc"><div class='inline'><p>A new instance of FieldValueWithStaticMapping.</p>
 </div></span>
   
 </li>
@@ -427,19 +419,7 @@ rubocop:enable Layout/LineLength
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-  in mapping
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-  a different target field is not given
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-  value on the string given (since 3.0.0)</p>
+    <p>Returns a new instance of FieldValueWithStaticMapping.</p>
 
 
   </div>
@@ -507,7 +487,8 @@ rubocop:enable Layout/LineLength
       
       
         &mdash;
-        <div class='inline'><p>value to use if no match for source value is found</p>
+        <div class='inline'><p>value to use if no match for source value is found
+in mapping</p>
 </div>
       
     </li>
@@ -524,7 +505,8 @@ rubocop:enable Layout/LineLength
       
       
         &mdash;
-        <div class='inline'><p>whether to remove source field after mapping. Has no effect if</p>
+        <div class='inline'><p>whether to remove source field after mapping. Has no effect if
+a different target field is not given</p>
 </div>
       
     </li>
@@ -541,7 +523,8 @@ rubocop:enable Layout/LineLength
       
       
         &mdash;
-        <div class='inline'><p>if a value is given, turns on &quot;multival&quot; mode, splitting the whole field</p>
+        <div class='inline'><p>if a value is given, turns on &quot;multival&quot; mode, splitting the whole field
+value on the string given (since 3.0.0)</p>
 </div>
       
     </li>
@@ -555,19 +538,19 @@ rubocop:enable Layout/LineLength
       <pre class="lines">
 
 
-241
-242
-243
-244
-245
-246
-247
-248
-249
-250</pre>
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/replace/field_value_with_static_mapping.rb', line 241</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/replace/field_value_with_static_mapping.rb', line 219</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>source:</span><span class='comma'>,</span> <span class='label'>mapping:</span><span class='comma'>,</span> <span class='label'>target:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>fallback_val:</span> <span class='symbol'>:orig</span><span class='comma'>,</span>
   <span class='label'>delete_source:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
@@ -606,16 +589,16 @@ rubocop:enable Layout/LineLength
       <pre class="lines">
 
 
-188
-189
-190
-191
-192
-193
-194</pre>
+182
+183
+184
+185
+186
+187
+188</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/replace/field_value_with_static_mapping.rb', line 188</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/replace/field_value_with_static_mapping.rb', line 182</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_multival_msg'>multival_msg</span>
   <span class='heredoc_beg'>&lt;&lt;~MSG</span>
@@ -640,11 +623,8 @@ rubocop:enable Layout/LineLength
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-Overridden to provide more informative/detailed ArgumentError messages for parameters that are
-rubocop:enable Layout/LineLength
-  removed after not having been deprecated very long.
-rubocop:todo Layout/LineLength</p>
+    <p>Overridden to provide more informative/detailed ArgumentError messages for parameters that are
+  removed after not having been deprecated very long.</p>
 
 
   </div>
@@ -658,32 +638,26 @@ rubocop:todo Layout/LineLength</p>
       <pre class="lines">
 
 
-201
-202
-203
-204
-205
-206
-207
-208
-209
-210
-211
-212</pre>
+192
+193
+194
+195
+196
+197
+198
+199
+200</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/replace/field_value_with_static_mapping.rb', line 201</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/replace/field_value_with_static_mapping.rb', line 192</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>source:</span><span class='comma'>,</span> <span class='label'>mapping:</span><span class='comma'>,</span> <span class='label'>target:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>fallback_val:</span> <span class='symbol'>:orig</span><span class='comma'>,</span> <span class='label'>delete_source:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='kw'>nil</span><span class='comma'>,</span>
-  <span class='comment'># rubocop:enable Layout/LineLength
-</span>  <span class='label'>multival:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='label'>multival:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_instance'>instance</span> <span class='op'>=</span> <span class='id identifier rubyid_allocate'>allocate</span>
   <span class='id identifier rubyid_fail'>fail</span><span class='lparen'>(</span><span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='id identifier rubyid_sep_msg'>sep_msg</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_sep'>sep</span>
   <span class='id identifier rubyid_fail'>fail</span><span class='lparen'>(</span><span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='id identifier rubyid_multival_msg'>multival_msg</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_multival'>multival</span>
-  <span class='comment'># rubocop:todo Layout/LineLength
-</span>  <span class='id identifier rubyid_instance'>instance</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:initialize</span><span class='comma'>,</span> <span class='label'>source:</span> <span class='id identifier rubyid_source'>source</span><span class='comma'>,</span> <span class='label'>target:</span> <span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='label'>mapping:</span> <span class='id identifier rubyid_mapping'>mapping</span><span class='comma'>,</span> <span class='label'>fallback_val:</span> <span class='id identifier rubyid_fallback_val'>fallback_val</span><span class='comma'>,</span>
-    <span class='comment'># rubocop:enable Layout/LineLength
-</span>    <span class='label'>delete_source:</span> <span class='id identifier rubyid_delete_source'>delete_source</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_instance'>instance</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:initialize</span><span class='comma'>,</span> <span class='label'>source:</span> <span class='id identifier rubyid_source'>source</span><span class='comma'>,</span> <span class='label'>target:</span> <span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='label'>mapping:</span> <span class='id identifier rubyid_mapping'>mapping</span><span class='comma'>,</span> <span class='label'>fallback_val:</span> <span class='id identifier rubyid_fallback_val'>fallback_val</span><span class='comma'>,</span>
+    <span class='label'>delete_source:</span> <span class='id identifier rubyid_delete_source'>delete_source</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_instance'>instance</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -706,15 +680,15 @@ rubocop:todo Layout/LineLength</p>
       <pre class="lines">
 
 
-214
-215
-216
-217
-218
-219</pre>
+202
+203
+204
+205
+206
+207</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/replace/field_value_with_static_mapping.rb', line 214</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/replace/field_value_with_static_mapping.rb', line 202</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sep_msg'>sep_msg</span>
   <span class='heredoc_beg'>&lt;&lt;~MSG</span>
@@ -772,21 +746,21 @@ rubocop:todo Layout/LineLength</p>
       <pre class="lines">
 
 
-253
-254
-255
-256
-257
-258
-259
-260
-261
-262
-263
-264</pre>
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/replace/field_value_with_static_mapping.rb', line 253</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/replace/field_value_with_static_mapping.rb', line 231</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_set_initial_value'>set_initial_value</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
@@ -810,7 +784,7 @@ rubocop:todo Layout/LineLength</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Aug 28 21:54:20 2023 by
+  Generated on Fri Sep  1 02:53:06 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

@@ -101,84 +101,56 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-Called by transforms that have a <code>conditions</code> parameter, when a Lambda is passed in as the
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
+    <p>Called by transforms that have a <code>conditions</code> parameter, when a Lambda is passed in as the
   conditional logic. This is a more straightforward and flexible method of controlling which rows
-rubocop:enable Layout/LineLength
   are selected/operated on than the hideous Hash conditions format.</p>
 
-<p>rubocop:todo Layout/LineLength
-The lambda Proc passed in must be defined with two arguments. The first should be a single
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
+<p>The lambda Proc passed in must be defined with two arguments. The first should be a single
   data row, typically the source/target row for a data merge or other operation. The
-rubocop:enable Layout/LineLength
   second is an array of data rows.</p>
 
-<p>rubocop:todo Layout/LineLength
-Because of how this RowSelector is called by different transforms, both arguments need to be
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  defined, even if you aren&#39;t going to use them in the logic encapsulated in the Lambda.
-rubocop:enable Layout/LineLength</p>
+<p>Because of how this RowSelector is called by different transforms, both arguments need to be
+  defined, even if you aren&#39;t going to use them in the logic encapsulated in the Lambda.</p>
 
-<p>rubocop:todo Layout/LineLength
-The lambda Proc must return an array of rows meeting the given criteria.
-rubocop:enable Layout/LineLength</p>
+<p>The lambda Proc must return an array of rows meeting the given criteria.</p>
 
 <h2 id="examples">Examples</h2>
 
 <p>In your job transforms:</p>
 
-<pre class="code ruby"><code class="ruby">conditions = -&gt;(origrow, mergerows) do
-  latest = mergerows.sort_by{ |row| row[:addressid].to_i }
-             .last
-  [latest]
-end
-transform Merge::MultiRowLookup,
-  lookup: addresses,
-  keycolumn: :contactid,
-rubocop:todo Layout/LineLength
-  fieldmap: { address: :display_address, addresstype: address_category },
-rubocop:enable Layout/LineLength
-  conditions: conditions
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_conditions'>conditions</span> <span class='op'>=</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_origrow'>origrow</span><span class='comma'>,</span> <span class='id identifier rubyid_mergerows'>mergerows</span><span class='rparen'>)</span> <span class='kw'>do</span>
+  <span class='id identifier rubyid_latest'>latest</span> <span class='op'>=</span> <span class='id identifier rubyid_mergerows'>mergerows</span><span class='period'>.</span><span class='id identifier rubyid_sort_by'>sort_by</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='symbol'>:addressid</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_to_i'>to_i</span> <span class='rbrace'>}</span>
+             <span class='period'>.</span><span class='id identifier rubyid_last'>last</span>
+  <span class='lbracket'>[</span><span class='id identifier rubyid_latest'>latest</span><span class='rbracket'>]</span>
+<span class='kw'>end</span>
+<span class='id identifier rubyid_transform'>transform</span> <span class='const'>Merge</span><span class='op'>::</span><span class='const'>MultiRowLookup</span><span class='comma'>,</span>
+  <span class='label'>lookup:</span> <span class='id identifier rubyid_addresses'>addresses</span><span class='comma'>,</span>
+  <span class='label'>keycolumn:</span> <span class='symbol'>:contactid</span><span class='comma'>,</span>
+  <span class='label'>fieldmap:</span> <span class='lbrace'>{</span> <span class='label'>address:</span> <span class='symbol'>:display_address</span><span class='comma'>,</span> <span class='label'>addresstype:</span> <span class='id identifier rubyid_address_category'>address_category</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='label'>conditions:</span> <span class='id identifier rubyid_conditions'>conditions</span>
 </code></pre>
 
 <p>Assuming <code>addressid</code> increments as new addresses are added, sorting
-rubocop:todo Layout/LineLength
   the matching lookup rows by that field value, and taking the last (largest) value
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  should ensure we are merging in only the lastest address value per contact.
-rubocop:enable Layout/LineLength</p>
+  should ensure we are merging in only the lastest address value per contact.</p>
 
 <p>In your job transforms:</p>
 
-<pre class="code ruby"><code class="ruby">conditions = -&gt;(target, lkuprows) do
-  return [] unless target[:active] == &#39;1&#39;
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_conditions'>conditions</span> <span class='op'>=</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='id identifier rubyid_lkuprows'>lkuprows</span><span class='rparen'>)</span> <span class='kw'>do</span>
+  <span class='kw'>return</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='kw'>unless</span> <span class='id identifier rubyid_target'>target</span><span class='lbracket'>[</span><span class='symbol'>:active</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1</span><span class='tstring_end'>&#39;</span></span>
 
-  lkuprows.select{ |row| row[:active] == &#39;1&#39; }
-end
-transform Merge::MultiRowLookup,
-  lookup: addresses,
-  keycolumn: :contactid,
-rubocop:todo Layout/LineLength
-  fieldmap: { address: :display_address, addresstype: address_category },
-rubocop:enable Layout/LineLength
-  conditions: conditions
+  <span class='id identifier rubyid_lkuprows'>lkuprows</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='symbol'>:active</span><span class='rbracket'>]</span> <span class='op'>==</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1</span><span class='tstring_end'>&#39;</span></span> <span class='rbrace'>}</span>
+<span class='kw'>end</span>
+<span class='id identifier rubyid_transform'>transform</span> <span class='const'>Merge</span><span class='op'>::</span><span class='const'>MultiRowLookup</span><span class='comma'>,</span>
+  <span class='label'>lookup:</span> <span class='id identifier rubyid_addresses'>addresses</span><span class='comma'>,</span>
+  <span class='label'>keycolumn:</span> <span class='symbol'>:contactid</span><span class='comma'>,</span>
+  <span class='label'>fieldmap:</span> <span class='lbrace'>{</span> <span class='label'>address:</span> <span class='symbol'>:display_address</span><span class='comma'>,</span> <span class='label'>addresstype:</span> <span class='id identifier rubyid_address_category'>address_category</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='label'>conditions:</span> <span class='id identifier rubyid_conditions'>conditions</span>
 </code></pre>
 
-<p>rubocop:todo Layout/LineLength
-This assumes the source table (listing contacts) indicates whether a contact is active or not.
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
+<p>This assumes the source table (listing contacts) indicates whether a contact is active or not.
   In addition, the addresses table indicates whether each address is active. This will cause
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
   no addresses to be merged in for inactive contacts. For active contacts, only active
-rubocop:enable Layout/LineLength
   addresses will be merged in.</p>
 
 
@@ -329,12 +301,12 @@ rubocop:enable Layout/LineLength
       <pre class="lines">
 
 
-92
-93
-94</pre>
+66
+67
+68</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/lookup/row_selector_by_lambda.rb', line 92</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/lookup/row_selector_by_lambda.rb', line 66</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>conditions:</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@conditions</span> <span class='op'>=</span> <span class='id identifier rubyid_conditions'>conditions</span>
@@ -390,12 +362,12 @@ rubocop:enable Layout/LineLength
       <pre class="lines">
 
 
-96
-97
-98</pre>
+70
+71
+72</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/lookup/row_selector_by_lambda.rb', line 96</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/lookup/row_selector_by_lambda.rb', line 70</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='label'>origrow:</span><span class='comma'>,</span> <span class='label'>mergerows:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_conditions'>conditions</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_origrow'>origrow</span><span class='comma'>,</span> <span class='id identifier rubyid_mergerows'>mergerows</span><span class='rparen'>)</span>
@@ -410,7 +382,7 @@ rubocop:enable Layout/LineLength
 </div>
 
       <div id="footer">
-  Generated on Mon Aug 28 21:54:19 2023 by
+  Generated on Fri Sep  1 02:53:04 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

@@ -104,22 +104,17 @@
     
   <div class="note notetag">
     <strong>Note:</strong>
-    <div class='inline'><p>This transformation runs in memory, so it may bog down or crash on extremely large</p>
+    <div class='inline'><p>This transformation runs in memory, so it may bog down or crash on extremely large
+data sources</p>
 </div>
   </div>
 
   <div class="note notetag">
     <strong>Note:</strong>
-    <div class='inline'><p>This transformation has some pretty strong assumptions and limitations that can be</p>
+    <div class='inline'><p>This transformation has some pretty strong assumptions and limitations that can be
+quite destructive, so examine the example below carefully.</p>
 </div>
   </div>
-
-<p>rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-  data sources
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-  quite destructive, so examine the example below carefully.</p>
 
 <h1 id="examples">Examples</h1>
 
@@ -161,35 +156,18 @@ rubocop:enable Layout/LineLength
 
 <p><strong>NOTE</strong></p>
 
-<p>rubocop:todo Layout/LineLength</p>
-
 <ul>
-<li>A new column has been created for each unique value in the <code>field_to_columns</code> field
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength</li>
-<li>A single row has been generated for each unique value in the <code>field_to_rows</code> field
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength</li>
-<li>The value from the <code>field_to_col_vals</code> field is in the appropriate column
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength</li>
+<li>A new column has been created for each unique value in the <code>field_to_columns</code> field</li>
+<li>A single row has been generated for each unique value in the <code>field_to_rows</code> field</li>
+<li>The value from the <code>field_to_col_vals</code> field is in the appropriate column</li>
 <li>When more than one row has the same values for <code>field_to_columns</code> and <code>field_to_rows</code>,
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
 the value of the last row processed&#39;s <code>field_to_col_vals</code> will be used (we get Fred, Corp.
-rubocop:enable Layout/LineLength
-instead of Fred, Inc.
-rubocop:todo Layout/LineLength</li>
+instead of Fred, Inc.</li>
 <li>Only data from the three involved fields is kept! Note that the <code>unrelated</code> field from
-rubocop:enable Layout/LineLength
-the input has been lost
-rubocop:todo Layout/LineLength</li>
+the input has been lost</li>
 <li>Rows lacking a value for any of the three fields will be skipped, in terms of populating
-rubocop:enable Layout/LineLength
-the dynamically created column (see the Ghost examples)
-rubocop:todo Layout/LineLength</li>
+the dynamically created column (see the Ghost examples)</li>
 <li>However, a dynamically created column will still be created even if it is given no data
-rubocop:enable Layout/LineLength
 (See issues example)</li>
 </ul>
 
@@ -255,7 +233,7 @@ rubocop:enable Layout/LineLength
   
 
   
-    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength   values in this field) rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength.</p>
+    <span class="summary_desc"><div class='inline'><p>A new instance of SimplePivot.</p>
 </div></span>
   
 </li>
@@ -300,13 +278,7 @@ rubocop:enable Layout/LineLength
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-  values in this field)
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength</p>
+    <p>Returns a new instance of SimplePivot.</p>
 
 
   </div>
@@ -340,7 +312,8 @@ rubocop:enable Layout/LineLength</p>
       
       
         &mdash;
-        <div class='inline'><p>field whose values will generate the result rows (data is collapsed on</p>
+        <div class='inline'><p>field whose values will generate the result rows (data is collapsed on
+values in this field)</p>
 </div>
       
     </li>
@@ -369,16 +342,16 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-102
-103
-104
-105
-106
-107
-108</pre>
+76
+77
+78
+79
+80
+81
+82</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/reshape/simple_pivot.rb', line 102</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/reshape/simple_pivot.rb', line 76</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>field_to_columns:</span><span class='comma'>,</span> <span class='label'>field_to_rows:</span><span class='comma'>,</span> <span class='label'>field_to_col_vals:</span><span class='rparen'>)</span>
   <span class='ivar'>@col_field</span> <span class='op'>=</span> <span class='id identifier rubyid_field_to_columns'>field_to_columns</span>
@@ -414,20 +387,20 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-116
-117
-118
-119
-120
-121
-122
-123
-124
-125
-126</pre>
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/reshape/simple_pivot.rb', line 116</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/reshape/simple_pivot.rb', line 90</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_close'>close</span>
   <span class='ivar'>@rows</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_fieldval'>fieldval</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='op'>|</span>
@@ -484,13 +457,13 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-111
-112
-113
-114</pre>
+85
+86
+87
+88</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/reshape/simple_pivot.rb', line 111</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/reshape/simple_pivot.rb', line 85</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_gather_column_field'>gather_column_field</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
@@ -506,7 +479,7 @@ rubocop:enable Layout/LineLength</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Aug 28 21:54:18 2023 by
+  Generated on Fri Sep  1 02:53:04 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

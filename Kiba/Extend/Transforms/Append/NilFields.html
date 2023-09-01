@@ -101,9 +101,8 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-Adds the given field(s) to the row with nil value if they do not already exist in row
-rubocop:enable Layout/LineLength</p>
+    <p>Adds the given field(s) to the row with nil value if they do not
+  already exist in row</p>
 
 <h1 id="examples">Examples</h1>
 
@@ -166,7 +165,7 @@ rubocop:enable Layout/LineLength</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength.</p>
+    <span class="summary_desc"><div class='inline'><p>A new instance of NilFields.</p>
 </div></span>
   
 </li>
@@ -211,8 +210,7 @@ rubocop:enable Layout/LineLength</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength</p>
+    <p>Returns a new instance of NilFields.</p>
 
 
   </div>
@@ -231,7 +229,8 @@ rubocop:enable Layout/LineLength</p>
       
       
         &mdash;
-        <div class='inline'><p>field name or list of field names to add</p>
+        <div class='inline'><p>field name or list of field
+names to add</p>
 </div>
       
     </li>
@@ -245,12 +244,12 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-41
-42
-43</pre>
+39
+40
+41</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/append.rb', line 41</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/append.rb', line 39</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span><span class='rparen'>)</span>
   <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fields'>fields</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
@@ -306,15 +305,15 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
+44
+45
 46
 47
 48
-49
-50
-51</pre>
+49</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/append.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/append.rb', line 44</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='ivar'>@fields</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span>
@@ -332,7 +331,7 @@ rubocop:enable Layout/LineLength</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Aug 28 21:54:16 2023 by
+  Generated on Fri Sep  1 02:53:02 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

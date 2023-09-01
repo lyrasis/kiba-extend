@@ -101,15 +101,9 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-Convenience transform to rename one or more fields and add a field with a constant value,
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
+    <p>Convenience transform to rename one or more fields and add a field with a constant value,
   by default ensuring explicit empty field values and field evenness expected in
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
   field groups. Runs the following other transforms, which you will want to understand
-rubocop:enable Layout/LineLength
   before using this one:</p>
 
 <ul>
@@ -136,9 +130,7 @@ rubocop:enable Layout/LineLength
 <span class='rbracket'>]</span>
 </code></pre>
 
-<p>rubocop:todo Layout/LineLength
-Value of <code>Kiba::Extend.nullvalue</code> = <code>&#39;%NULLVALUE%&#39;</code>. Value of <code>Kiba::Extend.delim</code> = <code>&#39;|&#39;</code>.
-rubocop:enable Layout/LineLength</p>
+<p>Value of <code>Kiba::Extend.nullvalue</code> = <code>&#39;%NULLVALUE%&#39;</code>. Value of <code>Kiba::Extend.delim</code> = <code>&#39;|&#39;</code>.</p>
 
 <h3 id="default-behavior">Default behavior</h3>
 
@@ -152,25 +144,17 @@ rubocop:enable Layout/LineLength</p>
 
 <p>Results in:</p>
 
-<pre class="code ruby"><code class="ruby">[
-  {a_type: &#39;a thing&#39;, a_note: &#39;foo&#39;, a_date: &#39;2022&#39;},
-  {a_type: &#39;a thing&#39;, a_note: nil, a_date: &#39;2022&#39;},
-  {a_type: &#39;a thing&#39;, a_note: &#39;foo&#39;, a_date: nil},
-  {a_type: nil, a_note: nil, a_date: nil},
-rubocop:todo Layout/LineLength
-  {a_type: &#39;a thing|a thing|a thing&#39;, a_note: &#39;foo|bar|baz&#39;, a_date: &#39;2022|2021|%NULLVALUE%&#39;},
-rubocop:enable Layout/LineLength
-  {a_type: &#39;a thing|a thing&#39;, a_note: &#39;foo|bar&#39;, a_date: nil},
-rubocop:todo Layout/LineLength
-  {a_type: &#39;a thing|a thing|a thing&#39;, a_note: &#39;foo|bar|baz&#39;, a_date: &#39;2022|%NULLVALUE%|2021&#39;},
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  {a_type: &#39;a thing|a thing|a thing&#39;, a_note: &#39;%NULLVALUE%|bar|baz&#39;, a_date: &#39;2022|2021|%NULLVALUE%&#39;},
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  {a_type: &#39;a thing|a thing|a thing&#39;, a_note: &#39;foo|bar|%NULLVALUE%&#39;, a_date: &#39;2022|2021|%NULLVALUE%&#39;}
-rubocop:enable Layout/LineLength
-]
+<pre class="code ruby"><code class="ruby"><span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2022</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2022</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing|a thing|a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo|bar|baz</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2022|2021|%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing|a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo|bar</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing|a thing|a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo|bar|baz</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2022|%NULLVALUE%|2021</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing|a thing|a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%|bar|baz</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2022|2021|%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing|a thing|a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo|bar|%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2022|2021|%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
 </code></pre>
 
 <h3 id="with-custom-treat_as_null-string">With custom <code>treat_as_null</code> string</h3>
@@ -186,32 +170,20 @@ rubocop:enable Layout/LineLength
 
 <p>Results in:</p>
 
-<pre class="code ruby"><code class="ruby">[
-  {a_type: &#39;a thing&#39;, a_note: &#39;foo&#39;, a_date: &#39;2022&#39;},
-  {a_type: &#39;a thing&#39;, a_note: nil, a_date: &#39;2022&#39;},
-  {a_type: &#39;a thing&#39;, a_note: &#39;foo&#39;, a_date: nil},
-  {a_type: nil, a_note: nil, a_date: nil},
-rubocop:todo Layout/LineLength
-  {a_type: &#39;a thing|a thing|a thing&#39;, a_note: &#39;foo|bar|baz&#39;, a_date: &#39;2022|2021|%BLANK%&#39;},
-rubocop:enable Layout/LineLength
-  {a_type: &#39;a thing|a thing&#39;, a_note: &#39;foo|bar&#39;, a_date: nil},
-rubocop:todo Layout/LineLength
-  {a_type: &#39;a thing|a thing|a thing&#39;, a_note: &#39;foo|bar|baz&#39;, a_date: &#39;2022|%BLANK%|2021&#39;},
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  {a_type: &#39;a thing|a thing|a thing&#39;, a_note: &#39;%BLANK%|bar|baz&#39;, a_date: &#39;2022|2021|%BLANK%&#39;},
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  {a_type: &#39;a thing|a thing|a thing&#39;, a_note: &#39;foo|bar|%BLANK%&#39;, a_date: &#39;2022|2021|%BLANK%&#39;}
-rubocop:enable Layout/LineLength
-]
+<pre class="code ruby"><code class="ruby"><span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2022</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2022</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing|a thing|a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo|bar|baz</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2022|2021|%BLANK%</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing|a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo|bar</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing|a thing|a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo|bar|baz</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2022|%BLANK%|2021</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing|a thing|a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%BLANK%|bar|baz</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2022|2021|%BLANK%</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing|a thing|a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo|bar|%BLANK%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2022|2021|%BLANK%</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
 </code></pre>
 
-<p>rubocop:todo Layout/LineLength</p>
-
 <h3 id="with-evener-value-repeat-final-value-of-field-to-even-out-field-values">With <code>evener: :value</code> (repeat final value of field to even out field values)</h3>
-
-<p>rubocop:enable Layout/LineLength</p>
 
 <p>Used in job as:</p>
 
@@ -224,25 +196,17 @@ rubocop:enable Layout/LineLength
 
 <p>Results in:</p>
 
-<pre class="code ruby"><code class="ruby">[
-  {a_type: &#39;a thing&#39;, a_note: &#39;foo&#39;, a_date: &#39;2022&#39;},
-  {a_type: &#39;a thing&#39;, a_note: nil, a_date: &#39;2022&#39;},
-  {a_type: &#39;a thing&#39;, a_note: &#39;foo&#39;, a_date: nil},
-  {a_type: nil, a_note: nil, a_date: nil},
-rubocop:todo Layout/LineLength
-  {a_type: &#39;a thing|a thing|a thing&#39;, a_note: &#39;foo|bar|baz&#39;, a_date: &#39;2022|2021|2021&#39;},
-rubocop:enable Layout/LineLength
-  {a_type: &#39;a thing|a thing&#39;, a_note: &#39;foo|bar&#39;, a_date: nil},
-rubocop:todo Layout/LineLength
-  {a_type: &#39;a thing|a thing|a thing&#39;, a_note: &#39;foo|bar|baz&#39;, a_date: &#39;2022|%NULLVALUE%|2021&#39;},
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  {a_type: &#39;a thing|a thing|a thing&#39;, a_note: &#39;%NULLVALUE%|bar|baz&#39;, a_date: &#39;2022|2021|2021&#39;},
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  {a_type: &#39;a thing|a thing|a thing&#39;, a_note: &#39;foo|bar|%NULLVALUE%&#39;, a_date: &#39;2022|2021|2021&#39;}
-rubocop:enable Layout/LineLength
-]
+<pre class="code ruby"><code class="ruby"><span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2022</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2022</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing|a thing|a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo|bar|baz</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2022|2021|2021</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing|a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo|bar</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing|a thing|a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo|bar|baz</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2022|%NULLVALUE%|2021</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing|a thing|a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%|bar|baz</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2022|2021|2021</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing|a thing|a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo|bar|%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2022|2021|2021</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
 </code></pre>
 
 <h3 id="with-enforce_evenness-false">With <code>enforce_evenness: false</code></h3>
@@ -258,25 +222,17 @@ rubocop:enable Layout/LineLength
 
 <p>Results in:</p>
 
-<pre class="code ruby"><code class="ruby">[
-  {a_type: &#39;a thing&#39;, a_note: &#39;foo&#39;, a_date: &#39;2022&#39;},
-  {a_type: &#39;a thing&#39;, a_note: nil, a_date: &#39;2022&#39;},
-  {a_type: &#39;a thing&#39;, a_note: &#39;foo&#39;, a_date: nil},
-  {a_type: nil, a_note: nil, a_date: nil},
-rubocop:todo Layout/LineLength
-  {a_type: &#39;a thing|a thing|a thing&#39;, a_note: &#39;foo|bar|baz&#39;, a_date: &#39;2022|2021&#39;},
-rubocop:enable Layout/LineLength
-  {a_type: &#39;a thing|a thing&#39;, a_note: &#39;foo|bar&#39;, a_date: nil},
-rubocop:todo Layout/LineLength
-  {a_type: &#39;a thing|a thing|a thing&#39;, a_note: &#39;foo|bar|baz&#39;, a_date: &#39;2022|%NULLVALUE%|2021&#39;},
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  {a_type: &#39;a thing|a thing|a thing&#39;, a_note: &#39;%NULLVALUE%|bar|baz&#39;, a_date: &#39;2022|2021&#39;},
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  {a_type: &#39;a thing|a thing|a thing&#39;, a_note: &#39;foo|bar|%NULLVALUE%&#39;, a_date: &#39;2022|2021&#39;}
-rubocop:enable Layout/LineLength
-]
+<pre class="code ruby"><code class="ruby"><span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2022</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2022</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing|a thing|a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo|bar|baz</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2022|2021</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing|a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo|bar</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing|a thing|a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo|bar|baz</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2022|%NULLVALUE%|2021</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing|a thing|a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%|bar|baz</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2022|2021</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing|a thing|a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo|bar|%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2022|2021</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
 </code></pre>
 
 <h3 id="with-treat_as_null-nil-and-evener-null">With <code>treat_as_null: nil</code> and <code>evener: &#39;%NULL%</code></h3>
@@ -293,25 +249,17 @@ rubocop:enable Layout/LineLength
 
 <p>Results in:</p>
 
-<pre class="code ruby"><code class="ruby">[
-  {a_type: &#39;a thing&#39;, a_note: &#39;foo&#39;, a_date: &#39;2022&#39;},
-  {a_type: &#39;a thing&#39;, a_note: nil, a_date: &#39;2022&#39;},
-  {a_type: &#39;a thing&#39;, a_note: &#39;foo&#39;, a_date: nil},
-  {a_type: nil, a_note: nil, a_date: nil},
-rubocop:todo Layout/LineLength
-  {a_type: &#39;a thing|a thing|a thing&#39;, a_note: &#39;foo|bar|baz&#39;, a_date: &#39;2022|2021|%NULL%&#39;},
-rubocop:enable Layout/LineLength
-  {a_type: &#39;a thing|a thing&#39;, a_note: &#39;foo|bar&#39;, a_date: nil},
-rubocop:todo Layout/LineLength
-  {a_type: &#39;a thing|a thing|a thing&#39;, a_note: &#39;foo|bar|baz&#39;, a_date: &#39;2022||2021&#39;},
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  {a_type: &#39;a thing|a thing|a thing&#39;, a_note: &#39;|bar|baz&#39;, a_date: &#39;2022|2021|%NULL%&#39;},
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  {a_type: &#39;a thing|a thing|a thing&#39;, a_note: &#39;foo|bar|&#39;, a_date: &#39;2022|2021|%NULL%&#39;}
-rubocop:enable Layout/LineLength
-]
+<pre class="code ruby"><code class="ruby"><span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2022</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2022</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing|a thing|a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo|bar|baz</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2022|2021|%NULL%</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing|a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo|bar</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing|a thing|a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo|bar|baz</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2022||2021</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing|a thing|a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>|bar|baz</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2022|2021|%NULL%</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_type:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a thing|a thing|a thing</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_note:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foo|bar|</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_date:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2022|2021|%NULL%</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
 </code></pre>
 
 
@@ -369,7 +317,7 @@ rubocop:enable Layout/LineLength
   
 
   
-    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength   names.</p>
+    <span class="summary_desc"><div class='inline'><p>A new instance of FieldsToFieldGroupWithConstant.</p>
 </div></span>
   
 </li>
@@ -414,40 +362,7 @@ rubocop:enable Layout/LineLength
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-  names. Values: new field names. Forwarded to <span class='object_link'><a href="../Rename/Fields.html" title="Kiba::Extend::Transforms::Rename::Fields (class)">Kiba::Extend::Transforms::Rename::Fields</a></span>
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  empty field values and deleting empty field groups. If <code>nil</code>, &#39;&#39; will be used. <strong>NOTE:</strong> If you
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  need different <code>treat_as_null</code> values for replacing empty field values and deleting empty field
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  groups, use <span class='object_link'><a href="../Replace/EmptyFieldValues.html" title="Kiba::Extend::Transforms::Replace::EmptyFieldValues (class)">Kiba::Extend::Transforms::Replace::EmptyFieldValues</a></span> separately in your job before you use this transform.
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-  the same number of values
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  that string will be appended to even out fields. If <code>nil</code>, the value of <code>treat_as_null</code> will be
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  used. If <code>:value</code>, the <strong>final</strong> value in the field will be repeated to even out the field.
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength</p>
+    <p>Returns a new instance of FieldsToFieldGroupWithConstant.</p>
 
 
   </div>
@@ -466,7 +381,8 @@ rubocop:todo Layout/LineLength</p>
       
       
         &mdash;
-        <div class='inline'><p>map for renaming existing fields. Keys: existing field</p>
+        <div class='inline'><p>map for renaming existing fields. Keys: existing field
+names. Values: new field names. Forwarded to <span class='object_link'><a href="../Rename/Fields.html" title="Kiba::Extend::Transforms::Rename::Fields (class)">Kiba::Extend::Transforms::Rename::Fields</a></span></p>
 </div>
       
     </li>
@@ -530,7 +446,10 @@ rubocop:todo Layout/LineLength</p>
       
       
         &mdash;
-        <div class='inline'><p>value(s) to be treated as empty when replacing</p>
+        <div class='inline'><p>value(s) to be treated as empty when replacing
+empty field values and deleting empty field groups. If <code>nil</code>, &#39;&#39; will be used. <strong>NOTE:</strong> If you
+need different <code>treat_as_null</code> values for replacing empty field values and deleting empty field
+groups, use <span class='object_link'><a href="../Replace/EmptyFieldValues.html" title="Kiba::Extend::Transforms::Replace::EmptyFieldValues (class)">Kiba::Extend::Transforms::Replace::EmptyFieldValues</a></span> separately in your job before you use this transform.</p>
 </div>
       
     </li>
@@ -547,7 +466,8 @@ rubocop:todo Layout/LineLength</p>
       
       
         &mdash;
-        <div class='inline'><p>whether to pad field values to ensure all resulting fields have</p>
+        <div class='inline'><p>whether to pad field values to ensure all resulting fields have
+the same number of values</p>
 </div>
       
     </li>
@@ -564,7 +484,9 @@ rubocop:todo Layout/LineLength</p>
       
       
         &mdash;
-        <div class='inline'><p>value used to even out uneven field values. If given a String,</p>
+        <div class='inline'><p>value used to even out uneven field values. If given a String,
+that string will be appended to even out fields. If <code>nil</code>, the value of <code>treat_as_null</code> will be
+used. If <code>:value</code>, the <strong>final</strong> value in the field will be repeated to even out the field.</p>
 </div>
       
     </li>
@@ -644,45 +566,39 @@ rubocop:todo Layout/LineLength</p>
       <pre class="lines">
 
 
-273
-274
-275
-276
-277
-278
-279
-280
-281
-282
-283
-284
-285
-286
-287
-288
-289
-290
-291
-292
-293
-294
-295
-296
-297
-298
-299
-300
-301
-302
-303
-304</pre>
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/reshape/fields_to_field_group_with_constant.rb', line 273</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/reshape/fields_to_field_group_with_constant.rb', line 198</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fieldmap:</span><span class='comma'>,</span> <span class='label'>constant_target:</span><span class='comma'>,</span> <span class='label'>constant_value:</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_delim'><span class='object_link'><a href="../../../Extend.html#delim-class_method" title="Kiba::Extend.delim (method)">delim</a></span></span><span class='comma'>,</span>
-  <span class='comment'># rubocop:enable Layout/LineLength
-</span>  <span class='label'>replace_empty:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>treat_as_null:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_nullvalue'><span class='object_link'><a href="../../../Extend.html#nullvalue-class_method" title="Kiba::Extend.nullvalue (method)">nullvalue</a></span></span><span class='comma'>,</span>
+  <span class='label'>replace_empty:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>treat_as_null:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_nullvalue'><span class='object_link'><a href="../../../Extend.html#nullvalue-class_method" title="Kiba::Extend.nullvalue (method)">nullvalue</a></span></span><span class='comma'>,</span>
   <span class='label'>enforce_evenness:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>evener:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>uneven_warning:</span> <span class='kw'>true</span><span class='comma'>,</span>
   <span class='label'>remove_empty_groups:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='ivar'>@renamer</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Rename.html" title="Kiba::Extend::Transforms::Rename (module)">Rename</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Rename/Fields.html" title="Kiba::Extend::Transforms::Rename::Fields (class)">Fields</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Rename/Fields.html#initialize-instance_method" title="Kiba::Extend::Transforms::Rename::Fields#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fieldmap:</span> <span class='id identifier rubyid_fieldmap'>fieldmap</span><span class='rparen'>)</span>
@@ -697,14 +613,10 @@ rubocop:todo Layout/LineLength</p>
   <span class='ivar'>@uneven_warning</span> <span class='op'>=</span> <span class='id identifier rubyid_uneven_warning'>uneven_warning</span>
   <span class='ivar'>@remove_empty_groups</span> <span class='op'>=</span> <span class='id identifier rubyid_remove_empty_groups'>remove_empty_groups</span>
 
-  <span class='comment'># rubocop:todo Layout/LineLength
-</span>  <span class='ivar'>@empty_replacer</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Replace.html" title="Kiba::Extend::Transforms::Replace (module)">Replace</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Replace/EmptyFieldValues.html" title="Kiba::Extend::Transforms::Replace::EmptyFieldValues (class)">EmptyFieldValues</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Replace/EmptyFieldValues.html#initialize-instance_method" title="Kiba::Extend::Transforms::Replace::EmptyFieldValues#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='ivar'>@renamed</span><span class='comma'>,</span> <span class='label'>value:</span> <span class='id identifier rubyid_treat_as_null'>treat_as_null</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='comma'>,</span>
-    <span class='comment'># rubocop:enable Layout/LineLength
-</span>    <span class='label'>treat_as_null:</span> <span class='id identifier rubyid_treat_as_null'>treat_as_null</span><span class='rparen'>)</span>
-  <span class='comment'># rubocop:todo Layout/LineLength
-</span>  <span class='ivar'>@even_xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Clean.html" title="Kiba::Extend::Transforms::Clean (module)">Clean</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Clean/EvenFieldValues.html" title="Kiba::Extend::Transforms::Clean::EvenFieldValues (class)">EvenFieldValues</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Clean/EvenFieldValues.html#initialize-instance_method" title="Kiba::Extend::Transforms::Clean::EvenFieldValues#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='ivar'>@renamed</span><span class='comma'>,</span> <span class='label'>evener:</span> <span class='ivar'>@evener</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='comma'>,</span>
-    <span class='comment'># rubocop:enable Layout/LineLength
-</span>    <span class='label'>warn:</span> <span class='id identifier rubyid_uneven_warning'>uneven_warning</span><span class='rparen'>)</span>
+  <span class='ivar'>@empty_replacer</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Replace.html" title="Kiba::Extend::Transforms::Replace (module)">Replace</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Replace/EmptyFieldValues.html" title="Kiba::Extend::Transforms::Replace::EmptyFieldValues (class)">EmptyFieldValues</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Replace/EmptyFieldValues.html#initialize-instance_method" title="Kiba::Extend::Transforms::Replace::EmptyFieldValues#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='ivar'>@renamed</span><span class='comma'>,</span> <span class='label'>value:</span> <span class='id identifier rubyid_treat_as_null'>treat_as_null</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='comma'>,</span>
+    <span class='label'>treat_as_null:</span> <span class='id identifier rubyid_treat_as_null'>treat_as_null</span><span class='rparen'>)</span>
+  <span class='ivar'>@even_xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Clean.html" title="Kiba::Extend::Transforms::Clean (module)">Clean</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Clean/EvenFieldValues.html" title="Kiba::Extend::Transforms::Clean::EvenFieldValues (class)">EvenFieldValues</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Clean/EvenFieldValues.html#initialize-instance_method" title="Kiba::Extend::Transforms::Clean::EvenFieldValues#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='ivar'>@renamed</span><span class='comma'>,</span> <span class='label'>evener:</span> <span class='ivar'>@evener</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='comma'>,</span>
+    <span class='label'>warn:</span> <span class='id identifier rubyid_uneven_warning'>uneven_warning</span><span class='rparen'>)</span>
   <span class='ivar'>@group_cleaner</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Delete.html" title="Kiba::Extend::Transforms::Delete (module)">Delete</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Delete/EmptyFieldGroups.html" title="Kiba::Extend::Transforms::Delete::EmptyFieldGroups (class)">EmptyFieldGroups</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Delete/EmptyFieldGroups.html#initialize-instance_method" title="Kiba::Extend::Transforms::Delete::EmptyFieldGroups#initialize (method)">new</a></span></span><span class='lparen'>(</span>
     <span class='label'>groups:</span> <span class='lbracket'>[</span><span class='lbracket'>[</span><span class='id identifier rubyid_renamed'>renamed</span><span class='comma'>,</span>
       <span class='id identifier rubyid_target'>target</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='comma'>,</span> <span class='label'>treat_as_null:</span> <span class='id identifier rubyid_treat_as_null'>treat_as_null</span>
@@ -778,17 +690,17 @@ rubocop:todo Layout/LineLength</p>
       <pre class="lines">
 
 
-307
-308
-309
-310
-311
-312
-313
-314</pre>
+227
+228
+229
+230
+231
+232
+233
+234</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/reshape/fields_to_field_group_with_constant.rb', line 307</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/reshape/fields_to_field_group_with_constant.rb', line 227</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_renamer'>renamer</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
@@ -808,7 +720,7 @@ rubocop:todo Layout/LineLength</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Aug 28 21:54:21 2023 by
+  Generated on Fri Sep  1 02:53:06 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

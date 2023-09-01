@@ -106,9 +106,7 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-Merges given value into the given target field in every row. Target field is added new. If it already exists,
-rubocop:enable Layout/LineLength
+    <p>Merges given value into the given target field in every row. Target field is added new. If it already exists,
   values in target field are overridden by contant value.</p>
 
 <h2 id="examples">Examples</h2>
@@ -116,9 +114,7 @@ rubocop:enable Layout/LineLength
 <p>Source data:</p>
 
 <pre class="code ruby"><code class="ruby">{name: &#39;Weddy&#39;, sex: &#39;m&#39;, source: &#39;adopted&#39;},
-rubocop:todo Layout/LineLength
 {name: &#39;Kernel&#39;, sex: &#39;f&#39;, source: &#39;adopted&#39;, species: &#39;Numida meleagris&#39;}
-rubocop:enable Layout/LineLength
 </code></pre>
 
 <p>Used in pipeline as:</p>
@@ -132,9 +128,7 @@ rubocop:enable Layout/LineLength
 {name: &#39;Kernel&#39;, sex: &#39;f&#39;, source: &#39;adopted&#39;, species: &#39;guinea fowl&#39;}
 </code></pre>
 
-<p>rubocop:todo Layout/LineLength
-A warning will be printed to STDOUT since the existing <code>species</code> value is overwritten in
-rubocop:enable Layout/LineLength
+<p>A warning will be printed to STDOUT since the existing <code>species</code> value is overwritten in
   the second row.</p>
 
 
@@ -281,14 +275,14 @@ rubocop:enable Layout/LineLength
       <pre class="lines">
 
 
-44
-45
-46
-47
-48</pre>
+40
+41
+42
+43
+44</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/merge/constant_value.rb', line 44</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/merge/constant_value.rb', line 40</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>target:</span><span class='comma'>,</span> <span class='label'>value:</span><span class='rparen'>)</span>
   <span class='ivar'>@target</span> <span class='op'>=</span> <span class='id identifier rubyid_target'>target</span>
@@ -346,26 +340,22 @@ rubocop:enable Layout/LineLength
       <pre class="lines">
 
 
+47
+48
+49
+50
 51
 52
 53
-54
-55
-56
-57
-58
-59
-60</pre>
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/merge/constant_value.rb', line 51</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/merge/constant_value.rb', line 47</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='kw'>unless</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
-    <span class='comment'># rubocop:todo Layout/LineLength
-</span>    <span class='id identifier rubyid_add_single_warning'>add_single_warning</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Any values in existing `</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_target'>target</span><span class='embexpr_end'>}</span><span class='tstring_content'>` field will be overwritten with `</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_value'>value</span><span class='embexpr_end'>}</span><span class='tstring_content'>`</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-    <span class='comment'># rubocop:enable Layout/LineLength
-</span>  <span class='kw'>end</span>
+    <span class='id identifier rubyid_add_single_warning'>add_single_warning</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Any values in existing `</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_target'>target</span><span class='embexpr_end'>}</span><span class='tstring_content'>` field will be overwritten with `</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_value'>value</span><span class='embexpr_end'>}</span><span class='tstring_content'>`</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
 
   <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_target'>target</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
   <span class='id identifier rubyid_row'>row</span>
@@ -380,7 +370,7 @@ rubocop:enable Layout/LineLength
 </div>
 
       <div id="footer">
-  Generated on Mon Aug 28 21:54:18 2023 by
+  Generated on Fri Sep  1 02:53:04 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

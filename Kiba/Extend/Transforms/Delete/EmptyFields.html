@@ -108,21 +108,12 @@
 </div>
   </div>
 
-<p>rubocop:todo Layout/LineLength
-Removes fields/columns that contain no values. Supports treating <code>Kiba::Extend.nullvalue</code> as an empty value.
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  Also supports specifying field-specific values that should be treated as though they are empty.
-rubocop:enable Layout/LineLength</p>
-
-<p>rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength</p>
+<p>Removes fields/columns that contain no values. Supports treating <code>Kiba::Extend.nullvalue</code> as an empty value.
+  Also supports specifying field-specific values that should be treated as though they are empty.</p>
 
 <h1 id="examples">Examples</h1>
 
-<p>rubocop:todo Layout/LineLength
-The examples demonstrating <code>usenull</code> assume <code>Kiba::Extend.nullvalue</code> is set to <code>%NULLVALUE%</code>.
-rubocop:enable Layout/LineLength</p>
+<p>The examples demonstrating <code>usenull</code> assume <code>Kiba::Extend.nullvalue</code> is set to <code>%NULLVALUE%</code>.</p>
 
 <h2 id="basic-usage">Basic usage</h2>
 
@@ -186,9 +177,7 @@ rubocop:enable Layout/LineLength</p>
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
-transform Delete::EmptyFields, consider_blank: {b: &#39;false&#39;, c: &#39;nope&#39;, e: &quot;0#{Kiba::Extend.delim}false&quot;}
-rubocop:enable Layout/LineLength
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Delete.html" title="Kiba::Extend::Transforms::Delete (module)">Delete</a></span></span><span class='op'>::</span><span class='const'>EmptyFields</span><span class='comma'>,</span> <span class='label'>consider_blank:</span> <span class='lbrace'>{</span><span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>false</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>c:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>nope</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>e:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>0</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_delim'><span class='object_link'><a href="../../../Extend.html#delim-class_method" title="Kiba::Extend.delim (method)">delim</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>false</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
 </code></pre>
 
 <p>Input table:</p>
@@ -213,9 +202,7 @@ rubocop:enable Layout/LineLength
 
 <h3 id="notes">Notes</h3>
 
-<p>rubocop:todo Layout/LineLength
-Field <code>c</code> is retained because <code>usenull: true</code> is not used. If that argument were given, only Field <code>a</code> would be returned.
-rubocop:enable Layout/LineLength</p>
+<p>Field <code>c</code> is retained because <code>usenull: true</code> is not used. If that argument were given, only Field <code>a</code> would be returned.</p>
 
 
   </div>
@@ -279,7 +266,7 @@ rubocop:enable Layout/LineLength</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength   as blank/empty.</p>
+    <span class="summary_desc"><div class='inline'><p>A new instance of EmptyFields.</p>
 </div></span>
   
 </li>
@@ -324,14 +311,7 @@ rubocop:enable Layout/LineLength</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  as blank/empty. <strong>If multiple values should be considered blank for one field, join them using
-rubocop:enable Layout/LineLength
-  <code>Kiba::Extend.delimiter</code></strong></p>
+    <p>Returns a new instance of EmptyFields.</p>
 
 
   </div>
@@ -369,7 +349,9 @@ rubocop:enable Layout/LineLength
       
       
         &mdash;
-        <div class='inline'><p>specifies field-specific value(s) that should be treated</p>
+        <div class='inline'><p>specifies field-specific value(s) that should be treated
+as blank/empty. <strong>If multiple values should be considered blank for one field, join them using
+<code>Kiba::Extend.delimiter</code></strong></p>
 </div>
       
     </li>
@@ -383,17 +365,17 @@ rubocop:enable Layout/LineLength
       <pre class="lines">
 
 
-134
-135
-136
-137
-138
-139
-140
-141</pre>
+118
+119
+120
+121
+122
+123
+124
+125</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/empty_fields.rb', line 134</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/empty_fields.rb', line 118</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>usenull:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>consider_blank:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@usenull</span> <span class='op'>=</span> <span class='id identifier rubyid_usenull'>usenull</span>
@@ -430,18 +412,18 @@ rubocop:enable Layout/LineLength
       <pre class="lines">
 
 
-149
-150
-151
-152
-153
-154
-155
-156
-157</pre>
+133
+134
+135
+136
+137
+138
+139
+140
+141</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/empty_fields.rb', line 149</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/empty_fields.rb', line 133</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_close'>close</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_rows'>rows</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -496,13 +478,13 @@ rubocop:enable Layout/LineLength
       <pre class="lines">
 
 
-144
-145
-146
-147</pre>
+128
+129
+130
+131</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/empty_fields.rb', line 144</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/empty_fields.rb', line 128</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_populate_tracker'>populate_tracker</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
@@ -518,7 +500,7 @@ rubocop:enable Layout/LineLength
 </div>
 
       <div id="footer">
-  Generated on Mon Aug 28 21:54:18 2023 by
+  Generated on Fri Sep  1 02:53:03 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

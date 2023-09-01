@@ -101,36 +101,20 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-This one is hard to succintly describe! Use it if you have specific fields grouped together in a row, and you want to abstract them so the fields are broader, and you reduce the number of fields.
-rubocop:enable Layout/LineLength</p>
+    <p>This one is hard to succintly describe! Use it if you have specific fields grouped together in a row, and you want to abstract them so the fields are broader, and you reduce the number of fields.</p>
 
-<p>rubocop:todo Layout/LineLength
-In the example, 3 fields in each row represent fruit names and 2 fields in each row represent colors. We want more rows, but each row should have only one fruit column and color column.
-rubocop:enable Layout/LineLength</p>
+<p>In the example, 3 fields in each row represent fruit names and 2 fields in each row represent colors. We want more rows, but each row should have only one fruit column and color column.</p>
 
 <h1 id="example">Example</h1>
 
 <p>Input table:</p>
 
-<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
-| f1           | c1          | f2         | c2    | season | f3          |
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
+<pre class="code ruby"><code class="ruby">| f1           | c1          | f2         | c2    | season | f3          |
 |--------------+-------------+------------+-------+--------+-------------|
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
 | strawberry   | red         | blueberry  | blue  | spring | cherry      |
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
 | fig;honeydew | brown;green | watermelon | green | summer | nil         |
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
 | nil          | nil         | nil        | nil   | winter | grapefruit  |
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
 | nil          | nil         | nil        | nil   | autumn | nil         |
-rubocop:enable Layout/LineLength
 </code></pre>
 
 <p>Used in pipeline as:</p>
@@ -159,15 +143,10 @@ rubocop:enable Layout/LineLength
 
 <h2 id="things-to-notice">Things to notice</h2>
 
-<p>rubocop:todo Layout/LineLength</p>
-
 <ul>
-<li>The fact that some field values are multivalued is completely ignored
-rubocop:enable Layout/LineLength</li>
-<li>If all the values for a given remap group are blank, no row is added
-rubocop:todo Layout/LineLength</li>
-<li>Values in fields not included in <code>remap_groups</code> are copied to every row created
-rubocop:enable Layout/LineLength</li>
+<li>The fact that some field values are multivalued is completely ignored</li>
+<li>If all the values for a given remap group are blank, no row is added</li>
+<li>Values in fields not included in <code>remap_groups</code> are copied to every row created</li>
 </ul>
 
 
@@ -210,7 +189,7 @@ rubocop:enable Layout/LineLength</li>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength.</p>
+    <span class="summary_desc"><div class='inline'><p>A new instance of ColumnsRemappedInNewRows.</p>
 </div></span>
   
 </li>
@@ -255,8 +234,7 @@ rubocop:enable Layout/LineLength</li>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength</p>
+    <p>Returns a new instance of ColumnsRemappedInNewRows.</p>
 
 
   </div>
@@ -289,13 +267,13 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-84
-85
-86
-87</pre>
+64
+65
+66
+67</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/explode.rb', line 84</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/explode.rb', line 64</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>remap_groups:</span><span class='comma'>,</span> <span class='label'>map_to:</span><span class='rparen'>)</span>
   <span class='ivar'>@groups</span> <span class='op'>=</span> <span class='id identifier rubyid_remap_groups'>remap_groups</span>
@@ -352,24 +330,24 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-90
-91
-92
-93
-94
-95
-96
-97
-98
-99
-100
-101
-102
-103
-104</pre>
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/explode.rb', line 90</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/explode.rb', line 70</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_to_new_rows'>to_new_rows</span> <span class='op'>=</span> <span class='id identifier rubyid_new_row_groups'>new_row_groups</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
@@ -396,7 +374,7 @@ rubocop:enable Layout/LineLength</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Aug 28 21:54:16 2023 by
+  Generated on Fri Sep  1 02:53:02 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

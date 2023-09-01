@@ -104,26 +104,17 @@
     
   <div class="note notetag">
     <strong>Note:</strong>
-    <div class='inline'><p>This will collapse any source data to a one or two column result. It runs in-memory,</p>
+    <div class='inline'><p>This will collapse any source data to a one or two column result. It runs in-memory,
+so for very large sources, it may take a long time or fail</p>
 </div>
   </div>
 
 <p>Extracts the values of the given fields to a single <code>:value</code> column</p>
 
-<p>rubocop:todo Layout/LineLength
-Inserts a <code>:from_field</code> column recording original field name for the value
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  in each row. This can be turned off, resulting in a single-column result.
-rubocop:enable Layout/LineLength</p>
+<p>Inserts a <code>:from_field</code> column recording original field name for the value
+  in each row. This can be turned off, resulting in a single-column result.</p>
 
-<p>rubocop:todo Layout/LineLength
-Optionally, if given <code>:sep</code> value, splits multi-val fields to separate rows.
-rubocop:enable Layout/LineLength</p>
-
-<p>rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-  so for very large sources, it may take a long time or fail</p>
+<p>Optionally, if given <code>:sep</code> value, splits multi-val fields to separate rows.</p>
 
 <p>Input table:</p>
 
@@ -153,9 +144,7 @@ rubocop:enable Layout/LineLength
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
-transform Extract::Fields, fields: %i[foo bar], source_field_track: false
-rubocop:enable Layout/LineLength
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Extract.html" title="Kiba::Extend::Transforms::Extract (module)">Extract</a></span></span><span class='op'>::</span><span class='const'>Fields</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>foo</span><span class='words_sep'> </span><span class='tstring_content'>bar</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>source_field_track:</span> <span class='kw'>false</span>
 </code></pre>
 
 <p>Results in:</p>
@@ -320,15 +309,15 @@ rubocop:enable Layout/LineLength
       <pre class="lines">
 
 
-78
-79
-80
-81
-82
-83</pre>
+70
+71
+72
+73
+74
+75</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/extract.rb', line 78</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/extract.rb', line 70</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>source_field_track:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fields'>fields</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
@@ -387,12 +376,12 @@ rubocop:enable Layout/LineLength
       <pre class="lines">
 
 
-90
-91
-92</pre>
+82
+83
+84</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/extract.rb', line 90</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/extract.rb', line 82</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_close'>close</span>
   <span class='ivar'>@rows</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='kw'>yield</span> <span class='id identifier rubyid_row'>row</span> <span class='rbrace'>}</span>
@@ -441,13 +430,13 @@ rubocop:enable Layout/LineLength
       <pre class="lines">
 
 
-85
-86
-87
-88</pre>
+77
+78
+79
+80</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/extract.rb', line 85</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/extract.rb', line 77</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='ivar'>@fields</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span> <span class='id identifier rubyid_extract_field_value'>extract_field_value</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='comma'>,</span> <span class='id identifier rubyid_field'>field</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -463,7 +452,7 @@ rubocop:enable Layout/LineLength
 </div>
 
       <div id="footer">
-  Generated on Mon Aug 28 21:54:16 2023 by
+  Generated on Fri Sep  1 02:53:02 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

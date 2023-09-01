@@ -108,11 +108,7 @@
 </div>
   </div>
 
-<p>rubocop:todo Layout/LineLength
-Copy the value of a field to another field. If <code>to</code> field does not yet exist, it is created. Otherwise, it is overwritten with the copied value.
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength</p>
+<p>Copy the value of a field to another field. If <code>to</code> field does not yet exist, it is created. Otherwise, it is overwritten with the copied value.</p>
 
 
   </div>
@@ -257,13 +253,13 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-25
-26
-27
-28</pre>
+21
+22
+23
+24</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/copy/field.rb', line 25</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/copy/field.rb', line 21</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>from:</span><span class='comma'>,</span> <span class='label'>to:</span><span class='rparen'>)</span>
   <span class='ivar'>@from</span> <span class='op'>=</span> <span class='id identifier rubyid_from'>from</span>
@@ -320,15 +316,15 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
+27
+28
+29
+30
 31
-32
-33
-34
-35
-36</pre>
+32</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/copy/field.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/copy/field.rb', line 27</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_fail'>fail</span> <span class='const'><span class='object_link'><a href="Field/MissingFromFieldError.html" title="Kiba::Extend::Transforms::Copy::Field::MissingFromFieldError (class)">MissingFromFieldError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Field/MissingFromFieldError.html#initialize-instance_method" title="Kiba::Extend::Transforms::Copy::Field::MissingFromFieldError#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_from'>from</span><span class='comma'>,</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='id identifier rubyid_from'>from</span><span class='rparen'>)</span>
@@ -346,7 +342,7 @@ rubocop:enable Layout/LineLength</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Aug 28 21:54:17 2023 by
+  Generated on Fri Sep  1 02:53:02 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

@@ -106,9 +106,7 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-Keep or reject rows based on whether any of the given fields is populated. Blank strings and nils count as
-rubocop:enable Layout/LineLength
+    <p>Keep or reject rows based on whether any of the given fields is populated. Blank strings and nils count as
   not populated.</p>
 
 <h2 id="examples">Examples</h2>
@@ -124,9 +122,7 @@ rubocop:enable Layout/LineLength
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
-transform FilterRows::AnyFieldsPopulated, action: :keep, fields: %i[a b]
-rubocop:enable Layout/LineLength
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../FilterRows.html" title="Kiba::Extend::Transforms::FilterRows (module)">FilterRows</a></span></span><span class='op'>::</span><span class='const'>AnyFieldsPopulated</span><span class='comma'>,</span> <span class='label'>action:</span> <span class='symbol'>:keep</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>a</span><span class='words_sep'> </span><span class='tstring_content'>b</span><span class='tstring_end'>]</span></span>
 </code></pre>
 
 <p>Resulting data:</p>
@@ -151,9 +147,7 @@ rubocop:enable Layout/LineLength
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
-transform FilterRows::AnyFieldsPopulated, action: :reject, fields: %i[a b]
-rubocop:enable Layout/LineLength
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../FilterRows.html" title="Kiba::Extend::Transforms::FilterRows (module)">FilterRows</a></span></span><span class='op'>::</span><span class='const'>AnyFieldsPopulated</span><span class='comma'>,</span> <span class='label'>action:</span> <span class='symbol'>:reject</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>a</span><span class='words_sep'> </span><span class='tstring_content'>b</span><span class='tstring_end'>]</span></span>
 </code></pre>
 
 <p>Resulting data:</p>
@@ -337,14 +331,14 @@ rubocop:enable Layout/LineLength
       <pre class="lines">
 
 
-77
-78
-79
-80
-81</pre>
+73
+74
+75
+76
+77</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/filter_rows/any_fields_populated.rb', line 77</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/filter_rows/any_fields_populated.rb', line 73</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>action:</span><span class='comma'>,</span> <span class='label'>fields:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_validate_action_argument'>validate_action_argument</span><span class='lparen'>(</span><span class='id identifier rubyid_action'>action</span><span class='rparen'>)</span>
@@ -417,19 +411,19 @@ rubocop:enable Layout/LineLength
       <pre class="lines">
 
 
+80
+81
+82
+83
 84
 85
 86
 87
 88
-89
-90
-91
-92
-93</pre>
+89</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/filter_rows/any_fields_populated.rb', line 84</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/filter_rows/any_fields_populated.rb', line 80</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_finalize_fields'>finalize_fields</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_fields_set'>fields_set</span>
@@ -451,7 +445,7 @@ rubocop:enable Layout/LineLength
 </div>
 
       <div id="footer">
-  Generated on Mon Aug 28 21:54:20 2023 by
+  Generated on Fri Sep  1 02:53:06 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

@@ -104,38 +104,25 @@
     
   <div class="note notetag">
     <strong>Note:</strong>
-    <div class='inline'><p>This currently only works when using <code>Kiba::Extend::Destinations::CSV</code> destination. It depends on</p>
+    <div class='inline'><p>This currently only works when using <code>Kiba::Extend::Destinations::CSV</code> destination. It depends on
+the <code>fields</code> method added to that class to support. This was not added to the
+<code>Kiba::Extend::Destinations::JsonArray</code> class because it does not require an identical field set
+in all records</p>
 </div>
   </div>
 
-<p>rubocop:todo Layout/LineLength
-Helper to make it less tedious to ensure the same fields are present in all rows
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
+<p>Helper to make it less tedious to ensure the same fields are present in all rows
   included in a multi-source job. This is annoying to deal with when the source tables have
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
   different fields. It&#39;s impossible to deal with without a helper if you are doing any
-rubocop:enable Layout/LineLength
   of your jobs/transformations dynamically.</p>
 
-<p>The basic idea is:
-rubocop:todo Layout/LineLength</p>
+<p>The basic idea is:</p>
 
 <ul>
-<li>an new instance of this class is created somewhere accessible from within jobs. In Kiba::TMS
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-this is a config settig per multi-source job: <code>Kiba::Tms.config.name_compilation.multi_source_normalizer</code>
-rubocop:enable Layout/LineLength</li>
-</ul>
-
-<p>rubocop:todo Layout/LineLength</p>
-
-<ul>
-<li>pass this instance in as a helper on the <code>MultiSourcePrepJob</code>s that generate files that will be used
-rubocop:enable Layout/LineLength
-as sources in the multisource job:</li>
+<li><p>an new instance of this class is created somewhere accessible from within jobs. In Kiba::TMS
+this is a config settig per multi-source job: <code>Kiba::Tms.config.name_compilation.multi_source_normalizer</code></p></li>
+<li><p>pass this instance in as a helper on the <code>MultiSourcePrepJob</code>s that generate files that will be used
+as sources in the multisource job:</p></li>
 </ul>
 
 <pre class="code ruby"><code class="ruby"> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Jobs.html" title="Kiba::Extend::Jobs (module)">Jobs</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Jobs/MultiSourcePrepJob.html" title="Kiba::Extend::Jobs::MultiSourcePrepJob (class)">MultiSourcePrepJob</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Jobs/MultiSourcePrepJob.html#initialize-instance_method" title="Kiba::Extend::Jobs::MultiSourcePrepJob#initialize (method)">new</a></span></span><span class='lparen'>(</span>
@@ -148,25 +135,11 @@ as sources in the multisource job:</li>
 <span class='rparen'>)</span>
 </code></pre>
 
-<p>rubocop:todo Layout/LineLength
-Finally, in the multisource job, call the <code>get_fields</code> method of your normalizer as the <code>fields</code>
-rubocop:enable Layout/LineLength
+<p>Finally, in the multisource job, call the <code>get_fields</code> method of your normalizer as the <code>fields</code>
   argument of an <code>Append::NilFields</code> transform:</p>
 
-<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
-transform Append::NilFields, fields: Tms.config.name_compilation.multi_source_normalizer.get_fields
-rubocop:enable Layout/LineLength
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'>Append</span><span class='op'>::</span><span class='const'>NilFields</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='const'>Tms</span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_name_compilation'>name_compilation</span><span class='period'>.</span><span class='id identifier rubyid_multi_source_normalizer'>multi_source_normalizer</span><span class='period'>.</span><span class='id identifier rubyid_get_fields'>get_fields</span>
 </code></pre>
-
-<p>rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  the <code>fields</code> method added to that class to support. This was not added to the
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  <code>Kiba::Extend::Destinations::JsonArray</code> class because it does not require an identical field set
-rubocop:enable Layout/LineLength
-  in all records</p>
 
 
   </div>
@@ -319,12 +292,12 @@ rubocop:enable Layout/LineLength
       <pre class="lines">
 
 
-63
-64
-65</pre>
+43
+44
+45</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/multi_source_normalizer.rb', line 63</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/multi_source_normalizer.rb', line 43</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span>
   <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -393,12 +366,12 @@ rubocop:enable Layout/LineLength
       <pre class="lines">
 
 
-68
-69
-70</pre>
+48
+49
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/multi_source_normalizer.rb', line 68</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/multi_source_normalizer.rb', line 48</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_fields'>get_fields</span>
   <span class='id identifier rubyid_fields'>fields</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span><span class='period'>.</span><span class='id identifier rubyid_sort'>sort</span>
@@ -462,12 +435,12 @@ rubocop:enable Layout/LineLength
       <pre class="lines">
 
 
-73
-74
-75</pre>
+53
+54
+55</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/multi_source_normalizer.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/multi_source_normalizer.rb', line 53</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_record_fields'>record_fields</span><span class='lparen'>(</span><span class='id identifier rubyid_new_fields'>new_fields</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_fields'>fields</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_new_fields'>new_fields</span>
@@ -482,7 +455,7 @@ rubocop:enable Layout/LineLength
 </div>
 
       <div id="footer">
-  Generated on Mon Aug 28 21:54:18 2023 by
+  Generated on Fri Sep  1 02:53:03 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

@@ -125,15 +125,9 @@ See <span class='object_link'><a href="Add.html" title="Kiba::Extend::Transforms
 
 <p>Results in:</p>
 
-<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
-| a   | b   | c   | d    | e | fp                               | fp_b | fp_c | fp_d | fp_e |
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
+<pre class="code ruby"><code class="ruby">| a   | b   | c   | d    | e | fp                               | fp_b | fp_c | fp_d | fp_e |
 |-----+-----+-----+------+---+----------------------------------+------+------+------+------|
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
 | ant | bee | nil | deer |   | YmVlOzs7bmlsOzs7ZGVlcjs7O2VtcHR5 | bee  | nil  | deer |      |
-rubocop:enable Layout/LineLength
 </code></pre>
 
 <p>Used in pipeline as:</p>
@@ -373,6 +367,10 @@ field</p>
       <pre class="lines">
 
 
+76
+77
+78
+79
 80
 81
 82
@@ -381,14 +379,10 @@ field</p>
 85
 86
 87
-88
-89
-90
-91
-92</pre>
+88</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/decode.rb', line 80</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/decode.rb', line 76</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fingerprint:</span><span class='comma'>,</span> <span class='label'>source_fields:</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>␟</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>prefix:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>fp</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
   <span class='label'>delete_fp:</span> <span class='kw'>false</span><span class='rparen'>)</span>
@@ -469,6 +463,10 @@ field</p>
       <pre class="lines">
 
 
+91
+92
+93
+94
 95
 96
 97
@@ -482,14 +480,10 @@ field</p>
 105
 106
 107
-108
-109
-110
-111
-112</pre>
+108</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/decode.rb', line 95</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/decode.rb', line 91</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='ivar'>@row_ct</span> <span class='op'>+=</span> <span class='int'>1</span>
@@ -519,7 +513,7 @@ field</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Aug 28 21:54:18 2023 by
+  Generated on Fri Sep  1 02:53:03 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

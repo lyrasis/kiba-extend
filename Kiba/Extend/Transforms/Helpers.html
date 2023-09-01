@@ -142,7 +142,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength Indicates whether a given value is empty, ignoring delimiters.</p>
+    <span class="summary_desc"><div class='inline'><p>Indicates whether a given value is empty, ignoring delimiters.</p>
 </div></span>
   
 </li>
@@ -168,12 +168,8 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-Indicates whether a given value is empty, ignoring delimiters. If <code>usenull</code> is true,
-rubocop:enable Layout/LineLength
-  the config.nullvalue string is treated as empty
-rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength</p>
+    <p>Indicates whether a given value is empty, ignoring delimiters. If <code>usenull</code> is true,
+  the config.nullvalue string is treated as empty</p>
 
 
   </div>
@@ -236,16 +232,16 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
+16
+17
 18
 19
 20
 21
-22
-23
-24</pre>
+22</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/helpers.rb', line 18</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/helpers.rb', line 16</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_empty?'>empty?</span><span class='lparen'>(</span><span class='id identifier rubyid_val'>val</span><span class='comma'>,</span> <span class='id identifier rubyid_usenull'>usenull</span> <span class='op'>=</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
@@ -264,7 +260,7 @@ rubocop:enable Layout/LineLength</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Aug 28 21:54:16 2023 by
+  Generated on Fri Sep  1 02:53:01 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

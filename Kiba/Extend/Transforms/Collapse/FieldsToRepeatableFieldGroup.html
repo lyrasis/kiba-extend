@@ -101,83 +101,57 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-Combines data from multiple fields following an expected naming pattern (shown in examples below) into
-rubocop:enable Layout/LineLength
-  final fields that are part of a repeatable fieldgroup.</p>
+    <p>Combines data from multiple fields following an expected naming
+  pattern (shown in examples below) into final fields that are part of
+  a repeatable fieldgroup.</p>
 
-<p>rubocop:todo Layout/LineLength
-This transform can be seen as a more opinionated, structured  shorthand for
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  <span class='object_link'><a href="FieldsWithCustomFieldmap.html" title="Kiba::Extend::Transforms::Collapse::FieldsWithCustomFieldmap (class)">FieldsWithCustomFieldmap</a></span>, which does not make the same assumptions about the field
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  names/patterns involved, nor about field groups and field group evenness.
-rubocop:enable Layout/LineLength</p>
+<p>This transform can be seen as a more opinionated, structured
+  shorthand for <span class='object_link'><a href="FieldsWithCustomFieldmap.html" title="Kiba::Extend::Transforms::Collapse::FieldsWithCustomFieldmap (class)">FieldsWithCustomFieldmap</a></span>, which does not
+  make the same assumptions about the field names/patterns involved,
+  nor about field groups and field group evenness.</p>
 
 <p>Goes through the following steps:</p>
 
-<p>rubocop:todo Layout/LineLength</p>
-
 <ul>
-<li>Runs <span class='object_link'><a href="../Replace/EmptyFieldValues.html" title="Kiba::Extend::Transforms::Replace::EmptyFieldValues (class)">Replace::EmptyFieldValues</a></span> to replace source fields values that are nil or empty (the full
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-field value) with value of given for <code>null_placeholder</code>. This avoids odd situations where dropping
-rubocop:enable Layout/LineLength
-fields because they are empty at this point introduces unevenness.
-rubocop:todo Layout/LineLength</li>
-<li>If <code>enforce_evenness: true</code>, ensure all fields from a given source have the same number of
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-values by running <span class='object_link'><a href="../Clean/EvenFieldValues.html" title="Kiba::Extend::Transforms::Clean::EvenFieldValues (class)">Kiba::Extend::Transforms::Clean::EvenFieldValues</a></span> with <code>evener: even_val</code>, <code>treat_as_null:
-rubocop:enable Layout/LineLength
-null_placeholder</code>, and <code>warn: warn_if_uneven</code>
-rubocop:todo Layout/LineLength</li>
-<li>Uses <span class='object_link'><a href="../Helpers/FieldValueGetter.html" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter (class)">Helpers::FieldValueGetter</a></span> with <code>discard: []</code> (i.e. keep all values) to gather and combine
-rubocop:enable Layout/LineLength
-values from source fields for a given target into the target value</li>
-<li>Deletes source fields
-rubocop:todo Layout/LineLength</li>
-<li>Runs <span class='object_link'><a href="../Replace/EmptyFieldValues.html" title="Kiba::Extend::Transforms::Replace::EmptyFieldValues (class)">Replace::EmptyFieldValues</a></span> on target fields, with <code>delim: delim</code> (turns on replacement of
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-individual empty values in a multi-value string) and <code>value: null_placeholder</code>
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength</li>
-<li>If <code>empty_groups: delete</code>, runs <span class='object_link'><a href="../Delete/EmptyFieldGroups.html" title="Kiba::Extend::Transforms::Delete::EmptyFieldGroups (class)">Delete::EmptyFieldGroups</a></span> on target fields with
-rubocop:enable Layout/LineLength
-<code>treat_as_null: [null_placeholder, even_val].uniq</code>
-rubocop:todo Layout/LineLength</li>
-<li>Runs <span class='object_link'><a href="../Delete/DelimiterOnlyFieldValues.html" title="Kiba::Extend::Transforms::Delete::DelimiterOnlyFieldValues (class)">Delete::DelimiterOnlyFieldValues</a></span> on target fields with <code>treat_as_null: null_placeholder</code>
-rubocop:enable Layout/LineLength</li>
+<li>Runs <span class='object_link'><a href="../Replace/EmptyFieldValues.html" title="Kiba::Extend::Transforms::Replace::EmptyFieldValues (class)">Replace::EmptyFieldValues</a></span> to replace source fields values
+that are nil or empty (the full field value) with value of given for
+<code>null_placeholder</code>. This avoids odd situations where dropping fields
+because they are empty at this point introduces unevenness.</li>
+<li>If <code>enforce_evenness: true</code>, ensure all fields from a given source
+have the same number of values by running <span class='object_link'><a href="../Clean/EvenFieldValues.html" title="Kiba::Extend::Transforms::Clean::EvenFieldValues (class)">Kiba::Extend::Transforms::Clean::EvenFieldValues</a></span>
+with <code>evener: even_val</code>, <code>treat_as_null: null_placeholder</code>, and
+<code>warn: warn_if_uneven</code></li>
+<li>Uses <span class='object_link'><a href="../Helpers/FieldValueGetter.html" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter (class)">Helpers::FieldValueGetter</a></span> with <code>discard: []</code> (i.e. keep all
+values) to gather and combine values from source fields for a given
+target into the target value</li>
+<li>Deletes source fields</li>
+<li>Runs <span class='object_link'><a href="../Replace/EmptyFieldValues.html" title="Kiba::Extend::Transforms::Replace::EmptyFieldValues (class)">Replace::EmptyFieldValues</a></span> on target fields, with
+<code>delim: delim</code> (turns on replacement of individual empty values in a
+multi-value string) and <code>value: null_placeholder</code></li>
+<li>If <code>empty_groups: delete</code>, runs <span class='object_link'><a href="../Delete/EmptyFieldGroups.html" title="Kiba::Extend::Transforms::Delete::EmptyFieldGroups (class)">Delete::EmptyFieldGroups</a></span> on target
+fields with <code>treat_as_null: [null_placeholder, even_val].uniq</code></li>
+<li>Runs <span class='object_link'><a href="../Delete/DelimiterOnlyFieldValues.html" title="Kiba::Extend::Transforms::Delete::DelimiterOnlyFieldValues (class)">Delete::DelimiterOnlyFieldValues</a></span> on target fields with
+<code>treat_as_null: null_placeholder</code></li>
 </ul>
 
-<p>rubocop:todo Layout/LineLength</p>
-
-<h2 id="general-example-background-field-name-pattern-expectations-and-default-use-behavior">General example: Background, field name pattern, expectations and default use/behavior</h2>
-
-<p>rubocop:enable Layout/LineLength</p>
+<h2 id="general-example">General example</h2>
 
 <p>As an example, let&#39;s use example original source data:</p>
 
-<pre class="code ruby"><code class="ruby">rubocop:todo Layout/LineLength
-{displayideas: &#39;blah&#39;, ideadate: &#39;2022-07-07&#39;, creditline: &#39;from someone&#39;}
-rubocop:enable Layout/LineLength
+<pre class="code ruby"><code class="ruby"><span class='lbrace'>{</span>
+  <span class='label'>displayideas:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>blah</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>ideadate:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>2022-07-07</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>creditline:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>from someone</span><span class='tstring_end'>&#39;</span></span>
+<span class='rbrace'>}</span>
 </code></pre>
 
-<p>rubocop:todo Layout/LineLength
-We want data from :displayideas and :creditline to both get mapped to annotation note fields,
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  and we want the annotation type and annotation date fields set as appropriate.
-rubocop:enable Layout/LineLength</p>
+<p>We want data from :displayideas and :creditline to both get mapped to
+  annotation note fields, and we want the annotation type and
+  annotation date fields set as appropriate.</p>
 
-<p>rubocop:todo Layout/LineLength
-In order to apply this transform, we must first get the source data into the expected format (This
-rubocop:enable Layout/LineLength
-  must be achieved via other transforms before applying this one):</p>
+<p>In order to apply this transform, we must first get the source data
+  into the expected format (This must be achieved via other transforms
+  before applying this one):</p>
 
 <pre class="code ruby"><code class="ruby"><span class='lbrace'>{</span>
   <span class='label'>idea_annotationtype:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>display idea</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
@@ -191,10 +165,9 @@ rubocop:enable Layout/LineLength
 <p>Requirements of this pattern:</p>
 
 <ul>
-<li>consistent prefix indicating orig source data
-rubocop:todo Layout/LineLength</li>
-<li>suffix is the eventual target field that the values will be combined into
-rubocop:enable Layout/LineLength</li>
+<li>consistent prefix indicating orig source data</li>
+<li>suffix is the eventual target field that the values will be combined
+into</li>
 <li>prefix and suffix separated by underscore</li>
 </ul>
 
@@ -219,21 +192,14 @@ rubocop:enable Layout/LineLength</li>
 
 <h3 id="blank-null-values-null_placeholder-parameter">Blank/null values (<code>:null_placeholder</code> parameter)</h3>
 
-<p>rubocop:todo Layout/LineLength
-Prior to any other processing, empty or nil whole-field values are converted to a string representing
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  a null value. After target fields are compiled, any individual null/empty values within a joined
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  String is also converted to this null-value representing string. This behavior
-rubocop:enable Layout/LineLength
-  cannot be disabled.</p>
+<p>Prior to any other processing, empty or nil whole-field values are
+  converted to a string representing a null value. After target fields
+  are compiled, any individual null/empty values within a joined
+  String is also converted to this null-value representing string.
+  This behavior cannot be disabled.</p>
 
-<p>rubocop:todo Layout/LineLength
-The null placeholder string used by default is the value of <code>Kiba::Extend.nullvalue</code> (default =
-rubocop:enable Layout/LineLength
-  &#39;%NULLVALUE%&#39;</p>
+<p>The null placeholder string used by default is the value of
+  <code>Kiba::Extend.nullvalue</code> (default = &#39;%NULLVALUE%&#39;)</p>
 
 <p>You can change this as follows:</p>
 
@@ -268,38 +234,26 @@ rubocop:enable Layout/LineLength
 <span class='rbracket'>]</span>
 </code></pre>
 
-<p>rubocop:todo Layout/LineLength
-<strong>Note that there are still some &#39;%NULLVALUE%&#39;s in there.</strong> This is because we did not
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  change the <code>even_val</code> parameter from its default value. The &#39;%NULLVALUE%&#39;s were added to
-rubocop:enable Layout/LineLength
-  achieve even field values.</p>
+<p><strong>Note that there are still some &#39;%NULLVALUE%&#39;s in there.</strong> This is
+  because we did not change the <code>even_val</code> parameter from its default
+  value. The &#39;%NULLVALUE%&#39;s were added to achieve even field values.</p>
 
-<p>rubocop:todo Layout/LineLength</p>
+<h3 id="automatic-removal-of-grouped-field-with-no-values-in-group">Automatic removal of grouped field with no values in group</h3>
 
-<h3 id="automatic-removal-of-grouped-field-with-no-values-in-group-empty_groups-parameter">Automatic removal of grouped field with no values in group (<code>empty_groups</code> parameter)</h3>
-
-<p>rubocop:enable Layout/LineLength</p>
-
-<p>rubocop:todo Layout/LineLength
-By default, <code>empty_groups: :delete</code>. This causes the <span class='object_link'><a href="../Clean/EmptyFieldGroups.html" title="Kiba::Extend::Transforms::Clean::EmptyFieldGroups (class)">Kiba::Extend::Transforms::Clean::EmptyFieldGroups</a></span> transform (with
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  <code>use_nullvalue: true</code>) to be applied after the target fields are compiled, so that, with the
-rubocop:enable Layout/LineLength
+<p>By default, <code>empty_groups: :delete</code>. This causes the
+  <span class='object_link'><a href="../Clean/EmptyFieldGroups.html" title="Kiba::Extend::Transforms::Clean::EmptyFieldGroups (class)">Kiba::Extend::Transforms::Clean::EmptyFieldGroups</a></span> transform (with <code>use_nullvalue: true</code>) to
+  be applied after the target fields are compiled, so that, with the
   following source data:</p>
 
-<pre class="code ruby"><code class="ruby">[
-  {a_foo: &#39;afoo&#39;, a_bar: &#39;abar&#39;, b_foo: &#39;bfoo&#39;, b_bar: &#39;bbar&#39;},
-  {a_foo: &#39;afoo&#39;, a_bar: &#39;abar&#39;, b_foo: nil, b_bar: &#39;&#39;},
-  {a_foo: &#39;afoo&#39;, a_bar: &#39;abar&#39;, b_foo: nil, b_bar: &#39;%NULLVALUE%&#39;},
-rubocop:todo Layout/LineLength
-  {a_foo: &#39;afoo&#39;, a_bar: &#39;%NULLVALUE%&#39;, b_foo: &#39;%NULLVALUE%&#39;, b_bar: &#39;bbar&#39;},
-rubocop:enable Layout/LineLength
-  {a_foo: nil, a_bar: nil, b_foo: nil, b_bar: &#39;&#39;},
-  {a_foo: &#39;afoo&#39;, a_bar: &#39;abar&#39;, b_foo: &#39;bfoo&#39;},
-]
+<pre class="code ruby"><code class="ruby"><span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>a_foo:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>afoo</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_bar:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>abar</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>b_foo:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bfoo</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>b_bar:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bbar</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_foo:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>afoo</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_bar:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>abar</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>b_foo:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>b_bar:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_foo:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>afoo</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_bar:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>abar</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>b_foo:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>b_bar:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_foo:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>afoo</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_bar:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>b_foo:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%NULLVALUE%</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+    <span class='label'>b_bar:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bbar</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_foo:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>a_bar:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>b_foo:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>b_bar:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a_foo:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>afoo</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>a_bar:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>abar</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>b_foo:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>bfoo</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+<span class='rbracket'>]</span>
 </code></pre>
 
 <p>And this usage:</p>
@@ -347,9 +301,8 @@ rubocop:enable Layout/LineLength
 
 <p>See <span class='object_link'><a href="../Warn/UnevenFields.html" title="Kiba::Extend::Transforms::Warn::UnevenFields (class)">Warn::UnevenFields</a></span> for explanation of what is meant by evenness.</p>
 
-<p>rubocop:todo Layout/LineLength
-See <span class='object_link'><a href="../Clean/EvenFieldValues.html" title="Kiba::Extend::Transforms::Clean::EvenFieldValues (class)">Kiba::Extend::Transforms::Clean::EvenFieldValues</a></span> for details on how fields are evened if <code>enforce_evenness: true</code>.
-rubocop:enable Layout/LineLength</p>
+<p>See <span class='object_link'><a href="../Clean/EvenFieldValues.html" title="Kiba::Extend::Transforms::Clean::EvenFieldValues (class)">Kiba::Extend::Transforms::Clean::EvenFieldValues</a></span> for details on how fields are evened if
+  <code>enforce_evenness: true</code>.</p>
 
 <p>With source data:</p>
 
@@ -382,18 +335,13 @@ rubocop:enable Layout/LineLength</p>
 <span class='rbracket'>]</span>
 </code></pre>
 
-<p>rubocop:todo Layout/LineLength
-Note that we did not pass in <code>empty_groups: retain</code>, but we get an empty group (the 4th
-rubocop:enable Layout/LineLength
-  value in <code>foo</code> and the 4th/final value in <code>bar</code>)</p>
+<p>Note that we did not pass in <code>empty_groups: retain</code>, but we get an
+  empty group (the 4th value in <code>foo</code> and the 4th/final value in
+  <code>bar</code>)</p>
 
-<p>rubocop:todo Layout/LineLength
-This is because <span class='object_link'><a href="../Clean/EmptyFieldGroups.html" title="Kiba::Extend::Transforms::Clean::EmptyFieldGroups (class)">Kiba::Extend::Transforms::Clean::EmptyFieldGroups</a></span> avoids making any changes when it detects
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  uneven fields, because how the values should actually line up (and thus what is actually
-rubocop:enable Layout/LineLength
-  empty) is ambiguous.</p>
+<p>This is because <span class='object_link'><a href="../Clean/EmptyFieldGroups.html" title="Kiba::Extend::Transforms::Clean::EmptyFieldGroups (class)">Kiba::Extend::Transforms::Clean::EmptyFieldGroups</a></span> avoids making any changes
+  when it detects uneven fields, because how the values should
+  actually line up (and thus what is actually empty) is ambiguous.</p>
 
 
   </div>
@@ -668,6 +616,53 @@ should print warnings about uneven field groups to STDOUT</p>
       <pre class="lines">
 
 
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
 325
 326
 327
@@ -681,59 +676,10 @@ should print warnings about uneven field groups to STDOUT</p>
 335
 336
 337
-338
-339
-340
-341
-342
-343
-344
-345
-346
-347
-348
-349
-350
-351
-352
-353
-354
-355
-356
-357
-358
-359
-360
-361
-362
-363
-364
-365
-366
-367
-368
-369
-370
-371
-372
-373
-374
-375
-376
-377
-378
-379
-380
-381
-382
-383
-384
-385
-386
-387</pre>
+338</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/collapse/fields_to_repeatable_field_group.rb', line 325</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/collapse/fields_to_repeatable_field_group.rb', line 278</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span>
   <span class='label'>sources:</span><span class='comma'>,</span>
@@ -790,10 +736,8 @@ should print warnings about uneven field groups to STDOUT</p>
   <span class='ivar'>@delim_only_cleaner</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Delete.html" title="Kiba::Extend::Transforms::Delete (module)">Delete</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Delete/DelimiterOnlyFieldValues.html" title="Kiba::Extend::Transforms::Delete::DelimiterOnlyFieldValues (class)">DelimiterOnlyFieldValues</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Delete/DelimiterOnlyFieldValues.html#initialize-instance_method" title="Kiba::Extend::Transforms::Delete::DelimiterOnlyFieldValues#initialize (method)">new</a></span></span><span class='lparen'>(</span>
     <span class='label'>fields:</span> <span class='id identifier rubyid_targets'>targets</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='comma'>,</span> <span class='label'>treat_as_null:</span> <span class='id identifier rubyid_null_placeholder'>null_placeholder</span>
   <span class='rparen'>)</span>
-  <span class='comment'># rubocop:todo Layout/LineLength
-</span>  <span class='ivar'>@empty_replacer</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Transforms.html" title="Kiba::Extend::Transforms (module)">Transforms</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Replace.html" title="Kiba::Extend::Transforms::Replace (module)">Replace</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Replace/EmptyFieldValues.html" title="Kiba::Extend::Transforms::Replace::EmptyFieldValues (class)">EmptyFieldValues</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Replace/EmptyFieldValues.html#initialize-instance_method" title="Kiba::Extend::Transforms::Replace::EmptyFieldValues#initialize (method)">new</a></span></span><span class='lparen'>(</span>
-    <span class='comment'># rubocop:enable Layout/LineLength
-</span>    <span class='label'>fields:</span> <span class='id identifier rubyid_targets'>targets</span><span class='comma'>,</span>
+  <span class='ivar'>@empty_replacer</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Replace.html" title="Kiba::Extend::Transforms::Replace (module)">Replace</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Replace/EmptyFieldValues.html" title="Kiba::Extend::Transforms::Replace::EmptyFieldValues (class)">EmptyFieldValues</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Replace/EmptyFieldValues.html#initialize-instance_method" title="Kiba::Extend::Transforms::Replace::EmptyFieldValues#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+    <span class='label'>fields:</span> <span class='id identifier rubyid_targets'>targets</span><span class='comma'>,</span>
     <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='comma'>,</span>
     <span class='label'>value:</span> <span class='id identifier rubyid_null_placeholder'>null_placeholder</span>
   <span class='rparen'>)</span>
@@ -849,23 +793,23 @@ should print warnings about uneven field groups to STDOUT</p>
       <pre class="lines">
 
 
-389
-390
-391
-392
-393
-394
-395
-396
-397
-398
-399
-400
-401
-402</pre>
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/collapse/fields_to_repeatable_field_group.rb', line 389</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/collapse/fields_to_repeatable_field_group.rb', line 340</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_srcemptyreplacers'>srcemptyreplacers</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_replacer'>replacer</span><span class='op'>|</span> <span class='id identifier rubyid_replacer'>replacer</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -891,7 +835,7 @@ should print warnings about uneven field groups to STDOUT</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Aug 28 21:54:20 2023 by
+  Generated on Fri Sep  1 02:53:06 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

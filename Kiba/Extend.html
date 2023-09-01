@@ -95,38 +95,23 @@
     <p>Handles:</p>
 
 <ul>
-<li>auto-loading of the code
-rubocop:todo Layout/LineLength</li>
-<li>extending <code>Kiba</code> with <code>Kiba::Extend::Jobs::JobSegmenter</code> so we can call <code>Kiba.job_segment</code>
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength</li>
+<li>auto-loading of the code</li>
+<li>extending <code>Kiba</code> with <code>Kiba::Extend::Jobs::JobSegmenter</code> so we can call <code>Kiba.job_segment</code></li>
 <li>defining config settings, all of which can be overridden by project applications using
-rubocop:enable Layout/LineLength
 <code>kiba-extend</code></li>
 </ul>
 
 <p>Also defines some CSV converters:</p>
 
-<p>rubocop:todo Layout/LineLength</p>
-
 <ul>
 <li><code>:stripextra</code> -- strips leading/trailing spaces, collapses multiple spaces, removes terminal commas,
-rubocop:enable Layout/LineLength
-strips again
-rubocop:todo Layout/LineLength</li>
-<li><code>:nulltonil</code> -- replaces any values that are a literal string NULL with a nil value
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength</li>
+strips again</li>
+<li><code>:nulltonil</code> -- replaces any values that are a literal string NULL with a nil value</li>
 <li><code>:stripplus</code> -- strips leading/trailing spaces, collapses multiple spaces, removes terminal commas,
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-strips again, removes &quot;NULL&quot; (i.e. literal string &quot;NULL&quot; becomes a <code>nilValue</code>
-rubocop:enable Layout/LineLength</li>
+strips again, removes &quot;NULL&quot; (i.e. literal string &quot;NULL&quot; becomes a <code>nilValue</code></li>
 </ul>
 
-<p>rubocop:todo Layout/LineLength
-Note that <code>:stripplus</code> combines the functionality of <code>:stripextra</code> and <code>:nulltonil</code>
-rubocop:enable Layout/LineLength</p>
+<p>Note that <code>:stripplus</code> combines the functionality of <code>:stripextra</code> and <code>:nulltonil</code></p>
 
 
   </div>
@@ -217,7 +202,7 @@ rubocop:enable Layout/LineLength</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength   entry hash creator as a Module](<a href="https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html#module-creator-example-since-2-7-2">https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html#module-creator-example-since-2-7-2</a>).</p>
+    <span class="summary_desc"><div class='inline'><p>The job definition module method expected to be present if you <a href="https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html#module-creator-example-since-2-7-2">define a registry entry hash creator as a Module</a>.</p>
 </div></span>
   
 </li>
@@ -263,7 +248,7 @@ rubocop:enable Layout/LineLength</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength Default destination class for jobs.</p>
+    <span class="summary_desc"><div class='inline'><p>Default destination class for jobs.</p>
 </div></span>
   
 </li>
@@ -309,7 +294,7 @@ rubocop:enable Layout/LineLength</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength.</p>
+    <span class="summary_desc"><div class='inline'><p>Whether to have computer audibly say something when job is complete.</p>
 </div></span>
   
 </li>
@@ -332,7 +317,9 @@ rubocop:enable Layout/LineLength</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength.</p>
+    <span class="summary_desc"><div class='inline'><ul>
+<li>:debug - tells you A LOT - helpful when developing pipelines and debugging - :normal - reports what is running, from where, and the results - :minimal - bare minimum.</li>
+</ul>
 </div></span>
   
 </li>
@@ -423,7 +410,7 @@ rubocop:enable Layout/LineLength</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength.</p>
+    <span class="summary_desc"><div class='inline'><p>Default string to be treated as though it were a null/empty value.</p>
 </div></span>
   
 </li>
@@ -446,7 +433,7 @@ rubocop:enable Layout/LineLength</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength  - :backup - Moves all existing files in specified directories to backup directory created in your <code>:datadir</code> rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength  - :nuke - Deletes all existing files in specified directories when a job is run.</p>
+    <span class="summary_desc"><div class='inline'><p>Controls what happens when pre-job task is run.</p>
 </div></span>
   
 </li>
@@ -469,7 +456,7 @@ rubocop:enable Layout/LineLength</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength   :backup`.</p>
+    <span class="summary_desc"><div class='inline'><p>Full path to directory to which files will be moved if <code>pre_job_task_action == :backup</code>.</p>
 </div></span>
   
 </li>
@@ -492,7 +479,7 @@ rubocop:enable Layout/LineLength</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength.</p>
+    <span class="summary_desc"><div class='inline'><p>Full paths to directories that will be affected by the specified pre-task action.</p>
 </div></span>
   
 </li>
@@ -538,7 +525,7 @@ rubocop:enable Layout/LineLength</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength rubocop:enable Layout/LineLength rubocop:todo Layout/LineLength   for backward compatibility, as existing projects may not have the required settings configured.</p>
+    <span class="summary_desc"><div class='inline'><p>Whether to use Kiba::Extend&#39;s pre-job task functionality.</p>
 </div></span>
   
 </li>
@@ -561,7 +548,7 @@ rubocop:enable Layout/LineLength</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength   <a href="https://dry-rb.org/gems/dry-container/main/">dry-container</a> for registering and resolving rubocop:enable Layout/LineLength   jobs.</p>
+    <span class="summary_desc"><div class='inline'><p>A customized <a href="https://dry-rb.org/gems/dry-container/main/">dry-container</a> for registering and resolving jobs.</p>
 </div></span>
   
 </li>
@@ -584,7 +571,7 @@ rubocop:enable Layout/LineLength</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength Used to join nested namespaces and registered keys in FileRegistry.</p>
+    <span class="summary_desc"><div class='inline'><p>Used to join nested namespaces and registered keys in FileRegistry.</p>
 </div></span>
   
 </li>
@@ -629,7 +616,7 @@ rubocop:enable Layout/LineLength</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength Default subgrouping delimiter for splitting/joining values in multi-valued fields rubocop:enable Layout/LineLength.</p>
+    <span class="summary_desc"><div class='inline'><p>Default subgrouping delimiter for splitting/joining values in multi-valued fields.</p>
 </div></span>
   
 </li>
@@ -652,7 +639,7 @@ rubocop:enable Layout/LineLength</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength Default source class for jobs.</p>
+    <span class="summary_desc"><div class='inline'><p>Default source class for jobs.</p>
 </div></span>
   
 </li>
@@ -675,7 +662,7 @@ rubocop:enable Layout/LineLength</p>
   
 
   
-    <span class="summary_desc"><div class='inline'><p>rubocop:todo Layout/LineLength Warns that nested job config settings will be deprecated and gives new setting to use rubocop:enable Layout/LineLength.</p>
+    <span class="summary_desc"><div class='inline'><p>Warns that nested job config settings will be deprecated and gives new setting to use.</p>
 </div></span>
   
 </li>
@@ -756,16 +743,14 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-92
-93
-94</pre>
+80
+81</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 92</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 80</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:csvopts</span><span class='comma'>,</span>
-<span class='comment'># rubocop:todo Layout/LineLength
-</span><span class='label'>default:</span> <span class='lbrace'>{</span><span class='label'>headers:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>header_converters:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>symbol</span><span class='words_sep'> </span><span class='tstring_content'>downcase</span><span class='tstring_end'>]</span></span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
+<span class='label'>default:</span> <span class='lbrace'>{</span><span class='label'>headers:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>header_converters:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>symbol</span><span class='words_sep'> </span><span class='tstring_content'>downcase</span><span class='tstring_end'>]</span></span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
   </tr>
 </table>
@@ -782,9 +767,8 @@ rubocop:enable Layout/LineLength</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-  entry hash creator as a Module](<a href="https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html#module-creator-example-since-2-7-2">https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html#module-creator-example-since-2-7-2</a>)</p>
+    <p>Returns the job definition module method expected to be present if you <a href="https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html#module-creator-example-since-2-7-2">define a registry
+entry hash creator as a Module</a>.</p>
 
 
   </div>
@@ -802,7 +786,8 @@ rubocop:enable Layout/LineLength
       
       
         &mdash;
-        <div class='inline'><p>the job definition module method expected to be present if you [define a registry</p>
+        <div class='inline'><p>the job definition module method expected to be present if you <a href="https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html#module-creator-example-since-2-7-2">define a registry
+entry hash creator as a Module</a></p>
 </div>
       
     </li>
@@ -815,10 +800,10 @@ rubocop:enable Layout/LineLength
       <pre class="lines">
 
 
-170</pre>
+140</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 170</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 140</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:default_job_method_name</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='symbol'>:job</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -867,10 +852,10 @@ rubocop:enable Layout/LineLength
       <pre class="lines">
 
 
-108</pre>
+94</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 108</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 94</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:delim</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -889,9 +874,7 @@ rubocop:enable Layout/LineLength
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-Default destination class for jobs. Must meet implementation criteria in <a href="https://github.com/thbar/kiba/wiki/Implementing-ETL-destinations">Kiba wiki</a>
-rubocop:enable Layout/LineLength</p>
+    <p>Default destination class for jobs. Must meet implementation criteria in <a href="https://github.com/thbar/kiba/wiki/Implementing-ETL-destinations">Kiba wiki</a></p>
 
 
   </div>
@@ -905,12 +888,12 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-150
-151
-152</pre>
+124
+125
+126</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 150</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 124</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:destination</span><span class='comma'>,</span> <span class='label'>constructor:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span>
   <span class='const'><span class='object_link'><a href="../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Extend/Destinations.html" title="Kiba::Extend::Destinations (module)">Destinations</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Extend/Destinations/CSV.html" title="Kiba::Extend::Destinations::CSV (class)">CSV</a></span></span>
@@ -962,10 +945,10 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-230</pre>
+178</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 230</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 178</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:job_show_me</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -984,8 +967,7 @@ rubocop:enable Layout/LineLength</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength</p>
+    <p>Returns whether to have computer audibly say something when job is complete.</p>
 
 
   </div>
@@ -1016,10 +998,10 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-235</pre>
+181</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 235</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 181</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:job_tell_me</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1038,14 +1020,8 @@ rubocop:enable Layout/LineLength</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength</p>
-
-<p>rubocop:todo Layout/LineLength</p>
-
-<ul>
-<li>:debug - tells you A LOT - helpful when developing pipelines and debugging
-rubocop:enable Layout/LineLength</li>
+    <ul>
+<li>:debug - tells you A LOT - helpful when developing pipelines and debugging</li>
 <li>:normal - reports what is running, from where, and the results</li>
 <li>:minimal - bare minimum</li>
 </ul>
@@ -1079,10 +1055,10 @@ rubocop:enable Layout/LineLength</li>
       <pre class="lines">
 
 
-246</pre>
+188</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 246</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 188</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:job_verbosity</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='symbol'>:normal</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1134,14 +1110,14 @@ internally by transforms and utils), and not specific to a project</p>
       <pre class="lines">
 
 
-59
-60
-61
-62
-63</pre>
+47
+48
+49
+50
+51</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 59</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 47</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:ke_dir</span><span class='comma'>,</span>
 <span class='label'>reader:</span> <span class='kw'>true</span><span class='comma'>,</span>
@@ -1195,12 +1171,12 @@ internally by transforms and utils), and not specific to a project</p>
       <pre class="lines">
 
 
-98
-99
-100</pre>
+84
+85
+86</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 98</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 84</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:lambdaopts</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='lbrace'>{</span><span class='label'>on_write:</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_r'>r</span><span class='rparen'>)</span> <span class='tlambeg'>{</span>
   <span class='id identifier rubyid_accumulator'>accumulator</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_r'>r</span>
@@ -1225,12 +1201,12 @@ internally by transforms and utils), and not specific to a project</p>
       <pre class="lines">
 
 
-65
-66
-67</pre>
+53
+54
+55</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 53</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_loader'>loader</span>
   <span class='ivar'>@loader</span> <span class='op'>||=</span> <span class='id identifier rubyid_setup_loader'>setup_loader</span>
@@ -1251,8 +1227,7 @@ internally by transforms and utils), and not specific to a project</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength</p>
+    <p>Returns default string to be treated as though it were a null/empty value.</p>
 
 
   </div>
@@ -1283,10 +1258,10 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-126</pre>
+108</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 126</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 108</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:nullvalue</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>%NULLVALUE%</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1305,15 +1280,12 @@ rubocop:enable Layout/LineLength</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength</p>
+    <p>Returns Controls what happens when pre-job task is run</p>
 
 <ul>
-<li>:backup - Moves all existing files in specified directories to backup directory created in your <code>:datadir</code>
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength</li>
+<li>:backup - Moves all existing files in specified directories to backup directory created in your <code>:datadir</code></li>
 <li>:nuke - Deletes all existing files in specified directories when a job is run. <strong>Make sure you only
-rubocop:enable Layout/LineLength
-specify directories that contain derived/generated files!</strong></li>
+specify directories that contain derived/generated files!</strong>.</li>
 </ul>
 
 
@@ -1333,6 +1305,12 @@ specify directories that contain derived/generated files!</strong></li>
       
         &mdash;
         <div class='inline'><p>Controls what happens when pre-job task is run</p>
+
+<ul>
+<li>:backup - Moves all existing files in specified directories to backup directory created in your <code>:datadir</code></li>
+<li>:nuke - Deletes all existing files in specified directories when a job is run. <strong>Make sure you only
+specify directories that contain derived/generated files!</strong></li>
+</ul>
 </div>
       
     </li>
@@ -1345,10 +1323,10 @@ specify directories that contain derived/generated files!</strong></li>
       <pre class="lines">
 
 
-210</pre>
+164</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 210</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 164</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:pre_job_task_action</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='symbol'>:backup</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1367,9 +1345,8 @@ specify directories that contain derived/generated files!</strong></li>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-  :backup`. The directory will be created if it does not exist.</p>
+    <p>Returns full path to directory to which files will be moved if <code>pre_job_task_action ==
+:backup</code>. The directory will be created if it does not exist.</p>
 
 
   </div>
@@ -1387,7 +1364,8 @@ rubocop:enable Layout/LineLength
       
       
         &mdash;
-        <div class='inline'><p>full path to directory to which files will be moved if `pre_job_task_action ==</p>
+        <div class='inline'><p>full path to directory to which files will be moved if <code>pre_job_task_action ==
+:backup</code>. The directory will be created if it does not exist.</p>
 </div>
       
     </li>
@@ -1400,10 +1378,10 @@ rubocop:enable Layout/LineLength
       <pre class="lines">
 
 
-194</pre>
+154</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 194</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 154</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:pre_job_task_backup_dir</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1422,8 +1400,7 @@ rubocop:enable Layout/LineLength
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength</p>
+    <p>Returns full paths to directories that will be affected by the specified pre-task action.</p>
 
 
   </div>
@@ -1454,10 +1431,10 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-199</pre>
+157</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 199</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 157</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:pre_job_task_directories</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1478,18 +1455,11 @@ rubocop:enable Layout/LineLength</p>
   <div class="discussion">
     <p>Controls whether pre-job task is run</p>
 
-<p>rubocop:todo Layout/LineLength</p>
-
 <ul>
 <li>:job - runs pre-job task specified above whenever you invoke <code>thor run:job ...</code>. All dependency jobs
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
 required for the invoked job will be run. This mode is recommended during development when you want
-rubocop:enable Layout/LineLength
-any change in the dependency chain to get picked up.
-rubocop:todo Layout/LineLength</li>
+any change in the dependency chain to get picked up.</li>
 <li>any other value - only regenerates missing dependency files. Useful when your data is really big
-rubocop:enable Layout/LineLength
 and/or your jobs are more stable</li>
 </ul>
 
@@ -1518,10 +1488,10 @@ and/or your jobs are more stable</li>
       <pre class="lines">
 
 
-227</pre>
+175</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 227</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 175</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:pre_job_task_mode</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='symbol'>:job</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1540,11 +1510,8 @@ and/or your jobs are more stable</li>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
-  for backward compatibility, as existing projects may not have the required settings configured.
-rubocop:enable Layout/LineLength</p>
+    <p>Returns whether to use Kiba::Extend&#39;s pre-job task functionality. The default is <code>false</code>
+for backward compatibility, as existing projects may not have the required settings configured.</p>
 
 
   </div>
@@ -1562,7 +1529,8 @@ rubocop:enable Layout/LineLength</p>
       
       
         &mdash;
-        <div class='inline'><p>whether to use Kiba::Extend&#39;s pre-job task functionality. The default is <code>false</code></p>
+        <div class='inline'><p>whether to use Kiba::Extend&#39;s pre-job task functionality. The default is <code>false</code>
+for backward compatibility, as existing projects may not have the required settings configured.</p>
 </div>
       
     </li>
@@ -1575,10 +1543,10 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-188</pre>
+150</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 188</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 150</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:pre_job_task_run</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1597,10 +1565,9 @@ rubocop:enable Layout/LineLength</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-  <a href="https://dry-rb.org/gems/dry-container/main/">dry-container</a> for registering and resolving
-rubocop:enable Layout/LineLength
-  jobs</p>
+    <p>Returns A customized
+<a href="https://dry-rb.org/gems/dry-container/main/">dry-container</a> for registering and resolving
+jobs.</p>
 
 
   </div>
@@ -1618,7 +1585,9 @@ rubocop:enable Layout/LineLength
       
       
         &mdash;
-        <div class='inline'><p>A customized</p>
+        <div class='inline'><p>A customized
+<a href="https://dry-rb.org/gems/dry-container/main/">dry-container</a> for registering and resolving
+jobs</p>
 </div>
       
     </li>
@@ -1631,12 +1600,12 @@ rubocop:enable Layout/LineLength
       <pre class="lines">
 
 
-162
-163
-164</pre>
+134
+135
+136</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 162</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 134</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:registry</span><span class='comma'>,</span>
 <span class='label'>constructor:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='const'><span class='object_link'><a href="../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Extend/Registry.html" title="Kiba::Extend::Registry (module)">Registry</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Extend/Registry/FileRegistry.html" title="Kiba::Extend::Registry::FileRegistry (class)">FileRegistry</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='rbrace'>}</span><span class='comma'>,</span>
@@ -1657,12 +1626,8 @@ rubocop:enable Layout/LineLength
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-Used to join nested namespaces and registered keys in FileRegistry. With namespace &#39;ns&#39; and registered
-rubocop:enable Layout/LineLength
-rubocop:todo Layout/LineLength
+    <p>Used to join nested namespaces and registered keys in FileRegistry. With namespace &#39;ns&#39; and registered
   key &#39;foo&#39;: &#39;ns__foo&#39;. With parent namespace &#39;ns&#39;, child namespace &#39;child&#39;, and registered key &#39;foo&#39;:
-rubocop:enable Layout/LineLength
   &#39;ns__child__foo&#39;</p>
 
 
@@ -1690,10 +1655,10 @@ rubocop:enable Layout/LineLength
       <pre class="lines">
 
 
-136</pre>
+114</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 136</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 114</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:registry_namespace_separator</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>__</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1716,12 +1681,12 @@ rubocop:enable Layout/LineLength
       <pre class="lines">
 
 
-87
-88
-89</pre>
+75
+76
+77</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 87</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 75</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_reload!'>reload!</span>
   <span class='ivar'>@loader</span><span class='period'>.</span><span class='id identifier rubyid_reload'>reload</span>
@@ -1742,9 +1707,7 @@ rubocop:enable Layout/LineLength
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-Default subgrouping delimiter for splitting/joining values in multi-valued fields
-rubocop:enable Layout/LineLength</p>
+    <p>Default subgrouping delimiter for splitting/joining values in multi-valued fields</p>
 
 <pre class="code ruby"><code class="ruby">orig = &#39;a^^y|b^^z&#39;
 delim_split = orig.split(delim)
@@ -1777,10 +1740,10 @@ sgdelim_split =&gt; [[&#39;a&#39;, &#39;y&#39;], [&#39;b&#39;, &#39;z&#39;]]
       <pre class="lines">
 
 
-121</pre>
+105</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 121</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 105</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:sgdelim</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>^^</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1799,9 +1762,7 @@ sgdelim_split =&gt; [[&#39;a&#39;, &#39;y&#39;], [&#39;b&#39;, &#39;z&#39;]]
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-Default source class for jobs. Must meet implementation criteria in <a href="https://github.com/thbar/kiba/wiki/Implementing-ETL-sources">Kiba wiki</a>
-rubocop:enable Layout/LineLength</p>
+    <p>Default source class for jobs. Must meet implementation criteria in <a href="https://github.com/thbar/kiba/wiki/Implementing-ETL-sources">Kiba wiki</a></p>
 
 
   </div>
@@ -1815,12 +1776,12 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-142
-143
-144</pre>
+118
+119
+120</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 142</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 118</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:source</span><span class='comma'>,</span> <span class='label'>constructor:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span>
   <span class='const'><span class='object_link'><a href="../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Extend/Sources.html" title="Kiba::Extend::Sources (module)">Sources</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Extend/Sources/CSV.html" title="Kiba::Extend::Sources::CSV (class)">CSV</a></span></span>
@@ -1841,9 +1802,7 @@ rubocop:enable Layout/LineLength</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>rubocop:todo Layout/LineLength
-Warns that nested job config settings will be deprecated and gives new setting to use
-rubocop:enable Layout/LineLength</p>
+    <p>Warns that nested job config settings will be deprecated and gives new setting to use</p>
 
 
   </div>
@@ -1872,24 +1831,20 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-254
-255
-256
-257
-258
-259
-260
-261</pre>
+194
+195
+196
+197
+198
+199</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 254</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 194</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_warn_unnested'>warn_unnested</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_rep_by'>rep_by</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>job_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-  <span class='comment'># rubocop:todo Layout/LineLength
-</span>  <span class='id identifier rubyid_msg'>msg</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Kiba::Extend.config.job.</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'> setting has been replaced by Kiba::Extend.config.</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_rep_by'>rep_by</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-  <span class='comment'># rubocop:enable Layout/LineLength
-</span>  <span class='id identifier rubyid_warn'>warn</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_warning_label'><span class='object_link'><a href="#warning_label-class_method" title="Kiba::Extend.warning_label (method)">warning_label</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_msg'>msg</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_msg'>msg</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Kiba::Extend.config.job.</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'> setting has been replaced by Kiba::Extend.config.</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_rep_by'>rep_by</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_warn'>warn</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_warning_label'><span class='object_link'><a href="#warning_label-class_method" title="Kiba::Extend.warning_label (method)">warning_label</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_msg'>msg</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='id identifier rubyid_value'>value</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -1939,10 +1894,10 @@ rubocop:enable Layout/LineLength</p>
       <pre class="lines">
 
 
-155</pre>
+129</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 155</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 129</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:warning_label</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>KIBA WARNING</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1955,7 +1910,7 @@ rubocop:enable Layout/LineLength</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Aug 28 21:54:15 2023 by
+  Generated on Fri Sep  1 02:53:01 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>
