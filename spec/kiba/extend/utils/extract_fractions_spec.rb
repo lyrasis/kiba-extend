@@ -89,9 +89,8 @@ RSpec.describe Kiba::Extend::Utils::ExtractFractions do
       let(:value) { "copy 1/0" }
       let(:result) { xform.call(value) }
       it "returns expected" do
-        # rubocop:todo Layout/LineLength
-        msg = "Kiba::Extend::Utils::ExtractFractions: Unconvertible fraction: 1/0"
-        # rubocop:enable Layout/LineLength
+        msg = "Kiba::Extend::Utils::ExtractFractions: "\
+          "Unconvertible fraction: 1/0"
         expect(xform).to receive(:warn).with(msg)
         expect(result).to eq([fraction({fraction: "1/0", position: 5..7})])
       end

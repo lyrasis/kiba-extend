@@ -85,12 +85,9 @@ RSpec.describe Kiba::Extend::Utils::FieldValueMatcher do
           {test: nil} => true,
           {test: ""} => true,
           {test: "UNMAPPED"} => false,
-          # rubocop:todo Layout/LineLength
-          {test: "%NULL%"} => true, # gets converted to empty value prior to matching
-          # rubocop:enable Layout/LineLength
-          # rubocop:todo Layout/LineLength
-          {test: " %NULL% "} => true # gets converted to empty value prior to matching
-          # rubocop:enable Layout/LineLength
+          # the next two get converted to empty values prior to matching
+          {test: "%NULL%"} => true,
+          {test: " %NULL% "} => true
         }
       end
 
@@ -99,9 +96,8 @@ RSpec.describe Kiba::Extend::Utils::FieldValueMatcher do
       end
     end
 
-    # rubocop:todo Layout/LineLength
-    context %(with field: :test, match: '^$', treat_as_null: '%NULL%', matchmode: :regexp) do
-      # rubocop:enable Layout/LineLength
+    context "with field: :test, "\
+      "match: '^$', treat_as_null: '%NULL%', matchmode: :regexp" do
       let(:params) do
         {field: :test, match: "^$", treat_as_null: "%NULL%", matchmode: :regexp}
       end
@@ -171,9 +167,8 @@ RSpec.describe Kiba::Extend::Utils::FieldValueMatcher do
       end
     end
 
-    # rubocop:todo Layout/LineLength
-    context %(when field: :test, match: match, delim: '|', multimode: :allstrict) do
-      # rubocop:enable Layout/LineLength
+    context "when field: :test, "\
+      "match: match, delim: '|', multimode: :allstrict" do
       let(:params) do
         {field: :test, match: "Foo", delim: "|", multimode: :allstrict}
       end
@@ -223,9 +218,8 @@ RSpec.describe Kiba::Extend::Utils::FieldValueMatcher do
       end
     end
 
-    # rubocop:todo Layout/LineLength
-    context %(when field: :test, match: '', delim: '|', treat_as_null: '%NULL%') do
-      # rubocop:enable Layout/LineLength
+    context "when field: :test, "\
+      "match: '', delim: '|', treat_as_null: '%NULL%'" do
       let(:params) do
         {field: :test, match: "", delim: "|", treat_as_null: "%NULL%"}
       end
@@ -246,9 +240,8 @@ RSpec.describe Kiba::Extend::Utils::FieldValueMatcher do
       end
     end
 
-    # rubocop:todo Layout/LineLength
-    context %(when field: :test, match: '', delim: '|', treat_as_null: '%NULL%', strip: false) do
-      # rubocop:enable Layout/LineLength
+    context "when field: :test, match: '', "\
+      "delim: '|', treat_as_null: '%NULL%', strip: false" do
       let(:params) do
         {field: :test, match: "", delim: "|", treat_as_null: "%NULL%",
          strip: false}
@@ -284,9 +277,8 @@ RSpec.describe Kiba::Extend::Utils::FieldValueMatcher do
       end
     end
 
-    # rubocop:todo Layout/LineLength
-    context %(with field: :test, match: '^fo+$', matchmode: :regex, delim: '|') do
-      # rubocop:enable Layout/LineLength
+    context "with field: :test, match: '^fo+$', "\
+      "matchmode: :regex, delim: '|'" do
       let(:params) do
         {field: :test, match: "^fo+$", matchmode: :regex, delim: "|"}
       end
@@ -304,9 +296,8 @@ RSpec.describe Kiba::Extend::Utils::FieldValueMatcher do
       end
     end
 
-    # rubocop:todo Layout/LineLength
-    context %(with field: :test, match: '^fo+$', matchmode: :regex, delim: '|', multimode: :all) do
-      # rubocop:enable Layout/LineLength
+    context "with field: :test, match: '^fo+$', matchmode: :regex, "\
+      "delim: '|', multimode: :all" do
       let(:params) do
         {field: :test, match: "^fo+$", matchmode: :regex, delim: "|",
          multimode: :all}
@@ -326,9 +317,8 @@ RSpec.describe Kiba::Extend::Utils::FieldValueMatcher do
       end
     end
 
-    # rubocop:todo Layout/LineLength
-    context %(with field: :test, match: '^fo+', matchmode: :regex, delim: '|', casesensitive: false) do
-      # rubocop:enable Layout/LineLength
+    context "with field: :test, match: '^fo+', matchmode: :regex, "\
+      "delim: '|', casesensitive: false" do
       let(:params) do
         {field: :test, match: "^fo+", matchmode: :regex, delim: "|",
          casesensitive: false}

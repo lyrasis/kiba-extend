@@ -21,9 +21,8 @@ RSpec.describe Kiba::Extend::Transforms::Append do
 
     let(:expected) { [{z: "zz", a: nil, b: nil, c: nil}] }
 
-    # rubocop:todo Layout/LineLength
-    it "adds non-existing fields, populating with nil, while leaving existing fields alone" do
-      # rubocop:enable Layout/LineLength
+    it "adds non-existing fields, populating with nil, "\
+      "while leaving existing fields alone" do
       expect(result).to eq(expected)
     end
   end
@@ -51,9 +50,8 @@ RSpec.describe Kiba::Extend::Transforms::Append do
       ]
     end
 
-    # rubocop:todo Layout/LineLength
-    it "prepends given value to existing field values, leaving blank values alone" do
-      # rubocop:enable Layout/LineLength
+    it "prepends given value to existing field values, "\
+      "leaving blank values alone" do
       expect(result).to eq(expected)
     end
   end
