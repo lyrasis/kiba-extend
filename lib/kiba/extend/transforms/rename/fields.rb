@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
+# rubocop:todo Layout/LineLength
+
 module Kiba
   module Extend
     module Transforms
       module Rename
-        # rubocop:todo Layout/LineLength
         # Renames multiple fields at once, given a fieldmap where key is `from` field and value is `to` field
-        # rubocop:enable Layout/LineLength
         #
         # # Examples
         #
@@ -32,9 +32,7 @@ module Kiba
         #
         # @since 2.8.0
         class Fields
-          # rubocop:todo Layout/LineLength
           # @param fieldmap [Hash(Symbol => Symbol)] Keys are the `from` fields; values are the `to` fields
-          # rubocop:enable Layout/LineLength
           def initialize(fieldmap:)
             @fieldmap = fieldmap
             @renamers = fieldmap.map do |from, to|
@@ -56,3 +54,4 @@ module Kiba
     end
   end
 end
+# rubocop:enable Layout/LineLength

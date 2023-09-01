@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:todo Layout/LineLength
+
 require "dry-container"
 
 require_relative "registered_source"
@@ -11,9 +13,7 @@ require_relative "registry_validator"
 module Kiba
   module Extend
     module Registry
-      # rubocop:todo Layout/LineLength
       # Transforms a file_registry hash into an object that can return source, lookup, or destination
-      # rubocop:enable Layout/LineLength
       #   config for that file, for passing to jobs
       #
       # An example of a file registry setup in a project can be found at:
@@ -39,9 +39,7 @@ module Kiba
           end
         end
 
-        # rubocop:todo Layout/LineLength
         # @param filekey [String, Symbol] file registry key for file to be used as destination
-        # rubocop:enable Layout/LineLength
         # @return [Kiba::Extend::Registry::RegisteredDestination]
         def as_destination(filekey)
           RegisteredDestination.new(key: filekey, data: lookup(filekey))
@@ -49,9 +47,7 @@ module Kiba
           raise KeyNotRegisteredError.new(err.key, :destination)
         end
 
-        # rubocop:todo Layout/LineLength
         # @param filekey [String, Symbol] file registry key for file to be used as a lookup source
-        # rubocop:enable Layout/LineLength
         # @return [Kiba::Extend::Registry::RegisteredLookup]
         def as_lookup(filekey)
           RegisteredLookup.new(key: filekey, data: lookup(filekey))
@@ -59,9 +55,7 @@ module Kiba
           raise KeyNotRegisteredError.new(err.key, :lookup)
         end
 
-        # rubocop:todo Layout/LineLength
         # @param filekey [String, Symbol] file registry key for file to be used as a source
-        # rubocop:enable Layout/LineLength
         # @return [Kiba::Extend::Registry::RegisteredSource]
         def as_source(filekey)
           RegisteredSource.new(key: filekey, data: lookup(filekey))
@@ -74,21 +68,15 @@ module Kiba
           @entries ||= populate_entries
         end
 
-        # rubocop:todo Layout/LineLength
         # Convenience method combining the steps of transforming initial registry entry hashes
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         #   into FileRegistryEntry objects, and then making the registry immutable for the
-        # rubocop:enable Layout/LineLength
         #   rest of the application's run. `:freeze` is from dry-container.
         def finalize
           transform
           freeze
         end
 
-        # rubocop:todo Layout/LineLength
         # Transforms registered file hashes into Kiba::Extend::Registry::FileRegistryEntry objects
-        # rubocop:enable Layout/LineLength
         def transform
           each { |key, val| decorate(key) { FileRegistryEntry.new(val) } }
           @entries = populate_entries
@@ -135,9 +123,7 @@ module Kiba
           end.map(&:path).uniq.each do |file|
             next if file.exist?
 
-            # rubocop:todo Layout/LineLength
             puts %(#{Kiba::Extend.warning_label}: Missing supplied file: #{file})
-            # rubocop:enable Layout/LineLength
           end
         end
 
@@ -148,3 +134,4 @@ module Kiba
     end
   end
 end
+# rubocop:enable Layout/LineLength

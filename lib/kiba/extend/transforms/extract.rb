@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:todo Layout/LineLength
+
 module Kiba
   module Extend
     module Transforms
@@ -10,20 +12,12 @@ module Kiba
 
         # Extracts the values of the given fields to a single `:value` column
         #
-        # rubocop:todo Layout/LineLength
         # Inserts a `:from_field` column recording original field name for the value
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         #   in each row. This can be turned off, resulting in a single-column result.
-        # rubocop:enable Layout/LineLength
         #
-        # rubocop:todo Layout/LineLength
         # Optionally, if given `:sep` value, splits multi-val fields to separate rows.
-        # rubocop:enable Layout/LineLength
         #
-        # rubocop:todo Layout/LineLength
         # @note This will collapse any source data to a one or two column result. It runs in-memory,
-        # rubocop:enable Layout/LineLength
         #   so for very large sources, it may take a long time or fail
         #
         # Input table:
@@ -58,9 +52,7 @@ module Kiba
         # Used in pipeline as:
         #
         # ```
-        # rubocop:todo Layout/LineLength
         # transform Extract::Fields, fields: %i[foo bar], source_field_track: false
-        # rubocop:enable Layout/LineLength
         # ```
         #
         # Results in:
@@ -111,3 +103,4 @@ module Kiba
     end
   end
 end
+# rubocop:enable Layout/LineLength

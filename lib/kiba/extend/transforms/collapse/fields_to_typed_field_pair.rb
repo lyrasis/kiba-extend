@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
+# rubocop:todo Layout/LineLength
+
 module Kiba
   module Extend
     module Transforms
       module Collapse
         # @since 2.9.0
         #
-        # rubocop:todo Layout/LineLength
         # Takes multiple fields like :workphone, :homephone, :mobilephone and produces two new fields like :phone and :phonetype where :phonetype depends on the original field taken from
-        # rubocop:enable Layout/LineLength
         #
         # # Examples
         #
@@ -38,24 +38,12 @@ module Kiba
         # Results in:
         #
         # ```
-        # rubocop:todo Layout/LineLength
         # | work | home     | mobile | other | phone           | phonetype | name |
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         # |------+----------+--------+-------|-----------------+-----------+------|
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         # | 123  | 456      | 789    | 897   | 456^123^789^897 | h^b^m^    | Sue  |
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         # |      | 987;555  |        | 253   | 987^555^253     | h^h^      | Bob  |
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         # | nil  |          |        | nil   | nil             | nil       | Mae  |
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         # | 654  | 321      | 257    |       | 321^654^257     | h^b^m     | Sid  |
-        # rubocop:enable Layout/LineLength
         # ```
         #
         # Used in pipeline as:
@@ -82,28 +70,14 @@ module Kiba
         # ## Notice
         #
         # * The number of values in `phone` and `phonetype` are kept even
-        # rubocop:todo Layout/LineLength
         # * The data in the target fields is in the order of the keys in the `sourcefieldmap`: home, work, mobile, other.
-        # rubocop:enable Layout/LineLength
         class FieldsToTypedFieldPair
-          # rubocop:todo Layout/LineLength
           # @param sourcefieldmap [Hash{Symbol => String}] Keys are the names of the source fields. Each key's value is the type that should be assigned in `typefield`
-          # rubocop:enable Layout/LineLength
-          # rubocop:todo Layout/LineLength
           # @param datafield [Symbol] Target field into which the original data value(s) from source fields will be mapped
-          # rubocop:enable Layout/LineLength
-          # rubocop:todo Layout/LineLength
           # @param typefield [Symbol] Target field into which the type values will be mapped
-          # rubocop:enable Layout/LineLength
-          # rubocop:todo Layout/LineLength
           # @param sourcesep [String] Delimiter used to split source data into multiple values
-          # rubocop:enable Layout/LineLength
-          # rubocop:todo Layout/LineLength
           # @param targetsep [String] Delimiter used to join multiple values in target fields
-          # rubocop:enable Layout/LineLength
-          # rubocop:todo Layout/LineLength
           # @param delete_sources [Boolean] Whether to delete source fields after mapping them to target fields
-          # rubocop:enable Layout/LineLength
           def initialize(sourcefieldmap:, datafield:, typefield:, targetsep:,
             sourcesep: nil, delete_sources: true)
             @map = sourcefieldmap
@@ -138,3 +112,4 @@ module Kiba
     end
   end
 end
+# rubocop:enable Layout/LineLength

@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
+# rubocop:todo Layout/LineLength
+
 module Kiba
   module Extend
     module Registry
-      # rubocop:todo Layout/LineLength
       # Bundles up the logic/options of different ways of validating and calling registry entry creators
-      # rubocop:enable Layout/LineLength
       class Creator
         attr_reader :mod, :meth, :args
 
@@ -67,9 +67,7 @@ module Kiba
 
           @args = spec[:args]
           callee = spec[:callee]
-          # rubocop:todo Layout/LineLength
           callee.is_a?(Method) ? setup_method_spec(callee) : setup_module_spec(callee)
-          # rubocop:enable Layout/LineLength
         end
 
         def setup_method_spec(using = spec)
@@ -79,9 +77,7 @@ module Kiba
 
         def setup_module_spec(using = spec)
           default_job_method = Kiba::Extend.default_job_method_name
-          # rubocop:todo Layout/LineLength
           raise JoblessModuleCreatorError.new(using) unless using.private_method_defined?(default_job_method)
-          # rubocop:enable Layout/LineLength
 
           @mod = using
           @meth = default_job_method
@@ -90,3 +86,4 @@ module Kiba
     end
   end
 end
+# rubocop:enable Layout/LineLength

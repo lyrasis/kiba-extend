@@ -1,22 +1,18 @@
 # frozen_string_literal: true
 
+# rubocop:todo Layout/LineLength
+
 module Kiba
   module Extend
     module Registry
-      # rubocop:todo Layout/LineLength
       # Abstract base class defining interface for destination files, lookup files, and source files
-      # rubocop:enable Layout/LineLength
       #   returned by {Kiba::Extend::FileRegistry}
       class RegisteredFile
         # Exception raised if no path is given in {FileRegistry} hash
         class NoFilePathError < StandardError
-          # rubocop:todo Layout/LineLength
           # @param filekey [Symbol] key for which a file path was not found in {Kiba::Extend::FileRegistry}
-          # rubocop:enable Layout/LineLength
           def initialize(filekey)
-            # rubocop:todo Layout/LineLength
             msg = "No file path for :#{filekey} is recorded in file registry hash"
-            # rubocop:enable Layout/LineLength
             super(msg)
           end
         end
@@ -28,9 +24,7 @@ module Kiba
           :desc
 
         # @param key [Symbol] the {Kiba::Extend::FileRegistry} lookup key
-        # rubocop:todo Layout/LineLength
         # @param data [Hash] the hash of data for the file from {Kiba::Extend::FileRegistry}
-        # rubocop:enable Layout/LineLength
         def initialize(key:, data:)
           raise FileNotRegisteredError, key unless data
           raise NoFilePathError, key if data.errors.keys.any?(:missing_path)
@@ -64,3 +58,4 @@ module Kiba
     end
   end
 end
+# rubocop:enable Layout/LineLength

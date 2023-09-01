@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
+# rubocop:todo Layout/LineLength
+
 module Kiba
   module Extend
     module Registry
-      # rubocop:todo Layout/LineLength
       # Utility class used by project applications to display information about a set of
-      # rubocop:enable Layout/LineLength
       #   registered files/jobs
       #
       # Puts to STDOUT
@@ -20,3 +20,4 @@ module Kiba
     end
   end
 end
+# rubocop:enable Layout/LineLength

@@ -1,16 +1,14 @@
 # frozen_string_literal: true
 
+# rubocop:todo Layout/LineLength
+
 module Kiba
   module Extend
     module Transforms
       module Replace
-        # rubocop:todo Layout/LineLength
         # Looks up value of `source` field in given `mapping` Hash. Replaces orignal value with the result.
-        # rubocop:enable Layout/LineLength
         #
-        # rubocop:todo Layout/LineLength
         # Optional: put result in new `target` field; look up multiple values from a multivalue source field,
-        # rubocop:enable Layout/LineLength
         #   provide a fallback value if source value is not found in mapping
         #
         # ## Examples
@@ -46,9 +44,7 @@ module Kiba
         # Using:
         #
         # ```
-        # rubocop:todo Layout/LineLength
         # transform Replace::FieldValueWithStaticMapping, source: :color, mapping: mapping
-        # rubocop:enable Layout/LineLength
         # ```
         #
         # Results in:
@@ -70,9 +66,7 @@ module Kiba
         # Using:
         #
         # ```
-        # rubocop:todo Layout/LineLength
         # transform Replace::FieldValueWithStaticMapping, source: :color, target: :fullcol, mapping: mapping
-        # rubocop:enable Layout/LineLength
         # ```
         #
         # Results in (showing first row only):
@@ -193,20 +187,14 @@ module Kiba
               MSG
             end
 
-            # rubocop:todo Layout/LineLength
             # Overridden to provide more informative/detailed ArgumentError messages for parameters that are
-            # rubocop:enable Layout/LineLength
             #   removed after not having been deprecated very long.
-            # rubocop:todo Layout/LineLength
             def new(source:, mapping:, target: nil, fallback_val: :orig, delete_source: true, delim: nil,
-              # rubocop:enable Layout/LineLength
               multival: nil, sep: nil)
               instance = allocate
               fail(ArgumentError, sep_msg) if sep
               fail(ArgumentError, multival_msg) if multival
-              # rubocop:todo Layout/LineLength
               instance.send(:initialize, source: source, target: target, mapping: mapping, fallback_val: fallback_val,
-                # rubocop:enable Layout/LineLength
                 delete_source: delete_source, delim: delim)
               instance
             end
@@ -219,24 +207,14 @@ module Kiba
             end
           end
 
-          # rubocop:todo Layout/LineLength
           # @param source [Symbol] the field containing the value to look up for mapping
-          # rubocop:enable Layout/LineLength
-          # rubocop:todo Layout/LineLength
           # @param target [nil, Symbol] optional new field in which to put the mapped/looked up result
-          # rubocop:enable Layout/LineLength
           # @param mapping [Hash] keys = source field values
-          # rubocop:todo Layout/LineLength
           # @param fallback_val [:orig, :nil, String] value to use if no match for source value is found
-          # rubocop:enable Layout/LineLength
           #   in mapping
-          # rubocop:todo Layout/LineLength
           # @param delete_source [Boolean] whether to remove source field after mapping. Has no effect if
-          # rubocop:enable Layout/LineLength
           #   a different target field is not given
-          # rubocop:todo Layout/LineLength
           # @param delim [nil, String] if a value is given, turns on "multival" mode, splitting the whole field
-          # rubocop:enable Layout/LineLength
           #   value on the string given (since 3.0.0)
           def initialize(source:, mapping:, target: nil, fallback_val: :orig,
             delete_source: true, delim: nil)
@@ -265,9 +243,7 @@ module Kiba
 
           private
 
-          # rubocop:todo Layout/LineLength
           attr_reader :source, :target, :mapping, :fallback, :del, :multival, :sep, :delim,
-            # rubocop:enable Layout/LineLength
             :fallback_val
 
           def get_fallback_val(source_val)
@@ -324,3 +300,4 @@ module Kiba
     end
   end
 end
+# rubocop:enable Layout/LineLength

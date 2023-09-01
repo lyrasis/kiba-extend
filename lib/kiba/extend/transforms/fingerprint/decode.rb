@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:todo Layout/LineLength
+
 require "base64"
 
 module Kiba
@@ -35,15 +37,9 @@ module Kiba
         # Results in:
         #
         # ```
-        # rubocop:todo Layout/LineLength
         # | a   | b   | c   | d    | e | fp                               | fp_b | fp_c | fp_d | fp_e |
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         # |-----+-----+-----+------+---+----------------------------------+------+------+------+------|
-        # rubocop:enable Layout/LineLength
-        # rubocop:todo Layout/LineLength
         # | ant | bee | nil | deer |   | YmVlOzs7bmlsOzs7ZGVlcjs7O2VtcHR5 | bee  | nil  | deer |      |
-        # rubocop:enable Layout/LineLength
         # ```
         #
         # Used in pipeline as:
@@ -152,3 +148,4 @@ module Kiba
     end
   end
 end
+# rubocop:enable Layout/LineLength

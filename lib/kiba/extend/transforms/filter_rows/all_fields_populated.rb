@@ -1,14 +1,14 @@
 # frozen_string_literal: true
 
+# rubocop:todo Layout/LineLength
+
 module Kiba
   module Extend
     module Transforms
       module FilterRows
         # @since 2.9.0
         #
-        # rubocop:todo Layout/LineLength
         # Keep or reject rows based on whether all of the given fields are populated. Blank strings and nils count as
-        # rubocop:enable Layout/LineLength
         #   not populated.
         #
         # ## Examples
@@ -26,9 +26,7 @@ module Kiba
         # Used in pipeline as:
         #
         # ```
-        # rubocop:todo Layout/LineLength
         # transform FilterRows::AllFieldsPopulated, action: :keep, fields: %i[a b]
-        # rubocop:enable Layout/LineLength
         # ```
         #
         # Resulting data:
@@ -53,9 +51,7 @@ module Kiba
         # Used in pipeline as:
         #
         # ```
-        # rubocop:todo Layout/LineLength
         # transform FilterRows::AllFieldsPopulated, action: :reject, fields: %i[a b]
-        # rubocop:enable Layout/LineLength
         # ```
         #
         # Resulting data:
@@ -105,3 +101,4 @@ module Kiba
     end
   end
 end
+# rubocop:enable Layout/LineLength

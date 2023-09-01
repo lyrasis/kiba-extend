@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# rubocop:todo Layout/LineLength
+
 module Kiba
   module Extend
     module Transforms
@@ -51,9 +53,7 @@ module Kiba
         #   # transform Cspace::AddressCountry,
         #   #   source: :country,
         #   #   keep_orig: false
-        # rubocop:todo Layout/LineLength
         #   xform = Cspace::AddressCountry.new(source: :country, keep_orig: false)
-        # rubocop:enable Layout/LineLength
         #   input = [
         #     {country: 'Viet Nam'},
         #     {country: 'Shangri-La'},
@@ -344,9 +344,7 @@ module Kiba
             "United Arab Emirates (the)" => "AE",
             "United Kingdom" => "GB",
             "United Kingdom (UK)" => "GB",
-            # rubocop:todo Layout/LineLength
             "United Kingdom of Great Britain and Northern Ireland (the)" => "GB",
-            # rubocop:enable Layout/LineLength
             "United States" => "US",
             "United States of America" => "US",
             "United States of America (the)" => "US",
@@ -454,3 +452,4 @@ module Kiba
     end
   end
 end
+# rubocop:enable Layout/LineLength
