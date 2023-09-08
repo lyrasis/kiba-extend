@@ -112,9 +112,11 @@ RSpec.describe Kiba::Extend::Transforms::Delete::EmptyFields do
       let(:transforms) do
         Kiba.job_segment do
           transform Delete::EmptyFields, usenull: true,
-            # rubocop:todo Layout/LineLength
-            consider_blank: {b: "false", c: "nope", e: "0#{Kiba::Extend.delim}false"}
-          # rubocop:enable Layout/LineLength
+            consider_blank: {
+              b: "false",
+              c: "nope",
+              e: "0#{Kiba::Extend.delim}false"
+            }
         end
       end
 
