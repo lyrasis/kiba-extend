@@ -380,7 +380,8 @@ module Kiba
             path: File.join(Kiba::Extend::Mixins::IterativeCleanup.datadir(mod),
               "working", "#{mod.cleanup_base_name}_base_job_cleaned.csv"),
             creator: {
-              callee: Kiba::Extend::Mixins::IterativeCleanup::BaseJobCleaned,
+              callee:
+              Kiba::Extend::Mixins::IterativeCleanup::Jobs::BaseJobCleaned,
               args: {mod: mod}
             },
             tags: mod.job_tags,
@@ -394,7 +395,7 @@ module Kiba
             path: File.join(Kiba::Extend::Mixins::IterativeCleanup.datadir(mod),
               "working", "#{mod.cleanup_base_name}_cleaned_uniq.csv"),
             creator: {
-              callee: Kiba::Extend::Mixins::IterativeCleanup::CleanedUniq,
+              callee: Kiba::Extend::Mixins::IterativeCleanup::Jobs::CleanedUniq,
               args: {mod: mod}
             },
             tags: mod.job_tags
@@ -407,7 +408,7 @@ module Kiba
             path: File.join(Kiba::Extend::Mixins::IterativeCleanup.datadir(mod),
               "to_client", "#{mod.cleanup_base_name}_worksheet.csv"),
             creator: {
-              callee: Kiba::Extend::Mixins::IterativeCleanup::Worksheet,
+              callee: Kiba::Extend::Mixins::IterativeCleanup::Jobs::Worksheet,
               args: {mod: mod}
             },
             tags: mod.job_tags,
@@ -421,7 +422,8 @@ module Kiba
             path: File.join(Kiba::Extend::Mixins::IterativeCleanup.datadir(mod),
               "working", "#{mod.cleanup_base_name}_returned_compiled.csv"),
             creator: {
-              callee: Kiba::Extend::Mixins::IterativeCleanup::ReturnedCompiled,
+              callee:
+              Kiba::Extend::Mixins::IterativeCleanup::Jobs::ReturnedCompiled,
               args: {mod: mod}
             },
             tags: mod.job_tags
@@ -434,7 +436,7 @@ module Kiba
             path: File.join(Kiba::Extend::Mixins::IterativeCleanup.datadir(mod),
               "working", "#{mod.cleanup_base_name}_corrections.csv"),
             creator: {
-              callee: Kiba::Extend::Mixins::IterativeCleanup::Corrections,
+              callee: Kiba::Extend::Mixins::IterativeCleanup::Jobs::Corrections,
               args: {mod: mod}
             },
             tags: mod.job_tags,
