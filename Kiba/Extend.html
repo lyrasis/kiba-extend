@@ -96,22 +96,33 @@
 
 <ul>
 <li>auto-loading of the code</li>
-<li>extending <code>Kiba</code> with <code>Kiba::Extend::Jobs::JobSegmenter</code> so we can call <code>Kiba.job_segment</code></li>
-<li>defining config settings, all of which can be overridden by project applications using
-<code>kiba-extend</code></li>
+<li>extending <code>Kiba</code> with <code>Kiba::Extend::Jobs::JobSegmenter</code> so we
+can call <code>Kiba.job_segment</code></li>
+<li>defining config settings, all of which can be overridden by
+project applications using <code>kiba-extend</code></li>
 </ul>
 
 <p>Also defines some CSV converters:</p>
 
 <ul>
-<li><code>:stripextra</code> -- strips leading/trailing spaces, collapses multiple spaces, removes terminal commas,
-strips again</li>
-<li><code>:nulltonil</code> -- replaces any values that are a literal string NULL with a nil value</li>
-<li><code>:stripplus</code> -- strips leading/trailing spaces, collapses multiple spaces, removes terminal commas,
-strips again, removes &quot;NULL&quot; (i.e. literal string &quot;NULL&quot; becomes a <code>nilValue</code></li>
+<li><code>:stripextra</code> -- strips leading/trailing spaces, collapses
+multiple spaces, removes terminal commas, strips again</li>
+<li><code>:nulltonil</code> -- replaces any values that are a literal string
+NULL with a nil value</li>
+<li><code>:stripplus</code> -- strips leading/trailing spaces, collapses
+multiple spaces, removes terminal commas, strips again, removes
+&quot;NULL&quot; (i.e. literal string &quot;NULL&quot; becomes a <code>nilValue</code></li>
 </ul>
 
-<p>Note that <code>:stripplus</code> combines the functionality of <code>:stripextra</code> and <code>:nulltonil</code></p>
+<p>Note that <code>:stripplus</code> combines the functionality of <code>:stripextra</code>
+   and <code>:nulltonil</code></p>
+
+<h2 id="about-pre-job-task-settings">About pre-job task settings</h2>
+
+<p>If configured properly, the pre-job task is run when a job is run
+  via Thor invocation. This includes <code>run:job</code>, <code>run:jobs</code>, and
+  <code>jobs:tagged -r tagvalue</code>. The task is run once when the Thor
+  task is invoked.</p>
 
 
   </div>
@@ -127,7 +138,7 @@ strips again, removes &quot;NULL&quot; (i.e. literal string &quot;NULL&quot; bec
     
   
     
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Extend/BooleanReturningLambdaError.html" title="Kiba::Extend::BooleanReturningLambdaError (class)">BooleanReturningLambdaError</a></span>, <span class='object_link'><a href="Extend/Error.html" title="Kiba::Extend::Error (class)">Error</a></span>, <span class='object_link'><a href="Extend/InvalidActionError.html" title="Kiba::Extend::InvalidActionError (class)">InvalidActionError</a></span>, <span class='object_link'><a href="Extend/PathRequiredError.html" title="Kiba::Extend::PathRequiredError (class)">PathRequiredError</a></span>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Extend/BooleanReturningLambdaError.html" title="Kiba::Extend::BooleanReturningLambdaError (class)">BooleanReturningLambdaError</a></span>, <span class='object_link'><a href="Extend/Error.html" title="Kiba::Extend::Error (class)">Error</a></span>, <span class='object_link'><a href="Extend/InvalidActionError.html" title="Kiba::Extend::InvalidActionError (class)">InvalidActionError</a></span>, <span class='object_link'><a href="Extend/IterativeCleanupSettingUndefinedError.html" title="Kiba::Extend::IterativeCleanupSettingUndefinedError (class)">IterativeCleanupSettingUndefinedError</a></span>, <span class='object_link'><a href="Extend/PathRequiredError.html" title="Kiba::Extend::PathRequiredError (class)">PathRequiredError</a></span>, <span class='object_link'><a href="Extend/ProjectSettingUndefinedError.html" title="Kiba::Extend::ProjectSettingUndefinedError (class)">ProjectSettingUndefinedError</a></span>
     
   
 </p>
@@ -161,6 +172,29 @@ strips again, removes &quot;NULL&quot; (i.e. literal string &quot;NULL&quot; bec
     </h2>
 
     <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#config_namespaces-class_method" title="config_namespaces (class method)">.<strong>config_namespaces</strong>  &#x21d2; Array&lt;Module&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Ruby modules that serve as namespaces under which config   modules for a project are nested.</p>
+</div></span>
+  
+</li>
+
       
         <li class="public ">
   <span class="summary_signature">
@@ -202,7 +236,7 @@ strips again, removes &quot;NULL&quot; (i.e. literal string &quot;NULL&quot; bec
   
 
   
-    <span class="summary_desc"><div class='inline'><p>The job definition module method expected to be present if you <a href="https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html#module-creator-example-since-2-7-2">define a registry entry hash creator as a Module</a>.</p>
+    <span class="summary_desc"><div class='inline'><p>The job definition module method expected to be present if you   <a href="https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html#module-creator-example-since-2-7-2">define a registry entry hash creator as a   Module</a>.</p>
 </div></span>
   
 </li>
@@ -234,7 +268,7 @@ strips again, removes &quot;NULL&quot; (i.e. literal string &quot;NULL&quot; bec
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#destination-class_method" title="destination (class method)">.<strong>destination</strong>  &#x21d2; Object </a>
+      <a href="#destination-class_method" title="destination (class method)">.<strong>destination</strong>  &#x21d2; Class </a>
     
 
     
@@ -317,9 +351,7 @@ strips again, removes &quot;NULL&quot; (i.e. literal string &quot;NULL&quot; bec
   
 
   
-    <span class="summary_desc"><div class='inline'><ul>
-<li>:debug - tells you A LOT - helpful when developing pipelines and debugging - :normal - reports what is running, from where, and the results - :minimal - bare minimum.</li>
-</ul>
+    <span class="summary_desc"><div class='inline'><p>How much output about jobs to output to STDOUT.</p>
 </div></span>
   
 </li>
@@ -456,7 +488,7 @@ strips again, removes &quot;NULL&quot; (i.e. literal string &quot;NULL&quot; bec
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Full path to directory to which files will be moved if <code>pre_job_task_action == :backup</code>.</p>
+    <span class="summary_desc"><div class='inline'><p>Full path to directory to which files will be moved if   <code>pre_job_task_action == :backup</code>.</p>
 </div></span>
   
 </li>
@@ -479,7 +511,7 @@ strips again, removes &quot;NULL&quot; (i.e. literal string &quot;NULL&quot; bec
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Full paths to directories that will be affected by the specified pre-task action.</p>
+    <span class="summary_desc"><div class='inline'><p>Full paths to directories that will be affected by the specified pre-task   action.</p>
 </div></span>
   
 </li>
@@ -534,6 +566,29 @@ strips again, removes &quot;NULL&quot; (i.e. literal string &quot;NULL&quot; bec
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#project_configs-class_method" title="project_configs (class method)">.<strong>project_configs</strong>  &#x21d2; Array&lt;Module&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>List of config modules in project namespaces set in <span class='object_link'><a href="#config_namespaces-class_method" title="Kiba::Extend.config_namespaces (method)">Extend.config_namespaces</a></span>   setting.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#registry-class_method" title="registry (class method)">.<strong>registry</strong>  &#x21d2; Kiba::Extend::Registry::FileRegistry </a>
     
 
@@ -548,7 +603,7 @@ strips again, removes &quot;NULL&quot; (i.e. literal string &quot;NULL&quot; bec
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A customized <a href="https://dry-rb.org/gems/dry-container/main/">dry-container</a> for registering and resolving jobs.</p>
+    <span class="summary_desc"><div class='inline'><p>A customized   <a href="https://dry-rb.org/gems/dry-container/main/">dry-container</a>   for registering and resolving jobs.</p>
 </div></span>
   
 </li>
@@ -571,7 +626,7 @@ strips again, removes &quot;NULL&quot; (i.e. literal string &quot;NULL&quot; bec
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Used to join nested namespaces and registered keys in FileRegistry.</p>
+    <span class="summary_desc"><div class='inline'><p>Used to join nested namespaces and registered keys in   FileRegistry.</p>
 </div></span>
   
 </li>
@@ -616,7 +671,7 @@ strips again, removes &quot;NULL&quot; (i.e. literal string &quot;NULL&quot; bec
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Default subgrouping delimiter for splitting/joining values in multi-valued fields.</p>
+    <span class="summary_desc"><div class='inline'><p>Default subgrouping delimiter for splitting/joining values in multi-valued   fields.</p>
 </div></span>
   
 </li>
@@ -625,7 +680,7 @@ strips again, removes &quot;NULL&quot; (i.e. literal string &quot;NULL&quot; bec
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#source-class_method" title="source (class method)">.<strong>source</strong>  &#x21d2; Object </a>
+      <a href="#source-class_method" title="source (class method)">.<strong>source</strong>  &#x21d2; Class </a>
     
 
     
@@ -662,7 +717,7 @@ strips again, removes &quot;NULL&quot; (i.e. literal string &quot;NULL&quot; bec
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Warns that nested job config settings will be deprecated and gives new setting to use.</p>
+    <span class="summary_desc"><div class='inline'><p>Warns that nested job config settings will be deprecated and gives new   setting to use.</p>
 </div></span>
   
 </li>
@@ -702,7 +757,66 @@ strips again, removes &quot;NULL&quot; (i.e. literal string &quot;NULL&quot; bec
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="csvopts-class_method">
+  <h3 class="signature first" id="config_namespaces-class_method">
+  
+    .<strong>config_namespaces</strong>  &#x21d2; <tt>Array&lt;Module&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>You must set this from
+an individual project if you wish to use the
+<span class='object_link'><a href="Extend/Mixins/IterativeCleanup.html" title="Kiba::Extend::Mixins::IterativeCleanup (module)">Kiba::Extend::Mixins::IterativeCleanup</a></span> mixin.</p>
+</div>
+  </div>
+
+<p>Ruby modules that serve as namespaces under which config
+  modules for a project are nested.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;Module&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+94</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 94</span>
+
+<span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:config_namespaces</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="csvopts-class_method">
   
     .<strong>csvopts</strong>  &#x21d2; <tt>Hash</tt> 
   
@@ -712,7 +826,7 @@ strips again, removes &quot;NULL&quot; (i.e. literal string &quot;NULL&quot; bec
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns default options used for CSV sources/destinations.</p>
+    <p>Default options used for CSV sources/destinations</p>
 
 
   </div>
@@ -729,10 +843,6 @@ strips again, removes &quot;NULL&quot; (i.e. literal string &quot;NULL&quot; bec
       
       
       
-        &mdash;
-        <div class='inline'><p>default options used for CSV sources/destinations</p>
-</div>
-      
     </li>
   
 </ul>
@@ -743,14 +853,16 @@ strips again, removes &quot;NULL&quot; (i.e. literal string &quot;NULL&quot; bec
       <pre class="lines">
 
 
-80
-81</pre>
+99
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 80</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 99</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:csvopts</span><span class='comma'>,</span>
-<span class='label'>default:</span> <span class='lbrace'>{</span><span class='label'>headers:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>header_converters:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>symbol</span><span class='words_sep'> </span><span class='tstring_content'>downcase</span><span class='tstring_end'>]</span></span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
+<span class='label'>default:</span> <span class='lbrace'>{</span><span class='label'>headers:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>header_converters:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>symbol</span><span class='words_sep'> </span><span class='tstring_content'>downcase</span><span class='tstring_end'>]</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+<span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
   </tr>
 </table>
@@ -767,8 +879,9 @@ strips again, removes &quot;NULL&quot; (i.e. literal string &quot;NULL&quot; bec
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns the job definition module method expected to be present if you <a href="https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html#module-creator-example-since-2-7-2">define a registry
-entry hash creator as a Module</a>.</p>
+    <p>The job definition module method expected to be present if you
+  <a href="https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html#module-creator-example-since-2-7-2">define a registry entry hash creator as a
+  Module</a></p>
 
 
   </div>
@@ -785,11 +898,6 @@ entry hash creator as a Module</a>.</p>
       
       
       
-        &mdash;
-        <div class='inline'><p>the job definition module method expected to be present if you <a href="https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html#module-creator-example-since-2-7-2">define a registry
-entry hash creator as a Module</a></p>
-</div>
-      
     </li>
   
 </ul>
@@ -800,10 +908,10 @@ entry hash creator as a Module</a></p>
       <pre class="lines">
 
 
-140</pre>
+180</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 140</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 180</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:default_job_method_name</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='symbol'>:job</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -852,10 +960,10 @@ entry hash creator as a Module</a></p>
       <pre class="lines">
 
 
-94</pre>
+115</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 94</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 115</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:delim</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -866,7 +974,7 @@ entry hash creator as a Module</a></p>
       <div class="method_details ">
   <h3 class="signature " id="destination-class_method">
   
-    .<strong>destination</strong>  &#x21d2; <tt>Object</tt> 
+    .<strong>destination</strong>  &#x21d2; <tt>Class</tt> 
   
 
   
@@ -874,13 +982,28 @@ entry hash creator as a Module</a></p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Default destination class for jobs. Must meet implementation criteria in <a href="https://github.com/thbar/kiba/wiki/Implementing-ETL-destinations">Kiba wiki</a></p>
+    <p>Default destination class for jobs. Must meet implementation
+criteria in <a href="https://github.com/thbar/kiba/wiki/Implementing-ETL-destinations">Kiba
+wiki</a></p>
 
 
   </div>
 </div>
 <div class="tags">
   
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Class</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -888,12 +1011,12 @@ entry hash creator as a Module</a></p>
       <pre class="lines">
 
 
-124
-125
-126</pre>
+157
+158
+159</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 124</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 157</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:destination</span><span class='comma'>,</span> <span class='label'>constructor:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span>
   <span class='const'><span class='object_link'><a href="../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Extend/Destinations.html" title="Kiba::Extend::Destinations (module)">Destinations</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Extend/Destinations/CSV.html" title="Kiba::Extend::Destinations::CSV (class)">CSV</a></span></span>
@@ -914,7 +1037,7 @@ entry hash creator as a Module</a></p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns whether to output results to STDOUT for debugging.</p>
+    <p>Whether to output results to STDOUT for debugging</p>
 
 
   </div>
@@ -931,10 +1054,6 @@ entry hash creator as a Module</a></p>
       
       
       
-        &mdash;
-        <div class='inline'><p>whether to output results to STDOUT for debugging</p>
-</div>
-      
     </li>
   
 </ul>
@@ -945,10 +1064,10 @@ entry hash creator as a Module</a></p>
       <pre class="lines">
 
 
-178</pre>
+229</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 178</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 229</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:job_show_me</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -967,7 +1086,7 @@ entry hash creator as a Module</a></p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns whether to have computer audibly say something when job is complete.</p>
+    <p>Whether to have computer audibly say something when job is complete</p>
 
 
   </div>
@@ -984,10 +1103,6 @@ entry hash creator as a Module</a></p>
       
       
       
-        &mdash;
-        <div class='inline'><p>whether to have computer audibly say something when job is complete</p>
-</div>
-      
     </li>
   
 </ul>
@@ -998,10 +1113,10 @@ entry hash creator as a Module</a></p>
       <pre class="lines">
 
 
-181</pre>
+234</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 181</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 234</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:job_tell_me</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1020,8 +1135,11 @@ entry hash creator as a Module</a></p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <ul>
-<li>:debug - tells you A LOT - helpful when developing pipelines and debugging</li>
+    <p>How much output about jobs to output to STDOUT</p>
+
+<ul>
+<li>:debug - tells you A LOT - helpful when developing pipelines and
+debugging</li>
 <li>:normal - reports what is running, from where, and the results</li>
 <li>:minimal - bare minimum</li>
 </ul>
@@ -1041,10 +1159,6 @@ entry hash creator as a Module</a></p>
       
       
       
-        &mdash;
-        <div class='inline'><p>how much output about jobs to output to STDOUT</p>
-</div>
-      
     </li>
   
 </ul>
@@ -1055,10 +1169,10 @@ entry hash creator as a Module</a></p>
       <pre class="lines">
 
 
-188</pre>
+244</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 188</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 244</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:job_verbosity</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='symbol'>:normal</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1110,14 +1224,14 @@ internally by transforms and utils), and not specific to a project</p>
       <pre class="lines">
 
 
-47
-48
-49
-50
-51</pre>
+56
+57
+58
+59
+60</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 47</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 56</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:ke_dir</span><span class='comma'>,</span>
 <span class='label'>reader:</span> <span class='kw'>true</span><span class='comma'>,</span>
@@ -1140,7 +1254,7 @@ internally by transforms and utils), and not specific to a project</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns default settings for Lambda destination.</p>
+    <p>Default settings for Lambda destination</p>
 
 
   </div>
@@ -1157,10 +1271,6 @@ internally by transforms and utils), and not specific to a project</p>
       
       
       
-        &mdash;
-        <div class='inline'><p>default settings for Lambda destination</p>
-</div>
-      
     </li>
   
 </ul>
@@ -1171,12 +1281,12 @@ internally by transforms and utils), and not specific to a project</p>
       <pre class="lines">
 
 
-84
-85
-86</pre>
+105
+106
+107</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 84</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 105</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:lambdaopts</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='lbrace'>{</span><span class='label'>on_write:</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_r'>r</span><span class='rparen'>)</span> <span class='tlambeg'>{</span>
   <span class='id identifier rubyid_accumulator'>accumulator</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_r'>r</span>
@@ -1201,12 +1311,12 @@ internally by transforms and utils), and not specific to a project</p>
       <pre class="lines">
 
 
-53
-54
-55</pre>
+62
+63
+64</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 62</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_loader'>loader</span>
   <span class='ivar'>@loader</span> <span class='op'>||=</span> <span class='id identifier rubyid_setup_loader'>setup_loader</span>
@@ -1227,7 +1337,7 @@ internally by transforms and utils), and not specific to a project</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns default string to be treated as though it were a null/empty value.</p>
+    <p>Default string to be treated as though it were a null/empty value.</p>
 
 
   </div>
@@ -1244,10 +1354,6 @@ internally by transforms and utils), and not specific to a project</p>
       
       
       
-        &mdash;
-        <div class='inline'><p>default string to be treated as though it were a null/empty value.</p>
-</div>
-      
     </li>
   
 </ul>
@@ -1258,10 +1364,10 @@ internally by transforms and utils), and not specific to a project</p>
       <pre class="lines">
 
 
-108</pre>
+133</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 108</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 133</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:nullvalue</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>%NULLVALUE%</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1280,12 +1386,14 @@ internally by transforms and utils), and not specific to a project</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns Controls what happens when pre-job task is run</p>
+    <p>Controls what happens when pre-job task is run</p>
 
 <ul>
-<li>:backup - Moves all existing files in specified directories to backup directory created in your <code>:datadir</code></li>
-<li>:nuke - Deletes all existing files in specified directories when a job is run. <strong>Make sure you only
-specify directories that contain derived/generated files!</strong>.</li>
+<li>:backup - Moves all existing files in specified directories to backup
+directory created in your <code>:datadir</code></li>
+<li>:nuke - Deletes all existing files in specified directories
+when a job is run. <strong>Make sure you only specify directories
+that contain derived/generated files!</strong></li>
 </ul>
 
 
@@ -1303,16 +1411,6 @@ specify directories that contain derived/generated files!</strong>.</li>
       
       
       
-        &mdash;
-        <div class='inline'><p>Controls what happens when pre-job task is run</p>
-
-<ul>
-<li>:backup - Moves all existing files in specified directories to backup directory created in your <code>:datadir</code></li>
-<li>:nuke - Deletes all existing files in specified directories when a job is run. <strong>Make sure you only
-specify directories that contain derived/generated files!</strong></li>
-</ul>
-</div>
-      
     </li>
   
 </ul>
@@ -1323,10 +1421,10 @@ specify directories that contain derived/generated files!</strong></li>
       <pre class="lines">
 
 
-164</pre>
+210</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 164</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 210</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:pre_job_task_action</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='symbol'>:backup</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1345,8 +1443,9 @@ specify directories that contain derived/generated files!</strong></li>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns full path to directory to which files will be moved if <code>pre_job_task_action ==
-:backup</code>. The directory will be created if it does not exist.</p>
+    <p>Full path to directory to which files will be moved if
+  <code>pre_job_task_action == :backup</code>. The directory will be
+  created if it does not exist.</p>
 
 
   </div>
@@ -1363,11 +1462,6 @@ specify directories that contain derived/generated files!</strong></li>
       
       
       
-        &mdash;
-        <div class='inline'><p>full path to directory to which files will be moved if <code>pre_job_task_action ==
-:backup</code>. The directory will be created if it does not exist.</p>
-</div>
-      
     </li>
   
 </ul>
@@ -1378,10 +1472,10 @@ specify directories that contain derived/generated files!</strong></li>
       <pre class="lines">
 
 
-154</pre>
+194</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 154</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 194</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:pre_job_task_backup_dir</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1400,7 +1494,8 @@ specify directories that contain derived/generated files!</strong></li>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns full paths to directories that will be affected by the specified pre-task action.</p>
+    <p>Full paths to directories that will be affected by the specified pre-task
+  action</p>
 
 
   </div>
@@ -1417,10 +1512,6 @@ specify directories that contain derived/generated files!</strong></li>
       
       
       
-        &mdash;
-        <div class='inline'><p>full paths to directories that will be affected by the specified pre-task action</p>
-</div>
-      
     </li>
   
 </ul>
@@ -1431,10 +1522,10 @@ specify directories that contain derived/generated files!</strong></li>
       <pre class="lines">
 
 
-157</pre>
+199</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 157</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 199</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:pre_job_task_directories</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1456,11 +1547,14 @@ specify directories that contain derived/generated files!</strong></li>
     <p>Controls whether pre-job task is run</p>
 
 <ul>
-<li>:job - runs pre-job task specified above whenever you invoke <code>thor run:job ...</code>. All dependency jobs
-required for the invoked job will be run. This mode is recommended during development when you want
-any change in the dependency chain to get picked up.</li>
-<li>any other value - only regenerates missing dependency files. Useful when your data is really big
-and/or your jobs are more stable</li>
+<li>:job - runs pre-job task specified above whenever you invoke
+<code>thor run:job ...</code>. All dependency jobs required for the
+invoked job will be run. This mode is recommended during
+development when you want any change in the dependency chain
+to get picked up.</li>
+<li>any other value - only regenerates missing dependency files.
+Useful when your data is really big and/or your jobs are more
+stable</li>
 </ul>
 
 
@@ -1488,10 +1582,10 @@ and/or your jobs are more stable</li>
       <pre class="lines">
 
 
-175</pre>
+224</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 175</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 224</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:pre_job_task_mode</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='symbol'>:job</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1510,8 +1604,9 @@ and/or your jobs are more stable</li>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns whether to use Kiba::Extend&#39;s pre-job task functionality. The default is <code>false</code>
-for backward compatibility, as existing projects may not have the required settings configured.</p>
+    <p>Whether to use Kiba::Extend&#39;s pre-job task functionality. The
+  default is <code>false</code> for backward compatibility, as existing
+  projects may not have the required settings configured.</p>
 
 
   </div>
@@ -1528,10 +1623,55 @@ for backward compatibility, as existing projects may not have the required setti
       
       
       
-        &mdash;
-        <div class='inline'><p>whether to use Kiba::Extend&#39;s pre-job task functionality. The default is <code>false</code>
-for backward compatibility, as existing projects may not have the required settings configured.</p>
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+187</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 187</span>
+
+<span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:pre_job_task_run</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
+    </td>
+  </tr>
+</table>
 </div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="project_configs-class_method">
+  
+    .<strong>project_configs</strong>  &#x21d2; <tt>Array&lt;Module&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>List of config modules in project namespaces set in <span class='object_link'><a href="#config_namespaces-class_method" title="Kiba::Extend.config_namespaces (method)">config_namespaces</a></span>
+  setting</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;Module&gt;</tt>)</span>
+      
+      
       
     </li>
   
@@ -1543,12 +1683,20 @@ for backward compatibility, as existing projects may not have the required setti
       <pre class="lines">
 
 
-150</pre>
+250
+251
+252
+253
+254</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 150</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 250</span>
 
-<span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:pre_job_task_run</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_project_configs'>project_configs</span>
+  <span class='id identifier rubyid_config_namespaces'>config_namespaces</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_ns'>ns</span><span class='op'>|</span> <span class='id identifier rubyid_get_config_mods'>get_config_mods</span><span class='lparen'>(</span><span class='id identifier rubyid_ns'>ns</span><span class='comma'>,</span> <span class='id identifier rubyid_ns'>ns</span><span class='period'>.</span><span class='id identifier rubyid_constants'>constants</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+    <span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
+    <span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_obj'>obj</span><span class='op'>|</span> <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Module</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:config</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -1565,9 +1713,9 @@ for backward compatibility, as existing projects may not have the required setti
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns A customized
-<a href="https://dry-rb.org/gems/dry-container/main/">dry-container</a> for registering and resolving
-jobs.</p>
+    <p>A customized
+  <a href="https://dry-rb.org/gems/dry-container/main/">dry-container</a>
+  for registering and resolving jobs</p>
 
 
   </div>
@@ -1584,12 +1732,6 @@ jobs.</p>
       
       
       
-        &mdash;
-        <div class='inline'><p>A customized
-<a href="https://dry-rb.org/gems/dry-container/main/">dry-container</a> for registering and resolving
-jobs</p>
-</div>
-      
     </li>
   
 </ul>
@@ -1600,12 +1742,12 @@ jobs</p>
       <pre class="lines">
 
 
-134
-135
-136</pre>
+171
+172
+173</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 134</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 171</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:registry</span><span class='comma'>,</span>
 <span class='label'>constructor:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='const'><span class='object_link'><a href="../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Extend/Registry.html" title="Kiba::Extend::Registry (module)">Registry</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Extend/Registry/FileRegistry.html" title="Kiba::Extend::Registry::FileRegistry (class)">FileRegistry</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='rbrace'>}</span><span class='comma'>,</span>
@@ -1626,9 +1768,10 @@ jobs</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Used to join nested namespaces and registered keys in FileRegistry. With namespace &#39;ns&#39; and registered
-  key &#39;foo&#39;: &#39;ns__foo&#39;. With parent namespace &#39;ns&#39;, child namespace &#39;child&#39;, and registered key &#39;foo&#39;:
-  &#39;ns__child__foo&#39;</p>
+    <p>Used to join nested namespaces and registered keys in
+  FileRegistry. With namespace &#39;ns&#39; and registered key &#39;foo&#39;:
+  &#39;ns__foo&#39;. With parent namespace &#39;ns&#39;, child namespace
+  &#39;child&#39;, and registered key &#39;foo&#39;: &#39;ns__child__foo&#39;</p>
 
 
   </div>
@@ -1655,10 +1798,10 @@ jobs</p>
       <pre class="lines">
 
 
-114</pre>
+141</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 114</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 141</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:registry_namespace_separator</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>__</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1681,12 +1824,12 @@ jobs</p>
       <pre class="lines">
 
 
-75
-76
-77</pre>
+84
+85
+86</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 75</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 84</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_reload!'>reload!</span>
   <span class='ivar'>@loader</span><span class='period'>.</span><span class='id identifier rubyid_reload'>reload</span>
@@ -1707,7 +1850,8 @@ jobs</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Default subgrouping delimiter for splitting/joining values in multi-valued fields</p>
+    <p>Default subgrouping delimiter for splitting/joining values in multi-valued
+  fields</p>
 
 <pre class="code ruby"><code class="ruby">orig = &#39;a^^y|b^^z&#39;
 delim_split = orig.split(delim)
@@ -1740,10 +1884,10 @@ sgdelim_split =&gt; [[&#39;a&#39;, &#39;y&#39;], [&#39;b&#39;, &#39;z&#39;]]
       <pre class="lines">
 
 
-105</pre>
+128</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 105</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 128</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:sgdelim</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>^^</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1754,7 +1898,7 @@ sgdelim_split =&gt; [[&#39;a&#39;, &#39;y&#39;], [&#39;b&#39;, &#39;z&#39;]]
       <div class="method_details ">
   <h3 class="signature " id="source-class_method">
   
-    .<strong>source</strong>  &#x21d2; <tt>Object</tt> 
+    .<strong>source</strong>  &#x21d2; <tt>Class</tt> 
   
 
   
@@ -1762,13 +1906,28 @@ sgdelim_split =&gt; [[&#39;a&#39;, &#39;y&#39;], [&#39;b&#39;, &#39;z&#39;]]
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Default source class for jobs. Must meet implementation criteria in <a href="https://github.com/thbar/kiba/wiki/Implementing-ETL-sources">Kiba wiki</a></p>
+    <p>Default source class for jobs. Must meet implementation criteria
+in <a href="https://github.com/thbar/kiba/wiki/Implementing-ETL-sources">Kiba
+wiki</a></p>
 
 
   </div>
 </div>
 <div class="tags">
   
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Class</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -1776,12 +1935,12 @@ sgdelim_split =&gt; [[&#39;a&#39;, &#39;y&#39;], [&#39;b&#39;, &#39;z&#39;]]
       <pre class="lines">
 
 
-118
-119
-120</pre>
+148
+149
+150</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 118</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 148</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:source</span><span class='comma'>,</span> <span class='label'>constructor:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span>
   <span class='const'><span class='object_link'><a href="../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Extend/Sources.html" title="Kiba::Extend::Sources (module)">Sources</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Extend/Sources/CSV.html" title="Kiba::Extend::Sources::CSV (class)">CSV</a></span></span>
@@ -1802,7 +1961,8 @@ sgdelim_split =&gt; [[&#39;a&#39;, &#39;y&#39;], [&#39;b&#39;, &#39;z&#39;]]
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Warns that nested job config settings will be deprecated and gives new setting to use</p>
+    <p>Warns that nested job config settings will be deprecated and gives new
+  setting to use</p>
 
 
   </div>
@@ -1831,19 +1991,21 @@ sgdelim_split =&gt; [[&#39;a&#39;, &#39;y&#39;], [&#39;b&#39;, &#39;z&#39;]]
       <pre class="lines">
 
 
-194
-195
-196
-197
-198
-199</pre>
+269
+270
+271
+272
+273
+274
+275</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 194</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 269</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_warn_unnested'>warn_unnested</span><span class='lparen'>(</span><span class='id identifier rubyid_name'>name</span><span class='comma'>,</span> <span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_rep_by'>rep_by</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>job_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-  <span class='id identifier rubyid_msg'>msg</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Kiba::Extend.config.job.</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'> setting has been replaced by Kiba::Extend.config.</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_rep_by'>rep_by</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_msg'>msg</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Kiba::Extend.config.job.</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'> setting has been replaced by </span><span class='tstring_end'>&quot;</span></span>\
+    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Kiba::Extend.config.</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_rep_by'>rep_by</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='id identifier rubyid_warn'>warn</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_warning_label'><span class='object_link'><a href="#warning_label-class_method" title="Kiba::Extend.warning_label (method)">warning_label</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_msg'>msg</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='id identifier rubyid_value'>value</span>
 <span class='kw'>end</span></pre>
@@ -1863,7 +2025,7 @@ sgdelim_split =&gt; [[&#39;a&#39;, &#39;y&#39;], [&#39;b&#39;, &#39;z&#39;]]
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns prefix for warnings from the ETL.</p>
+    <p>Prefix for warnings from the ETL</p>
 
 
   </div>
@@ -1880,10 +2042,6 @@ sgdelim_split =&gt; [[&#39;a&#39;, &#39;y&#39;], [&#39;b&#39;, &#39;z&#39;]]
       
       
       
-        &mdash;
-        <div class='inline'><p>prefix for warnings from the ETL</p>
-</div>
-      
     </li>
   
 </ul>
@@ -1894,10 +2052,10 @@ sgdelim_split =&gt; [[&#39;a&#39;, &#39;y&#39;], [&#39;b&#39;, &#39;z&#39;]]
       <pre class="lines">
 
 
-129</pre>
+164</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 129</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 164</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:warning_label</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>KIBA WARNING</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1910,7 +2068,7 @@ sgdelim_split =&gt; [[&#39;a&#39;, &#39;y&#39;], [&#39;b&#39;, &#39;z&#39;]]
 </div>
 
       <div id="footer">
-  Generated on Fri Sep  8 18:15:36 2023 by
+  Generated on Mon Sep 11 15:32:03 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>
