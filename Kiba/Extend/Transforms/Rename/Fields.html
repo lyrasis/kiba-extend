@@ -101,32 +101,47 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Renames multiple fields at once, given a fieldmap where key is <code>from</code> field and value is <code>to</code> field</p>
+    <p>Renames multiple fields at once, given a fieldmap where key is <code>from</code> field
+  and value is <code>to</code> field</p>
 
-<h1 id="examples">Examples</h1>
-
-<p>Input rows:</p>
-
-<pre class="code ruby"><code class="ruby">{name: &#39;Weddy&#39;, sex: &#39;m&#39;},
-{name: &#39;Kernel&#39;, sex: &#39;f&#39;}
-</code></pre>
-
-<p>Used in pipeline as:</p>
-
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Rename.html" title="Kiba::Extend::Transforms::Rename (module)">Rename</a></span></span><span class='op'>::</span><span class='const'>Fields</span><span class='comma'>,</span> <span class='label'>fieldmap:</span> <span class='lbrace'>{</span><span class='label'>name:</span> <span class='symbol'>:appellation</span><span class='comma'>,</span> <span class='label'>sex:</span> <span class='symbol'>:gender</span><span class='rbrace'>}</span>
-</code></pre>
-
-<p>Results in:</p>
-
-<pre class="code ruby"><code class="ruby">{appellation: &#39;Weddy&#39;, gender: &#39;m&#39;},
-{appellation: &#39;Kernel&#39;, gender: &#39;f&#39;}
-</code></pre>
+<p>This transform works by creating a <span class='object_link'><a href="Field.html" title="Kiba::Extend::Transforms::Rename::Field (class)">Field</a></span> transform for each
+  key/value pair specified in <code>fieldmap</code>, so see <span class='object_link'><a href="Field.html" title="Kiba::Extend::Transforms::Rename::Field (class)">Field</a></span> for
+  examples demonstrating edge case behavior.</p>
 
 
   </div>
 </div>
 <div class="tags">
   
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code><span class='comment'># Used in pipeline as:
+</span><span class='comment'># transform Rename::Fields, fieldmap: {
+</span><span class='comment'>#   name: :appellation,
+</span><span class='comment'>#   sex: :gender,
+</span><span class='comment'>#   color: :color
+</span><span class='comment'># }
+</span><span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Rename.html" title="Kiba::Extend::Transforms::Rename (module)">Rename</a></span></span><span class='op'>::</span><span class='const'>Fields</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Rename::Fields#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fieldmap:</span> <span class='lbrace'>{</span>
+  <span class='label'>name:</span> <span class='symbol'>:appellation</span><span class='comma'>,</span>
+  <span class='label'>sex:</span> <span class='symbol'>:gender</span><span class='comma'>,</span>
+  <span class='label'>color:</span> <span class='symbol'>:color</span>
+<span class='rbrace'>}</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Weddy</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>sex:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>m</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pearl gray, greater, pied</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Kernel</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>sex:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>f</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>buff dundotte</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>StreamingRunner</span><span class='period'>.</span><span class='id identifier rubyid_transform_stream'>transform_stream</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='id identifier rubyid_xform'>xform</span><span class='rparen'>)</span>
+  <span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_row'>row</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>appellation:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Weddy</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>gender:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>m</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>pearl gray, greater, pied</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>appellation:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Kernel</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>gender:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>f</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>buff dundotte</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
+  </div>
+
 <p class="tag_title">Since:</p>
 <ul class="since">
   
@@ -241,7 +256,8 @@
       
       
         &mdash;
-        <div class='inline'><p>Keys are the <code>from</code> fields; values are the <code>to</code> fields</p>
+        <div class='inline'><p>Keys are the <code>from</code> fields;
+values are the <code>to</code> fields</p>
 </div>
       
     </li>
@@ -270,15 +286,15 @@
       <pre class="lines">
 
 
-36
-37
-38
 39
 40
-41</pre>
+41
+42
+43
+44</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/rename/fields.rb', line 36</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/rename/fields.rb', line 39</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fieldmap:</span><span class='rparen'>)</span>
   <span class='ivar'>@fieldmap</span> <span class='op'>=</span> <span class='id identifier rubyid_fieldmap'>fieldmap</span>
@@ -352,13 +368,13 @@
       <pre class="lines">
 
 
-44
-45
-46
-47</pre>
+47
+48
+49
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/rename/fields.rb', line 44</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/rename/fields.rb', line 47</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_renamers'>renamers</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_renamer'>renamer</span><span class='op'>|</span> <span class='id identifier rubyid_renamer'>renamer</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -374,7 +390,7 @@
 </div>
 
       <div id="footer">
-  Generated on Mon Sep 11 16:38:34 2023 by
+  Generated on Mon Sep 11 16:41:00 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>
