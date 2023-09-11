@@ -4,31 +4,31 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
-  Module: Kiba::Extend::Mixins::IterativeCleanup::BaseJobCleaned
+  Module: Kiba::Extend::Mixins::IterativeCleanup::Jobs::BaseJobCleaned
   
     &mdash; Kiba-Extend Documentation
   
 </title>
 
-  <link rel="stylesheet" href="../../../../css/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../css/style.css" type="text/css" />
 
-  <link rel="stylesheet" href="../../../../css/common.css" type="text/css" />
+  <link rel="stylesheet" href="../../../../../css/common.css" type="text/css" />
 
 <script type="text/javascript">
-  pathId = "Kiba::Extend::Mixins::IterativeCleanup::BaseJobCleaned";
-  relpath = '../../../../';
+  pathId = "Kiba::Extend::Mixins::IterativeCleanup::Jobs::BaseJobCleaned";
+  relpath = '../../../../../';
 </script>
 
 
-  <script type="text/javascript" charset="utf-8" src="../../../../js/jquery.js"></script>
+  <script type="text/javascript" charset="utf-8" src="../../../../../js/jquery.js"></script>
 
-  <script type="text/javascript" charset="utf-8" src="../../../../js/app.js"></script>
+  <script type="text/javascript" charset="utf-8" src="../../../../../js/app.js"></script>
 
 
   </head>
   <body>
     <div class="nav_wrap">
-      <iframe id="nav" src="../../../../class_list.html?1"></iframe>
+      <iframe id="nav" src="../../../../../class_list.html?1"></iframe>
       <div id="resizer"></div>
     </div>
 
@@ -36,8 +36,8 @@
       <div id="header">
         <div id="menu">
   
-    <a href="../../../../_index.html">Index (B)</a> &raquo;
-    <span class='title'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../Mixins.html" title="Kiba::Extend::Mixins (module)">Mixins</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../IterativeCleanup.html" title="Kiba::Extend::Mixins::IterativeCleanup (module)">IterativeCleanup</a></span></span>
+    <a href="../../../../../_index.html">Index (B)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../../Mixins.html" title="Kiba::Extend::Mixins (module)">Mixins</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../IterativeCleanup.html" title="Kiba::Extend::Mixins::IterativeCleanup (module)">IterativeCleanup</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Jobs.html" title="Kiba::Extend::Mixins::IterativeCleanup::Jobs (module)">Jobs</a></span></span>
      &raquo; 
     <span class="title">BaseJobCleaned</span>
   
@@ -46,7 +46,7 @@
         <div id="search">
   
     <a class="full_list_link" id="class_list_link"
-        href="../../../../class_list.html">
+        href="../../../../../class_list.html">
 
         <svg width="24" height="24">
           <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
@@ -59,7 +59,7 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><h1>Module: Kiba::Extend::Mixins::IterativeCleanup::BaseJobCleaned
+      <div id="content"><h1>Module: Kiba::Extend::Mixins::IterativeCleanup::Jobs::BaseJobCleaned
   
   
   
@@ -78,7 +78,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/kiba/extend/mixins/iterative_cleanup/base_job_cleaned.rb</dd>
+    <dd>lib/kiba/extend/mixins/iterative_cleanup/jobs/base_job_cleaned.rb</dd>
   </dl>
   
 </div>
@@ -258,19 +258,19 @@
       <pre class="lines">
 
 
-21
 22
 23
 24
-25</pre>
+25
+26</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup/base_job_cleaned.rb', line 21</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup/jobs/base_job_cleaned.rb', line 22</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_lookups'>get_lookups</span><span class='lparen'>(</span><span class='id identifier rubyid_mod'>mod</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_base'>base</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_base'>base</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_corrections_job_key'>corrections_job_key</span> <span class='kw'>if</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_cleanup_done?'>cleanup_done?</span>
-  <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_job'>job</span><span class='op'>|</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Job.html" title="Kiba::Extend::Job (module)">Job</a></span></span><span class='period'>.</span><span class='id identifier rubyid_output?'><span class='object_link'><a href="../../Job.html#output%3F-class_method" title="Kiba::Extend::Job.output? (method)">output?</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_job'>job</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+  <span class='id identifier rubyid_base'>base</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_job'>job</span><span class='op'>|</span> <span class='const'><span class='object_link'><a href="../../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Job.html" title="Kiba::Extend::Job (module)">Job</a></span></span><span class='period'>.</span><span class='id identifier rubyid_output?'><span class='object_link'><a href="../../../Job.html#output%3F-class_method" title="Kiba::Extend::Job.output? (method)">output?</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_job'>job</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -316,7 +316,6 @@
       <pre class="lines">
 
 
-27
 28
 29
 30
@@ -326,10 +325,11 @@
 34
 35
 36
-37</pre>
+37
+38</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup/base_job_cleaned.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup/jobs/base_job_cleaned.rb', line 28</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_xforms'>get_xforms</span><span class='lparen'>(</span><span class='id identifier rubyid_mod'>mod</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_base'>base</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -386,7 +386,6 @@
       <pre class="lines">
 
 
-10
 11
 12
 13
@@ -395,13 +394,14 @@
 16
 17
 18
-19</pre>
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup/base_job_cleaned.rb', line 10</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup/jobs/base_job_cleaned.rb', line 11</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_job'>job</span><span class='lparen'>(</span><span class='label'>mod:</span><span class='rparen'>)</span>
-  <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Jobs.html" title="Kiba::Extend::Jobs (module)">Jobs</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Jobs/Job.html" title="Kiba::Extend::Jobs::Job (class)">Job</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../Jobs/BaseJob.html#initialize-instance_method" title="Kiba::Extend::Jobs::BaseJob#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+  <span class='const'><span class='object_link'><a href="../../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Jobs.html" title="Kiba::Extend::Jobs (module)">Jobs</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Jobs/Job.html" title="Kiba::Extend::Jobs::Job (class)">Job</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../../Jobs/BaseJob.html#initialize-instance_method" title="Kiba::Extend::Jobs::BaseJob#initialize (method)">new</a></span></span><span class='lparen'>(</span>
     <span class='label'>files:</span> <span class='lbrace'>{</span>
       <span class='label'>source:</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_base_job'>base_job</span><span class='comma'>,</span>
       <span class='label'>destination:</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_base_job_cleaned_job_key'>base_job_cleaned_job_key</span><span class='comma'>,</span>
@@ -454,7 +454,6 @@
       <pre class="lines">
 
 
-39
 40
 41
 42
@@ -480,15 +479,16 @@
 62
 63
 64
-65</pre>
+65
+66</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup/base_job_cleaned.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup/jobs/base_job_cleaned.rb', line 40</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_xforms'>xforms</span><span class='lparen'>(</span><span class='id identifier rubyid_mod'>mod</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_bind'>bind</span> <span class='op'>=</span> <span class='id identifier rubyid_binding'>binding</span>
 
-  <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='period'>.</span><span class='id identifier rubyid_job_segment'><span class='object_link'><a href="../../Jobs/JobSegmenter.html#job_segment-instance_method" title="Kiba::Extend::Jobs::JobSegmenter#job_segment (method)">job_segment</a></span></span> <span class='kw'>do</span>
+  <span class='const'><span class='object_link'><a href="../../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='period'>.</span><span class='id identifier rubyid_job_segment'><span class='object_link'><a href="../../../Jobs/JobSegmenter.html#job_segment-instance_method" title="Kiba::Extend::Jobs::JobSegmenter#job_segment (method)">job_segment</a></span></span> <span class='kw'>do</span>
     <span class='id identifier rubyid_job'>job</span> <span class='op'>=</span> <span class='id identifier rubyid_bind'>bind</span><span class='period'>.</span><span class='id identifier rubyid_receiver'>receiver</span>
     <span class='id identifier rubyid_lookups'>lookups</span> <span class='op'>=</span> <span class='id identifier rubyid_job'>job</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:get_lookups</span><span class='comma'>,</span> <span class='id identifier rubyid_mod'>mod</span><span class='rparen'>)</span>
 
@@ -522,7 +522,7 @@
 </div>
 
       <div id="footer">
-  Generated on Mon Sep 11 18:40:21 2023 by
+  Generated on Mon Sep 11 19:22:34 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>
