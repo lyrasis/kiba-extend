@@ -110,302 +110,308 @@
 #   defined in {Kiba::Tms::Jobs::IterativeCleanup}. See that module's
 #   documentation for how to set up custom pre/post transforms to customize
 #   specific cleanup routines.
-module Kiba::Extend::Mixins::IterativeCleanup
-  def self.extended(mod)
-    check_required_settings(mod)
-    define_provided_worksheets_setting(mod)
-    define_returned_files_setting(mod)
-  end
+module Kiba
+  module Extend
+    module Mixins
+      module IterativeCleanup
+        def self.extended(mod)
+          check_required_settings(mod)
+          define_provided_worksheets_setting(mod)
+          define_returned_files_setting(mod)
+        end
 
-  # OVERRIDEABLE PUBLIC METHODS
+        # OVERRIDEABLE PUBLIC METHODS
 
-  # Used as the namespace for auto-generated registry entries and the
-  #   base for output file names. By default, this will be the name of
-  #   the extending module, converted to snake case.
-  #
-  # @return [String]
-  def cleanup_base_name
-    name.split("::")[-1]
-      .gsub(/([A-Z])/, '_\1')
-      .delete_prefix("_")
-      .downcase
-  end
+        # Used as the namespace for auto-generated registry entries and the
+        #   base for output file names. By default, this will be the name of
+        #   the extending module, converted to snake case.
+        #
+        # @return [String]
+        def cleanup_base_name
+          name.split("::")[-1]
+            .gsub(/([A-Z])/, '_\1')
+            .delete_prefix("_")
+            .downcase
+        end
 
-  # Delimiting string used to join collated-on-deduplicated values. Should be
-  #   distinct from normal application delimiters since the field values being
-  #   joined/split may contain the normal application delimiters.
-  # @note Optional: override in extending module after extending
-  #
-  # @return ["////"]
-  def collation_delim
-    "////"
-  end
+        # Delimiting string used to join collated-on-deduplicated values. Should be
+        #   distinct from normal application delimiters since the field values being
+        #   joined/split may contain the normal application delimiters.
+        # @note Optional: override in extending module after extending
+        #
+        # @return ["////"]
+        def collation_delim
+          "////"
+        end
 
-  # Field in base job that combines/identifies the original field
-  #   values entering the cleanup process. This field is used as a
-  #   matchpoint for merging cleaned up data back into the migration,
-  #   and identifying whether a given value in subsequent worksheet
-  #   iterations has been previously included in a worksheet
-  # @note Optional: override in extending module after extending
-  #
-  # @return [:fingerprint]
-  def orig_values_identifier
-    :fingerprint
-  end
+        # Field in base job that combines/identifies the original field
+        #   values entering the cleanup process. This field is used as a
+        #   matchpoint for merging cleaned up data back into the migration,
+        #   and identifying whether a given value in subsequent worksheet
+        #   iterations has been previously included in a worksheet
+        # @note Optional: override in extending module after extending
+        #
+        # @return [:fingerprint]
+        def orig_values_identifier
+          :fingerprint
+        end
 
-  # Field used in cleanup process to deduplicate cleaned values and as
-  #   a matchpoint for collating orig_values_identifiers (and,
-  #   optionally, other field data) associated with cleaned values
-  # @note Optional: override in extending module after extending
-  #
-  # @return [:clean_fingerprint]
-  def cleaned_values_identifier
-    :clean_fingerprint
-  end
+        # Field used in cleanup process to deduplicate cleaned values and as
+        #   a matchpoint for collating orig_values_identifiers (and,
+        #   optionally, other field data) associated with cleaned values
+        # @note Optional: override in extending module after extending
+        #
+        # @return [:clean_fingerprint]
+        def cleaned_values_identifier
+          :clean_fingerprint
+        end
 
-  # Fields from base_job_cleaned that will be deleted in cleaned_uniq,
-  #   and then merged back into the deduplicated data from
-  #   base_job_cleaned. I.e., fields whose values will be collated
-  #   into multivalued fields on the deduplicated values
-  # @note Optional: override in extending module after extending
-  #
-  # @return [Array<:fingerprint>]
-  def cleaned_uniq_collate_fields
-    [orig_values_identifier]
-  end
+        # Fields from base_job_cleaned that will be deleted in cleaned_uniq,
+        #   and then merged back into the deduplicated data from
+        #   base_job_cleaned. I.e., fields whose values will be collated
+        #   into multivalued fields on the deduplicated values
+        # @note Optional: override in extending module after extending
+        #
+        # @return [Array<:fingerprint>]
+        def cleaned_uniq_collate_fields
+          [orig_values_identifier]
+        end
 
-  # DO NOT OVERRIDE REMAINING METHODS
+        # DO NOT OVERRIDE REMAINING METHODS
 
-  # @return [Array<Symbol>] supplied registry entry job keys corresponding to
-  #   returned cleanup files
-  def returned_file_jobs
-    returned_files.map.with_index do |filename, idx|
-      "#{cleanup_base_name}__file_returned_#{idx}".to_sym
-    end
-  end
-
-  # @return [Boolean]
-  def cleanup_done?
-    true unless returned_files.empty?
-  end
-  alias_method :cleanup_done, :cleanup_done?
-
-  # @return [Boolean]
-  def worksheet_sent_not_done?
-    true if !cleanup_done? && !provided_worksheets.empty?
-  end
-
-  # @return [Symbol] the registry entry job key for the base job with cleanup
-  #   merged in
-  def base_job_cleaned_job_key
-    "#{cleanup_base_name}__base_job_cleaned".to_sym
-  end
-
-  # @return [Symbol] the registry entry job key for the job that deduplicates
-  #   the clean base job data
-  def cleaned_uniq_job_key
-    "#{cleanup_base_name}__cleaned_uniq".to_sym
-  end
-
-  # @return [Symbol] the registry entry job key for the worksheet prep job
-  def worksheet_job_key
-    "#{cleanup_base_name}__worksheet".to_sym
-  end
-
-  # @return [Symbol] the registry entry job key for the compiled corrections job
-  def returned_compiled_job_key
-    "#{cleanup_base_name}__returned_compiled".to_sym
-  end
-
-  # @return [Symbol] the registry entry job key for the compiled corrections job
-  def corrections_job_key
-    "#{cleanup_base_name}__corrections".to_sym
-  end
-
-  # Appends "s" to module's `orig_values_identifier`. Used to manage joining,
-  #   collating, and splitting/exploding on this value, while clarifying that
-  #   any collated field in output is collated (not expected to be a single
-  #   value.
-  def collated_orig_values_id_field
-    "#{orig_values_identifier}s".to_sym
-  end
-
-  def self.check_required_settings(mod)
-    %i[base_job job_tags
-      worksheet_add_fields
-      worksheet_field_order fingerprint_fields
-      fingerprint_flag_ignore_fields].each do |setting|
-      unless mod.respond_to?(setting)
-        raise Kiba::Extend::IterativeCleanupSettingUndefinedError, setting
-      end
-    end
-  end
-  private_class_method :check_required_settings
-
-  def self.datadir(mod)
-    dir = nil
-    parents = mod.module_parents
-
-    until dir || parents.empty?
-      parent = parents.shift
-      dir = parent.datadir if parent.respond_to?(:datadir)
-    end
-
-    raise Kiba::Extend::ProjectSettingUndefinedError, :datadir unless dir
-
-    dir
-  end
-
-  def self.define_provided_worksheets_setting(mod)
-    provided_worksheets = <<~CODE
-      # Filenames of cleanup worksheets provided to the client. Should be
-      #   ordered oldest-to-newest. Assumes files are in the `to_client`
-      #   subdirectory of the migration base directory
-      #
-      # @return Array<String>
-      setting :provided_worksheets,
-        default: [],
-        reader: true,
-        constructor: proc { |value|
-          value.map do |filename|
-            File.join(Kiba::Extend::Mixins::IterativeCleanup.datadir(mod),
-              "to_client", filename)
+        # @return [Array<Symbol>] supplied registry entry job keys corresponding to
+        #   returned cleanup files
+        def returned_file_jobs
+          returned_files.map.with_index do |filename, idx|
+            "#{cleanup_base_name}__file_returned_#{idx}".to_sym
           end
-        }
-    CODE
-    mod.module_eval(provided_worksheets, __FILE__, __LINE__)
-  end
-  private_class_method :define_provided_worksheets_setting
+        end
 
-  def self.define_returned_files_setting(mod)
-    returned_files = <<~CODE
-      # Filenames of cleanup worksheets returned by the client. Should be
-      #   ordered oldest-to-newest. Assumes files are in the `supplied`
-      #   subdirectory of the migration base directory
-      #
-      # @return Array<String>
-      setting :returned_files,
-        default: [],
-        reader: true,
-        constructor: proc { |value|
-          value.map do |filename|
-            File.join(Kiba::Extend::Mixins::IterativeCleanup.datadir(mod),
-              "supplied", filename)
+        # @return [Boolean]
+        def cleanup_done?
+          true unless returned_files.empty?
+        end
+        alias_method :cleanup_done, :cleanup_done?
+
+        # @return [Boolean]
+        def worksheet_sent_not_done?
+          true if !cleanup_done? && !provided_worksheets.empty?
+        end
+
+        # @return [Symbol] the registry entry job key for the base job with cleanup
+        #   merged in
+        def base_job_cleaned_job_key
+          "#{cleanup_base_name}__base_job_cleaned".to_sym
+        end
+
+        # @return [Symbol] the registry entry job key for the job that deduplicates
+        #   the clean base job data
+        def cleaned_uniq_job_key
+          "#{cleanup_base_name}__cleaned_uniq".to_sym
+        end
+
+        # @return [Symbol] the registry entry job key for the worksheet prep job
+        def worksheet_job_key
+          "#{cleanup_base_name}__worksheet".to_sym
+        end
+
+        # @return [Symbol] the registry entry job key for the compiled corrections job
+        def returned_compiled_job_key
+          "#{cleanup_base_name}__returned_compiled".to_sym
+        end
+
+        # @return [Symbol] the registry entry job key for the compiled corrections job
+        def corrections_job_key
+          "#{cleanup_base_name}__corrections".to_sym
+        end
+
+        # Appends "s" to module's `orig_values_identifier`. Used to manage joining,
+        #   collating, and splitting/exploding on this value, while clarifying that
+        #   any collated field in output is collated (not expected to be a single
+        #   value.
+        def collated_orig_values_id_field
+          "#{orig_values_identifier}s".to_sym
+        end
+
+        def self.check_required_settings(mod)
+          %i[base_job job_tags
+            worksheet_add_fields
+            worksheet_field_order fingerprint_fields
+            fingerprint_flag_ignore_fields].each do |setting|
+            unless mod.respond_to?(setting)
+              raise Kiba::Extend::IterativeCleanupSettingUndefinedError, setting
+            end
           end
-        }
-    CODE
-    mod.module_eval(returned_files, __FILE__, __LINE__)
-  end
-  private_class_method :define_returned_files_setting
+        end
+        private_class_method :check_required_settings
 
-  def register_cleanup_jobs
-    ns = build_namespace
-    Kiba::Extend.registry.import(ns)
-  end
+        def self.datadir(mod)
+          dir = nil
+          parents = mod.module_parents
 
-  def build_namespace
-    bind = binding
+          until dir || parents.empty?
+            parent = parents.shift
+            dir = parent.datadir if parent.respond_to?(:datadir)
+          end
 
-    Dry::Container::Namespace.new(cleanup_base_name) do
-      mod = bind.receiver
-      register mod.send(:job_name, mod.send(:base_job_cleaned_job_key)),
-        mod.send(:base_job_cleaned_job_hash, mod)
-      register mod.send(:job_name, mod.send(:cleaned_uniq_job_key)),
-        mod.send(:cleaned_uniq_job_hash, mod)
-      register mod.send(:job_name, mod.send(:worksheet_job_key)),
-        mod.send(:worksheet_job_hash, mod)
-      if mod.cleanup_done?
-        returned = mod.send(:returned_files)
-        returned_jobs = mod.send(:returned_file_jobs)
-          .map { |job| mod.send(:job_name, job) }
-        returned.each_with_index do |file, idx|
-          register returned_jobs[idx], {
-            path: file,
-            supplied: true,
-            tags: mod.send(:job_tags)
+          raise Kiba::Extend::ProjectSettingUndefinedError, :datadir unless dir
+
+          dir
+        end
+
+        def self.define_provided_worksheets_setting(mod)
+          provided_worksheets = <<~CODE
+            # Filenames of cleanup worksheets provided to the client. Should be
+            #   ordered oldest-to-newest. Assumes files are in the `to_client`
+            #   subdirectory of the migration base directory
+            #
+            # @return Array<String>
+            setting :provided_worksheets,
+              default: [],
+              reader: true,
+              constructor: proc { |value|
+                value.map do |filename|
+                  File.join(Kiba::Extend::Mixins::IterativeCleanup.datadir(mod),
+                    "to_client", filename)
+                end
+              }
+          CODE
+          mod.module_eval(provided_worksheets, __FILE__, __LINE__)
+        end
+        private_class_method :define_provided_worksheets_setting
+
+        def self.define_returned_files_setting(mod)
+          returned_files = <<~CODE
+            # Filenames of cleanup worksheets returned by the client. Should be
+            #   ordered oldest-to-newest. Assumes files are in the `supplied`
+            #   subdirectory of the migration base directory
+            #
+            # @return Array<String>
+            setting :returned_files,
+              default: [],
+              reader: true,
+              constructor: proc { |value|
+                value.map do |filename|
+                  File.join(Kiba::Extend::Mixins::IterativeCleanup.datadir(mod),
+                    "supplied", filename)
+                end
+              }
+          CODE
+          mod.module_eval(returned_files, __FILE__, __LINE__)
+        end
+        private_class_method :define_returned_files_setting
+
+        def register_cleanup_jobs
+          ns = build_namespace
+          Kiba::Extend.registry.import(ns)
+        end
+
+        def build_namespace
+          bind = binding
+
+          Dry::Container::Namespace.new(cleanup_base_name) do
+            mod = bind.receiver
+            register mod.send(:job_name, mod.send(:base_job_cleaned_job_key)),
+              mod.send(:base_job_cleaned_job_hash, mod)
+            register mod.send(:job_name, mod.send(:cleaned_uniq_job_key)),
+              mod.send(:cleaned_uniq_job_hash, mod)
+            register mod.send(:job_name, mod.send(:worksheet_job_key)),
+              mod.send(:worksheet_job_hash, mod)
+            if mod.cleanup_done?
+              returned = mod.send(:returned_files)
+              returned_jobs = mod.send(:returned_file_jobs)
+                .map { |job| mod.send(:job_name, job) }
+              returned.each_with_index do |file, idx|
+                register returned_jobs[idx], {
+                  path: file,
+                  supplied: true,
+                  tags: mod.send(:job_tags)
+                }
+              end
+              register mod.send(:job_name, mod.send(:returned_compiled_job_key)),
+                mod.send(:returned_compiled_job_hash, mod)
+              register mod.send(:job_name, mod.send(:corrections_job_key)),
+                mod.send(:corrections_job_hash, mod)
+            end
+          end
+        end
+        private :build_namespace
+
+        def job_name(full_job_key)
+          full_job_key.to_s
+            .delete_prefix("#{cleanup_base_name}__")
+            .to_sym
+        end
+        private :job_name
+
+        def base_job_cleaned_job_hash(mod)
+          {
+            path: File.join(Kiba::Extend::Mixins::IterativeCleanup.datadir(mod),
+              "working", "#{mod.cleanup_base_name}_base_job_cleaned.csv"),
+            creator: {
+              callee: Kiba::Extend::Mixins::IterativeCleanup::BaseJobCleaned,
+              args: {mod: mod}
+            },
+            tags: mod.job_tags,
+            lookup_on: mod.cleaned_values_identifier
           }
         end
-        register mod.send(:job_name, mod.send(:returned_compiled_job_key)),
-          mod.send(:returned_compiled_job_hash, mod)
-        register mod.send(:job_name, mod.send(:corrections_job_key)),
-          mod.send(:corrections_job_hash, mod)
+        private :base_job_cleaned_job_hash
+
+        def cleaned_uniq_job_hash(mod)
+          {
+            path: File.join(Kiba::Extend::Mixins::IterativeCleanup.datadir(mod),
+              "working", "#{mod.cleanup_base_name}_cleaned_uniq.csv"),
+            creator: {
+              callee: Kiba::Extend::Mixins::IterativeCleanup::CleanedUniq,
+              args: {mod: mod}
+            },
+            tags: mod.job_tags
+          }
+        end
+        private :cleaned_uniq_job_hash
+
+        def worksheet_job_hash(mod)
+          {
+            path: File.join(Kiba::Extend::Mixins::IterativeCleanup.datadir(mod),
+              "to_client", "#{mod.cleanup_base_name}_worksheet.csv"),
+            creator: {
+              callee: Kiba::Extend::Mixins::IterativeCleanup::Worksheet,
+              args: {mod: mod}
+            },
+            tags: mod.job_tags,
+            dest_special_opts: {initial_headers: mod.worksheet_field_order}
+          }
+        end
+        private :worksheet_job_hash
+
+        def returned_compiled_job_hash(mod)
+          {
+            path: File.join(Kiba::Extend::Mixins::IterativeCleanup.datadir(mod),
+              "working", "#{mod.cleanup_base_name}_returned_compiled.csv"),
+            creator: {
+              callee: Kiba::Extend::Mixins::IterativeCleanup::ReturnedCompiled,
+              args: {mod: mod}
+            },
+            tags: mod.job_tags
+          }
+        end
+        private :returned_compiled_job_hash
+
+        def corrections_job_hash(mod)
+          {
+            path: File.join(Kiba::Extend::Mixins::IterativeCleanup.datadir(mod),
+              "working", "#{mod.cleanup_base_name}_corrections.csv"),
+            creator: {
+              callee: Kiba::Extend::Mixins::IterativeCleanup::Corrections,
+              args: {mod: mod}
+            },
+            tags: mod.job_tags,
+            lookup_on: mod.orig_values_identifier
+          }
+        end
+        private :corrections_job_hash
       end
     end
   end
-  private :build_namespace
-
-  def job_name(full_job_key)
-    full_job_key.to_s
-      .delete_prefix("#{cleanup_base_name}__")
-      .to_sym
-  end
-  private :job_name
-
-  def base_job_cleaned_job_hash(mod)
-    {
-      path: File.join(Kiba::Extend::Mixins::IterativeCleanup.datadir(mod),
-        "working", "#{mod.cleanup_base_name}_base_job_cleaned.csv"),
-      creator: {
-        callee: Kiba::Extend::Mixins::IterativeCleanup::BaseJobCleaned,
-        args: {mod: mod}
-      },
-      tags: mod.job_tags,
-      lookup_on: mod.cleaned_values_identifier
-    }
-  end
-  private :base_job_cleaned_job_hash
-
-  def cleaned_uniq_job_hash(mod)
-    {
-      path: File.join(Kiba::Extend::Mixins::IterativeCleanup.datadir(mod),
-        "working", "#{mod.cleanup_base_name}_cleaned_uniq.csv"),
-      creator: {
-        callee: Kiba::Extend::Mixins::IterativeCleanup::CleanedUniq,
-        args: {mod: mod}
-      },
-      tags: mod.job_tags
-    }
-  end
-  private :cleaned_uniq_job_hash
-
-  def worksheet_job_hash(mod)
-    {
-      path: File.join(Kiba::Extend::Mixins::IterativeCleanup.datadir(mod),
-        "to_client", "#{mod.cleanup_base_name}_worksheet.csv"),
-      creator: {
-        callee: Kiba::Extend::Mixins::IterativeCleanup::Worksheet,
-        args: {mod: mod}
-      },
-      tags: mod.job_tags,
-      dest_special_opts: {initial_headers: mod.worksheet_field_order}
-    }
-  end
-  private :worksheet_job_hash
-
-  def returned_compiled_job_hash(mod)
-    {
-      path: File.join(Kiba::Extend::Mixins::IterativeCleanup.datadir(mod),
-        "working", "#{mod.cleanup_base_name}_returned_compiled.csv"),
-      creator: {
-        callee: Kiba::Extend::Mixins::IterativeCleanup::ReturnedCompiled,
-        args: {mod: mod}
-      },
-      tags: mod.job_tags
-    }
-  end
-  private :returned_compiled_job_hash
-
-  def corrections_job_hash(mod)
-    {
-      path: File.join(Kiba::Extend::Mixins::IterativeCleanup.datadir(mod),
-        "working", "#{mod.cleanup_base_name}_corrections.csv"),
-      creator: {
-        callee: Kiba::Extend::Mixins::IterativeCleanup::Corrections,
-        args: {mod: mod}
-      },
-      tags: mod.job_tags,
-      lookup_on: mod.orig_values_identifier
-    }
-  end
-  private :corrections_job_hash
 end
