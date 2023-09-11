@@ -261,34 +261,6 @@ module Kiba
     end
     private_class_method :get_config_mods
 
-    # The section below is for backward comapatibility only
-
-    # @since 3.2.1
-    # Warns that nested job config settings will be deprecated and gives new
-    #   setting to use
-    def warn_unnested(name, value)
-      rep_by = "job_#{name}"
-      msg = "Kiba::Extend.config.job.#{name} setting has been replaced by "\
-        "Kiba::Extend.config.#{rep_by}"
-      warn("#{Kiba::Extend.warning_label}: #{msg}")
-      value
-    end
-
-    setting :job, reader: true do
-      setting :show_me, default: Kiba::Extend.job_show_me, reader: true,
-        constructor: proc { |name, value|
-                       Kiba::Extend.warn_unnested(name, value)
-                     }
-      setting :tell_me, default: Kiba::Extend.job_tell_me, reader: true,
-        constructor: proc { |name, value|
-                       Kiba::Extend.warn_unnested(name, value)
-                     }
-      setting :verbosity, default: Kiba::Extend.job_verbosity, reader: true,
-        constructor: proc { |name, value|
-                       Kiba::Extend.warn_unnested(name, value)
-                     }
-    end
-
     # Strips, collapses multiple spaces, removes terminal commas, strips again
     # removes "NULL"/treats as nilValue
     CSV::Converters[:stripplus] = lambda { |s|
