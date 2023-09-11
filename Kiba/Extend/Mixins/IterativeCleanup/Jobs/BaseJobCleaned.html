@@ -475,12 +475,7 @@
 58
 59
 60
-61
-62
-63
-64
-65
-66</pre>
+61</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup/jobs/base_job_cleaned.rb', line 40</span>
@@ -494,11 +489,6 @@
 
     <span class='id identifier rubyid_transform'>transform</span> <span class='const'>Append</span><span class='op'>::</span><span class='const'>NilFields</span><span class='comma'>,</span>
       <span class='label'>fields:</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_worksheet_add_fields'>worksheet_add_fields</span>
-
-    <span class='comment'># Add :fingerprint (orig values) before merging any cleanup in
-</span>    <span class='id identifier rubyid_transform'>transform</span> <span class='const'>Fingerprint</span><span class='op'>::</span><span class='const'>Add</span><span class='comma'>,</span>
-      <span class='label'>target:</span> <span class='symbol'>:fingerprint</span><span class='comma'>,</span>
-      <span class='label'>fields:</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_fingerprint_fields'>fingerprint_fields</span>
 
     <span class='kw'>if</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_cleanup_done?'>cleanup_done?</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_lookups'>lookups</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span><span class='lparen'>(</span><span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_corrections_job_key'>corrections_job_key</span><span class='rparen'>)</span>
       <span class='id identifier rubyid_transform'>transform</span> <span class='const'>Fingerprint</span><span class='op'>::</span><span class='const'>MergeCorrected</span><span class='comma'>,</span>
@@ -522,7 +512,7 @@
 </div>
 
       <div id="footer">
-  Generated on Mon Sep 11 21:03:55 2023 by
+  Generated on Mon Sep 11 21:25:33 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

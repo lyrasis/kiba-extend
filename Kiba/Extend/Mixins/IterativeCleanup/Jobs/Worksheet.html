@@ -125,28 +125,6 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#get_lookups-class_method" title="get_lookups (class method)">.<strong>get_lookups</strong>(mod)  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'></div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
       <a href="#get_xforms-class_method" title="get_xforms (class method)">.<strong>get_xforms</strong>(mod)  &#x21d2; Object </a>
     
 
@@ -220,9 +198,9 @@
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="get_lookups-class_method">
+  <h3 class="signature first" id="get_xforms-class_method">
   
-    .<strong>get_lookups</strong>(mod)  &#x21d2; <tt>Object</tt> 
+    .<strong>get_xforms</strong>(mod)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -266,78 +244,12 @@
 26
 27
 28
-29</pre>
+29
+30
+31</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup/jobs/worksheet.rb', line 21</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_get_lookups'>get_lookups</span><span class='lparen'>(</span><span class='id identifier rubyid_mod'>mod</span><span class='rparen'>)</span>
-  <span class='kw'>if</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_cleanup_done?'>cleanup_done?</span>
-    <span class='comment'># todo
-</span>  <span class='kw'>elsif</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_worksheet_sent_not_done?'>worksheet_sent_not_done?</span>
-    <span class='comment'># todo
-</span>  <span class='kw'>else</span>
-    <span class='lbracket'>[</span><span class='rbracket'>]</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="get_xforms-class_method">
-  
-    .<strong>get_xforms</strong>(mod)  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>4.0.0</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-31
-32
-33
-34
-35
-36
-37
-38
-39
-40
-41</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup/jobs/worksheet.rb', line 31</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_xforms'>get_xforms</span><span class='lparen'>(</span><span class='id identifier rubyid_mod'>mod</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_base'>base</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -460,6 +372,16 @@
       <pre class="lines">
 
 
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
 43
 44
 45
@@ -479,27 +401,13 @@
 59
 60
 61
-62
-63
-64
-65
-66
-67
-68
-69
-70
-71
-72
-73
-74</pre>
+62</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup/jobs/worksheet.rb', line 43</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup/jobs/worksheet.rb', line 33</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_xforms'>xforms</span><span class='lparen'>(</span><span class='id identifier rubyid_mod'>mod</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="../../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='period'>.</span><span class='id identifier rubyid_job_segment'><span class='object_link'><a href="../../../Jobs/JobSegmenter.html#job_segment-instance_method" title="Kiba::Extend::Jobs::JobSegmenter#job_segment (method)">job_segment</a></span></span> <span class='kw'>do</span>
-    <span class='id identifier rubyid_transform'>transform</span> <span class='const'>Append</span><span class='op'>::</span><span class='const'>NilFields</span><span class='comma'>,</span>
-      <span class='label'>fields:</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_worksheet_add_fields'>worksheet_add_fields</span>
     <span class='id identifier rubyid_transform'>transform</span> <span class='const'>Fingerprint</span><span class='op'>::</span><span class='const'>Add</span><span class='comma'>,</span>
       <span class='label'>target:</span> <span class='symbol'>:clean_fingerprint</span><span class='comma'>,</span>
       <span class='label'>fields:</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_fingerprint_fields'>fingerprint_fields</span>
@@ -538,7 +446,7 @@
 </div>
 
       <div id="footer">
-  Generated on Mon Sep 11 21:03:55 2023 by
+  Generated on Mon Sep 11 21:25:33 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>
