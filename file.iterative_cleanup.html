@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: iterative_cleanup
+  
+    &mdash; Kiba-Extend Documentation
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "iterative_cleanup";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="file_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: iterative_cleanup</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><div id='filecontents'><h1 id="using-the-iterativecleanup-mixin-added-in-v4-0-0">Using the <code>IterativeCleanup</code> mixin (added in v4.0.0)</h1>
+
+<p>&quot;Iterative cleanup&quot; means the client may provide the worksheet more
+than once, or that you may need to produce a fresh worksheet for the
+client after a new database export is provided.</p>
+
+<p>There is no reason you can&#39;t use the pattern for expected one-round
+cleanup. How often does one round of cleanup turn into more, after
+all?</p>
+
+<h2 id="examples">Examples</h2>
+
+<p><a href="https://github.com/lyrasis/kiba-extend-project">kiba-extend-project</a>
+has been updated to reflect usage of the <code>IterativeCleanup</code> mixin.</p>
+
+<p>Refer to todo:link Kiba::Tms::AltNumsForObjTypeCleanup as an example config
+  module extending this mixin module in a simple way. See
+  todo:link Kiba::Tms::PlacesCleanupInitial for a more complex usage with
+  default overrides and custom pre/post transforms.</p>
+
+<h2 id="project-setup-assumptions">Project setup assumptions</h2>
+
+<p>Your project must follow some setup/configuration conventions in order
+  to use this mixin:</p>
+
+<h3 id="each-cleanup-process-must-be-configured-in-its-own-config-module">Each cleanup process must be configured in its own config module</h3>
+
+<p>A config module is a Ruby module that responds to <code>:config</code>.</p>
+
+<p>Extending <code>Dry::Configurable</code> adds a <code>config</code> method to a module:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='kw'>module</span> <span class='const'>Project</span><span class='op'>::</span><span class='const'>NameCategorization</span>
+  <span class='id identifier rubyid_module_function'>module_function</span>
+  <span class='id identifier rubyid_extend'>extend</span> <span class='const'>Dry</span><span class='op'>::</span><span class='const'>Configurable</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<p>Or you can manually define a <code>config</code> class method on the module:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='kw'>module</span> <span class='const'>Project</span><span class='op'>::</span><span class='const'>PersonCleanup</span>
+  <span class='id identifier rubyid_module_function'>module_function</span>
+
+  <span class='kw'>def</span> <span class='id identifier rubyid_config'>config</span>
+    <span class='kw'>true</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<h3 id="kiba-extend-config_namespaces-setting-must-be-set-from-your-project"><code>Kiba::Extend</code> <code>config_namespaces</code> setting must be set from your project</h3>
+
+<p>After your project&#39;s base file has called the project&#39;s <code>loader</code>, it
+must set the <code>Kiba::Extend.config.config_namespaces</code> setting.</p>
+
+<p>This setting lists the namespace(s) where your config modules live.</p>
+
+<p>In most of my projects, all of my config modules are in one namespace.
+For example, for the above project, I would add:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Kiba/Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_config_namespaces'>config_namespaces</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='const'>Project</span><span class='rbracket'>]</span>
+</code></pre>
+
+<p>Note that the
+setting takes an array, so you can list multiple namespaces if you
+have organized your project differently and your configs are not all
+in one namespace. For example, a migration for a Tms client may have
+client specific cleanups in the client-specific migration code
+project (config namespace: <code>TmsClientName</code>). That code project will
+make use of the kiba-tms application, which also defines cleanup
+configs in the namespace <code>Kiba::Tms</code>. Such a project would do this
+at the bottom of <code>lib/tms_client_name.rb</code>:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Kiba/Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_config_namespaces'>config_namespaces</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='const'><span class='object_link'><a href="Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>Tms</span><span class='comma'>,</span> <span class='const'>TmsClientName</span><span class='rbracket'>]</span>
+</code></pre>
+
+<h3 id="add-cleanup-job-registration-to-your-registrydata-registration-method">Add cleanup job registration to your <code>RegistryData</code> registration method</h3>
+
+<p>Add the following to <code>RegistryData.register</code> (or whatever method
+triggers the registration of all your jobs):</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Kiba/Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Kiba/Extend/Utils.html" title="Kiba::Extend::Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Kiba/Extend/Utils/IterativeCleanupJobRegistrar.html" title="Kiba::Extend::Utils::IterativeCleanupJobRegistrar (class)">IterativeCleanupJobRegistrar</a></span></span><span class='period'>.</span><span class='id identifier rubyid_call'><span class='object_link'><a href="Kiba/Extend/Utils/IterativeCleanupJobRegistrar.html#call-class_method" title="Kiba::Extend::Utils::IterativeCleanupJobRegistrar.call (method)">call</a></span></span>
+</code></pre>
+
+<p>This line should be added before any <code>registry.transform</code>,
+<code>registry.freeze</code>, or <code>registry.finalize</code> methods.</p>
+
+<h3 id="config_namespaces-setting-is-populated-before-registrydata-registration"><code>config_namespaces</code> setting is populated before <code>RegistryData</code> registration</h3>
+
+<p>Calling <code>RegistryData.register</code> (or whatever method triggers the
+registration of all your jobs) must be done <strong><em>after</em></strong> the
+<code>config_namespaces</code> are set.</p>
+</div></div>
+
+      <div id="footer">
+  Generated on Mon Sep 11 18:40:20 2023 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.34 (ruby-2.7.8).
+</div>
+
+    </div>
+  </body>
+</html>

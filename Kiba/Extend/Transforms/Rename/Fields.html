@@ -101,8 +101,8 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Renames multiple fields at once, given a fieldmap where key is <code>from</code> field
-  and value is <code>to</code> field</p>
+    <p>Renames multiple fields at once, given a fieldmap where key
+  is <code>from</code> field and value is <code>to</code> field</p>
 
 <p>This transform works by creating a <span class='object_link'><a href="Field.html" title="Kiba::Extend::Transforms::Rename::Field (class)">Field</a></span> transform for each
   key/value pair specified in <code>fieldmap</code>, so see <span class='object_link'><a href="Field.html" title="Kiba::Extend::Transforms::Rename::Field (class)">Field</a></span> for
@@ -192,7 +192,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A new instance of Fields.</p>
+    <span class="summary_desc"><div class='inline'><p>rubocop:enable Layout/LineLength.</p>
 </div></span>
   
 </li>
@@ -237,7 +237,7 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of Fields.</p>
+    <p>rubocop:enable Layout/LineLength</p>
 
 
   </div>
@@ -286,15 +286,15 @@ values are the <code>to</code> fields</p>
       <pre class="lines">
 
 
-39
-40
-41
-42
-43
-44</pre>
+47
+48
+49
+50
+51
+52</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/rename/fields.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/rename/fields.rb', line 47</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fieldmap:</span><span class='rparen'>)</span>
   <span class='ivar'>@fieldmap</span> <span class='op'>=</span> <span class='id identifier rubyid_fieldmap'>fieldmap</span>
@@ -368,13 +368,13 @@ values are the <code>to</code> fields</p>
       <pre class="lines">
 
 
-47
-48
-49
-50</pre>
+55
+56
+57
+58</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/rename/fields.rb', line 47</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/rename/fields.rb', line 55</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_renamers'>renamers</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_renamer'>renamer</span><span class='op'>|</span> <span class='id identifier rubyid_renamer'>renamer</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -390,7 +390,7 @@ values are the <code>to</code> fields</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Sep 11 17:56:05 2023 by
+  Generated on Mon Sep 11 18:40:22 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

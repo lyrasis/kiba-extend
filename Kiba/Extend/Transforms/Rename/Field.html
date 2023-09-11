@@ -116,20 +116,24 @@
 
 <h3 id="2-to-field-already-exists">2 - :to field already exists</h3>
 
-<p>:sex is renamed to :gender, overwriting the existing value of :gender
-  (unknown) with value of :sex (m). The transform emits a warning about
-  this</p>
+<p>:sex is renamed to :gender, overwriting the existing value
+  of :gender (unknown) with value of :sex (m). The transform
+  emits a warning about this</p>
 
 <h3 id="3-from-field-does-not-exist">3 - :from field does not exist</h3>
 
-<p>Row is passed through unchanged, and the transform emits a warning about
-  not being able to rename a field that doesn&#39;t exist.</p>
+<p>Row is passed through unchanged, and the transform emits a
+  warning about not being able to rename a field that
+  doesn&#39;t exist.</p>
 
 <h3 id="4-from-and-to-field-are-the-same">4 - :from and :to field are the same</h3>
 
-<p>This seems like a real weird edge case from the perspective of defining
-  transforms manually, but it can happen when transform definitions are
-  programmatically generated from configuration.</p>
+<p>This seems like a real weird edge case from the perspective
+  of defining transforms manually, but it can happen when
+  transform definitions are programmatically generated from
+  configuration.</p>
+
+<p>rubocop:enable Layout/LineLength</p>
 
 
   </div>
@@ -376,14 +380,14 @@
       <pre class="lines">
 
 
-116
-117
-118
-119
-120</pre>
+124
+125
+126
+127
+128</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/rename/field.rb', line 116</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/rename/field.rb', line 124</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>from:</span><span class='comma'>,</span> <span class='label'>to:</span><span class='rparen'>)</span>
   <span class='ivar'>@from</span> <span class='op'>=</span> <span class='id identifier rubyid_from'>from</span>
@@ -441,14 +445,6 @@
       <pre class="lines">
 
 
-123
-124
-125
-126
-127
-128
-129
-130
 131
 132
 133
@@ -458,23 +454,31 @@
 137
 138
 139
-140</pre>
+140
+141
+142
+143
+144
+145
+146
+147
+148</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/rename/field.rb', line 123</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/rename/field.rb', line 131</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_row'>row</span> <span class='kw'>if</span> <span class='id identifier rubyid_from'>from</span> <span class='op'>==</span> <span class='id identifier rubyid_to'>to</span>
 
   <span class='kw'>unless</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='id identifier rubyid_from'>from</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_add_single_warning'>add_single_warning</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cannot rename field: `</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_from'>from</span><span class='embexpr_end'>}</span><span class='tstring_content'>` does not exist </span><span class='tstring_end'>&quot;</span></span>\
-                       <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>in row</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_add_single_warning'>add_single_warning</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cannot rename field: `</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_from'>from</span><span class='embexpr_end'>}</span><span class='tstring_content'>` does not </span><span class='tstring_end'>&quot;</span></span>\
+                       <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>exist in row</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
     <span class='kw'>return</span> <span class='id identifier rubyid_row'>row</span>
   <span class='kw'>end</span>
 
   <span class='kw'>if</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='id identifier rubyid_to'>to</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_add_single_warning'>add_single_warning</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Renaming `</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_from'>from</span><span class='embexpr_end'>}</span><span class='tstring_content'>` to `</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_to'>to</span><span class='embexpr_end'>}</span><span class='tstring_content'>` overwrites existing </span><span class='tstring_end'>&quot;</span></span>\
-                       <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_to'>to</span><span class='embexpr_end'>}</span><span class='tstring_content'>` field data</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_add_single_warning'>add_single_warning</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Renaming `</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_from'>from</span><span class='embexpr_end'>}</span><span class='tstring_content'>` to `</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_to'>to</span><span class='embexpr_end'>}</span><span class='tstring_content'>` overwrites </span><span class='tstring_end'>&quot;</span></span>\
+                       <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>existing `</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_to'>to</span><span class='embexpr_end'>}</span><span class='tstring_content'>` field data</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 
   <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_to'>to</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_from'>from</span><span class='rparen'>)</span>
@@ -491,7 +495,7 @@
 </div>
 
       <div id="footer">
-  Generated on Mon Sep 11 17:56:04 2023 by
+  Generated on Mon Sep 11 18:40:22 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>
