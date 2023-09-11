@@ -11,6 +11,8 @@ module Kiba
       #   job results in 1 or more rows being written
       # @return [false] if jobkey is not defined, or if job results in 0 rows
       #   when run
+      #
+      # @since 4.0.0
       def output?(jobkey)
         begin
           reg = Kiba::Extend.registry.resolve(jobkey)

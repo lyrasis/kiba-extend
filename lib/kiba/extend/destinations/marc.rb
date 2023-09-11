@@ -10,6 +10,8 @@ module Kiba
       # This is a wrapper around `ruby-marc`'s `MARC::Writer`, so see
       #   relevant documentation in:
       #   https://github.com/ruby-marc/ruby-marc/blob/main/lib/marc/writer.rb
+      #
+      # @since 4.0.0
       class Marc
         extend Destinationable
 

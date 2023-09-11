@@ -6,6 +6,8 @@ module Kiba
   module Extend
     module Utils
       # Callable service to clean punctuation off end of name string
+      #
+      # @since 4.0.0
       class MarcNameCleaner
         # @param value [String]
         # @return [String]

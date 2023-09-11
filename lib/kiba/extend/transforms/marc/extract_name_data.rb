@@ -15,6 +15,8 @@ module Kiba
         #   results = []
         #   xform.process(rec){ |row| results << row }
         #   expect(results.length).to eq(3)
+        #
+        # @since 4.0.0
         class ExtractNameData
           def initialize
             @extractors = [

@@ -2,11 +2,11 @@
 
 require "marc"
 
-# rubocop:todo Layout/LineLength
 module Kiba
   module Extend
     module Transforms
       module Marc
+        # rubocop:disable Layout/LineLength
         # For each occurrence of given field tag, outputs a row with the
         #   following columns: marcid, fullfield, and one column per specified
         #   subfield. If there are more than one occurrnces of a subfield
@@ -46,6 +46,9 @@ module Kiba
         #     :_260e=>nil, :_260f=>nil, :marcid=>"008000411-3"
         #   }
         #   expect(results[0]).to eq(first)
+        #
+        # @since 4.0.0
+        # rubocop:enable Layout/LineLength
         class ExtractSubfieldsFromField
           include FieldLinkable
           # @param tag [String] MARC tag from which to extract subfield values
@@ -106,4 +109,3 @@ module Kiba
     end
   end
 end
-# rubocop:enable Layout/LineLength

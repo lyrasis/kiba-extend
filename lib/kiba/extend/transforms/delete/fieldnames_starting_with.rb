@@ -27,6 +27,8 @@ module Kiba
         #      changed: nil},
         #   ]
         #   expect(result).to eq(expected)
+        #
+        # @since 4.0.0
         class FieldnamesStartingWith
           # @param prefix [String] if a fieldname begins with or equals this
           #   string, the field will be deleted

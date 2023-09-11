@@ -119,6 +119,8 @@ module Kiba
         #     {fp: "4", a: 'ant', b: 'bear', corr: "n"},
         #   ]
         #   expect(result).to eq(expected)
+        #
+        # @since 4.0.0
         class MergeCorrected
           # @param keycolumn [Symbol] the name of the field containing
           #   fingerprint values in data into which corrections will be

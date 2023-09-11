@@ -68,10 +68,10 @@ module Kiba
         #   ]
         #   expect(result).to eq(expected)
         class FromFieldsWithDelimiter
-          include Allable
+          include Allable # since 4.0.0
           include SepDeprecatable
 
-          # @param sources [Array<Symbol>] Fields whose values are to be
+          # @param sources [Array<Symbol>, :all] Fields whose values are to be
           #   combined
           # @param target [Symbol] Field into which the combined value will be
           #   written. May be one of the source fields
@@ -80,11 +80,12 @@ module Kiba
           # @param delim [String] Value used to separate individual field values
           #   in combined target field
           # @param prepend_source_field_name [Boolean] Whether to insert the
-          #   source field name before its value in the combined value.
+          #   source field name before its value in the combined value. Since
+          #   4.0.0
           # @param delete_sources [Boolean] Whether to delete the source fields
           #   after combining their values into the target field. If target
           #   field name is the same as one of the source fields, the target
-          #   field is not deleted.
+          #   field is not deleted. Since 4.0.0
           def initialize(sources: :all, target: :index, sep: nil, delim: nil,
             prepend_source_field_name: false, delete_sources: true)
             @fields = [sources].flatten

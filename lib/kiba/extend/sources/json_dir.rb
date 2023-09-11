@@ -44,6 +44,8 @@ module Kiba
       #   destination will protect against these errors.
       #   {Kiba::Extend::Jobs::JsonToCsvJob} runs this transform automatically
       #   as the last step before writing out rows
+      #
+      # @since 4.0.0
       class JsonDir
         extend Sourceable
 

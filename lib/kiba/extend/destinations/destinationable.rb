@@ -5,6 +5,8 @@ module Kiba
     module Destinations
       # Mix-in module for extending destinations so they can be set up in
       #   jobs
+      #
+      # @since 4.0.0
       module Destinationable
         include Kiba::Extend::Registry::Fileable
         # @return Constant if there is a {Kiba::Extend::Sources} class

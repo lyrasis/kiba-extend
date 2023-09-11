@@ -6,6 +6,8 @@ module Kiba
       # Job taking a JSON source that yields `Hash`es, and writing
       #   to a CSV (or other tabular) destination expecting the same
       #   headers/fields in every row
+      #
+      # @since 4.0.0
       class JsonToCsvJob < BaseJob
         private
 

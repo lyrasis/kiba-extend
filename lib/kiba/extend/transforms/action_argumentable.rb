@@ -4,6 +4,8 @@ module Kiba
   module Extend
     module Transforms
       # Mixin module providing consistent validation of `action` argument
+      #
+      # @since 4.0.0
       module ActionArgumentable
         ::ActionArgumentable = Kiba::Extend::Transforms::ActionArgumentable
 

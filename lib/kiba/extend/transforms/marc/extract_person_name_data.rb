@@ -32,6 +32,8 @@ module Kiba
         #   }
         #   expect(results[0]).to eq(first)
         #   expect(results[-1]).to eq(last)
+        #
+        # @since 4.0.0
         class ExtractPersonNameData < ExtractBaseNameData
           # @param name_type [String] to insert into name_type_target field
           # @param name_fields [Array<String>] MARC fields from which name data

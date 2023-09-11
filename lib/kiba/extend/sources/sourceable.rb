@@ -5,6 +5,8 @@ module Kiba
     module Sources
       # Mix-in module for extending sources so they can be used as sources
       #   in jobs
+      #
+      # @since 4.0.0
       module Sourceable
         include Kiba::Extend::Registry::Fileable
 

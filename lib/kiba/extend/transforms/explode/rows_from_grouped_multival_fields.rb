@@ -121,6 +121,7 @@ module Kiba
         #     {id: "8", name: nil, role: nil}
         #   ]
         #   expect(result).to eq(expected)
+        # @since 4.0.0
         class RowsFromGroupedMultivalFields
           # @param fields [Symbol] the grouped fields from which rows will be
           #   created

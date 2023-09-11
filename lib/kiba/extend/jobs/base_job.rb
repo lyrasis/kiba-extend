@@ -23,7 +23,7 @@ module Kiba
         # @param mode [:run, :setup, :info] :info mode sets up files only.
         #   :setup mode sets up files and handles requirements, including
         #   running any necessary jobs to create sources and/or lookups needed
-        #   by the job. :run does all of the above and runs the job.
+        #   by the job. :run does all of the above and runs the job. Since 4.0.0
         def initialize(files:, transformer:, mode: :run)
           if caller(2, 5).join(" ")["block in handle_requirements"]
             @dependency = true

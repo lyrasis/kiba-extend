@@ -4,6 +4,8 @@ module Kiba
   module Extend
     module Destinations
       # Wrapper around `Kiba::Common::Destinations::Lambda`
+      #
+      # @since 4.0.0
       class Lambda < Kiba::Common::Destinations::Lambda
         extend Destinationable
 

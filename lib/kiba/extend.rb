@@ -87,6 +87,7 @@ module Kiba
 
     # Ruby modules that serve as namespaces under which config
     #   modules for a project are nested.
+    # @since 4.0.0
     # @note You must set this from
     #   an individual project if you wish to use the
     #   {Kiba::Extend::Mixins::IterativeCleanup} mixin.
@@ -246,6 +247,7 @@ module Kiba
     # List of config modules in project namespaces set in {config_namespaces}
     #   setting
     #
+    # @since 4.0.0
     # @return [Array<Module>]
     def project_configs
       config_namespaces.map { |ns| get_config_mods(ns, ns.constants) }
@@ -255,6 +257,7 @@ module Kiba
 
     # @param ns [Module]
     # @param constants [Array<Symbol>]
+    # @since 4.0.0
     # @return [Array<Module>]
     def get_config_mods(ns, constants)
       constants.map { |const| ns.const_get(const) }

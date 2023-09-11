@@ -39,6 +39,8 @@ module Kiba
           #   expect{ result.call }.to raise_error(
           #     Kiba::Extend::BooleanReturningLambdaError
           #   )
+          #
+          # @since 4.0.0
           class WithLambda
             include ActionArgumentable
             # @param action [:keep, :reject] taken if the lambda returns true

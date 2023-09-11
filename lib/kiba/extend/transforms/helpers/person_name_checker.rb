@@ -19,6 +19,8 @@ module Kiba
         #   set at https://www.ssa.gov/OACT/babynames/limits.html which have
         #   been on more than 100 Social Security card applications from
         #   1880-2022. So there is a definite U.S. bias.
+        #
+        # @since 4.0.0
         class PersonNameChecker
           class << self
             def call(
