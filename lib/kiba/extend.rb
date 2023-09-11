@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:todo Layout/LineLength
-
 require "amazing_print"
 require "active_support"
 require "active_support/core_ext/object"
@@ -24,19 +22,30 @@ module Kiba
   # Handles:
   #
   # - auto-loading of the code
-  # - extending `Kiba` with `Kiba::Extend::Jobs::JobSegmenter` so we can call `Kiba.job_segment`
-  # - defining config settings, all of which can be overridden by project applications using
-  #   `kiba-extend`
+  # - extending `Kiba` with `Kiba::Extend::Jobs::JobSegmenter` so we
+  #   can call `Kiba.job_segment`
+  # - defining config settings, all of which can be overridden by
+  #   project applications using `kiba-extend`
   #
   # Also defines some CSV converters:
   #
-  # - `:stripextra` -- strips leading/trailing spaces, collapses multiple spaces, removes terminal commas,
-  #   strips again
-  # - `:nulltonil` -- replaces any values that are a literal string NULL with a nil value
-  # - `:stripplus` -- strips leading/trailing spaces, collapses multiple spaces, removes terminal commas,
-  #   strips again, removes "NULL" (i.e. literal string "NULL" becomes a `nilValue`
+  # - `:stripextra` -- strips leading/trailing spaces, collapses
+  #   multiple spaces, removes terminal commas, strips again
+  # - `:nulltonil` -- replaces any values that are a literal string
+  #   NULL with a nil value
+  # - `:stripplus` -- strips leading/trailing spaces, collapses
+  #   multiple spaces, removes terminal commas, strips again, removes
+  #   "NULL" (i.e. literal string "NULL" becomes a `nilValue`
   #
-  # Note that `:stripplus` combines the functionality of `:stripextra` and `:nulltonil`
+  # Note that `:stripplus` combines the functionality of `:stripextra`
+  #    and `:nulltonil`
+  #
+  # ## About pre-job task settings
+  #
+  # If configured properly, the pre-job task is run when a job is run
+  #   via Thor invocation. This includes `run:job`, `run:jobs`, and
+  #   `jobs:tagged -r tagvalue`. The task is run once when the Thor
+  #   task is invoked.
   module Extend
     module_function
 
@@ -88,9 +97,11 @@ module Kiba
     #
     # @return [Hash]
     setting :csvopts,
-      default: {headers: true, header_converters: %i[symbol downcase]}, reader: true
+      default: {headers: true, header_converters: %i[symbol downcase]},
+      reader: true
 
-    # @return [Hash] default settings for Lambda destination
+    # Default settings for Lambda destination
+    # @return [Hash]
     setting :lambdaopts, default: {on_write: ->(r) {
                                                accumulator << r
                                              }}, reader: true
@@ -103,8 +114,8 @@ module Kiba
     # ```
     setting :delim, default: "|", reader: true
 
-    # @return [String]
-    # Default subgrouping delimiter for splitting/joining values in multi-valued fields
+    # Default subgrouping delimiter for splitting/joining values in multi-valued
+    #   fields
     #
     # ```
     # orig = 'a^^y|b^^z'
@@ -112,89 +123,124 @@ module Kiba
     # sgdelim_split = delim_split.map{ |val| val.split(sgdelim) }
     # sgdelim_split => [['a', 'y'], ['b', 'z']]
     # ```
+    #
+    # @return [String]
     setting :sgdelim, default: "^^", reader: true
 
-    # @return [String] default string to be treated as though it were a null/empty value.
+    # Default string to be treated as though it were a null/empty value.
+    #
+    # @return [String]
     setting :nullvalue, default: "%NULLVALUE%", reader: true
 
+    # Used to join nested namespaces and registered keys in
+    #   FileRegistry. With namespace 'ns' and registered key 'foo':
+    #   'ns\__foo'. With parent namespace 'ns', child namespace
+    #   'child', and registered key 'foo': 'ns\__child\__foo'
+    #
     # @return [String]
-    # Used to join nested namespaces and registered keys in FileRegistry. With namespace 'ns' and registered
-    #   key 'foo': 'ns\__foo'. With parent namespace 'ns', child namespace 'child', and registered key 'foo':
-    #   'ns\__child\__foo'
     setting :registry_namespace_separator, default: "__", reader: true
 
-    # @!method source
-    # Default source class for jobs. Must meet implementation criteria in [Kiba wiki](https://github.com/thbar/kiba/wiki/Implementing-ETL-sources)
+    # Default source class for jobs. Must meet implementation criteria
+    # in [Kiba
+    # wiki](https://github.com/thbar/kiba/wiki/Implementing-ETL-sources)
+    #
+    # @return [Class]
     setting :source, constructor: proc {
                                     Kiba::Extend::Sources::CSV
                                   }, reader: true
 
-    # @!method destination
-    # Default destination class for jobs. Must meet implementation criteria in [Kiba wiki](https://github.com/thbar/kiba/wiki/Implementing-ETL-destinations)
+    # Default destination class for jobs. Must meet implementation
+    # criteria in [Kiba
+    # wiki](https://github.com/thbar/kiba/wiki/Implementing-ETL-destinations)
+    #
+    # @return [Class]
     setting :destination, constructor: proc {
                                          Kiba::Extend::Destinations::CSV
                                        }, reader: true
 
-    # @return [String] prefix for warnings from the ETL
+    # Prefix for warnings from the ETL
+    #
+    # @return [String]
     setting :warning_label, default: "KIBA WARNING", reader: true
 
-    # @return [Kiba::Extend::Registry::FileRegistry] A customized
-    #   [dry-container](https://dry-rb.org/gems/dry-container/main/) for registering and resolving
-    #   jobs
+    # A customized
+    #   [dry-container](https://dry-rb.org/gems/dry-container/main/)
+    #   for registering and resolving jobs
+    #
+    # @return [Kiba::Extend::Registry::FileRegistry]
     setting :registry,
       constructor: proc { Kiba::Extend::Registry::FileRegistry.new },
       reader: true
 
-    # @return [Symbol] the job definition module method expected to be present if you [define a registry
-    #   entry hash creator as a Module](https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html#module-creator-example-since-2-7-2)
+    # The job definition module method expected to be present if you
+    #   [define a registry entry hash creator as a
+    #   Module](https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html#module-creator-example-since-2-7-2)
+    #
+    # @return [Symbol]
     setting :default_job_method_name, default: :job, reader: true
 
-    # ## Pre-job task settings
+    # Whether to use Kiba::Extend's pre-job task functionality. The
+    #   default is `false` for backward compatibility, as existing
+    #   projects may not have the required settings configured.
     #
-    # If configured properly, the pre-job task is run when a job is run via Thor invocation. This includes
-    #   `run:job`, `run:jobs`, and `jobs:tagged -r tagvalue`. The task is run once when the Thor task is
-    #   invoked.
-
-    # @return [Boolean] whether to use Kiba::Extend's pre-job task functionality. The default is `false`
-    #   for backward compatibility, as existing projects may not have the required settings configured.
+    # @return [Boolean]
     setting :pre_job_task_run, default: false, reader: true
 
-    # @return [String] full path to directory to which files will be moved if `pre_job_task_action ==
-    #   :backup`. The directory will be created if it does not exist.
+    # Full path to directory to which files will be moved if
+    #   `pre_job_task_action == :backup`. The directory will be
+    #   created if it does not exist.
+    #
+    # @return [String]
     setting :pre_job_task_backup_dir, default: nil, reader: true
 
-    # @return [Array<String>] full paths to directories that will be affected by the specified pre-task action
+    # Full paths to directories that will be affected by the specified pre-task
+    #   action
+    # @return [Array<String>]
     setting :pre_job_task_directories, default: [], reader: true
 
-    # @return [:backup, :nuke] Controls what happens when pre-job task is run
+    # Controls what happens when pre-job task is run
     #
-    #  - :backup - Moves all existing files in specified directories to backup directory created in your `:datadir`
-    #  - :nuke - Deletes all existing files in specified directories when a job is run. **Make sure you only
-    #    specify directories that contain derived/generated files!**
+    # - :backup - Moves all existing files in specified directories to backup
+    #   directory created in your `:datadir`
+    # - :nuke - Deletes all existing files in specified directories
+    #    when a job is run. **Make sure you only specify directories
+    #    that contain derived/generated files!**
+    #
+    # @return [:backup, :nuke]
     setting :pre_job_task_action, default: :backup, reader: true
 
-    # @return [:job, nil, anyValue]
-    #
     # Controls whether pre-job task is run
     #
-    # - :job - runs pre-job task specified above whenever you invoke `thor run:job ...`. All dependency jobs
-    #   required for the invoked job will be run. This mode is recommended during development when you want
-    #   any change in the dependency chain to get picked up.
-    # - any other value - only regenerates missing dependency files. Useful when your data is really big
-    #   and/or your jobs are more stable
+    # - :job - runs pre-job task specified above whenever you invoke
+    #   `thor run:job ...`. All dependency jobs required for the
+    #   invoked job will be run. This mode is recommended during
+    #   development when you want any change in the dependency chain
+    #   to get picked up.
+    # - any other value - only regenerates missing dependency files.
+    #   Useful when your data is really big and/or your jobs are more
+    #   stable
+    #
+    # @return [:job, nil, anyValue]
     setting :pre_job_task_mode, default: :job, reader: true
 
-    # @return [Boolean] whether to output results to STDOUT for debugging
+    # Whether to output results to STDOUT for debugging
+    #
+    # @return [Boolean]
     setting :job_show_me, default: false, reader: true
 
-    # @return [Boolean] whether to have computer audibly say something when job is complete
+    # Whether to have computer audibly say something when job is complete
+    #
+    # @return [Boolean]
     setting :job_tell_me, default: false, reader: true
 
-    # @return [:debug, :normal, :minimal] how much output about jobs to output to STDOUT
+    # How much output about jobs to output to STDOUT
     #
-    # - :debug - tells you A LOT - helpful when developing pipelines and debugging
+    # - :debug - tells you A LOT - helpful when developing pipelines and
+    #   debugging
     # - :normal - reports what is running, from where, and the results
     # - :minimal - bare minimum
+    #
+    # @return [:debug, :normal, :minimal]
     setting :job_verbosity, default: :normal, reader: true
 
     # List of config modules in project namespaces set in {config_namespaces}
@@ -218,10 +264,12 @@ module Kiba
     # The section below is for backward comapatibility only
 
     # @since 3.2.1
-    # Warns that nested job config settings will be deprecated and gives new setting to use
+    # Warns that nested job config settings will be deprecated and gives new
+    #   setting to use
     def warn_unnested(name, value)
       rep_by = "job_#{name}"
-      msg = "Kiba::Extend.config.job.#{name} setting has been replaced by Kiba::Extend.config.#{rep_by}"
+      msg = "Kiba::Extend.config.job.#{name} setting has been replaced by "\
+        "Kiba::Extend.config.#{rep_by}"
       warn("#{Kiba::Extend.warning_label}: #{msg}")
       value
     end
@@ -241,7 +289,7 @@ module Kiba
                      }
     end
 
-    # strips, collapses multiple spaces, removes terminal commas, strips again
+    # Strips, collapses multiple spaces, removes terminal commas, strips again
     # removes "NULL"/treats as nilValue
     CSV::Converters[:stripplus] = lambda { |s|
       begin
@@ -262,7 +310,7 @@ module Kiba
       end
     }
 
-    # strips, collapses multiple spaces, removes terminal commas, strips again
+    # Strips, collapses multiple spaces, removes terminal commas, strips again
     CSV::Converters[:stripextra] = lambda { |s|
       begin
         if s.nil?
@@ -298,4 +346,3 @@ end
 Kiba::Extend.loader
 # So we can call Kiba.job_segment
 Kiba.extend(Kiba::Extend::Jobs::JobSegmenter)
-# rubocop:enable Layout/LineLength
