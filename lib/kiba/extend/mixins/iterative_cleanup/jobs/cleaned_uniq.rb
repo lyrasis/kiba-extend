@@ -60,13 +60,13 @@ module Kiba
                 job = bind.receiver
 
                 transform Deduplicate::Table,
-                  field: mod.cleaned_values_identifier,
+                  field: :clean_fingerprint,
                   delete_field: false
                 transform Delete::Fields,
                   fields: mod.cleaned_uniq_collate_fields
                 transform Merge::MultiRowLookup,
                   lookup: send(mod.base_job_cleaned_job_key),
-                  keycolumn: mod.cleaned_values_identifier,
+                  keycolumn: :clean_fingerprint,
                   fieldmap: job.send(:fieldmap, mod),
                   delim: mod.collation_delim
               end

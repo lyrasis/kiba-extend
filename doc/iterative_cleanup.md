@@ -93,3 +93,5 @@ This line should be added before any `registry.transform`,
 Calling `RegistryData.register` (or whatever method triggers the
 registration of all your jobs) must be done ***after*** the
 `config_namespaces` are set.
+
+## The process

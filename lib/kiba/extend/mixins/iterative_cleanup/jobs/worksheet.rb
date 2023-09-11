@@ -18,16 +18,6 @@ module Kiba
               )
             end
 
-            def get_lookups(mod)
-              if mod.cleanup_done?
-                # todo
-              elsif mod.worksheet_sent_not_done?
-                # todo
-              else
-                []
-              end
-            end
-
             def get_xforms(mod)
               base = []
               if mod.respond_to?(:worksheet_pre_xforms)
@@ -42,8 +32,6 @@ module Kiba
 
             def xforms(mod)
               Kiba.job_segment do
-                transform Append::NilFields,
-                  fields: mod.worksheet_add_fields
                 transform Fingerprint::Add,
                   target: :clean_fingerprint,
                   fields: mod.fingerprint_fields
