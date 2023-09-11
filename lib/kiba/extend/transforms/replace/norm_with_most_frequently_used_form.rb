@@ -88,6 +88,8 @@ module Kiba
         #     {name: "Fields, J. T.", norm: "fieldsjt", pref: "Fields, J.T."},
         #   ]
         #   expect(result).to eq(expected)
+        #
+        # @since 4.0.0
         class NormWithMostFrequentlyUsedForm
           # @param normfield [Symbol] field in which normalized form is
           #   initially found. Will be replaced with most frequently used form,

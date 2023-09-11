@@ -21,6 +21,8 @@ module Kiba
         #         :marcid=>"008000411-3"}
         #   expect(results.length).to eq(1)
         #   expect(results.first).to eq(row)
+        #
+        # @since 4.0.0
         class ExtractOrgNameData < ExtractBaseNameData
           # @param name_type [String] to insert into name_type_target field
           # @param name_fields [Array<String>] MARC fields from which name data

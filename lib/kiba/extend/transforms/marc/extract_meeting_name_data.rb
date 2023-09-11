@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:todo Layout/LineLength
-
 require "marc"
 
 module Kiba
@@ -13,7 +11,8 @@ module Kiba
         #
         # @example
         #   # =001  008000714-7
-        #   # =711  2\$aAssociation of Child Psychology Annual Conference.$esponsor$evenue
+        #   # =711  2\$aAssociation of Child Psychology Annual Conference.
+        #   #          $esponsor$evenue
         #   rec = get_marc_record(index: 6)
         #   xform = Marc::ExtractMeetingNameData.new
         #   results = []
@@ -24,6 +23,8 @@ module Kiba
         #          :nametype=>"meeting", :role_code=>"",
         #          :role_term=>"sponsor|venue", :marcid=>"008000714-7"}
         #   expect(results.first).to eq(row)
+        #
+        # @since 4.0.0
         class ExtractMeetingNameData < ExtractBaseNameData
           # @param name_type [String] to insert into name_type_target field
           # @param name_fields [Array<String>] MARC fields from which name data
@@ -49,4 +50,3 @@ module Kiba
     end
   end
 end
-# rubocop:enable Layout/LineLength

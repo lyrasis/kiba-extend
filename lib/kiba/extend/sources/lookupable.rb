@@ -5,6 +5,8 @@ module Kiba
     module Sources
       # Mix-in module for extending sources so that they can be used
       #   (or not) as lookups in jobs
+      #
+      # @since 4.0.0
       module Lookupable
         # @return True
         def is_lookupable?

@@ -22,7 +22,6 @@ toc::[]
 
 == Planned for a future release
 === Breaking
-* Removal of nested `job.show_me`, `job.tell_me`, and `job.verbosity` config settings (deprecated in 3.2.0)
 * Removal of `sep` parameter in `Deduplicate::GroupedFieldValues` (deprecated in 3.3.0)
 * Removal of `multival` parameter in `Cspace::NormalizeForId`  (deprecated in 3.3.0)
 
@@ -30,10 +29,26 @@ toc::[]
 These changes are merged into the `main` branch, but have not been released. After merging pull requests (PRs) that are not immediately released into `main`, a tag is added appending the PR# to the current release. For example, if the release version/tag is `3.2.1`, and PR# 107 is merged without a new release, the state of the codebase after that merge will be tagged as `3.2.1.107`.
 
 === Breaking
+
+=== Added
+
+=== Changed
+
+=== Deleted
+
+=== Deprecated/Will break in a future version
+
+=== Dev
+
+== Releases
+
+=== 4.0.0 - 2023-09-11
+==== Breaking
+* Nested `job.show_me`, `job.tell_me`, and `job.verbosity` config settings have been removed. (They were deprecated in 3.2.0)
 * `Kiba::Common::Sources` and `Kiba::Common::Destinations` are no longer supported. To use an external source or destination class, subclass it in a `Kiba::Extend` source or destination class that extends `Kiba::Extend::Sourceable` or `Kiba::Extend::Destinationable` (PR#139)
 * Using a supplied file registry entry as the destination of a job raises an error, since the definition of a supplied entry is that it is not created by a job in the project. (PR#139)
 
-=== Added
+==== Added
 .New destinations
 * `Destinations::Marc` (PR#138)
 * `Destinations::Lambda` (PR#139)
@@ -78,13 +93,14 @@ These changes are merged into the `main` branch, but have not been released. Aft
 * Job duration report (added to normal and verbose job run) (PR#154, PR#157)
 * `IterativeCleanup` mixin (PR#180)
 
-=== Changed
+==== Changed
 * Transforms that take an `action` argument now mix in the new `ActionArgumentable` module and validate the argument values in a consistent way (PR#138)
 * Name and role term values extracted from MARC data by subclasses of `Transforms::Marc::ExtractBaseNameData` are run through `Utils::MarcNameCleaner` and `Utils::MarcRoleTermCleaner` (PR#141)
 * `Fingerprint::Add` now passes in default delim: U+241F / E2 90 9F / Symbol for Unit Separator (PR#155)
 * `Fingerprint::Decode` now passes in default delim (U+241F / E2 90 9F / Symbol for Unit Separator), and default prefix (fp) (PR#155)
 * `Fingerprint::FlagChanged` can now be passed an `ignore_fields` parameter indicating fields included in the fingerprint, but which should not be compared to current values and flagged (PR#168)
-=== Bugfixes
+
+==== Bugfixes
 * Fixes https://github.com/lyrasis/kiba-extend/issues/146[#46 - CombineValues::FullRecord with multi-sources can result in different values] (PR#147)
 * Fixes issue where job registry entry with a Marc source and CSV destination could not be used as a source or lookup in jobs (PR#137)
 * Fixes issue in `StringValue::ToArray` transform where delim=nil was not correctly being calculated (PR#145)
@@ -92,17 +108,13 @@ These changes are merged into the `main` branch, but have not been released. Aft
 * Fixes https://github.com/lyrasis/kiba-extend/issues/162[#162]: failure of `Delete::EmptyFields` transform when passed a source with no rows
 * Fixes https://github.com/lyrasis/kiba-extend/issues/179[#179]: renaming field with same fieldname in `from` and `to` resulted in the field being deleted (PR#181)
 
-=== Deleted
-
-=== Deprecated/Will break in a future version
+==== Deprecated/Will break in a future version
 * `sep` parameter will be replaced by `delim` in `CombineValues::FromFieldWithDelimiter` and `CombineValues::FullRecord` (PR#147)
 
-=== Dev
+==== Dev
 * Adds `Kiba::Extend::ErrMod` module to be included into `Kiba::Extend`-specific error classes. This allows us to subclass each application-specific error to the semantically appropriate Ruby exception class, while retaining the ability to identify/scope/rescue only application-specific errors. (PR#138)
 * Add `:info` method to `Kiba::Extend::ErrMod` module, to print error type, message, and backtrace to STDOUT in a consistent way. (PR#141)
 * Set up https://github.com/standardrb/standard[standardrb] linting, with Kristina's standard (ha) minor overrides (PR#169)
-
-== Releases
 
 === 3.3.0 - 2023-02-17
 

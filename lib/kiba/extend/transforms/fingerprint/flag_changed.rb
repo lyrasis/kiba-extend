@@ -140,6 +140,8 @@ module Kiba
           #   fingerprint that should NOT compared/flagged
           # @param empty_equals_nil [Boolean] whether to treat blank and nil
           #   values as equal
+          #
+          # @since 4.0.0
           def initialize(fingerprint:, source_fields:, target:, delim: "␟",
             prefix: "fp", delete_fp: false, ignore_fields: [],
             empty_equals_nil: true)

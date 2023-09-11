@@ -137,6 +137,8 @@ module Kiba
         #   )
         #   result = input.map{ |row| xform.process(row) }
         #   expect(result).to eq(expected)
+        #
+        # @since 4.0.0
         class PublicationStatement
           DEFAULT_FIELDNAMES = %i[pubplace publisher pubdate
             manplace manufacturer mandate]

@@ -142,6 +142,8 @@ module Kiba
         #     {id: "an"},
         #   ]
         #   expect(result).to eq(expected)
+        #
+        # @since 4.0.0
         class ByFieldValue
           # @param field [Symbol] Field whose values will be used for sort
           # @param blanks [:first, :last] Whether rows with blank values should

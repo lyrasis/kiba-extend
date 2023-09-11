@@ -5,6 +5,8 @@ module Kiba
     module Sources
       # Extension of `Kiba::Common::Sources::Enumerable`, adding methods
       #   supporting use as a source in registry entries
+      #
+      # @since 4.0.0
       class Enumerable < Kiba::Common::Sources::Enumerable
         extend Sourceable
 

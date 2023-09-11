@@ -27,6 +27,8 @@ module Kiba
         #     {foo: nil, bar: nil, baz: 'baz', boo: 'boo'}
         #   ]
         #   expect(result).to eq(expected)
+        #
+        # @since 4.0.0
         class EnsureConsistentFields
           def initialize
             @keys = {}

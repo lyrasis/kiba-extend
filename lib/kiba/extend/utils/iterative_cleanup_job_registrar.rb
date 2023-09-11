@@ -1,6 +1,10 @@
 # frozen_string_literal: true
 
 module Kiba::Extend::Utils
+  # Adds jobs defined by {Kiba::Extend::Mixins::IterativeCleanup} to
+  #   registry
+  #
+  # @since 4.0.0
   class IterativeCleanupJobRegistrar
     def self.call
       new.call

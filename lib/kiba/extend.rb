@@ -87,6 +87,7 @@ module Kiba
 
     # Ruby modules that serve as namespaces under which config
     #   modules for a project are nested.
+    # @since 4.0.0
     # @note You must set this from
     #   an individual project if you wish to use the
     #   {Kiba::Extend::Mixins::IterativeCleanup} mixin.
@@ -246,6 +247,7 @@ module Kiba
     # List of config modules in project namespaces set in {config_namespaces}
     #   setting
     #
+    # @since 4.0.0
     # @return [Array<Module>]
     def project_configs
       config_namespaces.map { |ns| get_config_mods(ns, ns.constants) }
@@ -255,39 +257,12 @@ module Kiba
 
     # @param ns [Module]
     # @param constants [Array<Symbol>]
+    # @since 4.0.0
     # @return [Array<Module>]
     def get_config_mods(ns, constants)
       constants.map { |const| ns.const_get(const) }
     end
     private_class_method :get_config_mods
-
-    # The section below is for backward comapatibility only
-
-    # @since 3.2.1
-    # Warns that nested job config settings will be deprecated and gives new
-    #   setting to use
-    def warn_unnested(name, value)
-      rep_by = "job_#{name}"
-      msg = "Kiba::Extend.config.job.#{name} setting has been replaced by "\
-        "Kiba::Extend.config.#{rep_by}"
-      warn("#{Kiba::Extend.warning_label}: #{msg}")
-      value
-    end
-
-    setting :job, reader: true do
-      setting :show_me, default: Kiba::Extend.job_show_me, reader: true,
-        constructor: proc { |name, value|
-                       Kiba::Extend.warn_unnested(name, value)
-                     }
-      setting :tell_me, default: Kiba::Extend.job_tell_me, reader: true,
-        constructor: proc { |name, value|
-                       Kiba::Extend.warn_unnested(name, value)
-                     }
-      setting :verbosity, default: Kiba::Extend.job_verbosity, reader: true,
-        constructor: proc { |name, value|
-                       Kiba::Extend.warn_unnested(name, value)
-                     }
-    end
 
     # Strips, collapses multiple spaces, removes terminal commas, strips again
     # removes "NULL"/treats as nilValue

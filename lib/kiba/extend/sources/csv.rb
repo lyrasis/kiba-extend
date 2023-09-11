@@ -5,6 +5,8 @@ module Kiba
     module Sources
       # Extension of `Kiba::Common::Sources::CSV`, adding methods that support
       #   use as a source in registry entries
+      #
+      # @since 4.0.0
       class CSV < Kiba::Common::Sources::CSV
         extend Lookupable
         extend Sourceable

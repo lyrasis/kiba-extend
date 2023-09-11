@@ -10,6 +10,8 @@ module Kiba
         #   on freetext, be wary of false positives (though the patterns and
         #   the duplicative anchoring matching tries to avoid matching
         #   subject-like terms
+        #
+        # @since 4.0.0
         class OrgNameChecker
           class << self
             def call(

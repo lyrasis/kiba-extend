@@ -59,6 +59,8 @@ module Kiba
           #     xform.process(rec){ |result| results << result }
           #   }
           #   expect(results.length).to eq(3)
+          #
+          # @since 4.0.0
           class ById
             include ActionArgumentable
 

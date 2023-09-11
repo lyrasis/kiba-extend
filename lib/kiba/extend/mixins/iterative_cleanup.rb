@@ -2,6 +2,8 @@
 
 # Mixin module for setting up iterative cleanup based on a source table.
 #
+# @since 4.0.0
+#
 # "Iterative cleanup" means the client may provide the worksheet more
 #   than once, or that you may need to produce a fresh worksheet for
 #   the client after a new database export is provided.

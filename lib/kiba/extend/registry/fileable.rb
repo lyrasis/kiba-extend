@@ -4,6 +4,8 @@ module Kiba
   module Extend
     module Registry
       # Mix-in module with shared methods for sources and destinations
+      #
+      # @since 4.0.0
       module Fileable
         # @param path [String, nil]
         def default_args(path = nil)

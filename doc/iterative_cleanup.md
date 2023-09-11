@@ -1,4 +1,4 @@
-# Using the iterative cleanup mixin
+# Using the `IterativeCleanup` mixin (added in v4.0.0)
 
 "Iterative cleanup" means the client may provide the worksheet more
 than once, or that you may need to produce a fresh worksheet for the
