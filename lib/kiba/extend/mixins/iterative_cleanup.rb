@@ -134,9 +134,11 @@ module Kiba
             .downcase
         end
 
-        # Delimiting string used to join collated-on-deduplicated values. Should be
-        #   distinct from normal application delimiters since the field values being
-        #   joined/split may contain the normal application delimiters.
+        # Delimiting string used to join collated-on-deduplicated
+        #   values. Should be distinct from normal application
+        #   delimiters since the field values being joined/split may
+        #   contain the normal application delimiters.
+        #
         # @note Optional: override in extending module after extending
         #
         # @return ["////"]
@@ -149,6 +151,7 @@ module Kiba
         #   matchpoint for merging cleaned up data back into the migration,
         #   and identifying whether a given value in subsequent worksheet
         #   iterations has been previously included in a worksheet
+        #
         # @note Optional: override in extending module after extending
         #
         # @return [:fingerprint]
@@ -159,6 +162,7 @@ module Kiba
         # Field used in cleanup process to deduplicate cleaned values and as
         #   a matchpoint for collating orig_values_identifiers (and,
         #   optionally, other field data) associated with cleaned values
+        #
         # @note Optional: override in extending module after extending
         #
         # @return [:clean_fingerprint]
@@ -179,8 +183,10 @@ module Kiba
 
         # DO NOT OVERRIDE REMAINING METHODS
 
-        # @return [Array<Symbol>] supplied registry entry job keys corresponding to
-        #   returned cleanup files
+        # @return [Array<Symbol>] supplied registry entry job keys
+        #   corresponding to returned cleanup files
+        #
+        # @note Do not override
         def returned_file_jobs
           returned_files.map.with_index do |filename, idx|
             "#{cleanup_base_name}__file_returned_#{idx}".to_sym
@@ -188,47 +194,63 @@ module Kiba
         end
 
         # @return [Boolean]
+        #
+        # @note Do not override
         def cleanup_done?
           true unless returned_files.empty?
         end
         alias_method :cleanup_done, :cleanup_done?
 
         # @return [Boolean]
+        #
+        # @note Do not override
         def worksheet_sent_not_done?
           true if !cleanup_done? && !provided_worksheets.empty?
         end
 
-        # @return [Symbol] the registry entry job key for the base job with cleanup
-        #   merged in
+        # @return [Symbol] the registry entry job key for the base job
+        #   with cleanup merged in
+        #
+        # @note Do not override
         def base_job_cleaned_job_key
           "#{cleanup_base_name}__base_job_cleaned".to_sym
         end
 
-        # @return [Symbol] the registry entry job key for the job that deduplicates
-        #   the clean base job data
+        # @return [Symbol] the registry entry job key for the job that
+        #   deduplicates the clean base job data
+        #
+        # @note Do not override
         def cleaned_uniq_job_key
           "#{cleanup_base_name}__cleaned_uniq".to_sym
         end
 
         # @return [Symbol] the registry entry job key for the worksheet prep job
+        #
+        # @note Do not override
         def worksheet_job_key
           "#{cleanup_base_name}__worksheet".to_sym
         end
 
-        # @return [Symbol] the registry entry job key for the compiled corrections job
+        # @return [Symbol] the registry entry job key for the compiled
+        # corrections job
+        #
+        # @note Do not override
         def returned_compiled_job_key
           "#{cleanup_base_name}__returned_compiled".to_sym
         end
 
-        # @return [Symbol] the registry entry job key for the compiled corrections job
+        # @return [Symbol] the registry entry job key for the compiled
+        # corrections job
+        #
+        # @note Do not override
         def corrections_job_key
           "#{cleanup_base_name}__corrections".to_sym
         end
 
-        # Appends "s" to module's `orig_values_identifier`. Used to manage joining,
-        #   collating, and splitting/exploding on this value, while clarifying that
-        #   any collated field in output is collated (not expected to be a single
-        #   value.
+        # Appends "s" to module's `orig_values_identifier`. Used to
+        #   manage joining, collating, and splitting/exploding on this
+        #   value, while clarifying that any collated field in output
+        #   is collated (not expected to be a single value.
         def collated_orig_values_id_field
           "#{orig_values_identifier}s".to_sym
         end
@@ -328,7 +350,10 @@ module Kiba
                   tags: mod.send(:job_tags)
                 }
               end
-              register mod.send(:job_name, mod.send(:returned_compiled_job_key)),
+              register mod.send(
+                :job_name,
+                mod.send(:returned_compiled_job_key)
+              ),
                 mod.send(:returned_compiled_job_hash, mod)
               register mod.send(:job_name, mod.send(:corrections_job_key)),
                 mod.send(:corrections_job_hash, mod)
