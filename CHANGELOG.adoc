@@ -90,6 +90,7 @@ These changes are merged into the `main` branch, but have not been released. Aft
 * Fixes issue in `StringValue::ToArray` transform where delim=nil was not correctly being calculated (PR#145)
 * Fixes https://github.com/lyrasis/kiba-extend/issues/152[#152]: Fingerprint::Decode error: Encoding::CompatibilityError: incompatible character encodings: ASCII-8BIT and UTF-8 (PR#153)
 * Fixes https://github.com/lyrasis/kiba-extend/issues/162[#162]: failure of `Delete::EmptyFields` transform when passed a source with no rows
+Fixes https://github.com/lyrasis/kiba-extend/issues/179[#179]: renaming field with same fieldname in `from` and `to` resulted in the field being deleted
 
 === Deleted
 
