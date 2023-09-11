@@ -505,7 +505,7 @@ values as equal</p>
       
       
         
-        <div class='inline'><p>2.7.1.65</p>
+        <div class='inline'><p>4.0.0</p>
 </div>
       
     </li>
@@ -518,8 +518,6 @@ values as equal</p>
       <pre class="lines">
 
 
-143
-144
 145
 146
 147
@@ -534,10 +532,12 @@ values as equal</p>
 156
 157
 158
-159</pre>
+159
+160
+161</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/flag_changed.rb', line 143</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/flag_changed.rb', line 145</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fingerprint:</span><span class='comma'>,</span> <span class='label'>source_fields:</span><span class='comma'>,</span> <span class='label'>target:</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>␟</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
   <span class='label'>prefix:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>fp</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>delete_fp:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>ignore_fields:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span>
@@ -622,18 +622,18 @@ values as equal</p>
       <pre class="lines">
 
 
-162
-163
 164
 165
 166
 167
 168
 169
-170</pre>
+170
+171
+172</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/flag_changed.rb', line 162</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/fingerprint/flag_changed.rb', line 164</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_target'>target</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>nil</span>
@@ -654,7 +654,7 @@ values as equal</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Sep 11 16:41:01 2023 by
+  Generated on Mon Sep 11 17:56:06 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

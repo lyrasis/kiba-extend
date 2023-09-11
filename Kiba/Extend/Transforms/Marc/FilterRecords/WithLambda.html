@@ -169,7 +169,7 @@
       
       
         
-        <div class='inline'><p>3.3.0</p>
+        <div class='inline'><p>4.0.0</p>
 </div>
       
     </li>
@@ -312,7 +312,7 @@ MARC record), that returns true or false</p>
       
       
         
-        <div class='inline'><p>3.3.0</p>
+        <div class='inline'><p>4.0.0</p>
 </div>
       
     </li>
@@ -325,15 +325,15 @@ MARC record), that returns true or false</p>
       <pre class="lines">
 
 
-47
-48
 49
 50
 51
-52</pre>
+52
+53
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/marc/filter_records/with_lambda.rb', line 47</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/marc/filter_records/with_lambda.rb', line 49</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>action:</span><span class='comma'>,</span> <span class='label'>lambda:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_validate_action_argument'>validate_action_argument</span><span class='lparen'>(</span><span class='id identifier rubyid_action'>action</span><span class='rparen'>)</span>
@@ -434,7 +434,7 @@ MARC record), that returns true or false</p>
       
       
         
-        <div class='inline'><p>3.3.0</p>
+        <div class='inline'><p>4.0.0</p>
 </div>
       
     </li>
@@ -447,8 +447,6 @@ MARC record), that returns true or false</p>
       <pre class="lines">
 
 
-57
-58
 59
 60
 61
@@ -457,10 +455,12 @@ MARC record), that returns true or false</p>
 64
 65
 66
-67</pre>
+67
+68
+69</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/marc/filter_records/with_lambda.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/marc/filter_records/with_lambda.rb', line 59</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_validate_lambda'>validate_lambda</span><span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_lambda_validated'>lambda_validated</span>
@@ -483,7 +483,7 @@ MARC record), that returns true or false</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Sep 11 16:41:02 2023 by
+  Generated on Mon Sep 11 17:56:07 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

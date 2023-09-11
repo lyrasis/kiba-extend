@@ -106,11 +106,14 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>For each occurrence of given field tag, outputs a row with the
+    <p>rubocop:disable Layout/LineLength
+For each occurrence of given field tag, outputs a row with the
   following columns: marcid, fullfield, and one column per specified
   subfield. If there are more than one occurrnces of a subfield
   within a given field, the multiple values are separated by the
   delim value</p>
+
+<p>rubocop:enable Layout/LineLength</p>
 
 
   </div>
@@ -166,7 +169,7 @@
       
       
         
-        <div class='inline'><p>3.3.0</p>
+        <div class='inline'><p>4.0.0</p>
 </div>
       
     </li>
@@ -332,7 +335,7 @@ recurring subfield</p>
       
       
         
-        <div class='inline'><p>3.3.0</p>
+        <div class='inline'><p>4.0.0</p>
 </div>
       
     </li>
@@ -345,18 +348,18 @@ recurring subfield</p>
       <pre class="lines">
 
 
-56
-57
-58
 59
 60
 61
 62
 63
-64</pre>
+64
+65
+66
+67</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/marc/extract_subfields_from_field.rb', line 56</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/marc/extract_subfields_from_field.rb', line 59</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>tag:</span><span class='comma'>,</span> <span class='label'>subfields:</span><span class='comma'>,</span>
   <span class='label'>id_target:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Marc.html" title="Kiba::Extend::Marc (module)">Marc</a></span></span><span class='period'>.</span><span class='id identifier rubyid_id_target_field'><span class='object_link'><a href="../../Marc.html#id_target_field-class_method" title="Kiba::Extend::Marc.id_target_field (method)">id_target_field</a></span></span><span class='comma'>,</span>
@@ -435,7 +438,7 @@ recurring subfield</p>
       
       
         
-        <div class='inline'><p>3.3.0</p>
+        <div class='inline'><p>4.0.0</p>
 </div>
       
     </li>
@@ -448,9 +451,6 @@ recurring subfield</p>
       <pre class="lines">
 
 
-68
-69
-70
 71
 72
 73
@@ -460,10 +460,13 @@ recurring subfield</p>
 77
 78
 79
-80</pre>
+80
+81
+82
+83</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/marc/extract_subfields_from_field.rb', line 68</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/marc/extract_subfields_from_field.rb', line 71</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_fields'>fields</span> <span class='op'>=</span> <span class='id identifier rubyid_select_fields'>select_fields</span><span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='id identifier rubyid_tag'>tag</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -488,7 +491,7 @@ recurring subfield</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Sep 11 16:41:02 2023 by
+  Generated on Mon Sep 11 17:56:07 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

@@ -301,7 +301,7 @@
         <span class='name'>sources</span>
       
       
-        <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>)</span>
+        <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>, <tt>:all</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>:all</tt>)</em>
@@ -381,7 +381,8 @@ in combined target field</p>
       
         &mdash;
         <div class='inline'><p>Whether to insert the
-source field name before its value in the combined value.</p>
+source field name before its value in the combined value. Since
+4.0.0</p>
 </div>
       
     </li>
@@ -401,7 +402,7 @@ source field name before its value in the combined value.</p>
         <div class='inline'><p>Whether to delete the source fields
 after combining their values into the target field. If target
 field name is the same as one of the source fields, the target
-field is not deleted.</p>
+field is not deleted. Since 4.0.0</p>
 </div>
       
     </li>
@@ -415,7 +416,6 @@ field is not deleted.</p>
       <pre class="lines">
 
 
-88
 89
 90
 91
@@ -427,10 +427,11 @@ field is not deleted.</p>
 97
 98
 99
-100</pre>
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/combine_values/from_fields_with_delimiter.rb', line 88</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/combine_values/from_fields_with_delimiter.rb', line 89</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>sources:</span> <span class='symbol'>:all</span><span class='comma'>,</span> <span class='label'>target:</span> <span class='symbol'>:index</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='kw'>nil</span><span class='comma'>,</span>
   <span class='label'>prepend_source_field_name:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>delete_sources:</span> <span class='kw'>true</span><span class='rparen'>)</span>
@@ -482,7 +483,6 @@ field is not deleted.</p>
       <pre class="lines">
 
 
-103
 104
 105
 106
@@ -501,10 +501,11 @@ field is not deleted.</p>
 119
 120
 121
-122</pre>
+122
+123</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/combine_values/from_fields_with_delimiter.rb', line 103</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/combine_values/from_fields_with_delimiter.rb', line 104</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_finalize_fields'>finalize_fields</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_fields_set'>fields_set</span>
@@ -536,7 +537,7 @@ field is not deleted.</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Sep 11 16:41:03 2023 by
+  Generated on Mon Sep 11 17:56:08 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

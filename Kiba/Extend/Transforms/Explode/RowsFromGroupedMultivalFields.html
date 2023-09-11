@@ -236,6 +236,21 @@ field get treated as empty string values.</li>
     
   </div>
 
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>4.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div>
 
@@ -379,6 +394,21 @@ number of values in grouped fields are not equal</p>
   
 </ul>
 
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>4.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -386,15 +416,15 @@ number of values in grouped fields are not equal</p>
       <pre class="lines">
 
 
-131
 132
 133
 134
 135
-136</pre>
+136
+137</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/explode/rows_from_grouped_multival_fields.rb', line 131</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/explode/rows_from_grouped_multival_fields.rb', line 132</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>placeholder:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fields'>fields</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
@@ -446,6 +476,21 @@ number of values in grouped fields are not equal</p>
   
 </ul>
 
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>4.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -453,7 +498,6 @@ number of values in grouped fields are not equal</p>
       <pre class="lines">
 
 
-139
 140
 141
 142
@@ -467,10 +511,11 @@ number of values in grouped fields are not equal</p>
 150
 151
 152
-153</pre>
+153
+154</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/explode/rows_from_grouped_multival_fields.rb', line 139</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/explode/rows_from_grouped_multival_fields.rb', line 140</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_set_other_fields'>set_other_fields</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_other_fields'>other_fields</span>
@@ -497,7 +542,7 @@ number of values in grouped fields are not equal</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Sep 11 16:41:03 2023 by
+  Generated on Mon Sep 11 17:56:08 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

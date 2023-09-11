@@ -206,6 +206,21 @@ first-encountered form is used</li>
     
   </div>
 
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>4.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div>
 
@@ -370,6 +385,21 @@ form of normalized value will be entered</p>
   
 </ul>
 
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>4.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -377,17 +407,17 @@ form of normalized value will be entered</p>
       <pre class="lines">
 
 
-99
-100
 101
 102
 103
 104
 105
-106</pre>
+106
+107
+108</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/replace/norm_with_most_frequently_used_form.rb', line 99</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/replace/norm_with_most_frequently_used_form.rb', line 101</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>normfield:</span><span class='comma'>,</span> <span class='label'>nonnormfield:</span><span class='comma'>,</span> <span class='label'>target:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@normfield</span> <span class='op'>=</span> <span class='id identifier rubyid_normfield'>normfield</span>
@@ -418,22 +448,46 @@ form of normalized value will be entered</p>
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>4.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-114
-115
 116
 117
 118
 119
-120</pre>
+120
+121
+122</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/replace/norm_with_most_frequently_used_form.rb', line 114</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/replace/norm_with_most_frequently_used_form.rb', line 116</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_close'>close</span>
   <span class='id identifier rubyid_populate_lookup'>populate_lookup</span>
@@ -456,20 +510,44 @@ form of normalized value will be entered</p>
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>4.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-108
-109
 110
 111
-112</pre>
+112
+113
+114</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/replace/norm_with_most_frequently_used_form.rb', line 108</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/replace/norm_with_most_frequently_used_form.rb', line 110</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_populate_data'>populate_data</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
@@ -486,7 +564,7 @@ form of normalized value will be entered</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Sep 11 16:41:03 2023 by
+  Generated on Mon Sep 11 17:56:08 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>

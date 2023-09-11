@@ -116,7 +116,8 @@
     
       
       <pre class="example code"><code><span class='comment'># =001  008000714-7
-</span><span class='comment'># =711  2\$aAssociation of Child Psychology Annual Conference.$esponsor$evenue
+</span><span class='comment'># =711  2\$aAssociation of Child Psychology Annual Conference.
+</span><span class='comment'>#          $esponsor$evenue
 </span><span class='id identifier rubyid_rec'>rec</span> <span class='op'>=</span> <span class='id identifier rubyid_get_marc_record'>get_marc_record</span><span class='lparen'>(</span><span class='label'>index:</span> <span class='int'>6</span><span class='rparen'>)</span>
 <span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Marc.html" title="Kiba::Extend::Transforms::Marc (module)">Marc</a></span></span><span class='op'>::</span><span class='const'>ExtractMeetingNameData</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Marc::ExtractMeetingNameData#initialize (method)">new</a></span></span>
 <span class='id identifier rubyid_results'>results</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -139,7 +140,7 @@
       
       
         
-        <div class='inline'><p>3.3.0</p>
+        <div class='inline'><p>4.0.0</p>
 </div>
       
     </li>
@@ -334,7 +335,7 @@ role term value</p>
       
       
         
-        <div class='inline'><p>3.3.0</p>
+        <div class='inline'><p>4.0.0</p>
 </div>
       
     </li>
@@ -347,7 +348,6 @@ role term value</p>
       <pre class="lines">
 
 
-37
 38
 39
 40
@@ -356,10 +356,11 @@ role term value</p>
 43
 44
 45
-46</pre>
+46
+47</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/marc/extract_meeting_name_data.rb', line 37</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/marc/extract_meeting_name_data.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>name_type:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>meeting</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
   <span class='label'>name_fields:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Marc.html" title="Kiba::Extend::Marc (module)">Marc</a></span></span><span class='period'>.</span><span class='id identifier rubyid_meeting_data_tags'><span class='object_link'><a href="../../Marc.html#meeting_data_tags-class_method" title="Kiba::Extend::Marc.meeting_data_tags (method)">meeting_data_tags</a></span></span><span class='comma'>,</span>
@@ -382,7 +383,7 @@ role term value</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Sep 11 16:41:02 2023 by
+  Generated on Mon Sep 11 17:56:07 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>
