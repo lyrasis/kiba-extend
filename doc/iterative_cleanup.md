@@ -93,3 +93,7 @@ This line should be added before any `registry.transform`,
 Calling `RegistryData.register` (or whatever method triggers the
 registration of all your jobs) must be done ***after*** the
 `config_namespaces` are set.
+
+## The process
+
+![Flowchart](https://github.com/lyrasis/kiba-extend/blob/main/doc/iterative_cleanup_flowchart.png?raw=true)

@@ -47,11 +47,6 @@ module Kiba
                 transform Append::NilFields,
                   fields: mod.worksheet_add_fields
 
-                # Add :fingerprint (orig values) before merging any cleanup in
-                transform Fingerprint::Add,
-                  target: :fingerprint,
-                  fields: mod.fingerprint_fields
-
                 if mod.cleanup_done? && lookups.any?(mod.corrections_job_key)
                   transform Fingerprint::MergeCorrected,
                     lookup: method(mod.corrections_job_key).call,

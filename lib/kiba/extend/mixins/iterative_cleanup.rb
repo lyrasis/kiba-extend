@@ -80,7 +80,6 @@ module Kiba
       #
       # - {collation_delim}
       # - {orig_values_identifier}
-      # - {cleaned_values_identifier}
       # - {cleaned_uniq_collate_fields}
       #
       # ## What extending this module does
@@ -163,17 +162,6 @@ module Kiba
         # @return [:fingerprint]
         def orig_values_identifier
           :fingerprint
-        end
-
-        # Field used in cleanup process to deduplicate cleaned values and as
-        #   a matchpoint for collating orig_values_identifiers (and,
-        #   optionally, other field data) associated with cleaned values
-        #
-        # @note Optional: override in extending module after extending
-        #
-        # @return [:clean_fingerprint]
-        def cleaned_values_identifier
-          :clean_fingerprint
         end
 
         # Fields from base_job_cleaned that will be deleted in cleaned_uniq,
@@ -385,7 +373,7 @@ module Kiba
               args: {mod: mod}
             },
             tags: mod.job_tags,
-            lookup_on: mod.cleaned_values_identifier
+            lookup_on: :clean_fingerprint
           }
         end
         private :base_job_cleaned_job_hash
