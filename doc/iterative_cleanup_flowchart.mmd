@@ -1,0 +1,67 @@
+graph TD;
+    base_job["`**base_job**`"]
+
+    BaseJobCleaned["`**BaseJobCleaned**
+    Adds mod.worksheet_add_fields
+    If cleanup done, merges from Corrections
+    Adds :clean_fingerprint`"]
+
+    CleanedUniq["`**CleanedUniq**
+    Deduplicate on :clean_fingerprint
+    Delete mod.cleaned_uniq_collate_fields
+    Collate mod.cleaned_uniq_collate_fields`"]
+
+    Worksheet["`**Worksheet**
+    Add :clean_fingerprint
+    If worksheet already provided:
+    - add :to_review
+    - populate it based on KnownWorksheetValues`"]
+
+    Returned[/"`**Returned_n**
+    One CSV per cleanup worksheet returned`"\]
+
+    Provided[/"`**Provided_n**
+    One CSV per cleanup worksheet provided to client`"\]
+
+    ReturnedCompiled["`**ReturnedCompiled**
+    Delete :to_review
+    Flag changes via :clean_fingerprint
+    Deletes fp_ fields`"]
+
+    KnownWorksheetValues[["`**KnownWorksheetValues**
+    Splits collated mod.orig_values_identifier
+    Produces list of uniq orig values in previous worksheets`"]]
+
+    Corrections["`**Corrections**
+    Keep only rows with corrections
+    Explode collated mod.orig_values_identifier
+    Deduplicate on full row match`"]
+
+    base_job-->BaseJobCleaned;
+
+    Corrections-.
+    "lkup on
+    mod.orig_values_identifier`" .->
+    BaseJobCleaned;
+
+    BaseJobCleaned-->CleanedUniq;
+
+    BaseJobCleaned--
+    "`lkup on
+    :clean_fingerprint`" -->
+    CleanedUniq;
+
+    CleanedUniq-->Worksheet;
+
+    Worksheet-.
+    "`returned
+    if cleanup done`" .->
+    Returned;
+
+    Returned-.->ReturnedCompiled;
+
+    ReturnedCompiled-.->Corrections;
+
+    Provided-->KnownWorksheetValues;
+
+    KnownWorksheetValues-->Worksheet;

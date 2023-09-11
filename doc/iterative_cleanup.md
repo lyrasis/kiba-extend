@@ -95,3 +95,5 @@ registration of all your jobs) must be done ***after*** the
 `config_namespaces` are set.
 
 ## The process
+
+![Flowchart](https://github.com/lyrasis/kiba-extend/blob/main/doc/iterative_cleanup_flowchart.png?raw=true)
