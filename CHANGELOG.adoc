@@ -76,6 +76,7 @@ These changes are merged into the `main` branch, but have not been released. Aft
 * Utility classes to clean ISBD trailing punctuation from name and role term values extracted from MARC data (PR#141)
 * `Kiba::Extend::Job.output?` convenience method (PR#150)
 * Job duration report (added to normal and verbose job run) (PR#154, PR#157)
+* `IterativeCleanup` mixin (PR#180)
 
 === Changed
 * Transforms that take an `action` argument now mix in the new `ActionArgumentable` module and validate the argument values in a consistent way (PR#138)

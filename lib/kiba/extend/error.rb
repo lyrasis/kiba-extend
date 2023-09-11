@@ -43,6 +43,14 @@ module Kiba
       end
     end
 
+    class IterativeCleanupSettingUndefinedError < StandardError
+      include Kiba::Extend::ErrMod
+    end
+
+    class ProjectSettingUndefinedError < StandardError
+      include Kiba::Extend::ErrMod
+    end
+
     class PathRequiredError < ArgumentError
       include Kiba::Extend::ErrMod
       def initialize(klass)
