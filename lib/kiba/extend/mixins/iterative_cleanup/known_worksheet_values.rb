@@ -3,34 +3,40 @@
 require "csv"
 require "set"
 
-module Kiba::Extend::Mixins::IterativeCleanup
-  class KnownWorksheetValues
-    def initialize(mod)
-      @mod = mod
-      @field = mod.collated_orig_values_id_field
-        .to_s
-      @values = nil
-    end
+module Kiba
+  module Extend
+    module Mixins
+      module IterativeCleanup
+        class KnownWorksheetValues
+          def initialize(mod)
+            @mod = mod
+            @field = mod.collated_orig_values_id_field
+              .to_s
+            @values = nil
+          end
 
-    def call
-      return values if values
+          def call
+            return values if values
 
-      @values = Set.new
-      mod.provided_worksheets.each { |file| extract_values(file) }
-      values
-    end
+            @values = Set.new
+            mod.provided_worksheets.each { |file| extract_values(file) }
+            values
+          end
 
-    private
+          private
 
-    attr_reader :mod, :field, :values
+          attr_reader :mod, :field, :values
 
-    def extract_values(file)
-      CSV.foreach(file, headers: true) do |row|
-        vals = row[field]
-        next if vals.blank?
+          def extract_values(file)
+            CSV.foreach(file, headers: true) do |row|
+              vals = row[field]
+              next if vals.blank?
 
-        vals.split(mod.collation_delim).each do |val|
-          values << val
+              vals.split(mod.collation_delim).each do |val|
+                values << val
+              end
+            end
+          end
         end
       end
     end
