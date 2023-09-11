@@ -341,8 +341,8 @@ module Kiba::Extend::Mixins::IterativeCleanup
 
   def base_job_cleaned_job_hash(mod)
     {
-      path: File.join(Kiba::Extend::Mixins::IterativeCleanup.datadir(mod), "working",
-        "#{mod.cleanup_base_name}_base_job_cleaned.csv"),
+      path: File.join(Kiba::Extend::Mixins::IterativeCleanup.datadir(mod),
+        "working", "#{mod.cleanup_base_name}_base_job_cleaned.csv"),
       creator: {
         callee: Kiba::Extend::Mixins::IterativeCleanup::BaseJobCleaned,
         args: {mod: mod}
@@ -355,8 +355,8 @@ module Kiba::Extend::Mixins::IterativeCleanup
 
   def cleaned_uniq_job_hash(mod)
     {
-      path: File.join(Kiba::Extend::Mixins::IterativeCleanup.datadir(mod), "working",
-        "#{mod.cleanup_base_name}_cleaned_uniq.csv"),
+      path: File.join(Kiba::Extend::Mixins::IterativeCleanup.datadir(mod),
+        "working", "#{mod.cleanup_base_name}_cleaned_uniq.csv"),
       creator: {
         callee: Kiba::Extend::Mixins::IterativeCleanup::CleanedUniq,
         args: {mod: mod}
@@ -368,8 +368,8 @@ module Kiba::Extend::Mixins::IterativeCleanup
 
   def worksheet_job_hash(mod)
     {
-      path: File.join(Kiba::Extend::Mixins::IterativeCleanup.datadir(mod), "to_client",
-        "#{mod.cleanup_base_name}_worksheet.csv"),
+      path: File.join(Kiba::Extend::Mixins::IterativeCleanup.datadir(mod),
+        "to_client", "#{mod.cleanup_base_name}_worksheet.csv"),
       creator: {
         callee: Kiba::Extend::Mixins::IterativeCleanup::Worksheet,
         args: {mod: mod}
