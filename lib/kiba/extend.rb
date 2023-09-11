@@ -76,7 +76,17 @@ module Kiba
       @loader.reload
     end
 
-    # @return [Hash] default options used for CSV sources/destinations
+    # Ruby modules that serve as namespaces under which config
+    #   modules for a project are nested.
+    # @note You must set this from
+    #   an individual project if you wish to use the
+    #   {Kiba::Extend::Mixins::IterativeCleanup} mixin.
+    # @return [Array<Module>]
+    setting :config_namespaces, default: [], reader: true
+
+    # Default options used for CSV sources/destinations
+    #
+    # @return [Hash]
     setting :csvopts,
       default: {headers: true, header_converters: %i[symbol downcase]}, reader: true
 
@@ -186,6 +196,24 @@ module Kiba
     # - :normal - reports what is running, from where, and the results
     # - :minimal - bare minimum
     setting :job_verbosity, default: :normal, reader: true
+
+    # List of config modules in project namespaces set in {config_namespaces}
+    #   setting
+    #
+    # @return [Array<Module>]
+    def project_configs
+      config_namespaces.map { |ns| get_config_mods(ns, ns.constants) }
+        .flatten
+        .select { |obj| obj.is_a?(Module) && obj.respond_to?(:config) }
+    end
+
+    # @param ns [Module]
+    # @param constants [Array<Symbol>]
+    # @return [Array<Module>]
+    def get_config_mods(ns, constants)
+      constants.map { |const| ns.const_get(const) }
+    end
+    private_class_method :get_config_mods
 
     # The section below is for backward comapatibility only
 
