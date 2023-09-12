@@ -69,6 +69,7 @@ module Kiba
       # - {collate_fields}
       # - {collation_delim}
       # - {clean_fingerprint_flag_ignore_fields}
+      # - {final_lookup_on_field}
       #
       # ## What extending this module does
       #
@@ -233,6 +234,18 @@ module Kiba
           nil
         end
 
+        # Will be used to set the `lookup_on` field in job registry
+        #   hash for `cleanup_base_name__final`, for merging
+        #   cleaned-up data back into the rest of your migration.
+        #   DEFAULT VALUE: value of orig_values_identifier
+        #
+        # @note Optional: override in extending module after extending
+        #
+        # @return [Symbol]
+        def final_lookup_on_field
+          orig_values_identifier
+        end
+
         # DO NOT OVERRIDE REMAINING METHODS
 
         # @return [Array<Symbol>] supplied registry entry job keys
@@ -307,6 +320,10 @@ module Kiba
         # @note Do not override
         def corrections_job_key
           "#{cleanup_base_name}__corrections".to_sym
+        end
+
+        def final_job_key
+          "#{cleanup_base_name}__final".to_sym
         end
 
         # Appends "s" to module's `orig_values_identifier`. Used to
@@ -417,6 +434,8 @@ module Kiba
               register mod.send(:job_name, mod.send(:corrections_job_key)),
                 mod.send(:corrections_job_hash, mod)
             end
+            register mod.send(:job_name, mod.send(:final_job_key)),
+              mod.send(:final_job_hash, mod)
           end
         end
         private :build_namespace
@@ -497,6 +516,21 @@ module Kiba
           }
         end
         private :corrections_job_hash
+
+        def final_job_hash(mod)
+          {
+            path: File.join(Kiba::Extend::Mixins::IterativeCleanup.datadir(mod),
+              "working", "#{mod.cleanup_base_name}_final.csv"),
+            creator: {
+              callee:
+              Kiba::Extend::Mixins::IterativeCleanup::Jobs::Final,
+              args: {mod: mod}
+            },
+            tags: mod.job_tags,
+            lookup_on: mod.final_lookup_on_field
+          }
+        end
+        private :final_job_hash
       end
     end
   end
