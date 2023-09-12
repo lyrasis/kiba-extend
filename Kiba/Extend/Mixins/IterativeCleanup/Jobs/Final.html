@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
-  Module: Kiba::Extend::Mixins::IterativeCleanup::Jobs::ReturnedCompiled
+  Module: Kiba::Extend::Mixins::IterativeCleanup::Jobs::Final
   
     &mdash; Kiba-Extend Documentation
   
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="../../../../../css/common.css" type="text/css" />
 
 <script type="text/javascript">
-  pathId = "Kiba::Extend::Mixins::IterativeCleanup::Jobs::ReturnedCompiled";
+  pathId = "Kiba::Extend::Mixins::IterativeCleanup::Jobs::Final";
   relpath = '../../../../../';
 </script>
 
@@ -36,10 +36,10 @@
       <div id="header">
         <div id="menu">
   
-    <a href="../../../../../_index.html">Index (R)</a> &raquo;
+    <a href="../../../../../_index.html">Index (F)</a> &raquo;
     <span class='title'><span class='object_link'><a href="../../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../../Mixins.html" title="Kiba::Extend::Mixins (module)">Mixins</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../IterativeCleanup.html" title="Kiba::Extend::Mixins::IterativeCleanup (module)">IterativeCleanup</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Jobs.html" title="Kiba::Extend::Mixins::IterativeCleanup::Jobs (module)">Jobs</a></span></span>
      &raquo; 
-    <span class="title">ReturnedCompiled</span>
+    <span class="title">Final</span>
   
 </div>
 
@@ -59,7 +59,7 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><h1>Module: Kiba::Extend::Mixins::IterativeCleanup::Jobs::ReturnedCompiled
+      <div id="content"><h1>Module: Kiba::Extend::Mixins::IterativeCleanup::Jobs::Final
   
   
   
@@ -78,7 +78,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/kiba/extend/mixins/iterative_cleanup/jobs/returned_compiled.rb</dd>
+    <dd>lib/kiba/extend/mixins/iterative_cleanup/jobs/final.rb</dd>
   </dl>
   
 </div>
@@ -246,23 +246,19 @@
 28
 29
 30
-31
-32
-33</pre>
+31</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup/jobs/returned_compiled.rb', line 21</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup/jobs/final.rb', line 21</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_xforms'>get_xforms</span><span class='lparen'>(</span><span class='id identifier rubyid_mod'>mod</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_base'>base</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
-  <span class='kw'>if</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:returned_compiled_pre_xforms</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_base'>base</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_returned_compiled_pre_xforms'>returned_compiled_pre_xforms</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:final_pre_xforms</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_base'>base</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_final_pre_xforms'>final_pre_xforms</span>
   <span class='kw'>end</span>
-
   <span class='id identifier rubyid_base'>base</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_xforms'>xforms</span><span class='lparen'>(</span><span class='id identifier rubyid_mod'>mod</span><span class='rparen'>)</span>
-
-  <span class='kw'>if</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:returned_compiled_post_xforms</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_base'>base</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_returned_compiled_post_xforms'>returned_compiled_post_xforms</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:final_post_xforms</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_base'>base</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_final_post_xforms'>final_post_xforms</span>
   <span class='kw'>end</span>
   <span class='id identifier rubyid_base'>base</span>
 <span class='kw'>end</span></pre>
@@ -321,13 +317,13 @@
 19</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup/jobs/returned_compiled.rb', line 11</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup/jobs/final.rb', line 11</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_job'>job</span><span class='lparen'>(</span><span class='label'>mod:</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="../../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Jobs.html" title="Kiba::Extend::Jobs (module)">Jobs</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Jobs/Job.html" title="Kiba::Extend::Jobs::Job (class)">Job</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../../Jobs/BaseJob.html#initialize-instance_method" title="Kiba::Extend::Jobs::BaseJob#initialize (method)">new</a></span></span><span class='lparen'>(</span>
     <span class='label'>files:</span> <span class='lbrace'>{</span>
-      <span class='label'>source:</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_returned_file_jobs'>returned_file_jobs</span><span class='comma'>,</span>
-      <span class='label'>destination:</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_returned_compiled_job_key'>returned_compiled_job_key</span>
+      <span class='label'>source:</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_base_job_cleaned_job_key'>base_job_cleaned_job_key</span><span class='comma'>,</span>
+      <span class='label'>destination:</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_final_job_key'>final_job_key</span>
     <span class='rbrace'>}</span><span class='comma'>,</span>
     <span class='label'>transformer:</span> <span class='id identifier rubyid_get_xforms'>get_xforms</span><span class='lparen'>(</span><span class='id identifier rubyid_mod'>mod</span><span class='rparen'>)</span>
   <span class='rparen'>)</span>
@@ -376,59 +372,19 @@
       <pre class="lines">
 
 
+33
+34
 35
 36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57
-58
-59</pre>
+37</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup/jobs/returned_compiled.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup/jobs/final.rb', line 33</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_xforms'>xforms</span><span class='lparen'>(</span><span class='id identifier rubyid_mod'>mod</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="../../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='period'>.</span><span class='id identifier rubyid_job_segment'><span class='object_link'><a href="../../../Jobs/JobSegmenter.html#job_segment-instance_method" title="Kiba::Extend::Jobs::JobSegmenter#job_segment (method)">job_segment</a></span></span> <span class='kw'>do</span>
-    <span class='id identifier rubyid_transform'>transform</span> <span class='const'>Delete</span><span class='op'>::</span><span class='const'>Fields</span><span class='comma'>,</span>
-      <span class='label'>fields:</span> <span class='symbol'>:to_review</span>
-
-    <span class='kw'>if</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_clean_fingerprint_flag_ignore_fields'>clean_fingerprint_flag_ignore_fields</span>
-      <span class='id identifier rubyid_transform'>transform</span> <span class='const'>Fingerprint</span><span class='op'>::</span><span class='const'>FlagChanged</span><span class='comma'>,</span>
-        <span class='label'>fingerprint:</span> <span class='symbol'>:clean_fingerprint</span><span class='comma'>,</span>
-        <span class='label'>source_fields:</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_fingerprint_fields'>fingerprint_fields</span><span class='comma'>,</span>
-        <span class='label'>delete_fp:</span> <span class='kw'>true</span><span class='comma'>,</span>
-        <span class='label'>target:</span> <span class='symbol'>:corrected</span><span class='comma'>,</span>
-        <span class='label'>ignore_fields:</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_clean_fingerprint_flag_ignore_fields'>clean_fingerprint_flag_ignore_fields</span>
-    <span class='kw'>else</span>
-      <span class='id identifier rubyid_transform'>transform</span> <span class='const'>Fingerprint</span><span class='op'>::</span><span class='const'>FlagChanged</span><span class='comma'>,</span>
-        <span class='label'>fingerprint:</span> <span class='symbol'>:clean_fingerprint</span><span class='comma'>,</span>
-        <span class='label'>source_fields:</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_fingerprint_fields'>fingerprint_fields</span><span class='comma'>,</span>
-        <span class='label'>delete_fp:</span> <span class='kw'>true</span><span class='comma'>,</span>
-        <span class='label'>target:</span> <span class='symbol'>:corrected</span>
-    <span class='kw'>end</span>
-
-    <span class='id identifier rubyid_transform'>transform</span> <span class='const'>Delete</span><span class='op'>::</span><span class='const'>FieldnamesStartingWith</span><span class='comma'>,</span>
-      <span class='label'>prefix:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>fp_</span><span class='tstring_end'>&quot;</span></span>
-    <span class='id identifier rubyid_transform'>transform</span> <span class='const'>Clean</span><span class='op'>::</span><span class='const'>EnsureConsistentFields</span>
-  <span class='kw'>end</span>
+    <span class='comment'># passthrough - pre and post mean nothing here
+</span>  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>

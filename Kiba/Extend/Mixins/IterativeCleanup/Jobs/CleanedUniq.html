@@ -352,11 +352,11 @@
   <span class='const'><span class='object_link'><a href="../../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='period'>.</span><span class='id identifier rubyid_job_segment'><span class='object_link'><a href="../../../Jobs/JobSegmenter.html#job_segment-instance_method" title="Kiba::Extend::Jobs::JobSegmenter#job_segment (method)">job_segment</a></span></span> <span class='kw'>do</span>
     <span class='id identifier rubyid_job'>job</span> <span class='op'>=</span> <span class='id identifier rubyid_bind'>bind</span><span class='period'>.</span><span class='id identifier rubyid_receiver'>receiver</span>
 
+    <span class='id identifier rubyid_transform'>transform</span> <span class='const'>Delete</span><span class='op'>::</span><span class='const'>Fields</span><span class='comma'>,</span>
+      <span class='label'>fields:</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_all_collate_fields'>all_collate_fields</span>
     <span class='id identifier rubyid_transform'>transform</span> <span class='const'>Deduplicate</span><span class='op'>::</span><span class='const'>Table</span><span class='comma'>,</span>
       <span class='label'>field:</span> <span class='symbol'>:clean_fingerprint</span><span class='comma'>,</span>
       <span class='label'>delete_field:</span> <span class='kw'>false</span>
-    <span class='id identifier rubyid_transform'>transform</span> <span class='const'>Delete</span><span class='op'>::</span><span class='const'>Fields</span><span class='comma'>,</span>
-      <span class='label'>fields:</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_all_collate_fields'>all_collate_fields</span>
     <span class='id identifier rubyid_transform'>transform</span> <span class='const'>Merge</span><span class='op'>::</span><span class='const'>MultiRowLookup</span><span class='comma'>,</span>
       <span class='label'>lookup:</span> <span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_base_job_cleaned_job_key'>base_job_cleaned_job_key</span><span class='rparen'>)</span><span class='comma'>,</span>
       <span class='label'>keycolumn:</span> <span class='symbol'>:clean_fingerprint</span><span class='comma'>,</span>
@@ -768,7 +768,7 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Sep 12 19:39:34 2023 by
+  Generated on Tue Sep 12 23:45:55 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>
