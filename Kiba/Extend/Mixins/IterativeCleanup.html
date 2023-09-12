@@ -130,25 +130,8 @@
 </span><span class='comment'>#   iterations has been previously included in a worksheet**
 </span><span class='comment'># base_job
 </span><span class='comment'>#
-</span><span class='comment'># @return [Array&lt;Symbol&gt;] tags assigned to all jobs generated
-</span><span class='comment'>#  by extending IterativeCleanup
-</span><span class='comment'># job_tags
-</span><span class='comment'>#
-</span><span class='comment'># @return [Array&lt;Symbol&gt;] nil/empty fields to be added to worksheet
-</span><span class='comment'># worksheet_add_fields
-</span><span class='comment'>#
-</span><span class='comment'># @return [Array&lt;Symbol&gt;] order of fields (in worksheet
-</span><span class='comment'>#   output). Will be used to set destination special
-</span><span class='comment'>#   options/initial headers on the worksheet job.
-</span><span class='comment'>#   worksheet_field_order
-</span><span class='comment'>#
 </span><span class='comment'># @return [Array&lt;Symbol&gt;] fields included in the fingerprint value
 </span><span class='comment'># fingerprint_fields
-</span><span class='comment'>#
-</span><span class='comment'># @return [Symbol, Array&lt;Symbol&gt;, nil] field or fields included in
-</span><span class='comment'>#   the fingerprint value that should be ignored when flagging
-</span><span class='comment'>#   changes
-</span><span class='comment'># fingerprint_flag_ignore_fields
 </span></code></pre>
 
 <h3 id="then-extend-this-module">Then, extend this module</h3>
@@ -157,14 +140,19 @@
 
 <h3 id="optional-settings-methods-in-extending-module">Optional settings/methods in extending module</h3>
 
-<p>Default values for the following methods defined in this mixin
+<p>Default values for the following methods are defined in this mixin
   module. If you want to override the values, define these methods
   in your config module after extending this module.</p>
 
 <ul>
-<li><span class='object_link'><a href="#collation_delim-instance_method" title="Kiba::Extend::Mixins::IterativeCleanup#collation_delim (method)">#collation_delim</a></span></li>
+<li><span class='object_link'><a href="#cleanup_base_name-instance_method" title="Kiba::Extend::Mixins::IterativeCleanup#cleanup_base_name (method)">#cleanup_base_name</a></span></li>
 <li><span class='object_link'><a href="#orig_values_identifier-instance_method" title="Kiba::Extend::Mixins::IterativeCleanup#orig_values_identifier (method)">#orig_values_identifier</a></span></li>
-<li><span class='object_link'><a href="#cleaned_uniq_collate_fields-instance_method" title="Kiba::Extend::Mixins::IterativeCleanup#cleaned_uniq_collate_fields (method)">#cleaned_uniq_collate_fields</a></span></li>
+<li><span class='object_link'><a href="#job_tags-instance_method" title="Kiba::Extend::Mixins::IterativeCleanup#job_tags (method)">#job_tags</a></span></li>
+<li><span class='object_link'><a href="#worksheet_add_fields-instance_method" title="Kiba::Extend::Mixins::IterativeCleanup#worksheet_add_fields (method)">#worksheet_add_fields</a></span></li>
+<li><span class='object_link'><a href="#worksheet_field_order-instance_method" title="Kiba::Extend::Mixins::IterativeCleanup#worksheet_field_order (method)">#worksheet_field_order</a></span></li>
+<li><span class='object_link'><a href="#collate_fields-instance_method" title="Kiba::Extend::Mixins::IterativeCleanup#collate_fields (method)">#collate_fields</a></span></li>
+<li><span class='object_link'><a href="#collation_delim-instance_method" title="Kiba::Extend::Mixins::IterativeCleanup#collation_delim (method)">#collation_delim</a></span></li>
+<li><span class='object_link'><a href="#clean_fingerprint_flag_ignore_fields-instance_method" title="Kiba::Extend::Mixins::IterativeCleanup#clean_fingerprint_flag_ignore_fields (method)">#clean_fingerprint_flag_ignore_fields</a></span></li>
 </ul>
 
 <h2 id="what-extending-this-module-does">What extending this module does</h2>
@@ -310,6 +298,29 @@ base directory. <strong>Define actual values in client config file.</strong></li
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#all_collate_fields-instance_method" title="#all_collate_fields (instance method)">#<strong>all_collate_fields</strong>  &#x21d2; Array&lt;Symbol&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Ensures that orig_values_identifier is always included in collated   fields.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#base_job_cleaned_job_key-instance_method" title="#base_job_cleaned_job_key (instance method)">#<strong>base_job_cleaned_job_key</strong>  &#x21d2; Symbol </a>
     
 
@@ -333,7 +344,7 @@ base directory. <strong>Define actual values in client config file.</strong></li
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#cleaned_uniq_collate_fields-instance_method" title="#cleaned_uniq_collate_fields (instance method)">#<strong>cleaned_uniq_collate_fields</strong>  &#x21d2; Array&lt;:fingerprint&gt; </a>
+      <a href="#clean_fingerprint_flag_ignore_fields-instance_method" title="#clean_fingerprint_flag_ignore_fields (instance method)">#<strong>clean_fingerprint_flag_ignore_fields</strong>  &#x21d2; nil, ... </a>
     
 
     
@@ -347,7 +358,7 @@ base directory. <strong>Define actual values in client config file.</strong></li
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Fields from base_job_cleaned that will be deleted in cleaned_uniq,   and then merged back into the deduplicated data from   base_job_cleaned.</p>
+    <span class="summary_desc"><div class='inline'><p>Field(s) included in <code>fingerprint_fields</code> setting that   should be ignored when identifying changed/corrected   values in returned worksheets.</p>
 </div></span>
   
 </li>
@@ -426,6 +437,29 @@ base directory. <strong>Define actual values in client config file.</strong></li
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#collate_fields-instance_method" title="#collate_fields (instance method)">#<strong>collate_fields</strong>  &#x21d2; Array&lt;:fingerprint&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Fields from base_job_cleaned that will be deleted in   cleaned_uniq, and then merged back into the deduplicated   data from base_job_cleaned.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#collated_orig_values_id_field-instance_method" title="#collated_orig_values_id_field (instance method)">#<strong>collated_orig_values_id_field</strong>  &#x21d2; Object </a>
     
 
@@ -449,7 +483,7 @@ base directory. <strong>Define actual values in client config file.</strong></li
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#collation_delim-instance_method" title="#collation_delim (instance method)">#<strong>collation_delim</strong>  &#x21d2; &quot;////&quot; </a>
+      <a href="#collation_delim-instance_method" title="#collation_delim (instance method)">#<strong>collation_delim</strong>  &#x21d2; String </a>
     
 
     
@@ -463,7 +497,7 @@ base directory. <strong>Define actual values in client config file.</strong></li
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Delimiting string used to join collated-on-deduplicated   values.</p>
+    <span class="summary_desc"><div class='inline'><p>Delimiting string used to join collated-on-deduplication   values.</p>
 </div></span>
   
 </li>
@@ -495,7 +529,7 @@ base directory. <strong>Define actual values in client config file.</strong></li
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#orig_values_identifier-instance_method" title="#orig_values_identifier (instance method)">#<strong>orig_values_identifier</strong>  &#x21d2; :fingerprint </a>
+      <a href="#job_tags-instance_method" title="#job_tags (instance method)">#<strong>job_tags</strong>  &#x21d2; Array&lt;Symbol&gt; </a>
     
 
     
@@ -509,7 +543,30 @@ base directory. <strong>Define actual values in client config file.</strong></li
   
 
   
-    <span class="summary_desc"><div class='inline'><p>Field in base job that combines/identifies the original field   values entering the cleanup process.</p>
+    <span class="summary_desc"><div class='inline'><p>Tags assigned to all jobs generated by IterativeCleanup for this   module.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#orig_values_identifier-instance_method" title="#orig_values_identifier (instance method)">#<strong>orig_values_identifier</strong>  &#x21d2; Symbol </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Field in base job that combines/identifies the original   field values entering the cleanup process.</p>
 </div></span>
   
 </li>
@@ -578,6 +635,52 @@ base directory. <strong>Define actual values in client config file.</strong></li
 
   
     <span class="summary_desc"><div class='inline'><p>Supplied registry entry job keys corresponding to returned cleanup files.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#worksheet_add_fields-instance_method" title="#worksheet_add_fields (instance method)">#<strong>worksheet_add_fields</strong>  &#x21d2; Array&lt;Symbol&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Nil/empty fields to be added to worksheet.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#worksheet_field_order-instance_method" title="#worksheet_field_order (instance method)">#<strong>worksheet_field_order</strong>  &#x21d2; Array&lt;Symbol&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Order of fields (in worksheet output).</p>
 </div></span>
   
 </li>
@@ -689,22 +792,22 @@ base directory. <strong>Define actual values in client config file.</strong></li
       <pre class="lines">
 
 
-264
-265
-266
-267
-268
-269
-270
-271
-272
-273
-274
-275
-276</pre>
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 264</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 329</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_datadir'>datadir</span><span class='lparen'>(</span><span class='id identifier rubyid_mod'>mod</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_dir'>dir</span> <span class='op'>=</span> <span class='kw'>nil</span>
@@ -763,14 +866,14 @@ base directory. <strong>Define actual values in client config file.</strong></li
       <pre class="lines">
 
 
-122
-123
-124
-125
-126</pre>
+110
+111
+112
+113
+114</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 122</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 110</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_extended'>extended</span><span class='lparen'>(</span><span class='id identifier rubyid_mod'>mod</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_check_required_settings'>check_required_settings</span><span class='lparen'>(</span><span class='id identifier rubyid_mod'>mod</span><span class='rparen'>)</span>
@@ -789,7 +892,83 @@ base directory. <strong>Define actual values in client config file.</strong></li
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="base_job_cleaned_job_key-instance_method">
+  <h3 class="signature first" id="all_collate_fields-instance_method">
+  
+    #<strong>all_collate_fields</strong>  &#x21d2; <tt>Array&lt;Symbol&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>Override at your peril</p>
+</div>
+  </div>
+
+<p>Ensures that orig_values_identifier is always included in collated
+  fields</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>4.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+269
+270
+271</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 269</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_all_collate_fields'>all_collate_fields</span>
+  <span class='lbracket'>[</span><span class='id identifier rubyid_collate_fields'>collate_fields</span><span class='comma'>,</span> <span class='id identifier rubyid_orig_values_identifier'>orig_values_identifier</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="base_job_cleaned_job_key-instance_method">
   
     #<strong>base_job_cleaned_job_key</strong>  &#x21d2; <tt>Symbol</tt> 
   
@@ -854,12 +1033,12 @@ with cleanup merged in</p>
       <pre class="lines">
 
 
-209
-210
-211</pre>
+277
+278
+279</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 209</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 277</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_base_job_cleaned_job_key'>base_job_cleaned_job_key</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_cleanup_base_name'>cleanup_base_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>__base_job_cleaned</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
@@ -870,9 +1049,9 @@ with cleanup merged in</p>
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="cleaned_uniq_collate_fields-instance_method">
+  <h3 class="signature " id="clean_fingerprint_flag_ignore_fields-instance_method">
   
-    #<strong>cleaned_uniq_collate_fields</strong>  &#x21d2; <tt>Array&lt;:fingerprint&gt;</tt> 
+    #<strong>clean_fingerprint_flag_ignore_fields</strong>  &#x21d2; <tt>nil</tt>, ... 
   
 
   
@@ -887,10 +1066,33 @@ with cleanup merged in</p>
 </div>
   </div>
 
-<p>Fields from base_job_cleaned that will be deleted in cleaned_uniq,
-  and then merged back into the deduplicated data from
-  base_job_cleaned. I.e., fields whose values will be collated
-  into multivalued fields on the deduplicated values</p>
+<p>Field(s) included in <code>fingerprint_fields</code> setting that
+  should be ignored when identifying changed/corrected
+  values in returned worksheets. If a Symbol or Array of
+  Symbols is given, these are passed as the value of
+  <code>ignore_fields</code> when
+  <span class='object_link'><a href="../Transforms/Fingerprint/FlagChanged.html" title="Kiba::Extend::Transforms::Fingerprint::FlagChanged (class)">Transforms::Fingerprint::FlagChanged</a></span> is
+  called.  DEFAULT VALUE: <code>nil</code></p>
+
+<p>This is included because of two situations that I&#39;ve run into:</p>
+
+<ul>
+<li>I accidentally included a field I shouldn&#39;t have in the
+fingerprint and sent a worksheet to the client. For
+example, maybe I put <code>:client_cleanup_process_notes</code> in
+the <code>worksheet_add_fields</code> setting, told the client these
+notes are for their use only and will not be considered
+&quot;corrections&quot; or merged into the migration or future
+cleanup iterations, but I forgot to subtract this field
+from my <code>fingerprint_fields</code> setting.</li>
+<li>I purposefully included a field (e.g. <code>:rowid</code>) present in
+my <code>base_job</code> in <code>fingerprint_fields</code> to ensure unique
+matchpoints, but didn&#39;t want to include that field in the
+client worksheet. If I don&#39;t ignore this field in flagging
+changes, <code>:rowid</code> in all returned worksheets is <code>nil</code>,
+which does not match the fingerprinted <code>:rowid</code> value, and
+thus <strong>every row</strong> is a changed row.</li>
+</ul>
 
 
   </div>
@@ -903,7 +1105,7 @@ with cleanup merged in</p>
     <li>
       
       
-        <span class='type'>(<tt>Array&lt;:fingerprint&gt;</tt>)</span>
+        <span class='type'>(<tt>nil</tt>, <tt>Symbol</tt>, <tt>Array&lt;Symbol&gt;</tt>)</span>
       
       
       
@@ -932,15 +1134,15 @@ with cleanup merged in</p>
       <pre class="lines">
 
 
-174
-175
-176</pre>
+232
+233
+234</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 174</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 232</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_cleaned_uniq_collate_fields'>cleaned_uniq_collate_fields</span>
-  <span class='lbracket'>[</span><span class='id identifier rubyid_orig_values_identifier'>orig_values_identifier</span><span class='rbracket'>]</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_clean_fingerprint_flag_ignore_fields'>clean_fingerprint_flag_ignore_fields</span>
+  <span class='kw'>nil</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1013,12 +1215,12 @@ deduplicates the clean base job data</p>
       <pre class="lines">
 
 
-217
-218
-219</pre>
+285
+286
+287</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 217</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 285</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cleaned_uniq_job_key'>cleaned_uniq_job_key</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_cleanup_base_name'>cleanup_base_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>__cleaned_uniq</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
@@ -1039,8 +1241,15 @@ deduplicates the clean base job data</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Used as the namespace for auto-generated registry entries and the
-  base for output file names. By default, this will be the name of
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>Optional: override in extending module after extending</p>
+</div>
+  </div>
+
+<p>Used as the namespace for auto-generated registry entries and the
+  base for output file names. DEFAULT VALUE: the name of
   the extending module, converted to snake case.</p>
 
 
@@ -1083,15 +1292,15 @@ deduplicates the clean base job data</p>
       <pre class="lines">
 
 
-135
-136
-137
-138
-139
-140</pre>
+125
+126
+127
+128
+129
+130</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 135</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 125</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cleanup_base_name'>cleanup_base_name</span>
   <span class='id identifier rubyid_name'>name</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>::</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span>
@@ -1167,15 +1376,94 @@ deduplicates the clean base job data</p>
       <pre class="lines">
 
 
-193
-194
-195</pre>
+251
+252
+253</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 193</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 251</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cleanup_done?'>cleanup_done?</span>
   <span class='kw'>true</span> <span class='kw'>unless</span> <span class='id identifier rubyid_returned_files'>returned_files</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="collate_fields-instance_method">
+  
+    #<strong>collate_fields</strong>  &#x21d2; <tt>Array&lt;:fingerprint&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>Optional: override in extending module after extending</p>
+</div>
+  </div>
+
+<p>Fields from base_job_cleaned that will be deleted in
+  cleaned_uniq, and then merged back into the deduplicated
+  data from base_job_cleaned. I.e., fields whose values will
+  be collated into multivalued fields on the deduplicated
+  values. DEFAULT VALUE: <code>[]</code></p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;:fingerprint&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>4.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+187
+188
+189</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 187</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_collate_fields'>collate_fields</span>
+  <span class='lbracket'>[</span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1225,12 +1513,12 @@ deduplicates the clean base job data</p>
       <pre class="lines">
 
 
-248
-249
-250</pre>
+316
+317
+318</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 248</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 316</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_collated_orig_values_id_field'>collated_orig_values_id_field</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_orig_values_identifier'>orig_values_identifier</span><span class='embexpr_end'>}</span><span class='tstring_content'>s</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
@@ -1243,7 +1531,7 @@ deduplicates the clean base job data</p>
       <div class="method_details ">
   <h3 class="signature " id="collation_delim-instance_method">
   
-    #<strong>collation_delim</strong>  &#x21d2; <tt>"////"</tt> 
+    #<strong>collation_delim</strong>  &#x21d2; <tt>String</tt> 
   
 
   
@@ -1258,10 +1546,10 @@ deduplicates the clean base job data</p>
 </div>
   </div>
 
-<p>Delimiting string used to join collated-on-deduplicated
+<p>Delimiting string used to join collated-on-deduplication
   values. Should be distinct from normal application
   delimiters since the field values being joined/split may
-  contain the normal application delimiters.</p>
+  contain the normal application delimiters. DEFAULT VALUE: <code>&quot;////&quot;</code></p>
 
 
   </div>
@@ -1274,7 +1562,7 @@ deduplicates the clean base job data</p>
     <li>
       
       
-        <span class='type'>(<tt>"////"</tt>)</span>
+        <span class='type'>(<tt>String</tt>)</span>
       
       
       
@@ -1303,12 +1591,12 @@ deduplicates the clean base job data</p>
       <pre class="lines">
 
 
-150
-151
-152</pre>
+199
+200
+201</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 150</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 199</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_collation_delim'>collation_delim</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>////</span><span class='tstring_end'>&quot;</span></span>
@@ -1382,12 +1670,12 @@ deduplicates the clean base job data</p>
       <pre class="lines">
 
 
-240
-241
-242</pre>
+308
+309
+310</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 240</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 308</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_corrections_job_key'>corrections_job_key</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_cleanup_base_name'>cleanup_base_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>__corrections</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
@@ -1398,9 +1686,9 @@ deduplicates the clean base job data</p>
 </div>
     
       <div class="method_details ">
-  <h3 class="signature " id="orig_values_identifier-instance_method">
+  <h3 class="signature " id="job_tags-instance_method">
   
-    #<strong>orig_values_identifier</strong>  &#x21d2; <tt>:fingerprint</tt> 
+    #<strong>job_tags</strong>  &#x21d2; <tt>Array&lt;Symbol&gt;</tt> 
   
 
   
@@ -1415,11 +1703,8 @@ deduplicates the clean base job data</p>
 </div>
   </div>
 
-<p>Field in base job that combines/identifies the original field
-  values entering the cleanup process. This field is used as a
-  matchpoint for merging cleaned up data back into the migration,
-  and identifying whether a given value in subsequent worksheet
-  iterations has been previously included in a worksheet</p>
+<p>Tags assigned to all jobs generated by IterativeCleanup for this
+  module. DEFAULT VALUE: <code>[]</code> (empty array)</p>
 
 
   </div>
@@ -1432,7 +1717,7 @@ deduplicates the clean base job data</p>
     <li>
       
       
-        <span class='type'>(<tt>:fingerprint</tt>)</span>
+        <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>)</span>
       
       
       
@@ -1461,12 +1746,92 @@ deduplicates the clean base job data</p>
       <pre class="lines">
 
 
-163
-164
-165</pre>
+152
+153
+154</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 163</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 152</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_job_tags'>job_tags</span>
+  <span class='lbracket'>[</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="orig_values_identifier-instance_method">
+  
+    #<strong>orig_values_identifier</strong>  &#x21d2; <tt>Symbol</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>Optional: override in extending module after extending</p>
+</div>
+  </div>
+
+<p>Field in base job that combines/identifies the original
+  field values entering the cleanup process. This field is
+  used as a matchpoint for merging cleaned up data back into
+  the migration, and identifying whether a given value in
+  subsequent worksheet iterations has been previously
+  included in a worksheet. DEFAULT VALUE: <code>:fingerprint</code></p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>4.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+142
+143
+144</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 142</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_orig_values_identifier'>orig_values_identifier</span>
   <span class='symbol'>:fingerprint</span>
@@ -1515,13 +1880,13 @@ deduplicates the clean base job data</p>
       <pre class="lines">
 
 
-320
-321
-322
-323</pre>
+385
+386
+387
+388</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 320</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 385</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_register_cleanup_jobs'>register_cleanup_jobs</span>
   <span class='id identifier rubyid_ns'>ns</span> <span class='op'>=</span> <span class='id identifier rubyid_build_namespace'>build_namespace</span>
@@ -1596,12 +1961,12 @@ deduplicates the clean base job data</p>
       <pre class="lines">
 
 
-232
-233
-234</pre>
+300
+301
+302</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 232</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 300</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_returned_compiled_job_key'>returned_compiled_job_key</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_cleanup_base_name'>cleanup_base_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>__returned_compiled</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
@@ -1677,19 +2042,173 @@ corresponding to returned cleanup files</p>
       <pre class="lines">
 
 
-184
-185
-186
-187
-188</pre>
+242
+243
+244
+245
+246</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 184</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 242</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_returned_file_jobs'>returned_file_jobs</span>
   <span class='id identifier rubyid_returned_files'>returned_files</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='period'>.</span><span class='id identifier rubyid_with_index'>with_index</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_filename'>filename</span><span class='comma'>,</span> <span class='id identifier rubyid_idx'>idx</span><span class='op'>|</span>
     <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_cleanup_base_name'>cleanup_base_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>__file_returned_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_idx'>idx</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
   <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="worksheet_add_fields-instance_method">
+  
+    #<strong>worksheet_add_fields</strong>  &#x21d2; <tt>Array&lt;Symbol&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>Optional: override in extending module after extending</p>
+</div>
+  </div>
+
+<p>Nil/empty fields to be added to worksheet. Note: values from these
+  fields are retained from returned cleanup worksheets if these fields
+  are included in <code>fingerprint_fields</code>. DEFAULT VALUE: <code>[]</code></p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>4.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+163
+164
+165</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 163</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_worksheet_add_fields'>worksheet_add_fields</span>
+  <span class='lbracket'>[</span><span class='rbracket'>]</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="worksheet_field_order-instance_method">
+  
+    #<strong>worksheet_field_order</strong>  &#x21d2; <tt>Array&lt;Symbol&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>Optional: override in extending module after extending</p>
+</div>
+  </div>
+
+<p>Order of fields (in worksheet output). Will be used to set
+  destination special options/initial headers on the
+  worksheet job. DEFAULT VALUE: <code>[]</code></p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>4.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+174
+175
+176</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 174</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_worksheet_field_order'>worksheet_field_order</span>
+  <span class='lbracket'>[</span><span class='rbracket'>]</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1760,12 +2279,12 @@ corresponding to returned cleanup files</p>
       <pre class="lines">
 
 
-224
-225
-226</pre>
+292
+293
+294</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 224</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 292</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_worksheet_job_key'>worksheet_job_key</span>
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_cleanup_base_name'>cleanup_base_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>__worksheet</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
@@ -1834,12 +2353,12 @@ corresponding to returned cleanup files</p>
       <pre class="lines">
 
 
-201
-202
-203</pre>
+259
+260
+261</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 201</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 259</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_worksheet_sent_not_done?'>worksheet_sent_not_done?</span>
   <span class='kw'>true</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_cleanup_done?'>cleanup_done?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_provided_worksheets'>provided_worksheets</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -1854,7 +2373,7 @@ corresponding to returned cleanup files</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Sep 11 21:25:33 2023 by
+  Generated on Tue Sep 12 19:39:33 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-2.7.8).
 </div>
