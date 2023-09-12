@@ -63,7 +63,7 @@ module Kiba
                   field: :clean_fingerprint,
                   delete_field: false
                 transform Delete::Fields,
-                  fields: mod.cleaned_uniq_collate_fields
+                  fields: mod.all_collate_fields
                 transform Merge::MultiRowLookup,
                   lookup: send(mod.base_job_cleaned_job_key),
                   keycolumn: :clean_fingerprint,
@@ -73,7 +73,7 @@ module Kiba
             end
 
             def fieldmap(mod)
-              mod.cleaned_uniq_collate_fields.map do |field|
+              mod.all_collate_fields.map do |field|
                 field_mapping(field)
               end.to_h
             end

@@ -32,10 +32,6 @@ module Kiba
 
             def xforms(mod)
               Kiba.job_segment do
-                transform Fingerprint::Add,
-                  target: :clean_fingerprint,
-                  fields: mod.fingerprint_fields
-
                 unless mod.provided_worksheets.empty?
                   # rubocop:disable Layout/LineLength
                   known_vals =
