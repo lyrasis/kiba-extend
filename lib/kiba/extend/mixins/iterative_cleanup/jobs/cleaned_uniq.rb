@@ -59,11 +59,11 @@ module Kiba
               Kiba.job_segment do
                 job = bind.receiver
 
+                transform Delete::Fields,
+                  fields: mod.all_collate_fields
                 transform Deduplicate::Table,
                   field: :clean_fingerprint,
                   delete_field: false
-                transform Delete::Fields,
-                  fields: mod.all_collate_fields
                 transform Merge::MultiRowLookup,
                   lookup: send(mod.base_job_cleaned_job_key),
                   keycolumn: :clean_fingerprint,
