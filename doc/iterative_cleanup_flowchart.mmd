@@ -8,8 +8,8 @@ graph TD;
 
     CleanedUniq["`**CleanedUniq**
     Deduplicate on :clean_fingerprint
-    Delete mod.cleaned_uniq_collate_fields
-    Collate mod.cleaned_uniq_collate_fields`"]
+    Delete collate_fields
+    Collate collate_fields`"]
 
     Worksheet["`**Worksheet**
     If worksheet already provided:
@@ -35,6 +35,12 @@ graph TD;
     Keep only rows with corrections
     Explode collated mod.orig_values_identifier
     Deduplicate on full row match`"]
+
+    Final["`**Final**
+    Lets you:
+    - Set custom lookup key for merge back into migration
+    - Apply custom transforms on cleaned data that won't interfere with cleanup iterations`"
+    ]
 
     base_job-->BaseJobCleaned;
 
@@ -66,3 +72,5 @@ graph TD;
     Provided-->KnownWorksheetValues;
 
     KnownWorksheetValues-->Worksheet;
+
+    BaseJobCleaned-->Final;
