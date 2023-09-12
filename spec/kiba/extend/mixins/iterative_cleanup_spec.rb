@@ -14,17 +14,9 @@ module WithSetup
 
   extend Dry::Configurable
   setting :base_job, default: :base__job, reader: true
-  setting :job_tags, default: %i[test cleanup], reader: true
-  setting :worksheet_add_fields,
-    default: %i[type note],
-    reader: true
-  setting :worksheet_field_order,
-    default: %i[value type note],
-    reader: true
   setting :fingerprint_fields,
     default: %i[value type note],
     reader: true
-  setting :fingerprint_flag_ignore_fields, default: nil, reader: true
 end
 
 RSpec.describe Kiba::Extend::Mixins::IterativeCleanup do
