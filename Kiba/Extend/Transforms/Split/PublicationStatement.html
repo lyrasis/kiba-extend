@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: Kiba::Extend::Transforms::Split::PublicationStatement
+  
+    &mdash; Kiba-Extend Documentation
+  
+</title>
+
+  <link rel="stylesheet" href="../../../../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../../../../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "Kiba::Extend::Transforms::Split::PublicationStatement";
+  relpath = '../../../../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../../../../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../../../../_index.html">Index (P)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../Transforms.html" title="Kiba::Extend::Transforms (module)">Transforms</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Split.html" title="Kiba::Extend::Transforms::Split (module)">Split</a></span></span>
+     &raquo; 
+    <span class="title">PublicationStatement</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../../../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: Kiba::Extend::Transforms::Split::PublicationStatement
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Kiba::Extend::Transforms::Split::PublicationStatement</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/kiba/extend/transforms/split/publication_statement.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>Splits string value of given field into new <code>:pubplace</code>, <code>:publisher</code>,
+  <code>:pubdate</code>, <code>:manplace</code>, <code>:manufacturer</code>, and <code>:mandate</code> fields.
+  Fieldnames can be overridden.</p>
+
+<p>Splitting is based on expected ISBD punctuation used in the MARC 260
+  field.</p>
+
+<p>This transform does the best it can, but depends on fiddly punctuation
+  standards that are not always followed, and which are sometimes
+  ambiguous when MARC subfield coding is not present. It is intended
+  for use in preparing data for client review and cleanup.</p>
+
+<p>Algorithm/assumptions:</p>
+
+<ul>
+  <li>Terminal period is removed from field value pre-processing</li>
+  <li>If field value starts with a digit, the whole field value is treated
+as a date</li>
+  <li>If field value contains a <code>:</code> or <code>;</code>, followed by the pattern <code>comma
+followed by non-comma characters and one or more digits</code>, then
+everything including and following that pattern is treated as the
+date value</li>
+  <li>If a field value contains <code>:</code> or <code>;</code>, we treat the first segment of
+the value as place</li>
+  <li>If a field value does not contain <code>:</code> or <code>;</code>, and does not begin
+with a digit, we treat the whole field value as publisher</li>
+  <li>Any part of the field value in parentheses is extracted separately
+and checked for whether it follows the above patterns. If so, it is
+run through processing as manufacturing data, and the
+non-parenthetical data is run through the processing as publication
+data. If parenthetical data does not match one of the patterns,
+it gets included as part of publication place, name, or date field</li>
+</ul>
+
+<h2 id="usage-in-jobs">Usage in jobs</h2>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Split.html" title="Kiba::Extend::Transforms::Split (module)">Split</a></span></span><span class='op'>::</span><span class='const'>PublicationStatement</span><span class='comma'>,</span> <span class='label'>source:</span> <span class='symbol'>:pubstmt</span>
+</code></pre>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Split.html" title="Kiba::Extend::Transforms::Split (module)">Split</a></span></span><span class='op'>::</span><span class='const'>PublicationStatement</span><span class='comma'>,</span>
+  <span class='label'>source:</span> <span class='symbol'>:pubstmt</span><span class='comma'>,</span>
+  <span class='label'>fieldname_overrides:</span> <span class='lbrace'>{</span><span class='label'>manufacturer:</span> <span class='symbol'>:printer</span><span class='comma'>,</span> <span class='label'>mandate:</span> <span class='symbol'>:printdate</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>%</span><span class='tstring_end'>&#39;</span></span>
+</code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>Default fieldnames, demonstrating parsing/splitting behavior</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>ps:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Belfast [i.e. Dublin : s.n.], 1946 [reprinted 1965]</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>ps:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Harmondsworth : Penguin, 1949 (1963 printing)</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>ps:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Wash, D.C. (16 K St., N., Wash 20006) : Wider , 1979 printing, c1975.</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>ps:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>American Issue Publishing Company</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>ps:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Chicago : New Voice Press, ©1898.</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>ps:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>New York ; Berlin : Springer Verlag, 1977.</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>ps:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Columbus : The League</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>ps:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1908-1924.</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>ps:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Paris : Rue ; London : Press, 1955</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>ps:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Chicago, etc. : Time Inc.</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>ps:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Paris : Impr. Vincent, 1798 [i.e. Bruxelles : Moens, 1883]</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>ps:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>London : Council, 1976 (Twickenham : CTD Printers, 1974)</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>ps:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Belfast [i.e. Dublin : s.n.], 1946 [reprinted 1965]</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>pubplace:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Belfast [i.e. Dublin</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>publisher:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>s.n.]</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>pubdate:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1946 [reprinted 1965]</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>manplace:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+   <span class='label'>manufacturer:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>mandate:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>ps:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Harmondsworth : Penguin, 1949 (1963 printing)</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>pubplace:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Harmondsworth</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>publisher:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Penguin</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>pubdate:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1949</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>manplace:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>manufacturer:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+   <span class='label'>mandate:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1963 printing</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>ps:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Wash, D.C. (16 K St., N., Wash 20006) : Wider , 1979 printing, c1975.</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>pubplace:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Wash, D.C. (16 K St., N., Wash 20006)</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>publisher:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Wider</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>pubdate:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1979 printing, c1975</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>manplace:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>manufacturer:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+   <span class='label'>mandate:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>ps:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>American Issue Publishing Company</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>pubplace:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>publisher:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>American Issue Publishing Company</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>pubdate:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>manplace:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>manufacturer:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>mandate:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>ps:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Chicago : New Voice Press, ©1898.</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>pubplace:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Chicago</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>publisher:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>New Voice Press</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>pubdate:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>©1898</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>manplace:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>manufacturer:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+   <span class='label'>mandate:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>ps:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>New York ; Berlin : Springer Verlag, 1977.</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>pubplace:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>New York|Berlin</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>publisher:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Springer Verlag</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>pubdate:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1977</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>manplace:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>manufacturer:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+   <span class='label'>mandate:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>ps:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Columbus : The League</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>pubplace:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Columbus</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>publisher:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>The League</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>pubdate:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>manplace:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>manufacturer:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+   <span class='label'>mandate:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>ps:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1908-1924.</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>pubplace:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>publisher:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>pubdate:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1908-1924</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>manplace:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>manufacturer:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>mandate:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>ps:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Paris : Rue ; London : Press, 1955</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>pubplace:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Paris|London</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>publisher:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Rue|Press</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>pubdate:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1955</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>manplace:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>manufacturer:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>mandate:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+ <span class='comment'># NOTE: Terminal period from publisher name removed, but we don&#39;t
+</span> <span class='comment'>#   typically expect abbreviations on the end of this field
+</span>  <span class='lbrace'>{</span><span class='label'>ps:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Chicago, etc. : Time Inc.</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>pubplace:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Chicago, etc.</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>publisher:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Time Inc</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>pubdate:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+   <span class='label'>manplace:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>manufacturer:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>mandate:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+ <span class='comment'># NOTE: This is handled as best we can do without MARC subfields
+</span>  <span class='lbrace'>{</span><span class='label'>ps:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Paris : Impr. Vincent, 1798 [i.e. Bruxelles : Moens, 1883]</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>pubplace:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Paris</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>publisher:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Impr. Vincent</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>pubdate:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1798 [i.e. Bruxelles : Moens, 1883]</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>manplace:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>manufacturer:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>mandate:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>ps:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>London : Council, 1976 (Twickenham : CTD Printers, 1974)</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>pubplace:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>London</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>publisher:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Council</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>pubdate:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1976</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>manplace:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Twickenham</span><span class='tstring_end'>&#39;</span></span> <span class='comma'>,</span> <span class='label'>manufacturer:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>CTD Printers</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>mandate:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1974</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Split.html" title="Kiba::Extend::Transforms::Split (module)">Split</a></span></span><span class='op'>::</span><span class='const'>PublicationStatement</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Split::PublicationStatement#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>source:</span> <span class='symbol'>:ps</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Overriding fieldnames</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>ps:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>London : Council, 1976 (Twickenham : CTD Printers, 1974)</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>ps:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>London : Council, 1976 (Twickenham : CTD Printers, 1974)</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>pubplace:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>London</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>publisher:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Council</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>pubdate:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1976</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>prtplace:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Twickenham</span><span class='tstring_end'>&#39;</span></span> <span class='comma'>,</span> <span class='label'>printer:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>CTD Printers</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+   <span class='label'>prtdate:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1974</span><span class='tstring_end'>&#39;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Split.html" title="Kiba::Extend::Transforms::Split (module)">Split</a></span></span><span class='op'>::</span><span class='const'>PublicationStatement</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Split::PublicationStatement#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+  <span class='label'>source:</span> <span class='symbol'>:ps</span><span class='comma'>,</span>
+  <span class='label'>fieldname_overrides:</span> <span class='lbrace'>{</span><span class='label'>manplace:</span> <span class='symbol'>:prtplace</span><span class='comma'>,</span> <span class='label'>manufacturer:</span> <span class='symbol'>:printer</span><span class='comma'>,</span>
+    <span class='label'>mandate:</span> <span class='symbol'>:prtdate</span><span class='rbrace'>}</span>
+<span class='rparen'>)</span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
+  </div>
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>4.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div>
+  
+    <h2>
+      Constant Summary
+      <small><a href="#" class="constants_summary_toggle">collapse</a></small>
+    </h2>
+
+    <dl class="constants">
+      
+        <dt id="DEFAULT_FIELDNAMES-constant" class="">DEFAULT_FIELDNAMES =
+          <div class="docstring">
+  <div class="discussion">
+    
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>4.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='qsymbols_beg'>%i[</span><span class='tstring_content'>pubplace</span><span class='words_sep'> </span><span class='tstring_content'>publisher</span><span class='words_sep'> </span><span class='tstring_content'>pubdate</span><span class='words_sep'>
+</span><span class='tstring_content'>manplace</span><span class='words_sep'> </span><span class='tstring_content'>manufacturer</span><span class='words_sep'> </span><span class='tstring_content'>mandate</span><span class='tstring_end'>]</span></span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(source:, fieldname_overrides: nil, delim: Kiba::Extend.delim)  &#x21d2; PublicationStatement </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A new instance of PublicationStatement.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#process-instance_method" title="#process (instance method)">#<strong>process</strong>(row)  &#x21d2; Hash{ Symbol =&gt; String, nil } </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>(source:, fieldname_overrides: nil, delim: Kiba::Extend.delim)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Split::PublicationStatement (class)">PublicationStatement</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns a new instance of PublicationStatement.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>source</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>field containing publication statement to
+split</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>fieldname_overrides</span>
+      
+      
+        <span class='type'>(<tt>nil</tt>, <tt>Hash&lt;Symbol=&gt;Symbol&gt;</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>with default
+field name to override as key, and new field name as value</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>delim</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>Kiba::Extend.delim</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>for joining multiple values in a given target
+field</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>4.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+152
+153
+154
+155
+156
+157
+158</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/split/publication_statement.rb', line 152</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>source:</span><span class='comma'>,</span>
+  <span class='label'>fieldname_overrides:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+  <span class='label'>delim:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_delim'><span class='object_link'><a href="../../../Extend.html#delim-class_method" title="Kiba::Extend.delim (method)">delim</a></span></span><span class='rparen'>)</span>
+  <span class='ivar'>@source</span> <span class='op'>=</span> <span class='id identifier rubyid_source'>source</span>
+  <span class='ivar'>@fieldnames</span> <span class='op'>=</span> <span class='id identifier rubyid_setup_fieldnames'>setup_fieldnames</span><span class='lparen'>(</span><span class='id identifier rubyid_fieldname_overrides'>fieldname_overrides</span><span class='rparen'>)</span>
+  <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_delim'>delim</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="process-instance_method">
+  
+    #<strong>process</strong>(row)  &#x21d2; <tt>Hash{ Symbol =&gt; String, nil }</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>row</span>
+      
+      
+        <span class='type'>(<tt>Hash{ Symbol =&gt; String, nil }</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash{ Symbol =&gt; String, nil }</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>4.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+162
+163
+164
+165
+166
+167
+168</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/split/publication_statement.rb', line 162</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_add_all_fields'>add_all_fields</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_val'>val</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_source'>source</span><span class='rbracket'>]</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_row'>row</span> <span class='kw'>if</span> <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+
+  <span class='id identifier rubyid_extract_handler'>extract_handler</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='comma'>,</span> <span class='label'>scanner:</span> <span class='id identifier rubyid_initial_clean'>initial_clean</span><span class='lparen'>(</span><span class='id identifier rubyid_val'>val</span><span class='rparen'>)</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Wed Sep 13 15:50:08 2023 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.34 (ruby-3.1.4).
+</div>
+
+    </div>
+  </body>
+</html>

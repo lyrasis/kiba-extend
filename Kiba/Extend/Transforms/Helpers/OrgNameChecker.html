@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: Kiba::Extend::Transforms::Helpers::OrgNameChecker
+  
+    &mdash; Kiba-Extend Documentation
+  
+</title>
+
+  <link rel="stylesheet" href="../../../../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../../../../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "Kiba::Extend::Transforms::Helpers::OrgNameChecker";
+  relpath = '../../../../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../../../../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../../../../_index.html">Index (O)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../Transforms.html" title="Kiba::Extend::Transforms (module)">Transforms</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Helpers.html" title="Kiba::Extend::Transforms::Helpers (module)">Helpers</a></span></span>
+     &raquo; 
+    <span class="title">OrgNameChecker</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../../../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: Kiba::Extend::Transforms::Helpers::OrgNameChecker
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Kiba::Extend::Transforms::Helpers::OrgNameChecker</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/kiba/extend/transforms/helpers/org_name_checker.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>Returns true/false indicating whether given value matches any
+  given or added patterns. Used on a list of names and name-like
+  values, this works ok. Used on a list of subject like terms or
+  on freetext, be wary of false positives (though the patterns and
+  the duplicative anchoring matching tries to avoid matching
+  subject-like terms</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>4.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div>
+  
+    <h2>
+      Constant Summary
+      <small><a href="#" class="constants_summary_toggle">collapse</a></small>
+    </h2>
+
+    <dl class="constants">
+      
+        <dt id="TERMS-constant" class="">TERMS =
+          <div class="docstring">
+  <div class="discussion">
+    
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>4.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='heredoc_beg'>&lt;&lt;~LIST</span>
+<span class='tstring_content'>  (?:
+</span><span class='tstring_content'>  # business domains or types
+</span><span class='tstring_content'>  auto(motive|)|hotels?|inn|insurance|plumb(ers|ing)|roofing|shop|
+</span><span class='tstring_content'>  store|
+</span><span class='tstring_content'>  # clubs and groups
+</span><span class='tstring_content'>  association|club|fraternity|friends of the|legion|league|
+</span><span class='tstring_content'>  society|sorority|team|
+</span><span class='tstring_content'>  # corporate or company name terms
+</span><span class='tstring_content'>  company|consultant(s|)|corporation|group|incorporated|service|
+</span><span class='tstring_content'>  # education
+</span><span class='tstring_content'>  academy|college|institute|program|university|school|
+</span><span class='tstring_content'>  # events
+</span><span class='tstring_content'>  games|olympics|
+</span><span class='tstring_content'>  # food and drink
+</span><span class='tstring_content'>  brewer(ies|y)|cafe|farm|grocer(ies|y)|restaurant|saloon|tavern|
+</span><span class='tstring_content'>  # glam or cultural institutions
+</span><span class='tstring_content'>  band|centers?|choir|ensemble|gallery|library|museum|observatory|
+</span><span class='tstring_content'>  orchestra|studio|theat(er|re)|
+</span><span class='tstring_content'>  # governmental
+</span><span class='tstring_content'>  agency|court of|general assembly|senate|tribe|
+</span><span class='tstring_content'>  # health-related
+</span><span class='tstring_content'>  hospital|nursing home|pharmacy|
+</span><span class='tstring_content'>  # military
+</span><span class='tstring_content'>  artillery|brigade|infantry|regiment|
+</span><span class='tstring_content'>  # non-profity terms
+</span><span class='tstring_content'>  alliance|board of|foundation|program|task ?force|
+</span><span class='tstring_content'>  # organizational units
+</span><span class='tstring_content'>  administration|assembly|bureau|commission|committee|council|
+</span><span class='tstring_content'>  department|division|federation|office|
+</span><span class='tstring_content'>  # transportation
+</span><span class='tstring_content'>  airport|depot|rail(road|way)
+</span><span class='tstring_content'>  )
+</span><span class='heredoc_end'>LIST</span></pre></dd>
+      
+        <dt id="DEFAULT_PATTERNS-constant" class="">DEFAULT_PATTERNS =
+          <div class="docstring">
+  <div class="discussion">
+    
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>4.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='lbracket'>[</span>
+  <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'> LLC</span><span class='regexp_end'>/i</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'> co$</span><span class='regexp_end'>/i</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'> corp$</span><span class='regexp_end'>/i</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\bdept$</span><span class='regexp_end'>/i</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\bdept\.</span><span class='regexp_end'>/i</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\binc$</span><span class='regexp_end'>/i</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\binc\.</span><span class='regexp_end'>/i</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^\w+ (?:&amp;|and) \w+$</span><span class='regexp_end'>/</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^(\w+,? )+(?:&amp;|and) \w+$</span><span class='regexp_end'>/</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>&#39;s$</span><span class='regexp_end'>/</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\b(inter|multi)?national\b</span><span class='regexp_end'>/i</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'> (network|project|services?)$</span><span class='regexp_end'>/i</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\.com$</span><span class='regexp_end'>/</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>publish</span><span class='regexp_end'>/i</span></span><span class='comma'>,</span>
+  <span class='comment'># term at beginning
+</span>  <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>^</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#TERMS-constant" title="Kiba::Extend::Transforms::Helpers::OrgNameChecker::TERMS (constant)">TERMS</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>\b.+</span><span class='regexp_end'>/ix</span></span><span class='comma'>,</span>
+  <span class='comment'># term between other terms
+</span>  <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>.+\b</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#TERMS-constant" title="Kiba::Extend::Transforms::Helpers::OrgNameChecker::TERMS (constant)">TERMS</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>\b.+</span><span class='regexp_end'>/ix</span></span><span class='comma'>,</span>
+  <span class='comment'># term at end
+</span>  <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>.+\b</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="#TERMS-constant" title="Kiba::Extend::Transforms::Helpers::OrgNameChecker::TERMS (constant)">TERMS</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>$</span><span class='regexp_end'>/ix</span></span>
+<span class='rbracket'>]</span></pre></dd>
+      
+        <dt id="FAMILY_PATTERNS-constant" class="">FAMILY_PATTERNS =
+          <div class="docstring">
+  <div class="discussion">
+    
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>4.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div>
+        </dt>
+        <dd><pre class="code"><span class='lbracket'>[</span>
+  <span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'> famil(ies|y)</span><span class='regexp_end'>/i</span></span>
+<span class='rbracket'>]</span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#call-class_method" title="call (class method)">.<strong>call</strong>(value:, added_patterns: [], family_is_org: false)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#call-instance_method" title="#call (instance method)">#<strong>call</strong>(value)  &#x21d2; true, false </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(added_patterns: [], family_is_org: false)  &#x21d2; OrgNameChecker </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A new instance of OrgNameChecker.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>(added_patterns: [], family_is_org: false)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Helpers::OrgNameChecker (class)">OrgNameChecker</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns a new instance of OrgNameChecker.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>added_patterns</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;Regexp&gt;</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>[]</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>non-standard regexp to check
+against. Best practice is to add these to this helper via a pull
+request if you think they generally indicate organization-ness</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>family_is_org</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>whether names with terms indicating
+family-ness are treated as organizations (yes for CollectionSpace,
+no for applications that have a Family name type)</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>4.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+97
+98
+99
+100</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/helpers/org_name_checker.rb', line 97</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>added_patterns:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>family_is_org:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_base'>base</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="#DEFAULT_PATTERNS-constant" title="Kiba::Extend::Transforms::Helpers::OrgNameChecker::DEFAULT_PATTERNS (constant)">DEFAULT_PATTERNS</a></span></span> <span class='op'>+</span> <span class='id identifier rubyid_added_patterns'>added_patterns</span>
+  <span class='ivar'>@patterns</span> <span class='op'>=</span> <span class='id identifier rubyid_family_is_org'>family_is_org</span> <span class='op'>?</span> <span class='id identifier rubyid_base'>base</span> <span class='op'>+</span> <span class='const'><span class='object_link'><a href="#FAMILY_PATTERNS-constant" title="Kiba::Extend::Transforms::Helpers::OrgNameChecker::FAMILY_PATTERNS (constant)">FAMILY_PATTERNS</a></span></span> <span class='op'>:</span> <span class='id identifier rubyid_base'>base</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="call-class_method">
+  
+    .<strong>call</strong>(value:, added_patterns: [], family_is_org: false)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>4.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/helpers/org_name_checker.rb', line 17</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span>
+  <span class='label'>value:</span><span class='comma'>,</span>
+  <span class='label'>added_patterns:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span>
+  <span class='label'>family_is_org:</span> <span class='kw'>false</span>
+<span class='rparen'>)</span>
+  <span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span>
+    <span class='label'>added_patterns:</span> <span class='id identifier rubyid_added_patterns'>added_patterns</span><span class='comma'>,</span>
+    <span class='label'>family_is_org:</span> <span class='id identifier rubyid_family_is_org'>family_is_org</span>
+  <span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="call-instance_method">
+  
+    #<strong>call</strong>(value)  &#x21d2; <tt>true</tt>, <tt>false</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>value</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>true</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>if <code>value</code> matches an org pattern</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>false</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>otherwise</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>4.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+105
+106
+107
+108
+109
+110
+111</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/helpers/org_name_checker.rb', line 105</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_testval'>testval</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span><span class='period'>.</span><span class='id identifier rubyid_sub'>sub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\. *$</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>if</span> <span class='id identifier rubyid_testval'>testval</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+  <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='id identifier rubyid_patterns'>patterns</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_pattern'>pattern</span><span class='op'>|</span> <span class='id identifier rubyid_testval'>testval</span><span class='period'>.</span><span class='id identifier rubyid_match?'>match?</span><span class='lparen'>(</span><span class='id identifier rubyid_pattern'>pattern</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+
+  <span class='kw'>false</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Wed Sep 13 15:50:08 2023 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.34 (ruby-3.1.4).
+</div>
+
+    </div>
+  </body>
+</html>

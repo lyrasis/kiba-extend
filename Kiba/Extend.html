@@ -1,0 +1,2023 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Module: Kiba::Extend
+  
+    &mdash; Kiba-Extend Documentation
+  
+</title>
+
+  <link rel="stylesheet" href="../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "Kiba::Extend";
+  relpath = '../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../_index.html">Index (E)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../Kiba.html" title="Kiba (module)">Kiba</a></span></span>
+     &raquo; 
+    <span class="title">Extend</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Module: Kiba::Extend
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+
+  
+  
+  <dl>
+      <dt>Extended by:</dt>
+      <dd>Dry::Configurable</dd>
+  </dl>
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/kiba/extend.rb<span class="defines">,<br />
+  lib/kiba/extend/job.rb,<br /> lib/kiba/extend/jobs.rb,<br /> lib/kiba/extend/marc.rb,<br /> lib/kiba/extend/error.rb,<br /> lib/kiba/extend/command.rb,<br /> lib/kiba/extend/sources.rb,<br /> lib/kiba/extend/version.rb,<br /> lib/kiba/extend/jobs/job.rb,<br /> lib/kiba/extend/registry.rb,<br /> lib/kiba/extend/transforms.rb,<br /> lib/kiba/extend/command/reg.rb,<br /> lib/kiba/extend/command/run.rb,<br /> lib/kiba/extend/jobs/parser.rb,<br /> lib/kiba/extend/jobs/runner.rb,<br /> lib/kiba/extend/sources/csv.rb,<br /> lib/kiba/extend/destinations.rb,<br /> lib/kiba/extend/sources/marc.rb,<br /> lib/kiba/extend/utils/lookup.rb,<br /> lib/kiba/extend/jobs/base_job.rb,<br /> lib/kiba/extend/jobs/marc_job.rb,<br /> lib/kiba/extend/jobs/reporter.rb,<br /> lib/kiba/extend/utils/fieldset.rb,<br /> lib/kiba/extend/transforms/copy.rb,<br /> lib/kiba/extend/transforms/marc.rb,<br /> lib/kiba/extend/transforms/name.rb,<br /> lib/kiba/extend/transforms/sort.rb,<br /> lib/kiba/extend/transforms/take.rb,<br /> lib/kiba/extend/transforms/warn.rb,<br /> lib/kiba/extend/command/reg/list.rb,<br /> lib/kiba/extend/command/runnable.rb,<br /> lib/kiba/extend/destinations/csv.rb,<br /> lib/kiba/extend/jobs/show_me_job.rb,<br /> lib/kiba/extend/jobs/tell_me_job.rb,<br /> lib/kiba/extend/registry/creator.rb,<br /> lib/kiba/extend/sources/json_dir.rb,<br /> lib/kiba/extend/transforms/clean.rb,<br /> lib/kiba/extend/transforms/count.rb,<br /> lib/kiba/extend/transforms/merge.rb,<br /> lib/kiba/extend/transforms/split.rb,<br /> lib/kiba/extend/destinations/marc.rb,<br /> lib/kiba/extend/registry/fileable.rb,<br /> lib/kiba/extend/transforms/append.rb,<br /> lib/kiba/extend/transforms/cspace.rb,<br /> lib/kiba/extend/transforms/delete.rb,<br /> lib/kiba/extend/transforms/rename.rb,<br /> lib/kiba/extend/utils/lookup_hash.rb,<br /> lib/kiba/extend/jobs/job_segmenter.rb,<br /> lib/kiba/extend/sources/enumerable.rb,<br /> lib/kiba/extend/sources/lookupable.rb,<br /> lib/kiba/extend/sources/sourceable.rb,<br /> lib/kiba/extend/transforms/allable.rb,<br /> lib/kiba/extend/transforms/compare.rb,<br /> lib/kiba/extend/transforms/explode.rb,<br /> lib/kiba/extend/transforms/extract.rb,<br /> lib/kiba/extend/transforms/helpers.rb,<br /> lib/kiba/extend/transforms/prepend.rb,<br /> lib/kiba/extend/transforms/replace.rb,<br /> lib/kiba/extend/transforms/reshape.rb,<br /> lib/kiba/extend/utils/pre_job_task.rb,<br /> lib/kiba/extend/destinations/lambda.rb,<br /> lib/kiba/extend/jobs/dependency_job.rb,<br /> lib/kiba/extend/transforms/collapse.rb,<br /> lib/kiba/extend/transforms/fraction.rb,<br /> lib/kiba/extend/jobs/json_to_csv_job.rb,<br /> lib/kiba/extend/transforms/ms_access.rb,<br /> lib/kiba/extend/transforms/copy/field.rb,<br /> lib/kiba/extend/registry/file_registry.rb,<br /> lib/kiba/extend/registry/registry_list.rb,<br /> lib/kiba/extend/transforms/deduplicate.rb,<br /> lib/kiba/extend/transforms/filter_rows.rb,<br /> lib/kiba/extend/transforms/fingerprint.rb,<br /> lib/kiba/extend/destinations/json_array.rb,<br /> lib/kiba/extend/transforms/rename/field.rb,<br /> lib/kiba/extend/transforms/string_value.rb,<br /> lib/kiba/extend/utils/extract_fractions.rb,<br /> lib/kiba/extend/utils/lookup/row_sorter.rb,<br /> lib/kiba/extend/utils/marc_id_extractor.rb,<br /> lib/kiba/extend/utils/marc_name_cleaner.rb,<br /> lib/kiba/extend/utils/pre_job_nuke_task.rb,<br /> lib/kiba/extend/utils/string_normalizer.rb,<br /> lib/kiba/extend/mixins/iterative_cleanup.rb,<br /> lib/kiba/extend/registry/registered_file.rb,<br /> lib/kiba/extend/registry/requirable_file.rb,<br /> lib/kiba/extend/transforms/delete/fields.rb,<br /> lib/kiba/extend/transforms/rename/fields.rb,<br /> lib/kiba/extend/utils/lookup/set_checker.rb,<br /> lib/kiba/extend/data/convertible_fraction.rb,<br /> lib/kiba/extend/transforms/combine_values.rb,<br /> lib/kiba/extend/utils/field_value_matcher.rb,<br /> lib/kiba/extend/utils/fingerprint_creator.rb,<br /> lib/kiba/extend/utils/lookup/row_selector.rb,<br /> lib/kiba/extend/utils/pre_job_backup_task.rb,<br /> lib/kiba/extend/jobs/multi_source_prep_job.rb,<br /> lib/kiba/extend/registry/registered_lookup.rb,<br /> lib/kiba/extend/registry/registered_source.rb,<br /> lib/kiba/extend/transforms/fingerprint/add.rb,<br /> lib/kiba/extend/transforms/single_warnable.rb,<br /> lib/kiba/extend/utils/lookup/pair_equality.rb,<br /> lib/kiba/extend/registry/creator/type_error.rb,<br /> lib/kiba/extend/registry/registry_validator.rb,<br /> lib/kiba/extend/transforms/deduplicate/flag.rb,<br /> lib/kiba/extend/transforms/marc/extract_ids.rb,<br /> lib/kiba/extend/transforms/sep_deprecatable.rb,<br /> lib/kiba/extend/utils/lookup/multival_pairs.rb,<br /> lib/kiba/extend/utils/lookup/pair_inclusion.rb,<br /> lib/kiba/extend/destinations/destinationable.rb,<br /> lib/kiba/extend/registry/file_registry_entry.rb,<br /> lib/kiba/extend/transforms/deduplicate/table.rb,<br /> lib/kiba/extend/utils/lookup/field_emptiness.rb,<br /> lib/kiba/extend/utils/marc_role_term_cleaner.rb,<br /> lib/kiba/extend/mixins/iterative_cleanup/jobs.rb,<br /> lib/kiba/extend/transforms/clean/strip_fields.rb,<br /> lib/kiba/extend/transforms/count/field_values.rb,<br /> lib/kiba/extend/transforms/deduplicate/fields.rb,<br /> lib/kiba/extend/transforms/fingerprint/decode.rb,<br /> lib/kiba/extend/transforms/warn/uneven_fields.rb,<br /> lib/kiba/extend/utils/lookup/criteria_checker.rb,<br /> lib/kiba/extend/utils/multi_source_normalizer.rb,<br /> lib/kiba/extend/transforms/action_argumentable.rb,<br /> lib/kiba/extend/transforms/delete/empty_fields.rb,<br /> lib/kiba/extend/transforms/fraction/to_decimal.rb,<br /> lib/kiba/extend/transforms/marc/field_linkable.rb,<br /> lib/kiba/extend/transforms/marc/filter_records.rb,<br /> lib/kiba/extend/transforms/name/split_inverted.rb,<br /> lib/kiba/extend/transforms/sort/by_field_value.rb,<br /> lib/kiba/extend/registry/registered_destination.rb,<br /> lib/kiba/extend/transforms/compare/field_values.rb,<br /> lib/kiba/extend/transforms/cspace/convert_to_id.rb,<br /> lib/kiba/extend/transforms/deduplicate/flag_all.rb,<br /> lib/kiba/extend/transforms/delete/fields_except.rb,<br /> lib/kiba/extend/transforms/merge/constant_value.rb,<br /> lib/kiba/extend/transforms/reshape/simple_pivot.rb,<br /> lib/kiba/extend/registry/registry_entry_selector.rb,<br /> lib/kiba/extend/transforms/merge/constant_values.rb,<br /> lib/kiba/extend/transforms/string_value/to_array.rb,<br /> lib/kiba/extend/transforms/cspace/address_country.rb,<br /> lib/kiba/extend/transforms/marc/extract_245_title.rb,<br /> lib/kiba/extend/transforms/marc/extract_name_data.rb,<br /> lib/kiba/extend/transforms/merge/multi_row_lookup.rb,<br /> lib/kiba/extend/transforms/prepend/to_field_value.rb,<br /> lib/kiba/extend/utils/lookup/row_selector_by_hash.rb,<br /> lib/kiba/extend/transforms/clean/even_field_values.rb,<br /> lib/kiba/extend/transforms/cspace/normalize_for_id.rb,<br /> lib/kiba/extend/transforms/filter_rows/with_lambda.rb,<br /> lib/kiba/extend/mixins/iterative_cleanup/jobs/final.rb,<br /> lib/kiba/extend/transforms/deduplicate/field_values.rb,<br /> lib/kiba/extend/transforms/fingerprint/flag_changed.rb,<br /> lib/kiba/extend/transforms/helpers/org_name_checker.rb,<br /> lib/kiba/extend/utils/lookup/row_selector_by_lambda.rb,<br /> lib/kiba/extend/transforms/delete/empty_field_groups.rb,<br /> lib/kiba/extend/transforms/delete/empty_field_values.rb,<br /> lib/kiba/extend/transforms/marc/filter_records/by_id.rb,<br /> lib/kiba/extend/transforms/merge/compare_fields_flag.rb,<br /> lib/kiba/extend/transforms/merge/multivalue_constant.rb,<br /> lib/kiba/extend/transforms/combine_values/full_record.rb,<br /> lib/kiba/extend/transforms/filter_rows/field_equal_to.rb,<br /> lib/kiba/extend/transforms/helpers/delim_only_checker.rb,<br /> lib/kiba/extend/transforms/helpers/field_value_getter.rb,<br /> lib/kiba/extend/transforms/marc/extract_org_name_data.rb,<br /> lib/kiba/extend/transforms/replace/empty_field_values.rb,<br /> lib/kiba/extend/utils/iterative_cleanup_job_registrar.rb,<br /> lib/kiba/extend/transforms/filter_rows/field_populated.rb,<br /> lib/kiba/extend/transforms/fingerprint/merge_corrected.rb,<br /> lib/kiba/extend/transforms/helpers/person_name_checker.rb,<br /> lib/kiba/extend/transforms/marc/extract_base_name_data.rb,<br /> lib/kiba/extend/transforms/split/into_multiple_columns.rb,<br /> lib/kiba/extend/transforms/split/publication_statement.rb,<br /> lib/kiba/extend/transforms/warn/if_field_value_matches.rb,<br /> lib/kiba/extend/utils/delim_in_value_fingerprint_error.rb,<br /> lib/kiba/extend/mixins/iterative_cleanup/jobs/worksheet.rb,<br /> lib/kiba/extend/registry/creator/hash_creator_key_error.rb,<br /> lib/kiba/extend/transforms/prepend/field_to_field_value.rb,<br /> lib/kiba/extend/transforms/count/matching_rows_in_lookup.rb,<br /> lib/kiba/extend/transforms/marc/extract_person_name_data.rb,<br /> lib/kiba/extend/mixins/iterative_cleanup/jobs/corrections.rb,<br /> lib/kiba/extend/transforms/clean/ensure_consistent_fields.rb,<br /> lib/kiba/extend/transforms/cspace/flag_invalid_characters.rb,<br /> lib/kiba/extend/transforms/filter_rows/field_match_regexp.rb,<br /> lib/kiba/extend/transforms/helpers/field_evenness_checker.rb,<br /> lib/kiba/extend/transforms/marc/extract_meeting_name_data.rb,<br /> lib/kiba/extend/mixins/iterative_cleanup/jobs/cleaned_uniq.rb,<br /> lib/kiba/extend/registry/creator/hash_creator_callee_error.rb,<br /> lib/kiba/extend/transforms/append/converted_value_and_unit.rb,<br /> lib/kiba/extend/transforms/delete/fieldnames_starting_with.rb,<br /> lib/kiba/extend/transforms/marc/filter_records/with_lambda.rb,<br /> lib/kiba/extend/transforms/warn/unless_field_value_matches.rb,<br /> lib/kiba/extend/transforms/deduplicate/grouped_field_values.rb,<br /> lib/kiba/extend/transforms/explode/rows_from_multival_field.rb,<br /> lib/kiba/extend/transforms/filter_rows/all_fields_populated.rb,<br /> lib/kiba/extend/transforms/filter_rows/any_fields_populated.rb,<br /> lib/kiba/extend/transforms/merge/constant_value_conditional.rb,<br /> lib/kiba/extend/transforms/multival_plus_delim_deprecatable.rb,<br /> lib/kiba/extend/transforms/marc/extract_subfields_from_field.rb,<br /> lib/kiba/extend/registry/creator/hash_creator_args_type_error.rb,<br /> lib/kiba/extend/registry/creator/jobless_module_creator_error.rb,<br /> lib/kiba/extend/transforms/delete/delimiter_only_field_values.rb,<br /> lib/kiba/extend/transforms/delete/field_value_matching_regexp.rb,<br /> lib/kiba/extend/mixins/iterative_cleanup/jobs/base_job_cleaned.rb,<br /> lib/kiba/extend/transforms/collapse/fields_to_typed_field_pair.rb,<br /> lib/kiba/extend/mixins/iterative_cleanup/jobs/returned_compiled.rb,<br /> lib/kiba/extend/mixins/iterative_cleanup/known_worksheet_values.rb,<br /> lib/kiba/extend/transforms/clean/regexp_find_replace_field_vals.rb,<br /> lib/kiba/extend/transforms/collapse/fields_with_custom_fieldmap.rb,<br /> lib/kiba/extend/transforms/delete/field_value_containing_string.rb,<br /> lib/kiba/extend/transforms/fingerprint/delimiter_in_value_error.rb,<br /> lib/kiba/extend/transforms/name/convert_inverted_to_direct_form.rb,<br /> lib/kiba/extend/transforms/fingerprint/delimiter_collision_error.rb,<br /> lib/kiba/extend/transforms/replace/field_value_with_static_mapping.rb,<br /> lib/kiba/extend/transforms/delete/field_value_if_equals_other_field.rb,<br /> lib/kiba/extend/transforms/collapse/fields_to_repeatable_field_group.rb,<br /> lib/kiba/extend/transforms/combine_values/from_fields_with_delimiter.rb,<br /> lib/kiba/extend/transforms/explode/rows_from_grouped_multival_fields.rb,<br /> lib/kiba/extend/transforms/replace/norm_with_most_frequently_used_form.rb,<br /> lib/kiba/extend/transforms/reshape/fields_to_field_group_with_constant.rb</span>
+</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>Handles:</p>
+
+<ul>
+  <li>auto-loading of the code</li>
+  <li>extending <code>Kiba</code> with <code>Kiba::Extend::Jobs::JobSegmenter</code> so we
+can call <code>Kiba.job_segment</code></li>
+  <li>defining config settings, all of which can be overridden by
+project applications using <code>kiba-extend</code></li>
+</ul>
+
+<p>Also defines some CSV converters:</p>
+
+<ul>
+  <li><code>:stripextra</code> – strips leading/trailing spaces, collapses
+multiple spaces, removes terminal commas, strips again</li>
+  <li><code>:nulltonil</code> – replaces any values that are a literal string
+NULL with a nil value</li>
+  <li><code>:stripplus</code> – strips leading/trailing spaces, collapses
+multiple spaces, removes terminal commas, strips again, removes
+“NULL” (i.e. literal string “NULL” becomes a <code>nilValue</code></li>
+</ul>
+
+<p>Note that <code>:stripplus</code> combines the functionality of <code>:stripextra</code>
+   and <code>:nulltonil</code></p>
+
+<h2 id="about-pre-job-task-settings">About pre-job task settings</h2>
+
+<p>If configured properly, the pre-job task is run when a job is run
+  via Thor invocation. This includes <code>run:job</code>, <code>run:jobs</code>, and
+  <code>jobs:tagged -r tagvalue</code>. The task is run once when the Thor
+  task is invoked.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div><h2>Defined Under Namespace</h2>
+<p class="children">
+  
+    
+      <strong class="modules">Modules:</strong> <span class='object_link'><a href="Extend/Command.html" title="Kiba::Extend::Command (module)">Command</a></span>, <span class='object_link'><a href="Extend/Data.html" title="Kiba::Extend::Data (module)">Data</a></span>, <span class='object_link'><a href="Extend/Destinations.html" title="Kiba::Extend::Destinations (module)">Destinations</a></span>, <span class='object_link'><a href="Extend/ErrMod.html" title="Kiba::Extend::ErrMod (module)">ErrMod</a></span>, <span class='object_link'><a href="Extend/Job.html" title="Kiba::Extend::Job (module)">Job</a></span>, <span class='object_link'><a href="Extend/Jobs.html" title="Kiba::Extend::Jobs (module)">Jobs</a></span>, <span class='object_link'><a href="Extend/Marc.html" title="Kiba::Extend::Marc (module)">Marc</a></span>, <span class='object_link'><a href="Extend/Mixins.html" title="Kiba::Extend::Mixins (module)">Mixins</a></span>, <span class='object_link'><a href="Extend/Registry.html" title="Kiba::Extend::Registry (module)">Registry</a></span>, <span class='object_link'><a href="Extend/Sources.html" title="Kiba::Extend::Sources (module)">Sources</a></span>, <span class='object_link'><a href="Extend/Transforms.html" title="Kiba::Extend::Transforms (module)">Transforms</a></span>, <span class='object_link'><a href="Extend/Utils.html" title="Kiba::Extend::Utils (module)">Utils</a></span>
+    
+  
+    
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Extend/BooleanReturningLambdaError.html" title="Kiba::Extend::BooleanReturningLambdaError (class)">BooleanReturningLambdaError</a></span>, <span class='object_link'><a href="Extend/Error.html" title="Kiba::Extend::Error (class)">Error</a></span>, <span class='object_link'><a href="Extend/InvalidActionError.html" title="Kiba::Extend::InvalidActionError (class)">InvalidActionError</a></span>, <span class='object_link'><a href="Extend/IterativeCleanupSettingUndefinedError.html" title="Kiba::Extend::IterativeCleanupSettingUndefinedError (class)">IterativeCleanupSettingUndefinedError</a></span>, <span class='object_link'><a href="Extend/PathRequiredError.html" title="Kiba::Extend::PathRequiredError (class)">PathRequiredError</a></span>, <span class='object_link'><a href="Extend/ProjectSettingUndefinedError.html" title="Kiba::Extend::ProjectSettingUndefinedError (class)">ProjectSettingUndefinedError</a></span>
+    
+  
+</p>
+
+  
+    <h2>
+      Constant Summary
+      <small><a href="#" class="constants_summary_toggle">collapse</a></small>
+    </h2>
+
+    <dl class="constants">
+      
+        <dt id="VERSION-constant" class="">VERSION =
+          
+        </dt>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>4.0.0</span><span class='tstring_end'>&quot;</span></span></pre></dd>
+      
+    </dl>
+  
+
+
+
+
+
+
+
+  
+    <h2>
+      Class Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#config_namespaces-class_method" title="config_namespaces (class method)">.<strong>config_namespaces</strong>  &#x21d2; Array&lt;Module&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Ruby modules that serve as namespaces under which config   modules for a project are nested.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#csvopts-class_method" title="csvopts (class method)">.<strong>csvopts</strong>  &#x21d2; Hash </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Default options used for CSV sources/destinations.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#default_job_method_name-class_method" title="default_job_method_name (class method)">.<strong>default_job_method_name</strong>  &#x21d2; Symbol </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>The job definition module method expected to be present if you   <a href="https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html#module-creator-example-since-2-7-2">define a registry entry hash creator as a   Module</a>.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#delim-class_method" title="delim (class method)">.<strong>delim</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Default delimiter for splitting/joining values in multi-valued fields.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#destination-class_method" title="destination (class method)">.<strong>destination</strong>  &#x21d2; Class </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Default destination class for jobs.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#job_show_me-class_method" title="job_show_me (class method)">.<strong>job_show_me</strong>  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Whether to output results to STDOUT for debugging.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#job_tell_me-class_method" title="job_tell_me (class method)">.<strong>job_tell_me</strong>  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Whether to have computer audibly say something when job is complete.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#job_verbosity-class_method" title="job_verbosity (class method)">.<strong>job_verbosity</strong>  &#x21d2; :debug, ... </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>How much output about jobs to output to STDOUT.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#ke_dir-class_method" title="ke_dir (class method)">.<strong>ke_dir</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Path to this application’s data directory (used internally by transforms and utils), and not specific to a project.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#lambdaopts-class_method" title="lambdaopts (class method)">.<strong>lambdaopts</strong>  &#x21d2; Hash </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Default settings for Lambda destination.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#loader-class_method" title="loader (class method)">.<strong>loader</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#nullvalue-class_method" title="nullvalue (class method)">.<strong>nullvalue</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Default string to be treated as though it were a null/empty value.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#pre_job_task_action-class_method" title="pre_job_task_action (class method)">.<strong>pre_job_task_action</strong>  &#x21d2; :backup, :nuke </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Controls what happens when pre-job task is run.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#pre_job_task_backup_dir-class_method" title="pre_job_task_backup_dir (class method)">.<strong>pre_job_task_backup_dir</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Full path to directory to which files will be moved if   <code>pre_job_task_action == :backup</code>.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#pre_job_task_directories-class_method" title="pre_job_task_directories (class method)">.<strong>pre_job_task_directories</strong>  &#x21d2; Array&lt;String&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Full paths to directories that will be affected by the specified pre-task   action.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#pre_job_task_mode-class_method" title="pre_job_task_mode (class method)">.<strong>pre_job_task_mode</strong>  &#x21d2; :job, ... </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Controls whether pre-job task is run.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#pre_job_task_run-class_method" title="pre_job_task_run (class method)">.<strong>pre_job_task_run</strong>  &#x21d2; Boolean </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Whether to use Kiba::Extend’s pre-job task functionality.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#project_configs-class_method" title="project_configs (class method)">.<strong>project_configs</strong>  &#x21d2; Array&lt;Module&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>List of config modules in project namespaces set in <span class='object_link'><a href="#config_namespaces-class_method" title="Kiba::Extend.config_namespaces (method)">Extend.config_namespaces</a></span>   setting.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#registry-class_method" title="registry (class method)">.<strong>registry</strong>  &#x21d2; Kiba::Extend::Registry::FileRegistry </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A customized   <a href="https://dry-rb.org/gems/dry-container/main/">dry-container</a>   for registering and resolving jobs.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#registry_namespace_separator-class_method" title="registry_namespace_separator (class method)">.<strong>registry_namespace_separator</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Used to join nested namespaces and registered keys in   FileRegistry.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#reload!-class_method" title="reload! (class method)">.<strong>reload!</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#sgdelim-class_method" title="sgdelim (class method)">.<strong>sgdelim</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Default subgrouping delimiter for splitting/joining values in multi-valued   fields.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#source-class_method" title="source (class method)">.<strong>source</strong>  &#x21d2; Class </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Default source class for jobs.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#warning_label-class_method" title="warning_label (class method)">.<strong>warning_label</strong>  &#x21d2; String </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Prefix for warnings from the ETL.</p>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+
+  
+
+  <div id="class_method_details" class="method_details_list">
+    <h2>Class Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="config_namespaces-class_method">
+  
+    .<strong>config_namespaces</strong>  &#x21d2; <tt>Array&lt;Module&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>You must set this from
+an individual project if you wish to use the
+<span class='object_link'><a href="Extend/Mixins/IterativeCleanup.html" title="Kiba::Extend::Mixins::IterativeCleanup (module)">Kiba::Extend::Mixins::IterativeCleanup</a></span> mixin.</p>
+</div>
+  </div>
+
+<p>Ruby modules that serve as namespaces under which config
+  modules for a project are nested.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;Module&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>4.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+95</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 95</span>
+
+<span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:config_namespaces</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="csvopts-class_method">
+  
+    .<strong>csvopts</strong>  &#x21d2; <tt>Hash</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Default options used for CSV sources/destinations</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+100
+101
+102</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 100</span>
+
+<span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:csvopts</span><span class='comma'>,</span>
+<span class='label'>default:</span> <span class='lbrace'>{</span><span class='label'>headers:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>header_converters:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>symbol</span><span class='words_sep'> </span><span class='tstring_content'>downcase</span><span class='tstring_end'>]</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+<span class='label'>reader:</span> <span class='kw'>true</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="default_job_method_name-class_method">
+  
+    .<strong>default_job_method_name</strong>  &#x21d2; <tt>Symbol</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>The job definition module method expected to be present if you
+  <a href="https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html#module-creator-example-since-2-7-2">define a registry entry hash creator as a
+  Module</a></p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+181</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 181</span>
+
+<span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:default_job_method_name</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='symbol'>:job</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="delim-class_method">
+  
+    .<strong>delim</strong>  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Default delimiter for splitting/joining values in multi-valued fields.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a|b</span><span class='tstring_end'>&#39;</span></span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_delim'>delim</span><span class='rparen'>)</span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>b</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+</code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+116</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 116</span>
+
+<span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:delim</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="destination-class_method">
+  
+    .<strong>destination</strong>  &#x21d2; <tt>Class</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Default destination class for jobs. Must meet implementation
+criteria in <a href="https://github.com/thbar/kiba/wiki/Implementing-ETL-destinations">Kiba
+wiki</a></p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Class</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+158
+159
+160</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 158</span>
+
+<span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:destination</span><span class='comma'>,</span> <span class='label'>constructor:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span>
+  <span class='const'><span class='object_link'><a href="../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Extend/Destinations.html" title="Kiba::Extend::Destinations (module)">Destinations</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Extend/Destinations/CSV.html" title="Kiba::Extend::Destinations::CSV (class)">CSV</a></span></span>
+<span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="job_show_me-class_method">
+  
+    .<strong>job_show_me</strong>  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Whether to output results to STDOUT for debugging</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+230</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 230</span>
+
+<span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:job_show_me</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="job_tell_me-class_method">
+  
+    .<strong>job_tell_me</strong>  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Whether to have computer audibly say something when job is complete</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+235</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 235</span>
+
+<span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:job_tell_me</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="job_verbosity-class_method">
+  
+    .<strong>job_verbosity</strong>  &#x21d2; <tt>:debug</tt>, ... 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>How much output about jobs to output to STDOUT</p>
+
+<ul>
+  <li>:debug - tells you A LOT - helpful when developing pipelines and
+debugging</li>
+  <li>:normal - reports what is running, from where, and the results</li>
+  <li>:minimal - bare minimum</li>
+</ul>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>:debug</tt>, <tt>:normal</tt>, <tt>:minimal</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+245</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 245</span>
+
+<span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:job_verbosity</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='symbol'>:normal</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="ke_dir-class_method">
+  
+    .<strong>ke_dir</strong>  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns path to this application’s data directory (used
+internally by transforms and utils), and not specific to a project.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>path to this application’s data directory (used
+internally by transforms and utils), and not specific to a project</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+56
+57
+58
+59
+60</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 56</span>
+
+<span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:ke_dir</span><span class='comma'>,</span>
+<span class='label'>reader:</span> <span class='kw'>true</span><span class='comma'>,</span>
+<span class='label'>constructor:</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span> <span class='kw'>do</span>
+  <span class='const'>Gem</span><span class='period'>.</span><span class='id identifier rubyid_loaded_specs'>loaded_specs</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>kiba-extend</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_full_gem_path'>full_gem_path</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="lambdaopts-class_method">
+  
+    .<strong>lambdaopts</strong>  &#x21d2; <tt>Hash</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Default settings for Lambda destination</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+106
+107
+108</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 106</span>
+
+<span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:lambdaopts</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='lbrace'>{</span><span class='label'>on_write:</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_r'>r</span><span class='rparen'>)</span> <span class='tlambeg'>{</span>
+  <span class='id identifier rubyid_accumulator'>accumulator</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_r'>r</span>
+<span class='rbrace'>}</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="loader-class_method">
+  
+    .<strong>loader</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+62
+63
+64</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 62</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_loader'>loader</span>
+  <span class='ivar'>@loader</span> <span class='op'>||=</span> <span class='id identifier rubyid_setup_loader'>setup_loader</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="nullvalue-class_method">
+  
+    .<strong>nullvalue</strong>  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Default string to be treated as though it were a null/empty value.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+134</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 134</span>
+
+<span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:nullvalue</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>%NULLVALUE%</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="pre_job_task_action-class_method">
+  
+    .<strong>pre_job_task_action</strong>  &#x21d2; <tt>:backup</tt>, <tt>:nuke</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Controls what happens when pre-job task is run</p>
+
+<ul>
+  <li>:backup - Moves all existing files in specified directories to backup
+directory created in your <code>:datadir</code></li>
+  <li>:nuke - Deletes all existing files in specified directories
+ when a job is run. <strong>Make sure you only specify directories
+ that contain derived/generated files!</strong></li>
+</ul>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>:backup</tt>, <tt>:nuke</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+211</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 211</span>
+
+<span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:pre_job_task_action</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='symbol'>:backup</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="pre_job_task_backup_dir-class_method">
+  
+    .<strong>pre_job_task_backup_dir</strong>  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Full path to directory to which files will be moved if
+  <code>pre_job_task_action == :backup</code>. The directory will be
+  created if it does not exist.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+195</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 195</span>
+
+<span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:pre_job_task_backup_dir</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="pre_job_task_directories-class_method">
+  
+    .<strong>pre_job_task_directories</strong>  &#x21d2; <tt>Array&lt;String&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Full paths to directories that will be affected by the specified pre-task
+  action</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;String&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+200</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 200</span>
+
+<span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:pre_job_task_directories</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="pre_job_task_mode-class_method">
+  
+    .<strong>pre_job_task_mode</strong>  &#x21d2; <tt>:job</tt>, ... 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Controls whether pre-job task is run</p>
+
+<ul>
+  <li>:job - runs pre-job task specified above whenever you invoke
+<code>thor run:job ...</code>. All dependency jobs required for the
+invoked job will be run. This mode is recommended during
+development when you want any change in the dependency chain
+to get picked up.</li>
+  <li>any other value - only regenerates missing dependency files.
+Useful when your data is really big and/or your jobs are more
+stable</li>
+</ul>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>:job</tt>, <tt>nil</tt>, <tt>anyValue</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+225</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 225</span>
+
+<span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:pre_job_task_mode</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='symbol'>:job</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="pre_job_task_run-class_method">
+  
+    .<strong>pre_job_task_run</strong>  &#x21d2; <tt>Boolean</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Whether to use Kiba::Extend’s pre-job task functionality. The
+  default is <code>false</code> for backward compatibility, as existing
+  projects may not have the required settings configured.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+188</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 188</span>
+
+<span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:pre_job_task_run</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="project_configs-class_method">
+  
+    .<strong>project_configs</strong>  &#x21d2; <tt>Array&lt;Module&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>List of config modules in project namespaces set in <span class='object_link'><a href="#config_namespaces-class_method" title="Kiba::Extend.config_namespaces (method)">config_namespaces</a></span>
+  setting</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;Module&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>4.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+252
+253
+254
+255
+256</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 252</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_project_configs'>project_configs</span>
+  <span class='id identifier rubyid_config_namespaces'>config_namespaces</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_ns'>ns</span><span class='op'>|</span> <span class='id identifier rubyid_get_config_mods'>get_config_mods</span><span class='lparen'>(</span><span class='id identifier rubyid_ns'>ns</span><span class='comma'>,</span> <span class='id identifier rubyid_ns'>ns</span><span class='period'>.</span><span class='id identifier rubyid_constants'>constants</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+    <span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
+    <span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_obj'>obj</span><span class='op'>|</span> <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Module</span><span class='rparen'>)</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_obj'>obj</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:config</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="registry-class_method">
+  
+    .<strong>registry</strong>  &#x21d2; <tt><span class='object_link'><a href="Extend/Registry/FileRegistry.html" title="Kiba::Extend::Registry::FileRegistry (class)">Kiba::Extend::Registry::FileRegistry</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>A customized
+  <a href="https://dry-rb.org/gems/dry-container/main/">dry-container</a>
+  for registering and resolving jobs</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt><span class='object_link'><a href="Extend/Registry/FileRegistry.html" title="Kiba::Extend::Registry::FileRegistry (class)">Kiba::Extend::Registry::FileRegistry</a></span></tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+172
+173
+174</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 172</span>
+
+<span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:registry</span><span class='comma'>,</span>
+<span class='label'>constructor:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='const'><span class='object_link'><a href="../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Extend/Registry.html" title="Kiba::Extend::Registry (module)">Registry</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Extend/Registry/FileRegistry.html" title="Kiba::Extend::Registry::FileRegistry (class)">FileRegistry</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+<span class='label'>reader:</span> <span class='kw'>true</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="registry_namespace_separator-class_method">
+  
+    .<strong>registry_namespace_separator</strong>  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Used to join nested namespaces and registered keys in
+  FileRegistry. With namespace ‘ns’ and registered key ‘foo’:
+  ‘ns__foo’. With parent namespace ‘ns’, child namespace
+  ‘child’, and registered key ‘foo’: ‘ns__child__foo’</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+142</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 142</span>
+
+<span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:registry_namespace_separator</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>__</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="reload!-class_method">
+  
+    .<strong>reload!</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+84
+85
+86</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 84</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_reload!'>reload!</span>
+  <span class='ivar'>@loader</span><span class='period'>.</span><span class='id identifier rubyid_reload'>reload</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="sgdelim-class_method">
+  
+    .<strong>sgdelim</strong>  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Default subgrouping delimiter for splitting/joining values in multi-valued
+  fields</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_orig'>orig</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a^^y|b^^z</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_delim_split'>delim_split</span> <span class='op'>=</span> <span class='id identifier rubyid_orig'>orig</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='id identifier rubyid_delim'>delim</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_sgdelim_split'>sgdelim_split</span> <span class='op'>=</span> <span class='id identifier rubyid_delim_split'>delim_split</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_val'>val</span><span class='op'>|</span> <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='id identifier rubyid_sgdelim'>sgdelim</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_sgdelim_split'>sgdelim_split</span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>a</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>y</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>b</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>z</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='rbracket'>]</span>
+</code></pre>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+129</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 129</span>
+
+<span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:sgdelim</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>^^</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="source-class_method">
+  
+    .<strong>source</strong>  &#x21d2; <tt>Class</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Default source class for jobs. Must meet implementation criteria
+in <a href="https://github.com/thbar/kiba/wiki/Implementing-ETL-sources">Kiba
+wiki</a></p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Class</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+149
+150
+151</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 149</span>
+
+<span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:source</span><span class='comma'>,</span> <span class='label'>constructor:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span>
+  <span class='const'><span class='object_link'><a href="../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Extend/Sources.html" title="Kiba::Extend::Sources (module)">Sources</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Extend/Sources/CSV.html" title="Kiba::Extend::Sources::CSV (class)">CSV</a></span></span>
+<span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="warning_label-class_method">
+  
+    .<strong>warning_label</strong>  &#x21d2; <tt>String</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Prefix for warnings from the ETL</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+165</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 165</span>
+
+<span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:warning_label</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>KIBA WARNING</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Wed Sep 13 15:50:04 2023 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.34 (ruby-3.1.4).
+</div>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: File Registry Entry Reference
+  
+    &mdash; Kiba-Extend Documentation
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "file_registry_entry";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="file_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: File Registry Entry Reference</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><div id='filecontents'>
+<h1 id="file-registry-entry-reference">File Registry Entry Reference</h1>
+
+<h2 id="what-are-file-registry-entries">What are file registry entries?</h2>
+
+<p>A file registry entry is initialized with a Hash of data about a file. Depending on the details, this allows a given entry to be:</p>
+
+<ul>
+  <li>the destination of one job;</li>
+  <li>a source for another job; and</li>
+  <li>a lookup for yet another job</li>
+</ul>
+
+<p>Creating file registry entries and referring to them when setting up your project’s jobs has two major benefits:</p>
+
+<ul>
+  <li>a given entry may be reused in different ways, in many jobs, without having to specify details about how to find and read/write the associated file each time it is used</li>
+  <li>Kiba::Extend can generate all non-supplied dependencies for any job automatically</li>
+</ul>
+
+<h2 id="types-of-file-registry-entries">Types of file registry entries</h2>
+
+<ul>
+  <li><strong>supplied entries</strong>: These entries represent files that are not created by jobs in your project application. Indicate that an entry is supplied by including <code>supplied: true</code> in the registry entry hash. Supplied entries can be used as sources and, depending on the type of file, as lookups in jobs. They cannot be used as destinations for jobs, since, by definition, files created by jobs are not supplied.</li>
+  <li><strong>job entries</strong>: These entries represent files that are output as the destination by a job in your project application. A job entry hash must have a <code>creator</code> key, indicating the job that creates the file. The job pointed at by an entry’s <code>creator</code> must have that entry as its destination in the file config of the job.</li>
+</ul>
+
+<h2 id="file-registry-entries-in-your-etl-application">File registry entries in your ETL application</h2>
+
+<p>File registry entries are defined as Ruby <code>Hash</code>es in your ETL application.</p>
+
+<p>In the most basic Kiba::Extend project, these hashes will be manually entered in the <code>YourProject::RegistryData.register_files</code> method.</p>
+
+<p>You can also write code to dynamically generate registry entry <code>Hash</code>es that follow a pattern. The <a href="https://github.com/lyrasis/kiba-extend-project/blob/main/lib/ke_project/registry_data.rb">kiba-extend-project repository</a> provides some examples. See also <a href="file.common_patterns_tips_tricks.html#automating-repetitive-file-registry" title="common_patterns_tips_tricks">common_patterns_tips_tricks</a>.</p>
+
+<p>Kiba::Extend converts these <code>Hash</code>es to <span class='object_link'><a href="Kiba/Extend/Registry/FileRegistryEntry.html" title="Kiba::Extend::Registry::FileRegistryEntry (class)">Kiba::Extend::Registry::FileRegistryEntry</a></span> classes when you call <span class='object_link'><a href="Kiba/Extend/Registry/FileRegistry.html#finalize-instance_method" title="Kiba::Extend::Registry::FileRegistry#finalize (method)">Kiba::Extend::Registry::FileRegistry#finalize</a></span> or <span class='object_link'><a href="Kiba/Extend/Registry/FileRegistry.html#transform-instance_method" title="Kiba::Extend::Registry::FileRegistry#transform (method)">Kiba::Extend::Registry::FileRegistry#transform</a></span> on your project’s registry.</p>
+
+<h2 id="file-registry-hash-format">File registry <code>Hash</code> format</h2>
+
+<p>The allowable Hash keys, expected Hash value formats, and expectations about them are described below.</p>
+
+<p><strong>NOTE:</strong> (Since 3.0.0) For all keys besides <code>:dest_special_opts</code>, you may pass a Proc that returns the expected value format when called. For <code>:dest_special_opts</code>, you may pass Procs as individual values within the option Hash. This can be useful if you need to pass in a value that depends on other project config that may not be loaded/set up when registry is initially populated. A publicly available example is in <code>kiba-tms</code> which <a href="https://github.com/lyrasis/kiba-tms/blob/eb8f222f0dc753921e58d136cd15e5eab7472c60/lib/kiba/tms/table/prep/destination_options.rb#L32-L34">sets destination initial headers</a> <a href="https://github.com/lyrasis/kiba-tms/blob/eb8f222f0dc753921e58d136cd15e5eab7472c60/lib/kiba/tms/constituents.rb#L140-L148">based on the preferred name field for a given TMS client project, and whether they want to include “flipped” form as variant terms</a>.</p>
+
+<h3 id="path"><code>:path</code></h3>
+<p>[String] full or expandable relative path to the expected location of the file</p>
+
+<ul>
+  <li>default: <code>nil</code></li>
+  <li>required if either <code>:src_class</code> or <code>:dest_class</code> requires a path</li>
+</ul>
+
+<h3 id="srcclass"><code>:src_class</code></h3>
+<p>[Class] the Ruby class used to read in data. This class must be defined in the <code>Sources</code> namespace or equivalent. Example: you should never use <span class='object_link'><a href="Kiba/Extend/Destinations/CSV.html" title="Kiba::Extend::Destinations::CSV (class)">Kiba::Extend::Destinations::CSV</a></span> as a <code>src_class</code>value.</p>
+
+<ul>
+  <li>required, but default supplied if not given</li>
+  <li>default: value of <span class='object_link'><a href="Kiba/Extend.html#source-class_method" title="Kiba::Extend.source (method)">Kiba::Extend.source</a></span> (<code>Kiba::Extend::Sources::CSV</code> unless overridden by your ETL app)</li>
+</ul>
+
+<h3 id="srcopt"><code>:src_opt</code></h3>
+<p>[Hash] file options used when reading in source</p>
+
+<ul>
+  <li>required, but default supplied if not given</li>
+  <li>if <code>:src_class</code> is <code>Kiba::Extend::Sources::CSV</code>:
+    <ul>
+      <li>default: value of <span class='object_link'><a href="Kiba/Extend.html#csvopts-class_method" title="Kiba::Extend.csvopts (method)">Kiba::Extend.csvopts</a></span></li>
+    </ul>
+  </li>
+  <li>if <code>:src_class</code> is <code>Kiba::Extend::Sources::Marc</code>:
+    <ul>
+      <li>default: <code>nil</code></li>
+      <li>A hash of keyword parameters defined for <a href="https://github.com/ruby-marc/ruby-marc/blob/main/lib/marc/reader.rb">MARC::Reader</a> can be entered, for example: <code>{external_encoding: "MARC-8", internal_encoding: "UTF-16LE"}</code></li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="destclass"><code>:dest_class</code></h3>
+<p>[Class] the Ruby class used to write out the data. This class must be defined in the <code>Destinations</code> namespace or equivalent. Example: you should never use <code>Kiba::Extend::Sources::CSV</code> as a <code>:dest_class</code> value.</p>
+
+<ul>
+  <li>required, but default supplied if not given</li>
+  <li>default: value of <span class='object_link'><a href="Kiba/Extend.html#destination-class_method" title="Kiba::Extend.destination (method)">Kiba::Extend.destination</a></span> (<span class='object_link'><a href="Kiba/Extend/Destinations/CSV.html" title="Kiba::Extend::Destinations::CSV (class)">Kiba::Extend::Destinations::CSV</a></span> unless overridden by your ETL app)</li>
+</ul>
+
+<h3 id="destopt"><code>:dest_opt</code></h3>
+<p>[Hash] file options used when writing data</p>
+
+<ul>
+  <li>required, but default supplied if not given</li>
+  <li>if <code>:dest_class</code> is <span class='object_link'><a href="Kiba/Extend/Destinations/CSV.html" title="Kiba::Extend::Destinations::CSV (class)">Kiba::Extend::Destinations::CSV</a></span>
+    <ul>
+      <li>default: value of <span class='object_link'><a href="Kiba/Extend.html#csvopts-class_method" title="Kiba::Extend.csvopts (method)">Kiba::Extend.csvopts</a></span></li>
+    </ul>
+  </li>
+  <li>if <code>:dest_class</code> is <span class='object_link'><a href="Kiba/Extend/Destinations/JsonArray.html" title="Kiba::Extend::Destinations::JsonArray (class)">Kiba::Extend::Destinations::JsonArray</a></span>:
+    <ul>
+      <li>default: <code>nil</code></li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="destspecialopts"><code>:dest_special_opts</code></h3>
+<p>[Hash] additional options for writing out the data</p>
+
+<ul>
+  <li>optional</li>
+  <li>Only the following destination classes support extra options. If you provide unsupported extra options, they will not be sent through to the destination class, and you will receive a warning in STDOUT.
+    <ul>
+      <li><span class='object_link'><a href="Kiba/Extend/Destinations/CSV.html" title="Kiba::Extend::Destinations::CSV (class)">Kiba::Extend::Destinations::CSV</a></span> (<code>initial_headers</code>)</li>
+      <li><span class='object_link'><a href="Kiba/Extend/Destinations/Marc.html" title="Kiba::Extend::Destinations::Marc (class)">Kiba::Extend::Destinations::Marc</a></span> (<code>allow_oversized</code>)</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Examples:</p>
+
+<pre class="code language-ruby"><code class="language-ruby">reghash = {
+  path: &#39;/path/to/file.csv&#39;,
+  dest_class: Kiba::Extend::Destinations::CSV,
+  dest_special_opts: { initial_headers: %i[objectnumber briefdescription] }
+  }
+</code></pre>
+
+<pre class="code language-ruby"><code class="language-ruby">reghash = {
+  path: &#39;/path/to/long_marc_records.mrc&#39;,
+  dest_class: Kiba::Extend::Destinations::Marc,
+  dest_special_opts: { allow_oversized: true }
+  }
+</code></pre>
+
+<h3 id="creator"><code>:creator</code></h3>
+<p>[Method, Module, Hash] Ruby method that generates this file</p>
+
+<ul>
+  <li>Used to run ETL jobs to create necessary files, if said files do not exist</li>
+  <li>Not required at all if file is supplied</li>
+  <li>If the method that runs the job is a module instance method named <code>job</code>, creator value can just be the <code>Module</code> containing the <code>:job</code> method</li>
+  <li>Otherwise, the creator value must be a <code>Method</code> (Pattern: <code>Class::Or::Module::ConstantName.method(:name_of_method)</code>)</li>
+  <li>Sometimes you may need to call a job with arguments. This may be particularly useful if the same job logic can be reused many times with slightly different parameters. In this case creator may be a Hash with <code>callee</code> and <code>args</code> keys</li>
+</ul>
+
+<p>NOTE: The default value for <span class='object_link'><a href="Kiba/Extend.html#default_job_method_name-class_method" title="Kiba::Extend.default_job_method_name (method)">Kiba::Extend.default_job_method_name</a></span> is <code>:job</code>. You can override this in your project’s base file as follows (since 2.7.2):</p>
+
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Kiba/Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_default_job_method_name'>default_job_method_name</span> <span class='op'>=</span> <span class='symbol'>:whatever</span>
+</code></pre>
+
+<h4 id="module-creator-example--since-272"><code>Module</code> creator example  (since 2.7.2)</h4>
+
+<p>This is valid because the default <code>:job</code> method is present in the module:</p>
+
+<pre class="code language-ruby"><code class="language-ruby"># in job definitions
+module Project
+  module Table
+    module_function
+
+    def job
+	  Kiba::Extend::Jobs::Job.new(
+	   ...
+	  )
+	end
+  end
+end
+
+# in file registry
+reghash = {
+  path: &#39;/project/working/objects_prep.csv&#39;,
+  creator: Project::Table
+}
+</code></pre>
+
+<h4 id="method-creator-example"><code>Method</code> creator example</h4>
+
+<p>Default <code>:job</code> method not present (or is not the method you need to call for this job).</p>
+
+<pre class="code language-ruby"><code class="language-ruby"># in job definitions
+module Project
+  module Table
+    module_function
+
+    def prep
+	  Kiba::Extend::Jobs::Job.new(
+	   ...
+	  )
+	end
+  end
+end
+
+# in file registry
+reghash = {
+  path: &#39;/project/working/objects_prep.csv&#39;,
+  creator: Project::Table.method(:prep)
+}
+</code></pre>
+
+<h4 id="hash-creator-example-since-272"><code>Hash</code> creator example (since 2.7.2)</h4>
+
+<p>Hash keys:</p>
+
+<ul>
+  <li><code>callee</code>: <code>Method</code> or <code>Module</code> (as described above)</li>
+  <li><code>args</code>: <code>Hash</code> of keyword arguments to pass to the callee</li>
+</ul>
+
+<pre class="code language-ruby"><code class="language-ruby"># in your project&#39;s registry_data.rb
+module Project
+  module RegistryData
+    module_function
+
+    def register
+      register_lookups
+      register_files
+      Project.registry.transform
+      Project.registry.freeze
+    end
+
+    def normalized_lookup_type(type)
+      type.downcase
+        .gsub(&#39; &#39;, &#39;_&#39;)
+        .gsub(&#39;/&#39;, &#39;_&#39;)
+    end
+
+    def register_lookups
+      types = [
+        &#39;Accession Review Decision&#39;, &#39;Accession Type&#39;, &#39;Account Codes&#39;, &#39;ArchSite&#39;, &#39;Box&#39;, &#39;Budget Code&#39;,
+        &#39;Building&#39;, &#39;CityState&#39;, &#39;Cleaning&#39;, &#39;Condition Picks&#39;, &#39;Contact Type&#39;, &#39;Count Unit&#39;, &#39;Creator Type&#39;,
+        &#39;Cultural Affiliation&#39;, &#39;Department Code&#39;, &#39;Digitize Parameters&#39;, &#39;Digitizing Hardware&#39;,
+        &#39;Digitizing Software&#39;, &#39;Disposal Type&#39;, &#39;Exhibit Type&#39;, &#39;Format/Type&#39;, &#39;Genre&#39;, &#39;Image Resolution&#39;,
+        &#39;In Exhibit&#39;, &#39;Insured By&#39;, &#39;Loan Purpose&#39;, &#39;Material&#39;, &#39;Mount&#39;, &#39;NAGPRA Type&#39;, &#39;Owner Type&#39;,
+        &#39;Region&#39;, &#39;Room&#39;, &#39;Server Path&#39;, &#39;Technique&#39;, &#39;Treatment&#39;, &#39;Value&#39;
+      ]
+
+      # This section dynamically registers a job for each of the above `types` values
+      Project.registry.namespace(&#39;lkup&#39;) do
+        types.each do |type|
+          register Project::RegistryData.normalized_lookup_type(type).to_sym, {
+            path: File.join(Project.datadir, &#39;working&#39;, &quot;#{Project::RegistryData.normalized_lookup_type(type)}.csv&quot;),
+            creator: {callee: Project::Main::Lookups::Extract, args: {type: type}},
+            tags: %i[lkup],
+            lookup_on: :lookupvalueid
+          }
+        end
+      end
+    end
+
+    def register files
+	  ...
+	end
+  end
+end
+
+# in job definitions
+module Project
+  module Main
+    module Lookups
+      module Extract
+        module_function
+
+        def job(type:)
+          Kiba::Extend::Jobs::Job.new(
+            files: {
+              source: :lkup__prep,
+              destination: &quot;lkup__#{Project::RegistryData.normalized_lookup_type(type).to_sym}&quot;.to_sym
+            },
+            transformer: xforms(type)
+          )
+        end
+
+        def xforms(type)
+          Kiba.job_segment do
+            transform FilterRows::FieldEqualTo, action: :keep, field: :lookup_type, value: type
+          end
+        end
+      end
+    end
+  end
+end
+</code></pre>
+
+<h3 id="supplied"><code>:supplied</code></h3>
+<p>[true, false] whether the file/data is supplied from outside the ETL</p>
+
+<ul>
+  <li>default: false</li>
+  <li>Manually set to true for:
+    <ul>
+      <li>original data files from client</li>
+      <li>mappings/reconciliations to be merged into the ETL/migration</li>
+      <li>any other files created external to the ETL, which only need to be read from and never generated by the ETL process</li>
+      <li>entries where <code>:src_class</code> is <span class='object_link'><a href="Kiba/Extend/Sources/Marc.html" title="Kiba::Extend::Sources::Marc (class)">Kiba::Extend::Sources::Marc</a></span></li>
+    </ul>
+  </li>
+</ul>
+
+<p>Both of the following are valid:</p>
+
+<pre class="code language-ruby"><code class="language-ruby">reghash = {
+  path: &#39;/project/working/objects_prep.csv&#39;,
+  creator: Project::ClientData::ObjectTable.method(:prep)
+}
+
+reghash = {
+  path: &#39;/project/clientData/objects.csv&#39;,
+  supplied: true
+}
+</code></pre>
+
+<h3 id="lookupon"><code>:lookup_on</code></h3>
+<p>[Symbol] column to use as keys in lookup table created from file data</p>
+
+<ul>
+  <li>required if file is used as a lookup source</li>
+  <li>You can register the same file multiple times under different file keys with different <code>:lookup_on</code> values if you need to use the data for different lookup purposes</li>
+</ul>
+
+<p>Currently only the following types of registry entries can be used as lookups:</p>
+
+<ul>
+  <li><code>:supplied</code> = <code>true</code> and <code>:src_class</code> returns row/record Hashes</li>
+  <li><code>:dest_class</code> writes/returns row/record Hashes</li>
+</ul>
+
+<p>Other types of registry entries should not define a <code>:lookup_on</code> value.</p>
+
+<h3 id="desc"><code>:desc</code></h3>
+<p>[String] description of what the file is/what it is used for. Used when post-processing reports results to STDOUT</p>
+
+<ul>
+  <li>optional</li>
+</ul>
+
+<h3 id="tags"><code>:tags</code></h3>
+<p>[Array (of Symbols)] list of arbitrary tags useful for categorizing data/jobs in your ETL</p>
+
+<ul>
+  <li>optional</li>
+  <li>If set, you can filter to run only jobs tagged with a given tag (or tags)1</li>
+  <li>Tags I commonly use:
+    <ul>
+      <li>:report_problems - reports that indicate something unexpected or that I need to do more work</li>
+      <li>:report_fyi - informational reports</li>
+      <li>:postmigcleanup - for reports I will need to generate for client after production migration is complete</li>
+      <li>:cspace or :ingest- final files ready to import</li>
+    </ul>
+  </li>
+</ul>
+</div></div>
+
+      <div id="footer">
+  Generated on Wed Sep 13 15:50:03 2023 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.34 (ruby-3.1.4).
+</div>
+
+    </div>
+  </body>
+</html>

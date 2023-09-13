@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: Using the IterativeCleanup mixin
+  
+    &mdash; Kiba-Extend Documentation
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "iterative_cleanup";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="file_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: Using the IterativeCleanup mixin</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><div id='filecontents'>
+<h1 id="using-the-iterativecleanup-mixin">Using the <code>IterativeCleanup</code> mixin</h1>
+
+<p>“Iterative cleanup” means the client may provide the worksheet more
+than once, or that you may need to produce a fresh worksheet for the
+client after a new database export is provided.</p>
+
+<p>There is no reason you can’t use the pattern for expected one-round
+cleanup. How often does one round of cleanup turn into more, after
+all?</p>
+
+<p><code>IterativeCleanup</code> was added in added in v4.0.0.</p>
+
+<h2 id="examples">Examples</h2>
+
+<p><a href="https://github.com/lyrasis/kiba-extend-project">kiba-extend-project</a>
+has been updated to reflect usage of the <code>IterativeCleanup</code> mixin. If
+you have an existing project based off <code>kiba-extend-project</code>, <a href="https://github.com/lyrasis/kiba-extend-project/compare/pre-iterative-cleanup...demo-iterative-cleanup">this
+diff</a>
+might help identify what you need to add to your project to use
+<code>IterativeCleanup</code>.</p>
+
+<p>Refer to
+  <a href="https://github.com/lyrasis/kiba-tms/blob/main/lib/kiba/tms/alt_nums_for_obj_type_cleanup.rb">Kiba::Tms::AltNumsForObjTypeCleanup</a>
+  as an example config module extending <code>IterativeCleanup</code> in a simple
+  way. See
+  <a href="https://github.com/lyrasis/kiba-tms/blob/main/lib/kiba/tms/places_cleanup_initial.rb">Kiba::Tms::PlacesCleanupInitial</a>
+  for a more complex usage with default overrides and custom pre/post
+  transforms.</p>
+
+<h2 id="project-setup-assumptions">Project setup assumptions</h2>
+
+<p>Your project must follow some setup/configuration conventions in order
+  to use this mixin:</p>
+
+<h3 id="each-cleanup-process-must-be-configured-in-its-own-config-module">Each cleanup process must be configured in its own config module</h3>
+
+<p>A config module is a Ruby module that <a href="https://ruby-doc.org/core-3.1.0/Object.html#method-i-respond_to-3F">responds to</a> <code>:config</code>.</p>
+
+<p>Extending <code>Dry::Configurable</code> adds a <code>config</code> method to a module:</p>
+
+<pre class="code language-ruby"><code class="language-ruby">module Project::NameCategorization
+  module_function
+  extend Dry::Configurable
+end
+</code></pre>
+
+<p>Or you can manually define a <code>config</code> class method on the module:</p>
+
+<pre class="code language-ruby"><code class="language-ruby">module Project::PersonCleanup
+  module_function
+
+  def config
+    true
+  end
+end
+</code></pre>
+
+<h3 id="kibaextend-confignamespaces-setting-must-be-set-from-your-project"><code>Kiba::Extend</code> <code>config_namespaces</code> setting must be set from your project</h3>
+
+<p>After your project’s base file has called the project’s <code>loader</code>, it
+must set the <code>Kiba::Extend.config.config_namespaces</code> setting.</p>
+
+<p>This setting lists the namespace(s) where your config modules live.</p>
+
+<p>In most of my projects, all of my config modules are in one namespace.
+For example, for the above project, I would add:</p>
+
+<pre class="code language-ruby"><code class="language-ruby">Kiba::Extend.config.config_namespaces = [Project]
+</code></pre>
+
+<p>Note that the setting takes an array, so you can list multiple
+namespaces if you have organized your project differently and your
+configs are not all in one namespace. For example, a migration for a
+Tms client may have client specific cleanups in the client-specific
+migration code project (config namespace: <code>TmsClientName</code>). That code
+project will make use of the kiba-tms application, which also defines
+cleanup configs in the namespace <code>Kiba::Tms</code>. Such a project would do
+this at the bottom of <code>lib/tms_client_name.rb</code>:</p>
+
+<pre class="code language-ruby"><code class="language-ruby">Kiba::Extend.config.config_namespaces = [Kiba::Tms, TmsClientName]
+</code></pre>
+
+<h3 id="add-cleanup-job-registration-to-your-registrydata-registration-method">Add cleanup job registration to your <code>RegistryData</code> registration method</h3>
+
+<p>Add the following to <code>RegistryData.register</code> (or whatever method
+triggers the registration of all your jobs):</p>
+
+<pre class="code language-ruby"><code class="language-ruby">Kiba::Extend::Utils::IterativeCleanupJobRegistrar.call
+</code></pre>
+
+<p>This line should be added before any <code>registry.transform</code>,
+<code>registry.freeze</code>, or <code>registry.finalize</code> methods.</p>
+
+<h3 id="confignamespaces-setting-is-populated-before-registrydata-registration"><code>config_namespaces</code> setting is populated before <code>RegistryData</code> registration</h3>
+
+<p>Calling <code>RegistryData.register</code> (or whatever method triggers the
+registration of all your jobs) must be done <strong><em>after</em></strong> the
+<code>config_namespaces</code> are set.</p>
+
+<h2 id="setup-of-an-individual-iterative-cleanup-process">Setup of an individual iterative cleanup process</h2>
+
+<p>The following explanation uses the demonstration places cleanup in
+<a href="https://github.com/lyrasis/kiba-extend-project">kiba-extend-project</a>
+as its main example.</p>
+
+<ul>
+  <li><a href="https://github.com/lyrasis/kiba-extend-project/blob/main/lib/ke_project/places_cleanup.rb"><code>lib/ke_project/places_cleanup.rb</code></a> -
+config module for the iterative cleanup process</li>
+  <li><a href="https://github.com/lyrasis/kiba-extend-project/blob/main/lib/ke_project/places.rb"><code>lib/ke_project/places.rb</code></a> -
+config module for general places processing, including generation of
+the cleanup <code>base_job</code></li>
+</ul>
+
+<h3 id="fingerprints"><code>:fingerprint</code> vs. <code>:clean_fingerprint</code> and their functions in an iterative cleanup process</h3>
+
+<p>The <code>fingerprint_fields</code> setting required in a cleanup config module
+is only used <em>inside the iterative cleanup process</em> to add and decode
+<code>:clean_fingerprint</code> values.</p>
+
+<p>In the iterative cleanup process, the function of <code>:clean_fingerprint</code>
+is:</p>
+
+<ul>
+  <li>Represent the original values of the editable fields of the cleanup
+worksheet, so that we can identify rows where the client made
+changes</li>
+  <li>Allow multiple rows corrected to the same value to be collapsed to
+one row for future iterations of review/cleanup</li>
+</ul>
+
+<p>It follows that the <code>IterativeCleanup</code>-related <code>fingerprint_fields</code>
+used to create <code>:clean_fingerprint</code> should include all fields included
+in the worksheet that:</p>
+
+<ul>
+  <li>you expect to be edited</li>
+  <li>combine to uniquely identify a row (for example, if you have an
+<code>:orig_name</code> column with the original data, and a separate,
+initially blank <code>:corrected_name</code> column, you’d need to include both
+fields in <code>fingerprint_fields</code>, since the initially blank value of
+<code>corrected_name</code> does not uniquely identify the rows.)</li>
+</ul>
+
+<p>The file associated with the iterative cleanup process’ <code>base_job</code> is
+expected to include a <code>:fingerprint</code> field by default. The name of
+this field can be changed in the cleanup config. The function of this
+field in the iterative cleanup is:</p>
+
+<ul>
+  <li>In subsequent iterations, determine if a row in the worksheet has
+been seen before or needs to be marked for review</li>
+  <li>Each cleaned row keeps track of the <code>:fingerprint</code> values of the
+original rows that have been collapsed/changed into the clean row</li>
+</ul>
+
+<p>The complete difference in function for <code>:fingerprint</code> and
+<code>:clean_fingerprint</code> is why it is possible to override
+<code>orig_values_identifier</code> in your cleanup config module after extending
+<code>IterativeCleanup</code>.</p>
+
+<p>The <code>KeProject::PlacesCleanup</code> process could probably work just fine
+by overriding <code>orig_values_identifier</code> to be <code>:place</code>, and not adding
+a <code>:fingerprint</code> field in
+<a href="https://github.com/lyrasis/kiba-extend-project/blob/main/lib/ke_project/jobs/places/prep_for_cleanup.rb"><code>KeProject::Jobs::Places::PrepForCleanup</code></a>.</p>
+
+<h3 id="places-config-notes">places config notes</h3>
+
+<p>Defines settings used in <code>KeProject::Places::PrepForCleanup</code> job (and,
+presumably, in a real project, other jobs.</p>
+
+<p>Note that the value of <code>KeProject::Places.fingerprint_fields</code> is
+different from the value of
+<code>KeProject::PlacesCleanup.fingerprint_fields</code>. This works for the
+reasons outlined in the <a href="#fingerprints"><code>:fingerprint</code> vs. <code>:clean_fingerprint</code>
+section</a>.</p>
+
+<h3 id="places-cleanup-config-notes">places cleanup config notes</h3>
+
+<h4 id="required-before-extending-iterativecleanup-basejob">Required before extending <code>IterativeCleanup</code>: <code>base_job</code></h4>
+
+<p>This job is created outside the iterative cleanup process, and serves
+as the base and starting point for a cleanup process.</p>
+
+<p>The full registry entry key (e.g. <code>places__prep_for_cleanup</code>) must be
+set as the <code>base_job</code> setting in a cleanup config module prior to
+extending that module with <span class='object_link'><a href="Kiba/Extend/Mixins/IterativeCleanup.html" title="Kiba::Extend::Mixins::IterativeCleanup (module)">Kiba::Extend::Mixins::IterativeCleanup</a></span>.
+See
+<a href="https://github.com/lyrasis/kiba-extend-project/blob/main/lib/ke_project/places_cleanup.rb"><code>lib/ke_project/places_cleanup.rb</code></a>.</p>
+
+<p><strong>IMPORTANT: This job’s output must include a field which
+combines/identifies the original values that may be affected by the
+cleanup process.</strong> The default expectation is that this field is named
+<code>:fingerprint</code>, but this can be overridden by defining a custom
+<code>orig_values_identifier</code> method in the extending module after
+extension. This field is used as a matchpoint for merging cleaned up
+data back into the migration, and identifying whether a given value in
+subsequent worksheet iterations has been previously included in a
+worksheet.</p>
+
+<h4 id="required-before-extending-iterativecleanup-fingerprintfields">Required before extending <code>IterativeCleanup</code>: <code>fingerprint_fields</code></h4>
+
+<p>The fields that will be hashed into the <code>:clean_fingerprint</code> value.
+See the <a href="#fingerprints"><code>:fingerprint</code> vs. <code>:clean_fingerprint</code>
+section</a> for more detail.</p>
+
+<p>Usually you will want to include any <code>worksheet_add_fields</code>, plus any
+other fields that, in combination with the <code>worksheet_add_fields</code>,
+yield the full corrected value for the row.</p>
+
+<h4 id="optional-default-method-overrides">Optional default method overrides</h4>
+
+<p>There are a number of overrideable methods. They are well-documented at
+<span class='object_link'><a href="Kiba/Extend/Mixins/IterativeCleanup.html" title="Kiba::Extend::Mixins::IterativeCleanup (module)">Kiba::Extend::Mixins::IterativeCleanup</a></span>. Look for the list under
+“Methods that can be optionally overridden in extending module”.</p>
+
+<p>The ones used in the demo config are listed below. Look at the documentation linked above for the full list.</p>
+
+<h5 id="worksheetaddfields"><code>worksheet_add_fields</code></h5>
+
+<p>I want clients to be able to remove things like “near” and “(?)” from
+these place terms, recording proximity and uncertainty information in
+separate fields. So I add those fields for use.</p>
+
+<h5 id="jobtags"><code>job_tags</code></h5>
+
+<p>Allows retrieval and running of jobs via <code>thor jobs:tagged</code>, <code>thor
+jobs:tagged_or</code>, and <code>thor jobs:tagged_and</code> commands.</p>
+
+<h5 id="cleanupbasename"><code>cleanup_base_name</code></h5>
+
+<p>This is an important one to understand. Our cleanup config module name
+is <code>PlacesCleanup</code>, so by default, <code>cleanup_base_name</code> will be set to
+<code>"places_cleanup"</code>.</p>
+
+<p>This is used as the namespace for registering the jobs associated with
+the cleanup process, for example <code>:places_cleanup__worksheet</code>.</p>
+
+<p>You can override this if you want.</p>
+
+<h5 id="custom-transforms">Custom transforms!</h5>
+
+<p>See <span class='object_link'><a href="Kiba/Extend/Mixins/IterativeCleanup/Jobs.html" title="Kiba::Extend::Mixins::IterativeCleanup::Jobs (module)">Kiba::Extend::Mixins::IterativeCleanup::Jobs</a></span> for documentation,
+and the <code>kiba-tms</code>
+<a href="https://github.com/lyrasis/kiba-tms/blob/main/lib/kiba/tms/places_cleanup_initial.rb"><code>PlacesInitialCleanup</code></a>
+config module for use examples.</p>
+
+<h2 id="the-process">The process</h2>
+
+<p>Here is the default iterative cleanup process, represented in a
+flowchart. There’s also a <a href="https://github.com/lyrasis/kiba-extend/blob/main/doc/iterative_cleanup_flowchart.pdf">higher-resolution PDF
+version</a>,
+and <a href="https://github.com/lyrasis/kiba-extend/blob/main/doc/iterative_cleanup_flowchart.mmd">the raw Mermaid source of the
+flowchart</a>.
+The steps and settings are explained textually below the flowchart.</p>
+
+<p><img src="https://github.com/lyrasis/kiba-extend/blob/main/doc/iterative_cleanup_flowchart.png?raw=true" alt="Flowchart" /></p>
+
+<p>Right now, the best place to step through and check out the processing
+in a detailed way is to look at the following in the <code>kiba-tms</code>
+repository:</p>
+
+<ul>
+  <li><a href="https://github.com/lyrasis/kiba-tms/blob/main/lib/kiba/tms/places_cleanup_initial.rb"><code>PlacesInitialCleanup</code></a>
+and <a href="https://github.com/lyrasis/kiba-tms/blob/main/spec/kiba/tms/places_cleanup_initial_spec.rb">its detailed
+tests</a>:</li>
+  <li>generation of initial worksheet (i.e. “when no cleanup done”)</li>
+  <li>merge of corrected data and generation of a second worksheet after
+first round of cleanup is returned (i.e. “when initial cleanup
+returned”)</li>
+  <li>after a new database export is received after an initial round of
+cleanup has been done (i.e. “when fresh data after initial
+cleanup”) - all previous cleanup retained; cleanup rows linked to
+now-deleted database data no longer appear; any new values in
+cleanup worksheet generated at this point get flagged “to_review”</li>
+  <li>verification of everything after worksheet based on fresh data is
+returned, including “final” job (i.e. “when second round of
+cleanup”)</li>
+</ul>
+
+<h3 id="basejobcleaned">BaseJobCleaned <code>:cleanup_base_name__base_job_cleaned</code></h3>
+
+<h4 id="if-no-cleanup-worksheets-returned">If no cleanup worksheets returned</h4>
+
+<p>Adds any <code>worksheet_add_fields</code> you have specified.</p>
+
+<p>Adds <code>:clean_fingerprint</code> field.</p>
+
+<h4 id="if-any-cleanup-worksheets-returned">If any cleanup worksheets returned</h4>
+
+<p>Adds any <code>worksheet_add_fields</code> you have specified.</p>
+
+<p>Merges corrections. See <a href="#corrections">Corrections</a> for details on how
+corrections are prepared for merge back into original data.</p>
+
+<p>Adds <code>:clean_fingerprint</code> field.</p>
+
+<h3 id="cleaneduniq">CleanedUniq <code>:cleanup_base_name__cleaned_uniq</code></h3>
+
+<p>Starts with <a href="#basejobcleaned">BaseJobCleaned</a> output.</p>
+
+<p>Deletes <code>:fingerprint</code> (or your custom <code>orig_values_identifier</code>) and
+any custom <code>collate_fields</code> you specified.</p>
+
+<p>Deduplicates on <code>:clean_fingerprint</code> field values. Now if four rows
+for “North Carolina”, “NC”, “N.C.”, and “N. Carolina” have all been
+changed to “North Carolina”, we only have one row for “North
+Carolina”.</p>
+
+<p>Re-merges in the collate fields (including
+<code>orig_values_identifier</code>/<code>:fingerprint</code> field) as multi-valued fields
+(separated by <code>collation_delim</code>). This also pluralizes collate field
+names that don’t start with “s”. So our one row for “North Carolina”
+will have now have a <code>:fingerprints</code> field containing 4 fingerprint
+values from the 4 original rows.</p>
+
+<p>Once all cleanup is done, this might be the appropriate source job for
+further jobs generating unique authority terms.</p>
+
+<h3 id="worksheet">Worksheet <code>:cleanup_base_name__worksheet</code></h3>
+
+<p>Starts with <a href="#cleaneduniq">CleanedUniq</a> output.</p>
+
+<p>See bottom of
+<a href="https://github.com/lyrasis/kiba-extend-project/blob/main/lib/ke_project/places_cleanup.rb">KeProject::PlacesCleanup</a>
+for example of recording <code>provided_worksheets</code>.</p>
+
+<h4 id="if-you-have-recorded-no-providedworksheets">If you have recorded no <code>provided_worksheets</code></h4>
+
+<p>Rows are just passed through as-is.</p>
+
+<h4 id="if-you-have-recorded-one-or-more-providedworksheets">If you have recorded one or more <code>provided_worksheets</code></h4>
+
+<p>Gets a list of known <code>orig_values_identifier</code>/<code>:fingerprint</code> values in
+provided worksheets. It does this by creating and <code>call</code>ing a new
+<span class='object_link'><a href="Kiba/Extend/Mixins/IterativeCleanup/KnownWorksheetValues.html" title="Kiba::Extend::Mixins::IterativeCleanup::KnownWorksheetValues (class)">Kiba::Extend::Mixins::IterativeCleanup::KnownWorksheetValues</a></span>
+instance. This:</p>
+
+<ul>
+  <li>Reads each provided worksheet file</li>
+  <li>Gets the <code>:fingerprints</code> (or equivalent field) from each row and
+splits the multiple values in a single field</li>
+  <li>Compiles and deduplicates all the values</li>
+</ul>
+
+<p>A blank <code>:to_review</code> field is added to the worksheet being prepared.</p>
+
+<p>Now for each row we are going to output to <em>this</em> worksheet, we:</p>
+
+<ul>
+  <li>Split the values of the <code>:fingerprints</code> or equivalent field.</li>
+  <li>If <strong>all</strong> the fingerprint values for this row are in the list of
+known values, <code>:to_review</code> is left blank.</li>
+  <li>Otherwise, <code>:to_review</code> is set to “y”</li>
+</ul>
+
+<h3 id="worksheet-is-given-to-client-for-completion">Worksheet is given to client for completion</h3>
+
+<p>At this point, you should record this file in the
+<code>provided_worksheets</code> setting.</p>
+
+<p>See bottom of
+<a href="https://github.com/lyrasis/kiba-extend-project/blob/main/lib/ke_project/places_cleanup.rb">KeProject::PlacesCleanup</a>
+for example of recording <code>provided_worksheets</code>.</p>
+
+<h3 id="client-returns-completed-or-partially-completed-worksheet">Client returns completed (or partially completed) worksheet</h3>
+
+<p>At this point, you should record the returned file in the
+<code>returned_files</code> setting.</p>
+
+<p>See bottom of
+<a href="https://github.com/lyrasis/kiba-extend-project/blob/main/lib/ke_project/places_cleanup.rb">KeProject::PlacesCleanup</a>
+for example of recording <code>returned_files</code>.</p>
+
+<h3 id="returnedcompiled">ReturnedCompiled <code>:cleanup_base_name__returned_compiled</code></h3>
+
+<p>Reads in all rows from <code>returned_files</code> as data source. Note that
+these must be listed oldest to newest. They are read in as sources in
+that order, which is important when we get to merging corrections!</p>
+
+<p>Deletes :to_review field if present.</p>
+
+<p>Runs <span class='object_link'><a href="Kiba/Extend/Transforms/Fingerprint/FlagChanged.html" title="Kiba::Extend::Transforms::Fingerprint::FlagChanged (class)">Kiba::Extend::Transforms::Fingerprint::FlagChanged</a></span>, using
+<code>:clean_fingerprint</code>. Any custom
+<code>clean_fingerprint_flag_ignore_fields</code> are ignored. This:</p>
+
+<ul>
+  <li>Adds the decoded (original) fingerprint field values to new fields
+prefixed with “fp_”</li>
+  <li>Deletes <code>:clean_fingerprint</code> after it has been decoded</li>
+  <li>Adds a <code>:corrected</code> field.</li>
+  <li>Compares each original/fp_ field with its corresponding field in the
+returned file. For rows where any values of the <code>fingerprint_fields</code>
+was changed in the returned worksheet, the names of the fields with
+changed values are gathered in the <code>:corrected</code> field. For rows with
+no changes, the <code>:corrected</code> field is blank.</li>
+</ul>
+
+<p>Deletes the fields prefixed with <code>:fp_</code> derived during the
+<code>FlagChanged</code> process.</p>
+
+<p>Runs <span class='object_link'><a href="Kiba/Extend/Transforms/Clean/EnsureConsistentFields.html" title="Kiba::Extend::Transforms::Clean::EnsureConsistentFields (class)">Kiba::Extend::Transforms::Clean::EnsureConsistentFields</a></span> to
+ensure all rows have the same fields.</p>
+
+<h3 id="corrections">Corrections <code>:cleanup_base_name__corrections</code></h3>
+
+<p>Reads in the output of <a href="#returnedcompiled">ReturnedCompiled</a>.</p>
+
+<p>Deletes rows where <code>:corrections</code> field is blank.</p>
+
+<p>This leaves just rows where changes were made in a returned worksheet,
+from oldest to newest. Order is important!</p>
+
+<p>Because this is an iterative cleanup process, we need to account for
+the fact that cleanup done in worksheet #2 may have been done on a
+single row that resulted from the cleanup of 4 rows in worksheet #1.
+Recall the “North Carolina” example in <a href="#cleaneduniq">CleanedUniq</a>.</p>
+
+<p>For this reason, and because we merge all the corrections, from
+oldest-to-newest, back into <a href="#basejobcleaned">BaseJobCleaned</a> on the
+original <code>:fingerprint</code>, we run
+<span class='object_link'><a href="Kiba/Extend/Transforms/Explode/RowsFromMultivalField.html" title="Kiba::Extend::Transforms::Explode::RowsFromMultivalField (class)">Kiba::Extend::Transforms::Explode::RowsFromMultivalField</a></span> on that
+<code>:fingerprint</code> (or equivalent) field.</p>
+
+<p>So, if, in round 1, the <code>:state</code> field values “NC”, “N.C.”, and “N.
+Carolina” were all changed to “North Carolina”, we have 3 rows in
+Corrections output with instructions to merge “North Carolina” into
+the <code>:state</code> field in rows with matching <code>:fingerprint</code> values. (The
+4th “North Carolina” row had no change in round 1.)</p>
+
+<p>Now, in round 2, the client noticed that the row with <code>:state</code> =
+“Ohio” also has <code>:country</code> = “USA”, and added “USA” as country in the
+row for “North Carolina”.</p>
+
+<p>The Corrections output is now also going to have 4 rows with
+instructions to merge “USA” into the <code>:country</code> field in rows with
+matching <code>:fingerprint</code> values.</p>
+
+<p>So:</p>
+
+<pre class="code ruby"><code class="ruby">
+| country | state          | corrected | fingerprint |
+|---------+----------------+-----------+-------------|
+|         | North Carolina | state     |           2 |
+|         | North Carolina | state     |           3 |
+|         | North Carolina | state     |           4 |
+| USA     | North Carolina | country   |           1 |
+| USA     | North Carolina | country   |           2 |
+| USA     | North Carolina | country   |           3 |
+| USA     | North Carolina | country   |           4 |
+</code></pre>
+
+<p>For lookup/merge back into <a href="#basejobcleaned">BaseJobCleaned</a>, those
+rows are gathered into a hash, with <code>:fingerprint</code> as the key:</p>
+
+<pre class="code language-ruby"><code class="language-ruby">{ 2=&gt;[
+  {country: nil, state: &quot;North Carolina&quot;, corrected: &quot;state&quot;, fingerprint: 2},
+  {country: &quot;USA&quot;, state: &quot;North Carolina&quot;, corrected: &quot;country&quot;, fingerprint: 2}
+ ]
+}
+</code></pre>
+
+<p>When the <a href="#basejobcleaned">BaseJobCleaned</a> merge process hits the row
+with <code>:fingerprint</code> = 2, it carries out the corrections per row, in
+order.</p>
+
+<ul>
+  <li><code>row[:state] = "North Carolina"</code></li>
+  <li><code>row[:country] = "USA"</code></li>
+</ul>
+
+<p>Why does it do this so inefficiently? Why not just take the last
+cleanup row for each fingerprint and replace the field values?</p>
+
+<p>I can’t tell you the details why but at some point I tried something
+like that and ended up with a mess. That was before I had worked out
+some of the stuff with having two separate fingerprints, and there
+were other complications with that one. But I worked out this process
+and it works, generally, across the board, so I’m leaving it for now.</p>
+
+<h3 id="final-cleanupbasenamefinal">Final <code>:cleanup_base_name__final</code></h3>
+
+<p>Unless you define custom transforms for this one, it just returns
+<a href="#basejobcleaned">BaseJobCleaned</a> with <code>:fingerprint</code> (or your custom
+field defined in an override <code>final_lookup_on_field</code> method).</p>
+
+<p>Use this as a lookup to get your cleaned data back into other places
+in the migration.</p>
+</div></div>
+
+      <div id="footer">
+  Generated on Wed Sep 13 15:50:03 2023 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.34 (ruby-3.1.4).
+</div>
+
+    </div>
+  </body>
+</html>

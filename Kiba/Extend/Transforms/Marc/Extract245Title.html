@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  Class: Kiba::Extend::Transforms::Marc::Extract245Title
+  
+    &mdash; Kiba-Extend Documentation
+  
+</title>
+
+  <link rel="stylesheet" href="../../../../css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="../../../../css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "Kiba::Extend::Transforms::Marc::Extract245Title";
+  relpath = '../../../../';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="../../../../js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="../../../../js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="../../../../class_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="../../../../_index.html">Index (E)</a> &raquo;
+    <span class='title'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../Transforms.html" title="Kiba::Extend::Transforms (module)">Transforms</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Marc.html" title="Kiba::Extend::Transforms::Marc (module)">Marc</a></span></span>
+     &raquo; 
+    <span class="title">Extract245Title</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="../../../../class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><h1>Class: Kiba::Extend::Transforms::Marc::Extract245Title
+  
+  
+  
+</h1>
+<div class="box_info">
+  
+  <dl>
+    <dt>Inherits:</dt>
+    <dd>
+      <span class="inheritName">Object</span>
+      
+        <ul class="fullTree">
+          <li>Object</li>
+          
+            <li class="next">Kiba::Extend::Transforms::Marc::Extract245Title</li>
+          
+        </ul>
+        <a href="#" class="inheritanceTree">show all</a>
+      
+    </dd>
+  </dl>
+  
+
+  
+  
+  
+  
+  
+
+  
+
+  
+  <dl>
+    <dt>Defined in:</dt>
+    <dd>lib/kiba/extend/transforms/marc/extract_245_title.rb</dd>
+  </dl>
+  
+</div>
+
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    <p>Extract title fields from 245 (and/or linked 880) fields, along with
+  :marcid value</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>Just 245</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='comment'># 245 13 $a Un sextuor pour piano et cordes en mi bémol majeur
+</span><span class='comment'># $h [sound recording] ; $b Divertimento sur des thémes de la
+</span><span class='comment'># Somnanbula de Bellini ; Sérénade sur des thémes d&#39;Anna Bolena de
+</span><span class='comment'># Donizetti / $c Mikhail Glinka.
+</span><span class='id identifier rubyid_rec'>rec</span> <span class='op'>=</span> <span class='id identifier rubyid_get_marc_record'>get_marc_record</span><span class='lparen'>(</span><span class='label'>index:</span> <span class='int'>9</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Marc.html" title="Kiba::Extend::Transforms::Marc (module)">Marc</a></span></span><span class='op'>::</span><span class='const'>Extract245Title</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Marc::Extract245Title#initialize (method)">new</a></span></span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_rec'>rec</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='symbol'>:title</span><span class='rbracket'>]</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Un sextuor pour piano et cordes en mi bémol majeur ; Divertimento sur des thémes de la Somnanbula de Bellini ; Sérénade sur des thémes d&#39;Anna Bolena de Donizetti</span><span class='tstring_end'>&quot;</span></span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Deleting non-filing characters</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='comment'># Same MARC data as above example
+</span><span class='id identifier rubyid_rec'>rec</span> <span class='op'>=</span> <span class='id identifier rubyid_get_marc_record'>get_marc_record</span><span class='lparen'>(</span><span class='label'>index:</span> <span class='int'>9</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Marc.html" title="Kiba::Extend::Transforms::Marc (module)">Marc</a></span></span><span class='op'>::</span><span class='const'>Extract245Title</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Marc::Extract245Title#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>delete_non_filing:</span> <span class='kw'>true</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_rec'>rec</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='symbol'>:title</span><span class='rbracket'>]</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>sextuor pour piano et cordes en mi bémol majeur ; Divertimento sur des thémes de la Somnanbula de Bellini ; Sérénade sur des thémes d&#39;Anna Bolena de Donizetti</span><span class='tstring_end'>&quot;</span></span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Deleting non-filing characters and upcasing first char</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='comment'># Same MARC data as above example
+</span><span class='id identifier rubyid_rec'>rec</span> <span class='op'>=</span> <span class='id identifier rubyid_get_marc_record'>get_marc_record</span><span class='lparen'>(</span><span class='label'>index:</span> <span class='int'>9</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Marc.html" title="Kiba::Extend::Transforms::Marc (module)">Marc</a></span></span><span class='op'>::</span><span class='const'>Extract245Title</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Marc::Extract245Title#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+  <span class='label'>delete_non_filing:</span> <span class='kw'>true</span><span class='comma'>,</span>
+  <span class='label'>upcase_first_filing_char:</span> <span class='kw'>true</span>
+<span class='rparen'>)</span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_rec'>rec</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='symbol'>:title</span><span class='rbracket'>]</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Sextuor pour piano et cordes en mi bémol majeur ; Divertimento sur des thémes de la Somnanbula de Bellini ; Sérénade sur des thémes d&#39;Anna Bolena de Donizetti</span><span class='tstring_end'>&quot;</span></span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>880 and Preferring vernacular</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='comment'># 245 10 $6 880-02 $a Jidō shinri hen / $c Nihon Ryōshin Saikyōiku
+</span><span class='comment'>#   Kyōkai hen.
+</span><span class='comment'># 880 10 $6 245-02 $a 兒童心理篇 / $c 日本兩親再教育協會編.
+</span><span class='id identifier rubyid_rec'>rec</span> <span class='op'>=</span> <span class='id identifier rubyid_get_marc_record'>get_marc_record</span><span class='lparen'>(</span><span class='label'>index:</span> <span class='int'>6</span><span class='rparen'>)</span>
+<span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Marc.html" title="Kiba::Extend::Transforms::Marc (module)">Marc</a></span></span><span class='op'>::</span><span class='const'>Extract245Title</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Marc::Extract245Title#initialize (method)">new</a></span></span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_rec'>rec</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='symbol'>:title</span><span class='rbracket'>]</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>兒童心理篇</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>880 and not preferring vernacular</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='comment'># Same MARC data as above example
+</span><span class='id identifier rubyid_rec'>rec</span> <span class='op'>=</span> <span class='id identifier rubyid_get_marc_record'>get_marc_record</span><span class='lparen'>(</span><span class='label'>index:</span> <span class='int'>6</span><span class='rparen'>)</span>
+<span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Marc.html" title="Kiba::Extend::Marc (module)">Marc</a></span></span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_prefer_vernacular'>prefer_vernacular</span> <span class='op'>=</span> <span class='kw'>false</span>
+<span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Marc.html" title="Kiba::Extend::Transforms::Marc (module)">Marc</a></span></span><span class='op'>::</span><span class='const'>Extract245Title</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Marc::Extract245Title#initialize (method)">new</a></span></span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_rec'>rec</span><span class='rparen'>)</span><span class='lbracket'>[</span><span class='symbol'>:title</span><span class='rbracket'>]</span>
+<span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Marc.html" title="Kiba::Extend::Marc (module)">Marc</a></span></span><span class='period'>.</span><span class='id identifier rubyid_reset_config'>reset_config</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Jidō shinri hen|兒童心理篇</span><span class='tstring_end'>&#39;</span></span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
+  </div>
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>3.3.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div>
+
+
+
+
+
+
+  
+    <h2>
+      Instance Method Summary
+      <small><a href="#" class="summary_toggle">collapse</a></small>
+    </h2>
+
+    <ul class="summary">
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(id_target: Kiba::Extend::Marc.id_target_field, title_target: :title, title_subfields: Kiba::Extend::Marc.title_part_subfields, delim: Kiba::Extend.delim, delete_non_filing: false, upcase_first_filing_char: false)  &#x21d2; Extract245Title </a>
+    
+
+    
+  </span>
+  
+  
+    <span class="note title constructor">constructor</span>
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>A new instance of Extract245Title.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#process-instance_method" title="#process (instance method)">#<strong>process</strong>(record)  &#x21d2; Hash{ Symbol =&gt; String, nil } </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+    </ul>
+  
+
+<div id="constructor_details" class="method_details_list">
+  <h2>Constructor Details</h2>
+  
+    <div class="method_details first">
+  <h3 class="signature first" id="initialize-instance_method">
+  
+    #<strong>initialize</strong>(id_target: Kiba::Extend::Marc.id_target_field, title_target: :title, title_subfields: Kiba::Extend::Marc.title_part_subfields, delim: Kiba::Extend.delim, delete_non_filing: false, upcase_first_filing_char: false)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Marc::Extract245Title (class)">Extract245Title</a></span></tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    <p>Returns a new instance of Extract245Title.</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>id_target</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>Kiba::Extend::Marc.id_target_field</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>row field into which id value will be
+written</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>title_target</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>:title</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>row field into which title value will
+be written</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>title_subfields</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;String&gt;</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>Kiba::Extend::Marc.title_part_subfields</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>subfields of 245 to extract
+as part of title value. NOTE: Any <code>space-punctuation-space?</code> at
+the end of a $h is retained as part of title if $h itself is not
+included as part of title</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>delim</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>Kiba::Extend.delim</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>used when joining values from multiple fields</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>delete_non_filing</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>if true, removes nonfiling
+characters as specified in 245 2nd indicator</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>upcase_first_filing_char</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>if true, upcases the
+first character of each title after non-filing characters are
+deleted. Has no effect if you are not deleting non-filing chars.</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>3.3.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/marc/extract_245_title.rb', line 76</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>id_target:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Marc.html" title="Kiba::Extend::Marc (module)">Marc</a></span></span><span class='period'>.</span><span class='id identifier rubyid_id_target_field'><span class='object_link'><a href="../../Marc.html#id_target_field-class_method" title="Kiba::Extend::Marc.id_target_field (method)">id_target_field</a></span></span><span class='comma'>,</span>
+  <span class='label'>title_target:</span> <span class='symbol'>:title</span><span class='comma'>,</span>
+  <span class='label'>title_subfields:</span>
+  <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Marc.html" title="Kiba::Extend::Marc (module)">Marc</a></span></span><span class='period'>.</span><span class='id identifier rubyid_title_part_subfields'><span class='object_link'><a href="../../Marc.html#title_part_subfields-class_method" title="Kiba::Extend::Marc.title_part_subfields (method)">title_part_subfields</a></span></span><span class='comma'>,</span>
+  <span class='label'>delim:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_delim'><span class='object_link'><a href="../../../Extend.html#delim-class_method" title="Kiba::Extend.delim (method)">delim</a></span></span><span class='comma'>,</span>
+  <span class='label'>delete_non_filing:</span> <span class='kw'>false</span><span class='comma'>,</span>
+  <span class='label'>upcase_first_filing_char:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+  <span class='ivar'>@id_target</span> <span class='op'>=</span> <span class='id identifier rubyid_id_target'>id_target</span>
+  <span class='ivar'>@title_target</span> <span class='op'>=</span> <span class='id identifier rubyid_title_target'>title_target</span>
+  <span class='ivar'>@title_subfields</span> <span class='op'>=</span> <span class='id identifier rubyid_title_subfields'>title_subfields</span>
+  <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_delim'>delim</span>
+  <span class='ivar'>@delete_non_filing</span> <span class='op'>=</span> <span class='id identifier rubyid_delete_non_filing'>delete_non_filing</span>
+  <span class='ivar'>@upcase_first_filing_char</span> <span class='op'>=</span> <span class='id identifier rubyid_upcase_first_filing_char'>upcase_first_filing_char</span>
+  <span class='ivar'>@idextractor</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Utils.html" title="Kiba::Extend::Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Utils/MarcIdExtractor.html" title="Kiba::Extend::Utils::MarcIdExtractor (class)">MarcIdExtractor</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../Utils/MarcIdExtractor.html#initialize-instance_method" title="Kiba::Extend::Utils::MarcIdExtractor#initialize (method)">new</a></span></span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+  
+</div>
+
+
+  <div id="instance_method_details" class="method_details_list">
+    <h2>Instance Method Details</h2>
+
+    
+      <div class="method_details first">
+  <h3 class="signature first" id="process-instance_method">
+  
+    #<strong>process</strong>(record)  &#x21d2; <tt>Hash{ Symbol =&gt; String, nil }</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>record</span>
+      
+      
+        <span class='type'>(<tt>MARC::Record</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Hash{ Symbol =&gt; String, nil }</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>3.3.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+94
+95
+96
+97
+98
+99</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/marc/extract_245_title.rb', line 94</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_id'>id</span> <span class='op'>=</span> <span class='id identifier rubyid_idextractor'>idextractor</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_row'>row</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='id identifier rubyid_id_target'>id_target</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_id'>id</span><span class='rbrace'>}</span>
+  <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_title_target'>title_target</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_title_value'>title_value</span><span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_row'>row</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+  </div>
+
+</div>
+
+      <div id="footer">
+  Generated on Wed Sep 13 15:50:07 2023 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.34 (ruby-3.1.4).
+</div>
+
+    </div>
+  </body>
+</html>

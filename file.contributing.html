@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>
+  File: Contributing to kiba-extend
+  
+    &mdash; Kiba-Extend Documentation
+  
+</title>
+
+  <link rel="stylesheet" href="css/style.css" type="text/css" />
+
+  <link rel="stylesheet" href="css/common.css" type="text/css" />
+
+<script type="text/javascript">
+  pathId = "contributing";
+  relpath = '';
+</script>
+
+
+  <script type="text/javascript" charset="utf-8" src="js/jquery.js"></script>
+
+  <script type="text/javascript" charset="utf-8" src="js/app.js"></script>
+
+
+  </head>
+  <body>
+    <div class="nav_wrap">
+      <iframe id="nav" src="file_list.html?1"></iframe>
+      <div id="resizer"></div>
+    </div>
+
+    <div id="main" tabindex="-1">
+      <div id="header">
+        <div id="menu">
+  
+    <a href="_index.html">Index</a> &raquo; 
+    <span class="title">File: Contributing to kiba-extend</span>
+  
+</div>
+
+        <div id="search">
+  
+    <a class="full_list_link" id="class_list_link"
+        href="class_list.html">
+
+        <svg width="24" height="24">
+          <rect x="0" y="4" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="12" width="24" height="4" rx="1" ry="1"></rect>
+          <rect x="0" y="20" width="24" height="4" rx="1" ry="1"></rect>
+        </svg>
+    </a>
+  
+</div>
+        <div class="clear"></div>
+      </div>
+
+      <div id="content"><div id='filecontents'>
+<h1 id="contributing-to-kiba-extend">Contributing to <code>kiba-extend</code></h1>
+
+<p>The preferred code, documentation, and testing practices have evolved over time and have not all been retrospectively updated throughout the codebase.</p>
+
+<p>This can be confusing, so this page’s purpose is to point you to the current preferred patterns for new code contributions.</p>
+
+<p><strong>The focus is on code for transforms</strong></p>
+
+<h2 id="code-structure">Code structure</h2>
+
+<p>Transforms go in <code>lib/kiba/extend/transforms</code>.</p>
+
+<h3 id="if-creating-a-new-transform-namespace">If creating a new transform namespace</h3>
+
+<ul>
+  <li>Create a new <code>.rb</code> file in <code>lib/kiba/extend/transforms</code> to document the scope of the namespace and alias the namespace (so you don’t have to type out <code>Kiba::Extend::Transforms</code> for every transform used in a pipeline/job.) See <a href="https://github.com/lyrasis/kiba-extend/blob/main/lib/kiba/extend/transforms/name.rb"><code>name.rb</code></a> as an example.
+    <ul>
+      <li>Note: If a namespace includes similar transforms, this is an appropriate place to differentiate them. See the <code>Deduplicate</code> transform namespace <a href="https://github.com/lyrasis/kiba-extend/blob/main/lib/kiba/extend/transforms/deduplicate.rb">code</a> and <a href="https://lyrasis.github.io/kiba-extend/Kiba/Extend/Transforms/Deduplicate.html">documentation page</a></li>
+    </ul>
+  </li>
+  <li>Create a directory to hold the transforms that will be in the new namespace. See <a href="https://github.com/lyrasis/kiba-extend/tree/main/lib/kiba/extend/transforms/name"><code>name</code> directory</a> as an example.</li>
+</ul>
+
+<h3 id="new-transforms">New transforms</h3>
+
+<p>Each transform class is in its own separate file in its namespace directory.</p>
+
+<p>Transforms must be implemented following <a href="https://github.com/thbar/kiba/wiki/Implementing-ETL-transforms">the requirements for <code>kiba</code> ETL transforms</a>.</p>
+
+<p>See the “Patterns in Transforms” section below for more best practices.</p>
+
+<h2 id="documentation">Documentation</h2>
+
+<p>Include <a href="https://www.rubydoc.info/gems/yard/file/docs/GettingStarted.md">YARD documentation comments</a> in your code. This is what creates/publishes the automatically generated <a href="https://lyrasis.github.io/kiba-extend/"><code>kiba-extend</code> documentation site</a> when a pull request is merged or a commit is made directly to the main branch.</p>
+
+<p>Most important:</p>
+
+<ul>
+  <li>Brief description of what the transform does (first line of transform class documentation)</li>
+  <li>If relevant: Distinguish between other transforms that do something similar. This can be done <a href="https://github.com/lyrasis/kiba-extend/blob/main/lib/kiba/extend/transforms/deduplicate/table.rb">in an individual transform’s documentation</a> and/or <a href="https://github.com/lyrasis/kiba-extend/blob/main/lib/kiba/extend/transforms/deduplicate.rb">at the transform namespace level</a></li>
+  <li>Optional: Fuller description of anything about the transform’s behavior that may not be obvious/apparent</li>
+  <li>Usage example(s) showing input data, how transform is set up in pipeline/job definition code, and result. <strong>Important:</strong> See also the Testing section.</li>
+  <li>Document each parameter for <code>initialize</code>. See the <a href="https://www.rubydoc.info/gems/yard/file/docs/GettingStarted.md#declaring-types">YARD Getting Started Guide section on declaring types</a> for an intro. The <a href="https://yardoc.org/types.html">interactive YARD Type Parser</a> is helpful for checking that your type declarations will work as expected.</li>
+  <li>If your transform returns the typical Hash row (with Symbol keys as field names and Strings/NilValues as values), the <code>:process</code> method should be documented as:</li>
+</ul>
+
+<pre class="code ruby"><code class="ruby"><span class='comment'># @param row [Hash{ Symbol =&gt; String, nil }]
+</span></code></pre>
+
+<p>If you include a <code>:close</code> method (See <a href="https://github.com/thbar/kiba/wiki/Implementing-ETL-transforms">kiba wiki: Implementing ETL Transforms</a>), it is assumed it returns yielded rows. No doc comments necessary.</p>
+
+<p>Private methods do not need to be documented, however, it can be helpful for code understanding to document <code>@param</code> and <code>@return</code> in complex code.</p>
+
+<h3 id="yard-markdown-flavor">YARD markdown flavor</h3>
+
+<p><code>kiba-extend</code> uses the <a href="https://kramdown.gettalong.org/">kramdown</a> parser to convert Markdown in YARD to HTML. Kramdown has slightly different syntax from plain or Github-flavored Markdown. <a href="https://kramdown.gettalong.org/syntax.html">The syntax guide</a> highlights all places where kramdown syntax differs from plan Markdown syntax. Kramdown was chosen because it supports manually</p>
+
+<p>Kramdown was chosen because:</p>
+
+<ul>
+  <li>I have not been able to consistently make Asciidoc work with YARD and yardspec</li>
+  <li>Other popular Markdown converters create ids from document headers automatically, with no straightforward way to manually define an id value. (So <code>### YARD markdown flavor</code> would be rendered in HTML as <code>&lt;h2 id="yard-markdown-flavor"&gt;YARD markdown flavor&lt;/h2&gt;</code>.)  This is problematic if you use links to reference and navigate to headers. If I change this section’s header to “Choice of YARD markdown flavor”, its id will change, and any cross-references in this document or the rest of my documentation will break. Kramdown supports <a href="https://kramdown.gettalong.org/syntax.html#specifying-a-header-id">manual specification of a static header id</a>.</li>
+  <li>Further, kramdown supports <a href="https://kramdown.gettalong.org/syntax.html#inline-attribute-lists">defining ids and other attributes on blocks or spans in your document</a>, so that you can create a stable link to any specific thing you want to reference.</li>
+</ul>
+
+<h3 id="testing-your-yard-doc">Testing your YARD doc</h3>
+<p>YARD, kramdown, and yardspec are in the <code>:documentation</code> dependency group. How bundler will handle these depends on how you have things configured locally. Refer to <a href="https://bundler.io/guides/groups.html">the bundler documentation on managing groups of gems</a> if you are not getting these with <code>bundle install</code> in your local copy of kiba-extend.</p>
+
+<p><code>cd</code> into the base directory of the <code>kiba-extend</code> repo. Then:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_yard'>yard</span> <span class='id identifier rubyid_server'>server</span> <span class='op'>-</span><span class='id identifier rubyid_rd'>rd</span>
+</code></pre>
+
+<p>This should spin up a daemonized copy of of the documentation site at http://localhost:8808/</p>
+
+<p>Reloading a page should re-parse the documentation.</p>
+
+<p>When done, do the following to find the YARDDOC DAEMON process using the tcp port and kill it:</p>
+
+<pre class="code ruby"><code class="ruby">lsof -wni tcp:8808
+kill -9 {pid}
+</code></pre>
+
+<p>Note: <code>lsof</code> can be installed with <code>brew install lsof</code> if you get a error about the lsof command being found.</p>
+
+<h2 id="tests">Tests</h2>
+
+<p>Tests for non-transform classes (and many older transform classes) are in RSpec.</p>
+
+<p>Contributed code should be well-tested. After running <code>bundle exec rspec</code> (or just <code>rspec</code> if you have binstubbed it), open <code>/kiba-extend/coverage/index.html</code> to verify test and <a href="https://www.tutorialspoint.com/software_testing_dictionary/branch_testing.htm">branch coverage</a> of your code.</p>
+
+<h3 id="test-transforms-in-their-documentation-using-yardspec">Test transforms in their documentation using yardspec</h3>
+
+<p>As of September 2022, the plan is to move most tests for transforms into <code>@example</code> tags in the YARD doc comments in the actual transform classes. See <a href="https://github.com/lyrasis/kiba-extend/blob/main/lib/kiba/extend/transforms/prepend/to_field_value.rb"><code>Prepend::ToFieldValue</code></a>.</p>
+
+<p>This will make for slightly less pretty documentation pages, but has big benefits:</p>
+
+<ul>
+  <li>ensures documentation does not get out of step with actual behavior of code (HUGE)</li>
+  <li>reduce duplication/tedious reformatting between <code>/spec</code> files and YARD comments in transforms</li>
+  <li>forces structuring tests in a way that fully demonstrates the function of a transform</li>
+</ul>
+
+<h3 id="tests-that-require-changing-kibaextendconfig-settings">Tests that require changing <code>Kiba::Extend.config</code> settings</h3>
+
+<p>If you want to future-proof tests relying on config settings against future changes to the default values of those settings, then explicitly setting the config values in your tests is a great idea. However, that hasn’t been done consistently to date.</p>
+
+<p>Changing a setting value in one test can cause problems in other tests if values are not reset to default.</p>
+
+<p>Note that running tests in a random order is a recommended practice, in order to ensure you are not getting false positives due to state effects in your tests that are not present in real life. If you have not been careful that any config changes made for one test are reverted, mayhem can ensue later if you turn on randomness in the test suite.</p>
+
+<p><code>Kiba::Extend</code>’s config settings are powered by <code>dry-configurable</code>, which offers <a href="https://dry-rb.org/gems/dry-configurable/main/testing/">a test interface</a> to handle this.</p>
+
+<p>This test interface is already set up in <code>kiba-extend</code>’s <a href="https://github.com/lyrasis/kiba-extend/blob/main/spec/spec_helper.rb"><code>spec_helper.rb</code></a>, so if you are writing full-fledged RSpec tests in the <code>/spec</code> directory, you can do as shown there (though, resetting <em>after</em> each test which may tweak the config seems to make more sense?)</p>
+
+<p>If you are writing yardspec tests, you can do the following:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='comment'># @example With `multival: true` and no :sep
+</span><span class='comment'>#   Kiba::Extend.config.delim = &#39;;&#39;
+</span><span class='comment'>#   xform = Clean::RegexpFindReplaceFieldVals.new(
+</span><span class='comment'>#     fields: :val,
+</span><span class='comment'>#     find: &#39;s$&#39;,
+</span><span class='comment'>#     replace: &#39;&#39;,
+</span><span class='comment'>#     multival: true
+</span><span class='comment'>#   )
+</span><span class='comment'>#   input = [
+</span><span class='comment'>#     {val: &#39;bats;bats&#39;}
+</span><span class='comment'>#   ]
+</span><span class='comment'>#   result = input.map{ |row| xform.process(row) }
+</span><span class='comment'>#   Kiba::Extend.reset_config
+</span><span class='comment'>#   expected = [
+</span><span class='comment'>#     {val: &#39;bat;bat&#39;}
+</span><span class='comment'>#   ]
+</span><span class='comment'>#   expect(result).to eq(expected)
+</span><span class='comment'># @example With `multival: true` and no :sep
+</span><span class='comment'>#   xform = Clean::RegexpFindReplaceFieldVals.new(
+</span><span class='comment'>#     fields: :val,
+</span><span class='comment'>#     find: &#39;s$&#39;,
+</span><span class='comment'>#     replace: &#39;&#39;,
+</span><span class='comment'>#     multival: true
+</span><span class='comment'>#   )
+</span><span class='comment'>#   input = [
+</span><span class='comment'>#     {val: &#39;bats|bats&#39;}
+</span><span class='comment'>#   ]
+</span><span class='comment'>#   result = input.map{ |row| xform.process(row) }
+</span><span class='comment'>#   expected = [
+</span><span class='comment'>#     {val: &#39;bat|bat&#39;}
+</span><span class='comment'>#   ]
+</span><span class='comment'>#   expect(result).to eq(expected)
+</span></code></pre>
+
+<p>At the time of writing, the default value of <code>Kiba::Extend.delim</code> is <code>|</code>. The first test here sets the value of that setting to <code>;</code>. That test passes. Since we call <code>Kiba::Extend.reset_config</code> after getting the result in the first test, the second test passes. If we did not call <code>Kiba::Extend.reset_config</code> in the first test, the second test would fail because the default value is still <code>;</code>.</p>
+
+<p><strong>Note: Do not write the above unnecessary tests of basically the exact same thing. 🤣 It’s the clearest example of the need for the <code>:reset_command</code> method I can think of at the moment, though</strong></p>
+
+<h3 id="testing-transforms-that-yield-or-output-from-close-method">Testing transforms that <code>yield</code> or output from <code>:close</code> method</h3>
+
+<p>Transform classes that return one row at a time from the <code>:process</code> method can be tested like:</p>
+
+<pre class="code language-ruby"><code class="language-ruby">result = input_rows.map{ |row| xform.process(row) }
+</code></pre>
+
+<p>Transforms that yield more than one row from a given input row, or which define and output rows from a <code>:close</code> method will need to be tested like:</p>
+
+<pre class="code language-ruby"><code class="language-ruby">result = Kiba::StreamingRunner.transform_stream(input, xform)
+  .map{ |row| row }
+</code></pre>
+
+<p><em>Note: Actually all transforms can be tested through <code>Kiba::StreamingRunner</code>, but yielding and closing transforms require it.</em></p>
+
+<h2 id="updating-existing-code">Updating existing code</h2>
+
+<p>If you are touching existing code, please make sure it is up to date with the current practices outlined above in terms of code structure, documentation, and testing.</p>
+
+<h2 id="patterns-in-transforms">Patterns in transforms</h2>
+
+<p>Some/most of these are NOT followed consistently throughout the existing code, but are aspirational guidelines.</p>
+
+<p>If nothing else, <code>kiba-extend</code> is proof I have learned a lot since I started building it, for sure. Unfortunately much of the older code is inconsistent, overly complex, or worse. Very gradually some has been improved but there are still a lot of antipatterns in the codebase.</p>
+
+<p>This section aims to clarify what the <em>desired</em> patterns are.</p>
+
+<h3 id="field-vs-fields-parameter"><code>field</code> vs. <code>fields</code> parameter</h3>
+
+<p>Most transforms do a relatively simple thing to one or more fields, and require the target field(s) to be passed in.</p>
+
+<p>Where possible, write such transforms so that they can be called on one or many fields with minimal typing. For example, both of the following work fine:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'>Delete</span><span class='op'>::</span><span class='const'>Fields</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>name</span><span class='words_sep'> </span><span class='tstring_content'>title</span><span class='words_sep'> </span><span class='tstring_content'>date</span><span class='tstring_end'>]</span></span>
+
+<span class='id identifier rubyid_transform'>transform</span> <span class='const'>Delete</span><span class='op'>::</span><span class='const'>Fields</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='symbol'>:title</span>
+</code></pre>
+
+<p>The commonly used code pattern to support this is:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='comment'># @param fields [Array&lt;Symbol&gt;,Symbol] field(s) to delete from
+</span><span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span><span class='rparen'>)</span>
+  <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fields'>fields</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<p>If it is a reasonable assumption that someone may want to apply the transform to <strong>all</strong> fields, consider <code>include</code>-ing <a href="https://lyrasis.github.io/kiba-extend/Kiba/Extend/Transforms/Allable.html">the <code>Allable</code> transform mixin module</a>. (See the code for “Included in” transforms at the top of that page)</p>
+
+<h3 id="delim-vs-sep-parameters"><code>delim</code> vs. <code>sep</code> parameters</h3>
+
+<p>Split/join strings have been passed into transforms inconsistently over time, but since mid 2020 (ish) I’ve been trying to standardize this.</p>
+
+<p>Prefer <code>delim</code></p>
+
+<p>Over time, <code>sep</code> will be deprecated/replaced with <code>delim</code> where it still exists.</p>
+
+<h3 id="should-a-field-be-treated-as-multivalued-or-not">Should a field be treated as multivalued or not?</h3>
+
+<p>In some earlier-added transforms such as <code>Clean::RegexpFindReplaceFieldVals</code>, there’s a <code>:multival</code> <strong>and</strong> a <code>:delim</code> (or <code>:sep</code>) parameter. These tend to have overly complicated logic where, if <code>:delim</code> is not given and <code>multival: true</code>, the value of <code>Kiba::Extend.delim</code> is used for <code>:delim</code>, but if <code>multival: false</code>, then delim isn’t used at all.</p>
+
+<p>(I’m sure I thought this was useful or needed at the time, but I am not sure why… 😅)</p>
+
+<p>Preferred practice when multivalued treatment should be turned off/on is to treat as multivalue if <code>:delim</code> is given, otherwise not.</p>
+
+<p>So, if the default behavior should be multivalued:</p>
+
+<pre class="code ruby"><code class="ruby">def initialize(fields:, delim: Kiba::Extend.delim)
+</code></pre>
+
+<p>User can turn off multivalued treatment by passing <code>delim: nil</code>. User can pass non-default <code>:delim</code> value as well.</p>
+
+<p>And if the default behavior should be to treat the whole field value as one string:</p>
+
+<pre class="code ruby"><code class="ruby">def initialize(fields:, delim: nil)
+</code></pre>
+
+<p>User can turn on multivalued treatment by passing a <code>:delim</code> value.</p>
+
+<h3 id="using-rowfetch-or-preferrably-not">Using <code>row.fetch</code> (or preferrably, not)</h3>
+
+<p>An empty CSV field by default comes through as <code>nil</code>, but some of the CSV converters provided by <code>kiba-extend</code> can end up converting a non-nil field value to an empty string.</p>
+
+<p>Prior to realizing I should add an <code>activesupport</code> dependency to pull in <a href="https://guides.rubyonrails.org/active_support_core_extensions.html#blank-questionmark-and-present-questionmark">the <code>:blank?</code> method</a>, dealing with the fact that <code>row[:fieldname]</code> might return <code>nil</code> or an empty String was another thing I was dealing with in a somewhat over-complicated way with <code>row.fetch</code> used in more or less sensible ways.</p>
+
+<p>In particular, my previous sometimes use of <code>row.fetch(:fieldname, nil)</code> is not a pattern to follow, as it is just saying “If row doesn’t have fieldname as a key, return nil”, which is what it is going to do anyway if you just call <code>row[:fieldname]</code>, <a href="https://github.com/fastruby/fast-ruby/blob/main/code/hash/bracket-vs-fetch.rb">which is more performant</a>.</p>
+
+<h3 id="complex-transforms-compose-behaviors-by-reusing-other-transforms">Complex transforms: compose behaviors by reusing other transforms</h3>
+
+<p>A simple example is <a href="https://github.com/lyrasis/kiba-extend/blob/main/lib/kiba/extend/transforms/rename/fields.rb"><code>Rename::Fields</code></a>, which is just a multi-field wrapper around the pre-existing <code>Rename::Field</code>.</p>
+
+<p>A more complex example is <a href="https://github.com/lyrasis/kiba-extend/blob/main/lib/kiba/extend/transforms/collapse/fields_to_repeatable_field_group.rb"><code>Collapse::FieldsToRepeatableFieldGroup</code></a>, which combines a number of other transforms for a specific complex purpose.</p>
+
+<h3 id="extract-reusable-processing-logic-to-command-service-objects">Extract reusable processing logic to command service objects</h3>
+
+<p>These object classes should more or less follow <a href="https://www.alchemists.io/articles/command_pattern/">the Command Pattern</a>. The linked article is very rigorous about what the pattern requires, but the main things are:</p>
+
+<ul>
+  <li>The class should do one specific thing</li>
+  <li>The class should have one public method: <code>:call</code>. When you call <code>:call</code>, the class does the thing and returns the result</li>
+</ul>
+
+<p>There are many benefits to doing this, but one I’ve run into in the <code>kiba-tms</code> project is that sometimes you need to use this logic/behavior outside the context of a transform class that takes and return a row.</p>
+
+<p>I have not been great at putting these in a consistent place. Some things I was using over and over again in transforms are in <a href="https://github.com/lyrasis/kiba-extend/tree/main/lib/kiba/extend/transforms/helpers"><code>lib/kiba/extend/transforms/helpers/</code></a>, while some have been added to <a href="https://github.com/lyrasis/kiba-extend/tree/main/lib/kiba/extend/utils"><code>lib/kiba/extend/utils/</code></a>.</p>
+
+<p>Organization of these needs to be re-thought. For now, I’m thinking <code>lib/transforms/helpers</code> should be limited to those that take and return a row, while others can keep going in <code>lib/utils</code> for now.</p>
+
+<h2 id="making-a-pull-request">Making a pull request</h2>
+
+<p>Pull requests are welcome!</p>
+
+<p>Please add entries in the “Unreleased” section of the CHANGELOG.adoc that describe your changes. In general we don’t need to specify that tests were added or code was refactored in the CHANGELOG, since it primarily should reflect what users of <code>kiba-extend</code> need to know about its evolution.</p>
+
+<p>Assign @kspurgin as a reviewer.</p>
+</div></div>
+
+      <div id="footer">
+  Generated on Wed Sep 13 15:50:03 2023 by
+  <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
+  0.9.34 (ruby-3.1.4).
+</div>
+
+    </div>
+  </body>
+</html>
