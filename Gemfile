@@ -6,21 +6,23 @@ git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
 group :documentation do
   gem "kramdown" # markdown parser for generating documentation
-  # gem "redcarpet", "~>3.5" # markdown parser for generating documentation
   gem "yard"
 end
 
-group :development, :test do
+group :documentation, :test do
+  gem "yardspec", "~> 0.2.0"
+end
+
+group :development do
   gem "byebug", "~>11.0"
   gem "pry", "~> 0.14"
   gem "rake", "~> 13.0"
-  gem "rspec"
   gem "almost_standard", github: "kspurgin/almost_standard", branch: "main"
 end
 
 group :test do
+  gem "rspec"
   gem "simplecov", require: false
-  gem "yardspec", "~> 0.2.0"
 end
 
 gemspec
