@@ -1,3 +1,8 @@
+<!--
+# @markup markdown
+# @title Common patterns, tips, and tricks
+-->
+
 # Common patterns, tips, and tricks
 
 ## Troubleshooting `MissingDependencyError` when all dependencies are set up as expected

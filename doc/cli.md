@@ -1,12 +1,17 @@
+<!--
+# @markup markdown
+# @title Command line interface (CLI)/thor
+-->
+
 # Command line interface (CLI) for running jobs/tasks
 
-`kiba-extend` uses [Thor](http://whatisthor.com/) to provide a command line interface for working with your ETL project. 
+`kiba-extend` uses [Thor](http://whatisthor.com/) to provide a command line interface for working with your ETL project.
 
 I chose Thor over Rake because it is awkward to pass options/parameters in Rake, and because automated testing of Rake tasks is convoluted. ([ref](https://technology.doximity.com/articles/move-over-rake-thor-is-the-new-king))
 
 ## Help on the CLI
 
-The following command will list all available tasks. 
+The following command will list all available tasks.
 
 `thor -T`
 
@@ -14,9 +19,9 @@ This lets you search for only tasks beginning with "reg":
 
 `thor list reg`
 
-Some of the task descriptions may be truncated in the display, though. This also doesn't tell you what parameters/options you can pass in. 
+Some of the task descriptions may be truncated in the display, though. This also doesn't tell you what parameters/options you can pass in.
 
-To get more details on a given task: 
+To get more details on a given task:
 
 `thor --help TASKNAME`
 
@@ -26,7 +31,7 @@ For example: `thor --help reg:list` or `thor --help jobs:tagged`
 
 #### Plain parameters
 
-When you see: 
+When you see:
 
 ```
 Usage:
@@ -39,7 +44,7 @@ The all caps word is a placeholder for a parameter that gets passed in without a
 
 #### Boolean options
 
-Boolean options are presented a bit oddly in the help. For example: 
+Boolean options are presented a bit oddly in the help. For example:
 
 ```
 Options:
@@ -85,7 +90,7 @@ Usage:
 
 In this case, replace the all-caps word with one of the possible values (if listed), or your uncontrolled string.
 
-To use the full option name: 
+To use the full option name:
 
 `thor jobs:tagged cspace --run --verbosity=verbose`
 
@@ -100,4 +105,3 @@ Thor tasks are defined in `kiba-extend/lib/tasks`.
 There is a Thorfile in the `kiba-extend` base directory that autoloads those tasks and runs the CLI when you type thor commands. (How this works is some kinda ruby/thor library magic I haven't dug into fully).
 
 Your ETL project base directory (if following the repo template/FWM example), will also have a Thorfile in its base directory, which will call in all of `kiba-extend`'s tasks, as well as any you create in your own repo's `/lib/tasks` directory.
-

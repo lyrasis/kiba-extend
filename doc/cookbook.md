@@ -1,3 +1,8 @@
+<!--
+# @markup markdown
+# @title Cookbook
+-->
+
 # kiba-extend cookbook
 
 A place to share patterns for handling common workflows.

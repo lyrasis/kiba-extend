@@ -1,3 +1,8 @@
+<!--
+# @markup markdown
+# @title Contributing to kiba-extend
+-->
+
 # Contributing to `kiba-extend`
 
 The preferred code, documentation, and testing practices have evolved over time and have not all been retrospectively updated throughout the codebase.

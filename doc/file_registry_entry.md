@@ -1,3 +1,8 @@
+<!--
+# @markup markdown
+# @title File Registry Entry Reference
+-->
+
 # File Registry Entry Reference
 
 ## What are file registry entries?

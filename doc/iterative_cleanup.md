@@ -1,4 +1,9 @@
-# Using the `IterativeCleanup` mixin (added in v4.0.0)
+<!--
+# @markup markdown
+# @title Using the IterativeCleanup mixin
+-->
+
+# Using the `IterativeCleanup` mixin
 
 "Iterative cleanup" means the client may provide the worksheet more
 than once, or that you may need to produce a fresh worksheet for the
@@ -7,6 +12,8 @@ client after a new database export is provided.
 There is no reason you can't use the pattern for expected one-round
 cleanup. How often does one round of cleanup turn into more, after
 all?
+
+`IterativeCleanup` was added in added in v4.0.0.
 
 ## Examples
 
