@@ -28,8 +28,6 @@ See the "Patterns in Transforms" section below for more best practices.
 
 Include [YARD documentation comments](https://www.rubydoc.info/gems/yard/file/docs/GettingStarted.md) in your code. This is what creates/publishes the automatically generated [`kiba-extend` documentation site](https://lyrasis.github.io/kiba-extend/) when a pull request is merged or a commit is made directly to the main branch.
 
-NOTE: `kiba-extend` uses a Markdown parser to convert YARD to HTML
-
 Most important:
 
 * Brief description of what the transform does (first line of transform class documentation)
@@ -45,10 +43,20 @@ Most important:
 
 If you include a `:close` method (See [kiba wiki: Implementing ETL Transforms](https://github.com/thbar/kiba/wiki/Implementing-ETL-transforms)), it is assumed it returns yielded rows. No doc comments necessary.
 
-Private methods do not need to be documented.
+Private methods do not need to be documented, however, it can be helpful for code understanding to document `@param` and `@return` in complex code.
+
+### YARD markdown flavor
+
+`kiba-extend` uses the [kramdown](https://kramdown.gettalong.org/) parser to convert Markdown in YARD to HTML. Kramdown has slightly different syntax from plain or Github-flavored Markdown. [The syntax guide](https://kramdown.gettalong.org/syntax.html) highlights all places where kramdown syntax differs from plan Markdown syntax. Kramdown was chosen because it supports manually
+
+Kramdown was chosen because:
+
+- I have not been able to consistently make Asciidoc work with YARD and yardspec
+- Other popular Markdown converters create ids from document headers automatically, with no straightforward way to manually define an id value. (So `### YARD markdown flavor` would be rendered in HTML as `<h2 id="yard-markdown-flavor">YARD markdown flavor</h2>`.)  This is problematic if you use links to reference and navigate to headers. If I change this section's header to "Choice of YARD markdown flavor", its id will change, and any cross-references in this document or the rest of my documentation will break. Kramdown supports [manual specification of a static header id](https://kramdown.gettalong.org/syntax.html#specifying-a-header-id).
+- Further, kramdown supports [defining ids and other attributes on blocks or spans in your document](https://kramdown.gettalong.org/syntax.html#inline-attribute-lists), so that you can create a stable link to any specific thing you want to reference.
 
 ### Testing your YARD doc
-YARD is installed as a development dependency, so I think if you `bundle install` in your local copy of kiba-extend, you get it.
+YARD, kramdown, and yardspec are in the `:documentation` dependency group. How bundler will handle these depends on how you have things configured locally. Refer to [the bundler documentation on managing groups of gems](https://bundler.io/guides/groups.html) if you are not getting these with `bundle install` in your local copy of kiba-extend.
 
 `cd` into the base directory of the `kiba-extend` repo. Then:
 
@@ -67,9 +75,11 @@ lsof -wni tcp:8808
 kill -9 {pid}
 ~~~
 
+Note: `lsof` can be installed with `brew install lsof` if you get a error about the lsof command being found.
+
 ## Tests
 
-Tests are in RSpec.
+Tests for non-transform classes (and many older transform classes) are in RSpec.
 
 Contributed code should be well-tested. After running `bundle exec rspec` (or just `rspec` if you have binstubbed it), open `/kiba-extend/coverage/index.html` to verify test and [branch coverage](https://www.tutorialspoint.com/software_testing_dictionary/branch_testing.htm) of your code.
 
@@ -135,6 +145,23 @@ If you are writing yardspec tests, you can do the following:
 At the time of writing, the default value of `Kiba::Extend.delim` is `|`. The first test here sets the value of that setting to `;`. That test passes. Since we call `Kiba::Extend.reset_config` after getting the result in the first test, the second test passes. If we did not call `Kiba::Extend.reset_config` in the first test, the second test would fail because the default value is still `;`.
 
 **Note: Do not write the above unnecessary tests of basically the exact same thing. 🤣 It's the clearest example of the need for the `:reset_command` method I can think of at the moment, though**
+
+### Testing transforms that `yield` or output from `:close` method
+
+Transform classes that return one row at a time from the `:process` method can be tested like:
+
+~~~ ruby
+result = input_rows.map{ |row| xform.process(row) }
+~~~
+
+Transforms that yield more than one row from a given input row, or which define and output rows from a `:close` method will need to be tested like:
+
+~~~ruby
+result = Kiba::StreamingRunner.transform_stream(input, xform)
+  .map{ |row| row }
+~~~
+
+*Note: Actually all transforms can be tested through `Kiba::StreamingRunner`, but yielding and closing transforms require it.*
 
 ## Updating existing code
 
