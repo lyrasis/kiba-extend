@@ -15,13 +15,13 @@ module Kiba
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Prepend::FieldToFieldValue, target_field: :a, prepended_field: :b, sep: ': '
-        # ```
+        # ~~~
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | a     | b   |
         # |-------+-----|
         # | c     | d   |
@@ -31,11 +31,11 @@ module Kiba
         # | j;k   | l;m |
         # | o;p;q | r;s |
         # | ;t    | u;v
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | a          | b   |
         # |------------|-----|
         # | d: c       | d   |
@@ -45,18 +45,18 @@ module Kiba
         # | l;m: j;k   | l;m |
         # | r;s: o;p;q | r;s |
         # | u;v: ;t    | u;v |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Prepend::FieldToFieldValue, target_field: :a, prepended_field: :b, sep: ': ',
         #                                        delete_prepended: true, mvdelim: ';'
-        # ```
+        # ~~~
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | a     | b   |
         # |-------+-----|
         # | c     | d   |
@@ -66,11 +66,11 @@ module Kiba
         # | j;k   | l;m |
         # | o;p;q | r;s |
         # | ;t    | u;v
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | a                    |
         # |----------------------|
         # | d: c                 |
@@ -80,7 +80,7 @@ module Kiba
         # | l;m: j;l;m: k        |
         # | r;s: o;r;s: p;r;s: q |
         # | ;u;v: t              |
-        # ```
+        # ~~~
         #
         # **This probably introduces extra unexpected `mvdelim` strings in the result.**
         #   If `prepended_field` contains the `mvdelim` character, you probably want to set
@@ -88,15 +88,15 @@ module Kiba
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Prepend::FieldToFieldValue, target_field: :a, prepended_field: :b, sep: ': ',
         #                                        delete_prepended: true, mvdelim: ';',
         #                                        multivalue_prepended_field: true
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | a              |
         # |----------------|
         # | d: c           |
@@ -106,7 +106,7 @@ module Kiba
         # | l: j;m: k      |
         # | r: o;s: p;q    |
         # | ;v: t          |
-        # ```
+        # ~~~
         #
         # If there are more `target_field` values than `prepend_field` values after they are split,
         #   nothing is prepended to remaining `target_field` values.

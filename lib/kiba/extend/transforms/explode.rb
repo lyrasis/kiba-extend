@@ -19,18 +19,18 @@ module Kiba
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | f1           | c1          | f2         | c2    | season | f3          |
         # |--------------+-------------+------------+-------+--------+-------------|
         # | strawberry   | red         | blueberry  | blue  | spring | cherry      |
         # | fig;honeydew | brown;green | watermelon | green | summer | nil         |
         # | nil          | nil         | nil        | nil   | winter | grapefruit  |
         # | nil          | nil         | nil        | nil   | autumn | nil         |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Explode::ColumnsRemappedInNewRows,
         #   remap_groups: [
         #     [:f1, :c1],
@@ -38,11 +38,11 @@ module Kiba
         #     [:f3]
         #   ],
         #  map_to: [:fruit, :color]
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | fruit        | color       | season |
         # |--------------+-------------+--------|
         # | strawberry   | red         | spring |
@@ -52,7 +52,7 @@ module Kiba
         # | watermelon   | green       | summer |
         # | grapefruit   | nil         | winter |
         # | nil          | nil         | autumn |
-        # ```
+        # ~~~
         #
         # ## Things to notice
         #

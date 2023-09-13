@@ -13,7 +13,7 @@ module Kiba
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | id  | pid | zid |
         # |-----+-----+-----|
         # | a   | a   | a   |
@@ -22,19 +22,19 @@ module Kiba
         # |     | a   | a   |
         # | nil | a   | a   |
         # |     | nil |     |
-        # ```
+        # ~~~
         #
         # The values in the third row are id = 'a ', pid = ' a', zid = ' a '.
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         #  transform Compare::FieldValues, fields: %i[id pid zid], target: :comp
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | id  | pid | zid | comp |
         # |-----+-----+-----+------|
         # | a   | a   | a   | same |
@@ -43,17 +43,17 @@ module Kiba
         # |     | a   | a   | diff |
         # | nil | a   | a   | diff |
         # |     | nil |     | same |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         #  transform Compare::FieldValues, fields: %i[id pid zid], target: :comp, downcase: false, strip: false
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | id  | pid | zid | comp |
         # |-----+-----+-----+------|
         # | a   | a   | a   | same |
@@ -62,17 +62,17 @@ module Kiba
         # |     | a   | a   | diff |
         # | nil | a   | a   | diff |
         # |     | nil |     | same |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         #  transform Compare::FieldValues, fields: %i[id pid zid], target: :comp, ignore_blank: true
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | id  | pid | zid | comp |
         # |-----+-----+-----+------|
         # | a   | a   | a   | same |
@@ -81,7 +81,7 @@ module Kiba
         # |     | a   | a   | same |
         # | nil | a   | a   | same |
         # |     | nil |     | same |
-        # ```
+        # ~~~
         #
         class FieldValues
           # @param fields [Array<Symbol>] names of fields whose values will be compared

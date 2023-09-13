@@ -14,18 +14,18 @@ module Kiba
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | work | home     | mobile | other | name |
         # |------+----------+--------+-------+------|
         # | 123  | 456      | 789    | 897   | Sue  |
         # |      | 987;555  |        | 253   | Bob  |
         # | nil  |          |        | nil   | Mae  |
         # | 654  | 321      | 257    |       | Sid  |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         #  transform Collapse::FieldsToTypedFieldPair,
         #    sourcefieldmap: { home: 'h', work: 'b', mobile: 'm', other: '' },
         #    datafield: :phone,
@@ -33,39 +33,39 @@ module Kiba
         #    sourcesep: ';',
         #    targetsep: '^',
         #    delete_sources: false
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | work | home     | mobile | other | phone           | phonetype | name |
         # |------+----------+--------+-------|-----------------+-----------+------|
         # | 123  | 456      | 789    | 897   | 456^123^789^897 | h^b^m^    | Sue  |
         # |      | 987;555  |        | 253   | 987^555^253     | h^h^      | Bob  |
         # | nil  |          |        | nil   | nil             | nil       | Mae  |
         # | 654  | 321      | 257    |       | 321^654^257     | h^b^m     | Sid  |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         #  transform Collapse::FieldsToTypedFieldPair,
         #    sourcefieldmap: { home: 'h', work: 'b', mobile: '', other: 'o' },
         #    datafield: :phone,
         #    typefield: :phonetype,
         #    targetsep: '^'
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | phone           | phonetype | name |
         # |-----------------+-----------+------|
         # | 456^123^789^897 | h^b^m^    | Sue  |
         # | 987;555^253     | h^        | Bob  |
         # | nil             | nil       | Mae  |
         # | 321^654^257     | h^b^m     | Sid  |
-        # ```
+        # ~~~
         #
         # ## Notice
         #

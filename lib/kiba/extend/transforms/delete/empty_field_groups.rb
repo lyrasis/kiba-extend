@@ -26,7 +26,7 @@ module Kiba
         #
         # Source data for both examples below:
         #
-        # ```
+        # ~~~
         # [
         #   {aa: '', ab: '', bb: '', bc: '', bd: ''},
         #   {aa: 'n|', ab: nil, bb: '|e', bc: '|n', bd: '|e'},
@@ -38,7 +38,7 @@ module Kiba
         #   {aa: '|', ab: '', bb: '%NULLVALUE%|', bc: '%NULLVALUE%|%NULLVALUE%', bd: '%NULLVALUE%|a'},
         #   {aa: '|', ab: '', bb: '%NULLVALUE%|', bc: '%NULLVALUE%|NULL', bd: '%NULLVALUE%|a'}
         # ]
-        # ```
+        # ~~~
         #
         # Value of `Kiba::Extend.nullvalue` is `%NULLVALUE%`.
         #
@@ -49,13 +49,13 @@ module Kiba
         #
         # Used in job as:
         #
-        # ```
+        # ~~~
         # transform Delete::EmptyFieldGroups, groups: [%i[aa ab], %i[bb bc bd]], delim: '|'
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # [
         #   {aa: nil, ab: nil, bb: nil, bc: nil, bd: nil},
         #   {aa: 'n', ab: nil, bb: 'e', bc: 'n', bd: 'e'},
@@ -67,7 +67,7 @@ module Kiba
         #   {aa: nil, ab: nil, bb: nil, bc: nil, bd: 'a'},
         #   {aa: nil, ab: nil, bb: nil, bc: 'NULL', bd: 'a'}
         # ]
-        # ```
+        # ~~~
         #
         # ### Treat multiple strings as empty
         #
@@ -77,16 +77,16 @@ module Kiba
         #
         # Used in job as:
         #
-        # ```
+        # ~~~
         # transform Delete::EmptyFieldGroups,
         #   groups: [%i[aa ab], %i[bb bc bd]],
         #   treat_as_null: ['NULL', Kiba::Extend.nullvalue],
         #   delim: '|'
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # [
         #   {aa: nil, ab: nil, bb: nil, bc: nil, bd: nil},
         #   {aa: 'n', ab: nil, bb: 'e', bc: 'n', bd: 'e'},
@@ -98,22 +98,22 @@ module Kiba
         #   {aa: nil, ab: nil, bb: nil, bc: nil, bd: 'a'},
         #   {aa: nil, ab: nil, bb: nil, bc: nil, bd: 'a'}
         # ]
-        # ```
+        # ~~~
         #
         # ### Do not treat any strings except empty string (`''`) as empty
         #
         # Used in job as:
         #
-        # ```
+        # ~~~
         # transform Delete::EmptyFieldGroups,
         #   groups: [%i[aa ab], %i[bb bc bd]],
         #   treat_as_null: nil,
         #   delim: '|'
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # [
         #   {aa: nil, ab: nil, bb: nil, bc: nil, bd: nil},
         #   {aa: 'n', ab: nil, bb: 'e', bc: 'n', bd: 'e'},
@@ -125,7 +125,7 @@ module Kiba
         #   {aa: nil, ab: nil, bb: '%NULLVALUE%|', bc: '%NULLVALUE%|%NULLVALUE%', bd: '%NULLVALUE%|a'},
         #   {aa: nil, ab: nil, bb: '%NULLVALUE%|', bc: '%NULLVALUE%|NULL', bd: '%NULLVALUE%|a'}
         # ]
-        # ```
+        # ~~~
         class EmptyFieldGroups
           # @param groups [Array(Array(Symbol))] Each of the arrays inside groups should list all fields that are
           #   part of a repeating field group or field subgroup

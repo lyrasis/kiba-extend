@@ -13,21 +13,21 @@ module Kiba
       #
       # 1.
       #
-      # ```
+      # ~~~
       # include SepDeprecatable
-      # ```
+      # ~~~
       #
       # 2. Include in :initialize params:
       #
-      # ```
+      # ~~~
       # sep: nil, delim: nil
-      # ```
+      # ~~~
       #
       # 3. Include in class :initialize method:
       #
-      # ```
+      # ~~~
       #   @delim = usedelim(sepval: sep, delimval: delim, calledby: self)
-      # ```
+      # ~~~
       #
       # @since 3.3.0
       module SepDeprecatable

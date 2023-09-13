@@ -32,7 +32,7 @@ module Kiba
       #   name the extending module should respond to, each preceded
       #   by its YARD signature.
       #
-      # ```
+      # ~~~
       # # @return [Symbol] registry entry job key for the job whose output
       # #   will be used as the base for generating the cleanup worksheet.
       # #   Iterations of cleanup will be layered over this output in the
@@ -49,7 +49,7 @@ module Kiba
       # #
       # # @return [Array<Symbol>] fields included in the fingerprint value
       # # fingerprint_fields
-      # ```
+      # ~~~
       #
       # ### Then, extend this module
       #

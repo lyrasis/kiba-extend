@@ -13,42 +13,42 @@ module Kiba
         #
         # Source data:
         #
-        # ```
+        # ~~~
         # {val:  'N'},
         # {val:  'n'},
         # {val:  'NN'},
         # {val:  'NY'},
         # {val:  ''},
         # {val:  nil}
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform FilterRows::FieldPopulated, action: :keep, field: :val
-        # ```
+        # ~~~
         #
         # Resulting data:
         #
-        # ```
+        # ~~~
         # {val:  'N'},
         # {val:  'n'},
         # {val:  'NN'},
         # {val:  'NY'}
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform FilterRows::FieldPopulated, action: :reject, field: :val
-        # ```
+        # ~~~
         #
         # Resulting data:
         #
-        # ```
+        # ~~~
         # {val:  ''},
         # {val:  nil},
-        # ```
+        # ~~~
         class FieldPopulated
           include ActionArgumentable
 

@@ -32,7 +32,7 @@ See [name compilation jobs in Kiba::TMS](https://github.com/lyrasis/kiba-tms/blo
 
 This pattern is used with argument forwarding to deprecate/rename some transforms in kiba-extend, as shown below:
 
-```
+~~~
 class Transformer
   def initialize(...)
     @xform = MyOtherTransformer.new(...)
@@ -48,13 +48,13 @@ class Transformer
 
   attr_reader :xform
 end
-```
+~~~
 
 ### Adding some extra behavior to an existing transform in a new transform
 
 It can also be used in order to compose additional behavior in another transform as shown below:
 
-```
+~~~
 class NewTransformer
   def initialize(param1:, param2:)
     @param1 = param1
@@ -74,7 +74,7 @@ class NewTransformer
 
   attr_reader :param1, :param2, :xform
 end
-```
+~~~
 
 See the code for {Kiba::Extend::Transforms::Rename::Fields} for a simple example of embedding another transform to compose transformation logic.
 
@@ -84,7 +84,7 @@ See {Kiba::Extend::Transforms::Collapse::FieldsToRepeatableFieldGroup} for a com
 
 You can do:
 
-```
+~~~
 class NewTransformer
   def initialize(...)
     @xforms = [
@@ -104,7 +104,7 @@ class NewTransformer
 
   attr_reader :xforms
 end
-```
+~~~
 
 ### LIMITATIONS ON THE ABOVE
 
@@ -123,20 +123,20 @@ The following code snippets are equivalent.
 
 This one relies on the domain specific language (DSL) "magic" defined in kiba:
 
-```
+~~~
 Kiba.job_segment do
   transform Merge::ConstantValue, target: :data_source, value: 'source system'
 end
-```
+~~~
 
 This one uses plain Ruby to set up the transform class and calls its `:process` method on each row:
 
-```
+~~~
 Kiba.job_segment do
   xform = Merge::ConstantValue.new(target: :data_source, value: 'source system')
   transform{ |row| xform.process(row) }
 end
-```
+~~~
 
 The second one might be useful in situations when you are trying to set things up more flexibly.
 
@@ -159,10 +159,10 @@ Another example (in LYRASIS private repo) is [here](https://github.com/lyrasis/c
 
 Since 3.1.0, you can do this from any project using `kiba-extend`:
 
-```
+~~~
 job = Kiba::Extend::Command::Run.job(:prep__objects)
 puts "Some records omitted" if job.outrows < job.srcrows
-```
+~~~
 
 This assumes `:prep__objects` is registered as a job.
 

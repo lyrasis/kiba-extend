@@ -15,31 +15,31 @@ module Kiba
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | foo         | bar       |
         # |-------------------------|
         # | 1;1;1;2;2;2 | a;A;b;b;b |
         # |             | q;r;r     |
         # | 1           | 2         |
         # | 1           | 2         |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         #   transform Deduplicate::FieldValues, fields: %i[foo bar], sep: ';'
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | foo   | bar     |
         # |-----------------|
         # | 1;2   | a;A;b   |
         # |       | q;r     |
         # | 1     | 2       |
         # | 1     | 2       |
-        # ```
+        # ~~~
         #
         class FieldValues
           # @param fields [Array<Symbol>] names of fields in which to deduplicate values

@@ -20,7 +20,7 @@ module Kiba
       #
       # ### With params: `field: :test, match: 'UNMAPPED'`
       #
-      # ```
+      # ~~~
       # {foo: 'bar'} => false, # field not present, always false
       # {test: nil} => false, # nil field value, always false
       # {test: ''} => false,
@@ -28,59 +28,59 @@ module Kiba
       # {test: 'UNMAPPED '} => true, # values are stripped
       # {test: '  UNMAPPED '} => true, # values are stripped
       # {test: 'Unmapped'} => false
-      # ```
+      # ~~~
       #
       # ### With params: `field: :test, match: 'UNMAPPED', strip: false`
       #
-      # ```
+      # ~~~
       # {test: 'UNMAPPED'} => true,
       # {test: 'UNMAPPED '} => false, # values are not stripped
       # {test: '  UNMAPPED '} => false, # values are not stripped
       # {test: 'Unmapped'} => false
-      # ```
+      # ~~~
       #
       # ### With params: `field: :test, match: 'UNMAPPED', casesensitive: false`
       #
-      # ```
+      # ~~~
       # {test: 'UNMAPPED'} => true,
       # {test: 'Unmapped'} => true
-      # ```
+      # ~~~
       #
       # ### With params: `field: :test, match: ''`
       #
-      # ```
+      # ~~~
       # {foo: 'bar'} => false,
       # {test: nil} => true,
       # {test: ''} => true,
       # {test: ' '} => true, # values are stripped
       # {test: '    '} => true, # values are stripped
       # {test: 'UNMAPPED'} => false
-      # ```
+      # ~~~
       #
       # ### With params: `field: :test, match: '', treat_as_null: '%NULL%'`
       #
-      # ```
+      # ~~~
       # {foo: 'bar'} => false,
       # {test: nil} => true,
       # {test: ''} => true,
       # {test: 'UNMAPPED'} => false,
       # {test: '%NULL%'} => true, # gets converted to empty value prior to matching
       # {test: ' %NULL% '} => true # gets converted to empty value prior to matching
-      # ```
+      # ~~~
       #
       # ### With params: `field: :test, match: '^$', treat_as_null: '%NULL%', matchmode: :regexp`
       #
-      # ```
+      # ~~~
       # {foo: 'bar'} => false,
       # {test: nil} => true,
       # {test: ''} => true,
       # {test: 'UNMAPPED'} => false,
       # {test: '%NULL%'} => true
-      # ```
+      # ~~~
       #
       # ### With params: `field: :test, match: 'Foo', delim: '|'`
       #
-      # ```
+      # ~~~
       # {foo: 'Foo'} => false,
       # {test: nil} => false,
       # {test: ''} => false,
@@ -94,11 +94,11 @@ module Kiba
       # {test: 'Foo|'} => true,
       # {test: 'foo|'} => false,
       # {test: 'bar|baz'} => false
-      # ```
+      # ~~~
       #
       # ### With params: `field: :test, match: '^$', matchmode: :regex, delim: '|'`
       #
-      # ```
+      # ~~~
       # {test: 'foo|'} => true,
       # {test: 'foo||foo'} => true,
       # {test: 'foo| |foo'} => true,
@@ -107,57 +107,57 @@ module Kiba
       # {test: 'foo|%NULL%|foo'} => false,
       # {test: 'foo| %NULL%|foo'} => false,
       # {test: '%NULL%|foo'} => false,
-      # ```
+      # ~~~
       #
       # ### With params: `field: :test, match: '', delim: '|', treat_as_null: '%NULL%'`
       #
-      # ```
+      # ~~~
       # {test: 'foo|%NULL%|bar'} => true,
       # {test: 'foo||bar'} => true,
       # {test: 'foo| %NULL% |bar'} => true,
       # {test: 'foo|  |bar'} => true
-      # ```
+      # ~~~
       #
       # ### With params: `field: :test, match: '', delim: '|', treat_as_null: '%NULL%', strip: false`
       #
-      # ```
+      # ~~~
       # {test: 'foo|%NULL%|bar'} => true,
       # {test: 'foo||bar'} => true,
       # {test: 'foo| %NULL% |bar'} => false,
       # {test: 'foo|  |bar'} => false
-      # ```
+      # ~~~
       #
       # ### With params: `field: :test, match: '^fo+$', matchmode: :regex`
       #
-      # ```
+      # ~~~
       # {test: 'food'} => false,
       # {test: 'foo'} => true,
       # {test: ' foo '} => true, # becasue stripped
       # {test: 'Food'} => false,
       # {test: 'Foo'} => false,
-      # ```
+      # ~~~
       #
       # ### With params: `field: :test, match: '^fo+$', matchmode: :regex, delim: '|'`
       #
-      # ```
+      # ~~~
       # {test: 'foo'} => true,
       # {test: 'foo|bar'} => true,
       # {test: 'Foo|bar'} => false,
       # {test: 'drink|food'} => false
-      # ```
+      # ~~~
       #
       # ### With params: `field: :test, match: '^fo+', matchmode: :regex, delim: '|', casesensitive: false`
       #
-      # ```
+      # ~~~
       # {test: 'foo'} => true,
       # {test: 'foo|bar'} => true,
       # {test: 'Foo|bar'} => true,
       # {test: 'drink|food'} => true
-      # ```
+      # ~~~
       #
       # ### With params: `field: :test, match: 'Foo', delim: '|', multimode: :all`
       #
-      # ```
+      # ~~~
       # {foo: 'Foo'} => false,
       # {test: nil} => false,
       # {test: ''} => false,
@@ -172,11 +172,11 @@ module Kiba
       # {test: 'Foo|'} => true,
       # {test: 'foo|'} => false,
       # {test: 'bar|baz'} => false
-      # ```
+      # ~~~
       #
       # ### With params: `field: :test, match: 'Foo', delim: '|', multimode: :allstrict`
       #
-      # ```
+      # ~~~
       # {foo: 'Foo'} => false,
       # {test: nil} => false,
       # {test: ''} => false,
@@ -191,7 +191,7 @@ module Kiba
       # {test: 'Foo|'} => false,
       # {test: 'foo|'} => false,
       # {test: 'bar|baz'} => false
-      # ```
+      # ~~~
       #
       class FieldValueMatcher
         # @param field [Symbol] whose value to match

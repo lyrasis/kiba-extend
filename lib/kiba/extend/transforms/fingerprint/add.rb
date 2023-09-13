@@ -18,33 +18,33 @@ module Kiba
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Fingerprint::Add, fields: %i[b c d e], delim: ';;;', target: :fp
-        # ```
+        # ~~~
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | a   | b   | c   | d    | e |
         # |-----+-----+-----+------+---|
         # | ant | bee | nil | deer |   |
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | a   | b   | c   | d    | e | fp                               |
         # |-----+-----+-----+------+---+----------------------------------|
         # | ant | bee | nil | deer |   | YmVlOzs7bmlsOzs7ZGVlcjs7O2VtcHR5 |
-        # ```
+        # ~~~
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | a   | b      | c   | d    | e |
         # |-----+--------+-----+------+---|
         # | ant | be;;;e | nil | deer |   |
-        # ```
+        # ~~~
         #
         # Results in an error because column b contains the fingerprint delimiter. If you tried to decode the
         #   resulting fingerprint, you would get too many columns and loss of data integrity

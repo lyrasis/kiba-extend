@@ -41,13 +41,13 @@ module Kiba
         #
         # As an example, let's use example original source data:
         #
-        # ```
+        # ~~~
         # {
         #   displayideas: 'blah',
         #   ideadate: '2022-07-07',
         #   creditline: 'from someone'
         # }
-        # ```
+        # ~~~
         #
         # We want data from :displayideas and :creditline to both get mapped to
         #   annotation note fields, and we want the annotation type and
@@ -57,7 +57,7 @@ module Kiba
         #   into the expected format (This must be achieved via other transforms
         #   before applying this one):
         #
-        # ```
+        # ~~~
         # {
         #   idea_annotationtype: 'display idea',
         #   idea_annotationdate: '2022-07-07',
@@ -65,7 +65,7 @@ module Kiba
         #   cl_annotationtype: 'credit line',
         #   cl_annotationnote: 'from someone'
         # }
-        # ```
+        # ~~~
         #
         # Requirements of this pattern:
         #
@@ -76,22 +76,22 @@ module Kiba
         #
         # Then we can use this transform as follows:
         #
-        # ```
+        # ~~~
         # transform Collapse::FieldsToRepeatableFieldGroup,
         #   sources: %i[cl idea],
         #   targets: %i[annotationtype annotationnote annotationdate],
         #   delim: '|'
-        # ```
+        # ~~~
         #
         # And the result will be:
         #
-        # ```
+        # ~~~
         # {
         #   annotationtype: 'credit line|display idea',
         #   annotationnote: 'from someone|blah',
         #   annotationdate: '%NULLVALUE%'|2022-07-07'
         # }
-        # ```
+        # ~~~
         #
         # ## Specific examples/parameter effects
         #
@@ -110,7 +110,7 @@ module Kiba
         #
         # Source data:
         #
-        # ```
+        # ~~~
         # [
         #   {
         #     a_foo: 'a|f', a_bar: 'a',
@@ -119,28 +119,28 @@ module Kiba
         #     d_foo: 'd|', d_bar: nil
         #   }
         # ]
-        # ```
+        # ~~~
         #
         # Use this transform as follows:
         #
-        # ```
+        # ~~~
         # transform Collapse::FieldsToRepeatableFieldGroup,
         #   sources: %i[a b c d],
         #   targets: %i[foo bar],
         #   delim: '|',
         #   null_placeholder: 'BLANK'
-        # ```
+        # ~~~
         #
         # And the result will be:
         #
-        # ```
+        # ~~~
         # [
         #   {
         #     foo: 'a|f|bf|BLANK|d',
         #     bar: 'a|%NULLVALUE%|b|c|BLANK'
         #   }
         # ]
-        # ```
+        # ~~~
         #
         # **Note that there are still some '%NULLVALUE%'s in there.** This is
         #   because we did not change the `even_val` parameter from its default
@@ -153,7 +153,7 @@ module Kiba
         #   be applied after the target fields are compiled, so that, with the
         #   following source data:
         #
-        # ```
+        # ~~~
         # [
         #   {a_foo: 'afoo', a_bar: 'abar', b_foo: 'bfoo', b_bar: 'bbar'},
         #   {a_foo: 'afoo', a_bar: 'abar', b_foo: nil, b_bar: ''},
@@ -163,20 +163,20 @@ module Kiba
         #   {a_foo: nil, a_bar: nil, b_foo: nil, b_bar: ''},
         #   {a_foo: 'afoo', a_bar: 'abar', b_foo: 'bfoo'},
         # ]
-        # ```
+        # ~~~
         #
         # And this usage:
         #
-        # ```
+        # ~~~
         # transform Collapse::FieldsToRepeatableFieldGroup,
         #   sources: %i[a b],
         #   targets: %i[foo bar],
         #   delim: '|'
-        # ```
+        # ~~~
         #
         # The result will be:
         #
-        # ```
+        # ~~~
         # [
         #   {foo: 'afoo|bfoo', bar: 'abar|bbar'},
         #   {foo: 'afoo', bar: 'abar'},
@@ -185,21 +185,21 @@ module Kiba
         #   {foo: nil, bar: nil},
         #   {foo: 'afoo|bfoo', bar: 'abar|%NULLVALUE%'}
         # ]
-        # ```
+        # ~~~
         #
         # If you do not want empty field groups removed, do:
         #
-        # ```
+        # ~~~
         # transform Cspace::FieldsToRepeatableFieldGroup,
         #   sources: %i[a b],
         #   targets: %i[foo bar],
         #   delim: '|',
         #   empty_groups: :retain
-        # ```
+        # ~~~
         #
         # The result will be:
         #
-        # ```
+        # ~~~
         # [
         #   {foo: 'afoo|bfoo', bar: 'abar|bbar'},
         #   {foo: 'afoo|%NULLVALUE%', bar: 'abar|%NULLVALUE%'},
@@ -208,7 +208,7 @@ module Kiba
         #   {foo: nil, bar: nil},
         #   {foo: 'afoo|bfoo', bar: 'abar|%NULLVALUE%'}
         # ]
-        # ```
+        # ~~~
         #
         # ## Enforcing evenness
         #
@@ -219,7 +219,7 @@ module Kiba
         #
         # With source data:
         #
-        # ```
+        # ~~~
         # [
         #   {
         #     a_foo: 'a|f', a_bar: 'a',
@@ -228,28 +228,28 @@ module Kiba
         #     d_foo: 'd|', d_bar: nil
         #   }
         # ]
-        # ```
+        # ~~~
         #
         # And tranform:
         #
-        # ```
+        # ~~~
         # transform Cspace::FieldsToRepeatableFieldGroup,
         #   sources: %i[a b],
         #   targets: %i[foo bar],
         #   delim: '|',
         #   enforce_evenness: false
-        # ```
+        # ~~~
         #
         # The result will be:
         #
-        # ```
+        # ~~~
         # [
         #   {
         #     foo: 'a|f|bf|%NULLVALUE%|d|%NULLVALUE%',
         #     bar: 'a|b|c|%NULLVALUE%'
         #   }
         # ]
-        # ```
+        # ~~~
         #
         # Note that we did not pass in `empty_groups: retain`, but we get an
         #   empty group (the 4th value in `foo` and the 4th/final value in

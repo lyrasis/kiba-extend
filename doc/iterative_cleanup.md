@@ -32,20 +32,20 @@ Your project must follow some setup/configuration conventions in order
 
 ### Each cleanup process must be configured in its own config module
 
-A config module is a Ruby module that responds to `:config`.
+A config module is a Ruby module that [responds to](https://ruby-doc.org/core-3.1.0/Object.html#method-i-respond_to-3F) `:config`.
 
 Extending `Dry::Configurable` adds a `config` method to a module:
 
-```ruby
+~~~ ruby
 module Project::NameCategorization
   module_function
   extend Dry::Configurable
 end
-```
+~~~
 
 Or you can manually define a `config` class method on the module:
 
-```ruby
+~~~ ruby
 module Project::PersonCleanup
   module_function
 
@@ -53,7 +53,7 @@ module Project::PersonCleanup
     true
   end
 end
-```
+~~~
 
 ### `Kiba::Extend` `config_namespaces` setting must be set from your project
 
@@ -65,9 +65,9 @@ This setting lists the namespace(s) where your config modules live.
 In most of my projects, all of my config modules are in one namespace.
 For example, for the above project, I would add:
 
-```ruby
+~~~ ruby
 Kiba::Extend.config.config_namespaces = [Project]
-```
+~~~
 
 Note that the setting takes an array, so you can list multiple
 namespaces if you have organized your project differently and your
@@ -78,18 +78,18 @@ project will make use of the kiba-tms application, which also defines
 cleanup configs in the namespace `Kiba::Tms`. Such a project would do
 this at the bottom of `lib/tms_client_name.rb`:
 
-```ruby
+~~~ ruby
 Kiba::Extend.config.config_namespaces = [Kiba::Tms, TmsClientName]
-```
+~~~
 
 ### Add cleanup job registration to your `RegistryData` registration method
 
 Add the following to `RegistryData.register` (or whatever method
 triggers the registration of all your jobs):
 
-```ruby
+~~~ ruby
 Kiba::Extend::Utils::IterativeCleanupJobRegistrar.call
-```
+~~~
 
 This line should be added before any `registry.transform`,
 `registry.freeze`, or `registry.finalize` methods.
@@ -171,12 +171,6 @@ section](#fingerprints).
 
 ### places cleanup config notes
 
-Note that the value of `KeProject::Places.fingerprint_fields` is
-different from the value of
-`KeProject::PlacesCleanup.fingerprint_fields`. This works for the
-reasons outlined in the [`:fingerprint` vs. `:clean_fingerprint`
-section](#fingerprints).
-
 #### Required before extending `IterativeCleanup`: `base_job`
 
 This job is created outside the iterative cleanup process, and serves
@@ -186,7 +180,7 @@ The full registry entry key (e.g. `places__prep_for_cleanup`) must be
 set as the `base_job` setting in a cleanup config module prior to
 extending that module with {Kiba::Extend::Mixins::IterativeCleanup}.
 See
-`[lib/ke_project/places_cleanup.rb](https://github.com/lyrasis/kiba-extend-project/blob/main/lib/ke_project/places_cleanup.rb)`.
+[`lib/ke_project/places_cleanup.rb`](https://github.com/lyrasis/kiba-extend-project/blob/main/lib/ke_project/places_cleanup.rb).
 
 **IMPORTANT: This job's output must include a field which
 combines/identifies the original values that may be affected by the
@@ -210,9 +204,11 @@ yield the full corrected value for the row.
 
 #### Optional default method overrides
 
-The overrideable methods are well-documented at
+There are a number of overrideable methods. They are well-documented at
 {Kiba::Extend::Mixins::IterativeCleanup}. Look for the list under
 "Methods that can be optionally overridden in extending module".
+
+The ones used in the demo config are listed below. Look at the documentation linked above for the full list.
 
 ##### `worksheet_add_fields`
 
@@ -255,7 +251,7 @@ The steps and settings are explained textually below the flowchart.
 ![Flowchart](https://github.com/lyrasis/kiba-extend/blob/main/doc/iterative_cleanup_flowchart.png?raw=true)
 
 Right now, the best place to step through and check out the processing
-in a detailed way is to look at the following in the [`kiba-tms`]
+in a detailed way is to look at the following in the `kiba-tms`
 repository:
 
 - [`PlacesInitialCleanup`](https://github.com/lyrasis/kiba-tms/blob/main/lib/kiba/tms/places_cleanup_initial.rb)
@@ -275,6 +271,7 @@ repository:
    cleanup")
 
 ### BaseJobCleaned `:cleanup_base_name__base_job_cleaned` {#basejobcleaned}
+
 #### If no cleanup worksheets returned
 
 Adds any `worksheet_add_fields` you have specified.
@@ -427,7 +424,7 @@ matching `:fingerprint` values.
 
 So:
 
-```
+<pre>
 | country | state          | corrected | fingerprint |
 |---------+----------------+-----------+-------------|
 |         | North Carolina | state     |           2 |
@@ -437,18 +434,18 @@ So:
 | USA     | North Carolina | country   |           2 |
 | USA     | North Carolina | country   |           3 |
 | USA     | North Carolina | country   |           4 |
-```
+</pre>
 
 For lookup/merge back into [BaseJobCleaned](#basejobcleaned), those
 rows are gathered into a hash, with `:fingerprint` as the key:
 
-```
+~~~ ruby
 { 2=>[
   {country: nil, state: "North Carolina", corrected: "state", fingerprint: 2},
   {country: "USA", state: "North Carolina", corrected: "country", fingerprint: 2}
  ]
 }
-```
+~~~
 
 When the [BaseJobCleaned](#basejobcleaned) merge process hits the row
 with `:fingerprint` = 2, it carries out the corrections per row, in

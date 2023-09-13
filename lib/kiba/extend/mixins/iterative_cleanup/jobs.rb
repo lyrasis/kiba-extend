@@ -34,7 +34,7 @@ module Kiba
         #   xforms method needs to call methods/settings defined in
         #   the config module, use `binding` as shown below:
         #
-        # ```ruby
+        # ~~~ ruby
         #   def base_job_cleaned_post_xforms
         #     bind = binding
         #
@@ -45,7 +45,7 @@ module Kiba
         #         fields: mod.post_xform_delete_fields
         #     end
         #   end
-        # ```
+        # ~~~
         module Jobs
         end
       end

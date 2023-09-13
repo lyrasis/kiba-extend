@@ -41,16 +41,16 @@ module Kiba
         #
         # ## Usage in jobs
         #
-        # ```
+        # ~~~
         # transform Split::PublicationStatement, source: :pubstmt
-        # ```
+        # ~~~
         #
-        # ```
+        # ~~~
         # transform Split::PublicationStatement,
         #   source: :pubstmt,
         #   fieldname_overrides: {manufacturer: :printer, mandate: :printdate},
         #   delim: '%'
-        # ```
+        # ~~~
         #
         # @example Default fieldnames, demonstrating parsing/splitting behavior
         #   input = [

@@ -13,15 +13,15 @@ module Kiba
       #
       # Set the `fields` instance variable from user input as follows:
       #
-      # ```
+      # ~~~
       #  @fields = [fields].flatten
-      # ```
+      # ~~~
       #
       # Add the following line as the first thing in the `process` method:
       #
-      # ```
+      # ~~~
       # finalize_fields(row) unless fields_set
-      # ```
+      # ~~~
       #
       # @since 2.8.0
       module Allable

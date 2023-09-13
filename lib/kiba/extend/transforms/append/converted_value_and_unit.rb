@@ -37,7 +37,7 @@ module Kiba
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | value | unit        |
         # |-------+-------------|
         # | nil   | nil         |
@@ -51,21 +51,21 @@ module Kiba
         # | 2     | kilograms   |
         # | 2     | ounces      |
         # | 200   | grams       |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         #  transform Append::ConvertedValueAndUnit,
         #    value: :value,
         #    unit: :unit,
         #    delim: '|',
         #    places: 2
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | value    | unit               |
         # |----------+--------------------|
         # | nil      | nil                |
@@ -79,7 +79,7 @@ module Kiba
         # | 2|4.41   | kilograms|pounds   |
         # | 2|56.7   | ounces|grams       |
         # | 200|7.05 | grams|ounces       |
-        # ```
+        # ~~~
         #
         # # Example 2 - Using a common conversion that isn't configured yet
         #
@@ -96,47 +96,47 @@ module Kiba
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | value | unit   |
         # |-------+--------|
         # | 1     | yard   |
         # | 36    | inches |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         #  transform Append::ConvertedValueAndUnit,
         #    value: :value,
         #    unit: :unit,
         #    delim: '|',
         #    places: 2,
         #    conversions: {'inches'=>'yards', 'yards'=>'feet'}
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | value | unit      |
         # |-------+-----------|
         # | 1|3   | yard|feet |
         # | 36|1  | inches|yd |
-        # ```
+        # ~~~
         #
         # # Example 3 - Fully custom conversions for unknown units
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | value | unit  |
         # |-------+-------|
         # | 4     | hops  |
         # | 15    | leaps |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         #  transform Append::ConvertedValueAndUnit,
         #    value: :value,
         #    unit: :unit,
@@ -147,16 +147,16 @@ module Kiba
         #      leaps: [10, :hops],
         #      hops: [0.25, :jumps]
         #    }
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | value  | unit       |
         # |--------+------------|
         # | 4|1    | hops|jumps |
         # | 15|150 | leaps|hops |
-        # ```
+        # ~~~
         #
         # # Example 4 - overriding default conversions
         #
@@ -166,30 +166,30 @@ module Kiba
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | value | unit    |
         # |-------+---------|
         # | 36    | inches  |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Append::ConvertedValueAndUnit,
         #   value: :value,
         #   unit: :unit,
         #   delim: '|',
         #   places: 2,
         #   conversions: {'inches'=>'feet'}
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | value | unit         |
         # |-------+--------------|
         # | 36|3  | inches|feet  |
-        # ```
+        # ~~~
         #
         # # Example 5 - overriding default converted unit name
         #
@@ -199,30 +199,30 @@ module Kiba
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | value | unit    |
         # |-------+---------|
         # | 36    | inches  |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Append::ConvertedValueAndUnit,
         #   value: :value,
         #   unit: :unit,
         #   delim: '|',
         #   places: 2,
         #   unit_names: {'centimeters'=>'cm'}
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | value    | unit      |
         # |----------+-----------|
         # | 36|91.44 | inches|cm |
-        # ```
+        # ~~~
         class ConvertedValueAndUnit
           # What unit the given unit will be converted to
           #

@@ -16,27 +16,27 @@ module Kiba
         # ## Example
         # Source data:
         #
-        # ```
+        # ~~~
         # {name: 'Weddy'},
         # {name: 'Kernel', species: 'Numida meleagris'}
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Merge::ConstantValues,
         #   constantmap: {
         #     species_common: 'guinea fowl',
         #     species_binomial: 'Numida meleagris'
         #   }
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # {name: 'Weddy', species_common: 'guinea fowl', species_binomial: 'Numida meleagris' },
         # {name: 'Kernel', species: 'Numida meleagris', species_common: 'guinea fowl', species_binomial: 'Numida meleagris' }
-        # ```
+        # ~~~
         #
         class ConstantValues
           def initialize(constantmap:)

@@ -15,55 +15,55 @@ module Kiba
         #
         # Source data:
         #
-        # ```
+        # ~~~
         # {a: 'a', b: 'b', c: 'c' },
         # {a: 'a', b: 'b', c: '' },
         # {a: '', b: nil, c: 'c' },
         # {a: '', b: 'b', c: 'c' },
         # {a: '', b: nil, c: nil },
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform FilterRows::AnyFieldsPopulated, action: :keep, fields: %i[a b]
-        # ```
+        # ~~~
         #
         # Resulting data:
         #
-        # ```
+        # ~~~
         # {a: 'a', b: 'b', c: 'c' },
         # {a: 'a', b: 'b', c: '' },
         # {a: '', b: 'b', c: 'c' }
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform FilterRows::AnyFieldsPopulated, action: :keep, fields: :all
-        # ```
+        # ~~~
         #
         # Resulting data:
         #
-        # ```
+        # ~~~
         # {a: 'a', b: 'b', c: 'c' },
         # {a: 'a', b: 'b', c: '' },
         # {a: '', b: nil, c: 'c' },
         # {a: '', b: 'b', c: 'c' }
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform FilterRows::AnyFieldsPopulated, action: :reject, fields: %i[a b]
-        # ```
+        # ~~~
         #
         # Resulting data:
         #
-        # ```
+        # ~~~
         # {a: '', b: nil, c: 'c' },
         # {a: '', b: nil, c: nil }
-        # ```
+        # ~~~
         class AnyFieldsPopulated
           include ActionArgumentable
           include Allable

@@ -17,7 +17,7 @@ module Kiba
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | authority | norm    | term        | unrelated |
         # |-----------+---------+-------------+-----------|
         # | person    | fred    | Fred Q.     | foo       |
@@ -33,26 +33,26 @@ module Kiba
         # | location  | ghost   | nil         | poo       |
         # | org       | fred    | Fred, Corp. | bar       |
         # | issues    | nil     | nil         | bah       |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Reshape::SimplePivot,
         #   field_to_columns: :authority,
         #   field_to_rows: :norm,
         #   field_to_col_vals: :term
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | norm    | person  | org         | location | work | issues |
         # |---------+---------+-------------+----------+------+--------|
         # | fred    | Fred Q. | Fred, Corp. | nil      | nil  | nil    |
         # | unknown | Unknown | Unknown     | Unknown  | nil  | nil    |
         # | book    | nil     | nil         | nil      | Book | nil    |
-        # ```
+        # ~~~
         #
         # **NOTE**
         #

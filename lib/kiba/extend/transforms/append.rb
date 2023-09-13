@@ -14,25 +14,25 @@ module Kiba
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | z  |
         # |----|
         # | zz |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         #  transform Append::NilFields, fields: %i[a b c z]
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | z  | a   | b   | c   |
         # |----+-----+-----+-----|
         # | zz | nil | nil | nil |
-        # ```
+        # ~~~
         class NilFields
           # @param fields [Array<Symbol>, Symbol] field name or list of field
           #   names to add
@@ -56,29 +56,29 @@ module Kiba
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | name  |
         # |-------|
         # | Weddy |
         # | nil   |
         # |       |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         #  transform Append::ToFieldValue, field: :name, value: ' (name)'
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | name         |
         # |--------------|
         # | Weddy (name) |
         # | nil          |
         # |              |
-        # ```
+        # ~~~
         class ToFieldValue
           # @param field [Symbol] name of field to append to
           # @param value [String] value to append to existing field values

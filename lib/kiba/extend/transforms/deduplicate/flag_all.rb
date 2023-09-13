@@ -17,32 +17,32 @@ module Kiba
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | foo | bar | combined  |
         # |-----------------------|
         # | a   | b   | a b       |
         # | c   | d   | c d       |
         # | c   | e   | c e       |
         # | c   | d   | c d       |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         #   @deduper = {}
         #   transform Deduplicate::FlagAll, on_field: :combined, in_field: :duplicate
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | foo | bar | combined | duplicate |
         # |----------------------------------|
         # | a   | b   | a b      | n         |
         # | c   | d   | c d      | y         |
         # | c   | e   | c e      | n         |
         # | c   | d   | c d      | y         |
-        # ```
+        # ~~~
         #
         class FlagAll
           # @param on_field [Symbol] Field on which to deduplicate

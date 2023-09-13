@@ -18,27 +18,27 @@ module Kiba
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | del | compare |
         # |-----+---------|
         # | a   | b       |
         # | c   | c       |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Delete::FieldValueIfEqualsOtherField, delete: :del, if_equal_to: :compare
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | del | compare |
         # |-----+---------|
         # | a   | b       |
         # | nil | c       |
-        # ```
+        # ~~~
         #
         # ### Notes
         #
@@ -52,7 +52,7 @@ module Kiba
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Delete::FieldValueIfEqualsOtherField,
         #   delete: :del,
         #   if_equal_to: :compare,
@@ -60,11 +60,11 @@ module Kiba
         #   delim: ';',
         #   grouped_fields: %i[grpa grpb],
         #   casesensitive: false
-        # ```
+        # ~~~
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | row | del       | compare | grpa      | grpb      |
         # |-----+-----------+---------+-----------+-----------|
         # | 1   | A;C;d;c;e | c       | y;x;w;u;v | e;f;g;h;i |
@@ -72,11 +72,11 @@ module Kiba
         # | 3   | a         | a;b     | d         | g         |
         # | 4   | a         | b       | z         | q         |
         # | 5   | a         | a       | z         | q         |
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | row | del   | compare | grpa  | grpb  |
         # |-----+-------+---------+-------+-------|
         # | 1   | A;d;e | c       | y;w;v | e;g;i |
@@ -84,7 +84,7 @@ module Kiba
         # | 3   | nil   | a;b     | nil   | nil   |
         # | 4   | a     | b       | z     | q     |
         # | 5   | nil   | a       | nil   | nil   |
-        # ```
+        # ~~~
         #
         # ### Notes
         # #### Row 1
@@ -119,7 +119,7 @@ module Kiba
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Delete::FieldValueIfEqualsOtherField,
         #   delete: :del,
         #   if_equal_to: :compare,
@@ -127,30 +127,30 @@ module Kiba
         #   delim: ';',
         #   grouped_fields: %i[grpa grpb],
         #   casesensitive: false
-        # ```
+        # ~~~
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | del       | compare | grpa    | grpb      |
         # |-----------+---------+---------+-----------|
         # | A;C;d;e;c | c       | y;x;w;u | e;f;g;h;i |
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | del   | compare | grpa  | grpb  |
         # |-------+---------+-------+-------|
         # | A;d;e | c       | y;w;u | e;g;h |
-        # ```
+        # ~~~
         #
         # And a warning printed to STDOUT, which may trigger you to examine the input data:
         #
-        # ```
+        # ~~~
         # KIBA WARNING: One or more grouped fields (grpa, grpb) has different number of values than the others
         # in {:del=>"A;d;e", :compare=>"c", :grpa=>"y;x;w;u", :grpb=>"e;f;g;h;i"}
-        # ```
+        # ~~~
         #
         # **If `del` had 4 elements and one or more of the grouped fields had a different number of elements,
         #   this would be handled similarly, with a slightly different warning.**

@@ -18,48 +18,48 @@ module Kiba
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | a   | b   | c   | d    | e | fp                               |
         # |-----+-----+-----+------+---+----------------------------------|
         # | ant | bee | nil | deer |   | YmVlOzs7bmlsOzs7ZGVlcjs7O2VtcHR5 |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Fingerprint::Decode,
         #   fingerprint: :fp,
         #   source_fields: %i[b c d e],
         #   delim: ';;;',
         #   prefix: 'fp'
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | a   | b   | c   | d    | e | fp                               | fp_b | fp_c | fp_d | fp_e |
         # |-----+-----+-----+------+---+----------------------------------+------+------+------+------|
         # | ant | bee | nil | deer |   | YmVlOzs7bmlsOzs7ZGVlcjs7O2VtcHR5 | bee  | nil  | deer |      |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Fingerprint::Decode,
         #   fingerprint: :fp,
         #   source_fields: %i[b c d e],
         #   delim: ';;;',
         #   prefix: 'fp',
         #   delete_fp: true
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | a   | b   | c   | d    | e | fp_b | fp_c | fp_d | fp_e |
         # |-----+-----+-----+------+---+------+------+------+------|
         # | ant | bee | nil | deer |   | bee  | nil  | deer |      |
-        # ```
+        # ~~~
         #
         class Decode
           # @param fingerprint [Symbol] the name of the field containing

@@ -10,39 +10,39 @@ module Kiba
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | a | b | c |
         # |---+---+---|
         # | 1 | 2 | 3 |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Delete::Fields, fields: %i[a c]
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | b |
         # |---|
         # | 2 |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Delete::Fields, fields: :b
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | a | c |
         # |---+---|
         # | 1 | 3 |
-        # ```
+        # ~~~
         #
         class Fields
           # @param fields [Array<Symbol>,Symbol] field(s) to delete from

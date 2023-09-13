@@ -23,7 +23,7 @@ module Kiba
         #
         # In your job transforms:
         #
-        # ```
+        # ~~~
         # conditions = ->(origrow, mergerows) do
         #   latest = mergerows.sort_by{ |row| row[:addressid].to_i }
         #              .last
@@ -34,7 +34,7 @@ module Kiba
         #   keycolumn: :contactid,
         #   fieldmap: { address: :display_address, addresstype: address_category },
         #   conditions: conditions
-        # ```
+        # ~~~
         #
         # Assuming `addressid` increments as new addresses are added, sorting
         #   the matching lookup rows by that field value, and taking the last (largest) value
@@ -42,7 +42,7 @@ module Kiba
         #
         # In your job transforms:
         #
-        # ```
+        # ~~~
         # conditions = ->(target, lkuprows) do
         #   return [] unless target[:active] == '1'
         #
@@ -53,7 +53,7 @@ module Kiba
         #   keycolumn: :contactid,
         #   fieldmap: { address: :display_address, addresstype: address_category },
         #   conditions: conditions
-        # ```
+        # ~~~
         #
         # This assumes the source table (listing contacts) indicates whether a contact is active or not.
         #   In addition, the addresses table indicates whether each address is active. This will cause

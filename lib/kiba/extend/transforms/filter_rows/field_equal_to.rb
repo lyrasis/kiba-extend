@@ -12,42 +12,42 @@ module Kiba
         #
         # Source data:
         #
-        # ```
+        # ~~~
         # {val:  'N'},
         # {val:  'n'},
         # {val:  'NN'},
         # {val:  'NY'},
         # {val:  ''},
         # {val:  nil}
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform FilterRows::FieldEqualTo, action: :keep, field: :val, value: 'N'
-        # ```
+        # ~~~
         #
         # Resulting data:
         #
-        # ```
+        # ~~~
         # {val:  'N'}
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform FilterRows::FieldEqualTo, action: :reject, field: :val, value: 'N'
-        # ```
+        # ~~~
         #
         # Resulting data:
         #
-        # ```
+        # ~~~
         # {val:  'n'},
         # {val:  'NN'},
         # {val:  'NY'},
         # {val:  ''},
         # {val:  nil}
-        # ```
+        # ~~~
         class FieldEqualTo
           include ActionArgumentable
 

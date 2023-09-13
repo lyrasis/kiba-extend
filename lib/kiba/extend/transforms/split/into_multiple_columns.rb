@@ -13,76 +13,76 @@ module Kiba
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | summary    |
         # |------------|
         # | a:b        |
         # | c          |
         # | :d         |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Split::IntoMultipleColumns, field: :summary, sep: ':', max_segments: 2
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | summary0 | summary1   |
         # |-----------------------|
         # | a        | b          |
         # | c        | nil        |
         # |          | d          |
-        # ```
+        # ~~~
         #
         # # Example 2
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | summary    |
         # |------------|
         # | a:b:c:d:e  |
         # | f:g        |
         # |            |
         # | nil        |
-        # ```
+        # ~~~
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Split::IntoMultipleColumns, field: :summary, sep: ':', max_segments: 3,
         #   collapse_on: :left, warnfield: :warnme
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | summary0 | summary1 | summary2 | warnme                                                |
         # |----------------------------------------------------------------------------------------|
         # | a:b:c    | d        | e        | max_segments less than total number of split segments |
         # | f        | g        | nil      | nil                                                   |
         # |          | nil      | nil      | nil                                                   |
         # | nil      | nil      | nil      | nil                                                   |
-        # ```
+        # ~~~
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Split::IntoMultipleColumns, field: :summary, sep: ':', max_segments: 3,
         #   collapse_on: :right
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | summary0 | summary1 | summary2 |
         # |--------------------------------|
         # | a        | b        | c:d:e    |
         # | f        | g        | nil      |
         # |          | nil      | nil      |
         # | nil      | nil      | nil      |
-        # ```
+        # ~~~
         class IntoMultipleColumns
           # @param field [Symbol] Name of field to split
           # @param sep [String] Character(s) on which to split the field value

@@ -110,20 +110,20 @@ module Kiba
     # @return [String]
     # Default delimiter for splitting/joining values in multi-valued fields.
     #
-    # ```
+    # ~~~
     # 'a|b'.split(Kiba::Extend.delim) => ['a', 'b']
-    # ```
+    # ~~~
     setting :delim, default: "|", reader: true
 
     # Default subgrouping delimiter for splitting/joining values in multi-valued
     #   fields
     #
-    # ```
+    # ~~~
     # orig = 'a^^y|b^^z'
     # delim_split = orig.split(delim)
     # sgdelim_split = delim_split.map{ |val| val.split(sgdelim) }
     # sgdelim_split => [['a', 'y'], ['b', 'z']]
-    # ```
+    # ~~~
     #
     # @return [String]
     setting :sgdelim, default: "^^", reader: true

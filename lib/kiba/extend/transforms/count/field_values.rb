@@ -19,13 +19,13 @@ module Kiba
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         #  transform Count::FieldValues, field: :name, target: :ct, delim: ';'
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | name                 | ct |
         # |----------------------+----|
         # | Weddy                | 1  |
@@ -38,7 +38,7 @@ module Kiba
         # | NULL;Earhart         | 2  |
         # | ;                    | 0  |
         # | NULL;NULL            | 2  |
-        # ```
+        # ~~~
         #
         # ## Example 2
         # No placeholder value is given, so "NULL" is treated as a string value. `count_empty` is true, so
@@ -49,13 +49,13 @@ module Kiba
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         #  transform Count::FieldValues, field: :name, target: :ct, delim: ';', count_empty: true
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | name                 | ct |
         # |----------------------+----|
         # | Weddy                | 1  |
@@ -68,7 +68,7 @@ module Kiba
         # | NULL;Earhart         | 2  |
         # | ;                    | 2  |
         # | NULL;NULL            | 2  |
-        # ```
+        # ~~~
         #
         # ## Example 3
         # Placeholder value is given, so "NULL" is treated as an empty value. `count_empty` default to false, so empty
@@ -76,13 +76,13 @@ module Kiba
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         #  transform Count::FieldValues, field: :name, target: :ct, delim: ';', placeholder: 'NULL'
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | name                 | ct |
         # |----------------------+----|
         # | Weddy                | 1  |
@@ -95,7 +95,7 @@ module Kiba
         # | NULL;Earhart         | 1  |
         # | ;                    | 0  |
         # | NULL;NULL            | 0  |
-        # ```
+        # ~~~
         #
         # ## Example 4
         # Placeholder value is given, so "NULL" is treated as an empty value. `count_empty` is true, so
@@ -106,13 +106,13 @@ module Kiba
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         #  transform Count::FieldValues, field: :name, target: :ct, delim: ';', placeholder: 'NULL', count_empty: true
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | name                 | ct |
         # |----------------------+----|
         # | Weddy                | 1  |
@@ -125,7 +125,7 @@ module Kiba
         # | NULL;Earhart         | 2  |
         # | ;                    | 2  |
         # | NULL;NULL            | 2  |
-        # ```
+        # ~~~
         class FieldValues
           # @param field [Symbol] the field whose values should be counted
           # @param target [Symbol] new field in which to record counts

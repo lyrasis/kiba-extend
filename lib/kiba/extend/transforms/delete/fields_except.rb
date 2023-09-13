@@ -12,39 +12,39 @@ module Kiba
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | a | b | c |
         # |---+---+---|
         # | 1 | 2 | 3 |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Delete::FieldsExcept, fields: %i[a c]
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | a | c |
         # |---+---|
         # | 1 | 3 |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Delete::FieldsExcept, fields: :b
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | b |
         # |---|
         # | 2 |
-        # ```
+        # ~~~
         #
         class FieldsExcept
           class MissingKeywordArgumentError < ArgumentError

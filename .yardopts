@@ -3,7 +3,7 @@
 --title 'Kiba-Extend Documentation'
 --charset utf-8
 --markup markdown
---markup-provider redcarpet
+--markup-provider kramdown
 -
 LICENSE.txt
 doc/contributing.md

@@ -22,7 +22,7 @@ module Kiba
         #
         # Source data:
         #
-        # ```
+        # ~~~
         # [
         #   {note: 'foo', date: '2022'},
         #   {note: nil, date: '2022'},
@@ -34,7 +34,7 @@ module Kiba
         #   {note: '|bar|baz', date: '2022|2021'},
         #   {note: 'foo|bar|', date: '2022|2021'},
         # ]
-        # ```
+        # ~~~
         #
         # Value of `Kiba::Extend.nullvalue` = `'%NULLVALUE%'`. Value of `Kiba::Extend.delim` = `'|'`.
         #
@@ -42,16 +42,16 @@ module Kiba
         #
         # Used in job as:
         #
-        # ```
+        # ~~~
         # transform Reshape::FieldsToFieldGroupWithConstant,
         #   fieldmap: {note: :a_note, date: :a_date},
         #   constant_target: :a_type,
         #   constant_value: 'a thing'
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # [
         #   {a_type: 'a thing', a_note: 'foo', a_date: '2022'},
         #   {a_type: 'a thing', a_note: nil, a_date: '2022'},
@@ -63,23 +63,23 @@ module Kiba
         #   {a_type: 'a thing|a thing|a thing', a_note: '%NULLVALUE%|bar|baz', a_date: '2022|2021|%NULLVALUE%'},
         #   {a_type: 'a thing|a thing|a thing', a_note: 'foo|bar|%NULLVALUE%', a_date: '2022|2021|%NULLVALUE%'}
         # ]
-        # ```
+        # ~~~
         #
         # ### With custom `treat_as_null` string
         #
         # Used in job as:
         #
-        # ```
+        # ~~~
         # transform Reshape::FieldsToFieldGroupWithConstant,
         #   fieldmap: {note: :a_note, date: :a_date},
         #   constant_target: :a_type,
         #   constant_value: 'a thing',
         #   treat_as_null: '%BLANK%'
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # [
         #   {a_type: 'a thing', a_note: 'foo', a_date: '2022'},
         #   {a_type: 'a thing', a_note: nil, a_date: '2022'},
@@ -91,23 +91,23 @@ module Kiba
         #   {a_type: 'a thing|a thing|a thing', a_note: '%BLANK%|bar|baz', a_date: '2022|2021|%BLANK%'},
         #   {a_type: 'a thing|a thing|a thing', a_note: 'foo|bar|%BLANK%', a_date: '2022|2021|%BLANK%'}
         # ]
-        # ```
+        # ~~~
         #
         # ### With `evener: :value` (repeat final value of field to even out field values)
         #
         # Used in job as:
         #
-        # ```
+        # ~~~
         # transform Reshape::FieldsToFieldGroupWithConstant,
         #   fieldmap: {note: :a_note, date: :a_date},
         #   constant_target: :a_type,
         #   constant_value: 'a thing',
         #   evener: :value
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # [
         #   {a_type: 'a thing', a_note: 'foo', a_date: '2022'},
         #   {a_type: 'a thing', a_note: nil, a_date: '2022'},
@@ -119,23 +119,23 @@ module Kiba
         #   {a_type: 'a thing|a thing|a thing', a_note: '%NULLVALUE%|bar|baz', a_date: '2022|2021|2021'},
         #   {a_type: 'a thing|a thing|a thing', a_note: 'foo|bar|%NULLVALUE%', a_date: '2022|2021|2021'}
         # ]
-        # ```
+        # ~~~
         #
         # ### With `enforce_evenness: false`
         #
         # Used in job as:
         #
-        # ```
+        # ~~~
         # transform Reshape::FieldsToFieldGroupWithConstant,
         #   fieldmap: {note: :a_note, date: :a_date},
         #   constant_target: :a_type,
         #   constant_value: 'a thing',
         #   enforce_evenness: false
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # [
         #   {a_type: 'a thing', a_note: 'foo', a_date: '2022'},
         #   {a_type: 'a thing', a_note: nil, a_date: '2022'},
@@ -147,24 +147,24 @@ module Kiba
         #   {a_type: 'a thing|a thing|a thing', a_note: '%NULLVALUE%|bar|baz', a_date: '2022|2021'},
         #   {a_type: 'a thing|a thing|a thing', a_note: 'foo|bar|%NULLVALUE%', a_date: '2022|2021'}
         # ]
-        # ```
+        # ~~~
         #
         # ### With `treat_as_null: nil` and `evener: '%NULL%`
         #
         # Used in job as:
         #
-        # ```
+        # ~~~
         # transform Reshape::FieldsToFieldGroupWithConstant,
         #   fieldmap: {note: :a_note, date: :a_date},
         #   constant_target: :a_type,
         #   constant_value: 'a thing',
         #   treat_as_null: nil,
         #   evener: '%NULL%'
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # [
         #   {a_type: 'a thing', a_note: 'foo', a_date: '2022'},
         #   {a_type: 'a thing', a_note: nil, a_date: '2022'},
@@ -176,7 +176,7 @@ module Kiba
         #   {a_type: 'a thing|a thing|a thing', a_note: '|bar|baz', a_date: '2022|2021|%NULL%'},
         #   {a_type: 'a thing|a thing|a thing', a_note: 'foo|bar|', a_date: '2022|2021|%NULL%'}
         # ]
-        # ```
+        # ~~~
         class FieldsToFieldGroupWithConstant
           # @param fieldmap [Hash{Symbol => Symbol}] map for renaming existing fields. Keys: existing field
           #   names. Values: new field names. Forwarded to {Rename::Fields}

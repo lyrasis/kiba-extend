@@ -21,32 +21,32 @@ module Kiba
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | foo | bar | combined  |
         # |-----------------------|
         # | a   | b   | a b       |
         # | c   | d   | c d       |
         # | c   | e   | c e       |
         # | c   | d   | c d       |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         #   @deduper = {}
         #   transform Deduplicate::Flag, on_field: :combined, in_field: :duplicate, using: @deduper
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | foo | bar | combined | duplicate |
         # |----------------------------------|
         # | a   | b   | a b      | n         |
         # | c   | d   | c d      | n         |
         # | c   | e   | c e      | n         |
         # | c   | d   | c d      | y         |
-        # ```
+        # ~~~
         #
         class Flag
           class NoUsingValueError < Kiba::Extend::Error; end

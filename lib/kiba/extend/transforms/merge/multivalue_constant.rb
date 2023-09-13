@@ -12,7 +12,7 @@ module Kiba
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | name                 |
         # |----------------------|
         # | Weddy                |
@@ -23,18 +23,18 @@ module Kiba
         # | ;Niblet              |
         # | Hunter;              |
         # | NULL;Earhart         |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         #  transform Merge::MultivalueConstant, on_field: :name, target: :species, value: 'guinea fowl', sep: ';',
         #    placeholder: 'NULL'
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | name                 | species                 |
         # |----------------------+-------------------------|
         # | Weddy                | guinea fowl             |
@@ -45,7 +45,7 @@ module Kiba
         # | ;Niblet              | NULL;guinea fowl        |
         # | Hunter;              | guinea fowl;NULL        |
         # | NULL;Earhart         | NULL;guinea fowl        |
-        # ```
+        # ~~~
         class MultivalueConstant
           # @param on_field [Symbol] field the new field's values will be based on
           # @param target [Symbol] name of new field

@@ -9,22 +9,22 @@ module Kiba
       #   other context when the same normalization settings will be used to
       #   normalize many strings:
       #
-      # ```
+      # ~~~
       #   # first initialize an instance of the class as an instance variable in
       #   #   your context
       #   @normalizer = StringNormalizer.new(downcased: false)
       #
       #   # for the repetitive part:
       #   vals.each{ |val| @normalizer.call(val) }
-      # ```
+      # ~~~
       #
       # For one-off usage, or where the normalization settings vary per
       #   normalized value, you can do:
       #
-      # ```
+      # ~~~
       # StringNormalizer.call(downcased: false, str: 'Table, café')
       #   => 'Tablecafe'
-      # ```
+      # ~~~
       #
       # The second way is much less performant, as it initializes a new instance
       #   of the class every time it is called.

@@ -49,15 +49,15 @@ module Kiba
     #    destination: [registry_key],
     #    lookup: [registry_key]
     # }
-    # ```
+    # ~~~
     #
     # OR
     #
-    # ```
+    # ~~~
     #  { source: [registry_key, registry_key],
     #    destination: [registry_key]
     #  }
-    # ```
+    # ~~~
     #
     # `source` and `destination` must each have at least one registry key.
     #   `lookup` may be omitted, or it may be included with one or more registry

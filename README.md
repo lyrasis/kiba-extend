@@ -22,9 +22,8 @@ On the to-do list:
 - Wiki documentation for how to use the registry and job templating. In the meantime the best place to get an understanding of this is [kiba-extend-project](https://github.com/lyrasis/kiba-extend-project).
 
 ## Documentation
-### https://lyrasis.github.io/kiba-extend/
 
-Browseable reference for available transformations.
+[API documentation](https://lyrasis.github.io/kiba-extend/)
 
 **Look under [Files](https://lyrasis.github.io/kiba-extend/file_list.html) for in-depth information on broader topics than can be covered in the code documentation.**
 

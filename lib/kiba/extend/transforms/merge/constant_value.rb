@@ -13,23 +13,23 @@ module Kiba
         #
         # Source data:
         #
-        # ```
+        # ~~~
         # {name: 'Weddy', sex: 'm', source: 'adopted'},
         # {name: 'Kernel', sex: 'f', source: 'adopted', species: 'Numida meleagris'}
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Merge::ConstantValue, target: :species, value: 'guinea fowl'
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # {name: 'Weddy', sex: 'm', source: 'adopted', species: 'guinea fowl'},
         # {name: 'Kernel', sex: 'f', source: 'adopted', species: 'guinea fowl'}
-        # ```
+        # ~~~
         #
         # A warning will be printed to STDOUT since the existing `species` value is overwritten in
         #   the second row.

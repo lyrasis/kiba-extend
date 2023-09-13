@@ -13,11 +13,11 @@ module Kiba
       #   a Cspace module in your project, you will need to write the transform
       #   like:
       #
-      # ```
+      # ~~~
       # transform Kiba::Extend::Transforms::Cspace::NormalizeForID,
       #   source: :field,
       #   target: :norm
-      # ```
+      # ~~~
       #
       # ## Other transforms of special relevance to CollectionSpace jobs
       #

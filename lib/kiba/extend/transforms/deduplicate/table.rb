@@ -18,30 +18,30 @@ module Kiba
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | foo | bar | baz |  combined |
         # |-----------------------------|
         # | a   | b   | f   | a b       |
         # | c   | d   | g   | c d       |
         # | c   | e   | h   | c e       |
         # | c   | d   | i   | c d       |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Deduplicate::Table, field: :combined, delete_field: true
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | foo | bar | baz |
         # |-----------------|
         # | a   | b   | f   |
         # | c   | d   | g   |
         # | c   | e   | h   |
-        # ```
+        # ~~~
         #
         # @since 2.2.0
         class Table

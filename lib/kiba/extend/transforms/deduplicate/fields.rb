@@ -10,7 +10,7 @@ module Kiba
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | x   | y   | z   |
         # |-----+-----+-----|
         # | a   | a   | b   |
@@ -22,17 +22,17 @@ module Kiba
         # |     | ;a  | b;  |
         # | a   | nil | nil |
         # | a   | A   | a   |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Deduplicate::Fields, source: :x, targets: %i[y z], multival: true, sep: ';'
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | x   | y   | z   |
         # |-----+-----+-----|
         # | a   | nil | b   |
@@ -44,36 +44,36 @@ module Kiba
         # |     | a   | b   |
         # | a   | nil | nil |
         # | a   | A   | nil |
-        # ```
+        # ~~~
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | x | y | z |
         # |---+---+---|
         # | a | A | a |
         # | a | a | B |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Deduplicate::Fields,
         #    source: :x,
         #    targets: %i[y z],
         #    multival: true,
         #    sep: ';',
         #    casesensitive: false
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | x | y   | z   |
         # |---+-----+-----|
         # | a | nil | nil |
         # | a | nil | B   |
-        # ```
+        # ~~~
         #
         class Fields
           # @param source [Symbol] name of field containing value to remove from target fields

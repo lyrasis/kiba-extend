@@ -39,9 +39,9 @@ Most important:
 * Document each parameter for `initialize`. See the [YARD Getting Started Guide section on declaring types](https://www.rubydoc.info/gems/yard/file/docs/GettingStarted.md#declaring-types) for an intro. The [interactive YARD Type Parser](https://yardoc.org/types.html) is helpful for checking that your type declarations will work as expected.
 * If your transform returns the typical Hash row (with Symbol keys as field names and Strings/NilValues as values), the `:process` method should be documented as:
 
-```
+~~~
 # @param row [Hash{ Symbol => String, nil }]
-```
+~~~
 
 If you include a `:close` method (See [kiba wiki: Implementing ETL Transforms](https://github.com/thbar/kiba/wiki/Implementing-ETL-transforms)), it is assumed it returns yielded rows. No doc comments necessary.
 
@@ -52,9 +52,9 @@ YARD is installed as a development dependency, so I think if you `bundle install
 
 `cd` into the base directory of the `kiba-extend` repo. Then:
 
-```
+~~~
 yard server -rd
-```
+~~~
 
 This should spin up a daemonized copy of of the documentation site at http://localhost:8808/
 
@@ -62,10 +62,10 @@ Reloading a page should re-parse the documentation.
 
 When done, do the following to find the YARDDOC DAEMON process using the tcp port and kill it:
 
-```
+~~~
 lsof -wni tcp:8808
 kill -9 {pid}
-```
+~~~
 
 ## Tests
 
@@ -97,7 +97,7 @@ This test interface is already set up in `kiba-extend`'s [`spec_helper.rb`](http
 
 If you are writing yardspec tests, you can do the following:
 
-```
+~~~
 # @example With `multival: true` and no :sep
 #   Kiba::Extend.config.delim = ';'
 #   xform = Clean::RegexpFindReplaceFieldVals.new(
@@ -130,7 +130,7 @@ If you are writing yardspec tests, you can do the following:
 #     {val: 'bat|bat'}
 #   ]
 #   expect(result).to eq(expected)
-```
+~~~
 
 At the time of writing, the default value of `Kiba::Extend.delim` is `|`. The first test here sets the value of that setting to `;`. That test passes. Since we call `Kiba::Extend.reset_config` after getting the result in the first test, the second test passes. If we did not call `Kiba::Extend.reset_config` in the first test, the second test would fail because the default value is still `;`.
 
@@ -154,20 +154,20 @@ Most transforms do a relatively simple thing to one or more fields, and require 
 
 Where possible, write such transforms so that they can be called on one or many fields with minimal typing. For example, both of the following work fine:
 
-```
+~~~
 transform Delete::Fields, fields: %i[name title date]
 
 transform Delete::Fields, fields: :title
-```
+~~~
 
 The commonly used code pattern to support this is:
 
-```
+~~~
 # @param fields [Array<Symbol>,Symbol] field(s) to delete from
 def initialize(fields:)
   @fields = [fields].flatten
 end
-```
+~~~
 
 If it is a reasonable assumption that someone may want to apply the transform to **all** fields, consider `include`-ing [the `Allable` transform mixin module](https://lyrasis.github.io/kiba-extend/Kiba/Extend/Transforms/Allable.html). (See the code for "Included in" transforms at the top of that page)
 
@@ -189,17 +189,17 @@ Preferred practice when multivalued treatment should be turned off/on is to trea
 
 So, if the default behavior should be multivalued:
 
-```
+~~~
 def initialize(fields:, delim: Kiba::Extend.delim)
-```
+~~~
 
 User can turn off multivalued treatment by passing `delim: nil`. User can pass non-default `:delim` value as well.
 
 And if the default behavior should be to treat the whole field value as one string:
 
-```
+~~~
 def initialize(fields:, delim: nil)
-```
+~~~
 
 User can turn on multivalued treatment by passing a `:delim` value.
 

@@ -12,36 +12,36 @@ module Kiba
         #
         # Used in job as:
         #
-        # ```
+        # ~~~
         # condition = ->(row) do
         #   row[:note].is_a?(String) && row[:note].match?(/gift|donation/i) && row[:type] != 'obj'
         # end
         # transform Merge::ConstantValueConditional,
         #   fieldmap: { reason: 'gift', cost: '0' },
         #   condition: condition
-        # ```
+        # ~~~
         #
         # With input:
         #
-        # ```
+        # ~~~
         # {note: 'Gift', type: 'acq'},
         # {reason: 'donation', note: 'Was a donation', type: 'acq'},
         # {note: 'Was a donation', type: 'obj'},
         # {reason: 'purchase', cost: '100', note: 'Purchased from Someone', type: 'acq'},
         # {note: '', type: 'acq'},
         # {note: nil, type: 'acq'}
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # {reason: 'gift', cost: '0', note: 'Gift', type: 'acq'},
         # {reason: 'gift', cost: '0', note: 'Was a donation', type: 'acq'},
         # {reason: nil, cost: nil, note: 'Was a donation', type: 'obj'},
         # {reason: 'purchase', cost: '100', note: 'Purchased from Someone', type: 'acq'},
         # {reason: nil, cost: nil, note: '', type: 'acq'},
         # {reason: nil, cost: nil, note: nil, type: 'acq'}
-        # ```
+        # ~~~
         #
         # Note that:
         #
@@ -58,42 +58,42 @@ module Kiba
         #
         # Used in job as:
         #
-        # ```
+        # ~~~
         # condition = ->(row) do
         #   row[:note].is_a?(row[:note].match?(/gift|donation/i) && row[:type] != 'obj' }
         # end
         # transform Merge::ConstantValueConditional,
         #   fieldmap: { reason: 'gift', cost: '0' },
         #   condition: condition
-        # ```
+        # ~~~
         #
         # Will cause:
         #
-        # ```
+        # ~~~
         # Kiba::Extend::Transforms::Merge::ConstantValueConditional::ConditionError: Condition lambda throws error with row: {:note=>nil, :type=>"acq"}
         # from /Users/kristina/code/mig/kiba-extend/lib/kiba/extend/transforms/merge/constant_value_conditional.rb:77:in `rescue in condition_met?'
         # Caused by NoMethodError: undefined method `match?' for nil:NilClass
         #       let(:condition){ ->(row){ row[:note].match?(/gift|donation/i) && row[:type] != 'obj' } }
         #                                             ^^^^^^^
-        # ```
+        # ~~~
         #
         # Finally, note that the `condition` lambda must return a true/false value, indicating whether the constant(s)
         #   should be merged into the given row. If the lambda returns something else, it will throw an error:
         #
         # Used in job as:
         #
-        # ```
+        # ~~~
         # condition = ->(row){ row[:note].length }
         # transform Merge::ConstantValueConditional,
         #   fieldmap: { reason: 'gift', cost: '0' },
         #   condition: condition
-        # ```
+        # ~~~
         #
         # Will cause:
         #
-        # ```
+        # ~~~
         # Kiba::Extend::Transforms::Merge::ConstantValueConditional::NonBooleanConditionError: `condition` lambda must return true or false
-        # ```
+        # ~~~
         class ConstantValueConditional
           class NonBooleanConditionError < Kiba::Extend::Error
             def initialize(msg = "`condition` lambda must return true or false")

@@ -19,31 +19,31 @@ module Kiba
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Delete::EmptyFields
-        # ```
+        # ~~~
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | a   | b   | c   | d   |
         # |-----+-----+-----+-----|
         # | a   |     | ccc |     |
         # |     | nil | c   | nil |
         # | nil |     | ccc |     |
         # | a   |     |     |     |
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | a   | c   |
         # |-----+-----|
         # | a   | ccc |
         # |     | c   |
         # | nil | ccc |
         # | a   |     |
-        # ```
+        # ~~~
         #
         # ### Notes
         # Empty strings and nil values are treated as empty by default.
@@ -52,60 +52,60 @@ module Kiba
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Delete::EmptyFields, usenull: true
-        # ```
+        # ~~~
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | a   | b   | c   | d   | e           |
         # |-----+-----+-----+-----+-------------|
         # |     | nil | c   | nil | %NULLVALUE% |
         # | a   |     | ccc |     |             |
         # | nil |     | ccc |     | %NULLVALUE% |
         # | a   |     |     |     |             |
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | a   | c   |
         # |-----+-----|
         # |     | c   |
         # | a   | ccc |
         # | nil | ccc |
         # | a   |     |
-        # ```
+        # ~~~
         #
         # ## With consider_blank config given
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Delete::EmptyFields, consider_blank: {b: 'false', c: 'nope', e: "0#{Kiba::Extend.delim}false"}
-        # ```
+        # ~~~
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | a   | b     | c           | d   | e     |
         # |-----+-------+-------------+-----+-------|
         # |     | nil   |             | nil | 0     |
         # | a   |       | %NULLVALUE% |     | false |
         # | nil | false | nope        |     | 0     |
         # | a   |       | nil         |     |       |
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | a   | c           |
         # |-----+-------------|
         # |     |             |
         # | a   | %NULLVALUE% |
         # | nil | nope        |
         # | a   | nil         |
-        # ```
+        # ~~~
         #
         # ### Notes
         # Field `c` is retained because `usenull: true` is not used. If that argument were given, only Field `a` would be returned.

@@ -22,23 +22,23 @@ module Kiba
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | foo | bar | baz | boo|
         # |----------------------|
         # | a:b | e   | f   |    |
         # | c   | nil | g   | h  |
         # | :d  | i:  | j   | k  |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Extract::Fields, fields: %i[foo bar], sep: ':'
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | value | from_field |
         # |--------------------|
         # | a     | foo        |
@@ -47,17 +47,17 @@ module Kiba
         # | c     | foo        |
         # | d     | foo        |
         # | i     | bar        |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Extract::Fields, fields: %i[foo bar], source_field_track: false
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | value |
         # |--------
         # | a:b   |
@@ -65,7 +65,7 @@ module Kiba
         # | c     |
         # | :d    |
         # | i:    |
-        # ```
+        # ~~~
         class Fields
           def initialize(fields:, sep: nil, source_field_track: true)
             @fields = [fields].flatten

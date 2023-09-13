@@ -14,57 +14,57 @@ module Kiba
         #
         # Source data:
         #
-        # ```
+        # ~~~
         # {val: 'N'},
         # {val: 'n'},
         # {val: 'NN'},
         # {val: 'NY'},
         # {val: ''},
         # {val: nil}
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform FilterRows::FieldMatchRegexp, action: :keep, field: :val, match: '^N'
-        # ```
+        # ~~~
         #
         # Resulting data:
         #
-        # ```
+        # ~~~
         # {val: 'N'},
         # {val: 'NN'},
         # {val: 'NY'},
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform FilterRows::FieldMatchRegexp, action: :keep, field: :val, match: '^N', ignore_case: true
-        # ```
+        # ~~~
         #
         # Resulting data:
         #
-        # ```
+        # ~~~
         # {val: 'N'},
         # {val: 'n'},
         # {val: 'NN'},
         # {val: 'NY'},
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform FilterRows::FieldMatchRegexp, action: :reject, field: :val, match: '^N'
-        # ```
+        # ~~~
         #
         # Resulting data:
         #
-        # ```
+        # ~~~
         # {val: 'n'},
         # {val: ''},
         # {val: nil},
-        # ```
+        # ~~~
         class FieldMatchRegexp
           include ActionArgumentable
 

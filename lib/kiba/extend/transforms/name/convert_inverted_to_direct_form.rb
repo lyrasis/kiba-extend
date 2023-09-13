@@ -17,13 +17,13 @@ module Kiba
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         #  transform Name::ConvertInvertedToDirectForm, source: :iname, target: :direct
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # {:iname=>"Smith, Robert", :firstname=>"Robert", :middlename=>nil, :lastname=>"Smith", :suffix=>nil, :direct=>"Robert Smith"}
         # {:iname=>"Smith, Robert J.", :firstname=>"Robert", :middlename=>"J.", :lastname=>"Smith", :suffix=>nil, :direct=>"Robert J. Smith"}
         # {:iname=>"Smith-Jones, Robert J.", :firstname=>"Robert", :middlename=>"J.", :lastname=>"Smith-Jones", :suffix=>nil, :direct=>"Robert J. Smith-Jones"}
@@ -48,31 +48,31 @@ module Kiba
         # {:iname=>"", :firstname=>nil, :middlename=>nil, :lastname=>nil, :suffix=>nil, :direct=>""}
         # {:iname=>nil, :firstname=>nil, :middlename=>nil, :lastname=>nil, :suffix=>nil, :direct=>nil}
         # {:foo=>"bar", :firstname=>nil, :middlename=>nil, :lastname=>nil, :suffix=>nil, :direct=>nil}
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         #  transform Name::ConvertInvertedToDirectForm, source: :iname, target: :direct, nameparts: %i[f m l s]
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # {:iname=>"Smith, R.J., Sr.", :direct=>"R. J. Smith, Sr.", :f=>"R.", :l=>"Smith", :m=>"J.", :s=>"Sr."}
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         #  transform Name::ConvertInvertedToDirectForm, source: :iname, target: :direct, keep_parts: false
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # {:iname=>"Smith, R.J., Sr.", :direct=>"R. J. Smith, Sr."}
-        # ```
+        # ~~~
         class ConvertInvertedToDirectForm
           # @param source [Symbol] field containing the inverted name to split
           # @param target [Symbol] field in which to write the direct form

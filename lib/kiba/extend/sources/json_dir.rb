@@ -24,7 +24,7 @@ module Kiba
       # If you need to work with such a value in subsequent jobs (i.e. reading
       #   the string back in from the CSV), you can do something like:
       #
-      # ```
+      # ~~~
       # transform do |row|
       #   val = row[:codestringfield]
       #   next row if val.blank?
@@ -34,7 +34,7 @@ module Kiba
       #   # whatever additional code you need to process the data
       #   row
       # end
-      # ```
+      # ~~~
       #
       # @note May return Hashes having different keys, which will cause problems
       #   writing out to {Kiba::Extend::Destinations::CSV}, which expects all

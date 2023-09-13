@@ -17,7 +17,7 @@ module Kiba
       # - pass this instance in as a helper on the `MultiSourcePrepJob`s that generate files that will be used
       #   as sources in the multisource job:
       #
-      # ```
+      # ~~~
       #  Kiba::Extend::Jobs::MultiSourcePrepJob.new(
       #   files: {
       #     source: :prep__obj_locations,
@@ -26,14 +26,14 @@ module Kiba
       #   transformer: from_obj_locations_xforms,
       #   helper: Kiba::Tms.config.name_compilation.multi_source_normalizer
       # )
-      # ```
+      # ~~~
       #
       # Finally, in the multisource job, call the `get_fields` method of your normalizer as the `fields`
       #   argument of an `Append::NilFields` transform:
       #
-      # ```
+      # ~~~
       # transform Append::NilFields, fields: Tms.config.name_compilation.multi_source_normalizer.get_fields
-      # ```
+      # ~~~
       # @note This currently only works when using `Kiba::Extend::Destinations::CSV` destination. It depends on
       #   the `fields` method added to that class to support. This was not added to the
       #   `Kiba::Extend::Destinations::JsonArray` class because it does not require an identical field set

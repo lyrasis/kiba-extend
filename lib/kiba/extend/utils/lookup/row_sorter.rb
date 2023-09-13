@@ -23,19 +23,19 @@ module Kiba
         #   a column to your lookup table that expresses the date as an integer. For
         #   simple/clean dates, something like this could work:
         #
-        # ```
+        # ~~~
         # transform do |row|
         #   dateval = row[:datefield]
         #   row[:date_as_num] = Date.parse(dateval).jd
         #   row
         # end
-        # ```
+        # ~~~
         #
         # ## Examples
         #
         # Rows:
         #
-        # ```
+        # ~~~
         # rows = [
         #   { id: '1' },
         #   { id: '10' },
@@ -46,43 +46,43 @@ module Kiba
         #   { id: 'XR3' },
         #   { id: '25' }
         # ]
-        # ```
+        # ~~~
         #
         # ### With defaults (asc, sorted as strings, blanks first)
         #
-        # ```
+        # ~~~
         # sorter = Lookup::RowSorter.new(on: :id)
         # result = sorter.call(rows)
         # result.map{ |row| row[:id] } =>
         #   [nil, '', '1', '10', '100', '11', '25', 'XR3']
-        # ```
+        # ~~~
         #
         # ### Asc, sorted as integers, blanks first
         #
-        # ```
+        # ~~~
         # sorter = Lookup::RowSorter.new(on: :id, as: :to_i)
         # result = sorter.call(rows)
         # result.map{ |row| row[:id] } =>
         #   [nil, '', '1', '10', '11', '25', '100', 'XR3']
-        # ```
+        # ~~~
         #
         # ### Asc, sorted as strings, blanks last
         #
-        # ```
+        # ~~~
         # sorter = Lookup::RowSorter.new(on: :id, as: :to_i)
         # result = sorter.call(rows)
         # result.map{ |row| row[:id] } =>
         #   ['1', '10', '100', '11', '25', 'XR3', nil, '']
-        # ```
+        # ~~~
         #
         # ### Desc, sorted as strings, blanks last
         #
-        # ```
+        # ~~~
         # sorter = Lookup::RowSorter.new(on: :id, as: :to_i)
         # result = sorter.call(rows)
         # result.map{ |row| row[:id] } =>
         #   [nil, '', 'XR3', '25', '11', '100', '10', '1']
-        # ```
+        # ~~~
         #
         # @since 2.8.0
         class RowSorter

@@ -23,31 +23,31 @@ module Kiba
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | a   | b   |
         # |-----------|
         # | c|d | e|j |
         # |     | nil |
         # | |f  | g|  |
         # | h   | i   |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Take::First, fields: %i[a b], targets: %i[y z], delim: '|'
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | a   | b   | y | z   |
         # |---------------------|
         # | c|d | e|j | c | e   |
         # |     | nil |   | nil |
         # | |f  | g|  |   | g   |
         # | h   | i   | h | i   |
-        # ```
+        # ~~~
 
         class First
           def initialize(fields:, delim:, targets: [])

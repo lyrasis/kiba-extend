@@ -18,112 +18,112 @@ module Kiba
         #
         # Source data:
         #
-        # ```
+        # ~~~
         # [
         #   {species: 'guineafowl', name: nil, sex: ''},
         #   {species: 'guineafowl', name: '%NULL%', sex: '%NULL%'},
         #   {species: 'guineafowl', name: 'Weddy||Grimace|', sex: ''},
         #   {species: 'guineafowl', name: '|Weddy|Grimace|', sex: '%NULL%|m|m|'}
         # ]
-        # ```
+        # ~~~
         #
         # Used as:
         #
-        # ```
+        # ~~~
         # transform Replace::EmptyFieldValues, fields: %i[name sex], value: '%NULLVALUE%'
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # [
         #   {species: 'guineafowl', name: '%NULLVALUE%', sex: '%NULLVALUE%' },
         #   {species: 'guineafowl', name: '%NULL%', sex: '%NULL%'},
         #   {species: 'guineafowl', name: 'Weddy||Grimace|', sex: '%NULLVALUE%'}
         #   {species: 'guineafowl', name: '|Weddy|Grimace|', sex: '%NULL%|m|m|'}
         # ]
-        # ```
+        # ~~~
         #
         # ### Null placeholder (single value)
         #
         # Using same source data as above, and transform set up as:
         #
-        # ```
+        # ~~~
         # transform Replace::EmptyFieldValues, fields: %i[name sex], value: '%NULLVALUE%',
         #   treat_as_null: '%NULL%'
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # [
         #   {species: 'guineafowl', name: '%NULLVALUE%', sex: '%NULLVALUE%' },
         #   {species: 'guineafowl', name: '%NULLVALUE%', sex: '%NULLVALUE%'},
         #   {species: 'guineafowl', name: 'Weddy||Grimace|', sex: '%NULLVALUE%'}
         #   {species: 'guineafowl', name: '|Weddy|Grimace|', sex: '%NULL%|m|m|'}
         # ]
-        # ```
+        # ~~~
         #
         # ### Multivalued (given a `delim` value)
         #
         # Using same source data as above, and transform set up as:
         #
-        # ```
+        # ~~~
         # transform Replace::EmptyFieldValues, fields: %i[name sex], delim: '|', value: '%NULLVALUE%'
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # [
         #   {species: 'guineafowl', name: '%NULLVALUE%', sex: '%NULLVALUE%' },
         #   {species: 'guineafowl', name: '%NULL%', sex: '%NULL%'},
         #   {species: 'guineafowl', name: 'Weddy|%NULLVALUE%|Grimace|%NULLVALUE%', sex: '%NULLVALUE%'},
         #   {species: 'guineafowl', name: '%NULLVALUE%|Weddy|Grimace|%NULLVALUE%', sex: '%NULL%|m|m|%NULLVALUE%'}
         # ]
-        # ```
+        # ~~~
         #
         # ### Multivalued (given a `delim` value) with `treat_as_null`
         #
         # Using same source data as above, and transform set up as:
         #
-        # ```
+        # ~~~
         # transform Replace::EmptyFieldValues, fields: %i[name sex], delim: '|', value: '%NULLVALUE%',
         #   treat_as_null: '%NULL%'
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # [
         #   {species: 'guineafowl', name: '%NULLVALUE%', sex: '%NULLVALUE%' },
         #   {species: 'guineafowl', name: '%NULLVALUE%', sex: '%NULLVALUE%'},
         #   {species: 'guineafowl', name: 'Weddy|%NULLVALUE%|Grimace|%NULLVALUE%', sex: '%NULLVALUE%'},
         #   {species: 'guineafowl', name: '%NULLVALUE%|Weddy|Grimace|%NULLVALUE%', sex: '%NULLVALUE%|m|m|%NULLVALUE%'}
         # ]
-        # ```
+        # ~~~
         #
         # ### Multiple `treat_as_null` values
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # [
         #   {species: 'guineafowl', name: '%NULL%', sex: '%NADA%' }
         # ]
         #
-        # ```
+        # ~~~
         # transform Replace::EmptyFieldValues, fields: %i[name sex], value: '%NULLVALUE%',
         #   treat_as_null: ['%NULL%', '%NADA%']
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # [
         #   {species: 'guineafowl', name: '%NULLVALUE%', sex: '%NULLVALUE%' },
         # ]
-        # ```
+        # ~~~
         class EmptyFieldValues
           # @param fields [Array(Symbol), Symbol] in which to perform replacements
           # @param value [String] replaces the empty value(s)

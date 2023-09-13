@@ -16,22 +16,22 @@ module Kiba
         #   necessary to achieve evenness across fields. So, with
         #   `evener: '%NULLVALUE%'`:
         #
-        # ```
+        # ~~~
         #  {a_foo: 'af', a_bar: 'ab', a_baz: 'az|zz'}
-        # ```
+        # ~~~
         #
         # is transformed to:
         #
-        # ```
+        # ~~~
         #   {a_foo: 'af|%NULLVALUE%', a_bar: 'ab|%NULLVALUE%', a_baz: 'az|zz'}
-        # ```
+        # ~~~
         #
         # However, what if `af` and `ab` are intended to go with `zz` instead of
         #   `az`? Or what if, in this situation, you really want:
         #
-        # ```
+        # ~~~
         #  {a_foo: 'af|af', a_bar: 'ab|ab', a_baz: 'az|zz'}
-        # ```
+        # ~~~
         #
         # Only you can be sure, so, by default, you get a warning whenever a
         #   source gets padded to enforce evenness. You can disable warnings by
@@ -43,23 +43,23 @@ module Kiba
         #
         # Source data:
         #
-        # ```
+        # ~~~
         # [
         #   {foo: 'a', bar: 'b', baz: 'c'},
         #   {foo: '', bar: nil, baz: 'c'},
         #   {foo: 'a|a|a', bar: '|b', baz: 'c'}
         # ]
-        # ```
+        # ~~~
         #
         # Used as:
         #
-        # ```
+        # ~~~
         # transform Clean::EvenFieldValues, fields: %i[foo bar baz], delim: '|'
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # [
         #   {foo: 'a', bar: 'b', baz: 'c'},
         #   {foo: '', bar: nil, baz: 'c'},
@@ -69,7 +69,7 @@ module Kiba
         #     baz: 'c|%NULLVALUE%|%NULLVALUE%'
         #   }
         # ]
-        # ```
+        # ~~~
         #
         # **NOTE:** nil or empty field values are skipped altogether
         #
@@ -77,28 +77,28 @@ module Kiba
         #
         # Source data:
         #
-        # ```
+        # ~~~
         # [
         #   {foo: 'a|a|a', bar: '|b', baz: 'c'}
         # ]
-        # ```
+        # ~~~
         #
         # Used as:
         #
-        # ```
+        # ~~~
         # transform Clean::EvenFieldValues,
         #   fields: %i[foo bar baz],
         #   delim: '|',
         #   evener: '%BLANK%'
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # [
         #   {foo: 'a|a|a', bar: '|b|%BLANK%', baz: 'c|%BLANK%|%BLANK%'}
         # ]
-        # ```
+        # ~~~
         #
         # ### Custom evener (:value)
         #
@@ -108,32 +108,32 @@ module Kiba
         #
         # Source data:
         #
-        # ```
+        # ~~~
         # [
         #   {foo: '', bar: nil, baz: 'c'},
         #   {foo: 'a|a|a', bar: '|b', baz: 'c'},
         #   {foo: 'a|a|a', bar: 'b|', baz: 'c|a'}
         # ]
-        # ```
+        # ~~~
         #
         # Used as:
         #
-        # ```
+        # ~~~
         # transform Clean::EvenFieldValues,
         #   fields: %i[foo bar baz],
         #   delim: '|',
         #   evener: :value
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # [
         #   {foo: '', bar: nil, baz: 'c'},
         #   {foo: 'a|a|a', bar: '|b|b', baz: 'c|c|c'},
         #   {foo: 'a|a|a', bar: 'b||', baz: 'c|a|a'},
         # ]
-        # ```
+        # ~~~
         class EvenFieldValues
           # @param fields [Array(Symbol)] fields across which to even field
           #   values

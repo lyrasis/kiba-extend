@@ -14,52 +14,52 @@ module Kiba
         #
         # Source data:
         #
-        # ```
+        # ~~~
         # {a: 'a', b: 'b', c: 'c' },
         # {a: 'a', b: 'b', c: '' },
         # {a: '', b: nil, c: 'c' },
         # {a: '', b: 'b', c: 'c' },
         # {a: '', b: nil, c: nil },
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # logic = ->(row){ row.values.any?(nil) }
         # transform FilterRows::WithLambda, action: :keep, lambda: logic
-        # ```
+        # ~~~
         #
         # Resulting data:
         #
-        # ```
+        # ~~~
         # {a: '', b: nil, c: 'c' },
         # {a: '', b: nil, c: nil }
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # whatever = ->(x) do
         #   x.values.any?(nil)
         # end
         # transform FilterRows::WithLambda, action: :keep, lambda: whatever
-        # ```
+        # ~~~
         #
         # Resulting data:
         #
-        # ```
+        # ~~~
         # {a: 'a', b: 'b', c: 'c' },
         # {a: 'a', b: 'b', c: '' },
         # {a: '', b: 'b', c: 'c' },
-        # ```
+        # ~~~
         #
         # The following will raise a NonBooleanLambdaError because `logic`
         #   returns an Array, rather than `TrueClass` or `FalseClass`:
         #
-        # ```
+        # ~~~
         # logic = ->(row){ row.values.select{ |val| val.nil? } }
         # transform FilterRows::WithLambda, action: :keep, lambda: logic
-        # ```
+        # ~~~
         #
         # @raise [Kiba::Extend::BooleanReturningLambdaError] if given lambda
         #   does not evaluate to `TrueClass` or `FalseClass` using

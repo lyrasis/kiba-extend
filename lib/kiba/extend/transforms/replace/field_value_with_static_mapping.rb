@@ -15,7 +15,7 @@ module Kiba
         #
         # The examples all share the following `mapping` Hash:
         #
-        # ```
+        # ~~~
         # {
         #   'cb' => 'coral blue',
         #   'rp' => 'royal purple',
@@ -23,11 +23,11 @@ module Kiba
         #   'pl' => 'pearl gray',
         #   nil => 'undetermined'
         # }
-        # ```
+        # ~~~
         #
         # Initial examples all use the following rows as input:
         #
-        # ```
+        # ~~~
         # [
         #   {name: 'Lazarus', color: 'cb'},
         #   {name: 'Inkpot', color: 'rp'},
@@ -39,17 +39,17 @@ module Kiba
         #   {name: 'Old', color: ''},
         #   {name: 'New|Hunter', color: '|pl'}
         # ]
-        # ```
+        # ~~~
         #
         # Using:
         #
-        # ```
+        # ~~~
         # transform Replace::FieldValueWithStaticMapping, source: :color, mapping: mapping
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # [
         #   {name: 'Lazarus', color: 'coral blue'},
         #     {name: 'Inkpot', color: 'royal purple'},
@@ -61,54 +61,54 @@ module Kiba
         #     {name: 'Old', color: ''},
         #     {name: 'New|Hunter', color: '|pl'}
         # ]
-        # ```
+        # ~~~
         #
         # Using:
         #
-        # ```
+        # ~~~
         # transform Replace::FieldValueWithStaticMapping, source: :color, target: :fullcol, mapping: mapping
-        # ```
+        # ~~~
         #
         # Results in (showing first row only):
         #
-        # ```
+        # ~~~
         # [
         #   {name: 'Lazarus', fullcol: 'coral blue'},
         #   ...
         # ]
-        # ```
+        # ~~~
         #
         # Using:
         #
-        # ```
+        # ~~~
         # transform Replace::FieldValueWithStaticMapping,
         #   source: :color,
         #   target: :fullcol,
         #   mapping: mapping,
         #   delete_source: false
-        # ```
+        # ~~~
         #
         # Results in (showing first row only):
         #
-        # ```
+        # ~~~
         # [
         #   {name: 'Lazarus', color: 'cb', fullcol: 'coral blue'},
         #   ...
         # ]
-        # ```
+        # ~~~
         #
         # Using:
         #
-        # ```
+        # ~~~
         # transform Replace::FieldValueWithStaticMapping,
         #   source: :color,
         #   mapping: mapping,
         #   delim: '|'
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # [
         #   {name: 'Lazarus', color: 'coral blue'},
         #   {name: 'Inkpot', color: 'royal purple'},
@@ -120,11 +120,11 @@ module Kiba
         #   {name: 'Old', color: ''},
         #   {name: 'New|Hunter', color: '|pearl gray'}
         # ]
-        # ```
+        # ~~~
         #
         # The remaining examples use only the following rows as input:
         #
-        # ```
+        # ~~~
         # [
         #   {name: 'Vern', color: 'v'},
         #   {name: 'Clover|Hops', color: 'rp|c'},
@@ -132,21 +132,21 @@ module Kiba
         #   {name: 'Old', color: ''},
         #   {name: 'New|Hunter', color: '|pl'}
         # ]
-        # ```
+        # ~~~
         #
         # Using:
         #
-        # ```
+        # ~~~
         # transform Replace::FieldValueWithStaticMapping,
         #   source: :color,
         #   mapping: mapping,
         #   delim: '|',
         #   fallback_val: :nil
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # [
         #   {name: 'Vern', color: nil},
         #   {name: 'Clover|Hops', color: 'royal purple|'},
@@ -154,21 +154,21 @@ module Kiba
         #   {name: 'Old', color: nil},
         #   {name: 'New|Hunter', color: '|pearl gray'}
         # ]
-        # ```
+        # ~~~
         #
         # Using:
         #
-        # ```
+        # ~~~
         # transform Replace::FieldValueWithStaticMapping,
         #   source: :color,
         #   mapping: mapping,
         #   delim: '|',
         #   fallback_val: 'nope'
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # [
         #   {name: 'Vern', color: 'nope'},
         #   {name: 'Clover|Hops', color: 'royal purple|nope'},
@@ -176,7 +176,7 @@ module Kiba
         #   {name: 'Old', color: 'nope'},
         #   {name: 'New|Hunter', color: 'nope|pearl gray'}
         # ]
-        # ```
+        # ~~~
         class FieldValueWithStaticMapping
           class << self
             def multival_msg

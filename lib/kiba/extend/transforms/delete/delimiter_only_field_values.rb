@@ -22,31 +22,31 @@ module Kiba
         #
         # Source data:
         #
-        # ```
+        # ~~~
         # [
         #   {foo: 'a| b', bar: ' | ', baz: ''},
         #   {foo: nil, bar: '|', baz: ' |b'},
         #   {foo: %NULLVALUE%, bar: "%NULLVALUE%|%NULLVALUE%", baz: "%NULLVALUE%| %NULLVALUE%"},
         #   {foo: 'NULL', bar: "NULL |%NULLVALUE%", baz: "NULL| NULL"},
         # ]
-        # ```
+        # ~~~
         #
         # Setup:
         #
-        # ```
+        # ~~~
         # transform Delete::DelimiterOnlyFieldValues
-        # ```
+        # ~~~
         #
         # Result:
         #
-        # ```
+        # ~~~
         # [
         #   {foo: 'a| b', bar: nil, baz: nil},
         #   {foo: nil, bar: nil, baz: ' |b'},
         #   {foo: %NULLVALUE%, bar: "%NULLVALUE%|%NULLVALUE%", baz: "%NULLVALUE%| %NULLVALUE%"},
         #   {foo: 'NULL', bar: "NULL |%NULLVALUE%", baz: "NULL| NULL"},
         # ]
-        # ```
+        # ~~~
         #
         # ### With non-default `delim` and `treat_as_null` parameters
         #
@@ -56,61 +56,61 @@ module Kiba
         #
         # Source data:
         #
-        # ```
+        # ~~~
         # [
         #   {foo: 'a; b', bar: ' ; ', baz: ''},
         #   {foo: nil, bar: ';', baz: ' ;b'},
         #   {foo: %NULLVALUE%, bar: "%NULLVALUE%;%NULLVALUE%", baz: "%NULLVALUE%; %NULLVALUE%"},
         #   {foo: 'NULL', bar: "NULL ;%NULLVALUE%", baz: "NULL; NULL"},
         # ]
-        # ```
+        # ~~~
         #
         # Setup:
         #
-        # ```
+        # ~~~
         # transform Delete::DelimiterOnlyFieldValues, delim: ';', treat_as_null: 'NULL'
-        # ```
+        # ~~~
         #
         # Result:
         #
-        # ```
+        # ~~~
         # [
         #   {foo: 'a; b', bar: nil, baz: nil},
         #   {foo: nil, bar: nil, baz: ' ;b'},
         #   {foo: %NULLVALUE%, bar: "%NULLVALUE%;%NULLVALUE%", baz: "%NULLVALUE%; %NULLVALUE%"},
         #   {foo: nil, bar: " ;%NULLVALUE%", baz: nil},
         # ]
-        # ```
+        # ~~~
         #
         # ### With Array of `treat_as_null` values
         #
         # Source data:
         #
-        # ```
+        # ~~~
         # [
         #   {foo: 'a| b', bar: ' | ', baz: ''},
         #   {foo: nil, bar: '|', baz: ' |b'},
         #   {foo: %NULLVALUE%, bar: "%NULLVALUE%|%NULLVALUE%", baz: "%NULLVALUE%| %NULLVALUE%"},
         #   {foo: '%NULL%', bar: "%NULL% |%NULLVALUE%", baz: "%NULL%| %NULL%"},
         # ]
-        # ```
+        # ~~~
         #
         # Setup:
         #
-        # ```
+        # ~~~
         # transform Delete::DelimiterOnlyFieldValues, treat_as_null: ['%NULL%', '%NULLVALUE%']
-        # ```
+        # ~~~
         #
         # Result:
         #
-        # ```
+        # ~~~
         # [
         #   {foo: 'a| b', bar: nil, baz: nil},
         #   {foo: nil, bar: nil, baz: ' |b'},
         #   {foo: nil, bar: nil, baz: nil},
         #   {foo: nil, bar: nil, baz: nil}
         # ]
-        # ```
+        # ~~~
         class DelimiterOnlyFieldValues
           include Allable
 

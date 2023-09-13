@@ -16,7 +16,7 @@ module Kiba
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | a              | b    |
         # |----------------+------|
         # | xxxx a thing   | foo  |
@@ -25,17 +25,17 @@ module Kiba
         # | y thing        | xXxX |
         # | xxxxxxx thing  | baz  |
         # |                | nil  |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Delete::FieldValueContainingString, fields: %i[a b], match: 'xxxx'
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | a       | b    |
         # |---------+------|
         # | nil     | foo  |
@@ -44,29 +44,29 @@ module Kiba
         # | y thing | xXxX |
         # | nil     | baz  |
         # |         | nil  |
-        # ```
+        # ~~~
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | a       | b       |
         # |---------+---------|
         # | y thing | xXxXxXy |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Delete::FieldValueContainingString, fields: :b, match: 'xxxx', casesensitive: false
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | a       | b   |
         # |---------+-----|
         # | y thing | nil |
-        # ```
+        # ~~~
         #
         class FieldValueContainingString
           # @param fields [Array<Symbol>,Symbol] field(s) to delete from

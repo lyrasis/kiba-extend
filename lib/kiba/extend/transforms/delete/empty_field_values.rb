@@ -15,7 +15,7 @@ module Kiba
         #
         # Assuming `Kiba::Extend.nullvalue` = `%NULLVALUE%`, and input table:
         #
-        # ```
+        # ~~~
         # | data             |
         # |------------------|
         # | abc;;;d e f      |
@@ -25,17 +25,17 @@ module Kiba
         # | ;;;%NULLVALUE%;; |
         # |                  |
         # | nil              |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Delete::EmptyFieldValues, fields: [:data], sep: ';'
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | data        |
         # |-------------|
         # | abc;d e f   |
@@ -45,17 +45,17 @@ module Kiba
         # | %NULLVALUE% |
         # |             |
         # | nil         |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Delete::EmptyFieldValues, fields: [:data], sep: ';', usenull: true
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | data      |
         # |-----------|
         # | abc;d e f |
@@ -65,7 +65,7 @@ module Kiba
         # |           |
         # |           |
         # | nil       |
-        # ```
+        # ~~~
         #
         class EmptyFieldValues
           include Allable

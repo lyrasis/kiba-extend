@@ -19,7 +19,7 @@ module Kiba
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # [
         #   {person: '', statusa: '', date: '',
         #    personb: '', statusb: '', date2: '',
@@ -37,22 +37,22 @@ module Kiba
         #    personb: 'jill', statusb: 'requested', date2: nil,
         #    personc: 'bill', statusc: 'followup', date3: '2019'}
         # ]
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         #  transform Collapse::FieldsWithCustomFieldmap,
         #    fieldmap: {
         #                :person => %i[person personb personc],
         #                :status => %i[statusc statusa statusb],
         #                :statusdate => %i[date date2 date3]
         #              }, delim: '|'
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # [
         #   {person: '||',
         #    status: '|',
@@ -75,7 +75,7 @@ module Kiba
         #    statusdate: '2020|%NULLVALUE%',
         #   statusc: 'followup', date2: nil, date3: '2019'}
         # ]
-        # ```
+        # ~~~
         #
         # ## NOTE
         # If it is important that the number of values in each target column match in each row, depending on the
@@ -86,37 +86,37 @@ module Kiba
         #
         # If the person column of row 4 were like this:
         #
-        # ```
+        # ~~~
         # | person  | statusa               | date | personb | statusb   | date2 | personc | statusc    | date3 |
         # |---------|-----------------------|------|---------|-----------|-------|---------|------------|-------|
         # | nil     | acknowledged|approved | 2020 | jill    | requested | nil   | bill    | followup   |  2019 |
-        # ```
+        # ~~~
         #
         # Then output would be:
         #
-        # ```
+        # ~~~
         # | person     | status                                   | statusdate |
         # |--------------------------------------------------------------------|
         # | |jill|bill | followup|acknowledged|approved|requested | 2020||2019 |
-        # ```
+        # ~~~
         #
         # Depending on your requirements, this could be problematic because you now have 3 values in person and
         #   statusdate, but 4 values in status
         #
         # Otherwise, you can collapse fields in whatever way you like. For example, used in pipeline as:
         #
-        # ```
+        # ~~~
         #  transform Collapse::FieldsWithCustomFieldmap,
         #    fieldmap: {
         #                :person => %i[person personb personc],
         #                :status => %i[statusa statusb],
         #                :statusdate => %i[date]
         #              }, delim: '|'
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # [
         #   {person: '||',
         #    status: '|',
@@ -139,7 +139,7 @@ module Kiba
         #    statusdate: '2020|%NULLVALUE%',
         #   statusc: 'followup', date2: nil, date3: '2019'}
         # ]
-        # ```
+        # ~~~
         #
         # # More on `fieldmap` parameter
         #

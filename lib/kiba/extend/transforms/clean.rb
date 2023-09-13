@@ -18,7 +18,7 @@ module Kiba
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | type                         |
         # |------------------------------|
         # | Person;unmapped;Organization |
@@ -28,21 +28,21 @@ module Kiba
         # | Person;notmapped             |
         # | %NULLVALUE%;apple            |
         # | oatmeal;%NULLVALUE%          |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         #  transform Clean::AlphabetizeFieldValues,
         #    fields: %i[type],
         #    delim: ';',
         #    usenull: false,
         #    direction: :asc
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | type                         |
         # |------------------------------|
         # | Organization;Person;unmapped |
@@ -52,21 +52,21 @@ module Kiba
         # | notmapped;Person             |
         # | apple;%NULLVALUE%            |
         # | %NULLVALUE%;oatmeal          |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         #  transform Clean::AlphabetizeFieldValues,
         #    fields: %i[type],
         #    delim: ';',
         #    usenull: false,
         #    direction: :desc
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | type                         |
         # |------------------------------|
         # | unmapped;Person;Organization |
@@ -76,21 +76,21 @@ module Kiba
         # | Person;notmapped             |
         # | %NULLVALUE%;apple            |
         # | oatmeal;%NULLVALUE%          |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         #  transform Clean::AlphabetizeFieldValues,
         #    fields: %i[type],
         #    delim: ';',
         #    usenull: true,
         #    direction: :asc
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | type                         |
         # |------------------------------|
         # | Organization;Person;unmapped |
@@ -100,21 +100,21 @@ module Kiba
         # | notmapped;Person             |
         # | apple;%NULLVALUE%            |
         # | oatmeal;%NULLVALUE%          |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         #  transform Clean::AlphabetizeFieldValues,
         #    fields: %i[type],
         #    delim: ';',
         #    usenull: true,
         #    direction: :desc
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | type                         |
         # |------------------------------|
         # | unmapped;Person;Organization |
@@ -124,7 +124,7 @@ module Kiba
         # | Person;notmapped             |
         # | %NULLVALUE%;apple            |
         # | %NULLVALUE%;oatmeal          |
-        # ```
+        # ~~~
         class AlphabetizeFieldValues
           include Kiba::Extend::Transforms::Helpers
 

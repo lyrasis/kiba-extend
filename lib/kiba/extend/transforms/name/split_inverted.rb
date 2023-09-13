@@ -17,13 +17,13 @@ module Kiba
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         #  transform Name::SplitInverted, source: :iname
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # {:iname=>"Smith, Robert", :firstname=>"Robert", :middlename=>nil, :lastname=>"Smith", :suffix=>nil}
         # {:iname=>"Smith, Robert J.", :firstname=>"Robert", :middlename=>"J.", :lastname=>"Smith", :suffix=>nil}
         # {:iname=>"Smith-Jones, Robert J.", :firstname=>"Robert", :middlename=>"J.", :lastname=>"Smith-Jones", :suffix=>nil}
@@ -48,31 +48,31 @@ module Kiba
         # {:iname=>"", :firstname=>nil, :middlename=>nil, :lastname=>nil, :suffix=>nil}
         # {:iname=>nil, :firstname=>nil, :middlename=>nil, :lastname=>nil, :suffix=>nil}
         # {:foo=>"bar", :firstname=>nil, :middlename=>nil, :lastname=>nil, :suffix=>nil}
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         #  transform Name::SplitInverted, source: :iname, targets: %i[f m l s]
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # {:iname=>"Smith, R.J., Sr.", :f=>"R.", :l=>"Smith", :m=>"J.", :s=>"Sr."}
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         #  transform Name::SplitInverted, source: :iname, fallback: :lastname
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # {:iname=>"Smith", :firstname=>nil, :lastname=>"Smith", :middlename=>nil, :suffix=>nil}
-        # ```
+        # ~~~
         class SplitInverted
           # @param source [Symbol] field containing the inverted name to split
           # @param targets [Array<Symbol>] field names for the split name parts. Must be provided in order:

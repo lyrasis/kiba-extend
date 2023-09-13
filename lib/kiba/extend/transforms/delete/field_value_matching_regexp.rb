@@ -13,7 +13,7 @@ module Kiba
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | a              | b    |
         # |----------------+------|
         # | xxxx a thing   | foo  |
@@ -22,17 +22,17 @@ module Kiba
         # | y thing        | xXxX |
         # | xxxxxxx thing  | baz  |
         # |                | nil  |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Delete::FieldValueMatchingRegexp, fields: %i[a b], match: 'xx+'
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | a       | b    |
         # |---------+------|
         # | nil     | foo  |
@@ -41,29 +41,29 @@ module Kiba
         # | y thing | xXxX |
         # | nil     | baz  |
         # |         | nil  |
-        # ```
+        # ~~~
         #
         # Input table:
         #
-        # ```
+        # ~~~
         # | a       | b       |
         # |---------+---------|
         # | an xxxx | xXxXxXy |
-        # ```
+        # ~~~
         #
         # Used in pipeline as:
         #
-        # ```
+        # ~~~
         # transform Delete::FieldValueMatchingRegexp, fields: %i[a b], match: '^xx+', casesensitive: false
-        # ```
+        # ~~~
         #
         # Results in:
         #
-        # ```
+        # ~~~
         # | a       | b   |
         # |---------+-----|
         # | an xxxx | nil |
-        # ```
+        # ~~~
         #
         class FieldValueMatchingRegexp
           # @param fields [Array<Symbol>,Symbol] field(s) to delete from

@@ -81,21 +81,21 @@ The allowable Hash keys, expected Hash value formats, and expectations about the
 
 Examples:
 
-```ruby
+~~~ ruby
 reghash = {
   path: '/path/to/file.csv',
   dest_class: Kiba::Extend::Destinations::CSV,
   dest_special_opts: { initial_headers: %i[objectnumber briefdescription] }
   }
-```
+~~~
 
-```ruby
+~~~ ruby
 reghash = {
   path: '/path/to/long_marc_records.mrc',
   dest_class: Kiba::Extend::Destinations::Marc,
   dest_special_opts: { allow_oversized: true }
   }
-```
+~~~
 
 ### `:creator`
 [Method, Module, Hash] Ruby method that generates this file
@@ -114,7 +114,7 @@ NOTE: The default value for {Kiba::Extend.default_job_method_name} is `:job`. Yo
 
 This is valid because the default `:job` method is present in the module:
 
-```ruby
+~~~ ruby
 # in job definitions
 module Project
   module Table
@@ -133,13 +133,13 @@ reghash = {
   path: '/project/working/objects_prep.csv',
   creator: Project::Table
 }
-```
+~~~
 
 #### `Method` creator example
 
 Default `:job` method not present (or is not the method you need to call for this job).
 
-```ruby
+~~~ ruby
 # in job definitions
 module Project
   module Table
@@ -158,7 +158,7 @@ reghash = {
   path: '/project/working/objects_prep.csv',
   creator: Project::Table.method(:prep)
 }
-```
+~~~
 
 #### `Hash` creator example (since 2.7.2)
 
@@ -167,7 +167,7 @@ Hash keys:
 * `callee`: `Method` or `Module` (as described above)
 * `args`: `Hash` of keyword arguments to pass to the callee
 
-```ruby
+~~~ ruby
 # in your project's registry_data.rb
 module Project
   module RegistryData
@@ -241,7 +241,7 @@ module Project
     end
   end
 end
-```
+~~~
 
 ### `:supplied`
 [true, false] whether the file/data is supplied from outside the ETL
@@ -255,7 +255,7 @@ end
 
 Both of the following are valid:
 
-```ruby
+~~~ ruby
 reghash = {
   path: '/project/working/objects_prep.csv',
   creator: Project::ClientData::ObjectTable.method(:prep)
@@ -265,7 +265,7 @@ reghash = {
   path: '/project/clientData/objects.csv',
   supplied: true
 }
-```
+~~~
 
 ### `:lookup_on`
 [Symbol] column to use as keys in lookup table created from file data

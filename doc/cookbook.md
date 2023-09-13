@@ -20,7 +20,7 @@ I'm going to set this up so that it can easily scale.
 
 First, create a job that accepts parameters. This will be used to isolate your subject field columns so they can be used as data sources. This job will drop rows with no subject values, and deduplicate each individual column, so our eventual combined list is smaller. It will also rename each source field to :subject.
 
-```
+~~~
 # clientproject/lib/client/jobs/subjects/extract_field_vals.rb
 
 module Client
@@ -61,17 +61,17 @@ module Client
     end
   end
 end
-```
+~~~
 
 **TIP: Have multi-values in subject field?**
 
 Put this before you rename the field:
 
-```
+~~~
 transform Explode::RowsFromMultivalField,
   field: field,
   delim: '|'
-```
+~~~
 
 **TIP: Have multi-values in subject field AND you want the unique _subject subdivisions_?**
 
@@ -79,15 +79,15 @@ Note: This creates a 2-column output for each subject field. You get the whole s
 
 Put this before you rename the field:
 
-```
+~~~
 transform Explode::RowsFromMultivalField,
   field: field,
   delim: '|'
-```
+~~~
 
 Put this after you rename the field:
 
-```
+~~~
 transform Copy::Field,
   from: :subject,
   to: :subdivision
@@ -95,7 +95,7 @@ transform Explode::RowsFromMultivalField,
   field: :subdivision,
   delim: '--'
 transform Clean::StripFields, fields: :subdivision
-```
+~~~
 
 Then, change the field you deduplicate on to :subdivision.
 
@@ -103,7 +103,7 @@ Then, change the field you deduplicate on to :subdivision.
 
 Set up your registry stuff to call this job dynamically for whatever sources you give it:
 
-```
+~~~
 Client.registry.namespace("subjects") do
   # Here is where you configure your subject value sources. If you have
   #   followed naming pattern/convention, then you don't have to touch
@@ -144,13 +144,13 @@ Client.registry.namespace("subjects") do
     }
   }
 end
-```
+~~~
 
 ### Write the compile job, taking its sources as an argument
 
 And the compile job you'll call to generate the list of all unique values. This is going to read in all the rows from all the single-column jobs and deduplicate the values:
 
-```
+~~~
 module Client
   module Jobs
     module Subjects
@@ -179,13 +179,13 @@ module Client
     end
   end
 end
-```
+~~~
 
 ## Run the compilation job
 
-```
+~~~
 thor run job subjects__compile
-```
+~~~
 
 Everything else runs automagically in the background.
 
@@ -193,7 +193,7 @@ Well, if any of your subject field sources ends up not writing a CSV file becaus
 
 If your project is more dynamic, you can register your compilation job like:
 
-```
+~~~
   register :compile, {
     path: File.join(Client.datadir, "working", "subjects_compiled.csv"),
     creator: {
@@ -201,9 +201,11 @@ If your project is more dynamic, you can register your compilation job like:
       args: {sources: subject_srcs.select{ |key| Kiba::Extend::Job.output?(key) }}
     }
   }
-```
+~~~
 
 ## Produce `description` field cleanup worksheet for client
+
+**This is old. Perhaps you would instead like to use the [IterativeCleanup mixin](./iterative_cleanup.md) instead?**
 
 Client has >10,000 source records. Their `description` field is free-text, but they have mostly entered data by cutting and pasting from the data entry guide for their previous system. However, some irregularities have crept in that they would like to clean up. Some of these irregularities may have been copied to many records by cloning records in the source system.
 
@@ -213,7 +215,7 @@ We assume there will be other fields they may also want to clean up in a similar
 
 Create a namespace in the registry for cleanup worksheets. Register the output of the job that will create the `description` cleanup worksheet:
 
-```
+~~~
 # in clientproject/lib/client/registry_data.rb
 
 Client.registry.namespace("cleanup_wrkshts") do
@@ -222,11 +224,11 @@ Client.registry.namespace("cleanup_wrkshts") do
     creator: Client::Jobs::CleanupWrkshts::Description
   }
 end
-```
+~~~
 
 Here is the job to create the worksheet. The source data is in CSV format, with >10,000 rows and >30 columns:
 
-```
+~~~
 # clientproject/lib/client/jobs/cleanup_wrkshts/description.rb
 
 module Client
@@ -265,7 +267,7 @@ module Client
     end
   end
 end
-```
+~~~
 
 This produces a CSV with ~500 rows, with all unique `description` field values: a much more manageable cleanup project.
 
@@ -281,13 +283,15 @@ If the existing value needs correction, they should enter the correct value in `
 
 ## Merging client corrections back into migration
 
+**This is old. Perhaps you would instead like to use the [IterativeCleanup mixin](./iterative_cleanup.md) instead?**
+
 This assumes you have set things up as described in the Produce cleanup worksheet for client section above.
 
 Client returns completed worksheet. If it was provided to them as Excel workbook, convert it back to CSV.
 
 Make a registry entry for this supplied file:
 
-```
+~~~
 # in clientproject/lib/client/registry_data.rb
 
 Client.registry.namespace("cleanup_done") do
@@ -296,11 +300,11 @@ Client.registry.namespace("cleanup_done") do
     supplied: true
   }
 end
-```
+~~~
 
 We will also set up a job to keep only the corrections, so our lookup and merge of corrections into the migration can be faster (this gets us neglible gains in most migration projects, but is illustrative...):
 
-```
+~~~
 # clientproject/lib/client/jobs/cleanup_prep/description.rb
 
 module Client
@@ -330,11 +334,11 @@ module Client
     end
   end
 end
-```
+~~~
 
 Make a registry entry for that job's output. We are going to want to look up the corrected `description` value by the original `description` value, so we record that, if used as a lookup source, the output of the `:description_prep` job entry will be indexed/looked up on the `description` field. Our `cleanup_done` registry namespace now looks like:
 
-```
+~~~
 # in clientproject/lib/client/registry_data.rb
 
 Client.registry.namespace("cleanup_done") do
@@ -348,11 +352,11 @@ Client.registry.namespace("cleanup_done") do
 	lookup_on: :description
   }
 end
-```
+~~~
 
 Finally, create and register a job that merges the corrected data:
 
-```
+~~~
 Client.registry.namespace("cleanup_merge") do
   register :field_cleanup, {
     path: File.join(Client.datadir, "working", "cleaned_field_data_merged.csv"),
@@ -406,35 +410,35 @@ module Client
     end
   end
 end
-```
+~~~
 
 This looks a little weird, but if we later add a date cleanup that follows the same pattern, we can merge that in by making two minor changes:
 
-```
+~~~
 lookup: %i[
            cleanup_done__description_prep
            ]
-```
+~~~
 
 becomes:
 
-```
+~~~
 lookup: %i[
            cleanup_done__description_prep
 		   cleanup_done__date_prep
            ]
-```
+~~~
 
 And
 
-```
+~~~
 %i[description].each do |field|
-```
+~~~
 
 becomes:
 
-```
+~~~
 %i[description date].each do |field|
-```
+~~~
 
 If you have a number of cleanup jobs like this, which follow the same pattern, you could also [automate repetitive file registry](https://lyrasis.github.io/kiba-extend/file.common_patterns_tips_tricks.html#automating-repetitive-file-registry) and create the prep job (and maybe worksheet creation job) as [jobs that take parameters](https://lyrasis.github.io/kiba-extend/file.common_patterns_tips_tricks.html#calling-a-job-with-parameters).

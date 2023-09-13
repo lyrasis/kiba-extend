@@ -12,36 +12,36 @@ module Kiba
       #
       # ONE:
       #
-      # ```
+      # ~~~
       # include MultivalPlusDelimDeprecatable
-      # ```
+      # ~~~
       #
       # TWO: Change :initialize params from:
       #
-      # ```
+      # ~~~
       # multival: trueorfalse
-      # ```
+      # ~~~
       #
       # to:
       #
-      # ```
+      # ~~~
       # multival: omitted = true
-      # ```
+      # ~~~
       #
       # THREE: Include in class :initialize method:
       #
-      # ```
+      # ~~~
       #   @multival = set_multival(multival, omitted, self)
-      # ```
+      # ~~~
       #
       # FOUR: **ONLY if current default value for :multival param == true:**
       #   Define a private :multival_default method that returns true:
       #
-      # ```
+      # ~~~
       # def multival_default
       #   true
       # end
-      # ````
+      # ~~~
       #
       # @since 3.3.0
       module MultivalPlusDelimDeprecatable
