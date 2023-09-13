@@ -17,9 +17,11 @@ module Kiba
       # - Each cleanup process must be configured in its own config module.
       # - A config module is a Ruby module that responds to `:config`.
       #
-      # Refer to todo:link Kiba::Tms::AltNumsForObjTypeCleanup as an
-      #   example config module extending this mixin module in a
-      #   simple way. See todo:link Kiba::Tms::PlacesCleanupInitial
+      # Refer to
+      #   [Kiba::Tms::AltNumsForObjTypeCleanup](https://github.com/lyrasis/kiba-tms/blob/main/lib/kiba/tms/alt_nums_for_obj_type_cleanup.rb)
+      #   as an example config module extending this mixin module in a
+      #   simple way. See
+      #   [Kiba::Tms::PlacesCleanupInitial](https://github.com/lyrasis/kiba-tms/blob/main/lib/kiba/tms/places_cleanup_initial.rb)
       #   for a more complex usage with default overrides and custom
       #   pre/post transforms.
       #
