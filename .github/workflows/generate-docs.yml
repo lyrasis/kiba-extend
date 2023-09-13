@@ -16,8 +16,8 @@ jobs:
           ruby-version: "2.7"
       - name: Install yard
         run: gem install yard --no-document
-      - name: Install redcarpet
-        run: gem install redcarpet
+      - name: Install kramdown
+        run: gem install kramdown
       - name: Build YARD Ruby Documentation
         run: yardoc
       - name: Deploy
