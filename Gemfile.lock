@@ -12,7 +12,7 @@ GIT
 PATH
   remote: .
   specs:
-    kiba-extend (4.0.0)
+    kiba-extend (4.0.1)
       activesupport (>= 6, < 8)
       amazing_print (~> 1.4)
       csv (~> 3)
