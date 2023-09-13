@@ -42,6 +42,12 @@ These changes are merged into the `main` branch, but have not been released. Aft
 
 == Releases
 
+=== 4.0.1 - 2023-09-13
+
+* Simplification of requirements for `IterativeCleanup` usage
+* Complete documentation for `IterativeCleanup`
+* Switch to kramdown Markdown conversion for YARD
+
 === 4.0.0 - 2023-09-11
 ==== Breaking
 * Nested `job.show_me`, `job.tell_me`, and `job.verbosity` config settings have been removed. (They were deprecated in 3.2.0)
