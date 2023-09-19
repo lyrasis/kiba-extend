@@ -47,9 +47,33 @@ module Kiba
       include Kiba::Extend::ErrMod
     end
 
+    class JobCannotBeUsedAsLookupError < TypeError
+      include Kiba::Extend::ErrMod
+      def initialize(key, klass, for_job)
+        @key = key
+        @klass = klass
+        @for_job = for_job
+        @msg = ":#{key} cannot be used as a lookup in :#{for_job} because "\
+          "its src_class (#{klass}) does not include "\
+          "Kiba::Extend::Soures::Lookupable"
+        super(msg)
+      end
+
+      def formatted
+        <<~STR
+          JOB FAILED: LOOKUP FILE SETUP ERROR FOR: #{for_job}
+            #{msg}
+        STR
+      end
+
+      private
+
+      attr_reader :key, :klass, :for_job, :type, :msg
+    end
+
     # Exception raised if {Kiba::Extend::FileRegistry} contains no lookup
     #   key for file
-    class NoLookupKeyError < NameError
+    class NoLookupOnError < NameError
       include Kiba::Extend::ErrMod
       # @param filekey [Symbol] key not found in
       #   {Kiba::Extend::FileRegistry}
@@ -72,6 +96,32 @@ module Kiba
       private
 
       attr_reader :filekey, :for_job
+    end
+
+    # Exception raised if the lookup key value for the file is not a Symbol
+    class NonSymbolLookupOnError < TypeError
+      include Kiba::Extend::ErrMod
+      # @param filekey [Symbol] registry entry key having the non-symbol
+      #   `lookup_on` value
+      def initialize(filekey, for_job)
+        @filekey = filekey
+        @for_job = for_job
+        @msg = "The `lookup_on` value in the registry entry hash for "\
+          ":#{filekey} is not a Ruby Symbol. "\
+          "Prepend a : to the field name to fix."
+        super(msg)
+      end
+
+      def formatted
+        <<~STR
+          JOB FAILED: LOOKUP FILE SETUP ERROR FOR: #{for_job}
+            #{msg}
+        STR
+      end
+
+      private
+
+      attr_reader :filekey, :for_job, :msg
     end
 
     class ProjectSettingUndefinedError < StandardError

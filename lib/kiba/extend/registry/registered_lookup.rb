@@ -16,26 +16,6 @@ module Kiba
       class RegisteredLookup < RegisteredFile
         include RequirableFile
 
-        class CannotBeUsedAsLookupError < TypeError
-          include Kiba::Extend::ErrMod
-          def initialize(klass)
-            super("The result of a registry entry with a #{klass} "\
-                  "dest_class cannot be used as source file in a job")
-          end
-        end
-
-        # Exception raised if the lookup key value for the file is not a Symbol
-        class NonSymbolLookupKeyError < TypeError
-          include Kiba::Extend::ErrMod
-          # @param filekey [Symbol] key not found in
-          #   {Kiba::Extend::FileRegistry}
-          def initialize(filekey)
-            msg = "Lookup key found for :#{filekey} is not a Ruby Symbol. "\
-              "Prepend a : to the field name to fix."
-            super(msg)
-          end
-        end
-
         # @param key [Symbol] file key from {FileRegistry} data hash
         # @param data [Hash] file data from {FileRegistry}
         # @param for_job [Symbol] registry entry job key of the job for which
@@ -43,13 +23,15 @@ module Kiba
         def initialize(key:, data:, for_job:)
           super
           unless src_class.respond_to?(:is_lookupable?)
-            fail CannotBeUsedAsLookupError.new(src_class)
+            fail Kiba::Extend::JobCannotBeUsedAsLookupError.new(
+              key, src_class, for_job
+            )
           end
           unless lookup_on
-            fail Kiba::Extend::NoLookupKeyError.new(@key, for_job)
+            fail Kiba::Extend::NoLookupOnError.new(key, for_job)
           end
           unless lookup_on.is_a?(Symbol)
-            fail NonSymbolLookupKeyError, @key
+            fail Kiba::Extend::NonSymbolLookupOnError.new(key, for_job)
           end
         end
 
