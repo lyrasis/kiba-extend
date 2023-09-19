@@ -19,6 +19,18 @@ module WithSetup
     reader: true
 end
 
+module WithoutDryConfig
+  module_function
+
+  def base_job
+    :base__job
+  end
+
+  def fingerprint_fields
+    %i[value type note]
+  end
+end
+
 RSpec.describe Kiba::Extend::Mixins::IterativeCleanup do
   let(:subject) { described_class }
 
@@ -42,6 +54,18 @@ RSpec.describe Kiba::Extend::Mixins::IterativeCleanup do
         expect(mod).to respond_to(:provided_worksheets, :returned_files,
           :returned_file_jobs, :cleanup_done?)
         expect(mod.cleanup_base_name).to eq("with_setup")
+      end
+    end
+
+    context "when extending module has not extended Dry::Configurable" do
+      let(:mod) { WithoutDryConfig }
+
+      it "extends IterativeCleanup" do
+        mod.extend(subject)
+        expect(mod).to be_a(subject)
+        expect(mod).to respond_to(:provided_worksheets, :returned_files,
+          :returned_file_jobs, :cleanup_done?)
+        expect(mod.cleanup_base_name).to eq("without_dry_config")
       end
     end
   end

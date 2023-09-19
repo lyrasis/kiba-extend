@@ -30,6 +30,10 @@ These changes are merged into the `main` branch, but have not been released. Aft
 
 === Breaking
 
+=== Bugfixes
+
+* `IterativeCleanup` now automatically extends its extending module with `Dry::Configurable` prior to defining settings that depend on `Dry::Configurable`. (PR#192)
+
 === Added
 
 === Changed

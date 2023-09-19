@@ -112,6 +112,9 @@ module Kiba
       module IterativeCleanup
         def self.extended(mod)
           check_required_settings(mod)
+          unless mod.is_a?(Dry::Configurable)
+            mod.extend(Dry::Configurable)
+          end
           define_provided_worksheets_setting(mod)
           define_returned_files_setting(mod)
         end
