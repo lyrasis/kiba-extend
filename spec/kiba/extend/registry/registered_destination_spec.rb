@@ -11,7 +11,8 @@ RSpec.describe "Kiba::Extend::Registry::RegisteredDestination" do
   let(:dest) do
     Kiba::Extend::Registry::RegisteredDestination.new(
       key: filekey,
-      data: Kiba::Extend::Registry::FileRegistryEntry.new(data)
+      data: Kiba::Extend::Registry::FileRegistryEntry.new(data),
+      for_job: :foo
     )
   end
   let(:optres) { {csv_options: Kiba::Extend.csvopts} }

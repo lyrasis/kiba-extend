@@ -16,7 +16,7 @@ module Kiba
           end
         end
 
-        def initialize(key:, data:)
+        def initialize(key:, data:, for_job:)
           super
           fail SuppliedEntryError.new(key) if supplied
         end

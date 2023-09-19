@@ -41,24 +41,39 @@ module Kiba
 
         # @param filekey [String, Symbol] file registry key for file to be used as destination
         # @return [Kiba::Extend::Registry::RegisteredDestination]
-        def as_destination(filekey)
-          RegisteredDestination.new(key: filekey, data: lookup(filekey))
+        def as_destination(filekey, for_job)
+          RegisteredDestination.new(
+            key: filekey,
+            data: lookup(filekey),
+            for_job: for_job
+          )
         rescue KeyNotRegisteredError => err
           raise KeyNotRegisteredError.new(err.key, :destination)
         end
 
-        # @param filekey [String, Symbol] file registry key for file to be used as a lookup source
+        # @param filekey [String, Symbol] file registry key for file to be used
+        #   as a lookup source
         # @return [Kiba::Extend::Registry::RegisteredLookup]
-        def as_lookup(filekey)
-          RegisteredLookup.new(key: filekey, data: lookup(filekey))
+        def as_lookup(filekey, for_job)
+          RegisteredLookup.new(
+            key: filekey,
+            data: lookup(filekey),
+            for_job: for_job
+          )
         rescue KeyNotRegisteredError => err
           raise KeyNotRegisteredError.new(err.key, :lookup)
+        rescue Kiba::Extend::NoLookupKeyError => err
+          raise err
         end
 
         # @param filekey [String, Symbol] file registry key for file to be used as a source
         # @return [Kiba::Extend::Registry::RegisteredSource]
-        def as_source(filekey)
-          RegisteredSource.new(key: filekey, data: lookup(filekey))
+        def as_source(filekey, for_job)
+          RegisteredSource.new(
+            key: filekey,
+            data: lookup(filekey),
+            for_job: for_job
+          )
         rescue KeyNotRegisteredError => err
           raise KeyNotRegisteredError.new(err.key, :source)
         end
