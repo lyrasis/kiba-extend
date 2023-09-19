@@ -108,8 +108,9 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Value object representing a file registered in a FileRegistry that is being
-  called into another job as a lookup table</p>
+    <p>Value object representing a file registered in a
+  FileRegistry that is being called into
+  another job as a lookup table</p>
 
 <p>Assumes this file will be used to build a Lookup</p>
 
@@ -134,17 +135,7 @@
   
 </ul>
 
-</div><h2>Defined Under Namespace</h2>
-<p class="children">
-  
-    
-  
-    
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="RegisteredLookup/CannotBeUsedAsLookupError.html" title="Kiba::Extend::Registry::RegisteredLookup::CannotBeUsedAsLookupError (class)">CannotBeUsedAsLookupError</a></span>, <span class='object_link'><a href="RegisteredLookup/NoLookupKeyError.html" title="Kiba::Extend::Registry::RegisteredLookup::NoLookupKeyError (class)">NoLookupKeyError</a></span>, <span class='object_link'><a href="RegisteredLookup/NonSymbolLookupKeyError.html" title="Kiba::Extend::Registry::RegisteredLookup::NonSymbolLookupKeyError (class)">NonSymbolLookupKeyError</a></span>
-    
-  
-</p>
-
+</div>
 
 
 
@@ -190,7 +181,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(key:, data:)  &#x21d2; RegisteredLookup </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(key:, data:, for_job:)  &#x21d2; RegisteredLookup </a>
     
 
     
@@ -266,7 +257,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(key:, data:)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Registry::RegisteredLookup (class)">RegisteredLookup</a></span></tt> 
+    #<strong>initialize</strong>(key:, data:, for_job:)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Registry::RegisteredLookup (class)">RegisteredLookup</a></span></tt> 
   
 
   
@@ -313,6 +304,22 @@
       
     </li>
   
+    <li>
+      
+        <span class='name'>for_job</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>registry entry job key of the job for which
+this registered file is being prepared</p>
+</div>
+      
+    </li>
+  
 </ul>
 
 <p class="tag_title">Since:</p>
@@ -337,28 +344,36 @@
       <pre class="lines">
 
 
-48
-49
-50
-51
-52
-53
-54
-55
-56
-57</pre>
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/registered_lookup.rb', line 48</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/registered_lookup.rb', line 23</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>key:</span><span class='comma'>,</span> <span class='label'>data:</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>key:</span><span class='comma'>,</span> <span class='label'>data:</span><span class='comma'>,</span> <span class='label'>for_job:</span><span class='rparen'>)</span>
   <span class='kw'>super</span>
   <span class='kw'>unless</span> <span class='id identifier rubyid_src_class'>src_class</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:is_lookupable?</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_fail'>fail</span> <span class='const'><span class='object_link'><a href="RegisteredLookup/CannotBeUsedAsLookupError.html" title="Kiba::Extend::Registry::RegisteredLookup::CannotBeUsedAsLookupError (class)">CannotBeUsedAsLookupError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RegisteredLookup/CannotBeUsedAsLookupError.html#initialize-instance_method" title="Kiba::Extend::Registry::RegisteredLookup::CannotBeUsedAsLookupError#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_src_class'>src_class</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_fail'>fail</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../JobCannotBeUsedAsLookupError.html" title="Kiba::Extend::JobCannotBeUsedAsLookupError (class)">JobCannotBeUsedAsLookupError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../JobCannotBeUsedAsLookupError.html#initialize-instance_method" title="Kiba::Extend::JobCannotBeUsedAsLookupError#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+      <span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_src_class'>src_class</span><span class='comma'>,</span> <span class='id identifier rubyid_for_job'>for_job</span>
+    <span class='rparen'>)</span>
   <span class='kw'>end</span>
-  <span class='id identifier rubyid_fail'>fail</span> <span class='const'><span class='object_link'><a href="RegisteredLookup/NoLookupKeyError.html" title="Kiba::Extend::Registry::RegisteredLookup::NoLookupKeyError (class)">NoLookupKeyError</a></span></span><span class='comma'>,</span> <span class='ivar'>@key</span> <span class='kw'>unless</span> <span class='id identifier rubyid_lookup_on'>lookup_on</span>
+  <span class='kw'>unless</span> <span class='id identifier rubyid_lookup_on'>lookup_on</span>
+    <span class='id identifier rubyid_fail'>fail</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../NoLookupOnError.html" title="Kiba::Extend::NoLookupOnError (class)">NoLookupOnError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../NoLookupOnError.html#initialize-instance_method" title="Kiba::Extend::NoLookupOnError#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_for_job'>for_job</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
   <span class='kw'>unless</span> <span class='id identifier rubyid_lookup_on'>lookup_on</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Symbol</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_fail'>fail</span> <span class='const'><span class='object_link'><a href="RegisteredLookup/NonSymbolLookupKeyError.html" title="Kiba::Extend::Registry::RegisteredLookup::NonSymbolLookupKeyError (class)">NonSymbolLookupKeyError</a></span></span><span class='comma'>,</span> <span class='ivar'>@key</span>
+    <span class='id identifier rubyid_fail'>fail</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../NonSymbolLookupOnError.html" title="Kiba::Extend::NonSymbolLookupOnError (class)">NonSymbolLookupOnError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../NonSymbolLookupOnError.html#initialize-instance_method" title="Kiba::Extend::NonSymbolLookupOnError#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_for_job'>for_job</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -426,12 +441,12 @@
       <pre class="lines">
 
 
-61
-62
-63</pre>
+40
+41
+42</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/registered_lookup.rb', line 61</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/registered_lookup.rb', line 40</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_args'>args</span>
   <span class='lbrace'>{</span><span class='label'>file:</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='label'>keycolumn:</span> <span class='id identifier rubyid_lookup_on'>lookup_on</span><span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -481,12 +496,12 @@
       <pre class="lines">
 
 
-65
-66
-67</pre>
+44
+45
+46</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/registered_lookup.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/registered_lookup.rb', line 44</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_klass'>klass</span>
   <span class='id identifier rubyid_src_class'>src_class</span>
@@ -501,7 +516,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Sep 13 19:24:37 2023 by
+  Generated on Tue Sep 19 20:53:22 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-3.1.4).
 </div>
