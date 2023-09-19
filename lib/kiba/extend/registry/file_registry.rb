@@ -62,8 +62,6 @@ module Kiba
           )
         rescue KeyNotRegisteredError => err
           raise KeyNotRegisteredError.new(err.key, :lookup)
-        rescue Kiba::Extend::NoLookupKeyError => err
-          raise err
         end
 
         # @param filekey [String, Symbol] file registry key for file to be used as a source
