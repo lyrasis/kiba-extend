@@ -10,7 +10,8 @@ RSpec.describe "Kiba::Extend::Registry::RegisteredFile" do
   let(:dest) do
     Kiba::Extend::Registry::RegisteredFile.new(
       key: filekey,
-      data: Kiba::Extend::Registry::FileRegistryEntry.new(data)
+      data: Kiba::Extend::Registry::FileRegistryEntry.new(data),
+      for_job: :foo
     )
   end
 
@@ -18,12 +19,7 @@ RSpec.describe "Kiba::Extend::Registry::RegisteredFile" do
     let(:data) { {description: "blah"} }
     it "raises FileNotRegisteredError" do
       msg = "No file path for :#{filekey} is recorded in file registry hash"
-      expect do
-        Kiba::Extend::Registry::RegisteredFile.new(
-          key: filekey,
-          data: Kiba::Extend::Registry::FileRegistryEntry.new(data)
-        )
-      end.to raise_error(
+      expect { dest }.to raise_error(
         Kiba::Extend::Registry::RegisteredFile::NoFilePathError, msg
       )
     end

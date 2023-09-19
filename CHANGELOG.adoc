@@ -40,6 +40,8 @@ These changes are merged into the `main` branch, but have not been released. Aft
 
 === Dev
 
+* Improve error handling for resolution of lookups for individual jobs (PR#191)
+
 == Releases
 
 === 4.0.1 - 2023-09-13

@@ -113,7 +113,7 @@ supplied: true})
     end
 
     describe "as destination" do
-      let(:result) { registry.as_destination(filekey) }
+      let(:result) { registry.as_destination(filekey, :foo) }
 
       context "with job entry key" do
         let(:filekey) { :foo }
@@ -145,14 +145,14 @@ supplied: true})
     end
 
     describe "as lookup" do
-      let(:result) { registry.as_lookup(filekey) }
+      let(:result) { registry.as_lookup(filekey, :foo) }
       it "returns lookup file config" do
         expect(result).to be_a(Kiba::Extend::Registry::RegisteredLookup)
       end
     end
 
     describe "as source" do
-      let(:result) { registry.as_source(filekey) }
+      let(:result) { registry.as_source(filekey, :foo) }
       it "returns source file config" do
         expect(result).to be_a(Kiba::Extend::Registry::RegisteredSource)
       end

@@ -25,6 +25,10 @@ module Kiba
         #   running any necessary jobs to create sources and/or lookups needed
         #   by the job. :run does all of the above and runs the job. Since 4.0.0
         def initialize(files:, transformer:, mode: :run)
+          @destination_key = files[:destination].is_a?(Symbol) ?
+            files[:destination] :
+            files[:destination].first
+
           if caller(2, 5).join(" ")["block in handle_requirements"]
             @dependency = true
           end
@@ -60,6 +64,8 @@ module Kiba
 
         private
 
+        attr_reader :destination_key
+
         def job_data
           @files[:destination].first.data
         end
@@ -70,7 +76,8 @@ module Kiba
           tmp = {}
           files.each do |type, arr|
             meth = Kiba::Extend.registry.method("as_#{type}")
-            tmp[type] = [arr].flatten.map { |key| prep_file(meth, key) }
+            tmp[type] = [arr].flatten
+              .map { |key| prep_file(meth, key, destination_key) }
           end
           tmp
         end
@@ -90,13 +97,15 @@ module Kiba
           end
         end
 
-        def prep_file(meth, key)
-          meth.call(key)
-        # rubocop:todo Layout/LineLength
-        rescue Kiba::Extend::Registry::FileRegistry::KeyNotRegisteredError => err
-          # rubocop:enable Layout/LineLength
-          puts "JOB FAILED: TRANSFORM ERROR IN: #{err.calling_job}"
-          err.info
+        def prep_file(meth, key, for_job)
+          meth.call(key, for_job)
+        rescue Kiba::Extend::ErrMod => err
+          if err.respond_to?(:formatted)
+            puts err.formatted
+          else
+            puts "JOB FAILED: TRANSFORM ERROR IN: #{err.calling_job}"
+            err.info
+          end
           exit
         end
 

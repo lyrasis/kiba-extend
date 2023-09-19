@@ -13,18 +13,29 @@ RSpec.describe "Kiba::Extend::Registry::RegisteredLookup" do
   let(:lookup) do
     Kiba::Extend::Registry::RegisteredLookup.new(
       key: filekey,
-      data: Kiba::Extend::Registry::FileRegistryEntry.new(data)
+      data: Kiba::Extend::Registry::FileRegistryEntry.new(data),
+      for_job: :bar
     )
   end
 
-  context "when called without lookup key" do
+  context "when called without lookup_on value" do
     let(:data) { {path: path} }
-    it "raises NoLookupKeyError" do
-      msg = "No lookup key column found for :#{filekey} in file registry hash"
+    it "raises NoLookupOnError" do
       expect do
         lookup
       end.to raise_error(
-        Kiba::Extend::Registry::RegisteredLookup::NoLookupKeyError, msg
+        Kiba::Extend::NoLookupOnError
+      )
+    end
+  end
+
+  context "when called with non-Symbol lookup_on value" do
+    let(:data) { {path: path, lookup_on: "bar"} }
+    it "raises NonSymbolLookupOnError" do
+      expect do
+        lookup
+      end.to raise_error(
+        Kiba::Extend::NonSymbolLookupOnError
       )
     end
   end
@@ -39,9 +50,12 @@ RSpec.describe "Kiba::Extend::Registry::RegisteredLookup" do
       }
     end
 
-    it "raises CannotBeUsedAsLookupError" do
+    it "raises JobCannotBeUsedAsLookupError" do
       expect { lookup }.to raise_error(
-        Kiba::Extend::Registry::RegisteredLookup::CannotBeUsedAsLookupError
+        Kiba::Extend::JobCannotBeUsedAsLookupError,
+        ":fkey cannot be used as a lookup in :bar because its src_class "\
+          "(Kiba::Extend::Sources::Marc) does not include "\
+          "Kiba::Extend::Soures::Lookupable"
       )
     end
   end
@@ -56,9 +70,12 @@ RSpec.describe "Kiba::Extend::Registry::RegisteredLookup" do
       }
     end
 
-    it "raises CannotBeUsedAsLookupError" do
+    it "raises JobCannotBeUsedAsLookupError" do
       expect { lookup }.to raise_error(
-        Kiba::Extend::Registry::RegisteredLookup::CannotBeUsedAsLookupError
+        Kiba::Extend::JobCannotBeUsedAsLookupError,
+        ":fkey cannot be used as a lookup in :bar because its src_class "\
+          "(Kiba::Extend::Sources::Marc) does not include "\
+          "Kiba::Extend::Soures::Lookupable"
       )
     end
   end

@@ -1,18 +1,19 @@
 # frozen_string_literal: true
 
-# rubocop:todo Layout/LineLength
-
 module Kiba
   module Extend
     module Registry
-      # Abstract base class defining interface for destination files, lookup files, and source files
-      #   returned by {Kiba::Extend::FileRegistry}
+      # Abstract base class defining interface for destination files,
+      #   lookup files, and source files returned by
+      #   {Kiba::Extend::FileRegistry}
       class RegisteredFile
         # Exception raised if no path is given in {FileRegistry} hash
         class NoFilePathError < StandardError
-          # @param filekey [Symbol] key for which a file path was not found in {Kiba::Extend::FileRegistry}
+          # @param filekey [Symbol] key for which a file path was not found in
+          #   {Kiba::Extend::FileRegistry}
           def initialize(filekey)
-            msg = "No file path for :#{filekey} is recorded in file registry hash"
+            msg = "No file path for :#{filekey} is recorded in file registry "\
+              "hash"
             super(msg)
           end
         end
@@ -24,13 +25,17 @@ module Kiba
           :desc
 
         # @param key [Symbol] the {Kiba::Extend::FileRegistry} lookup key
-        # @param data [Hash] the hash of data for the file from {Kiba::Extend::FileRegistry}
-        def initialize(key:, data:)
+        # @param data [Hash] the hash of data for the file from
+        #   {Kiba::Extend::FileRegistry}
+        # @param for_job [Symbol] registry entry job key of the job for which
+        #   this registered file is being prepared
+        def initialize(key:, data:, for_job:)
           raise FileNotRegisteredError, key unless data
           raise NoFilePathError, key if data.errors.keys.any?(:missing_path)
 
           @key = key
           @data = data
+          @for_job = for_job
           @path = data.path.to_s
           @dest_class = data.dest_class
           @dest_opt = data.dest_opt
@@ -47,6 +52,8 @@ module Kiba
 
         private
 
+        attr_reader :for_job
+
         # returns equivalent source class for given destination class
         def dest_src
           src = dest_class.as_source_class
@@ -58,4 +65,3 @@ module Kiba
     end
   end
 end
-# rubocop:enable Layout/LineLength
