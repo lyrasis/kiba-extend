@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:todo Layout/LineLength
-
 require "dry-container"
 
 require_relative "registered_source"
@@ -13,10 +11,12 @@ require_relative "registry_validator"
 module Kiba
   module Extend
     module Registry
-      # Transforms a file_registry hash into an object that can return source, lookup, or destination
-      #   config for that file, for passing to jobs
+      # Transforms a file_registry hash into an object that can return
+      #   source, lookup, or destination config for that file, for
+      #   passing to jobs
       #
-      # An example of a file registry setup in a project can be found at:
+      # An example of a file registry setup in a project can be found
+      #   at:
       #   https://github.com/lyrasis/fwm-cspace-migration/blob/main/lib/fwm/registry_data.rb
       class FileRegistry
         include Dry::Container::Mixin
@@ -39,7 +39,8 @@ module Kiba
           end
         end
 
-        # @param filekey [String, Symbol] file registry key for file to be used as destination
+        # @param filekey [String, Symbol] file registry key for file
+        #    to be used as destination
         # @return [Kiba::Extend::Registry::RegisteredDestination]
         def as_destination(filekey, for_job)
           RegisteredDestination.new(
@@ -64,7 +65,8 @@ module Kiba
           raise KeyNotRegisteredError.new(err.key, :lookup)
         end
 
-        # @param filekey [String, Symbol] file registry key for file to be used as a source
+        # @param filekey [String, Symbol] file registry key for file to be used
+        #   as a source
         # @return [Kiba::Extend::Registry::RegisteredSource]
         def as_source(filekey, for_job)
           RegisteredSource.new(
@@ -81,15 +83,18 @@ module Kiba
           @entries ||= populate_entries
         end
 
-        # Convenience method combining the steps of transforming initial registry entry hashes
-        #   into FileRegistryEntry objects, and then making the registry immutable for the
-        #   rest of the application's run. `:freeze` is from dry-container.
+        # Convenience method combining the steps of transforming
+        #   initial registry entry hashes into FileRegistryEntry
+        #   objects, and then making the registry immutable for the
+        #   rest of the application's run. `:freeze` is from
+        #   dry-container.
         def finalize
           transform
           freeze
         end
 
-        # Transforms registered file hashes into Kiba::Extend::Registry::FileRegistryEntry objects
+        # Transforms registered file hashes into
+        #   {Kiba::Extend::Registry::FileRegistryEntry} objects
         def transform
           each { |key, val| decorate(key) { FileRegistryEntry.new(val) } }
           @entries = populate_entries
@@ -136,7 +141,8 @@ module Kiba
           end.map(&:path).uniq.each do |file|
             next if file.exist?
 
-            puts %(#{Kiba::Extend.warning_label}: Missing supplied file: #{file})
+            puts "#{Kiba::Extend.warning_label}: Missing supplied "\
+              "file: #{file}"
           end
         end
 
@@ -147,4 +153,3 @@ module Kiba
     end
   end
 end
-# rubocop:enable Layout/LineLength
