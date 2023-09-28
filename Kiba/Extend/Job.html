@@ -242,7 +242,8 @@ when run</p>
 24
 25
 26
-27</pre>
+27
+28</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/job.rb', line 16</span>
@@ -256,6 +257,7 @@ when run</p>
   <span class='kw'>return</span> <span class='kw'>true</span> <span class='kw'>if</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span><span class='lparen'>(</span><span class='id identifier rubyid_reg'>reg</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_res'>res</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Command.html" title="Kiba::Extend::Command (module)">Command</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Command/Run.html" title="Kiba::Extend::Command::Run (module)">Run</a></span></span><span class='period'>.</span><span class='id identifier rubyid_job'><span class='object_link'><a href="Command/Run.html#job-class_method" title="Kiba::Extend::Command::Run.job (method)">job</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_jobkey'>jobkey</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>false</span> <span class='kw'>unless</span> <span class='id identifier rubyid_res'>res</span>
 
   <span class='op'>!</span><span class='lparen'>(</span><span class='id identifier rubyid_res'>res</span><span class='period'>.</span><span class='id identifier rubyid_outrows'>outrows</span> <span class='op'>==</span> <span class='int'>0</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
@@ -269,7 +271,7 @@ when run</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Sep 19 21:18:04 2023 by
+  Generated on Thu Sep 28 14:50:45 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-3.1.4).
 </div>
