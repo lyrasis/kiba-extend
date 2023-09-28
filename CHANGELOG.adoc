@@ -33,6 +33,7 @@ These changes are merged into the `main` branch, but have not been released. Aft
 === Bugfixes
 
 * `IterativeCleanup` now automatically extends its extending module with `Dry::Configurable` prior to defining settings that depend on `Dry::Configurable`. (PR#192)
+* `Kiba::Extend::Job.output?` no longer fails if given job returns Nil (PR#194)
 
 === Added
 
