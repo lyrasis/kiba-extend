@@ -36,7 +36,7 @@ RSpec.describe Kiba::Extend::Transforms::Reshape::FieldsToFieldGroupWithConstant
         {a_type: "a thing", a_note: "foo", a_date: "2022"},
         {a_type: "a thing", a_note: nil, a_date: "2022"},
         {a_type: "a thing", a_note: "foo", a_date: nil},
-        {a_type: nil, a_note: nil, a_date: nil},
+        {a_type: nil, a_note: "", a_date: nil},
         {a_type: "a thing|a thing|a thing", a_note: "foo|bar|baz",
          a_date: "2022|2021|%NULLVALUE%"},
         {a_type: "a thing|a thing", a_note: "foo|bar", a_date: nil},
@@ -51,6 +51,35 @@ RSpec.describe Kiba::Extend::Transforms::Reshape::FieldsToFieldGroupWithConstant
 
     it "reshapes the columns as specified" do
       expect(result).to eq(expected)
+    end
+
+    context "with only one fieldmap field" do
+      let(:input) do
+        [
+          {note: "foo"},
+          {note: nil},
+          {note: "bar|foo"}
+        ]
+      end
+      let(:params) do
+        {
+          fieldmap: {note: :a_note},
+          constant_target: :a_type,
+          constant_value: "a thing"
+        }
+      end
+
+      let(:expected) do
+        [
+          {a_type: "a thing", a_note: "foo"},
+          {a_type: nil, a_note: nil},
+          {a_type: "a thing|a thing", a_note: "bar|foo"}
+        ]
+      end
+
+      it "reshapes the columns as specified" do
+        expect(result).to eq(expected)
+      end
     end
   end
 
@@ -69,7 +98,7 @@ RSpec.describe Kiba::Extend::Transforms::Reshape::FieldsToFieldGroupWithConstant
         {a_type: "a thing", a_note: "foo", a_date: "2022"},
         {a_type: "a thing", a_note: nil, a_date: "2022"},
         {a_type: "a thing", a_note: "foo", a_date: nil},
-        {a_type: nil, a_note: nil, a_date: nil},
+        {a_type: nil, a_note: "", a_date: nil},
         {a_type: "a thing|a thing|a thing", a_note: "foo|bar|baz",
          a_date: "2022|2021|%BLANK%"},
         {a_type: "a thing|a thing", a_note: "foo|bar", a_date: nil},
@@ -102,7 +131,7 @@ RSpec.describe Kiba::Extend::Transforms::Reshape::FieldsToFieldGroupWithConstant
         {a_type: "a thing", a_note: "foo", a_date: "2022"},
         {a_type: "a thing", a_note: nil, a_date: "2022"},
         {a_type: "a thing", a_note: "foo", a_date: nil},
-        {a_type: nil, a_note: nil, a_date: nil},
+        {a_type: nil, a_note: "", a_date: nil},
         {a_type: "a thing|a thing|a thing", a_note: "foo|bar|baz",
          a_date: "2022|2021|2021"},
         {a_type: "a thing|a thing", a_note: "foo|bar", a_date: nil},
@@ -135,7 +164,7 @@ RSpec.describe Kiba::Extend::Transforms::Reshape::FieldsToFieldGroupWithConstant
         {a_type: "a thing", a_note: "foo", a_date: "2022"},
         {a_type: "a thing", a_note: nil, a_date: "2022"},
         {a_type: "a thing", a_note: "foo", a_date: nil},
-        {a_type: nil, a_note: nil, a_date: nil},
+        {a_type: nil, a_note: "", a_date: nil},
         {a_type: "a thing|a thing|a thing", a_note: "foo|bar|baz",
          a_date: "2022|2021"},
         {a_type: "a thing|a thing", a_note: "foo|bar", a_date: nil},
@@ -169,7 +198,7 @@ RSpec.describe Kiba::Extend::Transforms::Reshape::FieldsToFieldGroupWithConstant
         {a_type: "a thing", a_note: "foo", a_date: "2022"},
         {a_type: "a thing", a_note: nil, a_date: "2022"},
         {a_type: "a thing", a_note: "foo", a_date: nil},
-        {a_type: nil, a_note: nil, a_date: nil},
+        {a_type: nil, a_note: "", a_date: nil},
         {a_type: "a thing|a thing|a thing", a_note: "foo|bar|baz",
          a_date: "2022|2021|%NULL%"},
         {a_type: "a thing|a thing", a_note: "foo|bar", a_date: nil},
@@ -210,7 +239,7 @@ RSpec.describe Kiba::Extend::Transforms::Reshape::FieldsToFieldGroupWithConstant
       [
         {a_type: "a thing", a_note: "foo"},
         {a_type: nil, a_note: nil},
-        {a_type: nil, a_note: nil},
+        {a_type: nil, a_note: ""},
         {a_type: "a thing|a thing", a_note: "foo|bar"}
       ]
     end
