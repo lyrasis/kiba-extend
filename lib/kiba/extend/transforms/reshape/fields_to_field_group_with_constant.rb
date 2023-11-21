@@ -195,9 +195,15 @@ module Kiba
           # @param uneven_warning [Boolean] whether to print warnings about uneven field groups to STDOUT
           # @param remove_empty_groups [Boolean] whether to run {Delete::EmptyFieldGroups} before finalizing row
           # @param delim [String] used to split/join multiple values in a field
-          def initialize(fieldmap:, constant_target:, constant_value:, delim: Kiba::Extend.delim,
-            replace_empty: true, treat_as_null: Kiba::Extend.nullvalue,
-            enforce_evenness: true, evener: nil, uneven_warning: true,
+          def initialize(fieldmap:,
+            constant_target:,
+            constant_value:,
+            delim: Kiba::Extend.delim,
+            replace_empty: true,
+            treat_as_null: Kiba::Extend.nullvalue,
+            enforce_evenness: true,
+            evener: nil,
+            uneven_warning: true,
             remove_empty_groups: true)
             @renamer = Rename::Fields.new(fieldmap: fieldmap)
             @renamed = fieldmap.values
@@ -211,26 +217,44 @@ module Kiba
             @uneven_warning = uneven_warning
             @remove_empty_groups = remove_empty_groups
 
-            @empty_replacer = Replace::EmptyFieldValues.new(fields: @renamed, value: treat_as_null, delim: delim,
-              treat_as_null: treat_as_null)
-            @even_xform = Clean::EvenFieldValues.new(fields: @renamed, evener: @evener, delim: delim,
-              warn: uneven_warning)
-            @group_cleaner = Delete::EmptyFieldGroups.new(
-              groups: [[renamed,
-                target].flatten], delim: delim, treat_as_null: treat_as_null
+            @empty_replacer = Replace::EmptyFieldValues.new(
+              fields: @renamed,
+              value: treat_as_null,
+              delim: delim,
+              treat_as_null: treat_as_null
             )
-            @value_getter = Helpers::FieldValueGetter.new(fields: renamed,
-              delim: delim, treat_as_null: treat_as_null)
+            @even_xform = Clean::EvenFieldValues.new(
+              fields: @renamed,
+              evener: @evener,
+              delim: delim,
+              warn: uneven_warning
+            )
+            @group_cleaner = Delete::EmptyFieldGroups.new(
+              groups: [[renamed, target].flatten],
+              delim: delim,
+              treat_as_null: treat_as_null
+            )
+            @value_getter = Helpers::FieldValueGetter.new(
+              fields: renamed,
+              delim: delim,
+              treat_as_null: treat_as_null
+            )
           end
 
           # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             renamer.process(row)
-            empty_replacer.process(row) if replace_empty
-            max_vals = find_max_vals(row)
-            add_constant(row, max_vals)
-            even_xform.process(row) if enforce_evenness
-            group_cleaner.process(row) if remove_empty_groups
+            vals = value_getter.call(row)
+            if vals.empty?
+              row[target] = nil
+            else
+              empty_replacer.process(row) if replace_empty
+              max_vals = find_max_vals(row)
+              add_constant(row, max_vals)
+              even_xform.process(row) if enforce_evenness
+              group_cleaner.process(row) if remove_empty_groups
+            end
+            row
           end
 
           private
