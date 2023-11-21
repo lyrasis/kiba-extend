@@ -593,14 +593,38 @@ used. If <code>:value</code>, the <strong>final</strong> value in the field will
 221
 222
 223
-224</pre>
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/reshape/fields_to_field_group_with_constant.rb', line 198</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fieldmap:</span><span class='comma'>,</span> <span class='label'>constant_target:</span><span class='comma'>,</span> <span class='label'>constant_value:</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_delim'><span class='object_link'><a href="../../../Extend.html#delim-class_method" title="Kiba::Extend.delim (method)">delim</a></span></span><span class='comma'>,</span>
-  <span class='label'>replace_empty:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>treat_as_null:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_nullvalue'><span class='object_link'><a href="../../../Extend.html#nullvalue-class_method" title="Kiba::Extend.nullvalue (method)">nullvalue</a></span></span><span class='comma'>,</span>
-  <span class='label'>enforce_evenness:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>evener:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>uneven_warning:</span> <span class='kw'>true</span><span class='comma'>,</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fieldmap:</span><span class='comma'>,</span>
+  <span class='label'>constant_target:</span><span class='comma'>,</span>
+  <span class='label'>constant_value:</span><span class='comma'>,</span>
+  <span class='label'>delim:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_delim'><span class='object_link'><a href="../../../Extend.html#delim-class_method" title="Kiba::Extend.delim (method)">delim</a></span></span><span class='comma'>,</span>
+  <span class='label'>replace_empty:</span> <span class='kw'>true</span><span class='comma'>,</span>
+  <span class='label'>treat_as_null:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_nullvalue'><span class='object_link'><a href="../../../Extend.html#nullvalue-class_method" title="Kiba::Extend.nullvalue (method)">nullvalue</a></span></span><span class='comma'>,</span>
+  <span class='label'>enforce_evenness:</span> <span class='kw'>true</span><span class='comma'>,</span>
+  <span class='label'>evener:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+  <span class='label'>uneven_warning:</span> <span class='kw'>true</span><span class='comma'>,</span>
   <span class='label'>remove_empty_groups:</span> <span class='kw'>true</span><span class='rparen'>)</span>
   <span class='ivar'>@renamer</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Rename.html" title="Kiba::Extend::Transforms::Rename (module)">Rename</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Rename/Fields.html" title="Kiba::Extend::Transforms::Rename::Fields (class)">Fields</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Rename/Fields.html#initialize-instance_method" title="Kiba::Extend::Transforms::Rename::Fields#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fieldmap:</span> <span class='id identifier rubyid_fieldmap'>fieldmap</span><span class='rparen'>)</span>
   <span class='ivar'>@renamed</span> <span class='op'>=</span> <span class='id identifier rubyid_fieldmap'>fieldmap</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span>
@@ -614,16 +638,28 @@ used. If <code>:value</code>, the <strong>final</strong> value in the field will
   <span class='ivar'>@uneven_warning</span> <span class='op'>=</span> <span class='id identifier rubyid_uneven_warning'>uneven_warning</span>
   <span class='ivar'>@remove_empty_groups</span> <span class='op'>=</span> <span class='id identifier rubyid_remove_empty_groups'>remove_empty_groups</span>
 
-  <span class='ivar'>@empty_replacer</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Replace.html" title="Kiba::Extend::Transforms::Replace (module)">Replace</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Replace/EmptyFieldValues.html" title="Kiba::Extend::Transforms::Replace::EmptyFieldValues (class)">EmptyFieldValues</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Replace/EmptyFieldValues.html#initialize-instance_method" title="Kiba::Extend::Transforms::Replace::EmptyFieldValues#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='ivar'>@renamed</span><span class='comma'>,</span> <span class='label'>value:</span> <span class='id identifier rubyid_treat_as_null'>treat_as_null</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='comma'>,</span>
-    <span class='label'>treat_as_null:</span> <span class='id identifier rubyid_treat_as_null'>treat_as_null</span><span class='rparen'>)</span>
-  <span class='ivar'>@even_xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Clean.html" title="Kiba::Extend::Transforms::Clean (module)">Clean</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Clean/EvenFieldValues.html" title="Kiba::Extend::Transforms::Clean::EvenFieldValues (class)">EvenFieldValues</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Clean/EvenFieldValues.html#initialize-instance_method" title="Kiba::Extend::Transforms::Clean::EvenFieldValues#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='ivar'>@renamed</span><span class='comma'>,</span> <span class='label'>evener:</span> <span class='ivar'>@evener</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='comma'>,</span>
-    <span class='label'>warn:</span> <span class='id identifier rubyid_uneven_warning'>uneven_warning</span><span class='rparen'>)</span>
-  <span class='ivar'>@group_cleaner</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Delete.html" title="Kiba::Extend::Transforms::Delete (module)">Delete</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Delete/EmptyFieldGroups.html" title="Kiba::Extend::Transforms::Delete::EmptyFieldGroups (class)">EmptyFieldGroups</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Delete/EmptyFieldGroups.html#initialize-instance_method" title="Kiba::Extend::Transforms::Delete::EmptyFieldGroups#initialize (method)">new</a></span></span><span class='lparen'>(</span>
-    <span class='label'>groups:</span> <span class='lbracket'>[</span><span class='lbracket'>[</span><span class='id identifier rubyid_renamed'>renamed</span><span class='comma'>,</span>
-      <span class='id identifier rubyid_target'>target</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='comma'>,</span> <span class='label'>treat_as_null:</span> <span class='id identifier rubyid_treat_as_null'>treat_as_null</span>
+  <span class='ivar'>@empty_replacer</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Replace.html" title="Kiba::Extend::Transforms::Replace (module)">Replace</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Replace/EmptyFieldValues.html" title="Kiba::Extend::Transforms::Replace::EmptyFieldValues (class)">EmptyFieldValues</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Replace/EmptyFieldValues.html#initialize-instance_method" title="Kiba::Extend::Transforms::Replace::EmptyFieldValues#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+    <span class='label'>fields:</span> <span class='ivar'>@renamed</span><span class='comma'>,</span>
+    <span class='label'>value:</span> <span class='id identifier rubyid_treat_as_null'>treat_as_null</span><span class='comma'>,</span>
+    <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='comma'>,</span>
+    <span class='label'>treat_as_null:</span> <span class='id identifier rubyid_treat_as_null'>treat_as_null</span>
   <span class='rparen'>)</span>
-  <span class='ivar'>@value_getter</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Helpers.html" title="Kiba::Extend::Transforms::Helpers (module)">Helpers</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Helpers/FieldValueGetter.html" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter (class)">FieldValueGetter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Helpers/FieldValueGetter.html#initialize-instance_method" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='id identifier rubyid_renamed'>renamed</span><span class='comma'>,</span>
-    <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='comma'>,</span> <span class='label'>treat_as_null:</span> <span class='id identifier rubyid_treat_as_null'>treat_as_null</span><span class='rparen'>)</span>
+  <span class='ivar'>@even_xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Clean.html" title="Kiba::Extend::Transforms::Clean (module)">Clean</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Clean/EvenFieldValues.html" title="Kiba::Extend::Transforms::Clean::EvenFieldValues (class)">EvenFieldValues</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Clean/EvenFieldValues.html#initialize-instance_method" title="Kiba::Extend::Transforms::Clean::EvenFieldValues#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+    <span class='label'>fields:</span> <span class='ivar'>@renamed</span><span class='comma'>,</span>
+    <span class='label'>evener:</span> <span class='ivar'>@evener</span><span class='comma'>,</span>
+    <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='comma'>,</span>
+    <span class='label'>warn:</span> <span class='id identifier rubyid_uneven_warning'>uneven_warning</span>
+  <span class='rparen'>)</span>
+  <span class='ivar'>@group_cleaner</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Delete.html" title="Kiba::Extend::Transforms::Delete (module)">Delete</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Delete/EmptyFieldGroups.html" title="Kiba::Extend::Transforms::Delete::EmptyFieldGroups (class)">EmptyFieldGroups</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Delete/EmptyFieldGroups.html#initialize-instance_method" title="Kiba::Extend::Transforms::Delete::EmptyFieldGroups#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+    <span class='label'>groups:</span> <span class='lbracket'>[</span><span class='lbracket'>[</span><span class='id identifier rubyid_renamed'>renamed</span><span class='comma'>,</span> <span class='id identifier rubyid_target'>target</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='comma'>,</span>
+    <span class='label'>treat_as_null:</span> <span class='id identifier rubyid_treat_as_null'>treat_as_null</span>
+  <span class='rparen'>)</span>
+  <span class='ivar'>@value_getter</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Helpers.html" title="Kiba::Extend::Transforms::Helpers (module)">Helpers</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Helpers/FieldValueGetter.html" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter (class)">FieldValueGetter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Helpers/FieldValueGetter.html#initialize-instance_method" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+    <span class='label'>fields:</span> <span class='id identifier rubyid_renamed'>renamed</span><span class='comma'>,</span>
+    <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='comma'>,</span>
+    <span class='label'>treat_as_null:</span> <span class='id identifier rubyid_treat_as_null'>treat_as_null</span>
+  <span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -692,25 +728,37 @@ used. If <code>:value</code>, the <strong>final</strong> value in the field will
       <pre class="lines">
 
 
-227
-228
-229
-230
-231
-232
-233
-234</pre>
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/reshape/fields_to_field_group_with_constant.rb', line 227</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/reshape/fields_to_field_group_with_constant.rb', line 245</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_renamer'>renamer</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_empty_replacer'>empty_replacer</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_replace_empty'>replace_empty</span>
-  <span class='id identifier rubyid_max_vals'>max_vals</span> <span class='op'>=</span> <span class='id identifier rubyid_find_max_vals'>find_max_vals</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_add_constant'>add_constant</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='comma'>,</span> <span class='id identifier rubyid_max_vals'>max_vals</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_even_xform'>even_xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_enforce_evenness'>enforce_evenness</span>
-  <span class='id identifier rubyid_group_cleaner'>group_cleaner</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_remove_empty_groups'>remove_empty_groups</span>
+  <span class='id identifier rubyid_vals'>vals</span> <span class='op'>=</span> <span class='id identifier rubyid_value_getter'>value_getter</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_vals'>vals</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
+    <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_target'>target</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>nil</span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_empty_replacer'>empty_replacer</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_replace_empty'>replace_empty</span>
+    <span class='id identifier rubyid_max_vals'>max_vals</span> <span class='op'>=</span> <span class='id identifier rubyid_find_max_vals'>find_max_vals</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_add_constant'>add_constant</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='comma'>,</span> <span class='id identifier rubyid_max_vals'>max_vals</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_even_xform'>even_xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_enforce_evenness'>enforce_evenness</span>
+    <span class='id identifier rubyid_group_cleaner'>group_cleaner</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_remove_empty_groups'>remove_empty_groups</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_row'>row</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -722,7 +770,7 @@ used. If <code>:value</code>, the <strong>final</strong> value in the field will
 </div>
 
       <div id="footer">
-  Generated on Thu Sep 28 14:50:52 2023 by
+  Generated on Tue Nov 21 00:41:50 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-3.1.4).
 </div>
