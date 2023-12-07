@@ -239,7 +239,7 @@
 <span class='kw'>end</span>
 </code></pre>
 
-<h2 id="run-the-compilation-job">Run the compilation job</h2>
+<h3 id="run-the-compilation-job">Run the compilation job</h3>
 
 <pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_thor'>thor</span> <span class='id identifier rubyid_run'>run</span> <span class='id identifier rubyid_job'>job</span> <span class='id identifier rubyid_subjects__compile'>subjects__compile</span>
 </code></pre>
@@ -488,10 +488,78 @@
 </code></pre>
 
 <p>If you have a number of cleanup jobs like this, which follow the same pattern, you could also <a href="https://lyrasis.github.io/kiba-extend/file.common_patterns_tips_tricks.html#automating-repetitive-file-registry">automate repetitive file registry</a> and create the prep job (and maybe worksheet creation job) as <a href="https://lyrasis.github.io/kiba-extend/file.common_patterns_tips_tricks.html#calling-a-job-with-parameters">jobs that take parameters</a>.</p>
+
+<h2 id="split-one-file-into-multiple-files-based-on-a-field-value">Split one file into multiple files based on a field value</h2>
+
+<h3 id="use-case-example">Use case example</h3>
+
+<p>You have provided a client with a list of terms and asked them to categorize terms into different authorities. You end up with something like:</p>
+
+<pre class="code ruby"><code class="ruby">| term                          | authority    |
+|-------------------------------+--------------|
+| Atlantic Ocean                | place        |
+| Atlantis (ship)               | concept      |
+| Automat                       | DROP         |
+| Aux Galeries Lafayette (sign) | DROP         |
+| Avenger (bomber)              | concept      |
+| Avion (mobile home)           | concept      |
+| Awaia Point                   | place        |
+| Azima Odori (dance group)     | organization |
+| Azteca Cafe                   | place        |
+</code></pre>
+
+<p>You need to create separate files for place, concept, and organization terms.</p>
+
+<h3 id="create-a-job-that-takes-arguments">Create a job that takes arguments</h3>
+
+<pre class="code ruby"><code class="ruby"><span class='kw'>module</span> <span class='const'>Project</span>
+  <span class='kw'>module</span> <span class='const'>Jobs</span>
+    <span class='kw'>module</span> <span class='const'>SubjectProper</span>
+      <span class='kw'>module</span> <span class='const'>Split</span>
+        <span class='id identifier rubyid_module_function'>module_function</span>
+
+        <span class='kw'>def</span> <span class='id identifier rubyid_job'>job</span><span class='lparen'>(</span><span class='label'>authority:</span><span class='rparen'>)</span>
+          <span class='const'><span class='object_link'><a href="Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Kiba/Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Kiba/Extend/Jobs.html" title="Kiba::Extend::Jobs (module)">Jobs</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Kiba/Extend/Jobs/Job.html" title="Kiba::Extend::Jobs::Job (class)">Job</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Kiba/Extend/Jobs/BaseJob.html#initialize-instance_method" title="Kiba::Extend::Jobs::BaseJob#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+            <span class='label'>files:</span> <span class='lbrace'>{</span>
+              <span class='label'>source:</span> <span class='symbol'>:subject_proper__categorized</span><span class='comma'>,</span>
+              <span class='label'>destination:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>subject_proper__</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_authority'>authority</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span>
+            <span class='rbrace'>}</span><span class='comma'>,</span>
+            <span class='label'>transformer:</span> <span class='id identifier rubyid_xforms'>xforms</span><span class='lparen'>(</span><span class='id identifier rubyid_authority'>authority</span><span class='rparen'>)</span>
+          <span class='rparen'>)</span>
+        <span class='kw'>end</span>
+
+        <span class='kw'>def</span> <span class='id identifier rubyid_xforms'>xforms</span><span class='lparen'>(</span><span class='id identifier rubyid_authority'>authority</span><span class='rparen'>)</span>
+          <span class='const'><span class='object_link'><a href="Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='period'>.</span><span class='id identifier rubyid_job_segment'><span class='object_link'><a href="Kiba/Extend/Jobs/JobSegmenter.html#job_segment-instance_method" title="Kiba::Extend::Jobs::JobSegmenter#job_segment (method)">job_segment</a></span></span> <span class='kw'>do</span>
+            <span class='id identifier rubyid_transform'>transform</span> <span class='const'>FilterRows</span><span class='op'>::</span><span class='const'>FieldEqualTo</span><span class='comma'>,</span>
+              <span class='label'>action:</span> <span class='symbol'>:keep</span><span class='comma'>,</span>
+              <span class='label'>field:</span> <span class='symbol'>:authority</span><span class='comma'>,</span>
+              <span class='label'>value:</span> <span class='id identifier rubyid_authority'>authority</span>
+          <span class='kw'>end</span>
+        <span class='kw'>end</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+</code></pre>
+
+<h3 id="dynamically-register-the-jobs">Dynamically register the jobs</h3>
+
+<pre class="code ruby"><code class="ruby"><span class='qwords_beg'>%w[</span><span class='tstring_content'>concept</span><span class='words_sep'> </span><span class='tstring_content'>era</span><span class='words_sep'> </span><span class='tstring_content'>event</span><span class='words_sep'> </span><span class='tstring_content'>organization</span><span class='words_sep'> </span><span class='tstring_content'>people</span><span class='words_sep'> </span><span class='tstring_content'>person</span><span class='words_sep'> </span><span class='tstring_content'>place</span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_authority'>authority</span><span class='op'>|</span>
+  <span class='id identifier rubyid_register'>register</span> <span class='id identifier rubyid_authority'>authority</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='comma'>,</span> <span class='lbrace'>{</span>
+    <span class='label'>creator:</span> <span class='lbrace'>{</span>
+      <span class='label'>callee:</span> <span class='const'>Project</span><span class='op'>::</span><span class='const'>Jobs</span><span class='op'>::</span><span class='const'>SubjectProper</span><span class='op'>::</span><span class='const'>Split</span><span class='comma'>,</span>
+      <span class='label'>args:</span> <span class='lbrace'>{</span><span class='label'>authority:</span> <span class='id identifier rubyid_authority'>authority</span><span class='rbrace'>}</span>
+    <span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='label'>path:</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='const'>Project</span><span class='period'>.</span><span class='id identifier rubyid_datadir'>datadir</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>working</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+                    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>subject_proper_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_authority'>authority</span><span class='embexpr_end'>}</span><span class='tstring_content'>.csv</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
+    <span class='label'>tags:</span> <span class='lbracket'>[</span><span class='symbol'>:subject_proper</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_authority'>authority</span><span class='embexpr_end'>}</span><span class='tstring_content'>s</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbracket'>]</span>
+  <span class='rbrace'>}</span>
+<span class='kw'>end</span>
+</code></pre>
 </div></div>
 
       <div id="footer">
-  Generated on Tue Nov 21 00:41:45 2023 by
+  Generated on Thu Dec  7 16:58:40 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-3.1.4).
 </div>
