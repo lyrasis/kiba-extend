@@ -506,15 +506,21 @@ end
 ### Dynamically register the jobs
 
 ~~~
-%w[concept era event organization people person place].each do |authority|
-  register authority.to_sym, {
-    creator: {
-      callee: Project::Jobs::SubjectProper::Split,
-      args: {authority: authority}
-    },
-    path: File.join(Project.datadir, "working",
-                    "subject_proper_#{authority}.csv"),
-    tags: [:subject_proper, "#{authority}s".to_sym]
-  }
+Project.registry.namespace("subject_proper") do
+  ...
+
+  %w[concept era event organization people person place].each do |authority|
+    register authority.to_sym, {
+      creator: {
+        callee: Project::Jobs::SubjectProper::Split,
+        args: {authority: authority}
+      },
+      path: File.join(Project.datadir, "working",
+                      "subject_proper_#{authority}.csv"),
+      tags: [:subject_proper, :split, "#{authority}s".to_sym]
+    }
+  end
 end
 ~~~
+
+Now you can run the split jobs: `thor jobs tagged_and --tags subject_proper split`
