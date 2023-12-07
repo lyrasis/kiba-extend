@@ -186,7 +186,7 @@ module Client
 end
 ~~~
 
-## Run the compilation job
+### Run the compilation job
 
 ~~~
 thor run job subjects__compile
@@ -447,3 +447,74 @@ becomes:
 ~~~
 
 If you have a number of cleanup jobs like this, which follow the same pattern, you could also [automate repetitive file registry](https://lyrasis.github.io/kiba-extend/file.common_patterns_tips_tricks.html#automating-repetitive-file-registry) and create the prep job (and maybe worksheet creation job) as [jobs that take parameters](https://lyrasis.github.io/kiba-extend/file.common_patterns_tips_tricks.html#calling-a-job-with-parameters).
+
+## Split one file into multiple files based on a field value
+
+### Use case example
+
+You have provided a client with a list of terms and asked them to categorize terms into different authorities. You end up with something like:
+
+~~~
+| term                          | authority    |
+|-------------------------------+--------------|
+| Atlantic Ocean                | place        |
+| Atlantis (ship)               | concept      |
+| Automat                       | DROP         |
+| Aux Galeries Lafayette (sign) | DROP         |
+| Avenger (bomber)              | concept      |
+| Avion (mobile home)           | concept      |
+| Awaia Point                   | place        |
+| Azima Odori (dance group)     | organization |
+| Azteca Cafe                   | place        |
+~~~
+
+You need to create separate files for place, concept, and organization terms.
+
+### Create a job that takes arguments
+
+~~~
+module Project
+  module Jobs
+    module SubjectProper
+      module Split
+        module_function
+
+        def job(authority:)
+          Kiba::Extend::Jobs::Job.new(
+            files: {
+              source: :subject_proper__categorized,
+              destination: "subject_proper__#{authority}".to_sym
+            },
+            transformer: xforms(authority)
+          )
+        end
+
+        def xforms(authority)
+          Kiba.job_segment do
+            transform FilterRows::FieldEqualTo,
+              action: :keep,
+              field: :authority,
+              value: authority
+          end
+        end
+      end
+    end
+  end
+end
+~~~
+
+### Dynamically register the jobs
+
+~~~
+%w[concept era event organization people person place].each do |authority|
+  register authority.to_sym, {
+    creator: {
+      callee: Project::Jobs::SubjectProper::Split,
+      args: {authority: authority}
+    },
+    path: File.join(Project.datadir, "working",
+                    "subject_proper_#{authority}.csv"),
+    tags: [:subject_proper, "#{authority}s".to_sym]
+  }
+end
+~~~
