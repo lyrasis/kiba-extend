@@ -544,22 +544,28 @@
 
 <h3 id="dynamically-register-the-jobs">Dynamically register the jobs</h3>
 
-<pre class="code ruby"><code class="ruby"><span class='qwords_beg'>%w[</span><span class='tstring_content'>concept</span><span class='words_sep'> </span><span class='tstring_content'>era</span><span class='words_sep'> </span><span class='tstring_content'>event</span><span class='words_sep'> </span><span class='tstring_content'>organization</span><span class='words_sep'> </span><span class='tstring_content'>people</span><span class='words_sep'> </span><span class='tstring_content'>person</span><span class='words_sep'> </span><span class='tstring_content'>place</span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_authority'>authority</span><span class='op'>|</span>
-  <span class='id identifier rubyid_register'>register</span> <span class='id identifier rubyid_authority'>authority</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='comma'>,</span> <span class='lbrace'>{</span>
-    <span class='label'>creator:</span> <span class='lbrace'>{</span>
-      <span class='label'>callee:</span> <span class='const'>Project</span><span class='op'>::</span><span class='const'>Jobs</span><span class='op'>::</span><span class='const'>SubjectProper</span><span class='op'>::</span><span class='const'>Split</span><span class='comma'>,</span>
-      <span class='label'>args:</span> <span class='lbrace'>{</span><span class='label'>authority:</span> <span class='id identifier rubyid_authority'>authority</span><span class='rbrace'>}</span>
-    <span class='rbrace'>}</span><span class='comma'>,</span>
-    <span class='label'>path:</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='const'>Project</span><span class='period'>.</span><span class='id identifier rubyid_datadir'>datadir</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>working</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
-                    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>subject_proper_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_authority'>authority</span><span class='embexpr_end'>}</span><span class='tstring_content'>.csv</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
-    <span class='label'>tags:</span> <span class='lbracket'>[</span><span class='symbol'>:subject_proper</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_authority'>authority</span><span class='embexpr_end'>}</span><span class='tstring_content'>s</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbracket'>]</span>
-  <span class='rbrace'>}</span>
+<pre class="code ruby"><code class="ruby"><span class='const'>Project</span><span class='period'>.</span><span class='id identifier rubyid_registry'>registry</span><span class='period'>.</span><span class='id identifier rubyid_namespace'>namespace</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>subject_proper</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>do</span>
+  <span class='op'>...</span>
+
+  <span class='qwords_beg'>%w[</span><span class='tstring_content'>concept</span><span class='words_sep'> </span><span class='tstring_content'>era</span><span class='words_sep'> </span><span class='tstring_content'>event</span><span class='words_sep'> </span><span class='tstring_content'>organization</span><span class='words_sep'> </span><span class='tstring_content'>people</span><span class='words_sep'> </span><span class='tstring_content'>person</span><span class='words_sep'> </span><span class='tstring_content'>place</span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_authority'>authority</span><span class='op'>|</span>
+    <span class='id identifier rubyid_register'>register</span> <span class='id identifier rubyid_authority'>authority</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='comma'>,</span> <span class='lbrace'>{</span>
+      <span class='label'>creator:</span> <span class='lbrace'>{</span>
+        <span class='label'>callee:</span> <span class='const'>Project</span><span class='op'>::</span><span class='const'>Jobs</span><span class='op'>::</span><span class='const'>SubjectProper</span><span class='op'>::</span><span class='const'>Split</span><span class='comma'>,</span>
+        <span class='label'>args:</span> <span class='lbrace'>{</span><span class='label'>authority:</span> <span class='id identifier rubyid_authority'>authority</span><span class='rbrace'>}</span>
+      <span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>path:</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='const'>Project</span><span class='period'>.</span><span class='id identifier rubyid_datadir'>datadir</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>working</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+                      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>subject_proper_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_authority'>authority</span><span class='embexpr_end'>}</span><span class='tstring_content'>.csv</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span><span class='comma'>,</span>
+      <span class='label'>tags:</span> <span class='lbracket'>[</span><span class='symbol'>:subject_proper</span><span class='comma'>,</span> <span class='symbol'>:split</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_authority'>authority</span><span class='embexpr_end'>}</span><span class='tstring_content'>s</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rbracket'>]</span>
+    <span class='rbrace'>}</span>
+  <span class='kw'>end</span>
 <span class='kw'>end</span>
 </code></pre>
+
+<p>Now you can run the split jobs: <code>thor jobs tagged_and --tags subject_proper split</code></p>
 </div></div>
 
       <div id="footer">
-  Generated on Thu Dec  7 16:58:40 2023 by
+  Generated on Thu Dec  7 17:03:15 2023 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.34 (ruby-3.1.4).
 </div>
