@@ -7,7 +7,7 @@ module Kiba
         # Performs specified regular expression find/replace in the specified
         #   field(s)
         #
-        # @example Basic match(default)
+        # @example Basic match(default with find passed as String)
         #   # Used in pipeline as:
         #   # transform Clean::RegexpFindReplaceFieldVals,
         #   #   fields: :val,
@@ -30,10 +30,10 @@ module Kiba
         #     {val: 'x files'}
         #   ]
         #   expect(result).to eq(expected)
-        # @example Handles start/end anchors
+        # @example Handles start/end anchors, find passed as Regexp
         #   xform = Clean::RegexpFindReplaceFieldVals.new(
         #     fields: :val,
-        #     find: '^xx+',
+        #     find: /^xx+/,
         #     replace: 'exes'
         #   )
         #   input = [
@@ -52,6 +52,22 @@ module Kiba
         #     find: 'thing',
         #     replace: 'object',
         #     casesensitive: false
+        #   )
+        #   input = [
+        #     {val: 'the thing'},
+        #     {val: 'The Thing'}
+        #   ]
+        #   result = input.map{ |row| xform.process(row) }
+        #   expected = [
+        #     {val: 'the object'},
+        #     {val: 'The object'}
+        #   ]
+        #   expect(result).to eq(expected)
+        # @example Case insensitive regexp
+        #   xform = Clean::RegexpFindReplaceFieldVals.new(
+        #     fields: :val,
+        #     find: /thing/i,
+        #     replace: 'object'
         #   )
         #   input = [
         #     {val: 'the thing'},
@@ -202,8 +218,9 @@ module Kiba
           include Allable
 
           # @param fields [Array<Symbol>,Symbol,nil] in which to find/replace
-          # @param find [String] make sure to use double quotes to match slash
-          #   escaped characters (\n, etc)
+          # @param find [String, Regexp] If passing a string, make
+          #   sure to use double quotes to match slash escaped
+          #   characters (\n, etc)
           # @param replace [String]
           # @param casesensitive [Boolean]
           # @param multival [Boolean]
@@ -215,11 +232,7 @@ module Kiba
           def initialize(fields:, find:, replace:, casesensitive: true,
             multival: false, sep: nil, debug: false)
             @fields = [fields].flatten
-            @find = if casesensitive == true
-              Regexp.new(find)
-            else
-              Regexp.new(find, Regexp::IGNORECASE)
-            end
+            @find = build_pattern(find, casesensitive)
             @replace = replace
             @debug = debug
             @mv = multival
@@ -245,6 +258,19 @@ module Kiba
           private
 
           attr_reader :fields, :find, :replace, :debug, :mv, :sep
+
+          def build_pattern(find, casesensitive)
+            case find
+            when Regexp
+              find
+            when String
+              if casesensitive == true
+                Regexp.new(find)
+              else
+                Regexp.new(find, Regexp::IGNORECASE)
+              end
+            end
+          end
 
           def mv_find_replace(val)
             val.split(sep).map { |v| v.gsub(find, replace) }.join(sep)
