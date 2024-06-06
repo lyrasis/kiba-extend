@@ -60,7 +60,7 @@ module Kiba
       # @return [Array<String>] subfields to be extracted as part of name values
       #   from {meeting_data_tags}
       setting :meeting_name_part_subfields,
-        default: %w[a q b c d g n u],
+        default: %w[a q b c e d g n u],
         reader: true
       # @return [Array<String>] subfields to be extracted as meeting role codes
       #   from {meeting_data_tags}
@@ -70,7 +70,7 @@ module Kiba
       # @return [Array<String>] subfields to be extracted as meeting role terms
       #   from {meeting_data_tags}
       setting :meeting_role_term_subfields,
-        default: %w[e],
+        default: %w[j],
         reader: true
       # @return [Symbol] field in which to write the name value when
       #   converting MARC data to CSV row when extracting names

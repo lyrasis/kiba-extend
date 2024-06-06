@@ -12,14 +12,15 @@ module Kiba
         # @example
         #   # =001  008000714-7
         #   # =711  2\$aAssociation of Child Psychology Annual Conference.
-        #   #          $esponsor$evenue
+        #   #          $eSubcommittee.$jsponsor$jvenue
         #   rec = get_marc_record(index: 6)
         #   xform = Marc::ExtractMeetingNameData.new
         #   results = []
         #   xform.process(rec){ |row| results << row }
         #   expect(results.length).to eq(1)
         #   row = {:sourcefield=>"711",
-        #          :name=>"Association of Child Psychology Annual Conference",
+        #          :name=>"Association of Child Psychology Annual "\
+        #          "Conference. Subcommittee",
         #          :nametype=>"meeting", :role_code=>"",
         #          :role_term=>"sponsor|venue", :marcid=>"008000714-7"}
         #   expect(results.first).to eq(row)
