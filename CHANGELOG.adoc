@@ -32,11 +32,13 @@ These changes are merged into the `main` branch, but have not been released. Aft
 
 === Bugfixes
 
+* Role term and subordinate body subfields for meeting names fixed in default config.
 * `IterativeCleanup` now automatically extends its extending module with `Dry::Configurable` prior to defining settings that depend on `Dry::Configurable`. (PR#192)
 * `Kiba::Extend::Job.output?` no longer fails if given job returns Nil (PR#194)
 * `Reshape::FieldsToFieldGroupWithConstant` constant value is no longer added to rows with no values in the renamed/remapped value fields, when fieldmap length == 1. (PR#195)
 
 === Added
+* `MARC::LanguageCodeLookup` transform
 * Ability to pass `find` argument to `Clean::RegexpFindReplaceFieldVals` as a `Regexp` object. Not sure why this was not the default initial behavior, but here we are! (PR#196)
 
 === Changed

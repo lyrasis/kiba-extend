@@ -6,7 +6,6 @@ module Kiba
   module Extend
     module Transforms
       module Marc
-        # rubocop:disable Layout/LineLength
         # For each occurrence of given field tag, outputs a row with the
         #   following columns: marcid, fullfield, and one column per specified
         #   subfield. If there are more than one occurrnces of a subfield
@@ -24,14 +23,16 @@ module Kiba
         #   xform.process(rec){ |row| results << row }
         #   expect(results.length).to eq(1)
         #   first = {
-        #     :full260=>"260    $a Lahore : $b Zia-ul-Qurʾaan Publications, $c 1996. ",
+        #     :full260=>"260    $a Lahore : $b Zia-ul-Qurʾaan Publications, "\
+        #       "$c 1996. ",
         #     :_260a=>"Lahore :", :_260b=>"Zia-ul-Qurʾaan Publications,",
         #     :_260e=>nil, :_260f=>nil, :marcid=>"008000103-3"
         #   }
         #   expect(results[0]).to eq(first)
         # @example
         #   # =001  008000411-3
-        #   # =260  \\$aSan Jose, Calif. ;$aNew York, NY :$bH.M. Gousha Co.,$c[1986?]
+        #   # =260  \\$aSan Jose, Calif. ;$aNew York, NY :$bH.M. Gousha
+        #   #           Co.,$c[1986?]
         #   rec = get_marc_record(index: 3)
         #   xform = Marc::ExtractSubfieldsFromField.new(
         #     tag: '260', subfields: %w[a b e f]
@@ -40,7 +41,8 @@ module Kiba
         #   xform.process(rec){ |row| results << row }
         #   expect(results.length).to eq(1)
         #   first = {
-        #     :full260=>"260    $a San Jose, Calif. ; $a New York, NY : $b H.M. Gousha Co., $c [1986?] ",
+        #     :full260=>"260    $a San Jose, Calif. ; $a New York, NY : $b "\
+        #       "H.M. Gousha Co., $c [1986?] ",
         #     :_260a=>"San Jose, Calif. ;|New York, NY :",
         #     :_260b=>"H.M. Gousha Co.,",
         #     :_260e=>nil, :_260f=>nil, :marcid=>"008000411-3"
@@ -48,19 +50,22 @@ module Kiba
         #   expect(results[0]).to eq(first)
         #
         # @since 4.0.0
-        # rubocop:enable Layout/LineLength
         class ExtractSubfieldsFromField
           include FieldLinkable
           # @param tag [String] MARC tag from which to extract subfield values
           # @param subfields [Array<String>] subfield codes from which to
           #   extract values
+          # @param indicators [Boolean] whether to output indicators as separate
+          #   field values
+          # @param id_target [Symbol] name of field in which to write id value
           # @param delim [String] used when joining multiple values from
           #   recurring subfield
-          def initialize(tag:, subfields:,
+          def initialize(tag:, subfields:, indicators: false,
             id_target: Kiba::Extend::Marc.id_target_field,
             delim: Kiba::Extend.delim)
             @tag = tag
             @subfields = subfields
+            @indicators = indicators
             @id_target = id_target
             @delim = delim
             @idextractor = Kiba::Extend::Utils::MarcIdExtractor.new
@@ -84,7 +89,8 @@ module Kiba
 
           private
 
-          attr_reader :tag, :subfields, :id_target, :delim, :idextractor
+          attr_reader :tag, :subfields, :indicators, :id_target, :delim,
+            :idextractor
 
           def prepare_rows(fields, idhash)
             fields.map { |fld| prepare_row(fld, idhash) }
@@ -92,6 +98,10 @@ module Kiba
 
           def prepare_row(field, idhash)
             row = {"full#{tag}".to_sym => field.to_s}.merge(idhash)
+            if indicators
+              row[:i1] = field.indicator1
+              row[:i2] = field.indicator2
+            end
             subfields.each do |code|
               row["_#{tag}#{code}".to_sym] = sf_val(field, code)
             end
