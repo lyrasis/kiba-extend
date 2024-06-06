@@ -55,6 +55,7 @@ module Kiba
           # @param tag [String] MARC tag from which to extract subfield values
           # @param subfields [Array<String>] subfield codes from which to
           #   extract values
+          # @param id_target [Symbol] name of field in which to write id value
           # @param delim [String] used when joining multiple values from
           #   recurring subfield
           def initialize(tag:, subfields:,
