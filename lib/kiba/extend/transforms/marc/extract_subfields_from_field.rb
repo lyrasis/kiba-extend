@@ -6,7 +6,6 @@ module Kiba
   module Extend
     module Transforms
       module Marc
-        # rubocop:disable Layout/LineLength
         # For each occurrence of given field tag, outputs a row with the
         #   following columns: marcid, fullfield, and one column per specified
         #   subfield. If there are more than one occurrnces of a subfield
@@ -24,14 +23,16 @@ module Kiba
         #   xform.process(rec){ |row| results << row }
         #   expect(results.length).to eq(1)
         #   first = {
-        #     :full260=>"260    $a Lahore : $b Zia-ul-Qurʾaan Publications, $c 1996. ",
+        #     :full260=>"260    $a Lahore : $b Zia-ul-Qurʾaan Publications, "\
+        #       "$c 1996. ",
         #     :_260a=>"Lahore :", :_260b=>"Zia-ul-Qurʾaan Publications,",
         #     :_260e=>nil, :_260f=>nil, :marcid=>"008000103-3"
         #   }
         #   expect(results[0]).to eq(first)
         # @example
         #   # =001  008000411-3
-        #   # =260  \\$aSan Jose, Calif. ;$aNew York, NY :$bH.M. Gousha Co.,$c[1986?]
+        #   # =260  \\$aSan Jose, Calif. ;$aNew York, NY :$bH.M. Gousha
+        #   #           Co.,$c[1986?]
         #   rec = get_marc_record(index: 3)
         #   xform = Marc::ExtractSubfieldsFromField.new(
         #     tag: '260', subfields: %w[a b e f]
@@ -40,7 +41,8 @@ module Kiba
         #   xform.process(rec){ |row| results << row }
         #   expect(results.length).to eq(1)
         #   first = {
-        #     :full260=>"260    $a San Jose, Calif. ; $a New York, NY : $b H.M. Gousha Co., $c [1986?] ",
+        #     :full260=>"260    $a San Jose, Calif. ; $a New York, NY : $b "\
+        #       "H.M. Gousha Co., $c [1986?] ",
         #     :_260a=>"San Jose, Calif. ;|New York, NY :",
         #     :_260b=>"H.M. Gousha Co.,",
         #     :_260e=>nil, :_260f=>nil, :marcid=>"008000411-3"
@@ -48,7 +50,6 @@ module Kiba
         #   expect(results[0]).to eq(first)
         #
         # @since 4.0.0
-        # rubocop:enable Layout/LineLength
         class ExtractSubfieldsFromField
           include FieldLinkable
           # @param tag [String] MARC tag from which to extract subfield values
