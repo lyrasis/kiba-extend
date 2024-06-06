@@ -55,14 +55,17 @@ module Kiba
           # @param tag [String] MARC tag from which to extract subfield values
           # @param subfields [Array<String>] subfield codes from which to
           #   extract values
+          # @param indicators [Boolean] whether to output indicators as separate
+          #   field values
           # @param id_target [Symbol] name of field in which to write id value
           # @param delim [String] used when joining multiple values from
           #   recurring subfield
-          def initialize(tag:, subfields:,
+          def initialize(tag:, subfields:, indicators: false,
             id_target: Kiba::Extend::Marc.id_target_field,
             delim: Kiba::Extend.delim)
             @tag = tag
             @subfields = subfields
+            @indicators = indicators
             @id_target = id_target
             @delim = delim
             @idextractor = Kiba::Extend::Utils::MarcIdExtractor.new
@@ -86,7 +89,8 @@ module Kiba
 
           private
 
-          attr_reader :tag, :subfields, :id_target, :delim, :idextractor
+          attr_reader :tag, :subfields, :indicators, :id_target, :delim,
+            :idextractor
 
           def prepare_rows(fields, idhash)
             fields.map { |fld| prepare_row(fld, idhash) }
@@ -94,6 +98,10 @@ module Kiba
 
           def prepare_row(field, idhash)
             row = {"full#{tag}".to_sym => field.to_s}.merge(idhash)
+            if indicators
+              row[:i1] = field.indicator1
+              row[:i2] = field.indicator2
+            end
             subfields.each do |code|
               row["_#{tag}#{code}".to_sym] = sf_val(field, code)
             end
