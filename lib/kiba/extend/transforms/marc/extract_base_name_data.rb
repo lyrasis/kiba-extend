@@ -32,10 +32,9 @@ module Kiba
           # @param role_term_subfields [Array<String>] subfields to extract as
           #   role term value
           # @param delim [String] used when joining multiple values in a field
-          def initialize(name_type:,
-            # rubocop:todo Layout/LineLength
-            name_fields:, name_subfields:, role_code_subfields:, role_term_subfields:, id_target: Kiba::Extend::Marc.id_target_field,
-            # rubocop:enable Layout/LineLength
+          def initialize(name_type:, name_fields:, name_subfields:,
+            role_code_subfields:, role_term_subfields:,
+            id_target: Kiba::Extend::Marc.id_target_field,
             name_target: Kiba::Extend::Marc.name_target,
             role_term_target: Kiba::Extend::Marc.role_term_target,
             role_code_target: Kiba::Extend::Marc.role_code_target,
@@ -111,10 +110,11 @@ module Kiba
           end
 
           def role_term(field)
-            field.subfields
+            base = field.subfields
               .select { |sf| role_term_subfields.any?(sf.code) }
               .map { |sf| roletermcleaner.call(sf.value.strip) }
-              .join(Kiba::Extend.delim)
+            base << "uniform title name" if field.codes.include?("t")
+            base.join(Kiba::Extend.delim)
           end
         end
       end

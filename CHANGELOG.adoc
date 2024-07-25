@@ -43,6 +43,8 @@ These changes are merged into the `main` branch, but have not been released. Aft
 
 === Changed
 
+* MARC name extraction transforms now supply "uniform title name" as a role term in fields having a $t value. This change supports the fact that some applications may not wish to treat these values as standalone names, and this makes it possible to filter out these values.
+
 === Deleted
 
 === Deprecated/Will break in a future version
