@@ -26,12 +26,39 @@ module Kiba
         #       {name: ""}
         #     ]
         #   expect(result).to eq(expected)
+        #
+        # @example Treated as multivalue
+        #   # Used in pipeline as:
+        #   # transform Append::ToFieldValue,
+        #   #   field: :name,
+        #   #   value: " (name)",
+        #   #   delim: "|"
+        #
+        #   xform = Append::ToFieldValue.new(field: :name, value: " (name)",
+        #     delim: "|")
+        #   input = [
+        #       {name: "Weddy"},
+        #       {name: "Kernel|Zipper"},
+        #       {name: nil},
+        #       {name: ""}
+        #     ]
+        #   result = input.map{ |row| xform.process(row) }
+        #   expected = [
+        #       {name: "Weddy (name)"},
+        #       {name: "Kernel (name)|Zipper (name)"},
+        #       {name: nil},
+        #       {name: ""}
+        #     ]
+        #   expect(result).to eq(expected)
         class ToFieldValue
           # @param field [Symbol] name of field to append to
           # @param value [String] value to append to existing field values
-          def initialize(field:, value:)
+          # @param delim [String, nil] indicates multivalue delimiter on which
+          #   to split values, if given
+          def initialize(field:, value:, delim: nil)
             @field = field
             @value = value
+            @delim = delim
           end
 
           # @param row [Hash{ Symbol => String, nil }]
@@ -39,7 +66,9 @@ module Kiba
             fv = row.fetch(@field, nil)
             return row if fv.blank?
 
-            row[@field] = "#{fv}#{@value}"
+            vals = @delim ? fv.split(@delim) : [fv]
+            row[@field] = vals.map { |fieldval| "#{fieldval}#{@value}" }
+              .join(@delim)
             row
           end
         end

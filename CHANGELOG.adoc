@@ -40,6 +40,7 @@ These changes are merged into the `main` branch, but have not been released. Aft
 === Added
 * `MARC::LanguageCodeLookup` transform
 * Ability to pass `find` argument to `Clean::RegexpFindReplaceFieldVals` as a `Regexp` object. Not sure why this was not the default initial behavior, but here we are! (PR#196)
+* Ability to pass `delim` argument to `Append::ToFieldValue` to trigger multi-value treatment (PR#200)
 
 === Changed
 
