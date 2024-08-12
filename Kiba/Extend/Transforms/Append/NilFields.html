@@ -94,7 +94,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/kiba/extend/transforms/append.rb</dd>
+    <dd>lib/kiba/extend/transforms/append/nil_fields.rb</dd>
   </dl>
   
 </div>
@@ -104,32 +104,26 @@
     <p>Adds the given field(s) to the row with nil value if they do not
   already exist in row</p>
 
-<h1 id="examples">Examples</h1>
-
-<p>Input table:</p>
-
-<pre class="code ruby"><code class="ruby">| z  |
-|----|
-| zz |
-</code></pre>
-
-<p>Used in pipeline as:</p>
-
-<pre class="code ruby"><code class="ruby"> <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Append.html" title="Kiba::Extend::Transforms::Append (module)">Append</a></span></span><span class='op'>::</span><span class='const'>NilFields</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>a</span><span class='words_sep'> </span><span class='tstring_content'>b</span><span class='words_sep'> </span><span class='tstring_content'>c</span><span class='words_sep'> </span><span class='tstring_content'>z</span><span class='tstring_end'>]</span></span>
-</code></pre>
-
-<p>Results in:</p>
-
-<pre class="code ruby"><code class="ruby">| z  | a   | b   | c   |
-|----+-----+-----+-----|
-| zz | nil | nil | nil |
-</code></pre>
-
 
   </div>
 </div>
 <div class="tags">
   
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+      <pre class="example code"><code><span class='comment'># Used in pipeline as:
+</span><span class='comment'># transform Append::NilFields, fields: %i[a b z]
+</span>
+<span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Append.html" title="Kiba::Extend::Transforms::Append (module)">Append</a></span></span><span class='op'>::</span><span class='const'>NilFields</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Append::NilFields#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>a</span><span class='words_sep'> </span><span class='tstring_content'>b</span><span class='words_sep'> </span><span class='tstring_content'>z</span><span class='tstring_end'>]</span></span><span class='rparen'>)</span>
+<span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='lbrace'>{</span><span class='label'>z:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>zz</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='rbracket'>]</span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='lbrace'>{</span><span class='label'>z:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>zz</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>a:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>b:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='rbracket'>]</span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
+  </div>
+
 
 </div>
 
@@ -245,12 +239,12 @@ names to add</p>
       <pre class="lines">
 
 
-39
-40
-41</pre>
+22
+23
+24</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/append.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/append/nil_fields.rb', line 22</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span><span class='rparen'>)</span>
   <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fields'>fields</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
@@ -307,15 +301,15 @@ names to add</p>
       <pre class="lines">
 
 
-44
-45
-46
-47
-48
-49</pre>
+27
+28
+29
+30
+31
+32</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/append.rb', line 44</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/append/nil_fields.rb', line 27</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='ivar'>@fields</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span>
@@ -333,7 +327,7 @@ names to add</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Jul 25 18:14:25 2024 by
+  Generated on Mon Aug 12 20:21:38 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.36 (ruby-3.1.6).
 </div>

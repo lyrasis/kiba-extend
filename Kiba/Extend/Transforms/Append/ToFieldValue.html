@@ -94,7 +94,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/kiba/extend/transforms/append.rb</dd>
+    <dd>lib/kiba/extend/transforms/append/to_field_value.rb</dd>
   </dl>
   
 </div>
@@ -104,36 +104,66 @@
     <p>Adds the given value to the end of value of the given field. Does not
   affect nil/empty field values</p>
 
-<h1 id="examples">Examples</h1>
-
-<p>Input table:</p>
-
-<pre class="code ruby"><code class="ruby">| name  |
-|-------|
-| Weddy |
-| nil   |
-|       |
-</code></pre>
-
-<p>Used in pipeline as:</p>
-
-<pre class="code ruby"><code class="ruby"> <span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Append.html" title="Kiba::Extend::Transforms::Append (module)">Append</a></span></span><span class='op'>::</span><span class='const'>ToFieldValue</span><span class='comma'>,</span> <span class='label'>field:</span> <span class='symbol'>:name</span><span class='comma'>,</span> <span class='label'>value:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'> (name)</span><span class='tstring_end'>&#39;</span></span>
-</code></pre>
-
-<p>Results in:</p>
-
-<pre class="code ruby"><code class="ruby">| name         |
-|--------------|
-| Weddy (name) |
-| nil          |
-|              |
-</code></pre>
-
 
   </div>
 </div>
 <div class="tags">
   
+  <div class="examples">
+    <p class="tag_title">Examples:</p>
+    
+      
+        <p class="example_title"><div class='inline'><p>Treated as single value (default)</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='comment'># Used in pipeline as:
+</span><span class='comment'># transform Append::ToFieldValue, field: :name, value: &quot; (name)&quot;
+</span>
+<span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Append.html" title="Kiba::Extend::Transforms::Append (module)">Append</a></span></span><span class='op'>::</span><span class='const'>ToFieldValue</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Append::ToFieldValue#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>field:</span> <span class='symbol'>:name</span><span class='comma'>,</span> <span class='label'>value:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> (name)</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+    <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Weddy</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Kernel|Zipper</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span><span class='label'>name:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+  <span class='rbracket'>]</span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+    <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Weddy (name)</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Kernel|Zipper (name)</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span><span class='label'>name:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+  <span class='rbracket'>]</span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
+      
+        <p class="example_title"><div class='inline'><p>Treated as multivalue</p>
+</div></p>
+      
+      <pre class="example code"><code><span class='comment'># Used in pipeline as:
+</span><span class='comment'># transform Append::ToFieldValue,
+</span><span class='comment'>#   field: :name,
+</span><span class='comment'>#   value: &quot; (name)&quot;,
+</span><span class='comment'>#   delim: &quot;|&quot;
+</span>
+<span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Append.html" title="Kiba::Extend::Transforms::Append (module)">Append</a></span></span><span class='op'>::</span><span class='const'>ToFieldValue</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Append::ToFieldValue#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>field:</span> <span class='symbol'>:name</span><span class='comma'>,</span> <span class='label'>value:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> (name)</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+  <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>|</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+    <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Weddy</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Kernel|Zipper</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span><span class='label'>name:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+  <span class='rbracket'>]</span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+    <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Weddy (name)</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Kernel (name)|Zipper (name)</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span><span class='label'>name:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+    <span class='lbrace'>{</span><span class='label'>name:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+  <span class='rbracket'>]</span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
+  </div>
+
 
 </div>
 
@@ -153,7 +183,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(field:, value:)  &#x21d2; ToFieldValue </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(field:, value:, delim: nil)  &#x21d2; ToFieldValue </a>
     
 
     
@@ -207,7 +237,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(field:, value:)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Append::ToFieldValue (class)">ToFieldValue</a></span></tt> 
+    #<strong>initialize</strong>(field:, value:, delim: nil)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Append::ToFieldValue (class)">ToFieldValue</a></span></tt> 
   
 
   
@@ -254,6 +284,24 @@
       
     </li>
   
+    <li>
+      
+        <span class='name'>delim</span>
+      
+      
+        <span class='type'>(<tt>String</tt>, <tt>nil</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>indicates multivalue delimiter on which
+to split values, if given</p>
+</div>
+      
+    </li>
+  
 </ul>
 
 
@@ -263,17 +311,19 @@
       <pre class="lines">
 
 
-85
-86
-87
-88</pre>
+58
+59
+60
+61
+62</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/append.rb', line 85</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/append/to_field_value.rb', line 58</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>field:</span><span class='comma'>,</span> <span class='label'>value:</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>field:</span><span class='comma'>,</span> <span class='label'>value:</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@field</span> <span class='op'>=</span> <span class='id identifier rubyid_field'>field</span>
   <span class='ivar'>@value</span> <span class='op'>=</span> <span class='id identifier rubyid_value'>value</span>
+  <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_delim'>delim</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -327,22 +377,26 @@
       <pre class="lines">
 
 
-91
-92
-93
-94
-95
-96
-97</pre>
+65
+66
+67
+68
+69
+70
+71
+72
+73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/append.rb', line 91</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/append/to_field_value.rb', line 65</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_fv'>fv</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='ivar'>@field</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_row'>row</span> <span class='kw'>if</span> <span class='id identifier rubyid_fv'>fv</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
 
-  <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='ivar'>@field</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_fv'>fv</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='ivar'>@value</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='id identifier rubyid_vals'>vals</span> <span class='op'>=</span> <span class='ivar'>@delim</span> <span class='op'>?</span> <span class='id identifier rubyid_fv'>fv</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='ivar'>@delim</span><span class='rparen'>)</span> <span class='op'>:</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fv'>fv</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='ivar'>@field</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_vals'>vals</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_fieldval'>fieldval</span><span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_fieldval'>fieldval</span><span class='embexpr_end'>}</span><span class='embexpr_beg'>#{</span><span class='ivar'>@value</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+    <span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='ivar'>@delim</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_row'>row</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -355,7 +409,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Jul 25 18:14:25 2024 by
+  Generated on Mon Aug 12 20:21:38 2024 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.36 (ruby-3.1.6).
 </div>
