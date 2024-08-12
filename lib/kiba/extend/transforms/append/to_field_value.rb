@@ -4,33 +4,28 @@ module Kiba
   module Extend
     module Transforms
       module Append
-        # # Examples
+        # Adds the given value to the end of value of the given field. Does not
+        #   affect nil/empty field values
         #
-        # Input table:
+        # @example Treated as single value (default)
+        #   # Used in pipeline as:
+        #   # transform Append::ToFieldValue, field: :name, value: " (name)"
         #
-        # ~~~
-        # | name  |
-        # |-------|
-        # | Weddy |
-        # | nil   |
-        # |       |
-        # ~~~
-        #
-        # Used in pipeline as:
-        #
-        # ~~~
-        #  transform Append::ToFieldValue, field: :name, value: ' (name)'
-        # ~~~
-        #
-        # Results in:
-        #
-        # ~~~
-        # | name         |
-        # |--------------|
-        # | Weddy (name) |
-        # | nil          |
-        # |              |
-        # ~~~
+        #   xform = Append::ToFieldValue.new(field: :name, value: " (name)")
+        #   input = [
+        #       {name: "Weddy"},
+        #       {name: "Kernel|Zipper"},
+        #       {name: nil},
+        #       {name: ""}
+        #     ]
+        #   result = input.map{ |row| xform.process(row) }
+        #   expected = [
+        #       {name: "Weddy (name)"},
+        #       {name: "Kernel|Zipper (name)"},
+        #       {name: nil},
+        #       {name: ""}
+        #     ]
+        #   expect(result).to eq(expected)
         class ToFieldValue
           # @param field [Symbol] name of field to append to
           # @param value [String] value to append to existing field values
