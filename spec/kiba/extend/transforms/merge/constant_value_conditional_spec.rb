@@ -64,9 +64,8 @@ RSpec.describe Kiba::Extend::Transforms::Merge::ConstantValueConditional do
       end
 
       it "raises error" do
-        # rubocop:todo Layout/LineLength
-        msg = %(Condition lambda throws error with row: {:note=>nil, :type=>"acq"})
-        # rubocop:enable Layout/LineLength
+        msg = "Condition lambda throws error with row: {note: nil, "\
+          'type: "acq"}'
         # rubocop:todo Layout/LineLength
         err = Kiba::Extend::Transforms::Merge::ConstantValueConditional::ConditionError
         # rubocop:enable Layout/LineLength
