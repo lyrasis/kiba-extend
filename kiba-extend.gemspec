@@ -42,7 +42,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "activesupport"
   spec.add_dependency "bigdecimal"
   spec.add_dependency "amazing_print"
-  spec.add_dependency "csv", "~> 3"
+  spec.add_dependency "csv"
   # @todo specify 0.14 ?
   spec.add_dependency "dry-configurable", "= 0.15.0"
   # @todo 0.9.0 ?
