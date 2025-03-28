@@ -19,7 +19,7 @@ PATH
       csv
       dry-configurable
       dry-container
-      kiba (~> 4)
+      kiba
       kiba-common (~> 1)
       marc (~> 1.2)
       measured
