@@ -45,8 +45,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "csv"
   spec.add_dependency "dry-configurable"
   spec.add_dependency "dry-container"
-  # @todo 4.0
-  spec.add_dependency "kiba", "~> 4"
+  spec.add_dependency "kiba"
   # @todo 1.5
   spec.add_dependency "kiba-common", "~> 1"
   spec.add_dependency "marc", "~> 1.2"
