@@ -40,6 +40,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "activesupport", ">= 6", "< 8"
+  spec.add_dependency "bigdecimal"
   spec.add_dependency "amazing_print", "~> 1.4"
   spec.add_dependency "csv", "~> 3"
   # @todo specify 0.14 ?
