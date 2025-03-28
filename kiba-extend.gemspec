@@ -44,8 +44,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "amazing_print"
   spec.add_dependency "csv"
   spec.add_dependency "dry-configurable"
-  # @todo 0.9.0 ?
-  spec.add_dependency "dry-container", "~> 0"
+  spec.add_dependency "dry-container"
   # @todo 4.0
   spec.add_dependency "kiba", "~> 4"
   # @todo 1.5
