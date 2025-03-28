@@ -52,8 +52,7 @@ Gem::Specification.new do |spec|
   # @todo 1.5
   spec.add_dependency "kiba-common", "~> 1"
   spec.add_dependency "marc", "~> 1.2"
-  # @todo 2.8.2?
-  spec.add_dependency "measured", "~> 2"
+  spec.add_dependency "measured"
   # @todo 1.2.1?
   spec.add_dependency "thor", "~> 1"
   # @todo can replace with stdlib?
