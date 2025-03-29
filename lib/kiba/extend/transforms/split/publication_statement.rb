@@ -310,11 +310,11 @@ module Kiba
           end
 
           def datefield(type)
-            fieldnames["#{type}date".to_sym]
+            fieldnames[:"#{type}date"]
           end
 
           def placefield(type)
-            fieldnames["#{type}place".to_sym]
+            fieldnames[:"#{type}place"]
           end
         end
       end

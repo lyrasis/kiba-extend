@@ -28,7 +28,7 @@ module Kiba
         # Add lookup tables to the context as methods memoized to instance
         #   variables
         def add_lookup(config)
-          key_as_iv = "@#{config.key}".to_sym
+          key_as_iv = :"@#{config.key}"
 
           context.define_singleton_method(config.key) do
             if instance_variable_defined?(key_as_iv)

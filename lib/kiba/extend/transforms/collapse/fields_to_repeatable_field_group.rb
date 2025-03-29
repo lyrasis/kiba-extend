@@ -363,7 +363,7 @@ module Kiba
           def delete_sources(row)
             targets.each do |target|
               sources.each do |src|
-                row.delete("#{src}_#{target}".to_sym)
+                row.delete(:"#{src}_#{target}")
               end
             end
           end
@@ -376,7 +376,7 @@ module Kiba
           end
 
           def field_name(source, target)
-            "#{source}_#{target}".to_sym
+            :"#{source}_#{target}"
           end
         end
       end

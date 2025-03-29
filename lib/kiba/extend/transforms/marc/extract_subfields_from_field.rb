@@ -97,13 +97,13 @@ module Kiba
           end
 
           def prepare_row(field, idhash)
-            row = {"full#{tag}".to_sym => field.to_s}.merge(idhash)
+            row = {"full#{tag}": field.to_s}.merge(idhash)
             if indicators
               row[:i1] = field.indicator1
               row[:i2] = field.indicator2
             end
             subfields.each do |code|
-              row["_#{tag}#{code}".to_sym] = sf_val(field, code)
+              row[:"_#{tag}#{code}"] = sf_val(field, code)
             end
             row.transform_values { |val| val.blank? ? nil : val }
           end

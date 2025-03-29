@@ -112,7 +112,7 @@ module Kiba
             @keep_empty = keep_empty
           end
 
-          def process(row, &block)
+          def process(row, &)
             rows = []
             other_fields = row.keys - @fields
             other_data = {}
@@ -139,7 +139,7 @@ module Kiba
                 rows << new_row
               end
             end
-            rows.each(&block)
+            rows.each(&)
             nil
           end
         end

@@ -156,7 +156,7 @@ module Kiba
             @empty_equals_nil = empty_equals_nil
             @source_fields = source_fields - [ignore_fields].flatten
             @target_fields = @source_fields.map do |field|
-              "#{prefix}_#{field}".to_sym
+              :"#{prefix}_#{field}"
             end
           end
 

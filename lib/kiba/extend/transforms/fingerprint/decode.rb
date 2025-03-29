@@ -82,7 +82,7 @@ module Kiba
             @delete = delete_fp
             @num_fields = source_fields.length
             @target_fields = source_fields.map do |field|
-              "#{prefix}_#{field}".to_sym
+              :"#{prefix}_#{field}"
             end
             @row_ct = 0
           end

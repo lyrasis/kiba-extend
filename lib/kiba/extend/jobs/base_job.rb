@@ -75,7 +75,7 @@ module Kiba
         def setup_files(files)
           tmp = {}
           files.each do |type, arr|
-            meth = Kiba::Extend.registry.method("as_#{type}")
+            meth = Kiba::Extend.registry.method(:"as_#{type}")
             tmp[type] = [arr].flatten
               .map { |key| prep_file(meth, key, destination_key) }
           end
@@ -123,7 +123,7 @@ module Kiba
 
         def set_row_count_instance_variables
           %w[srcrows outrows].each do |var|
-            varsym = "@#{var}".to_sym
+            varsym = :"@#{var}"
             instance_variable_set(varsym, context.instance_variable_get(varsym))
           end
         end

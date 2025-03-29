@@ -249,7 +249,7 @@ module Kiba
               next unless oldval.is_a?(String)
 
               newval = mv ? mv_find_replace(oldval) : sv_find_replace(oldval)
-              target = debug ? "#{field}_repl".to_sym : field
+              target = debug ? :"#{field}_repl" : field
               row[target] = newval.blank? ? nil : newval
             end
             row
