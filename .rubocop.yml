@@ -1,2 +1,4 @@
 inherit_gem:
   almost_standard: .rubocop.yml
+AllCops:
+  TargetRubyVersion: 3.4
