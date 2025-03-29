@@ -52,5 +52,5 @@ Gem::Specification.new do |spec|
   spec.add_dependency "thor"
   # @todo can replace with stdlib?
   spec.add_dependency "xxhash"
-  spec.add_dependency "zeitwerk", "~> 2.5"
+  spec.add_dependency "zeitwerk"
 end
