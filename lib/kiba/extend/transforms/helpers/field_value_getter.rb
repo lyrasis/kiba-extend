@@ -62,7 +62,9 @@ module Kiba
 
           def replace_nulls_in_val(val)
             null_vals.each do |nv|
-              val.nil? ? val : val = val.gsub(nv, "").strip
+              next if val.nil?
+
+              val = val.gsub(nv, "").strip
             end
             val
           end
