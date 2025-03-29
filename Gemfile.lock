@@ -25,7 +25,7 @@ PATH
       measured
       thor
       xxhash
-      zeitwerk (~> 2.5)
+      zeitwerk
 
 GEM
   remote: https://rubygems.org/
