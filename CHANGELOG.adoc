@@ -32,19 +32,9 @@ These changes are merged into the `main` branch, but have not been released. Aft
 
 === Bugfixes
 
-* Role term and subordinate body subfields for meeting names fixed in default config.
-* `IterativeCleanup` now automatically extends its extending module with `Dry::Configurable` prior to defining settings that depend on `Dry::Configurable`. (PR#192)
-* `Kiba::Extend::Job.output?` no longer fails if given job returns Nil (PR#194)
-* `Reshape::FieldsToFieldGroupWithConstant` constant value is no longer added to rows with no values in the renamed/remapped value fields, when fieldmap length == 1. (PR#195)
-
 === Added
-* `MARC::LanguageCodeLookup` transform
-* Ability to pass `find` argument to `Clean::RegexpFindReplaceFieldVals` as a `Regexp` object. Not sure why this was not the default initial behavior, but here we are! (PR#196)
-* Ability to pass `delim` argument to `Append::ToFieldValue` to trigger multi-value treatment (PR#200)
 
 === Changed
-
-* MARC name extraction transforms now supply "uniform title name" as a role term in fields having a $t value. This change supports the fact that some applications may not wish to treat these values as standalone names, and this makes it possible to filter out these values. (PR#199)
 
 === Deleted
 
@@ -52,9 +42,31 @@ These changes are merged into the `main` branch, but have not been released. Aft
 
 === Dev
 
-* Improve error handling for resolution of lookups for individual jobs (PR#191)
-
 == Releases
+
+=== 4.1.0 - 2025-03-28
+
+==== Bugfixes
+
+* Role term and subordinate body subfields for meeting names fixed in default config.
+* `IterativeCleanup` now automatically extends its extending module with `Dry::Configurable` prior to defining settings that depend on `Dry::Configurable`. (PR#192)
+* `Kiba::Extend::Job.output?` no longer fails if given job returns Nil (PR#194)
+* `Reshape::FieldsToFieldGroupWithConstant` constant value is no longer added to rows with no values in the renamed/remapped value fields, when fieldmap length == 1. (PR#195)
+
+==== Added
+* `MARC::LanguageCodeLookup` transform
+* Ability to pass `find` argument to `Clean::RegexpFindReplaceFieldVals` as a `Regexp` object. Not sure why this was not the default initial behavior, but here we are! (PR#196)
+* Ability to pass `delim` argument to `Append::ToFieldValue` to trigger multi-value treatment (PR#200)
+
+==== Changed
+
+* MARC name extraction transforms now supply "uniform title name" as a role term in fields having a $t value. This change supports the fact that some applications may not wish to treat these values as standalone names, and this makes it possible to filter out these values. (PR#199)
+
+==== Dev
+
+* Improve error handling for resolution of lookups for individual jobs (PR#191)
+* Update dependencies
+* Add support for Ruby 3.4.1
 
 === 4.0.1 - 2023-09-13
 
