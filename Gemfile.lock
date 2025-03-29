@@ -23,7 +23,7 @@ PATH
       kiba-common
       marc
       measured
-      thor (~> 1)
+      thor
       xxhash (~> 0)
       zeitwerk (~> 2.5)
 
@@ -157,7 +157,7 @@ GEM
     standard-performance (1.2.0)
       lint_roller (~> 1.1)
       rubocop-performance (~> 1.19.0)
-    thor (1.2.1)
+    thor (1.3.2)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     unicode-display_width (2.4.2)
