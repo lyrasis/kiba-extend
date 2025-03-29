@@ -46,8 +46,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "dry-configurable"
   spec.add_dependency "dry-container"
   spec.add_dependency "kiba"
-  # @todo 1.5
-  spec.add_dependency "kiba-common", "~> 1"
+  spec.add_dependency "kiba-common"
   spec.add_dependency "marc", "~> 1.2"
   spec.add_dependency "measured"
   # @todo 1.2.1?

@@ -20,7 +20,7 @@ PATH
       dry-configurable
       dry-container
       kiba
-      kiba-common (~> 1)
+      kiba-common
       marc (~> 1.2)
       measured
       thor (~> 1)
