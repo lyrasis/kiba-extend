@@ -142,7 +142,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#process-instance_method" title="#process (instance method)">#<strong>process</strong>(row, &amp;block)  &#x21d2; Object </a>
+      <a href="#process-instance_method" title="#process (instance method)">#<strong>process</strong>(row)  &#x21d2; Object </a>
     
 
     
@@ -230,7 +230,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="process-instance_method">
   
-    #<strong>process</strong>(row, &amp;block)  &#x21d2; <tt>Object</tt> 
+    #<strong>process</strong>(row)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -276,7 +276,7 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/explode.rb', line 115</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='comma'>,</span> <span class='op'>&amp;</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_rows'>rows</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
   <span class='id identifier rubyid_other_fields'>other_fields</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span> <span class='op'>-</span> <span class='ivar'>@fields</span>
   <span class='id identifier rubyid_other_data'>other_data</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
@@ -303,7 +303,7 @@
       <span class='id identifier rubyid_rows'>rows</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_new_row'>new_row</span>
     <span class='kw'>end</span>
   <span class='kw'>end</span>
-  <span class='id identifier rubyid_rows'>rows</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='id identifier rubyid_block'>block</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_rows'>rows</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='rparen'>)</span>
   <span class='kw'>nil</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -316,9 +316,9 @@
 </div>
 
       <div id="footer">
-  Generated on Mon Aug 12 20:21:37 2024 by
+  Generated on Sat Mar 29 01:04:45 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.36 (ruby-3.1.6).
+  0.9.37 (ruby-3.1.7).
 </div>
 
     </div>

@@ -115,11 +115,11 @@
 <div class="tags">
   
   <div class="examples">
-    <p class="tag_title">Examples:</p>
+    <h4 class="tag_title">Examples:</h4>
     
       
-        <p class="example_title"><div class='inline'><p>Keeping matches</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Keeping matches</p>
+</div></h5>
       
       <pre class="example code"><code><span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Marc.html" title="Kiba::Extend::Transforms::Marc (module)">Marc</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../FilterRecords.html" title="Kiba::Extend::Transforms::Marc::FilterRecords (module)">FilterRecords</a></span></span><span class='op'>::</span><span class='const'>WithLambda</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Marc::FilterRecords::WithLambda#initialize (method)">new</a></span></span><span class='lparen'>(</span>
   <span class='label'>action:</span> <span class='symbol'>:keep</span><span class='comma'>,</span>
@@ -132,8 +132,8 @@
 <span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_results'>results</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='int'>2</span><span class='rparen'>)</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Rejecting matches</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Rejecting matches</p>
+</div></h5>
       
       <pre class="example code"><code><span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Marc.html" title="Kiba::Extend::Transforms::Marc (module)">Marc</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../FilterRecords.html" title="Kiba::Extend::Transforms::Marc::FilterRecords (module)">FilterRecords</a></span></span><span class='op'>::</span><span class='const'>WithLambda</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Marc::FilterRecords::WithLambda#initialize (method)">new</a></span></span><span class='lparen'>(</span>
   <span class='label'>action:</span> <span class='symbol'>:reject</span><span class='comma'>,</span>
@@ -146,8 +146,8 @@
 <span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_results'>results</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='int'>8</span><span class='rparen'>)</span></code></pre>
     
       
-        <p class="example_title"><div class='inline'><p>Given non-Boolean-returning lambda</p>
-</div></p>
+        <h5 class="example_title"><div class='inline'><p>Given non-Boolean-returning lambda</p>
+</div></h5>
       
       <pre class="example code"><code><span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Marc.html" title="Kiba::Extend::Transforms::Marc (module)">Marc</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../FilterRecords.html" title="Kiba::Extend::Transforms::Marc::FilterRecords (module)">FilterRecords</a></span></span><span class='op'>::</span><span class='const'>WithLambda</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Marc::FilterRecords::WithLambda#initialize (method)">new</a></span></span><span class='lparen'>(</span>
   <span class='label'>action:</span> <span class='symbol'>:reject</span><span class='comma'>,</span>
@@ -485,9 +485,9 @@ MARC record), that returns true or false</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Aug 12 20:21:39 2024 by
+  Generated on Sat Mar 29 01:04:48 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.36 (ruby-3.1.6).
+  0.9.37 (ruby-3.1.7).
 </div>
 
     </div>
