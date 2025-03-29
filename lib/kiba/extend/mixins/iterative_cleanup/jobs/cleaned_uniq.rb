@@ -82,7 +82,7 @@ module Kiba
               if field.to_s.end_with?("s")
                 [field, field]
               else
-                ["#{field}s".to_sym, field]
+                [:"#{field}s", field]
               end
             end
             private :field_mapping

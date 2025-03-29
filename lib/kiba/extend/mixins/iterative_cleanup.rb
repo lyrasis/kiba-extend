@@ -290,7 +290,7 @@ module Kiba
         # @note Do not override
         def returned_file_jobs
           returned_files.map.with_index do |filename, idx|
-            "#{cleanup_base_name}__file_returned_#{idx}".to_sym
+            :"#{cleanup_base_name}__file_returned_#{idx}"
           end
         end
 
@@ -324,7 +324,7 @@ module Kiba
         #
         # @note Do not override
         def base_job_cleaned_job_key
-          "#{cleanup_base_name}__base_job_cleaned".to_sym
+          :"#{cleanup_base_name}__base_job_cleaned"
         end
 
         # @return [Symbol] the registry entry job key for the job that
@@ -332,14 +332,14 @@ module Kiba
         #
         # @note Do not override
         def cleaned_uniq_job_key
-          "#{cleanup_base_name}__cleaned_uniq".to_sym
+          :"#{cleanup_base_name}__cleaned_uniq"
         end
 
         # @return [Symbol] the registry entry job key for the worksheet prep job
         #
         # @note Do not override
         def worksheet_job_key
-          "#{cleanup_base_name}__worksheet".to_sym
+          :"#{cleanup_base_name}__worksheet"
         end
 
         # @return [Symbol] the registry entry job key for the compiled
@@ -347,7 +347,7 @@ module Kiba
         #
         # @note Do not override
         def returned_compiled_job_key
-          "#{cleanup_base_name}__returned_compiled".to_sym
+          :"#{cleanup_base_name}__returned_compiled"
         end
 
         # @return [Symbol] the registry entry job key for the compiled
@@ -355,11 +355,11 @@ module Kiba
         #
         # @note Do not override
         def corrections_job_key
-          "#{cleanup_base_name}__corrections".to_sym
+          :"#{cleanup_base_name}__corrections"
         end
 
         def final_job_key
-          "#{cleanup_base_name}__final".to_sym
+          :"#{cleanup_base_name}__final"
         end
 
         # Appends "s" to module's `orig_values_identifier`. Used to
@@ -367,7 +367,7 @@ module Kiba
         #   value, while clarifying that any collated field in output
         #   is collated (not expected to be a single value.
         def collated_orig_values_id_field
-          "#{orig_values_identifier}s".to_sym
+          :"#{orig_values_identifier}s"
         end
 
         def self.check_required_settings(mod)

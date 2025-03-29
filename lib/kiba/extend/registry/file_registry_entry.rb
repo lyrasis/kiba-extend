@@ -104,7 +104,7 @@ module Kiba
               val = val.is_a?(Proc) ? val.call : val
             end
 
-            instance_variable_set("@#{key}".to_sym, val)
+            instance_variable_set(:"@#{key}", val)
           else
             @warnings << ":#{key} is not an allowed FileRegistryEntry setting"
           end

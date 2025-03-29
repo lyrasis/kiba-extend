@@ -13,7 +13,7 @@ module Kiba
             @field = fvals[1].to_sym
             @row = fvals[0]
             val = h[@row].fetch(@field, "")
-            @result = (val.nil? || val.empty?)
+            @result = val.nil? || val.empty?
           end
         end
       end

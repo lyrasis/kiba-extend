@@ -102,7 +102,7 @@ module Kiba
             @sep = sep
             @del = delete_source
             @max = max_segments
-            @collapser = method("process_#{collapse_on}_collapse")
+            @collapser = method(:"process_#{collapse_on}_collapse")
             @warn = !warnfield.blank?
             @warnfield = warnfield || :warning
             @warnvalue = "max_segments less than total number of split segments"
@@ -151,15 +151,15 @@ module Kiba
           end
 
           def first_field
-            "#{field}0".to_sym
+            :"#{field}0"
           end
 
           def last_field
-            "#{field}#{max - 1}".to_sym
+            :"#{field}#{max - 1}"
           end
 
           def new_fields
-            (0..(max - 1)).entries.map { |entry| "#{field}#{entry}".to_sym }
+            (0..(max - 1)).entries.map { |entry| :"#{field}#{entry}" }
           end
 
           def process_left_collapse(valsplit, row)
@@ -167,7 +167,7 @@ module Kiba
 
             ind = max - 1
             to_iterate(valsplit).times do
-              row["#{field}#{ind}".to_sym] = valsplit.pop
+              row[:"#{field}#{ind}"] = valsplit.pop
               ind -= 1
             end
             row[first_field] = valsplit.join(sep)
@@ -178,7 +178,7 @@ module Kiba
 
             ind = 0
             to_iterate(valsplit).times do
-              row["#{field}#{ind}".to_sym] = valsplit.shift
+              row[:"#{field}#{ind}"] = valsplit.shift
               ind += 1
             end
             row[last_field] = valsplit.join(sep)
@@ -186,7 +186,7 @@ module Kiba
 
           def process_splits(valsplit, row)
             valsplit.each_with_index do |val, i|
-              row["#{field}#{i}".to_sym] = val
+              row[:"#{field}#{i}"] = val
             end
           end
 

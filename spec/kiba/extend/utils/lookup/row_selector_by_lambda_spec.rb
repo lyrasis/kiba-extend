@@ -52,7 +52,7 @@ RSpec.describe Kiba::Extend::Utils::Lookup::RowSelectorByLambda do
     context "when using orig only" do
       let(:mergerows) { [] }
       let(:conditions) do
-        ->(orig, merge) { return [orig] if merge.empty? }
+        ->(orig, merge) { [orig] if merge.empty? }
       end
 
       it "returns expected row(s)" do
