@@ -17,7 +17,7 @@ group :development do
   gem "byebug", "~>11.0"
   gem "pry", "~> 0.14"
   gem "rake", "~> 13.0"
-  gem "almost_standard", github: "kspurgin/almost_standard", branch: "main"
+  gem "almost_standard", github: "kspurgin/almost_standard", tag: "1.0.1"
 end
 
 group :test do
