@@ -104,17 +104,23 @@
     
   <div class="note notetag">
     <strong>Note:</strong>
-    <div class='inline'><p>This transform runs in memory, so for very large sources, it may take a long time or fail. In this
-case, use a combination of <span class='object_link'><a href="Flag.html" title="Kiba::Extend::Transforms::Deduplicate::Flag (class)">Flag</a></span> and <span class='object_link'><a href="../FilterRows/FieldEqualTo.html" title="Kiba::Extend::Transforms::FilterRows::FieldEqualTo (class)">FilterRows::FieldEqualTo</a></span></p>
+    <div class='inline'><p>This transform runs in memory, so for very large
+sources, it may take a long time or fail. In this case,
+use a combination of <span class='object_link'><a href="Flag.html" title="Kiba::Extend::Transforms::Deduplicate::Flag (class)">Flag</a></span> and
+<span class='object_link'><a href="../FilterRows/FieldEqualTo.html" title="Kiba::Extend::Transforms::FilterRows::FieldEqualTo (class)">FilterRows::FieldEqualTo</a></span></p>
 </div>
   </div>
 
-<p>Given a field on which to deduplicate, removes duplicate rows from table</p>
+<p>Given a field on which to deduplicate, removes duplicate
+  rows from table</p>
 
-<p>Keeps the row with the first instance of the value in the deduplicating field</p>
+<p>Keeps the row with the first instance of the value in the
+  deduplicating field</p>
 
-<p>Tip: Use <span class='object_link'><a href="../CombineValues/FromFieldsWithDelimiter.html" title="Kiba::Extend::Transforms::CombineValues::FromFieldsWithDelimiter (class)">CombineValues::FromFieldsWithDelimiter</a></span> or
-  <span class='object_link'><a href="../CombineValues/FullRecord.html" title="Kiba::Extend::Transforms::CombineValues::FullRecord (class)">CombineValues::FullRecord</a></span> to create a combined field on which to deduplicate</p>
+<p>Tip: Use
+  <span class='object_link'><a href="../CombineValues/FromFieldsWithDelimiter.html" title="Kiba::Extend::Transforms::CombineValues::FromFieldsWithDelimiter (class)">CombineValues::FromFieldsWithDelimiter</a></span>
+  or <span class='object_link'><a href="../CombineValues/FullRecord.html" title="Kiba::Extend::Transforms::CombineValues::FullRecord (class)">CombineValues::FullRecord</a></span>
+  to create a combined field on which to deduplicate</p>
 
 <p>Input table:</p>
 
@@ -124,6 +130,7 @@ case, use a combination of <span class='object_link'><a href="Flag.html" title="
 | c   | d   | g   | c d       |
 | c   | e   | h   | c e       |
 | c   | d   | i   | c d       |
+| c   | d   | j   | c d       |
 </code></pre>
 
 <p>Used in pipeline as:</p>
@@ -138,6 +145,38 @@ case, use a combination of <span class='object_link'><a href="Flag.html" title="
 | a   | b   | f   |
 | c   | d   | g   |
 | c   | e   | h   |
+</code></pre>
+
+<p>Used in pipeline as:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Deduplicate.html" title="Kiba::Extend::Transforms::Deduplicate (module)">Deduplicate</a></span></span><span class='op'>::</span><span class='const'>Table</span><span class='comma'>,</span> <span class='label'>field:</span> <span class='symbol'>:combined</span><span class='comma'>,</span> <span class='label'>delete_field:</span> <span class='kw'>true</span><span class='comma'>,</span>
+  <span class='label'>example_source_field:</span> <span class='symbol'>:baz</span><span class='comma'>,</span> <span class='label'>max_examples:</span> <span class='int'>2</span><span class='comma'>,</span>
+  <span class='label'>example_target_field:</span> <span class='symbol'>:ex</span><span class='comma'>,</span> <span class='label'>example_delim:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>;</span><span class='tstring_end'>&quot;</span></span>
+</code></pre>
+
+<p>Results in:</p>
+
+<pre class="code ruby"><code class="ruby">| foo | bar | baz | ex |
+|-----------------|----|
+| a   | b   | f   | f  |
+| c   | d   | g   | g;i|
+| c   | e   | h   | h  |
+</code></pre>
+
+<p>Used in pipeline as:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Deduplicate.html" title="Kiba::Extend::Transforms::Deduplicate (module)">Deduplicate</a></span></span><span class='op'>::</span><span class='const'>Table</span><span class='comma'>,</span> <span class='label'>field:</span> <span class='symbol'>:combined</span><span class='comma'>,</span> <span class='label'>delete_field:</span> <span class='kw'>true</span><span class='comma'>,</span>
+  <span class='label'>example_source_field:</span> <span class='symbol'>:baz</span><span class='comma'>,</span> <span class='label'>max_examples:</span> <span class='int'>2</span><span class='comma'>,</span>
+  <span class='label'>example_target_field:</span> <span class='symbol'>:ex</span><span class='comma'>,</span> <span class='label'>example_delim:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>include_occs:</span> <span class='kw'>true</span>
+</code></pre>
+
+<p>Results in:</p>
+
+<pre class="code ruby"><code class="ruby">| foo | bar | baz | ex | occurrences |
+|-----------------|----|-------------|
+| a   | b   | f   | f  | 1           |
+| c   | d   | g   | g;i| 3           |
+| c   | e   | h   | h  | 1           |
 </code></pre>
 
 
@@ -202,7 +241,7 @@ case, use a combination of <span class='object_link'><a href="Flag.html" title="
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(field:, delete_field: false)  &#x21d2; Table </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(field:, delete_field: false, example_source_field: nil, max_examples: 10, example_target_field: :examples, example_delim: Kiba::Extend.delim, include_occs: false, occs_target_field: :occurrences)  &#x21d2; Table </a>
     
 
     
@@ -256,7 +295,7 @@ case, use a combination of <span class='object_link'><a href="Flag.html" title="
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(field:, delete_field: false)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Deduplicate::Table (class)">Table</a></span></tt> 
+    #<strong>initialize</strong>(field:, delete_field: false, example_source_field: nil, max_examples: 10, example_target_field: :examples, example_delim: Kiba::Extend.delim, include_occs: false, occs_target_field: :occurrences)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Deduplicate::Table (class)">Table</a></span></tt> 
   
 
   
@@ -300,7 +339,115 @@ case, use a combination of <span class='object_link'><a href="Flag.html" title="
       
       
         &mdash;
-        <div class='inline'><p>whether to delete the deduplication field after doing deduplication</p>
+        <div class='inline'><p>whether to delete the deduplication
+field after doing deduplication</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>example_source_field</span>
+      
+      
+        <span class='type'>(<tt>nil</tt>, <tt>Symbol</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>field containing values to
+be compiled as examples</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>max_examples</span>
+      
+      
+        <span class='type'>(<tt>Integer</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>10</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>maximum number of example values to
+return</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>example_target_field</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>:examples</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>name of field in which to
+report example values</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>example_delim</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>Kiba::Extend.delim</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>used to join multiple example values</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>include_occs</span>
+      
+      
+        <span class='type'>(<tt>Boolean</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>false</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>whether to report number of
+occurrences of each field value being deduplicated on</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>occs_target_field</span>
+      
+      
+        <span class='type'>(<tt>Symbol</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>:occurrences</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>name of field in which to report
+occurrences</p>
 </div>
       
     </li>
@@ -329,19 +476,37 @@ case, use a combination of <span class='object_link'><a href="Flag.html" title="
       <pre class="lines">
 
 
-50
-51
-52
-53
-54</pre>
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/table.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/table.rb', line 104</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>field:</span><span class='comma'>,</span> <span class='label'>delete_field:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>field:</span><span class='comma'>,</span> <span class='label'>delete_field:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>example_source_field:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+  <span class='label'>max_examples:</span> <span class='int'>10</span><span class='comma'>,</span> <span class='label'>example_target_field:</span> <span class='symbol'>:examples</span><span class='comma'>,</span>
+  <span class='label'>example_delim:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_delim'><span class='object_link'><a href="../../../Extend.html#delim-class_method" title="Kiba::Extend.delim (method)">delim</a></span></span><span class='comma'>,</span>
+  <span class='label'>include_occs:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>occs_target_field:</span> <span class='symbol'>:occurrences</span><span class='rparen'>)</span>
   <span class='ivar'>@field</span> <span class='op'>=</span> <span class='id identifier rubyid_field'>field</span>
   <span class='ivar'>@deduper</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
   <span class='ivar'>@delete</span> <span class='op'>=</span> <span class='id identifier rubyid_delete_field'>delete_field</span>
+  <span class='ivar'>@example</span> <span class='op'>=</span> <span class='id identifier rubyid_example_source_field'>example_source_field</span>
+  <span class='ivar'>@max_examples</span> <span class='op'>=</span> <span class='id identifier rubyid_max_examples'>max_examples</span>
+  <span class='ivar'>@ex_target</span> <span class='op'>=</span> <span class='id identifier rubyid_example_target_field'>example_target_field</span>
+  <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_example_delim'>example_delim</span>
+  <span class='ivar'>@occs</span> <span class='op'>=</span> <span class='id identifier rubyid_include_occs'>include_occs</span>
+  <span class='ivar'>@occ_target</span> <span class='op'>=</span> <span class='id identifier rubyid_occs_target_field'>occs_target_field</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -395,19 +560,25 @@ case, use a combination of <span class='object_link'><a href="Flag.html" title="
       <pre class="lines">
 
 
-66
-67
-68
-69
-70
-71</pre>
+130
+131
+132
+133
+134
+135
+136
+137
+138</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/table.rb', line 66</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/table.rb', line 130</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_close'>close</span>
-  <span class='ivar'>@deduper</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span>
-    <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='ivar'>@field</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='ivar'>@delete</span>
+  <span class='id identifier rubyid_deduper'>deduper</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_hash'>hash</span><span class='op'>|</span>
+    <span class='id identifier rubyid_row'>row</span> <span class='op'>=</span> <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='symbol'>:row</span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_add_example_field'>add_example_field</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='comma'>,</span> <span class='id identifier rubyid_hash'>hash</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_example'>example</span>
+    <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_occ_target'>occ_target</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='symbol'>:occs</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_occs'>occs</span>
+    <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_delete'>delete</span>
     <span class='kw'>yield</span> <span class='id identifier rubyid_row'>row</span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
@@ -471,24 +642,26 @@ case, use a combination of <span class='object_link'><a href="Flag.html" title="
       <pre class="lines">
 
 
-57
-58
-59
-60
-61
-62
-63
-64</pre>
+120
+121
+122
+123
+124
+125
+126
+127
+128</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/table.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/table.rb', line 120</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_field_val'>field_val</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='ivar'>@field</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_field_val'>field_val</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_field_val'>field_val</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
-  <span class='kw'>return</span> <span class='kw'>if</span> <span class='ivar'>@deduper</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='id identifier rubyid_field_val'>field_val</span><span class='rparen'>)</span>
 
-  <span class='ivar'>@deduper</span><span class='lbracket'>[</span><span class='id identifier rubyid_field_val'>field_val</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span>
+  <span class='id identifier rubyid_get_row'>get_row</span><span class='lparen'>(</span><span class='id identifier rubyid_field_val'>field_val</span><span class='comma'>,</span> <span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_get_occ'>get_occ</span><span class='lparen'>(</span><span class='id identifier rubyid_field_val'>field_val</span><span class='comma'>,</span> <span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_occs'>occs</span>
+  <span class='id identifier rubyid_get_example'>get_example</span><span class='lparen'>(</span><span class='id identifier rubyid_field_val'>field_val</span><span class='comma'>,</span> <span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_example'>example</span>
   <span class='kw'>nil</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -501,7 +674,7 @@ case, use a combination of <span class='object_link'><a href="Flag.html" title="
 </div>
 
       <div id="footer">
-  Generated on Sat Mar 29 01:04:46 2025 by
+  Generated on Tue Apr  1 21:58:04 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>
