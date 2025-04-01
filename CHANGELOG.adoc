@@ -34,6 +34,8 @@ These changes are merged into the `main` branch, but have not been released. Aft
 
 === Added
 
+* Add example value and occurrence count to Deduplicate::Table transform (PR#202)
+
 === Changed
 
 === Deleted
