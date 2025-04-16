@@ -21,6 +21,7 @@ module Kiba
       class FileRegistry
         include Dry::Container::Mixin
 
+        @frozen = false
         config.namespace_separator = Kiba::Extend.registry_namespace_separator
 
         # Exception raised if the file key is not registered
@@ -78,9 +79,28 @@ module Kiba
           raise KeyNotRegisteredError.new(err.key, :source)
         end
 
-        # @return
+        # @return [Array]
         def entries
           @entries ||= populate_entries
+        end
+
+        # @param x [String] job_key to replace; this job_key will be retained,
+        #   but its entry is deleted and replaced by the entry for job_key y
+        # @param y [String] job_key whose entry is assigned to job_key x; this
+        #   job_key is removed
+        # @note This method only works before #freeze or #finalize are called on
+        #   the FileRegistry.
+        def replace_entry_x_with_entry_y(x:, y:)
+          if @frozen
+            return self && warn("#{Kiba::Extend.warning_label}: Cannot modify "\
+                                "frozen registry (replace #{x} with #{y})")
+          end
+
+          _container.delete(x.to_s)
+          entry = _container[y.to_s]
+          _container.delete(y.to_s)
+          _container[x.to_s] = entry
+          self
         end
 
         # Convenience method combining the steps of transforming
@@ -90,6 +110,7 @@ module Kiba
         #   dry-container.
         def finalize
           transform
+          @frozen = true
           freeze
         end
 
