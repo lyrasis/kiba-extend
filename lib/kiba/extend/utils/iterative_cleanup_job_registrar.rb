@@ -31,6 +31,10 @@ module Kiba
           Kiba::Extend.project_configs.select do |config|
             config.is_a?(Kiba::Extend::Mixins::IterativeCleanup)
           end
+            .group_by { |c| c.to_s.split("::").last }
+            .values
+            .map { |arr| arr.last }
+            .flatten
         end
       end
     end

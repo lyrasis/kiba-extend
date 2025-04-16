@@ -89,6 +89,11 @@ this at the bottom of `lib/tms_client_name.rb`:
 Kiba::Extend.config.config_namespaces = [Kiba::Tms, TmsClientName]
 ~~~
 
+If you have multiple config namespaces and you define IterativeCleanup
+processes with identical config module names in more than one config
+namespace, kiba-extend registers the jobs from the last-listed
+`config_namespaces` value.
+
 ### Add cleanup job registration to your `RegistryData` registration method
 
 Add the following to `RegistryData.register` (or whatever method
