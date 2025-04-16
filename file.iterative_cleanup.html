@@ -140,6 +140,11 @@ this at the bottom of <code>lib/tms_client_name.rb</code>:</p>
 <pre class="code language-ruby"><code class="language-ruby">Kiba::Extend.config.config_namespaces = [Kiba::Tms, TmsClientName]
 </code></pre>
 
+<p>If you have multiple config namespaces and you define IterativeCleanup
+processes with identical config module names in more than one config
+namespace, kiba-extend registers the jobs from the last-listed
+<code>config_namespaces</code> value.</p>
+
 <h3 id="add-cleanup-job-registration-to-your-registrydata-registration-method">Add cleanup job registration to your <code>RegistryData</code> registration method</h3>
 
 <p>Add the following to <code>RegistryData.register</code> (or whatever method
@@ -550,7 +555,7 @@ in the migration.</p>
 </div></div>
 
       <div id="footer">
-  Generated on Tue Apr  1 22:00:20 2025 by
+  Generated on Wed Apr 16 23:11:52 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>

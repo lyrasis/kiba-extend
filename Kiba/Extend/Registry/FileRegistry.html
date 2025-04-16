@@ -232,7 +232,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#entries-instance_method" title="#entries (instance method)">#<strong>entries</strong>  &#x21d2; Object </a>
+      <a href="#entries-instance_method" title="#entries (instance method)">#<strong>entries</strong>  &#x21d2; Array </a>
     
 
     
@@ -270,6 +270,29 @@
 
   
     <span class="summary_desc"><div class='inline'><p>Convenience method combining the steps of transforming   initial registry entry hashes into FileRegistryEntry   objects, and then making the registry immutable for the   rest of the application’s run.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#replace_entry_x_with_entry_y-instance_method" title="#replace_entry_x_with_entry_y (instance method)">#<strong>replace_entry_x_with_entry_y</strong>(x:, y:)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
 </div></span>
   
 </li>
@@ -427,7 +450,6 @@ to be used as destination</p>
       <pre class="lines">
 
 
-45
 46
 47
 48
@@ -435,10 +457,11 @@ to be used as destination</p>
 50
 51
 52
-53</pre>
+53
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 45</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 46</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_as_destination'>as_destination</span><span class='lparen'>(</span><span class='id identifier rubyid_filekey'>filekey</span><span class='comma'>,</span> <span class='id identifier rubyid_for_job'>for_job</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="RegisteredDestination.html" title="Kiba::Extend::Registry::RegisteredDestination (class)">RegisteredDestination</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RegisteredDestination.html#initialize-instance_method" title="Kiba::Extend::Registry::RegisteredDestination#initialize (method)">new</a></span></span><span class='lparen'>(</span>
@@ -527,7 +550,6 @@ as a lookup source</p>
       <pre class="lines">
 
 
-58
 59
 60
 61
@@ -535,10 +557,11 @@ as a lookup source</p>
 63
 64
 65
-66</pre>
+66
+67</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 58</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 59</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_as_lookup'>as_lookup</span><span class='lparen'>(</span><span class='id identifier rubyid_filekey'>filekey</span><span class='comma'>,</span> <span class='id identifier rubyid_for_job'>for_job</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="RegisteredLookup.html" title="Kiba::Extend::Registry::RegisteredLookup (class)">RegisteredLookup</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RegisteredLookup.html#initialize-instance_method" title="Kiba::Extend::Registry::RegisteredLookup#initialize (method)">new</a></span></span><span class='lparen'>(</span>
@@ -627,7 +650,6 @@ as a source</p>
       <pre class="lines">
 
 
-71
 72
 73
 74
@@ -635,10 +657,11 @@ as a source</p>
 76
 77
 78
-79</pre>
+79
+80</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 72</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_as_source'>as_source</span><span class='lparen'>(</span><span class='id identifier rubyid_filekey'>filekey</span><span class='comma'>,</span> <span class='id identifier rubyid_for_job'>for_job</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="RegisteredSource.html" title="Kiba::Extend::Registry::RegisteredSource (class)">RegisteredSource</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="RegisteredFile.html#initialize-instance_method" title="Kiba::Extend::Registry::RegisteredFile#initialize (method)">new</a></span></span><span class='lparen'>(</span>
@@ -657,7 +680,7 @@ as a source</p>
       <div class="method_details ">
   <h3 class="signature " id="entries-instance_method">
   
-    #<strong>entries</strong>  &#x21d2; <tt>Object</tt> 
+    #<strong>entries</strong>  &#x21d2; <tt>Array</tt> 
   
 
   
@@ -678,7 +701,7 @@ as a source</p>
     <li>
       
       
-        <span class='type'></span>
+        <span class='type'>(<tt>Array</tt>)</span>
       
       
       
@@ -707,12 +730,12 @@ as a source</p>
       <pre class="lines">
 
 
-82
 83
-84</pre>
+84
+85</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 82</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 83</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_entries'>entries</span>
   <span class='ivar'>@entries</span> <span class='op'>||=</span> <span class='id identifier rubyid_populate_entries'>populate_entries</span>
@@ -766,17 +789,136 @@ as a source</p>
       <pre class="lines">
 
 
-91
-92
-93
-94</pre>
+111
+112
+113
+114
+115</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 91</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 111</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_finalize'>finalize</span>
   <span class='id identifier rubyid_transform'>transform</span>
+  <span class='ivar'>@frozen</span> <span class='op'>=</span> <span class='kw'>true</span>
   <span class='id identifier rubyid_freeze'>freeze</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="replace_entry_x_with_entry_y-instance_method">
+  
+    #<strong>replace_entry_x_with_entry_y</strong>(x:, y:)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>This method only works before #freeze or #finalize are called on
+the FileRegistry.</p>
+</div>
+  </div>
+
+
+
+
+  </div>
+</div>
+<div class="tags">
+  <p class="tag_title">Parameters:</p>
+<ul class="param">
+  
+    <li>
+      
+        <span class='name'>x</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>job_key to replace; this job_key will be retained,
+but its entry is deleted and replaced by the entry for job_key y</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>y</span>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>job_key whose entry is assigned to job_key x; this
+job_key is removed</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>2.2.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 93</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_replace_entry_x_with_entry_y'>replace_entry_x_with_entry_y</span><span class='lparen'>(</span><span class='label'>x:</span><span class='comma'>,</span> <span class='label'>y:</span><span class='rparen'>)</span>
+  <span class='kw'>if</span> <span class='ivar'>@frozen</span>
+    <span class='kw'>return</span> <span class='kw'>self</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_warn'>warn</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_warning_label'><span class='object_link'><a href="../../Extend.html#warning_label-class_method" title="Kiba::Extend.warning_label (method)">warning_label</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>: Cannot modify </span><span class='tstring_end'>&quot;</span></span>\
+                        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>frozen registry (replace </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_x'>x</span><span class='embexpr_end'>}</span><span class='tstring_content'> with </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_y'>y</span><span class='embexpr_end'>}</span><span class='tstring_content'>)</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
+  <span class='id identifier rubyid__container'>_container</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_x'>x</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_entry'>entry</span> <span class='op'>=</span> <span class='id identifier rubyid__container'>_container</span><span class='lbracket'>[</span><span class='id identifier rubyid_y'>y</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rbracket'>]</span>
+  <span class='id identifier rubyid__container'>_container</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_y'>y</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid__container'>_container</span><span class='lbracket'>[</span><span class='id identifier rubyid_x'>x</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_entry'>entry</span>
+  <span class='kw'>self</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -824,15 +966,15 @@ as a source</p>
       <pre class="lines">
 
 
-98
-99
-100
-101
-102
-103</pre>
+119
+120
+121
+122
+123
+124</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 98</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 119</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_transform'>transform</span>
   <span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_val'>val</span><span class='op'>|</span> <span class='id identifier rubyid_decorate'>decorate</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='const'><span class='object_link'><a href="FileRegistryEntry.html" title="Kiba::Extend::Registry::FileRegistryEntry (class)">FileRegistryEntry</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="FileRegistryEntry.html#initialize-instance_method" title="Kiba::Extend::Registry::FileRegistryEntry#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_val'>val</span><span class='rparen'>)</span> <span class='rbrace'>}</span> <span class='rbrace'>}</span>
@@ -898,12 +1040,12 @@ as a source</p>
       <pre class="lines">
 
 
-105
-106
-107</pre>
+126
+127
+128</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 105</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 126</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_valid?'>valid?</span>
   <span class='id identifier rubyid_validator'>validator</span><span class='period'>.</span><span class='id identifier rubyid_valid?'>valid?</span>
@@ -966,12 +1108,12 @@ as a source</p>
       <pre class="lines">
 
 
-109
-110
-111</pre>
+130
+131
+132</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 109</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 130</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_warnings?'>warnings?</span>
   <span class='id identifier rubyid_validator'>validator</span><span class='period'>.</span><span class='id identifier rubyid_warnings?'>warnings?</span>
@@ -986,7 +1128,7 @@ as a source</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Apr  1 22:00:21 2025 by
+  Generated on Wed Apr 16 23:11:53 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>
