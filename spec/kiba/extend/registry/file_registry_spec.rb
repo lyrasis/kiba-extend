@@ -16,12 +16,6 @@ RSpec.describe "Kiba::Extend::Registry::FileRegistry" do
   let(:result) { registry.resolve(filekey) }
 
   describe "initial setup and registration" do
-    before(:context) do
-      Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry
-      populate_registry
-    end
-    after(:context) { Kiba::Extend.reset_config }
-
     context "when no namespace" do
       let(:data) { {path: fkeypath, supplied: true, lookup_on: :id} }
       it "registers and resolves" do
