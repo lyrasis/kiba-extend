@@ -14,7 +14,7 @@ group :documentation, :test do
 end
 
 group :development do
-  gem "byebug", "~>11.0"
+  gem "debug"
   gem "pry", "~> 0.14"
   gem "rake", "~> 13.0"
   gem "almost_standard", github: "kspurgin/almost_standard", tag: "1.0.1"
