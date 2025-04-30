@@ -52,7 +52,7 @@ Private methods do not need to be documented, however, it can be helpful for cod
 
 ### YARD markdown flavor
 
-`kiba-extend` uses the [kramdown](https://kramdown.gettalong.org/) parser to convert Markdown in YARD to HTML. Kramdown has slightly different syntax from plain or Github-flavored Markdown. [The syntax guide](https://kramdown.gettalong.org/syntax.html) highlights all places where kramdown syntax differs from plan Markdown syntax. Kramdown was chosen because it supports manually
+`kiba-extend` uses the [kramdown](https://kramdown.gettalong.org/) parser to convert Markdown in YARD to HTML. Kramdown has slightly different syntax from plain or Github-flavored Markdown. [The syntax guide](https://kramdown.gettalong.org/syntax.html) highlights all places where kramdown syntax differs from plan Markdown syntax.
 
 Kramdown was chosen because:
 
