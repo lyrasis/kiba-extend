@@ -60,18 +60,6 @@
       <div id="content"><div id='filecontents'>
 <h1 id="common-patterns-tips-and-tricks">Common patterns, tips, and tricks</h1>
 
-<h2 id="troubleshooting-missingdependencyerror-when-all-dependencies-are-set-up-as-expected">Troubleshooting <code>MissingDependencyError</code> when all dependencies are set up as expected</h2>
-
-<p>Usually the cause of a <code>MissingDependencyError</code> is that a table required in some later job ends up having no rows, and thus is not written out.</p>
-
-<p>So jobs are all set up properly, but some expected output file doesn’t exist.</p>
-
-<p>When there are no rows to write out to a Destination, we don’t even know what the expected headers would have been in order to write a headers-only CSV.</p>
-
-<p>At some point I plan to test whether jobs with no output can be made to just create a blank file, and whether that causes dependent jobs to fail in other ways.</p>
-
-<p>For now, as of 3.3.0.150, you defend against this using the <code>Kiba::Extend::Job.output?</code> method to dynamically select only jobs having output for use as sources or lookups.</p>
-
 <h2 id="joining-the-rows-of-multiple-sources-that-may-have-different-fields">Joining the rows of multiple sources that may have different fields</h2>
 
 <p><strong>Works for <code>Kiba::Extend::Destinations::CSV</code> destinations only</strong></p>
@@ -227,7 +215,7 @@
 </div></div>
 
       <div id="footer">
-  Generated on Wed Apr 16 23:11:52 2025 by
+  Generated on Wed Apr 30 16:50:37 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>
