@@ -88,47 +88,44 @@
   <li>Values assigned to a setting (including) <code>default</code> value must respond to <code>#freeze</code> method. You generally cannot calculate the <code>default</code> value of a setting. For example, this will raise an error:</li>
 </ul>
 
-<p><code>
-setting :indemnity_fields,
-  default: fields.select { |f| f.to_s.start_with?("ind") },
-  reader: true
-</code></p>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:indemnity_fields</span><span class='comma'>,</span>
+  <span class='label'>default:</span> <span class='id identifier rubyid_fields'>fields</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ind</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='label'>reader:</span> <span class='kw'>true</span>
+</code></pre>
 
 <ul>
   <li>If you need to dynamically set the default value of a setting, you must provide a custom constructor instead:</li>
 </ul>
 
-<p><code>
-setting :indemnity_fields,
-  default: %i[],
-  reader: true,
-  constructor: proc { fields.select { |f| f.to_s.start_with?("ind") } }
-</code>
-A constructor is always a Proc or Lambda returning a value that can be frozen.</p>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:indemnity_fields</span><span class='comma'>,</span>
+  <span class='label'>default:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_end'>]</span></span><span class='comma'>,</span>
+  <span class='label'>reader:</span> <span class='kw'>true</span><span class='comma'>,</span>
+  <span class='label'>constructor:</span> <span class='id identifier rubyid_proc'>proc</span> <span class='lbrace'>{</span> <span class='id identifier rubyid_fields'>fields</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_f'>f</span><span class='op'>|</span> <span class='id identifier rubyid_f'>f</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='period'>.</span><span class='id identifier rubyid_start_with?'>start_with?</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ind</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='rbrace'>}</span> <span class='rbrace'>}</span>
+</code></pre>
+<p>A constructor is always a Proc or Lambda returning a value that can be frozen.</p>
 
 <p>The first time <code>YourApp.indemnity_fields</code> is called from elsewhere in your code, the constructor code is called and the value is set to its result and frozen.</p>
 
 <p>Here is a more complex example defining the <code>:note_fields</code> setting for constituent addresses in kiba-tms. It is slightly modified from reality to make a better example:</p>
 
-<p><code>
-# Which TMS fields should be combined into a single :address_note value
-#   per TMS ConAddress row. Conditional logic here automatically includes
-#   fields in this setting based on other settings.
-setting :note_fields,
-  default: %i[addressnote],
-  reader: true,
-  constructor: -&gt;(value) {
-    value &lt;&lt; :remarks if migrate_remarks
-    value &lt;&lt; :addresstypenote if Tms::AddressTypes.used? &amp;&amp;
-      address_type_handling == :note
-    value &lt;&lt; :addressdates if dates_note
-    value &lt;&lt; :active if migrate_inactive &amp;&amp; active_note
-    %w[billing mailing shipping].each do |type|
-      value &lt;&lt; type.to_sym if send("#{type}_note".to_sym)
-    end
-    value
-  }
-</code></p>
+<pre class="code ruby"><code class="ruby"><span class='comment'># Which TMS fields should be combined into a single :address_note value
+</span><span class='comment'>#   per TMS ConAddress row. Conditional logic here automatically includes
+</span><span class='comment'>#   fields in this setting based on other settings.
+</span><span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:note_fields</span><span class='comma'>,</span>
+  <span class='label'>default:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>addressnote</span><span class='tstring_end'>]</span></span><span class='comma'>,</span>
+  <span class='label'>reader:</span> <span class='kw'>true</span><span class='comma'>,</span>
+  <span class='label'>constructor:</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_value'>value</span><span class='rparen'>)</span> <span class='tlambeg'>{</span>
+    <span class='id identifier rubyid_value'>value</span> <span class='op'>&lt;&lt;</span> <span class='symbol'>:remarks</span> <span class='kw'>if</span> <span class='id identifier rubyid_migrate_remarks'>migrate_remarks</span>
+    <span class='id identifier rubyid_value'>value</span> <span class='op'>&lt;&lt;</span> <span class='symbol'>:addresstypenote</span> <span class='kw'>if</span> <span class='const'>Tms</span><span class='op'>::</span><span class='const'>AddressTypes</span><span class='period'>.</span><span class='id identifier rubyid_used?'>used?</span> <span class='op'>&amp;&amp;</span>
+      <span class='id identifier rubyid_address_type_handling'>address_type_handling</span> <span class='op'>==</span> <span class='symbol'>:note</span>
+    <span class='id identifier rubyid_value'>value</span> <span class='op'>&lt;&lt;</span> <span class='symbol'>:addressdates</span> <span class='kw'>if</span> <span class='id identifier rubyid_dates_note'>dates_note</span>
+    <span class='id identifier rubyid_value'>value</span> <span class='op'>&lt;&lt;</span> <span class='symbol'>:active</span> <span class='kw'>if</span> <span class='id identifier rubyid_migrate_inactive'>migrate_inactive</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_active_note'>active_note</span>
+    <span class='qwords_beg'>%w[</span><span class='tstring_content'>billing</span><span class='words_sep'> </span><span class='tstring_content'>mailing</span><span class='words_sep'> </span><span class='tstring_content'>shipping</span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_type'>type</span><span class='op'>|</span>
+      <span class='id identifier rubyid_value'>value</span> <span class='op'>&lt;&lt;</span> <span class='id identifier rubyid_type'>type</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span> <span class='kw'>if</span> <span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_type'>type</span><span class='embexpr_end'>}</span><span class='tstring_content'>_note</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+    <span class='id identifier rubyid_value'>value</span>
+  <span class='rbrace'>}</span>
+</code></pre>
 
 <p>The <code>-&gt;(value)</code> is creating the constructor as a Lambda and passing in the setting’s <code>default</code> value as <code>value</code>. The <code>:addressnote</code> field is always treated as a note field from this table. Other fields get added to this list based on the specified criteria.</p>
 
@@ -144,10 +141,9 @@ setting :note_fields,
   </li>
 </ul>
 
-<p><code>
-Kiba::Tms::Exhibitions.delete_fields &lt;&lt; :lightexpdaysperweek
-Kiba::Tms::Exhibitions.delete_fields &lt;&lt; :lightexphoursperday
-</code></p>
+<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>Tms</span><span class='op'>::</span><span class='const'>Exhibitions</span><span class='period'>.</span><span class='id identifier rubyid_delete_fields'>delete_fields</span> <span class='op'>&lt;&lt;</span> <span class='symbol'>:lightexpdaysperweek</span>
+<span class='const'><span class='object_link'><a href="Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>Tms</span><span class='op'>::</span><span class='const'>Exhibitions</span><span class='period'>.</span><span class='id identifier rubyid_delete_fields'>delete_fields</span> <span class='op'>&lt;&lt;</span> <span class='symbol'>:lightexphoursperday</span>
+</code></pre>
 
 <p>The kiba-tms and client project main configs are read in/defined before any thing else happens, so we can add some fields to be removed when we process the Exhibitions table.</p>
 
@@ -157,17 +153,16 @@ Kiba::Tms::Exhibitions.delete_fields &lt;&lt; :lightexphoursperday
   <li>When the value of a setting is overwritten, it looks like you can set the value to something calculated without using a contructor:</li>
 </ul>
 
-<p><code>
- Kiba::Tms::Exhibitions.config.post_shape_xforms = Kiba.job_segment do
-    transform Merge::ConstantValueConditional,
-      fieldmap: {exhibitionstatus: "Facility report received",
-                 exhibitionstatusnote: "yes"},
-      condition: -&gt;(row) do
-        !row[:text_entry].blank?
-      end
-    transform Delete::Fields, fields: :text_entry
-  end
-</code></p>
+<pre class="code ruby"><code class="ruby"> <span class='const'><span class='object_link'><a href="Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>Tms</span><span class='op'>::</span><span class='const'>Exhibitions</span><span class='period'>.</span><span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_post_shape_xforms'>post_shape_xforms</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='period'>.</span><span class='id identifier rubyid_job_segment'><span class='object_link'><a href="Kiba/Extend/Jobs/JobSegmenter.html#job_segment-instance_method" title="Kiba::Extend::Jobs::JobSegmenter#job_segment (method)">job_segment</a></span></span> <span class='kw'>do</span>
+    <span class='id identifier rubyid_transform'>transform</span> <span class='const'>Merge</span><span class='op'>::</span><span class='const'>ConstantValueConditional</span><span class='comma'>,</span>
+      <span class='label'>fieldmap:</span> <span class='lbrace'>{</span><span class='label'>exhibitionstatus:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Facility report received</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+                 <span class='label'>exhibitionstatusnote:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>yes</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+      <span class='label'>condition:</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='kw'>do</span>
+        <span class='op'>!</span><span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='symbol'>:text_entry</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+      <span class='kw'>end</span>
+    <span class='id identifier rubyid_transform'>transform</span> <span class='const'>Delete</span><span class='op'>::</span><span class='const'>Fields</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='symbol'>:text_entry</span>
+  <span class='kw'>end</span>
+</code></pre>
 
 <p>Whatever’s after the <code>=</code> is evaluated first and the result of that evaluation is set as the settingvalue. The result of the <code>Kiba.job_segment</code> block is a <code>String</code>, so it can be a setting value.</p>
 
@@ -177,7 +172,7 @@ Kiba::Tms::Exhibitions.delete_fields &lt;&lt; :lightexphoursperday
 </div></div>
 
       <div id="footer">
-  Generated on Wed Apr 30 16:50:37 2025 by
+  Generated on Wed Apr 30 17:08:10 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>
