@@ -31,27 +31,27 @@ However, even for one-off projects, it can be convenient to add settings for val
 
 - Values assigned to a setting (including) `default` value must respond to `#freeze` method. You generally cannot calculate the `default` value of a setting. For example, this will raise an error:
 
-```
+~~~
 setting :indemnity_fields,
   default: fields.select { |f| f.to_s.start_with?("ind") },
   reader: true
-```
+~~~
 
 - If you need to dynamically set the default value of a setting, you must provide a custom constructor instead:
 
-```
+~~~
 setting :indemnity_fields,
   default: %i[],
   reader: true,
   constructor: proc { fields.select { |f| f.to_s.start_with?("ind") } }
-```
+~~~
 A constructor is always a Proc or Lambda returning a value that can be frozen.
 
 The first time `YourApp.indemnity_fields` is called from elsewhere in your code, the constructor code is called and the value is set to its result and frozen.
 
 Here is a more complex example defining the `:note_fields` setting for constituent addresses in kiba-tms. It is slightly modified from reality to make a better example:
 
-```
+~~~
 # Which TMS fields should be combined into a single :address_note value
 #   per TMS ConAddress row. Conditional logic here automatically includes
 #   fields in this setting based on other settings.
@@ -69,7 +69,7 @@ setting :note_fields,
     end
     value
   }
-```
+~~~
 
 The `->(value)` is creating the constructor as a Lambda and passing in the setting's `default` value as `value`. The `:addressnote` field is always treated as a note field from this table. Other fields get added to this list based on the specified criteria.
 
@@ -79,10 +79,10 @@ The `->(value)` is creating the constructor as a Lambda and passing in the setti
 
 - Setting values are not actually frozen until they are called. This is what allows us to do the following in a kiba-tms individual client project's main config:
 
-```
+~~~
 Kiba::Tms::Exhibitions.delete_fields << :lightexpdaysperweek
 Kiba::Tms::Exhibitions.delete_fields << :lightexphoursperday
-```
+~~~
 
 The kiba-tms and client project main configs are read in/defined before any thing else happens, so we can add some fields to be removed when we process the Exhibitions table.
 
@@ -90,7 +90,7 @@ If anything else had called `Kiba::Tms::Exhibitions.delete_fields` before this p
 
 - When the value of a setting is overwritten, it looks like you can set the value to something calculated without using a contructor:
 
-```
+~~~
  Kiba::Tms::Exhibitions.config.post_shape_xforms = Kiba.job_segment do
     transform Merge::ConstantValueConditional,
       fieldmap: {exhibitionstatus: "Facility report received",
@@ -100,7 +100,7 @@ If anything else had called `Kiba::Tms::Exhibitions.delete_fields` before this p
       end
     transform Delete::Fields, fields: :text_entry
   end
-```
+~~~
 
 Whatever's after the `=` is evaluated first and the result of that evaluation is set as the settingvalue. The result of the `Kiba.job_segment` block is a `String`, so it can be a setting value.
 
