@@ -190,7 +190,7 @@ module Kiba
         # If you do not want empty field groups removed, do:
         #
         # ~~~
-        # transform Cspace::FieldsToRepeatableFieldGroup,
+        # transform Collapse::FieldsToRepeatableFieldGroup,
         #   sources: %i[a b],
         #   targets: %i[foo bar],
         #   delim: '|',
@@ -233,7 +233,7 @@ module Kiba
         # And tranform:
         #
         # ~~~
-        # transform Cspace::FieldsToRepeatableFieldGroup,
+        # transform Collapse::FieldsToRepeatableFieldGroup,
         #   sources: %i[a b],
         #   targets: %i[foo bar],
         #   delim: '|',
