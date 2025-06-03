@@ -32,12 +32,7 @@ These changes are merged into the `main` branch, but have not been released. Aft
 
 === Bugfixes
 
-* https://github.com/lyrasis/kiba-extend/issues/203[#203] - Iterative Cleanup Jobs with same name defined in BaseProject and DependentProject cause error on file registration
-
 === Added
-
-* Added example value and occurrence count to Deduplicate::Table transform (PR#202)
-* Added `#replace_entry_x_with_entry_y` method to `FileRegistry`
 
 === Changed
 
@@ -48,6 +43,17 @@ These changes are merged into the `main` branch, but have not been released. Aft
 === Dev
 
 == Releases
+
+=== 4.2.0 - 2025-06-03
+==== Bugfixes
+
+* https://github.com/lyrasis/kiba-extend/issues/203[#203] - Iterative Cleanup Jobs with same name defined in BaseProject and DependentProject cause error on file registration
+
+==== Added
+
+* Added example value and occurrence count to Deduplicate::Table transform (PR#202)
+* Added `#replace_entry_x_with_entry_y` method to `FileRegistry`(PR#204)
+* Added `final_lookup_sources` method in IterativeCleanup mixin, allowing for configurable pre/post transformation logic for `cleanup_base_name__final` job to include transforms that use lookup tables. (PR#209)
 
 === 4.1.0 - 2025-03-28
 
