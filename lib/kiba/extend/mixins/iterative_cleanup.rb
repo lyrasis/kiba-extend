@@ -72,6 +72,7 @@ module Kiba
       # - {collation_delim}
       # - {clean_fingerprint_flag_ignore_fields}
       # - {final_lookup_on_field}
+      # - {final_lookup_sources}
       #
       # ## What extending this module does
       #
@@ -281,6 +282,10 @@ module Kiba
         def final_lookup_on_field
           orig_values_identifier
         end
+
+        # @return [Array<Symbol>] job keys of registered jobs to be used as
+        #   lookup tables in the `cleanup_base_name__final` job
+        def final_lookup_sources = []
 
         # DO NOT OVERRIDE REMAINING METHODS
 
