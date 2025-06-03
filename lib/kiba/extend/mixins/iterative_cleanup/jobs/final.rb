@@ -12,7 +12,8 @@ module Kiba
               Kiba::Extend::Jobs::Job.new(
                 files: {
                   source: mod.base_job_cleaned_job_key,
-                  destination: mod.final_job_key
+                  destination: mod.final_job_key,
+                  lookup: mod.final_lookup_sources
                 },
                 transformer: get_xforms(mod)
               )
