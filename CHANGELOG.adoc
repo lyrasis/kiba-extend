@@ -26,7 +26,9 @@ toc::[]
 * Removal of `multival` parameter in `Cspace::NormalizeForId`  (deprecated in 3.3.0)
 
 == Unreleased
-These changes are merged into the `main` branch, but have not been released. After merging pull requests (PRs) that are not immediately released into `main`, a tag is added appending the PR# to the current release. For example, if the release version/tag is `3.2.1`, and PR# 107 is merged without a new release, the state of the codebase after that merge will be tagged as `3.2.1.107`.
+These changes are merged into the `main` branch, but have not been released.
+After merging pull requests (PRs) that are not immediately released into `main`, a tag is added appending the PR# to the current release.
+For example, if the release version/tag is `3.2.1`, and PR# 107 is merged without a new release, the state of the codebase after that merge will be tagged as `3.2.1.107`.
 
 === Breaking
 
@@ -59,25 +61,31 @@ In https://github.com/lyrasis/kiba-extend/pull/211[PR#211]
 
 * Added example value and occurrence count to Deduplicate::Table transform (PR#202)
 * Added `#replace_entry_x_with_entry_y` method to `FileRegistry`(PR#204)
-* Added `final_lookup_sources` method in IterativeCleanup mixin, allowing for configurable pre/post transformation logic for `cleanup_base_name__final` job to include transforms that use lookup tables. (PR#209)
+* Added `final_lookup_sources` method in IterativeCleanup mixin, allowing for configurable pre/post transformation logic for `cleanup_base_name__final` job to include transforms that use lookup tables.
+(PR#209)
 
 === 4.1.0 - 2025-03-28
 
 ==== Bugfixes
 
 * Role term and subordinate body subfields for meeting names fixed in default config.
-* `IterativeCleanup` now automatically extends its extending module with `Dry::Configurable` prior to defining settings that depend on `Dry::Configurable`. (PR#192)
+* `IterativeCleanup` now automatically extends its extending module with `Dry::Configurable` prior to defining settings that depend on `Dry::Configurable`.
+(PR#192)
 * `Kiba::Extend::Job.output?` no longer fails if given job returns Nil (PR#194)
-* `Reshape::FieldsToFieldGroupWithConstant` constant value is no longer added to rows with no values in the renamed/remapped value fields, when fieldmap length == 1. (PR#195)
+* `Reshape::FieldsToFieldGroupWithConstant` constant value is no longer added to rows with no values in the renamed/remapped value fields, when fieldmap length == 1.
+(PR#195)
 
 ==== Added
 * `MARC::LanguageCodeLookup` transform
-* Ability to pass `find` argument to `Clean::RegexpFindReplaceFieldVals` as a `Regexp` object. Not sure why this was not the default initial behavior, but here we are! (PR#196)
+* Ability to pass `find` argument to `Clean::RegexpFindReplaceFieldVals` as a `Regexp` object.
+Not sure why this was not the default initial behavior, but here we are! (PR#196)
 * Ability to pass `delim` argument to `Append::ToFieldValue` to trigger multi-value treatment (PR#200)
 
 ==== Changed
 
-* MARC name extraction transforms now supply "uniform title name" as a role term in fields having a $t value. This change supports the fact that some applications may not wish to treat these values as standalone names, and this makes it possible to filter out these values. (PR#199)
+* MARC name extraction transforms now supply "uniform title name" as a role term in fields having a $t value.
+This change supports the fact that some applications may not wish to treat these values as standalone names, and this makes it possible to filter out these values.
+(PR#199)
 
 ==== Dev
 
@@ -93,9 +101,12 @@ In https://github.com/lyrasis/kiba-extend/pull/211[PR#211]
 
 === 4.0.0 - 2023-09-11
 ==== Breaking
-* Nested `job.show_me`, `job.tell_me`, and `job.verbosity` config settings have been removed. (They were deprecated in 3.2.0)
-* `Kiba::Common::Sources` and `Kiba::Common::Destinations` are no longer supported. To use an external source or destination class, subclass it in a `Kiba::Extend` source or destination class that extends `Kiba::Extend::Sourceable` or `Kiba::Extend::Destinationable` (PR#139)
-* Using a supplied file registry entry as the destination of a job raises an error, since the definition of a supplied entry is that it is not created by a job in the project. (PR#139)
+* Nested `job.show_me`, `job.tell_me`, and `job.verbosity` config settings have been removed.
+(They were deprecated in 3.2.0)
+* `Kiba::Common::Sources` and `Kiba::Common::Destinations` are no longer supported.
+To use an external source or destination class, subclass it in a `Kiba::Extend` source or destination class that extends `Kiba::Extend::Sourceable` or `Kiba::Extend::Destinationable` (PR#139)
+* Using a supplied file registry entry as the destination of a job raises an error, since the definition of a supplied entry is that it is not created by a job in the project.
+(PR#139)
 
 ==== Added
 .New destinations
@@ -161,8 +172,11 @@ In https://github.com/lyrasis/kiba-extend/pull/211[PR#211]
 * `sep` parameter will be replaced by `delim` in `CombineValues::FromFieldWithDelimiter` and `CombineValues::FullRecord` (PR#147)
 
 ==== Dev
-* Adds `Kiba::Extend::ErrMod` module to be included into `Kiba::Extend`-specific error classes. This allows us to subclass each application-specific error to the semantically appropriate Ruby exception class, while retaining the ability to identify/scope/rescue only application-specific errors. (PR#138)
-* Add `:info` method to `Kiba::Extend::ErrMod` module, to print error type, message, and backtrace to STDOUT in a consistent way. (PR#141)
+* Adds `Kiba::Extend::ErrMod` module to be included into `Kiba::Extend`-specific error classes.
+This allows us to subclass each application-specific error to the semantically appropriate Ruby exception class, while retaining the ability to identify/scope/rescue only application-specific errors.
+(PR#138)
+* Add `:info` method to `Kiba::Extend::ErrMod` module, to print error type, message, and backtrace to STDOUT in a consistent way.
+(PR#141)
 * Set up https://github.com/standardrb/standard[standardrb] linting, with Kristina's standard (ha) minor overrides (PR#169)
 
 === 3.3.0 - 2023-02-17
@@ -228,7 +242,8 @@ In https://github.com/lyrasis/kiba-extend/pull/211[PR#211]
 === 3.1.0 - 2022-09-20
 
 ==== Added
-* Add publicly readable `srcrows` and `outrows` on `Kiba::Extend::Jobs::BaseJob` (inherited by all job types). This makes it possible to do things like this in client projects:
+* Add publicly readable `srcrows` and `outrows` on `Kiba::Extend::Jobs::BaseJob` (inherited by all job types).
+This makes it possible to do things like this in client projects:
 
 [source,ruby]
 ----
@@ -244,18 +259,22 @@ job.context.instance_variable_get(:@srcrows)
 ----
 
 ==== Changed
-* Refactored thor tasks. Moved basically all logic/behavior into `Kiba::Extend::Command` namespace where it can be called by Thor tasks _or_ directly by client projects. This leaves the `/lib/tasks` more purely about defining the CLI interaction
+* Refactored thor tasks.
+Moved basically all logic/behavior into `Kiba::Extend::Command` namespace where it can be called by Thor tasks _or_ directly by client projects.
+This leaves the `/lib/tasks` more purely about defining the CLI interaction
 
 === 3.0.0 - 2022-08-26
 
 ==== Breaking
 * See the list of deleted transforms, helpers, and params below.
-* `Split::IntoMultipleColumns` transform: no longer removes spaces between split segments that end up collapsed left or right. This was a bug, but fixing it could cause jobs relying on that behavior (or introducing subsequent transforms to deal with it) to fail or generate unexpected results.
+* `Split::IntoMultipleColumns` transform: no longer removes spaces between split segments that end up collapsed left or right.
+This was a bug, but fixing it could cause jobs relying on that behavior (or introducing subsequent transforms to deal with it) to fail or generate unexpected results.
 
 ==== Added
 * `Warn::UnlessFieldValueMatches` transform
 * `multimode` parameter for `Utils::FieldValueMatcher`
-* Support for passing Procs in as file registry entry values (or as a value in a :dest_special_opts Hash). See [NOTE under "File Registry Data hashes in your ETL application](https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html#file-registry-data-hashes-in-your-etl-application)
+* Support for passing Procs in as file registry entry values (or as a value in a :dest_special_opts Hash).
+See [NOTE under "File Registry Data hashes in your ETL application](https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html#file-registry-data-hashes-in-your-etl-application)
 * `delim` parameter for `Replace::FieldValueWithStaticMapping` transform
 
 ==== Changed
@@ -282,7 +301,8 @@ job.context.instance_variable_get(:@srcrows)
 https://github.com/lyrasis/kiba-extend/compare/v2.8.0\...v2.9.0[Compare code changes]
 
 ==== Breaking
-* Removes Hash `conditions` parameter and `sep` parameter from `Merge::ConstantValueConditional` transform, replacing with lambda Proc `condition` parameter. In https://github.com/lyrasis/kiba-extend/pull/88[PR#88]
+* Removes Hash `conditions` parameter and `sep` parameter from `Merge::ConstantValueConditional` transform, replacing with lambda Proc `condition` parameter.
+In https://github.com/lyrasis/kiba-extend/pull/88[PR#88]
 * **Only relevant if you have called global `Kiba::Extend::DELIM` or `Kiba::Extend::CSVOPT` from outside Kiba::Extend for some reason.** These global constants were finally removed from the final few places they were being used within kiba-extend, and they have been removed from the application setup.
 
 ==== Added
@@ -307,76 +327,131 @@ https://github.com/lyrasis/kiba-extend/compare/v2.8.0\...v2.9.0[Compare code cha
 ** `Reshape::FieldsToFieldGroupWithConstant` (in https://github.com/lyrasis/kiba-extend/pull/93[PR#93])
 ** `Warn::UnevenFields` (in https://github.com/lyrasis/kiba-extend/pull/93[PR#93])
 
-* `stripextra` csv converter to do aggressive stripping of csv field values, _without_ converting 'NULL' strings to ``nilValue``s. In https://github.com/lyrasis/kiba-extend/pull/91[PR#91]
-* `ignore_case` parameter to `FilterRows::FieldMatchRegexp` transform. Defaults to `false` for backward compatibility. In https://github.com/lyrasis/kiba-extend/pull/85[PR#85]
+* `stripextra` csv converter to do aggressive stripping of csv field values, _without_ converting 'NULL' strings to ``nilValue``s.
+In https://github.com/lyrasis/kiba-extend/pull/91[PR#91]
+* `ignore_case` parameter to `FilterRows::FieldMatchRegexp` transform.
+Defaults to `false` for backward compatibility.
+In https://github.com/lyrasis/kiba-extend/pull/85[PR#85]
 
 ==== Changed
-* BUGFIX: `Utils::Lookup::RowSorter` no longer fails if all rows given to sort have blank values. In https://github.com/lyrasis/kiba-extend/pull/93[PR#93]
-* BUGFIX: `Clean::EmptyFieldGroups` was broken if `sep` = `|` and `use_nullvalue` = `true`. In https://github.com/lyrasis/kiba-extend/pull/93[PR#93]
-* BUGFIX: No longer runs the same dependency job multiple times. In https://github.com/lyrasis/kiba-extend/pull/90[PR#90]
-* In `Merge::ConstantValueConditional` transform, lambda Proc is passed in as `condition`, rather than `conditions`. In https://github.com/lyrasis/kiba-extend/pull/88[PR#88]
-* If source data is an ISO 3166 code, `Cspace::AddressCountry` passes that value through to target. Adds some more lookup keys to support client data set. In https://github.com/lyrasis/kiba-extend/pull/87[PR#87]
-* `Merge::ConstantValue` warns (once per transform) if `target` is an existing field containing any data. In https://github.com/lyrasis/kiba-extend/pull/84[PR#84]
-* BUGFIX: `RowSorter` checks for presence of `sortfield` and raises error if it doesn't exist, rather than trying to proceed and blowing up. In https://github.com/lyrasis/kiba-extend/pull/83[PR#83]
+* BUGFIX: `Utils::Lookup::RowSorter` no longer fails if all rows given to sort have blank values.
+In https://github.com/lyrasis/kiba-extend/pull/93[PR#93]
+* BUGFIX: `Clean::EmptyFieldGroups` was broken if `sep` = `|` and `use_nullvalue` = `true`.
+In https://github.com/lyrasis/kiba-extend/pull/93[PR#93]
+* BUGFIX: No longer runs the same dependency job multiple times.
+In https://github.com/lyrasis/kiba-extend/pull/90[PR#90]
+* In `Merge::ConstantValueConditional` transform, lambda Proc is passed in as `condition`, rather than `conditions`.
+In https://github.com/lyrasis/kiba-extend/pull/88[PR#88]
+* If source data is an ISO 3166 code, `Cspace::AddressCountry` passes that value through to target.
+Adds some more lookup keys to support client data set.
+In https://github.com/lyrasis/kiba-extend/pull/87[PR#87]
+* `Merge::ConstantValue` warns (once per transform) if `target` is an existing field containing any data.
+In https://github.com/lyrasis/kiba-extend/pull/84[PR#84]
+* BUGFIX: `RowSorter` checks for presence of `sortfield` and raises error if it doesn't exist, rather than trying to proceed and blowing up.
+In https://github.com/lyrasis/kiba-extend/pull/83[PR#83]
 
 ==== Deleted
-* Removes Hash `conditions` parameter and `sep` parameter from `Merge::ConstantValueConditional` transform, replacing with lambda Proc `condition` parameter. In https://github.com/lyrasis/kiba-extend/pull/88[PR#88]
+* Removes Hash `conditions` parameter and `sep` parameter from `Merge::ConstantValueConditional` transform, replacing with lambda Proc `condition` parameter.
+In https://github.com/lyrasis/kiba-extend/pull/88[PR#88]
 
 ==== To be deprecated/Will break in a future version
-* Deprecates `Helpers.delim_only?`, replacing with `Helpers::DelimOnlyChecker` service class. In https://github.com/lyrasis/kiba-extend/pull/93[PR#93]
-* Deprecates `Clean::DelimiterOnlyFields`, replacing with `Delete::DelimiterOnlyFieldValues` . In https://github.com/lyrasis/kiba-extend/pull/93[PR#93]
-* Deprecates `Reshape::CollapseMultipleFieldsToOneTypedFieldPair`, replacing with `Collapse::FieldsToTypedFieldPair` . In https://github.com/lyrasis/kiba-extend/pull/93[PR#93]
-* Deprecates `CombineValues::AcrossFieldGroup`, replacing with `Collapse::FieldsWithCustomFieldmap` . In https://github.com/lyrasis/kiba-extend/pull/93[PR#93]
-* Deprecates `FilterRows::FieldValueGreaterThan`. In https://github.com/lyrasis/kiba-extend/pull/86[PR#86]
+* Deprecates `Helpers.delim_only?`, replacing with `Helpers::DelimOnlyChecker` service class.
+In https://github.com/lyrasis/kiba-extend/pull/93[PR#93]
+* Deprecates `Clean::DelimiterOnlyFields`, replacing with `Delete::DelimiterOnlyFieldValues` .
+In https://github.com/lyrasis/kiba-extend/pull/93[PR#93]
+* Deprecates `Reshape::CollapseMultipleFieldsToOneTypedFieldPair`, replacing with `Collapse::FieldsToTypedFieldPair` .
+In https://github.com/lyrasis/kiba-extend/pull/93[PR#93]
+* Deprecates `CombineValues::AcrossFieldGroup`, replacing with `Collapse::FieldsWithCustomFieldmap` .
+In https://github.com/lyrasis/kiba-extend/pull/93[PR#93]
+* Deprecates `FilterRows::FieldValueGreaterThan`.
+In https://github.com/lyrasis/kiba-extend/pull/86[PR#86]
 
 === 2.8.0 - 2022-05-13
 https://github.com/lyrasis/kiba-extend/compare/v2.7.2\...v2.8.0[Compare code changes]
 
 ==== Breaking
-* `Count::MatchingRowsInLookup` previously returned Integers. Now it defaults to returning Strings, since many of the transforms assume all field values will be strings. If you were calling `Count::MatchingRowsInLookup` in a job and working with the integer result as an integer within that job, this will be a breaking change. In https://github.com/lyrasis/kiba-extend/pull/69[PR#69]
+* `Count::MatchingRowsInLookup` previously returned Integers.
+Now it defaults to returning Strings, since many of the transforms assume all field values will be strings.
+If you were calling `Count::MatchingRowsInLookup` in a job and working with the integer result as an integer within that job, this will be a breaking change.
+In https://github.com/lyrasis/kiba-extend/pull/69[PR#69]
 
 ==== Added
-* `Lookup::RowSorter` class and the ability to pass it in as an argument to `Merge::MultiRowLookup` transform to explicitly control the order in which matching rows are merged. In https://github.com/lyrasis/kiba-extend/pull/82[PR#82]
-* Ability to pass in a Lambda as a `conditions` argument on transforms. This provides a more straightforward and infinitely flexible alternative to the horrible, poorly documented Hash expression of conditions. In https://github.com/lyrasis/kiba-extend/pull/82[PR#82]
-* Add `Rename::Fields` transform. In https://github.com/lyrasis/kiba-extend/pull/75[PR#75]
-* Add `Name::SplitInverted` and `Name::ConvertInvertedToDirectForm` transforms. In https://github.com/lyrasis/kiba-extend/pull/74[PR#74]
-* Add `Allable` mixin module for transforms that accept `fields: :all`. In https://github.com/lyrasis/kiba-extend/pull/73[PR#73]
-* Add `Cspace::AddressCountry` transform. In https://github.com/lyrasis/kiba-extend/pull/72[PR#72]. Made more configurable in https://github.com/lyrasis/kiba-extend/pull/75[PR#75]
-* Add `null_placeholder` parameter to `Merge::MultiRowLookup`, which will replace any blank values in merged field values with the given string. Useful for building repeating field groups in CollectionSpace migrations. In https://github.com/lyrasis/kiba-extend/pull/70[PR#70]
+* `Lookup::RowSorter` class and the ability to pass it in as an argument to `Merge::MultiRowLookup` transform to explicitly control the order in which matching rows are merged.
+In https://github.com/lyrasis/kiba-extend/pull/82[PR#82]
+* Ability to pass in a Lambda as a `conditions` argument on transforms.
+This provides a more straightforward and infinitely flexible alternative to the horrible, poorly documented Hash expression of conditions.
+In https://github.com/lyrasis/kiba-extend/pull/82[PR#82]
+* Add `Rename::Fields` transform.
+In https://github.com/lyrasis/kiba-extend/pull/75[PR#75]
+* Add `Name::SplitInverted` and `Name::ConvertInvertedToDirectForm` transforms.
+In https://github.com/lyrasis/kiba-extend/pull/74[PR#74]
+* Add `Allable` mixin module for transforms that accept `fields: :all`.
+In https://github.com/lyrasis/kiba-extend/pull/73[PR#73]
+* Add `Cspace::AddressCountry` transform.
+In https://github.com/lyrasis/kiba-extend/pull/72[PR#72].
+Made more configurable in https://github.com/lyrasis/kiba-extend/pull/75[PR#75]
+* Add `null_placeholder` parameter to `Merge::MultiRowLookup`, which will replace any blank values in merged field values with the given string.
+Useful for building repeating field groups in CollectionSpace migrations.
+In https://github.com/lyrasis/kiba-extend/pull/70[PR#70]
 
 ==== Changed
-* Raise `LookupTypeError` when `Merge::MultiRowLookup` is called with `lookup` parameter that is not a Hash. In https://github.com/lyrasis/kiba-extend/pull/81[PR#81]
-* Improved exception handling when `MissingDependencyError` is raised. In https://github.com/lyrasis/kiba-extend/pull/80[PR#80]
-* Improved error message for `Copy::Field`. In https://github.com/lyrasis/kiba-extend/pull/78[PR#78]
-* Add improved error handling in jobs when a transform raises a `Kiba::Extend::Error`. In https://github.com/lyrasis/kiba-extend/pull/77[PR#77].
-* Improved exception handling when `KeyNotRegisteredError` is raised, as per https://github.com/lyrasis/kiba-extend/issues/64[GH#64]. In https://github.com/lyrasis/kiba-extend/pull/79[PR#79]
-* More informative error message if you pass in a non-existent `using` hash when calling `Deduplicate::Flag` transform. In https://github.com/lyrasis/kiba-extend/pull/76[PR#76]
-* `Rename::Field` now warns if the `to` field already exists and will be overwritten. In https://github.com/lyrasis/kiba-extend/pull/75[PR#75]
-* Use zeitwerk for autoloading. In https://github.com/lyrasis/kiba-extend/pull/75[PR#75]. Bugfix for use in projects implemented in https://github.com/lyrasis/kiba-extend/pull/76[PR#76] via eager autoload.
-* Make `Delete::EmptyFieldValues` `Allable`. In https://github.com/lyrasis/kiba-extend/pull/73[PR#73]
-* If given an "existing" field that does not exist, `Rename::Field` transform will warn about it, but not throw an exception. This supports building reusable jobs where the data may be slightly different from use to use. In https://github.com/lyrasis/kiba-extend/pull/71[PR#71]
-* BUGFIX: `Clean::RegexpFindReplaceFieldVals` now skips non-string field values instead of trying to call `:gsub` on them and failing with `NoMethodError`. In https://github.com/lyrasis/kiba-extend/pull/68[PR#68]
+* Raise `LookupTypeError` when `Merge::MultiRowLookup` is called with `lookup` parameter that is not a Hash.
+In https://github.com/lyrasis/kiba-extend/pull/81[PR#81]
+* Improved exception handling when `MissingDependencyError` is raised.
+In https://github.com/lyrasis/kiba-extend/pull/80[PR#80]
+* Improved error message for `Copy::Field`.
+In https://github.com/lyrasis/kiba-extend/pull/78[PR#78]
+* Add improved error handling in jobs when a transform raises a `Kiba::Extend::Error`.
+In https://github.com/lyrasis/kiba-extend/pull/77[PR#77].
+* Improved exception handling when `KeyNotRegisteredError` is raised, as per https://github.com/lyrasis/kiba-extend/issues/64[GH#64].
+In https://github.com/lyrasis/kiba-extend/pull/79[PR#79]
+* More informative error message if you pass in a non-existent `using` hash when calling `Deduplicate::Flag` transform.
+In https://github.com/lyrasis/kiba-extend/pull/76[PR#76]
+* `Rename::Field` now warns if the `to` field already exists and will be overwritten.
+In https://github.com/lyrasis/kiba-extend/pull/75[PR#75]
+* Use zeitwerk for autoloading.
+In https://github.com/lyrasis/kiba-extend/pull/75[PR#75].
+Bugfix for use in projects implemented in https://github.com/lyrasis/kiba-extend/pull/76[PR#76] via eager autoload.
+* Make `Delete::EmptyFieldValues` `Allable`.
+In https://github.com/lyrasis/kiba-extend/pull/73[PR#73]
+* If given an "existing" field that does not exist, `Rename::Field` transform will warn about it, but not throw an exception.
+This supports building reusable jobs where the data may be slightly different from use to use.
+In https://github.com/lyrasis/kiba-extend/pull/71[PR#71]
+* BUGFIX: `Clean::RegexpFindReplaceFieldVals` now skips non-string field values instead of trying to call `:gsub` on them and failing with `NoMethodError`.
+In https://github.com/lyrasis/kiba-extend/pull/68[PR#68]
 
 === 2.7.2 - 2022-04-05
 https://github.com/lyrasis/kiba-extend/compare/v2.7.1\...v2.7.2[Compare code changes]
 
 ==== Added
-* When setting up a file registry hash, `creator` may be a `Hash` if you need to pass keyword arguments to your job. See https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html#creator[File registry entry reference] for more info and examples. In https://github.com/lyrasis/kiba-extend/pull/67[PR#67]
-* When setting up a file registry hash, `creator` may be a `Module` if the relevant job is a private instance method named with the configured `default_job_method_name` (The default is `:job`). See https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html#creator[File registry entry reference] for more info and examples. In https://github.com/lyrasis/kiba-extend/pull/67[PR#67]
-* `default_job_method_name` config setting. In https://github.com/lyrasis/kiba-extend/pull/67[PR#67]
-* `Fingerprint::Add` and `Fingerprint::Decode` transforms. In https://github.com/lyrasis/kiba-extend/pull/65[PR#65]
-* `override_app_delim_check` param to `Fingerprint::Add` for backward compatibility with a project I want to be able to use this transform. Defaults to `false`. https://github.com/lyrasis/kiba-extend/pull/66[PR#66]
+* When setting up a file registry hash, `creator` may be a `Hash` if you need to pass keyword arguments to your job.
+See https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html#creator[File registry entry reference] for more info and examples.
+In https://github.com/lyrasis/kiba-extend/pull/67[PR#67]
+* When setting up a file registry hash, `creator` may be a `Module` if the relevant job is a private instance method named with the configured `default_job_method_name` (The default is `:job`).
+See https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html#creator[File registry entry reference] for more info and examples.
+In https://github.com/lyrasis/kiba-extend/pull/67[PR#67]
+* `default_job_method_name` config setting.
+In https://github.com/lyrasis/kiba-extend/pull/67[PR#67]
+* `Fingerprint::Add` and `Fingerprint::Decode` transforms.
+In https://github.com/lyrasis/kiba-extend/pull/65[PR#65]
+* `override_app_delim_check` param to `Fingerprint::Add` for backward compatibility with a project I want to be able to use this transform.
+Defaults to `false`.
+https://github.com/lyrasis/kiba-extend/pull/66[PR#66]
 
 ==== Changed
-* Moves `Merge::CompareFieldsFlag` to `Compare::FieldValues`. Aliases the old transform to the new one for backward compatibility, but raises deprecation warning. In https://github.com/lyrasis/kiba-extend/pull/62[PR#62]
-* `Fingerprint::Decode` forces field values to UTF-8, preventing CSV write errors. In https://github.com/lyrasis/kiba-extend/pull/66[PR#66]
+* Moves `Merge::CompareFieldsFlag` to `Compare::FieldValues`.
+Aliases the old transform to the new one for backward compatibility, but raises deprecation warning.
+In https://github.com/lyrasis/kiba-extend/pull/62[PR#62]
+* `Fingerprint::Decode` forces field values to UTF-8, preventing CSV write errors.
+In https://github.com/lyrasis/kiba-extend/pull/66[PR#66]
 
 === 2.7.1 - 2022-03-10
 https://github.com/lyrasis/kiba-extend/compare/v2.6.1\...v2.7.1[Compare code changes]
 
 ==== Added
 * `Kiba::Extend::Utils::MultiSourceNormalizer` and `Kiba::Extend::Jobs::MultiSourcePrepJob` to handle normalization of fields across multiple sources to be used in a multiple-source job with a `Kiba::Extend::Destinations::CSV` destination (in https://github.com/lyrasis/kiba-extend/pull/60[PR#60])
-* `explicit_no` argument to `Kiba::Extend::Transforms::Deduplicate::Flag`. Defaults to `true` for backward compatibility (in https://github.com/lyrasis/kiba-extend/pull/60[PR#60])
+* `explicit_no` argument to `Kiba::Extend::Transforms::Deduplicate::Flag`.
+Defaults to `true` for backward compatibility (in https://github.com/lyrasis/kiba-extend/pull/60[PR#60])
 * `amazing_print` dependency  (in https://github.com/lyrasis/kiba-extend/pull/61[PR#61])
 
 === 2.6.1 - 2022-03-09
@@ -413,7 +488,8 @@ https://github.com/lyrasis/kiba-extend/compare/v2.5.3\...v2.6.0[Compare code cha
 * test Clean::RegexpFindReplaceFieldVals to replace `\n` (in https://github.com/lyrasis/kiba-extend/pull/55[PR#55])
 * `Helpers.empty?` method, which returns true/false for a given string value (without treating delimiter values as special)  (in https://github.com/lyrasis/kiba-extend/pull/57[PR#57])
 * `fields` keyword argument to `Delete::FieldsExcept`, which should be used going forward instead of `keepfields` (in https://github.com/lyrasis/kiba-extend/pull/57[PR#57])
-* `nullvalue` setting to `Kiba::Extend.config`. Default value is '%NULLVALUE%' (in https://github.com/lyrasis/kiba-extend/pull/57[PR#57])
+* `nullvalue` setting to `Kiba::Extend.config`.
+Default value is '%NULLVALUE%' (in https://github.com/lyrasis/kiba-extend/pull/57[PR#57])
 * `usenull` keyword argument to `Delete::EmptyFieldValues` (in https://github.com/lyrasis/kiba-extend/pull/57[PR#57])
 * `delim` keyword argument to `Delete::EmptyFieldValues`, which should be used going forward instead of `sep` (in https://github.com/lyrasis/kiba-extend/pull/57[PR#57])
 * documentation for `Delete` transforms (in https://github.com/lyrasis/kiba-extend/pull/57[PR#57])
@@ -434,5 +510,7 @@ https://github.com/lyrasis/kiba-extend/compare/v2.5.3\...v2.6.0[Compare code cha
 ==== To be deprecated/Will break in a future version
 These will now give warnings if used.
 
-- `Delete::FieldsExcept` `keepfields` keyword parameter. Change to `fields`  (in https://github.com/lyrasis/kiba-extend/pull/57[PR#57])
-- `Delete::EmptyFieldValues` `sep` keyword parameter. Change to `delim`  (in https://github.com/lyrasis/kiba-extend/pull/57[PR#57])
+- `Delete::FieldsExcept` `keepfields` keyword parameter.
+Change to `fields`  (in https://github.com/lyrasis/kiba-extend/pull/57[PR#57])
+- `Delete::EmptyFieldValues` `sep` keyword parameter.
+Change to `delim`  (in https://github.com/lyrasis/kiba-extend/pull/57[PR#57])
