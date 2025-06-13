@@ -34,6 +34,9 @@ These changes are merged into the `main` branch, but have not been released. Aft
 
 === Added
 
+* Ability to make `Deduplicate::Table` compile all unique values of all fields in a duplicate row set, and write them into the kept row.
+In https://github.com/lyrasis/kiba-extend/pull/211[PR#211]
+
 === Changed
 
 === Deleted
@@ -41,6 +44,9 @@ These changes are merged into the `main` branch, but have not been released. Aft
 === Deprecated/Will break in a future version
 
 === Dev
+
+* Convert `Deduplicate::Table` spec to yardspec.
+In https://github.com/lyrasis/kiba-extend/pull/211[PR#211]
 
 == Releases
 
