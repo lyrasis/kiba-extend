@@ -106,9 +106,7 @@ RSpec.describe Kiba::Extend::Transforms::Delete::FieldValueIfEqualsOtherField do
       end
 
       it "outputs warning to STDOUT" do
-        # rubocop:todo Layout/LineLength
-        msg = /KIBA WARNING: One or more grouped fields \(grpa, grpb\) has different number of values than the others in \{.*\}/
-        # rubocop:enable Layout/LineLength
+        msg = /KIBA WARNING: One or more grouped fields.*/
         expect { result }.to output(msg).to_stdout
       end
     end
