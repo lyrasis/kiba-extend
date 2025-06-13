@@ -16,154 +16,139 @@ module Kiba
         # **Note that the value of the `if_equal_to` field is never modified by
         #   this transform.**
         #
-        # # Examples
-        # ## Simple example
+        # @example Simple example
+        #   # Used in pipeline as:
+        #   # transform Delete::FieldValueIfEqualsOtherField,
+        #   #    delete: :del, if_equal_to: :compare
+        #   xform = Delete::FieldValueIfEqualsOtherField.new(
+        #     delete: :del,
+        #     if_equal_to: :compare
+        #   )
+        #   input = [
+        #     {del: "a", compare: "b"},
+        #     {del: "c", compare: "c"}
+        #   ]
+        #   result = Kiba::StreamingRunner.transform_stream(input, xform)
+        #     .map{ |row| row }
+        #   expected = [
+        #     {del: "a", compare: "b"},
+        #     {del: nil, compare: "c"}
+        #   ]
+        #   expect(result).to eq(expected)
+        #   # Notes
+        #   #
+        #   # The first row is left alone because a != b.
+        #   #
+        #   # In the second row, c is deleted from `del` because the value of
+        #   #   `compare` is also c.
         #
-        # Input table:
+        # @example Even multival grouped fields, case insensitive
+        #   # Used in pipeline as:
+        #   # transform Delete::FieldValueIfEqualsOtherField,
+        #   #    delete: :del, if_equal_to: :compare, multival: true,
+        #   #    delim: ";", grouped_fields: %i[grpa grpb],
+        #   #    casesensitive: false
+        #   xform = Delete::FieldValueIfEqualsOtherField.new(
+        #     delete: :del,
+        #     if_equal_to: :compare,
+        #     multival: true,
+        #     delim: ";",
+        #     grouped_fields: %i[grpa grpb],
+        #     casesensitive: false
+        #   )
+        #   input = [
+        #     {row: "1", del: "A;C;d;c;e", compare: "c", grpa: "y;x;w;u;v",
+        #      grpb: "e;f;g;h;i"},
+        #     {row: "2", del: "a;b;c", compare: "a;z;c", grpa: "d;e;f",
+        #      grpb: "g;h;i"},
+        #     {row: "3", del: "a", compare: "a;b", grpa: "d", grpb: "g"},
+        #     {row: "4", del: "a", compare: "b", grpa: "z", grpb: "q"},
+        #     {row: "5", del: "a", compare: "a", grpa: "z", grpb: "q"}
+        #   ]
+        #   result = Kiba::StreamingRunner.transform_stream(input, xform)
+        #     .map{ |row| row }
+        #   expected = [
+        #     {row: "1", del: "A;d;e", compare: "c", grpa: "y;w;v",
+        #       grpb: "e;g;i"},
+        #     {row: "2", del: "b", compare: "a;z;c", grpa: "e", grpb: "h"},
+        #     {row: "3", del: nil, compare: "a;b", grpa: nil, grpb: nil},
+        #     {row: "4", del: "a", compare: "b", grpa: "z", grpb: "q"},
+        #     {row: "5", del: nil, compare: "a", grpa: nil, grpb: nil}
+        #   ]
+        #   expect(result).to eq(expected)
+        #   # ROW 1
+        #   # If `compare` is a single value, all individual values in `del`
+        #   #   are compared to the single `compare` value.
+        #   #
+        #   # In `del` field, elements 1 (C) and 3 (c) are case-insensitive
+        #   #   matches on the value in `compare`. Thus, elements 1 and 3 are
+        #   #   removed from `del` and both grouped fields.
+        #   #
+        #   # ROW 2
+        #   # If `compare` has multiple values, the values of `del` and
+        #   #   `compare` are compared positionally.
+        #   #
+        #   # Element 0 is a match (a in both). Element 1 is not (b != z).
+        #   #   Element 2 is a match (c in both).
+        #   #
+        #   # Elements 0 and 2 are removed `del` and all grouped fields.
+        #   #
+        #   # ROW 3
+        #   # `compare` is multivalued, so `del` is compared positionally
+        #   #   against `compare`, though `del` (and the grouped fields) are
+        #   #   single valued.
+        #   #
+        #   # When all values are removed from a field, `nil` is returned.
+        #   #
+        #   # ROW 4
+        #   # a != b, so row is returned unmodified.
+        #   #
+        #   # ROW 5
+        #   # a = a, so a (Element 0) is removed from `del`. Element 0 is then
+        #   #   removed from the grouped fields.
         #
-        # ~~~
-        # | del | compare |
-        # |-----+---------|
-        # | a   | b       |
-        # | c   | c       |
-        # ~~~
+        # @example Ragged multival grouped fields, case insensitive
+        #   # Used in pipeline as:
+        #   # transform Delete::FieldValueIfEqualsOtherField,
+        #   #    delete: :del, if_equal_to: :compare, multival: true,
+        #   #    delim: ";", grouped_fields: %i[grpa grpb],
+        #   #    casesensitive: false
+        #   xform = Delete::FieldValueIfEqualsOtherField.new(
+        #     delete: :del,
+        #     if_equal_to: :compare,
+        #     multival: true,
+        #     delim: ";",
+        #     grouped_fields: %i[grpa grpb],
+        #     casesensitive: false
+        #   )
+        #   input = [
+        #     {del: "A;C;d;e;c", compare: "c", grpa: "y;x;w;u",
+        #       grpb: "e;f;g;h;i"}
+        #   ]
+        #   result = Kiba::StreamingRunner.transform_stream(input, xform)
+        #     .map{ |row| row }
+        #   expected = [
+        #     {del: "A;d;e", compare: "c", grpa: "y;w;u", grpb: "e;g;h"}
+        #   ]
+        #   expect(result).to eq(expected)
+        #   # This triggers a warning printed to STDOUT, which may trigger you
+        #   #   to examine the input data:
         #
-        # Used in pipeline as:
+        #   # ~~~
+        #   # KIBA WARNING: One or more grouped fields (grpa, grpb) has
+        #   #   different number of values than the others in {:del=>"A;d;e",
+        #   #   :compare=>"c", :grpa=>"y;x;w;u", :grpb=>"e;f;g;h;i"}
+        #   # ~~~
         #
-        # ~~~
-        # transform Delete::FieldValueIfEqualsOtherField, delete: :del, if_equal_to: :compare
-        # ~~~
+        #   # If `del` had 4 elements and one or more of the grouped fields had
+        #   #   a different number of elements, this would be handled similarly,
+        #   #   with a slightly different warning.
         #
-        # Results in:
-        #
-        # ~~~
-        # | del | compare |
-        # |-----+---------|
-        # | a   | b       |
-        # | nil | c       |
-        # ~~~
-        #
-        # ### Notes
-        #
-        # The first row is left alone because a != b.
-        #
-        # In the second row, c is deleted from `del` because the value of `compare` is also c.
-        #
-        # ## Complex example
-        #
-        # This introduces handling of multivalued grouped fields with case insensitive matching.
-        #
-        # Used in pipeline as:
-        #
-        # ~~~
-        # transform Delete::FieldValueIfEqualsOtherField,
-        #   delete: :del,
-        #   if_equal_to: :compare,
-        #   multival: true,
-        #   delim: ';',
-        #   grouped_fields: %i[grpa grpb],
-        #   casesensitive: false
-        # ~~~
-        #
-        # Input table:
-        #
-        # ~~~
-        # | row | del       | compare | grpa      | grpb      |
-        # |-----+-----------+---------+-----------+-----------|
-        # | 1   | A;C;d;c;e | c       | y;x;w;u;v | e;f;g;h;i |
-        # | 2   | a;b;c     | a;z;c   | d;e;f     | g;h;i     |
-        # | 3   | a         | a;b     | d         | g         |
-        # | 4   | a         | b       | z         | q         |
-        # | 5   | a         | a       | z         | q         |
-        # ~~~
-        #
-        # Results in:
-        #
-        # ~~~
-        # | row | del   | compare | grpa  | grpb  |
-        # |-----+-------+---------+-------+-------|
-        # | 1   | A;d;e | c       | y;w;v | e;g;i |
-        # | 2   | b     | a;z;c   | e     | h     |
-        # | 3   | nil   | a;b     | nil   | nil   |
-        # | 4   | a     | b       | z     | q     |
-        # | 5   | nil   | a       | nil   | nil   |
-        # ~~~
-        #
-        # ### Notes
-        # #### Row 1
-        # **If `compare` is a single value, all individual values in `del` are compared to the single `compare` value.**
-        #
-        # In `del` field, elements 1 (C) and 3 (c) are case-insensitive matches on the value in `compare`. Thus,
-        #   elements 1 and 3 are removed from `del` and both grouped fields.
-        #
-        # #### Row 2
-        # **If `compare` has multiple values, the values of `del` and `compare` are compared positionally.**
-        #
-        # Element 0 is a match (a in both). Element 1 is not (b != z). Element 2 is a match (c in both).
-        #
-        # Elements 0 and 2 are removed `del` and all grouped fields.
-        #
-        # #### Row 3
-        # `compare` is multivalued, so `del` is compared positionally against `compare`, though `del` (and
-        #   the grouped fields) are single valued.
-        #
-        # When all values are removed from a field, `nil` is returned.
-        #
-        # #### Row 4
-        # a != b, so row is returned unmodified.
-        #
-        # #### Row 5
-        # a = a, so a (Element 0) is removed from `del`. Element 0 is then removed from the grouped fields.
-        #
-        # ## Group length mismatch: ragged groups
-        #
-        # This introduces handling of multivalued grouped fields if fields grouped together have differnt numbers of
-        #   values.
-        #
-        # Used in pipeline as:
-        #
-        # ~~~
-        # transform Delete::FieldValueIfEqualsOtherField,
-        #   delete: :del,
-        #   if_equal_to: :compare,
-        #   multival: true,
-        #   delim: ';',
-        #   grouped_fields: %i[grpa grpb],
-        #   casesensitive: false
-        # ~~~
-        #
-        # Input table:
-        #
-        # ~~~
-        # | del       | compare | grpa    | grpb      |
-        # |-----------+---------+---------+-----------|
-        # | A;C;d;e;c | c       | y;x;w;u | e;f;g;h;i |
-        # ~~~
-        #
-        # Results in:
-        #
-        # ~~~
-        # | del   | compare | grpa  | grpb  |
-        # |-------+---------+-------+-------|
-        # | A;d;e | c       | y;w;u | e;g;h |
-        # ~~~
-        #
-        # And a warning printed to STDOUT, which may trigger you to examine the input data:
-        #
-        # ~~~
-        # KIBA WARNING: One or more grouped fields (grpa, grpb) has different number of values than the others
-        # in {:del=>"A;d;e", :compare=>"c", :grpa=>"y;x;w;u", :grpb=>"e;f;g;h;i"}
-        # ~~~
-        #
-        # **If `del` had 4 elements and one or more of the grouped fields had a different number of elements,
-        #   this would be handled similarly, with a slightly different warning.**
-        #
-        # ### Notes
-        # `grpa` has 4 values, while `grpb` has 5.
-        #
-        # Elements 1 and 4 from `del` match `compare`, so they are deleted. Those elements are also deleted from
-        #   the grouped fields if present.
-        #
+        #   # `grpa` has 4 values, while `grpb` has 5.
+        #   #
+        #   # Elements 1 and 4 from `del` match `compare`, so they are deleted.
+        #   #   Those elements are also deleted from the grouped fields if
+        #   #   present.
         class FieldValueIfEqualsOtherField
           # @param delete [Symbol] field from which values will be deleted
           # @param if_equal_to [Symbol] field the `delete` values will be
