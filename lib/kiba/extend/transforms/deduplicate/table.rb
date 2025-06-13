@@ -127,6 +127,33 @@ module Kiba
         #     {foo: "c", bar: "e", baz: "h", examples: "h", occurrences: 1},
         #   ]
         #   expect(result).to eq(expected)
+        #
+        # @example Compiling unique field values into one field
+        #   # Used in pipeline as:
+        #   # transform Deduplicate::Table,
+        #   #   field: :combine,
+        #   #   delete_field: true,
+        #   #   compile_uniq_fieldvals: true,
+        #   #   compile_delim: ", "
+        #   xform = Deduplicate::Table.new(field: :combine, delete_field: true,
+        #     compile_uniq_fieldvals: true, compile_delim: ", ")
+        #   input = [
+        #     {foo: "a", bar: "b", baz: "f", combine: "a b"},
+        #     {foo: "a", bar: "b", baz: "f", combine: "a b"},
+        #     {foo: "c", bar: "d", baz: "g", combine: "c d"},
+        #     {foo: "c", bar: "e", baz: "h", combine: "c e"},
+        #     {foo: "c", bar: "d", baz: "i", combine: "c d"},
+        #     {foo: "c", bar: "d", baz: "j", combine: "c d"},
+        #     {foo: "c", bar: "d", baz: "k", combine: "c d"}
+        #   ]
+        #   result = Kiba::StreamingRunner.transform_stream(input, xform)
+        #     .map{ |row| row }
+        #   expected = [
+        #     {foo: "a", bar: "b", baz: "f"},
+        #     {foo: "c", bar: "d", baz: "g, i, j, k"},
+        #     {foo: "c", bar: "e", baz: "h"},
+        #   ]
+        #   expect(result).to eq(expected)
         # @since 2.2.0
         class Table
           # @param field [Symbol] name of field on which to deduplicate
@@ -143,10 +170,17 @@ module Kiba
           #   occurrences of each field value being deduplicated on
           # @param occs_target_field [Symbol] name of field in which to report
           #   occurrences
+          # @param compile_uniq_fieldvals [Boolean] whether to compile all
+          #   unique values of each field across duplicate row set into the row
+          #   that is kept. Values of each field are concatenated in order of
+          #   row occurrence, then deduplicated
+          # @param compile_delim [String] used to join compiled unique field
+          #   values
           def initialize(field:, delete_field: false, example_source_field: nil,
             max_examples: 10, example_target_field: :examples,
             example_delim: Kiba::Extend.delim,
-            include_occs: false, occs_target_field: :occurrences)
+            include_occs: false, occs_target_field: :occurrences,
+            compile_uniq_fieldvals: false, compile_delim: Kiba::Extend.delim)
             @field = field
             @deduper = {}
             @delete = delete_field
@@ -156,6 +190,8 @@ module Kiba
             @delim = example_delim
             @occs = include_occs
             @occ_target = occs_target_field
+            @compile_uniq_fieldvals = compile_uniq_fieldvals
+            @compile_delim = compile_delim
           end
 
           # @param row [Hash{ Symbol => String, nil }]
@@ -166,6 +202,7 @@ module Kiba
             get_row(field_val, row)
             get_occ(field_val, row) if occs
             get_example(field_val, row) if example
+            compile_values(field_val, row) if compile_uniq_fieldvals
             nil
           end
 
@@ -175,6 +212,11 @@ module Kiba
               add_example_field(row, hash) if example
               row[occ_target] = hash[:occs] if occs
               row.delete(field) if delete
+              if compile_uniq_fieldvals
+                row = row.map do |field, _val|
+                  [field, hash[:fieldvals][field].join(compile_delim)]
+                end.to_h
+              end
               yield row
             end
           end
@@ -182,7 +224,8 @@ module Kiba
           private
 
           attr_reader :field, :deduper, :delete, :example, :max_examples,
-            :ex_target, :delim, :occs, :occ_target
+            :ex_target, :delim, :occs, :occ_target, :compile_uniq_fieldvals,
+            :compile_delim
 
           def get_row(field_val, row)
             return if deduper.key?(field_val)
@@ -190,7 +233,14 @@ module Kiba
             hash = {row: row}
             hash[:examples] = [] if example
             hash[:occs] = 0 if occs
+            hash[:fieldvals] = set_up_fieldvals(row) if compile_uniq_fieldvals
             deduper[field_val] = hash
+          end
+
+          def set_up_fieldvals(row)
+            thisrow = row.dup
+            thisrow.delete(field)
+            thisrow.map { |field, val| [field, Set[val]] }.to_h
           end
 
           def get_occ(field_val, row) = deduper[field_val][:occs] += 1
@@ -199,6 +249,14 @@ module Kiba
             return if deduper[field_val][:examples].length == max_examples
 
             deduper[field_val][:examples] << row[example]
+          end
+
+          def compile_values(field_val, row)
+            target = deduper[field_val][:fieldvals]
+            row.each do |f, v|
+              next if f == field
+              target[f] << v
+            end
           end
 
           def add_example_field(row, hash)
