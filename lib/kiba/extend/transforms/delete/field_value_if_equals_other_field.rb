@@ -1,17 +1,20 @@
 # frozen_string_literal: true
 
-# rubocop:todo Layout/LineLength
-
 module Kiba
   module Extend
     module Transforms
       module Delete
-        # Deletes value in `delete` field if that value matches value in `if_equal_to` field. Opinionated treatment
-        #   of multivalued fields described below. Case sensitive or insensitive matching options. Can also delete
-        #   associated field values (by position) in additional grouped fields. This is useful, for example,
-        #   in maintaining the integrity of grouped/subgrouped multivalue fields in CollectionSpace.
+        # Deletes value in `delete` field if that value matches value
+        #   in `if_equal_to` field. Opinionated treatment of
+        #   multivalued fields described below. Case sensitive or
+        #   insensitive matching options. Can also delete associated
+        #   field values (by position) in additional grouped fields.
+        #   This is useful, for example, in maintaining the integrity
+        #   of grouped/subgrouped multivalue fields in
+        #   CollectionSpace.
         #
-        # **Note that the value of the `if_equal_to` field is never modified by this transform.**
+        # **Note that the value of the `if_equal_to` field is never modified by
+        #   this transform.**
         #
         # # Examples
         # ## Simple example
@@ -163,10 +166,14 @@ module Kiba
         #
         class FieldValueIfEqualsOtherField
           # @param delete [Symbol] field from which values will be deleted
-          # @param if_equal_to [Symbol] field the `delete` values will be compared to. In other words, the "other field"
-          # @param multival [Boolean] whether to split field values for comparison
-          # @param delim [String] on which to split if `multival`. Defaults to `Kiba::Extend.delim` if not provided.
-          # @param grouped_fields [Array<Symbol>] field(s) from which positionally corresponding values should also be removed
+          # @param if_equal_to [Symbol] field the `delete` values will be
+          #   compared to. In other words, the "other field"
+          # @param multival [Boolean] whether to split field values for
+          #   comparison
+          # @param delim [String] on which to split if `multival`. Defaults to
+          #   `Kiba::Extend.delim` if not provided.
+          # @param grouped_fields [Array<Symbol>] field(s) from which
+          #   positionally corresponding values should also be removed
           # @param casesensitive [Boolean] matching mode
           def initialize(delete:, if_equal_to:, multival: false, delim: nil,
             grouped_fields: [], casesensitive: true)
@@ -257,9 +264,11 @@ module Kiba
             grpfields = group.join(", ")
             case validation
             when :ragged_group_length
-              msg = "One or more grouped fields (#{grpfields}) has different number of values than the others"
+              msg = "One or more grouped fields (#{grpfields}) has different "\
+                "number of values than the others"
             when :orig_vs_group_length_mismatch
-              msg = "Grouped fields (#{grpfields}) have different number of values than #{delete} field"
+              msg = "Grouped fields (#{grpfields}) have different number of "\
+                "values than #{delete} field"
             end
             puts %(#{Kiba::Extend.warning_label}: #{msg} in #{row})
           end
@@ -277,4 +286,3 @@ module Kiba
     end
   end
 end
-# rubocop:enable Layout/LineLength
