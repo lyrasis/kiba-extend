@@ -5,86 +5,128 @@ module Kiba
     module Transforms
       module Deduplicate
         # Given a field on which to deduplicate, removes duplicate
-        #   rows from table
+        #   rows from table. The first row of each set of rows containing the
+        #   same value in the given field. Various additional functionality
+        #   is configurable via the arguments passed to the transform. See
+        #   examples and {#initialize} for details.
         #
-        # Keeps the row with the first instance of the value in the
-        #   deduplicating field
-        #
-        # Tip: Use
-        #   {Kiba::Extend::Transforms::CombineValues::FromFieldsWithDelimiter}
-        #   or {Kiba::Extend::Transforms::CombineValues::FullRecord}
-        #   to create a combined field on which to deduplicate
+        # Tip: Use {CombineValues::FromFieldsWithDelimiter} or
+        #   {CombineValues::FullRecord} to create a combined field on
+        #   which to deduplicate
         #
         # @note This transform runs in memory, so for very large
         #   sources, it may take a long time or fail. In this case,
-        #   use a combination of {Flag} and
-        #   {Kiba::Extend::Transforms::FilterRows::FieldEqualTo}
+        #   use a combination of {Deduplicate::Flag} and
+        #   {FilterRows::FieldEqualTo}
         #
-        # Input table:
+        # @example With defaults
+        #   # Used in pipeline as:
+        #   # transform Deduplicate::Table, field: :combine
+        #   xform = Deduplicate::Table.new(field: :combine)
         #
-        # ~~~
-        # | foo | bar | baz |  combined |
-        # |-----------------------------|
-        # | a   | b   | f   | a b       |
-        # | c   | d   | g   | c d       |
-        # | c   | e   | h   | c e       |
-        # | c   | d   | i   | c d       |
-        # | c   | d   | j   | c d       |
-        # ~~~
+        #   input = [
+        #     {foo: "a", bar: "b", baz: "f", combine: "a b"},
+        #     {foo: "a", bar: "b", baz: "f", combine: "a b"},
+        #     {foo: "c", bar: "d", baz: "g", combine: "c d"},
+        #     {foo: "c", bar: "e", baz: "h", combine: "c e"},
+        #     {foo: "c", bar: "d", baz: "i", combine: "c d"},
+        #     {foo: "c", bar: "d", baz: "j", combine: "c d"},
+        #     {foo: "c", bar: "d", baz: "k", combine: "c d"}
+        #   ]
+        #   result = Kiba::StreamingRunner.transform_stream(input, xform)
+        #     .map{ |row| row }
+        #   expected = [
+        #     {foo: "a", bar: "b", baz: "f", combine: "a b"},
+        #     {foo: "c", bar: "d", baz: "g", combine: "c d"},
+        #     {foo: "c", bar: "e", baz: "h", combine: "c e"},
+        #   ]
+        #   expect(result).to eq(expected)
         #
-        # Used in pipeline as:
+        # @example When delete_field == true
+        #   # Used in pipeline as:
+        #   # transform Deduplicate::Table,
+        #   #   field: :combine,
+        #   #   delete_field: true
+        #   xform = Deduplicate::Table.new(field: :combine, delete_field: true)
         #
-        # ~~~
-        # transform Deduplicate::Table, field: :combined, delete_field: true
-        # ~~~
+        #   input = [
+        #     {foo: "a", bar: "b", baz: "f", combine: "a b"},
+        #     {foo: "a", bar: "b", baz: "f", combine: "a b"},
+        #     {foo: "c", bar: "d", baz: "g", combine: "c d"},
+        #     {foo: "c", bar: "e", baz: "h", combine: "c e"},
+        #     {foo: "c", bar: "d", baz: "i", combine: "c d"},
+        #     {foo: "c", bar: "d", baz: "j", combine: "c d"},
+        #     {foo: "c", bar: "d", baz: "k", combine: "c d"}
+        #   ]
+        #   result = Kiba::StreamingRunner.transform_stream(input, xform)
+        #     .map{ |row| row }
+        #   expected = [
+        #     {foo: "a", bar: "b", baz: "f"},
+        #     {foo: "c", bar: "d", baz: "g"},
+        #     {foo: "c", bar: "e", baz: "h"},
+        #   ]
+        #   expect(result).to eq(expected)
         #
-        # Results in:
+        # @example Gathering examples
+        #   # Used in pipeline as:
+        #   # transform Deduplicate::Table,
+        #   #   field: :combine,
+        #   #   delete_field: true,
+        #   #   example_source_field: :baz,
+        #   #   max_examples: 2,
+        #   #   example_target_field: :ex,
+        #   #   example_delim: " ; "
+        #   xform = Deduplicate::Table.new(field: :combine, delete_field: true,
+        #     example_source_field: :baz, max_examples: 2,
+        #     example_target_field: :ex, example_delim: " ; ")
         #
-        # ~~~
-        # | foo | bar | baz |
-        # |-----------------|
-        # | a   | b   | f   |
-        # | c   | d   | g   |
-        # | c   | e   | h   |
-        # ~~~
+        #   input = [
+        #     {foo: "a", bar: "b", baz: "f", combine: "a b"},
+        #     {foo: "a", bar: "b", baz: "f", combine: "a b"},
+        #     {foo: "c", bar: "d", baz: "g", combine: "c d"},
+        #     {foo: "c", bar: "e", baz: "h", combine: "c e"},
+        #     {foo: "c", bar: "d", baz: "i", combine: "c d"},
+        #     {foo: "c", bar: "d", baz: "j", combine: "c d"},
+        #     {foo: "c", bar: "d", baz: "k", combine: "c d"}
+        #   ]
+        #   result = Kiba::StreamingRunner.transform_stream(input, xform)
+        #     .map{ |row| row }
+        #   expected = [
+        #     {foo: "a", bar: "b", baz: "f", ex: "f ; f"},
+        #     {foo: "c", bar: "d", baz: "g", ex: "g ; i"},
+        #     {foo: "c", bar: "e", baz: "h", ex: "h"},
+        #   ]
+        #   expect(result).to eq(expected)
         #
-        # Used in pipeline as:
-        #
-        # ~~~
-        # transform Deduplicate::Table, field: :combined, delete_field: true,
-        #   example_source_field: :baz, max_examples: 2,
-        #   example_target_field: :ex, example_delim: ";"
-        # ~~~
-        #
-        # Results in:
-        #
-        # ~~~
-        # | foo | bar | baz | ex |
-        # |-----------------|----|
-        # | a   | b   | f   | f  |
-        # | c   | d   | g   | g;i|
-        # | c   | e   | h   | h  |
-        # ~~~
-        #
-        #
-        # Used in pipeline as:
-        #
-        # ~~~
-        # transform Deduplicate::Table, field: :combined, delete_field: true,
-        #   example_source_field: :baz, max_examples: 2,
-        #   example_target_field: :ex, example_delim: ";", include_occs: true
-        # ~~~
-        #
-        # Results in:
-        #
-        # ~~~
-        # | foo | bar | baz | ex | occurrences |
-        # |-----------------|----|-------------|
-        # | a   | b   | f   | f  | 1           |
-        # | c   | d   | g   | g;i| 3           |
-        # | c   | e   | h   | h  | 1           |
-        # ~~~
-        #
+        # @example Reporting occurrence count
+        #   # Used in pipeline as:
+        #   # transform Deduplicate::Table,
+        #   #   field: :combine,
+        #   #   delete_field: true,
+        #   #   example_source_field: :baz,
+        #   #   max_examples: 2,
+        #   #   include_occs: true
+        #   xform = Deduplicate::Table.new(field: :combine, delete_field: true,
+        #     example_source_field: :baz, max_examples: 2,
+        #     include_occs: true
+        #   )
+        #   input = [
+        #     {foo: "a", bar: "b", baz: "f", combine: "a b"},
+        #     {foo: "a", bar: "b", baz: "f", combine: "a b"},
+        #     {foo: "c", bar: "d", baz: "g", combine: "c d"},
+        #     {foo: "c", bar: "e", baz: "h", combine: "c e"},
+        #     {foo: "c", bar: "d", baz: "i", combine: "c d"},
+        #     {foo: "c", bar: "d", baz: "j", combine: "c d"},
+        #     {foo: "c", bar: "d", baz: "k", combine: "c d"}
+        #   ]
+        #   result = Kiba::StreamingRunner.transform_stream(input, xform)
+        #     .map{ |row| row }
+        #   expected = [
+        #     {foo: "a", bar: "b", baz: "f", examples: "f|f", occurrences: 2},
+        #     {foo: "c", bar: "d", baz: "g", examples: "g|i", occurrences: 4},
+        #     {foo: "c", bar: "e", baz: "h", examples: "h", occurrences: 1},
+        #   ]
+        #   expect(result).to eq(expected)
         # @since 2.2.0
         class Table
           # @param field [Symbol] name of field on which to deduplicate
