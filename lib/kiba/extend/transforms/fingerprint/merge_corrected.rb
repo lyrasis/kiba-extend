@@ -125,8 +125,9 @@ module Kiba
           # @param keycolumn [Symbol] the name of the field containing
           #   fingerprint values in data into which corrections will be
           #   merged
-          # @param lookup [Hash] created by {Utils::Lookup.csv_to_hash} or
-          #   any method producing a Hash with the same structure
+          # @param lookup [Hash] created by
+          #   {Kiba::Extend::Utils::Lookup.csv_to_hash} or any method producing
+          #   a Hash with the same structure
           # @param todofield [Symbol] name of field (in lookup table) containing
           #   list of fields from which corrections should be merged in. This
           #   would the `target` parameter passed to the {FlagChanged} transform
