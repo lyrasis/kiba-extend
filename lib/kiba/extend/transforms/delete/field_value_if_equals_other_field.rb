@@ -198,6 +198,25 @@ module Kiba
           attr_reader :delete, :compare, :multival, :delim, :group,
             :casesensitive
 
+          def prepare_val(field, row, type = :final)
+            val = row.fetch(field)
+            return nil if val.blank?
+
+            if type == :final
+              split = multival ? val.split(delim) : [val]
+              return split
+            end
+
+            norm_val = casesensitive ? val : val.downcase
+            multival ? norm_val.split(delim) : [norm_val]
+          end
+
+          def get_compare_method(del_val, compare_val)
+            return :compare_against_single_value if compare_val.length == 1
+
+            :compare_against_multi_value
+          end
+
           def compare_against_multi_value(del_val, compare_val)
             to_del = []
             del_val.each_with_index do |val, i|
@@ -222,27 +241,17 @@ module Kiba
             vals.join(delim)
           end
 
-          def get_compare_method(del_val, compare_val)
-            return :compare_against_single_value if compare_val.length == 1
-
-            :compare_against_multi_value
-          end
-
           def grouped?
             !group.empty?
           end
 
-          def prepare_val(field, row, type = :final)
-            val = row.fetch(field)
-            return nil if val.blank?
+          def validate_groups(groups, orig_del_val)
+            orig_length = orig_del_val.length
+            lengths = groups.map(&:length).uniq
+            return :valid if lengths.length == 1 || orig_length == lengths.first
+            return :ragged_group_length if lengths.length > 1
 
-            if type == :final
-              split = multival ? val.split(delim) : [val]
-              return split
-            end
-
-            norm_val = casesensitive ? val : val.downcase
-            multival ? norm_val.split(delim) : [norm_val]
+            :orig_vs_group_length_mismatch
           end
 
           def report_group_issue(validation, row)
@@ -256,15 +265,6 @@ module Kiba
                 "values than #{delete} field"
             end
             puts %(#{Kiba::Extend.warning_label}: #{msg} in #{row})
-          end
-
-          def validate_groups(groups, orig_del_val)
-            orig_length = orig_del_val.length
-            lengths = groups.map(&:length).uniq
-            return :valid if lengths.length == 1 || orig_length == lengths.first
-            return :ragged_group_length if lengths.length > 1
-
-            :orig_vs_group_length_mismatch
           end
         end
       end
