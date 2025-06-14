@@ -106,16 +106,19 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Prints single warning to STDOUT if the value of the given field does not match match the given value
-  in any rows</p>
+    <p>Prints single warning to STDOUT if the value of the given
+  field does not match match the given value in any rows</p>
 
-<p>Useful for getting notification that assumptions made during initial transformation development
-  have changed in subsequent data.</p>
+<p>Useful for getting notification that assumptions made during
+  initial transformation development have changed in
+  subsequent data.</p>
 
-<p>Uses <span class='object_link'><a href="../../Utils/FieldValueMatcher.html" title="Kiba::Extend::Utils::FieldValueMatcher (class)">Utils::FieldValueMatcher</a></span> to determine whether value matches. See that class’ documentation
-  for examples/more details on parameters.</p>
+<p>Uses <span class='object_link'><a href="../../Utils/FieldValueMatcher.html" title="Kiba::Extend::Utils::FieldValueMatcher (class)">Utils::FieldValueMatcher</a></span> to determine whether value
+  matches. See that class’ documentation for examples/more
+  details on parameters.</p>
 
-<p>This transform warns if <span class='object_link'><a href="../../Utils/FieldValueMatcher.html" title="Kiba::Extend::Utils::FieldValueMatcher (class)">Utils::FieldValueMatcher</a></span> does not find a match</p>
+<p>This transform warns if <span class='object_link'><a href="../../Utils/FieldValueMatcher.html" title="Kiba::Extend::Utils::FieldValueMatcher (class)">Utils::FieldValueMatcher</a></span> does not find a
+  match</p>
 
 
   </div>
@@ -280,7 +283,8 @@
       
       
         &mdash;
-        <div class='inline'><p>If <code>:regex</code>, string is converted to a regular expression</p>
+        <div class='inline'><p>If <code>:regex</code>, string is converted
+to a regular expression</p>
 </div>
       
     </li>
@@ -297,8 +301,9 @@
       
       
         &mdash;
-        <div class='inline'><p>if a String is given, triggers multivalue matching, where field value is
-split and the match is run against each resulting value</p>
+        <div class='inline'><p>if a String is given, triggers multivalue
+matching, where field value is split and the match is run against
+each resulting value</p>
 </div>
       
     </li>
@@ -315,7 +320,8 @@ split and the match is run against each resulting value</p>
       
       
         &mdash;
-        <div class='inline'><p>if given, the string will be converted to empty string for matching</p>
+        <div class='inline'><p>if given, the string will be
+converted to empty string for matching</p>
 </div>
       
     </li>
@@ -349,7 +355,8 @@ split and the match is run against each resulting value</p>
       
       
         &mdash;
-        <div class='inline'><p>whether to strip leading/trailing spaces from values for matching</p>
+        <div class='inline'><p>whether to strip leading/trailing spaces
+from values for matching</p>
 </div>
       
     </li>
@@ -366,7 +373,8 @@ split and the match is run against each resulting value</p>
       
       
         &mdash;
-        <div class='inline'><p>See <span class='object_link'><a href="../../Utils/FieldValueMatcher.html" title="Kiba::Extend::Utils::FieldValueMatcher (class)">Utils::FieldValueMatcher</a></span></p>
+        <div class='inline'><p>See
+<span class='object_link'><a href="../../Utils/FieldValueMatcher.html" title="Kiba::Extend::Utils::FieldValueMatcher (class)">Utils::FieldValueMatcher</a></span></p>
 </div>
       
     </li>
@@ -395,29 +403,31 @@ split and the match is run against each resulting value</p>
       <pre class="lines">
 
 
-33
-34
-35
-36
-37
-38
 39
 40
 41
 42
-43</pre>
+43
+44
+45
+46
+47
+48
+49
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/warn/unless_field_value_matches.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/warn/unless_field_value_matches.rb', line 39</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>field:</span><span class='comma'>,</span> <span class='label'>match:</span><span class='comma'>,</span> <span class='label'>matchmode:</span> <span class='symbol'>:plain</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>treat_as_null:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>casesensitive:</span> <span class='kw'>true</span><span class='comma'>,</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>field:</span><span class='comma'>,</span> <span class='label'>match:</span><span class='comma'>,</span> <span class='label'>matchmode:</span> <span class='symbol'>:plain</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+  <span class='label'>treat_as_null:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>casesensitive:</span> <span class='kw'>true</span><span class='comma'>,</span>
   <span class='label'>strip:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>multimode:</span> <span class='symbol'>:all</span><span class='rparen'>)</span>
   <span class='ivar'>@field</span> <span class='op'>=</span> <span class='id identifier rubyid_field'>field</span>
   <span class='ivar'>@match</span> <span class='op'>=</span> <span class='id identifier rubyid_match'>match</span>
   <span class='ivar'>@matcher</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Utils.html" title="Kiba::Extend::Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Utils/FieldValueMatcher.html" title="Kiba::Extend::Utils::FieldValueMatcher (class)">FieldValueMatcher</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../Utils/FieldValueMatcher.html#initialize-instance_method" title="Kiba::Extend::Utils::FieldValueMatcher#initialize (method)">new</a></span></span><span class='lparen'>(</span>
     <span class='label'>field:</span> <span class='id identifier rubyid_field'>field</span><span class='comma'>,</span> <span class='label'>match:</span> <span class='id identifier rubyid_match'>match</span><span class='comma'>,</span> <span class='label'>matchmode:</span> <span class='id identifier rubyid_matchmode'>matchmode</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='comma'>,</span>
-    <span class='label'>treat_as_null:</span> <span class='id identifier rubyid_treat_as_null'>treat_as_null</span><span class='comma'>,</span> <span class='label'>casesensitive:</span> <span class='id identifier rubyid_casesensitive'>casesensitive</span><span class='comma'>,</span> <span class='label'>strip:</span> <span class='id identifier rubyid_strip'>strip</span><span class='comma'>,</span>
-    <span class='label'>multimode:</span> <span class='id identifier rubyid_multimode'>multimode</span>
+    <span class='label'>treat_as_null:</span> <span class='id identifier rubyid_treat_as_null'>treat_as_null</span><span class='comma'>,</span> <span class='label'>casesensitive:</span> <span class='id identifier rubyid_casesensitive'>casesensitive</span><span class='comma'>,</span>
+    <span class='label'>strip:</span> <span class='id identifier rubyid_strip'>strip</span><span class='comma'>,</span> <span class='label'>multimode:</span> <span class='id identifier rubyid_multimode'>multimode</span>
   <span class='rparen'>)</span>
   <span class='id identifier rubyid_setup_single_warning'>setup_single_warning</span>
 <span class='kw'>end</span></pre>
@@ -488,20 +498,20 @@ split and the match is run against each resulting value</p>
       <pre class="lines">
 
 
-46
-47
-48
-49
-50
-51
-52
 53
 54
 55
-56</pre>
+56
+57
+58
+59
+60
+61
+62
+63</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/warn/unless_field_value_matches.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/warn/unless_field_value_matches.rb', line 53</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='kw'>return</span> <span class='id identifier rubyid_row'>row</span> <span class='kw'>unless</span> <span class='id identifier rubyid_single_warnings'>single_warnings</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -524,7 +534,7 @@ split and the match is run against each resulting value</p>
 </div>
 
       <div id="footer">
-  Generated on Fri Jun 13 22:18:25 2025 by
+  Generated on Sat Jun 14 01:45:01 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>
