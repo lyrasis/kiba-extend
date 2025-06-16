@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:todo Layout/LineLength
-
 module Kiba
   module Extend
     module Transforms
@@ -130,4 +128,3 @@ module Kiba
     end
   end
 end
-# rubocop:enable Layout/LineLength
