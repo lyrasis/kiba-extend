@@ -34,6 +34,8 @@ For example, if the release version/tag is `3.2.1`, and PR# 107 is merged withou
 
 === Bugfixes
 
+* Error introduced in https://github.com/lyrasis/kiba-extend/pull/211[PR#211].
+In https://github.com/lyrasis/kiba-extend/pull/213[PR#213]
 === Added
 
 * `positional_compare` parameter to `Delete::FieldValueIfEqualsOtherField` transform
