@@ -40,7 +40,7 @@ module Kiba
         #     {index: 'Keet hatched'}
         #   ]
         #   expect(result).to eq(expected)
-        # @example With custom sources, target (with same name as a source field), and delim
+        # @example With custom sources, a source as target, and delim
         #   # Used in pipeline as:
         #   # transform CombineValues::FromFieldsWithDelimiter,
         #   #  sources: %i[name sex],
