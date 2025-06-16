@@ -141,10 +141,13 @@ module Kiba
         #     {foo: "a", bar: "b", baz: "f", combine: "a b"},
         #     {foo: "a", bar: "b", baz: "f", combine: "a b"},
         #     {foo: "c", bar: "d", baz: "g", combine: "c d"},
+        #     {foo: "c", bar: "d", baz: "", combine: "c d"},
         #     {foo: "c", bar: "e", baz: "h", combine: "c e"},
         #     {foo: "c", bar: "d", baz: "i", combine: "c d"},
         #     {foo: "c", bar: "d", baz: "j", combine: "c d"},
-        #     {foo: "c", bar: "d", baz: "k", combine: "c d"}
+        #     {foo: "c", bar: "d", baz: nil, combine: "c d"},
+        #     {foo: "c", bar: "d", baz: "k", combine: "c d"},
+        #     {foo: "e", bar: "f", baz: nil, combine: "e f"}
         #   ]
         #   result = Kiba::StreamingRunner.transform_stream(input, xform)
         #     .map{ |row| row }
@@ -152,6 +155,7 @@ module Kiba
         #     {foo: "a", bar: "b", baz: "f"},
         #     {foo: "c", bar: "d", baz: "g, i, j, k"},
         #     {foo: "c", bar: "e", baz: "h"},
+        #     {foo: "e", bar: "f", baz: ""}
         #   ]
         #   expect(result).to eq(expected)
         # @since 2.2.0
@@ -213,9 +217,11 @@ module Kiba
               row[occ_target] = hash[:occs] if occs
               row.delete(field) if delete
               if compile_uniq_fieldvals
-                row = row.map do |field, _val|
-                  [field, hash[:fieldvals][field].join(compile_delim)]
-                end.to_h
+                row = row.map do |fld, _val|
+                  next if fld == field
+
+                  [fld, hash[:fieldvals][fld].join(compile_delim)]
+                end.compact.to_h
               end
               yield row
             end
@@ -254,7 +260,8 @@ module Kiba
           def compile_values(field_val, row)
             target = deduper[field_val][:fieldvals]
             row.each do |f, v|
-              next if f == field
+              next if f == field || v.blank?
+
               target[f] << v
             end
           end
