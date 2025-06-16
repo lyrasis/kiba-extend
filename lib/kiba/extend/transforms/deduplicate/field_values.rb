@@ -1,17 +1,16 @@
 # frozen_string_literal: true
 
-# rubocop:todo Layout/LineLength
-
 module Kiba
   module Extend
     module Transforms
       module Deduplicate
         # Removes duplicate values within the given field(s)
         #
-        # Processes one field at a time. Splits value on sep, and keeps only the unique values
+        # Processes one field at a time. Splits value on sep, and keeps only
+        #   the unique values
         #
-        # @note This is NOT safe for use with groupings of fields whose multi-values are expected
-        #   to be the same length
+        # @note This is NOT safe for use with groupings of fields
+        #   whose multi-values are expected to be the same length
         #
         # Input table:
         #
@@ -42,7 +41,8 @@ module Kiba
         # ~~~
         #
         class FieldValues
-          # @param fields [Array<Symbol>] names of fields in which to deduplicate values
+          # @param fields [Array<Symbol>] names of fields in which to
+          #   deduplicate values
           # @param sep [String] used to split/join multivalued field values
           def initialize(fields:, sep:)
             @fields = [fields].flatten
@@ -62,4 +62,3 @@ module Kiba
     end
   end
 end
-# rubocop:enable Layout/LineLength
