@@ -98,7 +98,7 @@ module Kiba
             @prepend = prepend_source_field_name
           end
 
-          # param row [Hash{ Symbol => String, nil }]
+          # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             finalize_fields(row) unless fields_set
 
