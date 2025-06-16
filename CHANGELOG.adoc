@@ -32,12 +32,18 @@ For example, if the release version/tag is `3.2.1`, and PR# 107 is merged withou
 
 === Breaking
 
+* Removal of `sep` parameter in `CombineValues::FromFieldsWithDelimiter` and `CombineValues::FullRecord`.
+In https://github.com/lyrasis/kiba-extend/pull/214[PR#214]
+
 === Bugfixes
 
 * Error introduced in https://github.com/lyrasis/kiba-extend/pull/211[PR#211].
 In https://github.com/lyrasis/kiba-extend/pull/213[PR#213]
+
 === Added
 
+* `deduplicate` parameter to `CombineValues::FromFieldsWithDelimiter`.
+In https://github.com/lyrasis/kiba-extend/pull/214[PR#214]
 * `positional_compare` parameter to `Delete::FieldValueIfEqualsOtherField` transform
 In https://github.com/lyrasis/kiba-extend/pull/212[PR#212]
 * Ability to make `Deduplicate::Table` compile all unique values of all fields in a duplicate row set, and write them into the kept row.
