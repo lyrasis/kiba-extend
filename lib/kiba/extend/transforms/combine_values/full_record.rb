@@ -76,8 +76,6 @@ module Kiba
         class FullRecord < FromFieldsWithDelimiter
           # @param target [Symbol] Field into which the combined value will be
           #   written. May be one of the source fields
-          # @param sep [String] Will be deprecated in a future version. Do not
-          #   use.
           # @param delim [String] Value used to separate individual field values
           #   in combined target field
           # @param prepend_source_field_name [Boolean] Whether to insert the
@@ -86,7 +84,7 @@ module Kiba
           #   after combining their values into the target field. If target
           #   field name is the same as one of the source fields, the target
           #   field is not deleted.
-          def initialize(target: :index, sep: nil, delim: nil,
+          def initialize(target: :index, delim: " ",
             prepend_source_field_name: false,
             delete_sources: false)
             super
