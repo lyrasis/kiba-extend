@@ -213,7 +213,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(target: :index, sep: nil, delim: nil, prepend_source_field_name: false, delete_sources: false)  &#x21d2; FullRecord </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(target: :index, delim: &quot; &quot;, prepend_source_field_name: false, delete_sources: false)  &#x21d2; FullRecord </a>
     
 
     
@@ -255,24 +255,13 @@
   
   
   
-  
-  
-  
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="../SepDeprecatable.html" title="Kiba::Extend::Transforms::SepDeprecatable (module)">SepDeprecatable</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../SepDeprecatable.html#usedelim-instance_method" title="Kiba::Extend::Transforms::SepDeprecatable#usedelim (method)">#usedelim</a></span></p>
-
-  
-  
-  
-  
-  
   <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(target: :index, sep: nil, delim: nil, prepend_source_field_name: false, delete_sources: false)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::CombineValues::FullRecord (class)">FullRecord</a></span></tt> 
+    #<strong>initialize</strong>(target: :index, delim: &quot; &quot;, prepend_source_field_name: false, delete_sources: false)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::CombineValues::FullRecord (class)">FullRecord</a></span></tt> 
   
 
   
@@ -309,31 +298,13 @@ written. May be one of the source fields</p>
   
     <li>
       
-        <span class='name'>sep</span>
-      
-      
-        <span class='type'>(<tt>String</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>nil</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'><p>Will be deprecated in a future version. Do not
-use.</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
         <span class='name'>delim</span>
       
       
         <span class='type'>(<tt>String</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>nil</tt>)</em>
+        <em class="default">(defaults to: <tt>&quot; &quot;</tt>)</em>
       
       
         &mdash;
@@ -390,16 +361,16 @@ field is not deleted.</p>
       <pre class="lines">
 
 
+87
+88
 89
 90
-91
-92
-93</pre>
+91</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/combine_values/full_record.rb', line 89</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/combine_values/full_record.rb', line 87</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>target:</span> <span class='symbol'>:index</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='kw'>nil</span><span class='comma'>,</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>target:</span> <span class='symbol'>:index</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
   <span class='label'>prepend_source_field_name:</span> <span class='kw'>false</span><span class='comma'>,</span>
   <span class='label'>delete_sources:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='kw'>super</span>
@@ -415,7 +386,7 @@ field is not deleted.</p>
 </div>
 
       <div id="footer">
-  Generated on Mon Jun 16 17:00:32 2025 by
+  Generated on Tue Jun 17 00:35:42 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>
