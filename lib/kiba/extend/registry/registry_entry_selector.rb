@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 
-# rubocop:todo Layout/LineLength
-
 module Kiba
   module Extend
     module Registry
-      # Used in Rake tasks in project application to identify particular files/jobs
-      #   to run or display information about
+      # Used in Rake tasks in project application to identify
+      #   particular files/jobs to run or display information about
       class RegistryEntrySelector
         # Registry entries created by a given class
         # @param cstr [String] stringified class name
@@ -57,4 +55,3 @@ module Kiba
     end
   end
 end
-# rubocop:enable Layout/LineLength
