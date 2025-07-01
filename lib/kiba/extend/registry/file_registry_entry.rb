@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:todo Layout/LineLength
-
 module Kiba
   module Extend
     module Registry
@@ -54,7 +52,10 @@ module Kiba
 
         def summary_creator
           lines = []
-          arr = creator.to_s.delete_prefix("#<Method: ").delete_suffix(">").split(" ")
+          arr = creator.to_s
+            .delete_prefix("#<Method: ")
+            .delete_suffix(">")
+            .split(" ")
           lines << "Job method: #{arr[0]}"
           lines << "Job defined at: #{arr[1]}"
           lines.map { |line| "#{summary_padding}#{line}" }.join("\n")
@@ -189,4 +190,3 @@ module Kiba
     end
   end
 end
-# rubocop:enable Layout/LineLength

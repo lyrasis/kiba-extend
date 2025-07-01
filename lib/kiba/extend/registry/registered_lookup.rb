@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:todo Layout/LineLength
-
 require_relative "registered_file"
 require_relative "requirable_file"
 
@@ -57,4 +55,3 @@ module Kiba
     end
   end
 end
-# rubocop:enable Layout/LineLength
