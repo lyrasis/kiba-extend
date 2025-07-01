@@ -35,9 +35,7 @@ module Kiba
           path.dirname
         end
 
-        # Printable string summarizing the Entry
-        #
-        # Called by project applications
+        # Printable string summarizing the Entry, called by project applications
         def summary
           lines = [summary_first_line]
           lines << "#{summary_padding}#{desc}" unless desc.blank?
