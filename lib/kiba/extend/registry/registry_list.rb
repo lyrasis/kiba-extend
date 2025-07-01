@@ -10,8 +10,18 @@ module Kiba
         # @param args [nil, Array<FileRegistryEntry>]
         def initialize(*args)
           puts ""
-          list = args.empty? ? Kiba::Extend.registry.entries : args.flatten
-          list.each { |entry| puts entry.summary }
+          list(args).each { |entry| puts entry.summary }
+        end
+
+        private
+
+        def list(args)
+          return args.flatten unless args.empty?
+
+          Kiba::Extend.registry
+            ._container
+            .values
+            .map(&:item)
         end
       end
     end
