@@ -67,8 +67,9 @@ module Kiba
           control
         end
 
-        def check_requirements
-          [@files[:source], @files[:lookup]].compact.flatten.each do |data|
+        # @param type [:source, :lookup]
+        def check_requirements(type)
+          @files[type].flatten.compact.each do |data|
             next unless data.path
             next if File.exist?(data.path)
 
@@ -86,17 +87,19 @@ module Kiba
           {klass: config.klass, args: config.args}
         end
 
-        def handle_requirements
-          [@files[:source], @files[:lookup]].compact
-            .flatten
+        # @param type [:source, :lookup]
+        def handle_requirements(type)
+          deps = @files[type]
+          return unless deps
+
+          deps.flatten
             .compact
             .each do |registered|
               next unless registered.required
 
               registered.required.call
             end
-
-          check_requirements
+          check_requirements(type)
         rescue MissingDependencyError => err
           puts "JOB FAILED: DEPENDENCY ERROR IN: #{err.calling_job}"
           err.info
