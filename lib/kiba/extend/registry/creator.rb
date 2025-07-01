@@ -11,6 +11,9 @@ module Kiba
 
         def initialize(spec)
           @spec = spec.is_a?(Proc) ? spec.call : spec
+          if Kiba::Extend.job_verbosity == :verbose
+            puts "Initializing Creator class for #{@spec}"
+          end
           @mod = nil
           @meth = nil
           @args = nil
