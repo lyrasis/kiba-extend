@@ -10,7 +10,7 @@ module Kiba
 
         def initialize(spec)
           @spec = spec.is_a?(Proc) ? spec.call : spec
-          if Kiba::Extend.job_verbosity == :verbose
+          if Kiba::Extend.job_verbosity == :debug
             puts "Initializing Creator class for #{@spec}"
           end
           @mod = nil

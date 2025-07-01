@@ -236,12 +236,14 @@ module Kiba
 
     # How much output about jobs to output to STDOUT
     #
-    # - :debug - tells you A LOT - helpful when developing pipelines and
-    #   debugging
+    # - :debug - everything from verbose, plus what is being registered,
+    #   transformed, etc
+    # - :verbose - reports what is running, from where, dependencies, and
+    #   results
     # - :normal - reports what is running, from where, and the results
     # - :minimal - bare minimum
     #
-    # @return [:debug, :normal, :minimal]
+    # @return %i[debug verbose normal minimal]
     setting :job_verbosity, default: :normal, reader: true
 
     # List of config modules in project namespaces set in {config_namespaces}
