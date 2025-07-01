@@ -117,9 +117,8 @@ module Kiba
         # Transforms registered file hashes into
         #   {Kiba::Extend::Registry::FileRegistryEntry} objects
         def transform
-          each { |key, val| decorate(key) { FileRegistryEntry.new(val) } }
+          each { |key, val| decorate(key) { FileRegistryEntry.new(key, val) } }
           @entries = populate_entries
-          each { |key, val| val.set_key(key) }
           verify_paths
         end
 

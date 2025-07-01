@@ -39,7 +39,7 @@ end
 # rubocop:disable Metrics/BlockLength
 RSpec.describe "Kiba::Extend::Registry::FileRegistryEntry" do
   let(:path) { File.join("spec", "fixtures", "fkey.csv") }
-  let(:entry) { Kiba::Extend::Registry::FileRegistryEntry.new(data) }
+  let(:entry) { Kiba::Extend::Registry::FileRegistryEntry.new(:job__key, data) }
 
   context "with MARC source" do
     let(:path) { File.join("spec", "fixtures", "harvard_open_data.mrc") }
