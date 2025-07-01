@@ -1,11 +1,10 @@
 # frozen_string_literal: true
 
-# rubocop:todo Layout/LineLength
-
 module Kiba
   module Extend
     module Registry
-      # Bundles up the logic/options of different ways of validating and calling registry entry creators
+      # Bundles up the logic/options of different ways of validating and
+      #   calling registry entry creators
       class Creator
         attr_reader :mod, :meth, :args
 
@@ -70,7 +69,11 @@ module Kiba
 
           @args = spec[:args]
           callee = spec[:callee]
-          callee.is_a?(Method) ? setup_method_spec(callee) : setup_module_spec(callee)
+          if callee.is_a?(Method)
+            setup_method_spec(callee)
+          else
+            setup_module_spec(callee)
+          end
         end
 
         def setup_method_spec(using = spec)
@@ -80,7 +83,9 @@ module Kiba
 
         def setup_module_spec(using = spec)
           default_job_method = Kiba::Extend.default_job_method_name
-          raise JoblessModuleCreatorError.new(using) unless using.private_method_defined?(default_job_method)
+          unless using.private_method_defined?(default_job_method)
+            raise JoblessModuleCreatorError.new(using)
+          end
 
           @mod = using
           @meth = default_job_method
@@ -89,4 +94,3 @@ module Kiba
     end
   end
 end
-# rubocop:enable Layout/LineLength

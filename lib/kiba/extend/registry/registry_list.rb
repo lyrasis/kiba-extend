@@ -1,14 +1,11 @@
 # frozen_string_literal: true
 
-# rubocop:todo Layout/LineLength
-
 module Kiba
   module Extend
     module Registry
-      # Utility class used by project applications to display information about a set of
-      #   registered files/jobs
-      #
-      # Puts to STDOUT
+      # Utility class used by project applications to display
+      #   information about a set of registered files/jobs. Puts to
+      #   STDOUT
       class RegistryList
         # @param args [Array<FileRegistryEntry>]
         def initialize(*args)
@@ -20,4 +17,3 @@ module Kiba
     end
   end
 end
-# rubocop:enable Layout/LineLength
