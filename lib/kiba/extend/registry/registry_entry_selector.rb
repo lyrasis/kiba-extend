@@ -3,12 +3,11 @@
 module Kiba
   module Extend
     module Registry
-      # Used in Rake tasks in project application to identify
+      # Used in Thor tasks in project application to identify
       #   particular files/jobs to run or display information about
       class RegistryEntrySelector
-        # Registry entries created by a given class
         # @param cstr [String] stringified class name
-        # @return [Array<FileRegistryEntry>]
+        # @return [Array<FileRegistryEntry>] created by a given class
         def created_by_class(cstr)
           with_creator.select { |entry| entry.creator.mod.to_s[cstr] }
         end
