@@ -104,6 +104,9 @@ module Kiba
           puts "JOB FAILED: DEPENDENCY ERROR IN: #{err.calling_job}"
           err.info
           exit
+        rescue => err
+          puts "JOB FAILED: Error handling #{type} file dependency for "\
+            "#{destination_key}: #{err.message}"
         end
 
         def lookups_to_memoized_methods
