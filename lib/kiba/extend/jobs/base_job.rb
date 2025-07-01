@@ -38,7 +38,10 @@ module Kiba
 
           unless mode == :info
             report_run_start # defined in Reporter
-            handle_requirements # defined in Runner
+            # defined in Runner
+            %i[source lookup].each do |type|
+              handle_requirements(type)
+            end
             @control = Kiba::Control.new
             @context = Kiba::Context.new(control)
             @transformer = transformer
