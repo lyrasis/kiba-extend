@@ -34,21 +34,28 @@ module Kiba
         # @param args [Array<Symbol>]
         # @return [Array<FileRegistryEntry>]
         def tagged_any(*args)
-          tags = args.flatten.map(&:to_sym)
-          results = tags.each_with_object([]) do |arg, arr|
-            arr << tagged(arg)
-          end
-          results.flatten.uniq
+          args.flatten
+            .map { |tag| tagged(tag.to_sym) }
+            .flatten
+            .uniq
         end
 
         private
 
         def tagged(tag)
-          Kiba::Extend.registry.entries.select { |entry| entry.tags.any?(tag) }
+          Kiba::Extend.registry
+            ._container
+            .values
+            .map { |entry| entry.item if entry.item.tags.any?(tag) }
+            .compact
         end
 
         def with_creator
-          Kiba::Extend.registry.entries.select { |entry| entry.creator }
+          Kiba::Extend.registry
+            ._container
+            .values
+            .map { |entry| entry.item if entry.item.creator }
+            .compact
         end
       end
     end
