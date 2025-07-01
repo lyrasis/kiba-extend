@@ -8,6 +8,9 @@ module Kiba
         def report_run_start
           @start = Time.now unless @dependency
           case Kiba::Extend.job_verbosity
+          when :debug
+            verbose_start
+            nil
           when :verbose
             verbose_start
             nil
@@ -22,6 +25,9 @@ module Kiba
         def report_run_end
           @duration = Time.now - @start unless @dependency
           case Kiba::Extend.job_verbosity
+          when :debug
+            verbose_end
+            nil
           when :verbose
             verbose_end
             nil
