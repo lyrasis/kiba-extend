@@ -44,6 +44,9 @@ module Kiba
         #    to be used as destination
         # @return [Kiba::Extend::Registry::RegisteredDestination]
         def as_destination(filekey, for_job)
+          if Kiba::Extend.job_verbosity == :verbose
+            puts "Registering #{filekey} as destination for #{for_job}"
+          end
           RegisteredDestination.new(
             key: filekey,
             data: lookup(filekey),
@@ -57,6 +60,9 @@ module Kiba
         #   as a lookup source
         # @return [Kiba::Extend::Registry::RegisteredLookup]
         def as_lookup(filekey, for_job)
+          if Kiba::Extend.job_verbosity == :verbose
+            puts "Registering #{filekey} as lookup for #{for_job}"
+          end
           RegisteredLookup.new(
             key: filekey,
             data: lookup(filekey),
@@ -70,6 +76,9 @@ module Kiba
         #   as a source
         # @return [Kiba::Extend::Registry::RegisteredSource]
         def as_source(filekey, for_job)
+          if Kiba::Extend.job_verbosity == :verbose
+            puts "Registering #{filekey} as source for #{for_job}"
+          end
           RegisteredSource.new(
             key: filekey,
             data: lookup(filekey),
@@ -111,12 +120,17 @@ module Kiba
         def finalize
           transform
           @frozen = true
+          puts "Registry is frozen!" if Kiba::Extend.job_verbosity == :verbose
           freeze
         end
 
         # Transforms registered file hashes into
         #   {Kiba::Extend::Registry::FileRegistryEntry} objects
         def transform
+          if Kiba::Extend.job_verbosity == :verbose
+            puts "Transforming registered jobs into FileRegistryEntries"
+          end
+
           each { |key, val| decorate(key) { FileRegistryEntry.new(key, val) } }
           @entries = populate_entries
           verify_paths
