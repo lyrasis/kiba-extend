@@ -93,6 +93,11 @@ module Kiba
           @entries ||= populate_entries
         end
 
+        # @param arr [Array<Hash>]
+        def replace_entries(arr)
+          @entries = arr
+        end
+
         # @param x [String] job_key to replace; this job_key will be retained,
         #   but its entry is deleted and replaced by the entry for job_key y
         # @param y [String] job_key whose entry is assigned to job_key x; this
@@ -132,7 +137,6 @@ module Kiba
           end
 
           each { |key, val| decorate(key) { FileRegistryEntry.new(key, val) } }
-          @entries = populate_entries
           verify_paths
         end
 
@@ -153,7 +157,9 @@ module Kiba
         end
 
         def make_missing_directories
-          @entries.select(&:valid?).map(&:dir).uniq.each do |dir|
+          _container.map do |_k, entry|
+            entry.item.dir if entry.item.valid?
+          end.compact.uniq.each do |dir|
             dir.mkdir unless dir.exist?
           end
         end
@@ -170,9 +176,9 @@ module Kiba
         end
 
         def verify_supplied_files_exist
-          @entries.select do |entry|
-            entry.supplied
-          end.map(&:path).uniq.each do |file|
+          _container.map do |_k, entry|
+            entry.item.path if entry.item.supplied
+          end.compact.uniq.each do |file|
             next if file.exist?
 
             puts "#{Kiba::Extend.warning_label}: Missing supplied "\
