@@ -22,7 +22,7 @@ class Runnable < Thor
     default: "normal",
     aliases: :v,
     desc: "How much info to print to screen",
-    enum: ["minimal", "normal", "verbose"]
+    enum: %w[minimal normal verbose debug]
 
   private
 
