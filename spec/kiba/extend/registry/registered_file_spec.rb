@@ -10,7 +10,7 @@ RSpec.describe "Kiba::Extend::Registry::RegisteredFile" do
   let(:dest) do
     Kiba::Extend::Registry::RegisteredFile.new(
       key: filekey,
-      data: Kiba::Extend::Registry::FileRegistryEntry.new(data),
+      data: Kiba::Extend::Registry::FileRegistryEntry.new(:job__key, data),
       for_job: :foo
     )
   end

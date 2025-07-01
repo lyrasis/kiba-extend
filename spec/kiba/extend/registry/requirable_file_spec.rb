@@ -15,7 +15,7 @@ RSpec.describe "Kiba::Extend::Registry::RequirableFile" do
   end
   let(:klass) do
     TestClass.new(key: filekey,
-      data: Kiba::Extend::Registry::FileRegistryEntry.new(data),
+      data: Kiba::Extend::Registry::FileRegistryEntry.new(:job__key, data),
       for_job: :foo)
   end
 
@@ -23,7 +23,7 @@ RSpec.describe "Kiba::Extend::Registry::RequirableFile" do
     let(:data) { {path: path} }
     let(:klass) do
       TestClass.new(key: filekey,
-        data: Kiba::Extend::Registry::FileRegistryEntry.new(data),
+        data: Kiba::Extend::Registry::FileRegistryEntry.new(:job__key, data),
         for_job: :foo)
     end
 

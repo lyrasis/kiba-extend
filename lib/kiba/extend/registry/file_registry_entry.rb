@@ -21,9 +21,11 @@ module Kiba
         # allowed types
         TYPES = :file, :fileset, :enum, :lambda
 
+        # @param key [Symbol] Full job key associated with reghash
         # @param reghash [Hash] File data. See {file:doc/file_registry_entry.md}
         #   for details
-        def initialize(reghash)
+        def initialize(key, reghash)
+          @key = key
           set_defaults
           assign_values_from(reghash)
           validate
@@ -31,11 +33,6 @@ module Kiba
 
         def dir
           path.dirname
-        end
-
-        # Used by FileRegistry.transform to add the key as an instance variable to each Entry
-        def set_key(key)
-          @key = key
         end
 
         # Printable string summarizing the Entry

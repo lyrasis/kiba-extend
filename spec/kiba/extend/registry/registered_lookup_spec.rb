@@ -13,7 +13,7 @@ RSpec.describe "Kiba::Extend::Registry::RegisteredLookup" do
   let(:lookup) do
     Kiba::Extend::Registry::RegisteredLookup.new(
       key: filekey,
-      data: Kiba::Extend::Registry::FileRegistryEntry.new(data),
+      data: Kiba::Extend::Registry::FileRegistryEntry.new(:job__key, data),
       for_job: :bar
     )
   end
