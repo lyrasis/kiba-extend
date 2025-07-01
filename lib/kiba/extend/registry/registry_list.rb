@@ -7,7 +7,7 @@ module Kiba
       #   information about a set of registered files/jobs. Puts to
       #   STDOUT
       class RegistryList
-        # @param args [Array<FileRegistryEntry>]
+        # @param args [nil, Array<FileRegistryEntry>]
         def initialize(*args)
           puts ""
           list = args.empty? ? Kiba::Extend.registry.entries : args.flatten
