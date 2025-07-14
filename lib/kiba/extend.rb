@@ -243,7 +243,7 @@ module Kiba
     # - :normal - reports what is running, from where, and the results
     # - :minimal - bare minimum
     #
-    # @return %i[debug verbose normal minimal]
+    # @return [:debug, :verbose, :normal, :minimal]
     setting :job_verbosity, default: :normal, reader: true
 
     # List of config modules in project namespaces set in {config_namespaces}
