@@ -42,6 +42,10 @@ In https://github.com/lyrasis/kiba-extend/pull/213[PR#213]
 
 === Added
 
+* `Merge::IncrementingField` transform.
+In https://github.com/lyrasis/kiba-extend/pull/217[PR#217]
+* FileRegistry.replace_entries method.
+In https://github.com/lyrasis/kiba-extend/pull/216[PR#216]
 * Distinction between `:verbose` and `:debug` job verbosity.
 In https://github.com/lyrasis/kiba-extend/pull/216[PR#216]
 * `deduplicate` parameter to `CombineValues::FromFieldsWithDelimiter`.
@@ -50,8 +54,6 @@ In https://github.com/lyrasis/kiba-extend/pull/214[PR#214]
 In https://github.com/lyrasis/kiba-extend/pull/212[PR#212]
 * Ability to make `Deduplicate::Table` compile all unique values of all fields in a duplicate row set, and write them into the kept row.
 In https://github.com/lyrasis/kiba-extend/pull/211[PR#211]
-* FileRegistry.replace_entries method.
-In https://github.com/lyrasis/kiba-extend/pull/216[PR#216]
 
 === Changed
 
