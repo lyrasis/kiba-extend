@@ -103,7 +103,8 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Bundles up the logic/options of different ways of validating and calling registry entry creators</p>
+    <p>Bundles up the logic/options of different ways of validating and
+  calling registry entry creators</p>
 
 
   </div>
@@ -357,19 +358,25 @@
       <pre class="lines">
 
 
+11
 12
 13
 14
 15
 16
 17
-18</pre>
+18
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/creator.rb', line 12</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/creator.rb', line 11</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_spec'>spec</span><span class='rparen'>)</span>
   <span class='ivar'>@spec</span> <span class='op'>=</span> <span class='id identifier rubyid_spec'>spec</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Proc</span><span class='rparen'>)</span> <span class='op'>?</span> <span class='id identifier rubyid_spec'>spec</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span> <span class='op'>:</span> <span class='id identifier rubyid_spec'>spec</span>
+  <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_job_verbosity'><span class='object_link'><a href="../../Extend.html#job_verbosity-class_method" title="Kiba::Extend.job_verbosity (method)">job_verbosity</a></span></span> <span class='op'>==</span> <span class='symbol'>:debug</span>
+    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Initializing Creator class for </span><span class='embexpr_beg'>#{</span><span class='ivar'>@spec</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
+  <span class='kw'>end</span>
   <span class='ivar'>@mod</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='ivar'>@meth</span> <span class='op'>=</span> <span class='kw'>nil</span>
   <span class='ivar'>@args</span> <span class='op'>=</span> <span class='kw'>nil</span>
@@ -427,12 +434,12 @@
       <pre class="lines">
 
 
+9
 10
-11
-12</pre>
+11</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/creator.rb', line 10</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/creator.rb', line 9</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_args'>args</span>
   <span class='ivar'>@args</span>
@@ -484,12 +491,12 @@
       <pre class="lines">
 
 
+9
 10
-11
-12</pre>
+11</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/creator.rb', line 10</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/creator.rb', line 9</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_meth'>meth</span>
   <span class='ivar'>@meth</span>
@@ -541,12 +548,12 @@
       <pre class="lines">
 
 
+9
 10
-11
-12</pre>
+11</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/creator.rb', line 10</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/creator.rb', line 9</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_mod'>mod</span>
   <span class='ivar'>@mod</span>
@@ -603,16 +610,16 @@
       <pre class="lines">
 
 
-20
-21
 22
 23
 24
 25
-26</pre>
+26
+27
+28</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/creator.rb', line 20</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/creator.rb', line 22</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_args'>args</span>
@@ -666,17 +673,17 @@
       <pre class="lines">
 
 
-28
-29
 30
 31
 32
 33
 34
-35</pre>
+35
+36
+37</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/creator.rb', line 28</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/creator.rb', line 30</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_to_s'>to_s</span>
   <span class='id identifier rubyid_mod_meth'>mod_meth</span> <span class='op'>=</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_mod'>mod</span><span class='embexpr_end'>}</span><span class='tstring_content'>.</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_meth'>meth</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
@@ -696,7 +703,7 @@
 </div>
 
       <div id="footer">
-  Generated on Tue Jun 17 00:35:40 2025 by
+  Generated on Mon Jul 14 19:02:53 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>

@@ -525,7 +525,10 @@ by the job. :run does all of the above and runs the job. Since 4.0.0</p>
 50
 51
 52
-53</pre>
+53
+54
+55
+56</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/base_job.rb', line 27</span>
@@ -544,8 +547,11 @@ by the job. :run does all of the above and runs the job. Since 4.0.0</p>
 
   <span class='kw'>unless</span> <span class='id identifier rubyid_mode'>mode</span> <span class='op'>==</span> <span class='symbol'>:info</span>
     <span class='id identifier rubyid_report_run_start'>report_run_start</span> <span class='comment'># defined in Reporter
-</span>    <span class='id identifier rubyid_handle_requirements'>handle_requirements</span> <span class='comment'># defined in Runner
-</span>    <span class='ivar'>@control</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>Control</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
+</span>    <span class='comment'># defined in Runner
+</span>    <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>source</span><span class='words_sep'> </span><span class='tstring_content'>lookup</span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_type'>type</span><span class='op'>|</span>
+      <span class='id identifier rubyid_handle_requirements'>handle_requirements</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span>
+    <span class='kw'>end</span>
+    <span class='ivar'>@control</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>Control</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
     <span class='ivar'>@context</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>Context</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_control'>control</span><span class='rparen'>)</span>
     <span class='ivar'>@transformer</span> <span class='op'>=</span> <span class='id identifier rubyid_transformer'>transformer</span>
     <span class='id identifier rubyid_assemble_control'>assemble_control</span> <span class='comment'># defined in Runner
@@ -956,18 +962,18 @@ by the job. :run does all of the above and runs the job. Since 4.0.0</p>
       <pre class="lines">
 
 
-55
-56
-57
 58
 59
 60
 61
 62
-63</pre>
+63
+64
+65
+66</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/base_job.rb', line 55</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/base_job.rb', line 58</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run'>run</span>
   <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='period'>.</span><span class='id identifier rubyid_run'>run</span><span class='lparen'>(</span><span class='id identifier rubyid_control'>control</span><span class='rparen'>)</span>
@@ -988,7 +994,7 @@ by the job. :run does all of the above and runs the job. Since 4.0.0</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Jun 17 00:35:40 2025 by
+  Generated on Mon Jul 14 19:02:53 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>

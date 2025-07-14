@@ -337,7 +337,7 @@ multiple spaces, removes terminal commas, strips again, removes
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#job_verbosity-class_method" title="job_verbosity (class method)">.<strong>job_verbosity</strong>  &#x21d2; :debug, ... </a>
+      <a href="#job_verbosity-class_method" title="job_verbosity (class method)">.<strong>job_verbosity</strong>  &#x21d2; Object </a>
     
 
     
@@ -1121,7 +1121,7 @@ wiki</a></p>
       <div class="method_details ">
   <h3 class="signature " id="job_verbosity-class_method">
   
-    .<strong>job_verbosity</strong>  &#x21d2; <tt>:debug</tt>, ... 
+    .<strong>job_verbosity</strong>  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -1132,8 +1132,10 @@ wiki</a></p>
     <p>How much output about jobs to output to STDOUT</p>
 
 <ul>
-  <li>:debug - tells you A LOT - helpful when developing pipelines and
-debugging</li>
+  <li>:debug - everything from verbose, plus what is being registered,
+transformed, etc</li>
+  <li>:verbose - reports what is running, from where, dependencies, and
+results</li>
   <li>:normal - reports what is running, from where, and the results</li>
   <li>:minimal - bare minimum</li>
 </ul>
@@ -1143,19 +1145,6 @@ debugging</li>
 </div>
 <div class="tags">
   
-<p class="tag_title">Returns:</p>
-<ul class="return">
-  
-    <li>
-      
-      
-        <span class='type'>(<tt>:debug</tt>, <tt>:normal</tt>, <tt>:minimal</tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
 
 </div><table class="source_code">
   <tr>
@@ -1163,10 +1152,10 @@ debugging</li>
       <pre class="lines">
 
 
-245</pre>
+247</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 245</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 247</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:job_verbosity</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='symbol'>:normal</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1692,14 +1681,14 @@ stable</li>
       <pre class="lines">
 
 
-252
-253
 254
 255
-256</pre>
+256
+257
+258</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 252</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 254</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_project_configs'>project_configs</span>
   <span class='id identifier rubyid_config_namespaces'>config_namespaces</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_ns'>ns</span><span class='op'>|</span> <span class='id identifier rubyid_get_config_mods'>get_config_mods</span><span class='lparen'>(</span><span class='id identifier rubyid_ns'>ns</span><span class='comma'>,</span> <span class='id identifier rubyid_ns'>ns</span><span class='period'>.</span><span class='id identifier rubyid_constants'>constants</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -2013,7 +2002,7 @@ wiki</a></p>
 </div>
 
       <div id="footer">
-  Generated on Tue Jun 17 00:35:39 2025 by
+  Generated on Mon Jul 14 19:02:52 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>
