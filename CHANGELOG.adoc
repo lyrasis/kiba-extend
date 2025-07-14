@@ -42,12 +42,16 @@ In https://github.com/lyrasis/kiba-extend/pull/213[PR#213]
 
 === Added
 
+* Distinction between `:verbose` and `:debug` job verbosity.
+In https://github.com/lyrasis/kiba-extend/pull/216[PR#216]
 * `deduplicate` parameter to `CombineValues::FromFieldsWithDelimiter`.
 In https://github.com/lyrasis/kiba-extend/pull/214[PR#214]
 * `positional_compare` parameter to `Delete::FieldValueIfEqualsOtherField` transform
 In https://github.com/lyrasis/kiba-extend/pull/212[PR#212]
 * Ability to make `Deduplicate::Table` compile all unique values of all fields in a duplicate row set, and write them into the kept row.
 In https://github.com/lyrasis/kiba-extend/pull/211[PR#211]
+* FileRegistry.replace_entries method.
+In https://github.com/lyrasis/kiba-extend/pull/216[PR#216]
 
 === Changed
 
@@ -59,6 +63,10 @@ In https://github.com/lyrasis/kiba-extend/pull/211[PR#211]
 
 * Convert `Deduplicate::Table` spec to yardspec.
 In https://github.com/lyrasis/kiba-extend/pull/211[PR#211]
+* Add rubocop binstub.
+In https://github.com/lyrasis/kiba-extend/pull/216[PR#216]
+* Improve error messages and debugging output for registry-related work.
+In https://github.com/lyrasis/kiba-extend/pull/216[PR#216]
 
 == Releases
 
