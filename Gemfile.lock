@@ -1,9 +1,8 @@
 GIT
   remote: https://github.com/kspurgin/almost_standard
-  revision: 2778fd70246404e9f285a1a41eff3099cdade9ff
-  tag: 1.0.1
+  revision: bb4136961a2e33d2a750925935fd4df2a53cafdc
   specs:
-    almost_standard (1.0.1)
+    almost_standard (1.0.2)
       bundler
       rubocop
       rubocop-rspec
@@ -144,7 +143,7 @@ GEM
       rubocop-ast (>= 1.45.1, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 4.0)
-    rubocop-ast (1.45.1)
+    rubocop-ast (1.46.0)
       parser (>= 3.3.7.2)
       prism (~> 1.4)
     rubocop-performance (1.25.0)
