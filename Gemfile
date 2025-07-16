@@ -16,7 +16,6 @@ end
 group :development do
   gem "debug"
   gem "pry", "~> 0.14"
-  gem "rake", "~> 13.0"
   gem "almost_standard", github: "kspurgin/almost_standard"
 end
 
