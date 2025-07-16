@@ -11,7 +11,10 @@ module Kiba
         end
 
         def tags
-          Kiba::Extend.registry.entries.map(&:tags)
+          Kiba::Extend.registry
+            ._container
+            .values
+            .map { |entry| entry.item.tags }
             .compact
             .reject(&:empty?)
             .flatten
