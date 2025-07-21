@@ -29,31 +29,32 @@ This is related to autoloading via zeitwerk and the default assumptions made by 
 
 The usual culprits causing this are:
 
+- A module is listed as the creator of a registry entry in registry_data.rb, but the module itself hasn't been created
 - Naming the file `person_names.rb` but naming the constant defined in the file `Personnames` (should be `PersonNames`)
 - Opposite of above: naming the file `personnames.rb` and the constant defined in the file `PersonNames` (should be `Personnames`)
 - Mismatch of file path hierarchy and constant hierarchy. For example, having file path `/Users/you/projectname/lib/project/jobs/name_cleanup_prep/person_names.rb` but the following in your file:
 
-```
+~~~
 module Project
   module NameCleanupPrep
     module PersonNames
-	end
+    end
   end
 end
-```
+~~~
 
 The "jobs" level of file hierarchy is expected to be represented in your module namespace hierarchy, like:
 
-```
+~~~
 module Project
   module Jobs
     module NameCleanupPrep
       module PersonNames
-	  end
+      end
     end
   end
 end
-```
+~~~
 
 Zeitwerk provides ways to override almost all of this default behavior via inflectors, namespace collapsing, and techniques. See its very long README (linked above) for details. However, it's generally easier in most projects to follow the default convention (pretty simple once you are used to it) and reap the benefits of never having to `require_relative` anything ever again (a huge pain if you move files around or rename things).
 
