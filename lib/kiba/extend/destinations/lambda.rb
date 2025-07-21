@@ -10,29 +10,17 @@ module Kiba
         extend Destinationable
 
         class << self
-          def as_source_class
-            nil
-          end
+          def as_source_class = nil
 
-          def default_file_options
-            Kiba::Extend.lambdaopts
-          end
+          def default_file_options = Kiba::Extend.lambdaopts
 
-          def options_key
-            :options
-          end
+          def options_key = :options
 
-          def path_key
-            nil
-          end
+          def path_key = nil
 
-          def requires_path?
-            false
-          end
+          def requires_path? = false
 
-          def special_options
-            []
-          end
+          def special_options = []
         end
       end
     end

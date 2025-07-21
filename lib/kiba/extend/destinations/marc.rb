@@ -16,29 +16,17 @@ module Kiba
         extend Destinationable
 
         class << self
-          def as_source_class
-            Kiba::Extend::Sources::Marc
-          end
+          def as_source_class = Kiba::Extend::Sources::Marc
 
-          def default_file_options
-            nil
-          end
+          def default_file_options = nil
 
-          def options_key
-            nil
-          end
+          def options_key = nil
 
-          def path_key
-            :filename
-          end
+          def path_key = :filename
 
-          def requires_path?
-            true
-          end
+          def requires_path? = true
 
-          def special_options
-            [:allow_oversized]
-          end
+          def special_options = [:allow_oversized]
         end
 
         # @param filename [String] path for writing MARC file

@@ -20,9 +20,7 @@ module Kiba
         end
 
         # @return true
-        def is_destination?
-          true
-        end
+        def is_destination? = true
 
         # @return Array of defined special options for class
         def special_options
