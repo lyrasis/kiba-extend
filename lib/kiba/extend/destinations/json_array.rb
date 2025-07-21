@@ -11,7 +11,7 @@ module Kiba
       # This is simliar to the idea of, but not technically compliant with,
       #   [JSON Lines](https://jsonlines.org/)
       class JsonArray
-        extend Destinationable
+        include Destinationable
 
         class << self
           def as_source_class = nil

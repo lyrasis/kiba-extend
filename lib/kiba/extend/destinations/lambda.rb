@@ -7,7 +7,7 @@ module Kiba
       #
       # @since 4.0.0
       class Lambda < Kiba::Common::Destinations::Lambda
-        extend Destinationable
+        include Destinationable
 
         class << self
           def as_source_class = nil
