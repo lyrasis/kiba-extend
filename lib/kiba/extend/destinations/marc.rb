@@ -34,6 +34,8 @@ module Kiba
         #   MARC::Writer's `allow_oversized` attribute. **Set in registry
         #   entry's `dest_special_opts`**
         def initialize(filename:, allow_oversized: nil)
+          @filename = filename
+          ensure_dir
           @writer = MARC::Writer.new(filename)
           writer.allow_oversized = allow_oversized if allow_oversized
         end
@@ -50,7 +52,7 @@ module Kiba
 
         private
 
-        attr_reader :writer
+        attr_reader :filename, :writer
       end
     end
   end

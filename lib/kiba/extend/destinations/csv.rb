@@ -41,6 +41,7 @@ module Kiba
           @csv_options = csv_options || {}
           @headers = headers
           @initial_headers = initial_headers
+          ensure_dir
         end
 
         # @return [Array<Symbol>]

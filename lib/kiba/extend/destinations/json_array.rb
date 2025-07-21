@@ -29,6 +29,8 @@ module Kiba
 
         # @param filename [String] path for writing JSON file
         def initialize(filename:)
+          @filename = filename
+          ensure_dir
           @json = []
           @file = File.open(filename, "w")
         end
@@ -43,6 +45,10 @@ module Kiba
           @file << @json.to_json
           @file.close
         end
+
+        private
+
+        attr_reader :filename
       end
     end
   end
