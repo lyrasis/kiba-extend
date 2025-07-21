@@ -85,32 +85,31 @@ WARNING: unable to load thorfile "/Users/you/projectname/Thorfile": expected fil
 <p>The usual culprits causing this are:</p>
 
 <ul>
+  <li>A module is listed as the creator of a registry entry in registry_data.rb, but the module itself hasn’t been created</li>
   <li>Naming the file <code>person_names.rb</code> but naming the constant defined in the file <code>Personnames</code> (should be <code>PersonNames</code>)</li>
   <li>Opposite of above: naming the file <code>personnames.rb</code> and the constant defined in the file <code>PersonNames</code> (should be <code>Personnames</code>)</li>
   <li>Mismatch of file path hierarchy and constant hierarchy. For example, having file path <code>/Users/you/projectname/lib/project/jobs/name_cleanup_prep/person_names.rb</code> but the following in your file:</li>
 </ul>
 
-<p><code>
-module Project
-  module NameCleanupPrep
-    module PersonNames
-	end
-  end
-end
-</code></p>
+<pre class="code ruby"><code class="ruby"><span class='kw'>module</span> <span class='const'>Project</span>
+  <span class='kw'>module</span> <span class='const'>NameCleanupPrep</span>
+    <span class='kw'>module</span> <span class='const'>PersonNames</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+</code></pre>
 
 <p>The “jobs” level of file hierarchy is expected to be represented in your module namespace hierarchy, like:</p>
 
-<p><code>
-module Project
-  module Jobs
-    module NameCleanupPrep
-      module PersonNames
-	  end
-    end
-  end
-end
-</code></p>
+<pre class="code ruby"><code class="ruby"><span class='kw'>module</span> <span class='const'>Project</span>
+  <span class='kw'>module</span> <span class='const'>Jobs</span>
+    <span class='kw'>module</span> <span class='const'>NameCleanupPrep</span>
+      <span class='kw'>module</span> <span class='const'>PersonNames</span>
+      <span class='kw'>end</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span>
+<span class='kw'>end</span>
+</code></pre>
 
 <p>Zeitwerk provides ways to override almost all of this default behavior via inflectors, namespace collapsing, and techniques. See its very long README (linked above) for details. However, it’s generally easier in most projects to follow the default convention (pretty simple once you are used to it) and reap the benefits of never having to <code>require_relative</code> anything ever again (a huge pain if you move files around or rename things).</p>
 
@@ -120,7 +119,7 @@ end
 </div></div>
 
       <div id="footer">
-  Generated on Mon Jul 21 17:32:28 2025 by
+  Generated on Mon Jul 21 19:30:34 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>

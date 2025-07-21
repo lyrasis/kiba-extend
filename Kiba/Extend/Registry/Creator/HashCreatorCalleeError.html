@@ -235,17 +235,15 @@
 8
 9
 10
-11
-12</pre>
+11</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/creator/hash_creator_callee_error.rb', line 8</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_callee'>callee</span><span class='rparen'>)</span>
-  <span class='comment'># rubocop:todo Layout/LineLength
-</span>  <span class='kw'>super</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Registry::Creator passed Hash with </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_callee'>callee</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='embexpr_end'>}</span><span class='tstring_content'> `callee`. Give Method or Module instead.</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-  <span class='comment'># rubocop:enable Layout/LineLength
-</span><span class='kw'>end</span></pre>
+  <span class='kw'>super</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Registry::Creator passed Hash with </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_callee'>callee</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span>\
+        <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>`callee`. Give Method or Module instead.</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+<span class='kw'>end</span></pre>
     </td>
   </tr>
 </table>
@@ -257,7 +255,7 @@
 </div>
 
       <div id="footer">
-  Generated on Mon Jul 21 17:32:33 2025 by
+  Generated on Mon Jul 21 19:30:39 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>

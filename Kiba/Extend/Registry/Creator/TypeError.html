@@ -105,7 +105,8 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Raised when you try to initialize a Creator with an invalid value (wrong class)</p>
+    <p>Raised when you try to initialize a Creator with an invalid type
+  of creator</p>
 
 
   </div>
@@ -232,13 +233,13 @@
       <pre class="lines">
 
 
+10
 11
 12
-13
-14</pre>
+13</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/creator/type_error.rb', line 11</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/creator/type_error.rb', line 10</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_spec'>spec</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_type'>type</span> <span class='op'>=</span> <span class='id identifier rubyid_spec'>spec</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span>
@@ -255,7 +256,7 @@
 </div>
 
       <div id="footer">
-  Generated on Mon Jul 21 17:32:31 2025 by
+  Generated on Mon Jul 21 19:30:36 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>
