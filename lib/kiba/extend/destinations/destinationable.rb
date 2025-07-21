@@ -8,22 +8,25 @@ module Kiba
       #
       # @since 4.0.0
       module Destinationable
-        include Kiba::Extend::Registry::Fileable
+        def self.included(base)
+          base.extend(Kiba::Extend::Registry::Fileable)
+        end
+
         # @return Constant if there is a {Kiba::Extend::Sources} class
         #   for reading the output of jobs that have this class as their
         #   destination
         # @return Nil if results of a job with this destination cannot be
         #   used as a source for another job
-        def as_source_class
+        def self.as_source_class
           raise NotImplementedError,
             ":as_source_class must be defined in extending class"
         end
 
         # @return true
-        def is_destination? = true
+        def self.is_destination? = true
 
         # @return Array of defined special options for class
-        def special_options
+        def self.special_options
           raise NotImplementedError,
             ":special_options must be defined in extending class"
         end

@@ -8,7 +8,7 @@ module Kiba
       # An extension of Kiba::Common's CSV destination, adding the
       #   `initial_headers` option
       class CSV
-        extend Destinationable
+        include Destinationable
 
         class << self
           def as_source_class = Kiba::Extend::Sources::CSV

@@ -13,7 +13,7 @@ module Kiba
       #
       # @since 4.0.0
       class Marc
-        extend Destinationable
+        include Destinationable
 
         class << self
           def as_source_class = Kiba::Extend::Sources::Marc
