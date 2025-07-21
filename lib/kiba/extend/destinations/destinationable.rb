@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require "fileutils"
+require "pathname"
+
 module Kiba
   module Extend
     module Destinations
@@ -29,6 +32,15 @@ module Kiba
         def self.special_options
           raise NotImplementedError,
             ":special_options must be defined in extending class"
+        end
+
+        def ensure_dir
+          return unless self.class.requires_path?
+
+          dir = Pathname.new(send(self.class.path_key)).dirname
+          return if Dir.exist?(dir)
+
+          FileUtils.mkdir_p(dir)
         end
       end
     end

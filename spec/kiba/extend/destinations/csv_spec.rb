@@ -1,9 +1,15 @@
 # frozen_string_literal: true
 
+require "fileutils"
+require "pathname"
 require "spec_helper"
 
 RSpec.describe Kiba::Extend::Destinations::CSV do
-  before(:all) { @test_filename = "output.csv" }
+  before(:all) do
+    @test_filename = File.join(Bundler.root, "spec", "support", "fixtures",
+      "working", "output.csv")
+  end
+
   let(:testfile) { @test_filename }
 
   def run_job(input, output)
@@ -19,6 +25,9 @@ RSpec.describe Kiba::Extend::Destinations::CSV do
   end
 
   after(:each) { File.delete(@test_filename) if File.exist?(@test_filename) }
+  after(:all) do
+    FileUtils.rmdir(Pathname.new(@test_filename).dirname)
+  end
 
   describe "#write" do
     context "when intial headers present" do
