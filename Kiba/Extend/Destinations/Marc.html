@@ -85,12 +85,12 @@
 
   
   
+  
+  
   <dl>
-      <dt>Extended by:</dt>
+      <dt>Includes:</dt>
       <dd><span class='object_link'><a href="Destinationable.html" title="Kiba::Extend::Destinations::Destinationable (module)">Destinationable</a></span></dd>
   </dl>
-  
-  
   
   
 
@@ -379,18 +379,7 @@
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="Destinationable.html" title="Kiba::Extend::Destinations::Destinationable (module)">Destinationable</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Destinationable.html#as_source_class-instance_method" title="Kiba::Extend::Destinations::Destinationable#as_source_class (method)">as_source_class</a></span>, <span class='object_link'><a href="Destinationable.html#is_destination%3F-instance_method" title="Kiba::Extend::Destinations::Destinationable#is_destination? (method)">is_destination?</a></span>, <span class='object_link'><a href="Destinationable.html#special_options-instance_method" title="Kiba::Extend::Destinations::Destinationable#special_options (method)">special_options</a></span></p>
-
-  
-  
-  
-  
-  
-  
-  
-  
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Registry/Fileable.html" title="Kiba::Extend::Registry::Fileable (module)">Registry::Fileable</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../Registry/Fileable.html#default_args-instance_method" title="Kiba::Extend::Registry::Fileable#default_args (method)">#default_args</a></span>, <span class='object_link'><a href="../Registry/Fileable.html#default_file_options-instance_method" title="Kiba::Extend::Registry::Fileable#default_file_options (method)">#default_file_options</a></span>, <span class='object_link'><a href="../Registry/Fileable.html#labeled_options-instance_method" title="Kiba::Extend::Registry::Fileable#labeled_options (method)">#labeled_options</a></span>, <span class='object_link'><a href="../Registry/Fileable.html#options_key-instance_method" title="Kiba::Extend::Registry::Fileable#options_key (method)">#options_key</a></span>, <span class='object_link'><a href="../Registry/Fileable.html#path_key-instance_method" title="Kiba::Extend::Registry::Fileable#path_key (method)">#path_key</a></span>, <span class='object_link'><a href="../Registry/Fileable.html#requires_path%3F-instance_method" title="Kiba::Extend::Registry::Fileable#requires_path? (method)">#requires_path?</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="Destinationable.html#ensure_dir-instance_method" title="Kiba::Extend::Destinations::Destinationable#ensure_dir (method)">#ensure_dir</a></span>, <span class='object_link'><a href="Destinationable.html#included-class_method" title="Kiba::Extend::Destinations::Destinationable.included (method)">included</a></span>, <span class='object_link'><a href="Destinationable.html#is_destination%3F-class_method" title="Kiba::Extend::Destinations::Destinationable.is_destination? (method)">is_destination?</a></span></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
@@ -472,15 +461,19 @@ entry’s <code>dest_special_opts</code></strong></p>
       <pre class="lines">
 
 
-48
-49
-50
-51</pre>
+36
+37
+38
+39
+40
+41</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/marc.rb', line 48</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/marc.rb', line 36</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>filename:</span><span class='comma'>,</span> <span class='label'>allow_oversized:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='ivar'>@filename</span> <span class='op'>=</span> <span class='id identifier rubyid_filename'>filename</span>
+  <span class='id identifier rubyid_ensure_dir'>ensure_dir</span>
   <span class='ivar'>@writer</span> <span class='op'>=</span> <span class='const'>MARC</span><span class='op'>::</span><span class='const'>Writer</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_writer'>writer</span><span class='period'>.</span><span class='id identifier rubyid_allow_oversized'>allow_oversized</span> <span class='op'>=</span> <span class='id identifier rubyid_allow_oversized'>allow_oversized</span> <span class='kw'>if</span> <span class='id identifier rubyid_allow_oversized'>allow_oversized</span>
 <span class='kw'>end</span></pre>
@@ -536,16 +529,12 @@ entry’s <code>dest_special_opts</code></strong></p>
       <pre class="lines">
 
 
-19
-20
-21</pre>
+19</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/marc.rb', line 19</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_as_source_class'>as_source_class</span>
-  <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Sources.html" title="Kiba::Extend::Sources (module)">Sources</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Sources/Marc.html" title="Kiba::Extend::Sources::Marc (class)">Marc</a></span></span>
-<span class='kw'>end</span></pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_as_source_class'>as_source_class</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Sources.html" title="Kiba::Extend::Sources (module)">Sources</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Sources/Marc.html" title="Kiba::Extend::Sources::Marc (class)">Marc</a></span></span></pre>
     </td>
   </tr>
 </table>
@@ -591,16 +580,12 @@ entry’s <code>dest_special_opts</code></strong></p>
       <pre class="lines">
 
 
-23
-24
-25</pre>
+21</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/marc.rb', line 23</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/marc.rb', line 21</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_default_file_options'>default_file_options</span>
-  <span class='kw'>nil</span>
-<span class='kw'>end</span></pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_default_file_options'>default_file_options</span> <span class='op'>=</span> <span class='kw'>nil</span></pre>
     </td>
   </tr>
 </table>
@@ -646,16 +631,12 @@ entry’s <code>dest_special_opts</code></strong></p>
       <pre class="lines">
 
 
-27
-28
-29</pre>
+23</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/marc.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/marc.rb', line 23</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_options_key'>options_key</span>
-  <span class='kw'>nil</span>
-<span class='kw'>end</span></pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_options_key'>options_key</span> <span class='op'>=</span> <span class='kw'>nil</span></pre>
     </td>
   </tr>
 </table>
@@ -701,16 +682,12 @@ entry’s <code>dest_special_opts</code></strong></p>
       <pre class="lines">
 
 
-31
-32
-33</pre>
+25</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/marc.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/marc.rb', line 25</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_path_key'>path_key</span>
-  <span class='symbol'>:filename</span>
-<span class='kw'>end</span></pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_path_key'>path_key</span> <span class='op'>=</span> <span class='symbol'>:filename</span></pre>
     </td>
   </tr>
 </table>
@@ -769,16 +746,12 @@ entry’s <code>dest_special_opts</code></strong></p>
       <pre class="lines">
 
 
-35
-36
-37</pre>
+27</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/marc.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/marc.rb', line 27</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_requires_path?'>requires_path?</span>
-  <span class='kw'>true</span>
-<span class='kw'>end</span></pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_requires_path?'>requires_path?</span> <span class='op'>=</span> <span class='kw'>true</span></pre>
     </td>
   </tr>
 </table>
@@ -824,16 +797,12 @@ entry’s <code>dest_special_opts</code></strong></p>
       <pre class="lines">
 
 
-39
-40
-41</pre>
+29</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/marc.rb', line 39</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/marc.rb', line 29</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_special_options'>special_options</span>
-  <span class='lbracket'>[</span><span class='symbol'>:allow_oversized</span><span class='rbracket'>]</span>
-<span class='kw'>end</span></pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_special_options'>special_options</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='symbol'>:allow_oversized</span><span class='rbracket'>]</span></pre>
     </td>
   </tr>
 </table>
@@ -885,12 +854,12 @@ entry’s <code>dest_special_opts</code></strong></p>
       <pre class="lines">
 
 
-59
-60
-61</pre>
+49
+50
+51</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/marc.rb', line 59</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/marc.rb', line 49</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_close'>close</span>
   <span class='id identifier rubyid_writer'>writer</span><span class='period'>.</span><span class='id identifier rubyid_close'>close</span>
@@ -955,12 +924,12 @@ entry’s <code>dest_special_opts</code></strong></p>
       <pre class="lines">
 
 
-54
-55
-56</pre>
+44
+45
+46</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/marc.rb', line 54</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/marc.rb', line 44</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_writer'>writer</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='rparen'>)</span>
@@ -975,7 +944,7 @@ entry’s <code>dest_special_opts</code></strong></p>
 </div>
 
       <div id="footer">
-  Generated on Mon Jul 21 16:22:25 2025 by
+  Generated on Mon Jul 21 17:32:30 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>

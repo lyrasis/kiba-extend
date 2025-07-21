@@ -87,12 +87,12 @@
 
   
   
+  
+  
   <dl>
-      <dt>Extended by:</dt>
+      <dt>Includes:</dt>
       <dd><span class='object_link'><a href="Destinationable.html" title="Kiba::Extend::Destinations::Destinationable (module)">Destinationable</a></span></dd>
   </dl>
-  
-  
   
   
 
@@ -297,18 +297,7 @@
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="Destinationable.html" title="Kiba::Extend::Destinations::Destinationable (module)">Destinationable</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Destinationable.html#as_source_class-instance_method" title="Kiba::Extend::Destinations::Destinationable#as_source_class (method)">as_source_class</a></span>, <span class='object_link'><a href="Destinationable.html#is_destination%3F-instance_method" title="Kiba::Extend::Destinations::Destinationable#is_destination? (method)">is_destination?</a></span>, <span class='object_link'><a href="Destinationable.html#special_options-instance_method" title="Kiba::Extend::Destinations::Destinationable#special_options (method)">special_options</a></span></p>
-
-  
-  
-  
-  
-  
-  
-  
-  
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="../Registry/Fileable.html" title="Kiba::Extend::Registry::Fileable (module)">Registry::Fileable</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../Registry/Fileable.html#default_args-instance_method" title="Kiba::Extend::Registry::Fileable#default_args (method)">#default_args</a></span>, <span class='object_link'><a href="../Registry/Fileable.html#default_file_options-instance_method" title="Kiba::Extend::Registry::Fileable#default_file_options (method)">#default_file_options</a></span>, <span class='object_link'><a href="../Registry/Fileable.html#labeled_options-instance_method" title="Kiba::Extend::Registry::Fileable#labeled_options (method)">#labeled_options</a></span>, <span class='object_link'><a href="../Registry/Fileable.html#options_key-instance_method" title="Kiba::Extend::Registry::Fileable#options_key (method)">#options_key</a></span>, <span class='object_link'><a href="../Registry/Fileable.html#path_key-instance_method" title="Kiba::Extend::Registry::Fileable#path_key (method)">#path_key</a></span>, <span class='object_link'><a href="../Registry/Fileable.html#requires_path%3F-instance_method" title="Kiba::Extend::Registry::Fileable#requires_path? (method)">#requires_path?</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="Destinationable.html#ensure_dir-instance_method" title="Kiba::Extend::Destinations::Destinationable#ensure_dir (method)">#ensure_dir</a></span>, <span class='object_link'><a href="Destinationable.html#included-class_method" title="Kiba::Extend::Destinations::Destinationable.included (method)">included</a></span>, <span class='object_link'><a href="Destinationable.html#is_destination%3F-class_method" title="Kiba::Extend::Destinations::Destinationable.is_destination? (method)">is_destination?</a></span></p>
 
   
 
@@ -356,16 +345,12 @@
       <pre class="lines">
 
 
-13
-14
-15</pre>
+13</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/lambda.rb', line 13</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_as_source_class'>as_source_class</span>
-  <span class='kw'>nil</span>
-<span class='kw'>end</span></pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_as_source_class'>as_source_class</span> <span class='op'>=</span> <span class='kw'>nil</span></pre>
     </td>
   </tr>
 </table>
@@ -411,16 +396,12 @@
       <pre class="lines">
 
 
-17
-18
-19</pre>
+15</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/lambda.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/lambda.rb', line 15</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_default_file_options'>default_file_options</span>
-  <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_lambdaopts'><span class='object_link'><a href="../../Extend.html#lambdaopts-class_method" title="Kiba::Extend.lambdaopts (method)">lambdaopts</a></span></span>
-<span class='kw'>end</span></pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_default_file_options'>default_file_options</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_lambdaopts'><span class='object_link'><a href="../../Extend.html#lambdaopts-class_method" title="Kiba::Extend.lambdaopts (method)">lambdaopts</a></span></span></pre>
     </td>
   </tr>
 </table>
@@ -466,16 +447,12 @@
       <pre class="lines">
 
 
-21
-22
-23</pre>
+17</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/lambda.rb', line 21</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/lambda.rb', line 17</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_options_key'>options_key</span>
-  <span class='symbol'>:options</span>
-<span class='kw'>end</span></pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_options_key'>options_key</span> <span class='op'>=</span> <span class='symbol'>:options</span></pre>
     </td>
   </tr>
 </table>
@@ -521,16 +498,12 @@
       <pre class="lines">
 
 
-25
-26
-27</pre>
+19</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/lambda.rb', line 25</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/lambda.rb', line 19</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_path_key'>path_key</span>
-  <span class='kw'>nil</span>
-<span class='kw'>end</span></pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_path_key'>path_key</span> <span class='op'>=</span> <span class='kw'>nil</span></pre>
     </td>
   </tr>
 </table>
@@ -589,16 +562,12 @@
       <pre class="lines">
 
 
-29
-30
-31</pre>
+21</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/lambda.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/lambda.rb', line 21</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_requires_path?'>requires_path?</span>
-  <span class='kw'>false</span>
-<span class='kw'>end</span></pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_requires_path?'>requires_path?</span> <span class='op'>=</span> <span class='kw'>false</span></pre>
     </td>
   </tr>
 </table>
@@ -644,16 +613,12 @@
       <pre class="lines">
 
 
-33
-34
-35</pre>
+23</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/lambda.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/lambda.rb', line 23</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_special_options'>special_options</span>
-  <span class='lbracket'>[</span><span class='rbracket'>]</span>
-<span class='kw'>end</span></pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_special_options'>special_options</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span></pre>
     </td>
   </tr>
 </table>
@@ -664,7 +629,7 @@
 </div>
 
       <div id="footer">
-  Generated on Mon Jul 21 16:22:25 2025 by
+  Generated on Mon Jul 21 17:32:30 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>
