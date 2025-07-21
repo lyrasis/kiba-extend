@@ -14,29 +14,17 @@ module Kiba
         extend Destinationable
 
         class << self
-          def as_source_class
-            nil
-          end
+          def as_source_class = nil
 
-          def default_file_options
-            nil
-          end
+          def default_file_options = nil
 
-          def options_key
-            nil
-          end
+          def options_key = nil
 
-          def path_key
-            :filename
-          end
+          def path_key = :filename
 
-          def requires_path?
-            true
-          end
+          def requires_path? = true
 
-          def special_options
-            []
-          end
+          def special_options = []
         end
 
         # @param filename [String] path for writing JSON file

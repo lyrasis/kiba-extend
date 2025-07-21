@@ -11,29 +11,17 @@ module Kiba
         extend Destinationable
 
         class << self
-          def as_source_class
-            Kiba::Extend::Sources::CSV
-          end
+          def as_source_class = Kiba::Extend::Sources::CSV
 
-          def default_file_options
-            Kiba::Extend.csvopts
-          end
+          def default_file_options = Kiba::Extend.csvopts
 
-          def options_key
-            :csv_options
-          end
+          def options_key = :csv_options
 
-          def path_key
-            :filename
-          end
+          def path_key = :filename
 
-          def requires_path?
-            true
-          end
+          def requires_path? = true
 
-          def special_options
-            [:initial_headers]
-          end
+          def special_options = [:initial_headers]
         end
 
         attr_reader :filename, :csv_options, :csv, :headers
