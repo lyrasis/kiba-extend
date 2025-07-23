@@ -44,6 +44,8 @@ In https://github.com/lyrasis/kiba-extend/pull/213[PR#213]
 
 === Added
 
+* `Report::Fields` transform.
+In https://github.com/lyrasis/kiba-extend/pull/223[PR#223]
 * `Merge::IncrementingField` transform.
 In https://github.com/lyrasis/kiba-extend/pull/217[PR#217]
 * FileRegistry.replace_entries method.
