@@ -158,6 +158,37 @@ module Kiba
         #     {foo: "e", bar: "f", baz: ""}
         #   ]
         #   expect(result).to eq(expected)
+        #
+        # @example Compiling unique field values keeping dedupe field
+        #   # Used in pipeline as:
+        #   # transform Deduplicate::Table,
+        #   #   field: :combine,
+        #   #   delete_field: false,
+        #   #   compile_uniq_fieldvals: true,
+        #   #   compile_delim: ", "
+        #   xform = Deduplicate::Table.new(field: :combine, delete_field: false,
+        #     compile_uniq_fieldvals: true, compile_delim: ", ")
+        #   input = [
+        #     {baz: "f", combine: "a b"},
+        #     {baz: "f", combine: "a b"},
+        #     {baz: "g", combine: "c d"},
+        #     {baz: "", combine: "c d"},
+        #     {baz: "h", combine: "c e"},
+        #     {baz: "i", combine: "c d"},
+        #     {baz: "j", combine: "c d"},
+        #     {baz: nil, combine: "c d"},
+        #     {baz: "k", combine: "c d"},
+        #     {baz: nil, combine: "e f"}
+        #   ]
+        #   result = Kiba::StreamingRunner.transform_stream(input, xform)
+        #     .map{ |row| row }
+        #   expected = [
+        #     {baz: "f", combine: "a b"},
+        #     {baz: "g, i, j, k", combine: "c d"},
+        #     {baz: "h", combine: "c e"},
+        #     {baz: "", combine: "e f"}
+        #   ]
+        #   expect(result).to eq(expected)
         # @since 2.2.0
         class Table
           # @param field [Symbol] name of field on which to deduplicate
@@ -211,7 +242,7 @@ module Kiba
           end
 
           def close
-            deduper.values.each do |hash|
+            deduper.each do |val, hash|
               row = hash[:row]
               add_example_field(row, hash) if example
               row[occ_target] = hash[:occs] if occs
@@ -222,6 +253,7 @@ module Kiba
 
                   [fld, hash[:fieldvals][fld].join(compile_delim)]
                 end.compact.to_h
+                row[field] = val unless delete
               end
               yield row
             end
