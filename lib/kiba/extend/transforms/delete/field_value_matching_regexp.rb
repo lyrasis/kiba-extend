@@ -100,13 +100,13 @@ module Kiba
         #   expect(result).to eq(expected)
         class FieldValueMatchingRegexp
           # @param fields [Array<Symbol>,Symbol] field(s) to delete from
-          # @param match [String] value to match. Is converted to a regular
-          #   expression pattern via `Regexp.new(match)`
+          # @param match [String, Regexp] value to match. A String is converted
+          #   to a regular expression pattern via `Regexp.new(match)`
           # @param casesensitive [Boolean] match mode
           def initialize(fields:, match:, casesensitive: true)
             @fields = [fields].flatten
-            @match = casesensitive ? Regexp.new(match) : Regexp.new(match,
-              Regexp::IGNORECASE)
+            @casesensitive = casesensitive
+            @match = set_match(match)
           end
 
           # @param row [Hash{ Symbol => String, nil }]
@@ -123,7 +123,14 @@ module Kiba
 
           private
 
-          attr_reader :fields, :match
+          attr_reader :fields, :match, :casesensitive
+
+          def set_match(orig)
+            return orig if orig.is_a?(Regexp)
+            return Regexp.new(orig) if casesensitive
+
+            Regexp.new(orig, Regexp::IGNORECASE)
+          end
         end
       end
     end
