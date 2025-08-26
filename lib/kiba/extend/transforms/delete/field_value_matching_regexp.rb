@@ -53,6 +53,51 @@ module Kiba
         #     {a: "an xxxx", b: nil}
         #   ]
         #   expect(result).to eq(expected)
+        # @example Match as regexp, case sensitive
+        #   # Used in pipeline as:
+        #   # transform Delete::FieldValueMatchingRegexp,
+        #   #   fields: %i[a b z],
+        #   #   match: /xx+/
+        #   xform = Delete::FieldValueMatchingRegexp.new(
+        #     fields: %i[a b z], match: /xx+/
+        #   )
+        #   input = [
+        #     {a: "xxxx a thing", b: "foo"},
+        #     {a: "thing xxxx 123", b: "bar"},
+        #     {a: "x thing", b: "xxxx"},
+        #     {a: "y thing", b: "xXxX"},
+        #     {a: "xxxxxxx thing", b: "baz"},
+        #     {a: "", b: nil}
+        #   ]
+        #   result = Kiba::StreamingRunner.transform_stream(input, xform)
+        #     .map{ |row| row }
+        #   expected = [
+        #     {a: nil, b: "foo"},
+        #     {a: nil, b: "bar"},
+        #     {a: "x thing", b: nil},
+        #     {a: "y thing", b: "xXxX"},
+        #     {a: nil, b: "baz"},
+        #     {a: "", b: nil}
+        #   ]
+        #   expect(result).to eq(expected)
+        #
+        # @example Match as anchored regex, case insensitive
+        #   # Used in pipeline as:
+        #   # transform Delete::FieldValueMatchingRegexp,
+        #   #   fields: %i[a b],
+        #   #   match: /^xx+/i
+        #   xform = Delete::FieldValueMatchingRegexp.new(
+        #     fields: %i[a b], match: /^xx+/i, casesensitive: false
+        #   )
+        #   input = [
+        #     {a: "an xxxx", b: "xXxXxXy"}
+        #   ]
+        #   result = Kiba::StreamingRunner.transform_stream(input, xform)
+        #     .map{ |row| row }
+        #   expected = [
+        #     {a: "an xxxx", b: nil}
+        #   ]
+        #   expect(result).to eq(expected)
         class FieldValueMatchingRegexp
           # @param fields [Array<Symbol>,Symbol] field(s) to delete from
           # @param match [String] value to match. Is converted to a regular
