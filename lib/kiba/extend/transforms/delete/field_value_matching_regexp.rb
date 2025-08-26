@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
-# rubocop:todo Layout/LineLength
-
 module Kiba
   module Extend
     module Transforms
       module Delete
-        # Deletes full field value of all given fields that match the given regular expression pattern.
-        #   You can control whether the regexp is case sensitive or not
+        # Deletes full field value of all given fields that match the given
+        #   regular expression pattern. You can control whether the regexp is
+        #   case sensitive or not
         #
         # # Examples
         #
@@ -67,7 +66,8 @@ module Kiba
         #
         class FieldValueMatchingRegexp
           # @param fields [Array<Symbol>,Symbol] field(s) to delete from
-          # @param match [String] value to match. Is converted to a regular expression pattern via `Regexp.new(match)`
+          # @param match [String] value to match. Is converted to a regular
+          #   expression pattern via `Regexp.new(match)`
           # @param casesensitive [Boolean] match mode
           def initialize(fields:, match:, casesensitive: true)
             @fields = [fields].flatten
@@ -95,4 +95,3 @@ module Kiba
     end
   end
 end
-# rubocop:enable Layout/LineLength
