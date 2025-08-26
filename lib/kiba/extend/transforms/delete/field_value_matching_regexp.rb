@@ -6,15 +6,15 @@ module Kiba
       module Delete
         # Deletes full field value of all given fields that match the given
         #   regular expression pattern. You can control whether the regexp is
-        #   case sensitive or not
+        #   case sensitive or not.
         #
         # @example Match as string, case sensitive
         #   # Used in pipeline as:
         #   # transform Delete::FieldValueMatchingRegexp,
-        #   #   fields: %i[a b],
+        #   #   fields: %i[a b z],
         #   #   match: "xx+"
         #   xform = Delete::FieldValueMatchingRegexp.new(
-        #     fields: %i[a b], match: "xx+"
+        #     fields: %i[a b z], match: "xx+"
         #   )
         #   input = [
         #     {a: "xxxx a thing", b: "foo"},
@@ -67,7 +67,7 @@ module Kiba
           # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             fields.each do |field|
-              val = row.fetch(field)
+              val = row.fetch(field, nil)
               next if val.blank?
 
               row[field] = nil if val.match?(match)
