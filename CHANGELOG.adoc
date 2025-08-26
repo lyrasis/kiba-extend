@@ -37,6 +37,8 @@ In https://github.com/lyrasis/kiba-extend/pull/214[PR#214]
 
 === Bugfixes
 
+* Stop `Delete::FieldValueMatchingRegexp` transform from failing if a given row does not contain one of the keys given in `fields` parameter.
+In https://github.com/lyrasis/kiba-extend/pull/225[PR#225]
 * Create directories for Destination classes that write files, if said directories do not exist.
 In https://github.com/lyrasis/kiba-extend/pull/221[PR#221]
 * Error introduced in https://github.com/lyrasis/kiba-extend/pull/211[PR#211].
