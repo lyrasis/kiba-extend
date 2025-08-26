@@ -8,62 +8,51 @@ module Kiba
         #   regular expression pattern. You can control whether the regexp is
         #   case sensitive or not
         #
-        # # Examples
+        # @example Match as string, case sensitive
+        #   # Used in pipeline as:
+        #   # transform Delete::FieldValueMatchingRegexp,
+        #   #   fields: %i[a b],
+        #   #   match: "xx+"
+        #   xform = Delete::FieldValueMatchingRegexp.new(
+        #     fields: %i[a b], match: "xx+"
+        #   )
+        #   input = [
+        #     {a: "xxxx a thing", b: "foo"},
+        #     {a: "thing xxxx 123", b: "bar"},
+        #     {a: "x thing", b: "xxxx"},
+        #     {a: "y thing", b: "xXxX"},
+        #     {a: "xxxxxxx thing", b: "baz"},
+        #     {a: "", b: nil}
+        #   ]
+        #   result = Kiba::StreamingRunner.transform_stream(input, xform)
+        #     .map{ |row| row }
+        #   expected = [
+        #     {a: nil, b: "foo"},
+        #     {a: nil, b: "bar"},
+        #     {a: "x thing", b: nil},
+        #     {a: "y thing", b: "xXxX"},
+        #     {a: nil, b: "baz"},
+        #     {a: "", b: nil}
+        #   ]
+        #   expect(result).to eq(expected)
         #
-        # Input table:
-        #
-        # ~~~
-        # | a              | b    |
-        # |----------------+------|
-        # | xxxx a thing   | foo  |
-        # | thing xxxx 123 | bar  |
-        # | x thing        | xxxx |
-        # | y thing        | xXxX |
-        # | xxxxxxx thing  | baz  |
-        # |                | nil  |
-        # ~~~
-        #
-        # Used in pipeline as:
-        #
-        # ~~~
-        # transform Delete::FieldValueMatchingRegexp, fields: %i[a b], match: 'xx+'
-        # ~~~
-        #
-        # Results in:
-        #
-        # ~~~
-        # | a       | b    |
-        # |---------+------|
-        # | nil     | foo  |
-        # | nil     | bar  |
-        # | x thing | nil  |
-        # | y thing | xXxX |
-        # | nil     | baz  |
-        # |         | nil  |
-        # ~~~
-        #
-        # Input table:
-        #
-        # ~~~
-        # | a       | b       |
-        # |---------+---------|
-        # | an xxxx | xXxXxXy |
-        # ~~~
-        #
-        # Used in pipeline as:
-        #
-        # ~~~
-        # transform Delete::FieldValueMatchingRegexp, fields: %i[a b], match: '^xx+', casesensitive: false
-        # ~~~
-        #
-        # Results in:
-        #
-        # ~~~
-        # | a       | b   |
-        # |---------+-----|
-        # | an xxxx | nil |
-        # ~~~
-        #
+        # @example Match as anchored string, case insensitive
+        #   # Used in pipeline as:
+        #   # transform Delete::FieldValueMatchingRegexp,
+        #   #   fields: %i[a b],
+        #   #   match: "^xx+", casesensitive: false
+        #   xform = Delete::FieldValueMatchingRegexp.new(
+        #     fields: %i[a b], match: "^xx+", casesensitive: false
+        #   )
+        #   input = [
+        #     {a: "an xxxx", b: "xXxXxXy"}
+        #   ]
+        #   result = Kiba::StreamingRunner.transform_stream(input, xform)
+        #     .map{ |row| row }
+        #   expected = [
+        #     {a: "an xxxx", b: nil}
+        #   ]
+        #   expect(result).to eq(expected)
         class FieldValueMatchingRegexp
           # @param fields [Array<Symbol>,Symbol] field(s) to delete from
           # @param match [String] value to match. Is converted to a regular
