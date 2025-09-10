@@ -67,16 +67,13 @@ module Kiba
         #   ]
         #   expect(result).to eq(expected)
         class NormalizeForID
-          include MultivalPlusDelimDeprecatable
           # @param source [Symbol] field whose value will be normalized
           # @param target [Symbol] field to populate with normalized value
-          # @param multival [Boolean] **DEPRECATED - Do not use**
           # @param delim [nil, String] if given triggers treatment as
           #   multivalued, and is used to split/join string values
-          def initialize(source:, target:, multival: omitted = true, delim: nil)
+          def initialize(source:, target:, delim: nil)
             @source = source
             @target = target
-            @multival = set_multival(multival, omitted, self)
             @delim = delim
             @normalizer = Kiba::Extend::Utils::StringNormalizer.new(
               mode: :cspaceid
