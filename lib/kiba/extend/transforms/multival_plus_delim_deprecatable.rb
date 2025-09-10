@@ -38,9 +38,7 @@ module Kiba
       #   Define a private :multival_default method that returns true:
       #
       # ~~~
-      # def multival_default
-      #   true
-      # end
+      # def multival_default = true
       # ~~~
       #
       # @since 3.3.0
