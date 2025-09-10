@@ -50,14 +50,22 @@ RSpec.describe Kiba::Extend::Transforms::SepDeprecatable do
       end
     end
 
-    context "without sep or delim" do
+    context "without sep or delim and no default passed" do
       let(:params) { {sepval: nil, delimval: nil, calledby: mod} }
 
-      it "returns expected" do
+      it "raises error" do
         expect { result }.to raise_error(
           ArgumentError,
           "Xform: missing keyword: :delim"
         )
+      end
+    end
+
+    context "without sep or delim and default passed" do
+      let(:params) { {sepval: nil, delimval: nil, calledby: mod, default: ";"} }
+
+      it "does not raise error" do
+        expect { result }.not_to raise_error
       end
     end
   end
