@@ -50,16 +50,26 @@ module Kiba
         #     ]
         #   expect(result).to eq(expected)
         class ToFieldValue
+          include MultivalPlusDelimDeprecatable
+
           # @param field [Symbol] The field to prepend to
           # @param value [String] The value to be prepended
           # @param multival [Boolean] Whether prepend to multiple values
           # @param delim [String] for splitting value if `multival`
-          def initialize(field:, value:, multival: false,
-            delim: Kiba::Extend.delim)
+          def initialize(field:, value:, multival: omitted = true,
+            delim: nil)
             @field = field
             @value = value
-            @multival = multival
-            @delim = delim
+            @multival = set_multival(multival, omitted, self)
+            if delim.nil?
+              msg = "If you are expecting Kiba::Extend.delim to be used as "\
+                "default delimiter, please pass the `delim` explicitly. In "\
+                "a future release of kiba-extend, the `delim` value will "\
+                "no longer default to Kiba::Extend.delim."
+              warn("#{Kiba::Extend.warning_label}:\n"\
+                 "  #{self.class}: #{msg}")
+            end
+            @delim = delim || Kiba::Extend.delim
           end
 
           # @param row [Hash{ Symbol => String, nil }]
