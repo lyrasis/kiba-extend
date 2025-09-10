@@ -2,6 +2,6 @@
 
 module Kiba
   module Extend
-    VERSION = "4.2.0"
+    VERSION = "5.0.0"
   end
 end
