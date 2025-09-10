@@ -251,11 +251,12 @@ module Kiba
         #   #   Those elements are also deleted from the grouped fields if
         #   #   present.
         class FieldValueIfEqualsOtherField
+          include MultivalPlusDelimDeprecatable
+
           # @param delete [Symbol] field from which values will be deleted
           # @param if_equal_to [Symbol] field the `delete` values will be
           #   compared to. In other words, the "other field"
-          # @param multival [Boolean] whether to split field values for
-          #   comparison
+          # @param multival [Boolean] **DEPRECATED - Do not use**
           # @param positional_compare [Boolean] whether to compare multivalues
           #   positionally. Only relevant if `multival` is true and
           #   `if_equal_to` is multivalued
@@ -265,11 +266,11 @@ module Kiba
           #   positionally corresponding values should also be removed
           # @param casesensitive [Boolean] matching mode
           def initialize(delete:, if_equal_to:,
-            multival: false, positional_compare: true, delim: nil,
+            multival: omitted = true, positional_compare: true, delim: nil,
             grouped_fields: [], casesensitive: true)
             @delete = delete
             @compare = if_equal_to
-            @multival = multival
+            @multival = set_multival(multival, omitted, self)
             @positional = positional_compare
             @delim = delim || Kiba::Extend.delim
             @group = grouped_fields
