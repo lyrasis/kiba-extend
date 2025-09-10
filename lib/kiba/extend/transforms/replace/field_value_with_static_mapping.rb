@@ -194,6 +194,7 @@ module Kiba
               instance = allocate
               fail(ArgumentError, sep_msg) if sep
               fail(ArgumentError, multival_msg) if multival
+
               instance.send(:initialize, source: source, target: target, mapping: mapping, fallback_val: fallback_val,
                 delete_source: delete_source, delim: delim)
               instance

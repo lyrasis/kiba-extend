@@ -6,6 +6,7 @@ module WithoutBaseJob
   module_function
 
   extend Dry::Configurable
+
   setting :cleanup_base_name, default: :test__me, reader: true
 end
 
@@ -13,6 +14,7 @@ module WithSetup
   module_function
 
   extend Dry::Configurable
+
   setting :base_job, default: :base__job, reader: true
   setting :fingerprint_fields,
     default: %i[value type note],

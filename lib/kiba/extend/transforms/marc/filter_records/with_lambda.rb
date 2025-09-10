@@ -43,6 +43,7 @@ module Kiba
           # @since 4.0.0
           class WithLambda
             include ActionArgumentable
+
             # @param action [:keep, :reject] taken if the lambda returns true
             # @param lambda [Proc] Lambda Proc with one argument (the incoming
             #   MARC record), that returns true or false

@@ -8,6 +8,7 @@ module Kiba
     module Registry
       class CannotBeUsedAsSourceError < TypeError
         include Kiba::Extend::ErrMod
+
         attr_reader :entry
         def initialize(dest_class)
           super("The result of a registry entry with a #{dest_class} "\

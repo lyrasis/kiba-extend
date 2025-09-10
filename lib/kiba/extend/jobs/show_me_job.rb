@@ -21,6 +21,7 @@ module Kiba
         def show
           Kiba.job_segment do
             extend Kiba::Common::DSLExtensions::ShowMe
+
             show_me!
           end
         end
