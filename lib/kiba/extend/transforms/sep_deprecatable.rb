@@ -34,7 +34,8 @@ module Kiba
         # @param sepval [String] `sep` value passed to class
         # @param delimval [String] `delim` value passed to class
         # @param calledby Instance of the class in which sep is being deprecated
-        # @param default [nil, String] default sep/nil value used if none given
+        # @param default [nil, String] default sep/delim value used if none
+        #   given
         def usedelim(sepval:, delimval:, calledby:, default: nil)
           if delimval && !sepval
             delimval
