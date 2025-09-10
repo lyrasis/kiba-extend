@@ -88,19 +88,17 @@ module Kiba
         #     {id: 7, val: "s"}
         #   ]
         #   expect(result).to eq(expected)
-        # @example Multival, keeping empty
+        # @example Multival (via delim param only), keeping empty
         #   # Used in pipeline as:
         #   # transform Explode::FieldValuesToNewRows,
         #   #   fields: %i[child parent],
         #   #   target: :val,
-        #   #   multival: true,
-        #   #   sep: ";",
+        #   #   delim: ";",
         #   #   keep_empty: true
         #   xform = Explode::FieldValuesToNewRows.new(
         #     fields: %i[child parent],
         #     target: :val,
-        #     multival: true,
-        #     sep: ";",
+        #     delim: ";",
         #     keep_empty: true
         #   )
         #   input = [
@@ -210,27 +208,40 @@ module Kiba
         #   ]
         #   expect(result).to eq(expected)
         class FieldValuesToNewRows
+          include MultivalPlusDelimDeprecatable
           include SepDeprecatable
 
           # @param target [Symbol] new field into which existing field values
           #   will be mapped
           # @param fields [Symbol, Array<Symbol>] from which values will be
           #   exploded
-          # @param multival [Boolean]
+          # @param multival [Boolean] **deprecated - do not use**
           # @param sep [nil, String] **deprecated - do not use**
           # @param delim [nil, String] used to split field values
           # @param keep_nil [Boolean] whether to create an exploded row for a
           #   Nil value
           # @param keep_empty [Boolean] whether to create an exploded row for a
           #   empty value
-          def initialize(target:, fields: [], multival: false, sep: nil,
-                         delim: nil, keep_nil: false, keep_empty: false)
+          def initialize(target:, fields: [], multival: omitted = true,
+            sep: nil, delim: nil, keep_nil: false,
+            keep_empty: false)
             @fields = [fields].flatten
             @target = target
-            @multival = multival
-            @sep = sep
+            @multival = if omitted && delim
+              true
+            else
+              set_multival(multival, omitted, self)
+            end
+            if sep.nil? && delim.nil? && @multival && !omitted
+              msg = "If you are expecting Kiba::Extend.delim to be used as "\
+                "default `sep` value, please pass it as explicit `delim` "\
+                "argument. In a future release of kiba-extend, the `delim` "\
+                "value will no longer default to Kiba::Extend.delim."
+              warn("#{Kiba::Extend.warning_label}:\n  #{self.class}: #{msg}")
+              sep = Kiba::Extend.delim
+            end
             @delim = usedelim(sepval: sep, delimval: delim, calledby: self,
-                              default: nil)
+              default: nil)
             @keep_nil = keep_nil
             @keep_empty = keep_empty
           end
@@ -248,7 +259,7 @@ module Kiba
               elsif val.empty?
                 [""]
               elsif @multival
-                val.split(@sep, -1)
+                val.split(@delim, -1)
               else
                 [val]
               end
