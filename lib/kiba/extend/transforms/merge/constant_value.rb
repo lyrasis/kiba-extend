@@ -35,6 +35,7 @@ module Kiba
         #   value is overwritten in the second row.
         class ConstantValue
           include SingleWarnable
+
           # @param target [Symbol] target field in which to enter constant value
           # @param value [String] the constant value to enter in target field
           def initialize(target:, value:)

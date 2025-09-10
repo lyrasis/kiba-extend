@@ -22,6 +22,7 @@ module Kiba
           if subfield && MARC::ControlField.control_tags.any?(tag)
             raise ControlFieldsDoNotHaveSubfieldsError
           end
+
           @field_selector = id_field_selector
           @subfield_selector = id_subfield_selector
           @value_formatter = id_value_formatter

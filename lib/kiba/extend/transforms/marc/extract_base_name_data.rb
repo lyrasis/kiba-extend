@@ -10,6 +10,7 @@ module Kiba
         # @abstract
         class ExtractBaseNameData
           include FieldLinkable
+
           # @param name_type [String] to insert into name_type_target field
           # @param id_target [Symbol] row field into which id value will be
           #   written

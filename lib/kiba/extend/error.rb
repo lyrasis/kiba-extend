@@ -31,6 +31,7 @@ module Kiba
 
     class BooleanReturningLambdaError < TypeError
       include Kiba::Extend::ErrMod
+
       def initialize(msg = "Lambda must return true or false")
         super
       end
@@ -38,6 +39,7 @@ module Kiba
 
     class InvalidActionError < ArgumentError
       include Kiba::Extend::ErrMod
+
       def initialize(msg = "Action must be :keep or :reject")
         super
       end
@@ -49,6 +51,7 @@ module Kiba
 
     class JobCannotBeUsedAsLookupError < TypeError
       include Kiba::Extend::ErrMod
+
       def initialize(key, klass, for_job)
         @key = key
         @klass = klass
@@ -75,6 +78,7 @@ module Kiba
     #   key for file
     class NoLookupOnError < NameError
       include Kiba::Extend::ErrMod
+
       # @param filekey [Symbol] key not found in
       #   {Kiba::Extend::FileRegistry}
       def initialize(filekey, for_job)
@@ -101,6 +105,7 @@ module Kiba
     # Exception raised if the lookup key value for the file is not a Symbol
     class NonSymbolLookupOnError < TypeError
       include Kiba::Extend::ErrMod
+
       # @param filekey [Symbol] registry entry key having the non-symbol
       #   `lookup_on` value
       def initialize(filekey, for_job)
@@ -130,6 +135,7 @@ module Kiba
 
     class PathRequiredError < ArgumentError
       include Kiba::Extend::ErrMod
+
       def initialize(klass)
         super("Provide path for #{klass}")
       end

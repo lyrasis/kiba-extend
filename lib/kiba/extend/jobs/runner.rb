@@ -9,6 +9,7 @@ module Kiba
       #   which is why they are separated out into a module
       module Runner
         include Reporter
+
         # Error raised if dependency file is still missing after we tried to run
         #   dependencies
         class MissingDependencyError < Kiba::Extend::Error
@@ -124,6 +125,7 @@ module Kiba
           return unless Kiba::Extend.job_show_me
 
           extend ShowMeJob
+
           decorate
         end
 
@@ -137,6 +139,7 @@ module Kiba
           return unless Kiba::Extend.job_tell_me
 
           extend TellMeJob
+
           decorate
         end
 

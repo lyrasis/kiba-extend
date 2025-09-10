@@ -10,6 +10,7 @@ module Kiba
       class RegisteredDestination < RegisteredFile
         class SuppliedEntryError < TypeError
           include Kiba::Extend::ErrMod
+
           def initialize(entry_key)
             super("Registry entry #{entry_key} is a supplied entry, so it "\
                   "cannot be used as a job destination")

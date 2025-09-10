@@ -69,6 +69,7 @@ module Kiba
         #
         class EmptyFieldValues
           include Allable
+
           # @note `sep` will be removed in a future version. **DO NOT USE**
           # @param fields [Array<Symbol>,Symbol] field(s) to delete from
           # @param sep [String] **DEPRECATED; DO NOT USE**

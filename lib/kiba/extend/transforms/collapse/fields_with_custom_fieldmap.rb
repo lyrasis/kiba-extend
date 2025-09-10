@@ -188,6 +188,7 @@ module Kiba
             if row.keys.any?(source)
               val = row[source]
               return "" if val.blank?
+
               val.split(delim, -1)
             else
               add_single_warning("Source field `#{source}` missing; treating as nil value")

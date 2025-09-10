@@ -52,6 +52,7 @@ module Kiba
         # @since 4.0.0
         class ExtractSubfieldsFromField
           include FieldLinkable
+
           # @param tag [String] MARC tag from which to extract subfield values
           # @param subfields [Array<String>] subfield codes from which to
           #   extract values
