@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:todo Layout/LineLength
-
 module Kiba
   module Extend
     module Transforms
@@ -76,9 +74,12 @@ module Kiba
         # ~~~
         #
         class Fields
-          # @param source [Symbol] name of field containing value to remove from target fields
-          # @param targets [Array<Symbol>] names of fields to remove source value(s) from
-          # @param casesensitive [Boolean] whether matching should be case sensitive
+          # @param source [Symbol] name of field containing value to remove from
+          #   target fields
+          # @param targets [Array<Symbol>] names of fields to remove source
+          #   value(s) from
+          # @param casesensitive [Boolean] whether matching should be case
+          #   sensitive
           # @param multival [Boolean] whether to treat as multi-valued
           # @param sep [String] used to split/join multi-val field values
           def initialize(source:, targets:, casesensitive: true,
@@ -137,4 +138,3 @@ module Kiba
     end
   end
 end
-# rubocop:enable Layout/LineLength

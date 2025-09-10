@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:todo Layout/LineLength
-
 module Kiba
   module Extend
     module Transforms
@@ -32,9 +30,11 @@ module Kiba
         #
         # @example Treated as multivalue
         #   # Used in pipeline as:
-        #   # transform Prepend::ToFieldValue, field: :name, value: 'aka: ', multival: true, delim: '|'
+        #   # transform Prepend::ToFieldValue, field: :name, value: 'aka: ',
+        #   #   multival: true, delim: '|'
         #
-        #   xform = Prepend::ToFieldValue.new(field: :name, value: 'aka: ', multival: true, delim: '|')
+        #   xform = Prepend::ToFieldValue.new(field: :name, value: 'aka: ',
+        #     multival: true, delim: '|')
         #   input = [
         #       {name: 'Weddy'},
         #       {name: 'Kernel|Zipper'},
@@ -83,4 +83,3 @@ module Kiba
     end
   end
 end
-# rubocop:enable Layout/LineLength
