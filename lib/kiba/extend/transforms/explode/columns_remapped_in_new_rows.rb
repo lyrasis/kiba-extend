@@ -62,7 +62,10 @@ module Kiba
         #   ]
         #   expect(result).to eq(expected)
         class ColumnsRemappedInNewRows
-          # @param remap_groups [Array(Array(Symbol))] The existing field groups that should be
+          # @param remap_groups [Array(Array(Symbol))] The existing field groups
+          #   that should be mapped into the `map_to` fields
+          # @param map_to [Array<Symbol>] target fields derived from
+          #   `remap_groups`
           def initialize(remap_groups:, map_to:)
             @groups = remap_groups
             @map = map_to
