@@ -88,7 +88,11 @@ module Kiba
           raise KeyNotRegisteredError.new(err.key, :source)
         end
 
-        # @return [Array]
+        # @return [Array<Hash,FileRegistryEntry>]
+        # @note In general, avoid this. Prior to registry finalization, it will
+        #   return Hashes. After, it will return FileRegistryEntry objects. This
+        #   makes the results unpredicatable to work with.
+        # @todo Refactor this away, if possible
         def entries
           @entries ||= populate_entries
         end
