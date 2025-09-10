@@ -50,7 +50,6 @@ module Kiba
         #     ]
         #   expect(result).to eq(expected)
         class ToFieldValue
-          # @note `mvdelim` argument is deprecated and replaced by `multival` and `delim`
           # @param field [Symbol] The field to prepend to
           # @param value [String] The value to be prepended
           # @param multival [Boolean] Whether prepend to multiple values
