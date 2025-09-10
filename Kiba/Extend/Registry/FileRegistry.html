@@ -232,7 +232,30 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#entries-instance_method" title="#entries (instance method)">#<strong>entries</strong>  &#x21d2; Array </a>
+      <a href="#entries-instance_method" title="#entries (instance method)">#<strong>entries</strong>  &#x21d2; Array&lt;Hash,FileRegistryEntry&gt; </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#entry_objs-instance_method" title="#entry_objs (instance method)">#<strong>entry_objs</strong>  &#x21d2; Array&lt;FileRegistryEntry&gt; </a>
     
 
     
@@ -721,7 +744,7 @@ as a source</p>
       <div class="method_details ">
   <h3 class="signature " id="entries-instance_method">
   
-    #<strong>entries</strong>  &#x21d2; <tt>Array</tt> 
+    #<strong>entries</strong>  &#x21d2; <tt>Array&lt;Hash,<span class='object_link'><a href="FileRegistryEntry.html" title="Kiba::Extend::Registry::FileRegistryEntry (class)">FileRegistryEntry</a></span>&gt;</tt> 
   
 
   
@@ -730,6 +753,22 @@ as a source</p>
 </h3><div class="docstring">
   <div class="discussion">
     
+  <div class="note todo">
+    <strong>TODO:</strong>
+    <div class='inline'><p>Refactor this away, if possible</p>
+</div>
+  </div>
+
+
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>In general, avoid this. Prior to registry finalization, it will
+return Hashes. After, it will return FileRegistryEntry objects. This
+makes the results unpredicatable to work with.</p>
+</div>
+  </div>
+
+
 
 
   </div>
@@ -742,7 +781,7 @@ as a source</p>
     <li>
       
       
-        <span class='type'>(<tt>Array</tt>)</span>
+        <span class='type'>(<tt>Array&lt;Hash,<span class='object_link'><a href="FileRegistryEntry.html" title="Kiba::Extend::Registry::FileRegistryEntry (class)">FileRegistryEntry</a></span>&gt;</tt>)</span>
       
       
       
@@ -771,16 +810,80 @@ as a source</p>
       <pre class="lines">
 
 
-92
-93
-94</pre>
+96
+97
+98</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 92</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 96</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_entries'>entries</span>
   <span class='ivar'>@entries</span> <span class='op'>||=</span> <span class='id identifier rubyid_populate_entries'>populate_entries</span>
 <span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="entry_objs-instance_method">
+  
+    #<strong>entry_objs</strong>  &#x21d2; <tt>Array&lt;<span class='object_link'><a href="FileRegistryEntry.html" title="Kiba::Extend::Registry::FileRegistryEntry (class)">FileRegistryEntry</a></span>&gt;</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;<span class='object_link'><a href="FileRegistryEntry.html" title="Kiba::Extend::Registry::FileRegistryEntry (class)">FileRegistryEntry</a></span>&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>2.2.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+101</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 101</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_entry_objs'>entry_objs</span> <span class='op'>=</span> <span class='id identifier rubyid__container'>_container</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lparen'>(</span><span class='op'>&amp;</span><span class='symbol'>:item</span><span class='rparen'>)</span></pre>
     </td>
   </tr>
 </table>
@@ -830,15 +933,15 @@ as a source</p>
       <pre class="lines">
 
 
-125
-126
-127
-128
-129
-130</pre>
+132
+133
+134
+135
+136
+137</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 125</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 132</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_finalize'>finalize</span>
   <span class='id identifier rubyid_transform'>transform</span>
@@ -906,12 +1009,12 @@ as a source</p>
       <pre class="lines">
 
 
-97
-98
-99</pre>
+104
+105
+106</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 97</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 104</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_replace_entries'>replace_entries</span><span class='lparen'>(</span><span class='id identifier rubyid_arr'>arr</span><span class='rparen'>)</span>
   <span class='ivar'>@entries</span> <span class='op'>=</span> <span class='id identifier rubyid_arr'>arr</span>
@@ -1005,21 +1108,21 @@ job_key is removed</p>
       <pre class="lines">
 
 
-107
-108
-109
-110
-111
-112
-113
 114
 115
 116
 117
-118</pre>
+118
+119
+120
+121
+122
+123
+124
+125</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 107</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 114</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_replace_entry_x_with_entry_y'>replace_entry_x_with_entry_y</span><span class='lparen'>(</span><span class='label'>x:</span><span class='comma'>,</span> <span class='label'>y:</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='ivar'>@frozen</span>
@@ -1079,17 +1182,17 @@ job_key is removed</p>
       <pre class="lines">
 
 
-134
-135
-136
-137
-138
-139
-140
-141</pre>
+141
+142
+143
+144
+145
+146
+147
+148</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 134</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 141</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_transform'>transform</span>
   <span class='kw'>if</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_job_verbosity'><span class='object_link'><a href="../../Extend.html#job_verbosity-class_method" title="Kiba::Extend.job_verbosity (method)">job_verbosity</a></span></span> <span class='op'>==</span> <span class='symbol'>:debug</span>
@@ -1157,12 +1260,12 @@ job_key is removed</p>
       <pre class="lines">
 
 
-143
-144
-145</pre>
+150
+151
+152</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 143</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 150</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_valid?'>valid?</span>
   <span class='id identifier rubyid_validator'>validator</span><span class='period'>.</span><span class='id identifier rubyid_valid?'>valid?</span>
@@ -1225,12 +1328,12 @@ job_key is removed</p>
       <pre class="lines">
 
 
-147
-148
-149</pre>
+154
+155
+156</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 147</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry.rb', line 154</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_warnings?'>warnings?</span>
   <span class='id identifier rubyid_validator'>validator</span><span class='period'>.</span><span class='id identifier rubyid_warnings?'>warnings?</span>
@@ -1245,7 +1348,7 @@ job_key is removed</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Sep  9 20:34:27 2025 by
+  Generated on Wed Sep 10 15:38:47 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>
