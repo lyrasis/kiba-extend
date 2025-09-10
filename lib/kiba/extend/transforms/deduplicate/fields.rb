@@ -6,73 +6,70 @@ module Kiba
       module Deduplicate
         # Removes the value(s) of `source` from `targets`
         #
-        # Input table:
-        #
-        # ~~~
-        # | x   | y   | z   |
-        # |-----+-----+-----|
-        # | a   | a   | b   |
-        # | a   | a   | a   |
-        # | a   | b;a | a;c |
-        # | a;b | b;a | a;c |
-        # | a   | aa  | bat |
-        # | nil | a   | nil |
-        # |     | ;a  | b;  |
-        # | a   | nil | nil |
-        # | a   | A   | a   |
-        # ~~~
-        #
-        # Used in pipeline as:
-        #
-        # ~~~
-        # transform Deduplicate::Fields, source: :x, targets: %i[y z], multival: true, sep: ';'
-        # ~~~
-        #
-        # Results in:
-        #
-        # ~~~
-        # | x   | y   | z   |
-        # |-----+-----+-----|
-        # | a   | nil | b   |
-        # | a   | nil | nil |
-        # | a   | b   | c   |
-        # | a;b | nil | c   |
-        # | a   | aa  | bat |
-        # | nil | a   | nil |
-        # |     | a   | b   |
-        # | a   | nil | nil |
-        # | a   | A   | nil |
-        # ~~~
-        #
-        # Input table:
-        #
-        # ~~~
-        # | x | y | z |
-        # |---+---+---|
-        # | a | A | a |
-        # | a | a | B |
-        # ~~~
-        #
-        # Used in pipeline as:
-        #
-        # ~~~
-        # transform Deduplicate::Fields,
-        #    source: :x,
-        #    targets: %i[y z],
-        #    multival: true,
-        #    sep: ';',
-        #    casesensitive: false
-        # ~~~
-        #
-        # Results in:
-        #
-        # ~~~
-        # | x | y   | z   |
-        # |---+-----+-----|
-        # | a | nil | nil |
-        # | a | nil | B   |
-        # ~~~
-        #
+        # @example Multival, case sensitive, with sep
+        #   # Used in pipeline as:
+        #   # transform Deduplicate::Fields,
+        #   #   source: :x,
+        #   #   targets: %i[y z],
+        #   #   multival: true,
+        #   #   sep: ";"
+        #   xform = Deduplicate::Fields.new(
+        #     source: :x,
+        #     targets: %i[y z],
+        #     multival: true,
+        #     sep: ";"
+        #   )
+        #   input = [
+        #     {x: "a", y: "a", z: "b"},
+        #     {x: "a", y: "a", z: "a"},
+        #     {x: "a", y: "b;a", z: "a;c"},
+        #     {x: "a;b", y: "b;a", z: "a;c"},
+        #     {x: "a", y: "aa", z: "bat"},
+        #     {x: nil, y: "a", z: nil},
+        #     {x: "", y: ";a", z: "b;"},
+        #     {x: "a", y: nil, z: nil},
+        #     {x: "a", y: "A", z: "a"}
+        #   ]
+        #   result = Kiba::StreamingRunner.transform_stream(input, xform)
+        #     .map{ |row| row }
+        #   expected = [
+        #     {x: "a", y: nil, z: "b"},
+        #     {x: "a", y: nil, z: nil},
+        #     {x: "a", y: "b", z: "c"},
+        #     {x: "a;b", y: nil, z: "c"},
+        #     {x: "a", y: "aa", z: "bat"},
+        #     {x: nil, y: "a", z: nil},
+        #     {x: "", y: "a", z: "b"},
+        #     {x: "a", y: nil, z: nil},
+        #     {x: "a", y: "A", z: nil}
+        #   ]
+        #   expect(result).to eq(expected)
+        # @example Multival, case insensitive, with sep
+        #   # Used in pipeline as:
+        #   # transform Deduplicate::Fields,
+        #   #   source: :x,
+        #   #   targets: %i[y z],
+        #   #   multival: true,
+        #   #   sep: ";",
+        #   #   casesensitive: false
+        #   xform = Deduplicate::Fields.new(
+        #     source: :x,
+        #     targets: %i[y z],
+        #     multival: true,
+        #     sep: ";",
+        #     casesensitive: false
+        #   )
+        #   input = [
+        #     {x: "a", y: "A", z: "a"},
+        #     {x: "a", y: "a", z: "B"}
+        #   ]
+        #   result = Kiba::StreamingRunner.transform_stream(input, xform)
+        #     .map{ |row| row }
+        #   expected = [
+        #     {x: "a", y: nil, z: nil},
+        #     {x: "a", y: nil, z: "B"}
+        #   ]
+        #   expect(result).to eq(expected)
         class Fields
           # @param source [Symbol] name of field containing value to remove from
           #   target fields
