@@ -93,6 +93,9 @@ module Kiba
           @entries ||= populate_entries
         end
 
+        # @return [Array<FileRegistryEntry>]
+        def entry_objs = _container.values.map(&:item)
+
         # @param arr [Array<Hash>]
         def replace_entries(arr)
           @entries = arr

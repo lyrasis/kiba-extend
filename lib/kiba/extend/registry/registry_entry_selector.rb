@@ -44,18 +44,14 @@ module Kiba
 
         def tagged(tag)
           Kiba::Extend.registry
-            ._container
-            .values
-            .map { |entry| entry.item if entry.item.tags.any?(tag) }
-            .compact
+            .entry_objs
+            .select { |entry| entry.tags.any?(tag) }
         end
 
         def with_creator
           Kiba::Extend.registry
-            ._container
-            .values
-            .map { |entry| entry.item if entry.item.creator }
-            .compact
+            .entry_objs
+            .reject { |entry| !entry.creator }
         end
       end
     end
