@@ -326,15 +326,15 @@ MARC record), that returns true or false</p>
       <pre class="lines">
 
 
-49
 50
 51
 52
 53
-54</pre>
+54
+55</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/marc/filter_records/with_lambda.rb', line 49</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/marc/filter_records/with_lambda.rb', line 50</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>action:</span><span class='comma'>,</span> <span class='label'>lambda:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_validate_action_argument'>validate_action_argument</span><span class='lparen'>(</span><span class='id identifier rubyid_action'>action</span><span class='rparen'>)</span>
@@ -449,7 +449,6 @@ MARC record), that returns true or false</p>
       <pre class="lines">
 
 
-59
 60
 61
 62
@@ -459,10 +458,11 @@ MARC record), that returns true or false</p>
 66
 67
 68
-69</pre>
+69
+70</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/marc/filter_records/with_lambda.rb', line 59</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/marc/filter_records/with_lambda.rb', line 60</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_validate_lambda'>validate_lambda</span><span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_lambda_validated'>lambda_validated</span>
@@ -485,7 +485,7 @@ MARC record), that returns true or false</p>
 </div>
 
       <div id="footer">
-  Generated on Wed Sep 10 15:38:49 2025 by
+  Generated on Wed Sep 10 23:53:11 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>

@@ -94,59 +94,31 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/kiba/extend/transforms/explode.rb</dd>
+    <dd>lib/kiba/extend/transforms/explode/columns_remapped_in_new_rows.rb</dd>
   </dl>
   
 </div>
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>This one is hard to succintly describe! Use it if you have specific fields grouped together in a row, and you want to abstract them so the fields are broader, and you reduce the number of fields.</p>
+    <p>This one is hard to succintly describe! Use it if you have
+  specific fields grouped together in a row, and you want to
+  abstract them so the fields are broader, and you reduce
+  the number of fields.</p>
 
-<p>In the example, 3 fields in each row represent fruit names and 2 fields in each row represent colors. We want more rows, but each row should have only one fruit column and color column.</p>
+<p>In the example, 3 fields in each row represent fruit names
+  and 2 fields in each row represent colors. We want more
+  rows, but each row should have only one fruit column and
+  color column.</p>
 
-<h1 id="example">Example</h1>
-
-<p>Input table:</p>
-
-<pre class="code ruby"><code class="ruby">| f1           | c1          | f2         | c2    | season | f3          |
-|--------------+-------------+------------+-------+--------+-------------|
-| strawberry   | red         | blueberry  | blue  | spring | cherry      |
-| fig;honeydew | brown;green | watermelon | green | summer | nil         |
-| nil          | nil         | nil        | nil   | winter | grapefruit  |
-| nil          | nil         | nil        | nil   | autumn | nil         |
-</code></pre>
-
-<p>Used in pipeline as:</p>
-
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Explode.html" title="Kiba::Extend::Transforms::Explode (module)">Explode</a></span></span><span class='op'>::</span><span class='const'>ColumnsRemappedInNewRows</span><span class='comma'>,</span>
-  <span class='label'>remap_groups:</span> <span class='lbracket'>[</span>
-    <span class='lbracket'>[</span><span class='symbol'>:f1</span><span class='comma'>,</span> <span class='symbol'>:c1</span><span class='rbracket'>]</span><span class='comma'>,</span>
-    <span class='lbracket'>[</span><span class='symbol'>:f2</span><span class='comma'>,</span> <span class='symbol'>:c2</span><span class='rbracket'>]</span><span class='comma'>,</span>
-    <span class='lbracket'>[</span><span class='symbol'>:f3</span><span class='rbracket'>]</span>
-  <span class='rbracket'>]</span><span class='comma'>,</span>
- <span class='label'>map_to:</span> <span class='lbracket'>[</span><span class='symbol'>:fruit</span><span class='comma'>,</span> <span class='symbol'>:color</span><span class='rbracket'>]</span>
-</code></pre>
-
-<p>Results in:</p>
-
-<pre class="code ruby"><code class="ruby">| fruit        | color       | season |
-|--------------+-------------+--------|
-| strawberry   | red         | spring |
-| blueberry    | blue        | spring |
-| cherry       | nil         | spring |
-| fig;honeydew | brown;green | summer |
-| watermelon   | green       | summer |
-| grapefruit   | nil         | winter |
-| nil          | nil         | autumn |
-</code></pre>
-
-<h2 id="things-to-notice">Things to notice</h2>
+<p>Things to notice in example:</p>
 
 <ul>
-  <li>The fact that some field values are multivalued is completely ignored</li>
+  <li>The fact that some field values are multivalued is completely
+ignored</li>
   <li>If all the values for a given remap group are blank, no row is added</li>
-  <li>Values in fields not included in <code>remap_groups</code> are copied to every row created</li>
+  <li>Values in fields not included in <code>remap_groups</code> are copied to every
+row created</li>
 </ul>
 
 
@@ -154,6 +126,54 @@
 </div>
 <div class="tags">
   
+  <div class="examples">
+    <h4 class="tag_title">Examples:</h4>
+    
+      
+        <h5 class="example_title"><div class='inline'><p>With defaults</p>
+</div></h5>
+      
+      <pre class="example code"><code><span class='comment'># Used in pipeline as:
+</span><span class='comment'># transform Explode::ColumnsRemappedInNewRows,
+</span><span class='comment'>#   remap_groups: [
+</span><span class='comment'>#     [:f1, :c1],
+</span><span class='comment'>#     [:f2, :c2],
+</span><span class='comment'>#     [:f3]
+</span><span class='comment'>#   ],
+</span><span class='comment'>#   map_to: [:fruit, :color]
+</span><span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Explode.html" title="Kiba::Extend::Transforms::Explode (module)">Explode</a></span></span><span class='op'>::</span><span class='const'>ColumnsRemappedInNewRows</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Explode::ColumnsRemappedInNewRows#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+  <span class='label'>remap_groups:</span> <span class='lbracket'>[</span>
+    <span class='lbracket'>[</span><span class='symbol'>:f1</span><span class='comma'>,</span> <span class='symbol'>:c1</span><span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='lbracket'>[</span><span class='symbol'>:f2</span><span class='comma'>,</span> <span class='symbol'>:c2</span><span class='rbracket'>]</span><span class='comma'>,</span>
+    <span class='lbracket'>[</span><span class='symbol'>:f3</span><span class='rbracket'>]</span>
+  <span class='rbracket'>]</span><span class='comma'>,</span>
+  <span class='label'>map_to:</span> <span class='lbracket'>[</span><span class='symbol'>:fruit</span><span class='comma'>,</span> <span class='symbol'>:color</span><span class='rbracket'>]</span>
+<span class='rparen'>)</span>
+<span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>f1:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>strawberry</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>c1:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>red</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>f2:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>blueberry</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>c2:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>blue</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='label'>season:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>spring</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>f3:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cherry</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>f1:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>fig;honeydew</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>c1:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>brown;green</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>f2:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>watermelon</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='label'>c2:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>green</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>season:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>summer</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>f3:</span> <span class='kw'>nil</span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>f1:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>c2:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>f2:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>c2:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>season:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>winter</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='label'>f3:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>grapefruit</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>f1:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>c2:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>f2:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>c2:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>season:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>autumn</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
+    <span class='label'>f3:</span> <span class='kw'>nil</span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>StreamingRunner</span><span class='period'>.</span><span class='id identifier rubyid_transform_stream'>transform_stream</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='id identifier rubyid_xform'>xform</span><span class='rparen'>)</span>
+  <span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_row'>row</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>fruit:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>strawberry</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>red</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>season:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>spring</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>fruit:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>blueberry</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>blue</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>season:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>spring</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>fruit:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cherry</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>season:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>spring</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>fruit:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>fig;honeydew</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>brown;green</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>season:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>summer</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>fruit:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>watermelon</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>green</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>season:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>summer</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>fruit:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>grapefruit</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>color:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>season:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>winter</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>fruit:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>color:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>season:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>autumn</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
+  </div>
+
 
 </div>
 
@@ -254,7 +274,24 @@
       
       
         &mdash;
-        <div class='inline'><p>The existing field groups that should be</p>
+        <div class='inline'><p>The existing field groups
+that should be mapped into the <code>map_to</code> fields</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>map_to</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>target fields derived from
+<code>remap_groups</code></p>
 </div>
       
     </li>
@@ -268,13 +305,13 @@
       <pre class="lines">
 
 
-64
-65
-66
-67</pre>
+69
+70
+71
+72</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/explode.rb', line 64</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/explode/columns_remapped_in_new_rows.rb', line 69</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>remap_groups:</span><span class='comma'>,</span> <span class='label'>map_to:</span><span class='rparen'>)</span>
   <span class='ivar'>@groups</span> <span class='op'>=</span> <span class='id identifier rubyid_remap_groups'>remap_groups</span>
@@ -332,11 +369,6 @@
       <pre class="lines">
 
 
-70
-71
-72
-73
-74
 75
 76
 77
@@ -346,10 +378,15 @@
 81
 82
 83
-84</pre>
+84
+85
+86
+87
+88
+89</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/explode.rb', line 70</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/explode/columns_remapped_in_new_rows.rb', line 75</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_to_new_rows'>to_new_rows</span> <span class='op'>=</span> <span class='id identifier rubyid_new_row_groups'>new_row_groups</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
@@ -376,7 +413,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Sep 10 15:38:46 2025 by
+  Generated on Wed Sep 10 23:53:12 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>

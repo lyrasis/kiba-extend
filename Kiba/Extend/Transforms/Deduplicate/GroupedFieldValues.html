@@ -87,11 +87,6 @@
   
   
   
-  <dl>
-      <dt>Includes:</dt>
-      <dd><span class='object_link'><a href="../SepDeprecatable.html" title="Kiba::Extend::Transforms::SepDeprecatable (module)">SepDeprecatable</a></span></dd>
-  </dl>
-  
   
 
   
@@ -269,7 +264,7 @@ extensively tested</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(on_field:, sep: nil, delim: nil, grouped_fields: [], ignore_case: false, normalized: false)  &#x21d2; GroupedFieldValues </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(on_field:, delim: nil, grouped_fields: [], ignore_case: false, normalized: false)  &#x21d2; GroupedFieldValues </a>
     
 
     
@@ -317,24 +312,13 @@ extensively tested</p>
     </ul>
   
 
-
-  
-  
-  
-  
-  
-  
-  
-  
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="../SepDeprecatable.html" title="Kiba::Extend::Transforms::SepDeprecatable (module)">SepDeprecatable</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../SepDeprecatable.html#usedelim-instance_method" title="Kiba::Extend::Transforms::SepDeprecatable#usedelim (method)">#usedelim</a></span></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(on_field:, sep: nil, delim: nil, grouped_fields: [], ignore_case: false, normalized: false)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Deduplicate::GroupedFieldValues (class)">GroupedFieldValues</a></span></tt> 
+    #<strong>initialize</strong>(on_field:, delim: nil, grouped_fields: [], ignore_case: false, normalized: false)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Deduplicate::GroupedFieldValues (class)">GroupedFieldValues</a></span></tt> 
   
 
   
@@ -363,23 +347,6 @@ extensively tested</p>
         &mdash;
         <div class='inline'><p>the field we deduplicating (comparing, and
 initially removing values from</p>
-</div>
-      
-    </li>
-  
-    <li>
-      
-        <span class='name'>sep</span>
-      
-      
-        <span class='type'>(<tt>nil</tt>, <tt>String</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>nil</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'><p><strong>DEPRECATED</strong> do not use in new transforms</p>
 </div>
       
     </li>
@@ -463,6 +430,8 @@ from <code>field</code></p>
       <pre class="lines">
 
 
+137
+138
 139
 140
 141
@@ -474,18 +443,16 @@ from <code>field</code></p>
 147
 148
 149
-150
-151
-152</pre>
+150</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/grouped_field_values.rb', line 139</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/grouped_field_values.rb', line 137</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>on_field:</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>grouped_fields:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>on_field:</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>grouped_fields:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='comma'>,</span>
   <span class='label'>ignore_case:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>normalized:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='ivar'>@field</span> <span class='op'>=</span> <span class='id identifier rubyid_on_field'>on_field</span>
   <span class='ivar'>@other</span> <span class='op'>=</span> <span class='id identifier rubyid_grouped_fields'>grouped_fields</span>
-  <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_usedelim'>usedelim</span><span class='lparen'>(</span><span class='label'>sepval:</span> <span class='id identifier rubyid_sep'>sep</span><span class='comma'>,</span> <span class='label'>delimval:</span> <span class='id identifier rubyid_delim'>delim</span><span class='comma'>,</span> <span class='label'>calledby:</span> <span class='kw'>self</span><span class='rparen'>)</span>
+  <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_delim'>delim</span>
   <span class='ivar'>@getter</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Transforms.html" title="Kiba::Extend::Transforms (module)">Transforms</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Helpers.html" title="Kiba::Extend::Transforms::Helpers (module)">Helpers</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Helpers/FieldValueGetter.html" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter (class)">FieldValueGetter</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Helpers/FieldValueGetter.html#initialize-instance_method" title="Kiba::Extend::Transforms::Helpers::FieldValueGetter#initialize (method)">new</a></span></span><span class='lparen'>(</span>
     <span class='label'>fields:</span> <span class='id identifier rubyid_grouped_fields'>grouped_fields</span><span class='comma'>,</span>
     <span class='label'>discard:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>nil</span><span class='tstring_end'>]</span></span>
@@ -547,6 +514,8 @@ from <code>field</code></p>
       <pre class="lines">
 
 
+153
+154
 155
 156
 157
@@ -557,12 +526,10 @@ from <code>field</code></p>
 162
 163
 164
-165
-166
-167</pre>
+165</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/grouped_field_values.rb', line 155</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/grouped_field_values.rb', line 153</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_val'>val</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span>
@@ -587,7 +554,7 @@ from <code>field</code></p>
 </div>
 
       <div id="footer">
-  Generated on Wed Sep 10 15:38:50 2025 by
+  Generated on Wed Sep 10 23:53:11 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>

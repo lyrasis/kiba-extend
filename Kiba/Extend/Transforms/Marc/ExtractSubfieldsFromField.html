@@ -384,7 +384,6 @@ recurring subfield</p>
       <pre class="lines">
 
 
-63
 64
 65
 66
@@ -393,10 +392,11 @@ recurring subfield</p>
 69
 70
 71
-72</pre>
+72
+73</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/marc/extract_subfields_from_field.rb', line 63</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/marc/extract_subfields_from_field.rb', line 64</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>tag:</span><span class='comma'>,</span> <span class='label'>subfields:</span><span class='comma'>,</span> <span class='label'>indicators:</span> <span class='kw'>false</span><span class='comma'>,</span>
   <span class='label'>id_target:</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Marc.html" title="Kiba::Extend::Marc (module)">Marc</a></span></span><span class='period'>.</span><span class='id identifier rubyid_id_target_field'><span class='object_link'><a href="../../Marc.html#id_target_field-class_method" title="Kiba::Extend::Marc.id_target_field (method)">id_target_field</a></span></span><span class='comma'>,</span>
@@ -490,7 +490,6 @@ recurring subfield</p>
       <pre class="lines">
 
 
-76
 77
 78
 79
@@ -502,10 +501,11 @@ recurring subfield</p>
 85
 86
 87
-88</pre>
+88
+89</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/marc/extract_subfields_from_field.rb', line 76</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/marc/extract_subfields_from_field.rb', line 77</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_fields'>fields</span> <span class='op'>=</span> <span class='id identifier rubyid_select_fields'>select_fields</span><span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='id identifier rubyid_tag'>tag</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -530,7 +530,7 @@ recurring subfield</p>
 </div>
 
       <div id="footer">
-  Generated on Wed Sep 10 15:38:50 2025 by
+  Generated on Wed Sep 10 23:53:12 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>

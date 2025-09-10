@@ -258,7 +258,8 @@
 25
 26
 27
-28</pre>
+28
+29</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/marc_id_extractor.rb', line 13</span>
@@ -275,6 +276,7 @@
   <span class='kw'>if</span> <span class='id identifier rubyid_subfield'>subfield</span> <span class='op'>&amp;&amp;</span> <span class='const'>MARC</span><span class='op'>::</span><span class='const'>ControlField</span><span class='period'>.</span><span class='id identifier rubyid_control_tags'>control_tags</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span><span class='lparen'>(</span><span class='id identifier rubyid_tag'>tag</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="MarcIdExtractor/ControlFieldsDoNotHaveSubfieldsError.html" title="Kiba::Extend::Utils::MarcIdExtractor::ControlFieldsDoNotHaveSubfieldsError (class)">ControlFieldsDoNotHaveSubfieldsError</a></span></span>
   <span class='kw'>end</span>
+
   <span class='ivar'>@field_selector</span> <span class='op'>=</span> <span class='id identifier rubyid_id_field_selector'>id_field_selector</span>
   <span class='ivar'>@subfield_selector</span> <span class='op'>=</span> <span class='id identifier rubyid_id_subfield_selector'>id_subfield_selector</span>
   <span class='ivar'>@value_formatter</span> <span class='op'>=</span> <span class='id identifier rubyid_id_value_formatter'>id_value_formatter</span>
@@ -359,17 +361,17 @@
       <pre class="lines">
 
 
-32
 33
 34
 35
 36
 37
 38
-39</pre>
+39
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/marc_id_extractor.rb', line 32</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/marc_id_extractor.rb', line 33</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_fields'>fields</span> <span class='op'>=</span> <span class='id identifier rubyid_candidate_fields'>candidate_fields</span><span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='rparen'>)</span>
@@ -389,7 +391,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Sep 10 15:38:47 2025 by
+  Generated on Wed Sep 10 23:53:09 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>

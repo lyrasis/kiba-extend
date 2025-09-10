@@ -76,7 +76,7 @@
   
   <dl>
     <dt>Included in:</dt>
-    <dd><span class='object_link'><a href="Cspace/NormalizeForID.html" title="Kiba::Extend::Transforms::Cspace::NormalizeForID (class)">Cspace::NormalizeForID</a></span></dd>
+    <dd><span class='object_link'><a href="Clean/RegexpFindReplaceFieldVals.html" title="Kiba::Extend::Transforms::Clean::RegexpFindReplaceFieldVals (class)">Clean::RegexpFindReplaceFieldVals</a></span>, <span class='object_link'><a href="Deduplicate/Fields.html" title="Kiba::Extend::Transforms::Deduplicate::Fields (class)">Deduplicate::Fields</a></span>, <span class='object_link'><a href="Delete/FieldValueIfEqualsOtherField.html" title="Kiba::Extend::Transforms::Delete::FieldValueIfEqualsOtherField (class)">Delete::FieldValueIfEqualsOtherField</a></span>, <span class='object_link'><a href="Explode/FieldValuesToNewRows.html" title="Kiba::Extend::Transforms::Explode::FieldValuesToNewRows (class)">Explode::FieldValuesToNewRows</a></span>, <span class='object_link'><a href="Prepend/ToFieldValue.html" title="Kiba::Extend::Transforms::Prepend::ToFieldValue (class)">Prepend::ToFieldValue</a></span></dd>
   </dl>
   
 
@@ -120,9 +120,7 @@
 <p>FOUR: <strong>ONLY if current default value for :multival param == true:</strong>
   Define a private :multival_default method that returns true:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='kw'>def</span> <span class='id identifier rubyid_multival_default'>multival_default</span>
-  <span class='kw'>true</span>
-<span class='kw'>end</span>
+<pre class="code ruby"><code class="ruby"><span class='kw'>def</span> <span class='id identifier rubyid_multival_default'>multival_default</span> <span class='op'>=</span> <span class='kw'>true</span>
 </code></pre>
 
 
@@ -233,18 +231,18 @@
       <pre class="lines">
 
 
+46
+47
 48
 49
 50
 51
 52
 53
-54
-55
-56</pre>
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/multival_plus_delim_deprecatable.rb', line 48</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/multival_plus_delim_deprecatable.rb', line 46</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_set_multival'>set_multival</span><span class='lparen'>(</span><span class='id identifier rubyid_multival'>multival</span><span class='comma'>,</span> <span class='id identifier rubyid_omitted'>omitted</span><span class='comma'>,</span> <span class='id identifier rubyid_calledby'>calledby</span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_omitted'>omitted</span>
@@ -265,7 +263,7 @@
 </div>
 
       <div id="footer">
-  Generated on Wed Sep 10 15:38:46 2025 by
+  Generated on Wed Sep 10 23:53:08 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>

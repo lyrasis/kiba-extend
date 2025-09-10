@@ -87,11 +87,6 @@
   
   
   
-  <dl>
-      <dt>Includes:</dt>
-      <dd><span class='object_link'><a href="../MultivalPlusDelimDeprecatable.html" title="Kiba::Extend::Transforms::MultivalPlusDelimDeprecatable (module)">MultivalPlusDelimDeprecatable</a></span></dd>
-  </dl>
-  
   
 
   
@@ -214,7 +209,7 @@ tests of string normalization</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(source:, target:, multival: omitted = true, delim: nil)  &#x21d2; NormalizeForID </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(source:, target:, delim: nil)  &#x21d2; NormalizeForID </a>
     
 
     
@@ -262,24 +257,13 @@ tests of string normalization</p>
     </ul>
   
 
-
-  
-  
-  
-  
-  
-  
-  
-  
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="../MultivalPlusDelimDeprecatable.html" title="Kiba::Extend::Transforms::MultivalPlusDelimDeprecatable (module)">MultivalPlusDelimDeprecatable</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="../MultivalPlusDelimDeprecatable.html#set_multival-instance_method" title="Kiba::Extend::Transforms::MultivalPlusDelimDeprecatable#set_multival (method)">#set_multival</a></span></p>
 <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(source:, target:, multival: omitted = true, delim: nil)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Cspace::NormalizeForID (class)">NormalizeForID</a></span></tt> 
+    #<strong>initialize</strong>(source:, target:, delim: nil)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Cspace::NormalizeForID (class)">NormalizeForID</a></span></tt> 
   
 
   
@@ -328,23 +312,6 @@ tests of string normalization</p>
   
     <li>
       
-        <span class='name'>multival</span>
-      
-      
-        <span class='type'>(<tt>Boolean</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>omitted = true</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'><p><strong>DEPRECATED - Do not use</strong></p>
-</div>
-      
-    </li>
-  
-    <li>
-      
         <span class='name'>delim</span>
       
       
@@ -370,23 +337,21 @@ multivalued, and is used to split/join string values</p>
       <pre class="lines">
 
 
+74
+75
 76
 77
 78
 79
 80
-81
-82
-83
-84</pre>
+81</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/cspace/normalize_for_id.rb', line 76</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/cspace/normalize_for_id.rb', line 74</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>source:</span><span class='comma'>,</span> <span class='label'>target:</span><span class='comma'>,</span> <span class='label'>multival:</span> <span class='id identifier rubyid_omitted'>omitted</span> <span class='op'>=</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>source:</span><span class='comma'>,</span> <span class='label'>target:</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
   <span class='ivar'>@source</span> <span class='op'>=</span> <span class='id identifier rubyid_source'>source</span>
   <span class='ivar'>@target</span> <span class='op'>=</span> <span class='id identifier rubyid_target'>target</span>
-  <span class='ivar'>@multival</span> <span class='op'>=</span> <span class='id identifier rubyid_set_multival'>set_multival</span><span class='lparen'>(</span><span class='id identifier rubyid_multival'>multival</span><span class='comma'>,</span> <span class='id identifier rubyid_omitted'>omitted</span><span class='comma'>,</span> <span class='kw'>self</span><span class='rparen'>)</span>
   <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_delim'>delim</span>
   <span class='ivar'>@normalizer</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Utils.html" title="Kiba::Extend::Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Utils/StringNormalizer.html" title="Kiba::Extend::Utils::StringNormalizer (class)">StringNormalizer</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../Utils/StringNormalizer.html#initialize-instance_method" title="Kiba::Extend::Utils::StringNormalizer#initialize (method)">new</a></span></span><span class='lparen'>(</span>
     <span class='label'>mode:</span> <span class='symbol'>:cspaceid</span>
@@ -444,17 +409,17 @@ multivalued, and is used to split/join string values</p>
       <pre class="lines">
 
 
+84
+85
+86
 87
 88
 89
 90
-91
-92
-93
-94</pre>
+91</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/cspace/normalize_for_id.rb', line 87</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/cspace/normalize_for_id.rb', line 84</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_target'>target</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='kw'>nil</span>
@@ -474,7 +439,7 @@ multivalued, and is used to split/join string values</p>
 </div>
 
       <div id="footer">
-  Generated on Wed Sep 10 15:38:48 2025 by
+  Generated on Wed Sep 10 23:53:10 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>

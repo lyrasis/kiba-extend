@@ -541,7 +541,6 @@ value on the string given (since 3.0.0)</p>
       <pre class="lines">
 
 
-219
 220
 221
 222
@@ -550,10 +549,11 @@ value on the string given (since 3.0.0)</p>
 225
 226
 227
-228</pre>
+228
+229</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/replace/field_value_with_static_mapping.rb', line 219</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/replace/field_value_with_static_mapping.rb', line 220</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>source:</span><span class='comma'>,</span> <span class='label'>mapping:</span><span class='comma'>,</span> <span class='label'>target:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>fallback_val:</span> <span class='symbol'>:orig</span><span class='comma'>,</span>
   <span class='label'>delete_source:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
@@ -649,7 +649,8 @@ value on the string given (since 3.0.0)</p>
 197
 198
 199
-200</pre>
+200
+201</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/replace/field_value_with_static_mapping.rb', line 192</span>
@@ -659,6 +660,7 @@ value on the string given (since 3.0.0)</p>
   <span class='id identifier rubyid_instance'>instance</span> <span class='op'>=</span> <span class='id identifier rubyid_allocate'>allocate</span>
   <span class='id identifier rubyid_fail'>fail</span><span class='lparen'>(</span><span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='id identifier rubyid_sep_msg'>sep_msg</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_sep'>sep</span>
   <span class='id identifier rubyid_fail'>fail</span><span class='lparen'>(</span><span class='const'>ArgumentError</span><span class='comma'>,</span> <span class='id identifier rubyid_multival_msg'>multival_msg</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_multival'>multival</span>
+
   <span class='id identifier rubyid_instance'>instance</span><span class='period'>.</span><span class='id identifier rubyid_send'>send</span><span class='lparen'>(</span><span class='symbol'>:initialize</span><span class='comma'>,</span> <span class='label'>source:</span> <span class='id identifier rubyid_source'>source</span><span class='comma'>,</span> <span class='label'>target:</span> <span class='id identifier rubyid_target'>target</span><span class='comma'>,</span> <span class='label'>mapping:</span> <span class='id identifier rubyid_mapping'>mapping</span><span class='comma'>,</span> <span class='label'>fallback_val:</span> <span class='id identifier rubyid_fallback_val'>fallback_val</span><span class='comma'>,</span>
     <span class='label'>delete_source:</span> <span class='id identifier rubyid_delete_source'>delete_source</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='id identifier rubyid_delim'>delim</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_instance'>instance</span>
@@ -683,15 +685,15 @@ value on the string given (since 3.0.0)</p>
       <pre class="lines">
 
 
-202
 203
 204
 205
 206
-207</pre>
+207
+208</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/replace/field_value_with_static_mapping.rb', line 202</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/replace/field_value_with_static_mapping.rb', line 203</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sep_msg'>sep_msg</span>
   <span class='heredoc_beg'>&lt;&lt;~MSG</span>
@@ -750,7 +752,6 @@ value on the string given (since 3.0.0)</p>
       <pre class="lines">
 
 
-231
 232
 233
 234
@@ -761,10 +762,11 @@ value on the string given (since 3.0.0)</p>
 239
 240
 241
-242</pre>
+242
+243</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/replace/field_value_with_static_mapping.rb', line 231</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/replace/field_value_with_static_mapping.rb', line 232</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_set_initial_value'>set_initial_value</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
@@ -788,7 +790,7 @@ value on the string given (since 3.0.0)</p>
 </div>
 
       <div id="footer">
-  Generated on Wed Sep 10 15:38:50 2025 by
+  Generated on Wed Sep 10 23:53:12 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>
