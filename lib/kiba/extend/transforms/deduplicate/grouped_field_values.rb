@@ -122,10 +122,8 @@ module Kiba
         #   ]
         #   expect(result).to eq(expected)
         class GroupedFieldValues
-          include SepDeprecatable
           # @param on_field [Symbol] the field we deduplicating (comparing, and
           #   initially removing values from
-          # @param sep [nil, String] **DEPRECATED** do not use in new transforms
           # @param delim [nil, String] used to split/join multivalued field
           #   values
           # @param grouped_fields [Array<Symbol>] other field(s) in the same
@@ -136,11 +134,11 @@ module Kiba
           # @param normalized [Boolean] if true, will apply
           #   {Kiba::Extend::Utils::StringNormalizer} with arguments:
           #   `mode: :plain, downcased: false` to values for comparison
-          def initialize(on_field:, sep: nil, delim: nil, grouped_fields: [],
+          def initialize(on_field:, delim: nil, grouped_fields: [],
             ignore_case: false, normalized: false)
             @field = on_field
             @other = grouped_fields
-            @delim = usedelim(sepval: sep, delimval: delim, calledby: self)
+            @delim = delim
             @getter = Kiba::Extend::Transforms::Helpers::FieldValueGetter.new(
               fields: grouped_fields,
               discard: %i[nil]
