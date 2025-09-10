@@ -21,9 +21,14 @@ and this project adheres to https://semver.org/spec/v2.0.0.html[Semantic Version
 toc::[]
 
 == Planned for a future release
+
 === Breaking
-* Removal of `sep` parameter in `Deduplicate::GroupedFieldValues` (deprecated in 3.3.0)
-* Removal of `multival` parameter in `Cspace::NormalizeForId`  (deprecated in 3.3.0)
+
+* Removal of `sep` and `multival` params from `Deduplicate::Fields` (deprecated in 5.0.0)
+* Removal of `sep` & `multival` params from `Clean::RegexpFindReplaceFieldVals` (deprecated in 5.0.0)
+* Removal of `multival` param from `Prepend::ToFieldValue` (deprecated in 5.0.0)
+* Removal of `sep` & `multival` params from `Explode::FieldValuesToNewRows` (deprecated in 5.0.0)
+
 
 == Unreleased
 These changes are merged into the `main` branch, but have not been released.
@@ -32,21 +37,30 @@ For example, if the release version/tag is `3.2.1`, and PR# 107 is merged withou
 
 === Breaking
 
-* Removal of `sep` parameter in `CombineValues::FromFieldsWithDelimiter` and `CombineValues::FullRecord`.
-In https://github.com/lyrasis/kiba-extend/pull/214[PR#214]
+=== Added
 
 === Bugfixes
 
-* Fix failure of `thor jobs tagged_and` command related to pre-finalized registry Hashes being returned, rather than FileRegistryEntryObjects.
-In https://github.com/lyrasis/kiba-extend/pull/226[PR#226]
-* Stop `Delete::FieldValueMatchingRegexp` transform from failing if a given row does not contain one of the keys given in `fields` parameter.
-In https://github.com/lyrasis/kiba-extend/pull/225[PR#225]
-* Create directories for Destination classes that write files, if said directories do not exist.
-In https://github.com/lyrasis/kiba-extend/pull/221[PR#221]
-* Error introduced in https://github.com/lyrasis/kiba-extend/pull/211[PR#211].
-In https://github.com/lyrasis/kiba-extend/pull/213[PR#213]
+=== Changed
 
-=== Added
+=== Deleted
+
+=== Deprecated/Will break in a future version
+
+=== Dev
+
+== Releases
+
+=== 5.0.0 - 2025-09-10
+
+==== Breaking
+
+* Removal of `sep` parameter in `CombineValues::FromFieldsWithDelimiter` and `CombineValues::FullRecord`.
+In https://github.com/lyrasis/kiba-extend/pull/214[PR#214]
+* Removal of `sep` parameter in `Deduplicate::GroupedFieldValues` (deprecated in 3.3.0)
+* Removal of `multival` parameter in `Cspace::NormalizeForId`  (deprecated in 3.3.0)
+
+==== Added
 
 * `Report::Fields` transform.
 In https://github.com/lyrasis/kiba-extend/pull/223[PR#223]
@@ -63,13 +77,18 @@ In https://github.com/lyrasis/kiba-extend/pull/212[PR#212]
 * Ability to make `Deduplicate::Table` compile all unique values of all fields in a duplicate row set, and write them into the kept row.
 In https://github.com/lyrasis/kiba-extend/pull/211[PR#211]
 
-=== Changed
+==== Bugfixes
 
-=== Deleted
+* Fix failure of `thor jobs tagged_and` command related to pre-finalized registry Hashes being returned, rather than FileRegistryEntryObjects.
+In https://github.com/lyrasis/kiba-extend/pull/226[PR#226]
+* Stop `Delete::FieldValueMatchingRegexp` transform from failing if a given row does not contain one of the keys given in `fields` parameter.
+In https://github.com/lyrasis/kiba-extend/pull/225[PR#225]
+* Create directories for Destination classes that write files, if said directories do not exist.
+In https://github.com/lyrasis/kiba-extend/pull/221[PR#221]
+* Error introduced in https://github.com/lyrasis/kiba-extend/pull/211[PR#211].
+In https://github.com/lyrasis/kiba-extend/pull/213[PR#213]
 
-=== Deprecated/Will break in a future version
-
-=== Dev
+==== Dev
 
 * Convert `Deduplicate::Table` spec to yardspec.
 In https://github.com/lyrasis/kiba-extend/pull/211[PR#211]
@@ -77,8 +96,6 @@ In https://github.com/lyrasis/kiba-extend/pull/211[PR#211]
 In https://github.com/lyrasis/kiba-extend/pull/216[PR#216]
 * Improve error messages and debugging output for registry-related work.
 In https://github.com/lyrasis/kiba-extend/pull/216[PR#216]
-
-== Releases
 
 === 4.2.0 - 2025-06-03
 ==== Bugfixes
