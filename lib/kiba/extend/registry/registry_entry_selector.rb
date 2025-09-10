@@ -25,7 +25,7 @@ module Kiba
         # @return [Array<FileRegistryEntry>]
         def tagged_all(*args)
           tags = args.flatten.map(&:to_sym)
-          tags.inject(Kiba::Extend.registry.entries) do |arr, tag|
+          tags.inject(Kiba::Extend.registry.entry_objs) do |arr, tag|
             arr.select { |entry| entry.tags.any?(tag) }
           end
         end
