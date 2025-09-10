@@ -212,6 +212,17 @@ module Kiba
         class FieldValuesToNewRows
           include SepDeprecatable
 
+          # @param target [Symbol] new field into which existing field values
+          #   will be mapped
+          # @param fields [Symbol, Array<Symbol>] from which values will be
+          #   exploded
+          # @param multival [Boolean]
+          # @param sep [nil, String] **deprecated - do not use**
+          # @param delim [nil, String] used to split field values
+          # @param keep_nil [Boolean] whether to create an exploded row for a
+          #   Nil value
+          # @param keep_empty [Boolean] whether to create an exploded row for a
+          #   empty value
           def initialize(target:, fields: [], multival: false, sep: nil,
                          delim: nil, keep_nil: false, keep_empty: false)
             @fields = [fields].flatten
