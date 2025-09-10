@@ -210,12 +210,16 @@ module Kiba
         #   ]
         #   expect(result).to eq(expected)
         class FieldValuesToNewRows
-          def initialize(target:, fields: [], multival: false, sep: " ",
-            keep_nil: false, keep_empty: false)
+          include SepDeprecatable
+
+          def initialize(target:, fields: [], multival: false, sep: nil,
+                         delim: nil, keep_nil: false, keep_empty: false)
             @fields = [fields].flatten
             @target = target
             @multival = multival
             @sep = sep
+            @delim = usedelim(sepval: sep, delimval: delim, calledby: self,
+                              default: nil)
             @keep_nil = keep_nil
             @keep_empty = keep_empty
           end
