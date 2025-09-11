@@ -207,6 +207,21 @@
     
   </div>
 
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>5.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div>
 
@@ -352,6 +367,21 @@ be populated in order to keep the row</p>
   
 </ul>
 
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>5.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -359,7 +389,6 @@ be populated in order to keep the row</p>
       <pre class="lines">
 
 
-101
 102
 103
 104
@@ -368,10 +397,11 @@ be populated in order to keep the row</p>
 107
 108
 109
-110</pre>
+110
+111</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/report/fields.rb', line 101</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/report/fields.rb', line 102</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span><span class='comma'>,</span> <span class='label'>filter_fields:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>filter_mode:</span> <span class='symbol'>:any</span><span class='rparen'>)</span>
   <span class='ivar'>@deleter</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Delete.html" title="Kiba::Extend::Transforms::Delete (module)">Delete</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Delete/FieldsExcept.html" title="Kiba::Extend::Transforms::Delete::FieldsExcept (class)">FieldsExcept</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Delete/FieldsExcept.html#initialize-instance_method" title="Kiba::Extend::Transforms::Delete::FieldsExcept#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>fields:</span> <span class='id identifier rubyid_fields'>fields</span><span class='rparen'>)</span>
@@ -428,6 +458,21 @@ be populated in order to keep the row</p>
   
 </ul>
 
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>5.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -435,15 +480,15 @@ be populated in order to keep the row</p>
       <pre class="lines">
 
 
-113
 114
 115
 116
 117
-118</pre>
+118
+119</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/report/fields.rb', line 113</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/report/fields.rb', line 114</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_deleter'>deleter</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
@@ -461,7 +506,7 @@ be populated in order to keep the row</p>
 </div>
 
       <div id="footer">
-  Generated on Wed Sep 10 23:53:09 2025 by
+  Generated on Thu Sep 11 00:02:34 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>
