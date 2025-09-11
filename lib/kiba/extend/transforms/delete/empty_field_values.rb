@@ -98,8 +98,8 @@ module Kiba
             finalize_fields(row) unless fields_set
 
             fields.each do |field|
-              val = row.fetch(field)
-              next if val.nil?
+              val = row[field]
+              next if val.blank?
 
               row[field] = val.split(delim)
                 .compact
