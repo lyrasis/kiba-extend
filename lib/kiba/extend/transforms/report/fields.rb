@@ -4,6 +4,7 @@ module Kiba
   module Extend
     module Transforms
       module Report
+        # @since 5.0.0
         # Combines a number of other transforms into a one-step way of
         #   outputting a report of specified fields. Optionally,
         #   rows not having any information in a specified set of fields
