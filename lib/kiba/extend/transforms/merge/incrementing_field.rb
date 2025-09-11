@@ -4,6 +4,7 @@ module Kiba
   module Extend
     module Transforms
       module Merge
+        # @since 5.0.0
         # Merges numeric incrementing value into target field
         #
         # @note This transform runs in memory, so for very large
