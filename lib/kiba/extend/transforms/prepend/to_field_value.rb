@@ -61,7 +61,7 @@ module Kiba
             @field = field
             @value = value
             @multival = set_multival(multival, omitted, self)
-            if delim.nil?
+            if @multival && delim.nil?
               msg = "If you are expecting Kiba::Extend.delim to be used as "\
                 "default delimiter, please pass the `delim` explicitly. In "\
                 "a future release of kiba-extend, the `delim` value will "\
