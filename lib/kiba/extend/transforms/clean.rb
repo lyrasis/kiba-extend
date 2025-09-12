@@ -204,7 +204,9 @@ module Kiba
           # @param row [Hash{ Symbol => String, nil }]
           def process(row)
             @fields.each do |field|
-              val = row.fetch(field)
+              val = row[field]
+              next if val.blank?
+
               row[field] = val.is_a?(String) ? val.downcase : val
             end
             row
