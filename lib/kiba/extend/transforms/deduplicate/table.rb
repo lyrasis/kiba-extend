@@ -159,6 +159,51 @@ module Kiba
         #   ]
         #   expect(result).to eq(expected)
         #
+        # @example Combining examples, occs, and unique field value compile
+        #   # Used in pipeline as:
+        #   # transform Deduplicate::Table,
+        #   #   field: :combine,
+        #   #   delete_field: true,
+        #   #   example_source_field: :foo,
+        #   #   example_target_field: :ex,
+        #   #   max_examples: 4,
+        #   #   include_occs: true,
+        #   #   occs_target_field: :occs,
+        #   #   compile_uniq_fieldvals: true,
+        #   #   compile_delim: ", "
+        #   xform = Deduplicate::Table.new(
+        #     field: :combine,
+        #     delete_field: true,
+        #     example_source_field: :foo,
+        #     example_target_field: :ex,
+        #     max_examples: 4,
+        #     include_occs: true,
+        #     occs_target_field: :occs,
+        #     compile_uniq_fieldvals: true,
+        #     compile_delim: ", "
+        #   )
+        #   input = [
+        #     {foo: "a", bar: "b", baz: "f", combine: "a b"},
+        #     {foo: "aa", bar: "b", baz: "f", combine: "a b"},
+        #     {foo: "c", bar: "d", baz: "g", combine: "c d"},
+        #     {foo: "cc", bar: "d", baz: "", combine: "c d"},
+        #     {foo: "c", bar: "e", baz: "h", combine: "c e"},
+        #     {foo: "ccc", bar: "d", baz: "i", combine: "c d"},
+        #     {foo: "cc", bar: "d", baz: "j", combine: "c d"},
+        #     {foo: "c", bar: "d", baz: nil, combine: "c d"},
+        #     {foo: "c", bar: "d", baz: "k", combine: "c d"},
+        #     {foo: "e", bar: "f", baz: nil, combine: "e f"}
+        #   ]
+        #   result = Kiba::StreamingRunner.transform_stream(input, xform)
+        #     .map{ |row| row }
+        #   expected = [
+        #     {occs: 2, ex: "a|aa", bar: "b", baz: "f"},
+        #     {occs: 6, ex: "c|cc|ccc|cc", bar: "d", baz: "g, i, j, k"},
+        #     {occs: 1, ex: "c", bar: "e", baz: "h"},
+        #     {occs: 1, ex: "e", bar: "f", baz: ""}
+        #   ]
+        #   expect(result).to eq(expected)
+        #
         # @example Compiling unique field values keeping dedupe field
         #   # Used in pipeline as:
         #   # transform Deduplicate::Table,
@@ -242,21 +287,26 @@ module Kiba
           end
 
           def close
-            deduper.each do |val, hash|
+            deduper.each do |_val, hash|
               row = hash[:row]
               add_example_field(row, hash) if example
               row[occ_target] = hash[:occs] if occs
+              row = compiled_row(hash, row) if compile_uniq_fieldvals
               row.delete(field) if delete
-              if compile_uniq_fieldvals
-                row = row.map do |fld, _val|
-                  next if fld == field
-
-                  [fld, hash[:fieldvals][fld].join(compile_delim)]
-                end.compact.to_h
-                row[field] = val unless delete
-              end
               yield row
             end
+          end
+
+          def compiled_row(hash, row)
+            row.map do |fld, val|
+              if fld == example
+                [fld, nil]
+              elsif [field, ex_target, occ_target].include?(fld)
+                [fld, val]
+              else
+                [fld, hash[:fieldvals][fld].join(compile_delim)]
+              end
+            end.compact.to_h.compact
           end
 
           private
