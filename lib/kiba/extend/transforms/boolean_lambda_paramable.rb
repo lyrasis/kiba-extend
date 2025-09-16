@@ -24,10 +24,18 @@ module Kiba
       #   instance variable on which is also set an attr_reader (private
       #   or public is ok)
       #
-      # Add the following line to the top of the `process` method:
+      # Add the following line to the top of the `process` method if your lamba
+      #   takes a single argument:
       #
       # ~~~
       #  test_lambda(row) unless lambda_tested
+      # ~~~
+      #
+      # If your lambda takes multiple arguments, pass them in an Array in the
+      #   `test_lambda` call:
+      #
+      # ~~~
+      #  test_lambda([val, row]) unless lambda_tested
       # ~~~
       module BooleanLambdaParamable
         ::BooleanLambdaParamable =
@@ -39,8 +47,8 @@ module Kiba
 
         def lambda_tested = @lambda_tested
 
-        def test_lambda(row)
-          result = lambda.call(row)
+        def test_lambda(args)
+          result = args.is_a?(Array) ? lambda.call(*args) : lambda.call(args)
           unless result.is_a?(TrueClass) || result.is_a?(FalseClass)
             fail(Kiba::Extend::BooleanReturningLambdaError)
           end
