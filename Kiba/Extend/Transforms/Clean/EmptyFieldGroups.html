@@ -250,14 +250,14 @@ considers this a blank value, so if all values in a field are
       <pre class="lines">
 
 
-224
-225
 226
 227
-228</pre>
+228
+229
+230</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/clean.rb', line 224</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/clean.rb', line 226</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>groups:</span><span class='comma'>,</span> <span class='label'>sep:</span><span class='comma'>,</span> <span class='label'>use_nullvalue:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='ivar'>@groups</span> <span class='op'>=</span> <span class='id identifier rubyid_groups'>groups</span>
@@ -316,13 +316,13 @@ considers this a blank value, so if all values in a field are
       <pre class="lines">
 
 
-231
-232
 233
-234</pre>
+234
+235
+236</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/clean.rb', line 231</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/clean.rb', line 233</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='ivar'>@groups</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_group'>group</span><span class='op'>|</span> <span class='id identifier rubyid_process_group'>process_group</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='comma'>,</span> <span class='id identifier rubyid_group'>group</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -338,7 +338,7 @@ considers this a blank value, so if all values in a field are
 </div>
 
       <div id="footer">
-  Generated on Thu Sep 11 00:02:34 2025 by
+  Generated on Tue Sep 16 20:35:32 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>

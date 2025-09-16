@@ -285,6 +285,54 @@ use a combination of <span class='object_link'><a href="Flag.html" title="Kiba::
 <span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
     
       
+        <h5 class="example_title"><div class='inline'><p>Combining examples, occs, and unique field value compile</p>
+</div></h5>
+      
+      <pre class="example code"><code><span class='comment'># Used in pipeline as:
+</span><span class='comment'># transform Deduplicate::Table,
+</span><span class='comment'>#   field: :combine,
+</span><span class='comment'>#   delete_field: true,
+</span><span class='comment'>#   example_source_field: :foo,
+</span><span class='comment'>#   example_target_field: :ex,
+</span><span class='comment'>#   max_examples: 4,
+</span><span class='comment'>#   include_occs: true,
+</span><span class='comment'>#   occs_target_field: :occs,
+</span><span class='comment'>#   compile_uniq_fieldvals: true,
+</span><span class='comment'>#   compile_delim: &quot;, &quot;
+</span><span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../Deduplicate.html" title="Kiba::Extend::Transforms::Deduplicate (module)">Deduplicate</a></span></span><span class='op'>::</span><span class='const'>Table</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::Deduplicate::Table#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+  <span class='label'>field:</span> <span class='symbol'>:combine</span><span class='comma'>,</span>
+  <span class='label'>delete_field:</span> <span class='kw'>true</span><span class='comma'>,</span>
+  <span class='label'>example_source_field:</span> <span class='symbol'>:foo</span><span class='comma'>,</span>
+  <span class='label'>example_target_field:</span> <span class='symbol'>:ex</span><span class='comma'>,</span>
+  <span class='label'>max_examples:</span> <span class='int'>4</span><span class='comma'>,</span>
+  <span class='label'>include_occs:</span> <span class='kw'>true</span><span class='comma'>,</span>
+  <span class='label'>occs_target_field:</span> <span class='symbol'>:occs</span><span class='comma'>,</span>
+  <span class='label'>compile_uniq_fieldvals:</span> <span class='kw'>true</span><span class='comma'>,</span>
+  <span class='label'>compile_delim:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>, </span><span class='tstring_end'>&quot;</span></span>
+<span class='rparen'>)</span>
+<span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>foo:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>a</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>bar:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>b</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>baz:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>f</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>combine:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>a b</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>foo:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>aa</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>bar:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>b</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>baz:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>f</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>combine:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>a b</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>foo:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>c</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>bar:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>d</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>baz:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>g</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>combine:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>c d</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>foo:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cc</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>bar:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>d</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>baz:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>combine:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>c d</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>foo:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>c</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>bar:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>e</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>baz:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>h</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>combine:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>c e</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>foo:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>ccc</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>bar:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>d</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>baz:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>i</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>combine:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>c d</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>foo:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>cc</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>bar:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>d</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>baz:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>j</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>combine:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>c d</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>foo:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>c</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>bar:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>d</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>baz:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>combine:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>c d</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>foo:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>c</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>bar:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>d</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>baz:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>k</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>combine:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>c d</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>foo:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>e</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>bar:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>f</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>baz:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>combine:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>e f</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>StreamingRunner</span><span class='period'>.</span><span class='id identifier rubyid_transform_stream'>transform_stream</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='id identifier rubyid_xform'>xform</span><span class='rparen'>)</span>
+  <span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_row'>row</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>occs:</span> <span class='int'>2</span><span class='comma'>,</span> <span class='label'>ex:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>a|aa</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>bar:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>b</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>baz:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>f</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>occs:</span> <span class='int'>6</span><span class='comma'>,</span> <span class='label'>ex:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>c|cc|ccc|cc</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>bar:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>d</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>baz:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>g, i, j, k</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>occs:</span> <span class='int'>1</span><span class='comma'>,</span> <span class='label'>ex:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>c</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>bar:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>e</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>baz:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>h</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>occs:</span> <span class='int'>1</span><span class='comma'>,</span> <span class='label'>ex:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>e</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>bar:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>f</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>baz:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
+      
         <h5 class="example_title"><div class='inline'><p>Compiling unique field values keeping dedupe field</p>
 </div></h5>
       
@@ -355,6 +403,29 @@ use a combination of <span class='object_link'><a href="Flag.html" title="Kiba::
   <span class="summary_signature">
     
       <a href="#close-instance_method" title="#close (instance method)">#<strong>close</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#compiled_row-instance_method" title="#compiled_row (instance method)">#<strong>compiled_row</strong>(hash, row)  &#x21d2; Object </a>
     
 
     
@@ -650,26 +721,26 @@ values</p>
       <pre class="lines">
 
 
-214
-215
-216
-217
-218
-219
-220
-221
-222
-223
-224
-225
-226
-227
-228
-229
-230</pre>
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/table.rb', line 214</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/table.rb', line 259</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>field:</span><span class='comma'>,</span> <span class='label'>delete_field:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>example_source_field:</span> <span class='kw'>nil</span><span class='comma'>,</span>
   <span class='label'>max_examples:</span> <span class='int'>10</span><span class='comma'>,</span> <span class='label'>example_target_field:</span> <span class='symbol'>:examples</span><span class='comma'>,</span>
@@ -740,43 +811,100 @@ values</p>
       <pre class="lines">
 
 
-244
-245
-246
-247
-248
-249
-250
-251
-252
-253
-254
-255
-256
-257
-258
-259
-260</pre>
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/table.rb', line 244</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/table.rb', line 289</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_close'>close</span>
-  <span class='id identifier rubyid_deduper'>deduper</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_val'>val</span><span class='comma'>,</span> <span class='id identifier rubyid_hash'>hash</span><span class='op'>|</span>
+  <span class='id identifier rubyid_deduper'>deduper</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid__val'>_val</span><span class='comma'>,</span> <span class='id identifier rubyid_hash'>hash</span><span class='op'>|</span>
     <span class='id identifier rubyid_row'>row</span> <span class='op'>=</span> <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='symbol'>:row</span><span class='rbracket'>]</span>
     <span class='id identifier rubyid_add_example_field'>add_example_field</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='comma'>,</span> <span class='id identifier rubyid_hash'>hash</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_example'>example</span>
     <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_occ_target'>occ_target</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='symbol'>:occs</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_occs'>occs</span>
+    <span class='id identifier rubyid_row'>row</span> <span class='op'>=</span> <span class='id identifier rubyid_compiled_row'>compiled_row</span><span class='lparen'>(</span><span class='id identifier rubyid_hash'>hash</span><span class='comma'>,</span> <span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_compile_uniq_fieldvals'>compile_uniq_fieldvals</span>
     <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_delete'>delete</span>
-    <span class='kw'>if</span> <span class='id identifier rubyid_compile_uniq_fieldvals'>compile_uniq_fieldvals</span>
-      <span class='id identifier rubyid_row'>row</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_fld'>fld</span><span class='comma'>,</span> <span class='id identifier rubyid__val'>_val</span><span class='op'>|</span>
-        <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_fld'>fld</span> <span class='op'>==</span> <span class='id identifier rubyid_field'>field</span>
-
-        <span class='lbracket'>[</span><span class='id identifier rubyid_fld'>fld</span><span class='comma'>,</span> <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='symbol'>:fieldvals</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='id identifier rubyid_fld'>fld</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='id identifier rubyid_compile_delim'>compile_delim</span><span class='rparen'>)</span><span class='rbracket'>]</span>
-      <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span>
-      <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_val'>val</span> <span class='kw'>unless</span> <span class='id identifier rubyid_delete'>delete</span>
-    <span class='kw'>end</span>
     <span class='kw'>yield</span> <span class='id identifier rubyid_row'>row</span>
   <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="compiled_row-instance_method">
+  
+    #<strong>compiled_row</strong>(hash, row)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>2.2.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/table.rb', line 300</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_compiled_row'>compiled_row</span><span class='lparen'>(</span><span class='id identifier rubyid_hash'>hash</span><span class='comma'>,</span> <span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_fld'>fld</span><span class='comma'>,</span> <span class='id identifier rubyid_val'>val</span><span class='op'>|</span>
+    <span class='kw'>if</span> <span class='id identifier rubyid_fld'>fld</span> <span class='op'>==</span> <span class='id identifier rubyid_example'>example</span>
+      <span class='lbracket'>[</span><span class='id identifier rubyid_fld'>fld</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rbracket'>]</span>
+    <span class='kw'>elsif</span> <span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='comma'>,</span> <span class='id identifier rubyid_ex_target'>ex_target</span><span class='comma'>,</span> <span class='id identifier rubyid_occ_target'>occ_target</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_include?'>include?</span><span class='lparen'>(</span><span class='id identifier rubyid_fld'>fld</span><span class='rparen'>)</span>
+      <span class='lbracket'>[</span><span class='id identifier rubyid_fld'>fld</span><span class='comma'>,</span> <span class='id identifier rubyid_val'>val</span><span class='rbracket'>]</span>
+    <span class='kw'>else</span>
+      <span class='lbracket'>[</span><span class='id identifier rubyid_fld'>fld</span><span class='comma'>,</span> <span class='id identifier rubyid_hash'>hash</span><span class='lbracket'>[</span><span class='symbol'>:fieldvals</span><span class='rbracket'>]</span><span class='lbracket'>[</span><span class='id identifier rubyid_fld'>fld</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='id identifier rubyid_compile_delim'>compile_delim</span><span class='rparen'>)</span><span class='rbracket'>]</span>
+    <span class='kw'>end</span>
+  <span class='kw'>end</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -838,19 +966,19 @@ values</p>
       <pre class="lines">
 
 
-233
-234
-235
-236
-237
-238
-239
-240
-241
-242</pre>
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/table.rb', line 233</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/deduplicate/table.rb', line 278</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_field_val'>field_val</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='comma'>,</span> <span class='kw'>nil</span><span class='rparen'>)</span>
@@ -872,7 +1000,7 @@ values</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Sep 11 00:02:35 2025 by
+  Generated on Tue Sep 16 20:35:34 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>

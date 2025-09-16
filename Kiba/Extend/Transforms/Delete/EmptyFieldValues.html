@@ -113,8 +113,8 @@
 </div>
   </div>
 
-<p>Deletes any empty values from the field. Supports <code>usenull</code> = true to treat the value of
-  <code>Kiba::Extend.nullvalue</code> as empty</p>
+<p>Deletes any empty values from the field. Supports <code>usenull</code> = true to
+  treat the value of <code>Kiba::Extend.nullvalue</code> as empty</p>
 
 <h1 id="examples">Examples</h1>
 
@@ -151,7 +151,8 @@
 
 <p>Used in pipeline as:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Delete.html" title="Kiba::Extend::Transforms::Delete (module)">Delete</a></span></span><span class='op'>::</span><span class='const'>EmptyFieldValues</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='lbracket'>[</span><span class='symbol'>:data</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='label'>usenull:</span> <span class='kw'>true</span>
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../Delete.html" title="Kiba::Extend::Transforms::Delete (module)">Delete</a></span></span><span class='op'>::</span><span class='const'>EmptyFieldValues</span><span class='comma'>,</span> <span class='label'>fields:</span> <span class='lbracket'>[</span><span class='symbol'>:data</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>;</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='label'>usenull:</span> <span class='kw'>true</span>
 </code></pre>
 
 <p>Results in:</p>
@@ -319,7 +320,8 @@
       
       
         &mdash;
-        <div class='inline'><p>on which to split multivalued fields. Defaults to <code>Kiba::Extend.delim</code> if not provided.</p>
+        <div class='inline'><p>on which to split multivalued fields. Defaults
+to <code>Kiba::Extend.delim</code> if not provided.</p>
 </div>
       
     </li>
@@ -336,7 +338,8 @@
       
       
         &mdash;
-        <div class='inline'><p>whether to treat <code>Kiba::Extend.nullvalue</code> string as an empty value</p>
+        <div class='inline'><p>whether to treat <code>Kiba::Extend.nullvalue</code>
+string as an empty value</p>
 </div>
       
     </li>
@@ -350,7 +353,6 @@
       <pre class="lines">
 
 
-78
 79
 80
 81
@@ -361,18 +363,25 @@
 86
 87
 88
-89</pre>
+89
+90
+91
+92
+93</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/empty_field_values.rb', line 78</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/empty_field_values.rb', line 79</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>fields:</span><span class='comma'>,</span> <span class='label'>sep:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>usenull:</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fields'>fields</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
   <span class='ivar'>@usenull</span> <span class='op'>=</span> <span class='id identifier rubyid_usenull'>usenull</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_sep'>sep</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_delim'>delim</span>
-    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>%(</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_warning_label'><span class='object_link'><a href="../../../Extend.html#warning_label-class_method" title="Kiba::Extend.warning_label (method)">warning_label</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>: Do not use both `sep` and `delim`. Prefer `delim`</span><span class='tstring_end'>)</span></span>
+    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_warning_label'><span class='object_link'><a href="../../../Extend.html#warning_label-class_method" title="Kiba::Extend.warning_label (method)">warning_label</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>: Do not use both `sep` </span><span class='tstring_end'>&quot;</span></span>\
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>and `delim`. Prefer `delim`</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>elsif</span> <span class='id identifier rubyid_sep'>sep</span>
-    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>%(</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_warning_label'><span class='object_link'><a href="../../../Extend.html#warning_label-class_method" title="Kiba::Extend.warning_label (method)">warning_label</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>: The `sep` keyword is being deprecated in a future version. Change it to `delim` in your ETL code.</span><span class='tstring_end'>)</span></span>
+    <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_warning_label'><span class='object_link'><a href="../../../Extend.html#warning_label-class_method" title="Kiba::Extend.warning_label (method)">warning_label</a></span></span><span class='embexpr_end'>}</span><span class='tstring_content'>: The `sep` keyword is being </span><span class='tstring_end'>&quot;</span></span>\
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>deprecated in a future version. Change it to `delim` in </span><span class='tstring_end'>&quot;</span></span>\
+      <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>your ETL code.</span><span class='tstring_end'>&quot;</span></span>
     <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_sep'>sep</span>
   <span class='kw'>else</span>
     <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_delim'>delim</span> <span class='op'>||</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_delim'><span class='object_link'><a href="../../../Extend.html#delim-class_method" title="Kiba::Extend.delim (method)">delim</a></span></span>
@@ -430,10 +439,6 @@
       <pre class="lines">
 
 
-93
-94
-95
-96
 97
 98
 99
@@ -443,17 +448,21 @@
 103
 104
 105
-106</pre>
+106
+107
+108
+109
+110</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/empty_field_values.rb', line 93</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/delete/empty_field_values.rb', line 97</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_finalize_fields'>finalize_fields</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_fields_set'>fields_set</span>
 
   <span class='id identifier rubyid_fields'>fields</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_field'>field</span><span class='op'>|</span>
-    <span class='id identifier rubyid_val'>val</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_fetch'>fetch</span><span class='lparen'>(</span><span class='id identifier rubyid_field'>field</span><span class='rparen'>)</span>
-    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span>
+    <span class='id identifier rubyid_val'>val</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span>
+    <span class='kw'>next</span> <span class='kw'>if</span> <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
 
     <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_field'>field</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_split'>split</span><span class='lparen'>(</span><span class='id identifier rubyid_delim'>delim</span><span class='rparen'>)</span>
       <span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span>
@@ -472,7 +481,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Sep 11 00:02:36 2025 by
+  Generated on Tue Sep 16 20:35:35 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>
