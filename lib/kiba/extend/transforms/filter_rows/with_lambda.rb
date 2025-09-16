@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
-# rubocop:todo Layout/LineLength
-
 module Kiba
   module Extend
     module Transforms
       module FilterRows
         # @since 2.9.0
         #
-        # Keep or reject rows based on whether the arbitrary Lambda passed in evaluates to true/false
+        # Keep or reject rows based on whether the arbitrary Lambda passed in
+        #   evaluates to true/false
         #
         # ## Examples
         #
@@ -68,7 +67,8 @@ module Kiba
           include ActionArgumentable
 
           # @param action [:keep, :reject] what to do with row matching criteria
-          # @param lambda [Lambda] with one parameter for row to be passed in through. The Lambda must evaulate
+          # @param lambda [Lambda] with one parameter for row to be passed in
+          #   through. The Lambda must evaulate
           #   to/return `TrueClass` or `FalseClass`
           def initialize(action:, lambda:)
             validate_action_argument(action)
@@ -106,4 +106,3 @@ module Kiba
     end
   end
 end
-# rubocop:enable Layout/LineLength
