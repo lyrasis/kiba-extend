@@ -9,57 +9,63 @@ module Kiba
         # Keep or reject rows based on whether the arbitrary Lambda passed in
         #   evaluates to true/false
         #
-        # ## Examples
+        # @example Keeping rows with nil values
+        #   # Used in pipeline as:
+        #   # transform FilterRows::WithLambda,
+        #   #   action: :keep,
+        #   #   lambda: ->(row) { row.values.any?(nil) }
+        #   xform = FilterRows::WithLambda.new(
+        #     action: :keep,
+        #     lambda: ->(row) { row.values.any?(nil) }
+        #   )
         #
-        # Source data:
+        #   input = [
+        #     {a: "a", b: "b", c: "c"},
+        #     {a: "a", b: "b", c: ""},
+        #     {a: "", b: nil, c: "c"},
+        #     {a: "", b: "b", c: "c"},
+        #     {a: "", b: nil, c: nil}
+        #   ]
+        #   result = Kiba::StreamingRunner.transform_stream(input, xform)
+        #     .map{ |row| row }
+        #   expected = [
+        #     {a: "", b: nil, c: "c"},
+        #     {a: "", b: nil, c: nil}
+        #   ]
+        #   expect(result).to eq(expected)
         #
-        # ~~~
-        # {a: 'a', b: 'b', c: 'c' },
-        # {a: 'a', b: 'b', c: '' },
-        # {a: '', b: nil, c: 'c' },
-        # {a: '', b: 'b', c: 'c' },
-        # {a: '', b: nil, c: nil },
-        # ~~~
+        # @example Rejecting rows with nil values
+        #   # Used in pipeline as:
+        #   # transform FilterRows::WithLambda,
+        #   #   action: :reject,
+        #   #   lambda: ->(row) { row.values.any?(nil) }
+        #   xform = FilterRows::WithLambda.new(
+        #     action: :reject,
+        #     lambda: ->(row) { row.values.any?(nil) }
+        #   )
         #
-        # Used in pipeline as:
+        #   input = [
+        #     {a: "a", b: "b", c: "c"},
+        #     {a: "a", b: "b", c: ""},
+        #     {a: "", b: nil, c: "c"},
+        #     {a: "", b: "b", c: "c"},
+        #     {a: "", b: nil, c: nil}
+        #   ]
+        #   result = Kiba::StreamingRunner.transform_stream(input, xform)
+        #     .map{ |row| row }
+        #   expected = [
+        #     {a: "a", b: "b", c: "c"},
+        #     {a: "a", b: "b", c: ""},
+        #     {a: "", b: "b", c: "c"}
+        #   ]
+        #   expect(result).to eq(expected)
         #
-        # ~~~
-        # logic = ->(row){ row.values.any?(nil) }
-        # transform FilterRows::WithLambda, action: :keep, lambda: logic
-        # ~~~
-        #
-        # Resulting data:
-        #
-        # ~~~
-        # {a: '', b: nil, c: 'c' },
-        # {a: '', b: nil, c: nil }
-        # ~~~
-        #
-        # Used in pipeline as:
-        #
-        # ~~~
-        # whatever = ->(x) do
-        #   x.values.any?(nil)
-        # end
-        # transform FilterRows::WithLambda, action: :keep, lambda: whatever
-        # ~~~
-        #
-        # Resulting data:
-        #
-        # ~~~
-        # {a: 'a', b: 'b', c: 'c' },
-        # {a: 'a', b: 'b', c: '' },
-        # {a: '', b: 'b', c: 'c' },
-        # ~~~
-        #
-        # The following will raise a NonBooleanLambdaError because `logic`
-        #   returns an Array, rather than `TrueClass` or `FalseClass`:
-        #
-        # ~~~
-        # logic = ->(row){ row.values.select{ |val| val.nil? } }
-        # transform FilterRows::WithLambda, action: :keep, lambda: logic
-        # ~~~
-        #
+        # @example When Lambda does not evaluate to true/false
+        #   row = {a: "a", b: "b", c: "c"}
+        #   expect{
+        #     FilterRows::WithLambda.new(action: :keep, lambda: ->(row) { [] })
+        #     .process(row)
+        #   }.to raise_error(Kiba::Extend::BooleanReturningLambdaError)
         # @raise [Kiba::Extend::BooleanReturningLambdaError] if given lambda
         #   does not evaluate to `TrueClass` or `FalseClass` using
         #   the first row of data passed to the `process` method
