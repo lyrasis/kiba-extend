@@ -71,6 +71,7 @@ module Kiba
         #   the first row of data passed to the `process` method
         class WithLambda
           include ActionArgumentable
+          include BooleanLambdaParamable
 
           # @param action [:keep, :reject] what to do with row matching criteria
           # @param lambda [Lambda] with one parameter for row to be passed in
@@ -80,7 +81,6 @@ module Kiba
             validate_action_argument(action)
             @action = action
             @lambda = lambda
-            @lambda_tested = false
           end
 
           # @param row [Hash{ Symbol => String, nil }]
@@ -97,16 +97,7 @@ module Kiba
 
           private
 
-          attr_reader :action, :lambda, :lambda_tested
-
-          def test_lambda(row)
-            result = lambda.call(row)
-            unless result.is_a?(TrueClass) || result.is_a?(FalseClass)
-              fail(Kiba::Extend::BooleanReturningLambdaError)
-            end
-
-            @lambda_tested = true
-          end
+          attr_reader :action, :lambda
         end
       end
     end

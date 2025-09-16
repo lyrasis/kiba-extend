@@ -43,6 +43,7 @@ module Kiba
           # @since 4.0.0
           class WithLambda
             include ActionArgumentable
+            include BooleanLambdaParamable
 
             # @param action [:keep, :reject] taken if the lambda returns true
             # @param lambda [Proc] Lambda Proc with one argument (the incoming
@@ -51,14 +52,13 @@ module Kiba
               validate_action_argument(action)
               @action = action
               @lambda = lambda
-              @lambda_validated = false
             end
 
             # @param record [MARC::Record] to check for ID match
             # @yield record MARC record, if it matches criteria
             # @yieldparam [MARC::Record] yielded MARC record, if any
             def process(record)
-              validate_lambda(record) unless lambda_validated
+              test_lambda(record) unless lambda_tested
 
               case action
               when :keep
@@ -71,7 +71,7 @@ module Kiba
 
             private
 
-            attr_reader :action, :lambda, :lambda_validated
+            attr_reader :action, :lambda
 
             def match?(record)
               lambda.call(record)
