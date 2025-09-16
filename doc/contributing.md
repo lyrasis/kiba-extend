@@ -98,6 +98,29 @@ This will make for slightly less pretty documentation pages, but has big benefit
 * reduce duplication/tedious reformatting between `/spec` files and YARD comments in transforms
 * forces structuring tests in a way that fully demonstrates the function of a transform
 
+#### Using yardspec to test that errors get raised
+
+Sometimes this works as expected:
+
+~~~~
+expect{ xform.new(**params) }.to raise_error(
+  Kiba::Extend::UnsafeParameterComboError
+)
+~~~~
+
+I _think_ it might work if the xform is initialized and called from within curly braces. If you are initializing an xform outside the `expect`, and then calling methods on it in the curly braces, it doesn't seem to work in yardspec. Attempting to run the following test will raise the error, not run the test:
+
+~~~~
+expect{ xform.process(row) }.to raise_error
+~~~~
+
+I believe this is due to how yardspec uses `eval` to build the tests. The solution is to define the Proc/Lambda to run separately, and then call it from inside your `expect` curly braces:
+
+~~~~
+result = ->{xform.process(row)}
+expect{ result.call }.to raise_error
+~~~~
+
 ### Tests that require changing `Kiba::Extend.config` settings
 
 If you want to future-proof tests relying on config settings against future changes to the default values of those settings, then explicitly setting the config values in your tests is a great idea. However, that hasn't been done consistently to date.
