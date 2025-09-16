@@ -39,7 +39,17 @@ For example, if the release version/tag is `3.2.1`, and PR# 107 is merged withou
 
 === Added
 
+* `Count::UniqueVals` transform.
+In https://github.com/lyrasis/kiba-extend/pull/229[PR#229]
+
 === Bugfixes
+
+* Do not warn about missing `delim` parameter in `Prepend::ToFieldValue` transform when `multival` param is not given.
+In https://github.com/lyrasis/kiba-extend/pull/229[PR#229]
+* Make `Clean::DowncaseFieldValues` and `Delete::EmptyFieldValues` transforms ignore nonexistent fields instead of failing.
+In https://github.com/lyrasis/kiba-extend/pull/229[PR#229]
+* Fix interaction of occs, examples and compiling in `Deduplicate::Table` transform.
+In https://github.com/lyrasis/kiba-extend/pull/229[PR#229]
 
 === Changed
 
