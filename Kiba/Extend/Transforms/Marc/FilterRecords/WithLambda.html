@@ -89,7 +89,7 @@
   
   <dl>
       <dt>Includes:</dt>
-      <dd><span class='object_link'><a href="../../ActionArgumentable.html" title="Kiba::Extend::Transforms::ActionArgumentable (module)">ActionArgumentable</a></span></dd>
+      <dd><span class='object_link'><a href="../../ActionArgumentable.html" title="Kiba::Extend::Transforms::ActionArgumentable (module)">ActionArgumentable</a></span>, <span class='object_link'><a href="../../BooleanLambdaParamable.html" title="Kiba::Extend::Transforms::BooleanLambdaParamable (module)">BooleanLambdaParamable</a></span></dd>
   </dl>
   
   
@@ -248,6 +248,17 @@
   
   
   
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../../BooleanLambdaParamable.html" title="Kiba::Extend::Transforms::BooleanLambdaParamable (module)">BooleanLambdaParamable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../../BooleanLambdaParamable.html#included-class_method" title="Kiba::Extend::Transforms::BooleanLambdaParamable.included (method)">included</a></span>, <span class='object_link'><a href="../../BooleanLambdaParamable.html#lambda_tested-instance_method" title="Kiba::Extend::Transforms::BooleanLambdaParamable#lambda_tested (method)">#lambda_tested</a></span>, <span class='object_link'><a href="../../BooleanLambdaParamable.html#test_lambda-instance_method" title="Kiba::Extend::Transforms::BooleanLambdaParamable#test_lambda (method)">#test_lambda</a></span></p>
+
+  
+  
+  
+  
+  
   <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
@@ -326,7 +337,6 @@ MARC record), that returns true or false</p>
       <pre class="lines">
 
 
-50
 51
 52
 53
@@ -334,13 +344,12 @@ MARC record), that returns true or false</p>
 55</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/marc/filter_records/with_lambda.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/marc/filter_records/with_lambda.rb', line 51</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>action:</span><span class='comma'>,</span> <span class='label'>lambda:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_validate_action_argument'>validate_action_argument</span><span class='lparen'>(</span><span class='id identifier rubyid_action'>action</span><span class='rparen'>)</span>
   <span class='ivar'>@action</span> <span class='op'>=</span> <span class='id identifier rubyid_action'>action</span>
   <span class='ivar'>@lambda</span> <span class='op'>=</span> <span class='id identifier rubyid_lambda'>lambda</span>
-  <span class='ivar'>@lambda_validated</span> <span class='op'>=</span> <span class='kw'>false</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -465,7 +474,7 @@ MARC record), that returns true or false</p>
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/marc/filter_records/with_lambda.rb', line 60</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_validate_lambda'>validate_lambda</span><span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_lambda_validated'>lambda_validated</span>
+  <span class='id identifier rubyid_test_lambda'>test_lambda</span><span class='lparen'>(</span><span class='id identifier rubyid_record'>record</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_lambda_tested'>lambda_tested</span>
 
   <span class='kw'>case</span> <span class='id identifier rubyid_action'>action</span>
   <span class='kw'>when</span> <span class='symbol'>:keep</span>
@@ -485,7 +494,7 @@ MARC record), that returns true or false</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Sep 16 20:35:35 2025 by
+  Generated on Wed Sep 17 00:45:18 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>

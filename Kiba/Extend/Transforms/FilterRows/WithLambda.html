@@ -89,7 +89,7 @@
   
   <dl>
       <dt>Includes:</dt>
-      <dd><span class='object_link'><a href="../ActionArgumentable.html" title="Kiba::Extend::Transforms::ActionArgumentable (module)">ActionArgumentable</a></span></dd>
+      <dd><span class='object_link'><a href="../ActionArgumentable.html" title="Kiba::Extend::Transforms::ActionArgumentable (module)">ActionArgumentable</a></span>, <span class='object_link'><a href="../BooleanLambdaParamable.html" title="Kiba::Extend::Transforms::BooleanLambdaParamable (module)">BooleanLambdaParamable</a></span></dd>
   </dl>
   
   
@@ -106,58 +106,86 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Keep or reject rows based on whether the arbitrary Lambda passed in evaluates to true/false</p>
-
-<h2 id="examples">Examples</h2>
-
-<p>Source data:</p>
-
-<pre class="code ruby"><code class="ruby">{a: &#39;a&#39;, b: &#39;b&#39;, c: &#39;c&#39; },
-{a: &#39;a&#39;, b: &#39;b&#39;, c: &#39;&#39; },
-{a: &#39;&#39;, b: nil, c: &#39;c&#39; },
-{a: &#39;&#39;, b: &#39;b&#39;, c: &#39;c&#39; },
-{a: &#39;&#39;, b: nil, c: nil },
-</code></pre>
-
-<p>Used in pipeline as:</p>
-
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_logic'>logic</span> <span class='op'>=</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span><span class='tlambeg'>{</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
-<span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../FilterRows.html" title="Kiba::Extend::Transforms::FilterRows (module)">FilterRows</a></span></span><span class='op'>::</span><span class='const'>WithLambda</span><span class='comma'>,</span> <span class='label'>action:</span> <span class='symbol'>:keep</span><span class='comma'>,</span> <span class='label'>lambda:</span> <span class='id identifier rubyid_logic'>logic</span>
-</code></pre>
-
-<p>Resulting data:</p>
-
-<pre class="code ruby"><code class="ruby">{a: &#39;&#39;, b: nil, c: &#39;c&#39; },
-{a: &#39;&#39;, b: nil, c: nil }
-</code></pre>
-
-<p>Used in pipeline as:</p>
-
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_whatever'>whatever</span> <span class='op'>=</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_x'>x</span><span class='rparen'>)</span> <span class='kw'>do</span>
-  <span class='id identifier rubyid_x'>x</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='rparen'>)</span>
-<span class='kw'>end</span>
-<span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../FilterRows.html" title="Kiba::Extend::Transforms::FilterRows (module)">FilterRows</a></span></span><span class='op'>::</span><span class='const'>WithLambda</span><span class='comma'>,</span> <span class='label'>action:</span> <span class='symbol'>:keep</span><span class='comma'>,</span> <span class='label'>lambda:</span> <span class='id identifier rubyid_whatever'>whatever</span>
-</code></pre>
-
-<p>Resulting data:</p>
-
-<pre class="code ruby"><code class="ruby">{a: &#39;a&#39;, b: &#39;b&#39;, c: &#39;c&#39; },
-{a: &#39;a&#39;, b: &#39;b&#39;, c: &#39;&#39; },
-{a: &#39;&#39;, b: &#39;b&#39;, c: &#39;c&#39; },
-</code></pre>
-
-<p>The following will raise a NonBooleanLambdaError because <code>logic</code>
-  returns an Array, rather than <code>TrueClass</code> or <code>FalseClass</code>:</p>
-
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_logic'>logic</span> <span class='op'>=</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span><span class='tlambeg'>{</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_select'>select</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_val'>val</span><span class='op'>|</span> <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_nil?'>nil?</span> <span class='rbrace'>}</span> <span class='rbrace'>}</span>
-<span class='id identifier rubyid_transform'>transform</span> <span class='const'><span class='object_link'><a href="../FilterRows.html" title="Kiba::Extend::Transforms::FilterRows (module)">FilterRows</a></span></span><span class='op'>::</span><span class='const'>WithLambda</span><span class='comma'>,</span> <span class='label'>action:</span> <span class='symbol'>:keep</span><span class='comma'>,</span> <span class='label'>lambda:</span> <span class='id identifier rubyid_logic'>logic</span>
-</code></pre>
+    <p>Keep or reject rows based on whether the arbitrary Lambda passed in
+  evaluates to true/false</p>
 
 
   </div>
 </div>
 <div class="tags">
   
+  <div class="examples">
+    <h4 class="tag_title">Examples:</h4>
+    
+      
+        <h5 class="example_title"><div class='inline'><p>Keeping rows with nil values</p>
+</div></h5>
+      
+      <pre class="example code"><code><span class='comment'># Used in pipeline as:
+</span><span class='comment'># transform FilterRows::WithLambda,
+</span><span class='comment'>#   action: :keep,
+</span><span class='comment'>#   lambda: -&gt;(row) { row.values.any?(nil) }
+</span><span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../FilterRows.html" title="Kiba::Extend::Transforms::FilterRows (module)">FilterRows</a></span></span><span class='op'>::</span><span class='const'>WithLambda</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::FilterRows::WithLambda#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+  <span class='label'>action:</span> <span class='symbol'>:keep</span><span class='comma'>,</span>
+  <span class='label'>lambda:</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='rparen'>)</span>
+
+<span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>a</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>b</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>c:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>c</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>a</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>b</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>c:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>c:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>c</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>b</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>c:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>c</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>c:</span> <span class='kw'>nil</span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>StreamingRunner</span><span class='period'>.</span><span class='id identifier rubyid_transform_stream'>transform_stream</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='id identifier rubyid_xform'>xform</span><span class='rparen'>)</span>
+  <span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_row'>row</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>c:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>c</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>c:</span> <span class='kw'>nil</span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
+      
+        <h5 class="example_title"><div class='inline'><p>Rejecting rows with nil values</p>
+</div></h5>
+      
+      <pre class="example code"><code><span class='comment'># Used in pipeline as:
+</span><span class='comment'># transform FilterRows::WithLambda,
+</span><span class='comment'>#   action: :reject,
+</span><span class='comment'>#   lambda: -&gt;(row) { row.values.any?(nil) }
+</span><span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../FilterRows.html" title="Kiba::Extend::Transforms::FilterRows (module)">FilterRows</a></span></span><span class='op'>::</span><span class='const'>WithLambda</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::FilterRows::WithLambda#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+  <span class='label'>action:</span> <span class='symbol'>:reject</span><span class='comma'>,</span>
+  <span class='label'>lambda:</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_values'>values</span><span class='period'>.</span><span class='id identifier rubyid_any?'>any?</span><span class='lparen'>(</span><span class='kw'>nil</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='rparen'>)</span>
+
+<span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>a</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>b</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>c:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>c</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>a</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>b</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>c:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>c:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>c</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>b</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>c:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>c</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>c:</span> <span class='kw'>nil</span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>StreamingRunner</span><span class='period'>.</span><span class='id identifier rubyid_transform_stream'>transform_stream</span><span class='lparen'>(</span><span class='id identifier rubyid_input'>input</span><span class='comma'>,</span> <span class='id identifier rubyid_xform'>xform</span><span class='rparen'>)</span>
+  <span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_row'>row</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='lbracket'>[</span>
+  <span class='lbrace'>{</span><span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>a</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>b</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>c:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>c</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>a</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>b</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>c:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span><span class='comma'>,</span>
+  <span class='lbrace'>{</span><span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>b</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>c:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>c</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+<span class='rbracket'>]</span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_result'>result</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
+      
+        <h5 class="example_title"><div class='inline'><p>When Lambda does not evaluate to true/false</p>
+</div></h5>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_row'>row</span> <span class='op'>=</span> <span class='lbrace'>{</span><span class='label'>a:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>a</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>b:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>b</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='label'>c:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>c</span><span class='tstring_end'>&quot;</span></span><span class='rbrace'>}</span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lbrace'>{</span>
+  <span class='const'><span class='object_link'><a href="../FilterRows.html" title="Kiba::Extend::Transforms::FilterRows (module)">FilterRows</a></span></span><span class='op'>::</span><span class='const'>WithLambda</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Transforms::FilterRows::WithLambda#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>action:</span> <span class='symbol'>:keep</span><span class='comma'>,</span> <span class='label'>lambda:</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='tlambeg'>{</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='rbrace'>}</span><span class='rparen'>)</span>
+  <span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
+<span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_raise_error'>raise_error</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../BooleanReturningLambdaError.html" title="Kiba::Extend::BooleanReturningLambdaError (class)">BooleanReturningLambdaError</a></span></span><span class='rparen'>)</span></code></pre>
+    
+  </div>
+
 <p class="tag_title">Raises:</p>
 <ul class="raise">
   
@@ -265,6 +293,17 @@ the first row of data passed to the <code>process</code> method</p>
   
   
   
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="../BooleanLambdaParamable.html" title="Kiba::Extend::Transforms::BooleanLambdaParamable (module)">BooleanLambdaParamable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="../BooleanLambdaParamable.html#included-class_method" title="Kiba::Extend::Transforms::BooleanLambdaParamable.included (method)">included</a></span>, <span class='object_link'><a href="../BooleanLambdaParamable.html#lambda_tested-instance_method" title="Kiba::Extend::Transforms::BooleanLambdaParamable#lambda_tested (method)">#lambda_tested</a></span>, <span class='object_link'><a href="../BooleanLambdaParamable.html#test_lambda-instance_method" title="Kiba::Extend::Transforms::BooleanLambdaParamable#test_lambda (method)">#test_lambda</a></span></p>
+
+  
+  
+  
+  
+  
   <div id="constructor_details" class="method_details_list">
   <h2>Constructor Details</h2>
   
@@ -313,7 +352,8 @@ the first row of data passed to the <code>process</code> method</p>
       
       
         &mdash;
-        <div class='inline'><p>with one parameter for row to be passed in through. The Lambda must evaulate
+        <div class='inline'><p>with one parameter for row to be passed in
+through. The Lambda must evaulate
 to/return <code>TrueClass</code> or <code>FalseClass</code></p>
 </div>
       
@@ -343,21 +383,19 @@ to/return <code>TrueClass</code> or <code>FalseClass</code></p>
       <pre class="lines">
 
 
-73
-74
-75
-76
-77
-78</pre>
+80
+81
+82
+83
+84</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/filter_rows/with_lambda.rb', line 73</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/filter_rows/with_lambda.rb', line 80</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>action:</span><span class='comma'>,</span> <span class='label'>lambda:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_validate_action_argument'>validate_action_argument</span><span class='lparen'>(</span><span class='id identifier rubyid_action'>action</span><span class='rparen'>)</span>
   <span class='ivar'>@action</span> <span class='op'>=</span> <span class='id identifier rubyid_action'>action</span>
   <span class='ivar'>@lambda</span> <span class='op'>=</span> <span class='id identifier rubyid_lambda'>lambda</span>
-  <span class='ivar'>@lambda_tested</span> <span class='op'>=</span> <span class='kw'>false</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -426,19 +464,19 @@ to/return <code>TrueClass</code> or <code>FalseClass</code></p>
       <pre class="lines">
 
 
-81
-82
-83
-84
-85
-86
 87
 88
 89
-90</pre>
+90
+91
+92
+93
+94
+95
+96</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/filter_rows/with_lambda.rb', line 81</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/filter_rows/with_lambda.rb', line 87</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_test_lambda'>test_lambda</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_lambda_tested'>lambda_tested</span>
@@ -460,7 +498,7 @@ to/return <code>TrueClass</code> or <code>FalseClass</code></p>
 </div>
 
       <div id="footer">
-  Generated on Tue Sep 16 20:35:34 2025 by
+  Generated on Wed Sep 17 00:45:17 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>

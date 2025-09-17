@@ -161,6 +161,26 @@ kill -9 {pid}
   <li>forces structuring tests in a way that fully demonstrates the function of a transform</li>
 </ul>
 
+<h4 id="using-yardspec-to-test-that-errors-get-raised">Using yardspec to test that errors get raised</h4>
+
+<p>Sometimes this works as expected:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_expect'>expect</span><span class='lbrace'>{</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='op'>**</span><span class='id identifier rubyid_params'>params</span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_raise_error'>raise_error</span><span class='lparen'>(</span>
+  <span class='const'><span class='object_link'><a href="Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Kiba/Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Kiba/Extend/UnsafeParameterComboError.html" title="Kiba::Extend::UnsafeParameterComboError (class)">UnsafeParameterComboError</a></span></span>
+<span class='rparen'>)</span>
+</code></pre>
+
+<p>I <em>think</em> it might work if the xform is initialized and called from within curly braces. If you are initializing an xform outside the <code>expect</code>, and then calling methods on it in the curly braces, it doesn’t seem to work in yardspec. Attempting to run the following test will raise the error, not run the test:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_expect'>expect</span><span class='lbrace'>{</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_raise_error'>raise_error</span>
+</code></pre>
+
+<p>I believe this is due to how yardspec uses <code>eval</code> to build the tests. The solution is to define the Proc/Lambda to run separately, and then call it from inside your <code>expect</code> curly braces:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='tlambda'>-&gt;</span><span class='tlambeg'>{</span><span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span><span class='rbrace'>}</span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lbrace'>{</span> <span class='id identifier rubyid_result'>result</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span> <span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_raise_error'>raise_error</span>
+</code></pre>
+
 <h3 id="tests-that-require-changing-kibaextendconfig-settings">Tests that require changing <code>Kiba::Extend.config</code> settings</h3>
 
 <p>If you want to future-proof tests relying on config settings against future changes to the default values of those settings, then explicitly setting the config values in your tests is a great idea. However, that hasn’t been done consistently to date.</p>
@@ -330,7 +350,7 @@ kill -9 {pid}
 </div></div>
 
       <div id="footer">
-  Generated on Tue Sep 16 20:35:31 2025 by
+  Generated on Wed Sep 17 00:45:13 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>
