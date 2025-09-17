@@ -41,6 +41,8 @@ For example, if the release version/tag is `3.2.1`, and PR# 107 is merged withou
 
 * `Count::UniqueVals` transform.
 In https://github.com/lyrasis/kiba-extend/pull/229[PR#229]
+* `Delete::FieldValueConditional` transform.
+In https://github.com/lyrasis/kiba-extend/pull/230[PR#230]
 
 === Bugfixes
 
