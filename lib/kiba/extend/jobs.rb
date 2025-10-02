@@ -76,7 +76,7 @@ module Kiba
     #   configured for the job in the registry.
     #
     # What do you do if you need to use the same job (e.g.
-    #   `:names__final` as a lookup in different jobs, but need to
+    #   `:names__final`) as a lookup in different jobs, but need to
     #   lookup from that data on :id field in one job, and :type in
     #   another? If you have registered `:names__final` with
     #   `:lookup_on` = `:id` in your registry, you can do the
