@@ -89,23 +89,25 @@ RSpec.describe "Kiba::Extend::Jobs::Job" do
       it "calls dependency creators",
         skip: "cannot figure out how to test this in a timely manner. Will "\
         "test manually for now." do
-        missing_file = File.join(fixtures_dir, "base_job_missing.csv")
-        creator = double
-        Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry.new
-        # rubocop:todo Layout/LineLength
-        entries = {base_lookup: {path: File.join(fixtures_dir, "base_job_lookup.csv"), supplied: true, lookup_on: :letter},
-                   # rubocop:enable Layout/LineLength
-                   base_dest: {path: @dest_file,
-                               creator: Helpers.method(:fake_creator_method)},
-                   missing_src: {path: missing_file,
-                                 creator: Helpers::BaseJob.method(:creator)}}
-        entries.each { |key, data| Kiba::Extend.registry.register(key, data) }
-        transform_registry
-        testjob = Helpers::BaseJob.new(files: base_job_config)
-        testjob.creator = creator
-        expect(creator).to receive(:call)
-        testjob.handle_requirements
-      end
+          missing_file = File.join(fixtures_dir, "base_job_missing.csv")
+          creator = double
+          Kiba::Extend.config.registry =
+            Kiba::Extend::Registry::FileRegistry.new
+          entries = {base_lookup: {
+            path: File.join(fixtures_dir, "base_job_lookup.csv"),
+            supplied: true, lookup_on: :letter
+          },
+                     base_dest: {path: @dest_file,
+                                 creator: Helpers.method(:fake_creator_method)},
+                     missing_src: {path: missing_file,
+                                   creator: Helpers::BaseJob.method(:creator)}}
+          entries.each { |key, data| Kiba::Extend.registry.register(key, data) }
+          transform_registry
+          testjob = Helpers::BaseJob.new(files: base_job_config)
+          testjob.creator = creator
+          expect(creator).to receive(:call)
+          testjob.handle_requirements
+        end
     end
     # raise_error(Kiba::Extend::Jobs::Runner::MissingDependencyError)
   end
