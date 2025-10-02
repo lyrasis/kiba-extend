@@ -43,6 +43,8 @@ For example, if the release version/tag is `3.2.1`, and PR# 107 is merged withou
 In https://github.com/lyrasis/kiba-extend/pull/229[PR#229]
 * `Delete::FieldValueConditional` transform.
 In https://github.com/lyrasis/kiba-extend/pull/230[PR#230]
+* Ability to flexibly define `:lookup_on` keys (and method names for accessing the lookups) from with jobs.
+In https://github.com/lyrasis/kiba-extend/pull/234[PR#234]
 
 === Bugfixes
 
