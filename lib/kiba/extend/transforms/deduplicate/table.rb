@@ -128,6 +128,33 @@ module Kiba
         #   ]
         #   expect(result).to eq(expected)
         #
+        # @example Reporting occurrence count without examples
+        #   # Used in pipeline as:
+        #   # transform Deduplicate::Table,
+        #   #   field: :combine,
+        #   #   delete_field: true,
+        #   #   include_occs: true
+        #   xform = Deduplicate::Table.new(field: :combine, delete_field: true,
+        #     include_occs: true
+        #   )
+        #   input = [
+        #     {foo: "a", bar: "b", baz: "f", combine: "a b"},
+        #     {foo: "a", bar: "b", baz: "f", combine: "a b"},
+        #     {foo: "c", bar: "d", baz: "g", combine: "c d"},
+        #     {foo: "c", bar: "e", baz: "h", combine: "c e"},
+        #     {foo: "c", bar: "d", baz: "i", combine: "c d"},
+        #     {foo: "c", bar: "d", baz: "j", combine: "c d"},
+        #     {foo: "c", bar: "d", baz: "k", combine: "c d"}
+        #   ]
+        #   result = Kiba::StreamingRunner.transform_stream(input, xform)
+        #     .map{ |row| row }
+        #   expected = [
+        #     {foo: "a", bar: "b", baz: "f", occurrences: 2},
+        #     {foo: "c", bar: "d", baz: "g", occurrences: 4},
+        #     {foo: "c", bar: "e", baz: "h", occurrences: 1},
+        #   ]
+        #   expect(result).to eq(expected)
+        #
         # @example Compiling unique field values into one field
         #   # Used in pipeline as:
         #   # transform Deduplicate::Table,
