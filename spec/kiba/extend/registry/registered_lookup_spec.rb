@@ -7,7 +7,7 @@ RSpec.describe "Kiba::Extend::Registry::RegisteredLookup" do
   let(:filekey) { :fkey }
   let(:path) { File.join("spec", "fixtures", "fkey.csv") }
   let(:key) { :foo }
-  let(:default) do
+  let(:default_data) do
     {path: path, lookup_on: key, creator: Helpers.method(:test_csv)}
   end
   let(:lookup) do
@@ -82,11 +82,25 @@ RSpec.describe "Kiba::Extend::Registry::RegisteredLookup" do
 
   describe "#args" do
     let(:result) { lookup.args }
+
     context "with basic defaults" do
-      let(:data) { default }
+      let(:data) { default_data }
       let(:expected) do
         {file: path, csvopt: Kiba::Extend.csvopts, keycolumn: key}
       end
+
+      it "returns with default csvopts" do
+        expect(result).to eq(expected)
+      end
+    end
+
+    context "with Hash as key" do
+      let(:filekey) { {jobkey: :fkey, lookup_on: :bar} }
+      let(:data) { default_data }
+      let(:expected) do
+        {file: path, csvopt: Kiba::Extend.csvopts, keycolumn: :bar}
+      end
+
       it "returns with default csvopts" do
         expect(result).to eq(expected)
       end
@@ -94,10 +108,11 @@ RSpec.describe "Kiba::Extend::Registry::RegisteredLookup" do
 
     context "with given options" do
       let(:override_opts) { {foo: :bar} }
-      let(:data) { default.merge({src_opt: override_opts}) }
+      let(:data) { default_data.merge({src_opt: override_opts}) }
       let(:expected) do
         {file: path, csvopt: override_opts, keycolumn: key}
       end
+
       it "returns with given options" do
         expect(result).to eq(expected)
       end
