@@ -275,8 +275,11 @@ reghash = {
 ### `:lookup_on`
 [Symbol] column to use as keys in lookup table created from file data
 
-* required if file is used as a lookup source
-* You can register the same file multiple times under different file keys with different `:lookup_on` values if you need to use the data for different lookup purposes
+* required if file is used as a lookup source in any job AND that job defines this lookup file for use in the job only by its file key
+
+If the output of a given entry is expected to be used as a lookup on only one field, set a `:lookup_on` value in the registry.
+
+If you need to lookup in the output data on different columns, either within one job or in different jobs, this can be achieved by providing more information in the job definition's `files[:lookup]` value. See {Kiba::Extend::Jobs} for details. (Or you can register the same file multiple times under different file keys with different `:lookup_on` values, but yuck to that)
 
 Currently only the following types of registry entries can be used as lookups:
 
