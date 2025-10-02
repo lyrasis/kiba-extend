@@ -92,6 +92,7 @@ module Kiba
     # lookup: [
     #   :names__final,
     #   {jobkey: :names__final, lookup_on: :type, name: :names_by_type}
+    # ]
     # ~~~
     #
     # In the transforms for this job...
