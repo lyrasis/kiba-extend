@@ -34,7 +34,7 @@ module Kiba
           end
           extend DependencyJob if @dependency
 
-          @files = setup_files(files)
+          @files = setup_files(files.transform_values { |v| [v].flatten })
 
           unless mode == :info
             report_run_start # defined in Reporter
@@ -76,13 +76,16 @@ module Kiba
         # Replace file key names with registered_source/lookup/destination
         #   objects dynamically
         def setup_files(files)
-          tmp = {}
-          files.each do |type, arr|
-            meth = Kiba::Extend.registry.method(:"as_#{type}")
-            tmp[type] = [arr].flatten
-              .map { |key| prep_file(meth, key, destination_key) }
+          files.map { |type, arr| [type, setup_files_for(type, arr)] }
+            .to_h
+        end
+
+        def setup_files_for(type, arr)
+          arr.map do |key|
+            prep_file(
+              Kiba::Extend.registry.method(:"as_#{type}"), key, destination_key
+            )
           end
-          tmp
         end
 
         def initial_transforms
