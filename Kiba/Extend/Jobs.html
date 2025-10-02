@@ -92,23 +92,135 @@
 
 <h2>Overview</h2><div class="docstring">
   <div class="discussion">
-    <p>Reusable, composable patterns for jobs</p>
+    <p>Reusable, composable patterns for defining, running, and testing jobs</p>
 
-<p>Heretofore, I have been repeating tons of code/logic for setting up a job
-  in migration code:</p>
+<p>There are a number of operations that need to be carried out for any job,
+  depending on the format of the source and destination. For example, for
+  jobs with CSV input and output, we need to:</p>
 
 <ul>
-  <li>Defining sources/destinations, @srcrows, @outrows</li>
-  <li>Changing CSV rows to hashes (initial transforms)</li>
-  <li>Changing hashes back to CSV rows</li>
-  <li>Calling postprocessing</li>
+  <li>Set up the sources, destinations, and lookups</li>
+  <li>Create @srcrows and @outrows instance variables</li>
+  <li>Convert CSV rows to hashes (initial transforms) prior to executing other
+transformation logic</li>
+  <li>Convert hashes back to CSV rows after executing transformations</li>
+  <li>Calling any defined postprocessing</li>
 </ul>
 
-<p>Most of this never changes, and when it does there is way too much tedious
-  work in a given migration to make it consistent across all jobs.</p>
+<p>Most of this logic never changes for jobs with the same
+  input/output formats, so it is extracted here. This allows us
+  to simplify the job definition modules we write in a given
+  project.</p>
 
-<p>This is an attempt to dry up calling jobs and make it possible to test
-  them via RSpec</p>
+<h2 id="defining-jobs-in-your-project">Defining jobs in your project</h2>
+
+<p>The simplest job definition module will consist only of a <code>:job</code>
+  method, which initializes the appropriate Kiba::Extend::Jobs
+  job class for the planned input/output formats.</p>
+
+<p>Creating a new Kiba::Extend::Jobs class requires two arguments be
+  provided: <code>files</code> and <code>transformer</code></p>
+
+<h3 id="files-argument"><code>files</code> argument</h3>
+
+<p><code>files</code> is the configuration of destination, source, and lookup
+  files the job will use. It is a Hash with two required keys:
+  <code>:source</code> and <code>:destination</code>. If the transformation logic refers
+  to any lookup jobs, a <code>:lookup</code> key can be included.</p>
+
+<p>The values of <code>:source</code>, <code>:destination</code>, and <code>:lookup</code> must be
+  full namespaced job keys that are defined in your registry.
+  You can provide an array of job keys or a single job key
+  Symbol. Note that, if you provide more than one <code>:destination</code> job key,
+  only the first will be used. A given job can only write to a single
+  destination.</p>
+
+<pre class="code ruby"><code class="ruby"><span class='lbrace'>{</span> <span class='label'>source:</span> <span class='lbracket'>[</span><span class='symbol'>:ns__job1</span><span class='rbracket'>]</span><span class='comma'>,</span>
+   <span class='label'>destination:</span> <span class='lbracket'>[</span><span class='symbol'>:ns__job2</span><span class='comma'>,</span> <span class='symbol'>:ns__job3</span><span class='rbracket'>]</span><span class='comma'>,</span>
+   <span class='label'>lookup:</span> <span class='lbracket'>[</span><span class='symbol'>:ns__job4</span><span class='comma'>,</span> <span class='symbol'>:ns__job5</span><span class='rbracket'>]</span>
+<span class='rbrace'>}</span>
+</code></pre>
+
+<p>Is functionally equivalent to:</p>
+
+<pre class="code ruby"><code class="ruby"><span class='lbrace'>{</span> <span class='label'>source:</span> <span class='symbol'>:ns__job1</span><span class='comma'>,</span>
+   <span class='label'>destination:</span> <span class='symbol'>:ns__job2</span><span class='comma'>,</span>
+   <span class='label'>lookup:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>ns__job4</span><span class='words_sep'> </span><span class='tstring_content'>ns__job5</span><span class='tstring_end'>]</span></span>
+<span class='rbrace'>}</span>
+</code></pre>
+
+<h4 id="multiple-sources">Multiple sources</h4>
+
+<p>All rows of all sources will be read in, transformed, and written to the
+  destination.</p>
+
+<p>Writing CSV output will fail if all rows do not have the same fields. The
+  Kiba::Extend::Transforms::Clean::EnsureConsistentFields transform
+  can be added to the end of multi-source jobs to prevent this error.</p>
+
+<h4 id="more-flexible-lookup-file-definition">More flexible lookup file definition</h4>
+
+<p>Lookups defined as shown above depend upon a <code>:lookup_on</code> field being
+  configured for the job in the registry.</p>
+
+<p>What do you do if you need to use the same job (e.g.
+  <code>:names__final</code> as a lookup in different jobs, but need to
+  lookup from that data on :id field in one job, and :type in
+  another? If you have registered <code>:names__final</code> with
+  <code>:lookup_on</code> = <code>:id</code> in your registry, you can do the
+  following in the files argument setting up the job that needs
+  to look up on type:</p>
+
+<p><code>lookup: {jobkey: :names__final, lookup_on: :type}</code></p>
+
+<p>What if you need to look up in <code>:names__final</code> by :id and :type within the
+  same job?</p>
+
+<pre class="code ruby"><code class="ruby">lookup: [
+  :names__final,
+  {jobkey: :names__final, lookup_on: :type, name: :names_by_type}
+</code></pre>
+
+<p>In the transforms for this job…</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'>Merge</span><span class='op'>::</span><span class='const'>MultiRowLookup</span><span class='comma'>,</span> <span class='label'>lookup:</span> <span class='id identifier rubyid_names__final'>names__final</span>
+</code></pre>
+
+<p>…will look up on :id, and…</p>
+
+<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_transform'>transform</span> <span class='const'>Merge</span><span class='op'>::</span><span class='const'>MultiRowLookup</span><span class='comma'>,</span> <span class='label'>lookup:</span> <span class='id identifier rubyid_names_by_type'>names_by_type</span>
+</code></pre>
+
+<p>…will look up on :type.</p>
+
+<h3 id="transformer-argument"><code>transformer</code> argument</h3>
+
+<p>The value of <code>transformer</code> must consist of (or, more usually,
+  must return) one or more <code>Kiba.job_segment</code> blocks defining
+  transformation logic.</p>
+
+<p>In a given job definition module this usually looks like:</p>
+
+<pre class="code ruby"><code class="ruby">def job
+  Kiba::Extend::Jobs::Job.new(
+    files: { ...imagine stuff here... },
+    transformer: xforms
+  )
+end
+
+def xforms
+  Kiba.job_segment do
+    transform Delete::Fields, fields: :itemtype
+  end
+end
+</code></pre>
+
+<p>However, you may give an array to <code>transformer</code>. The resulting
+  job_segments will be included in the Job in the order you list them.
+  This allows for powerful reuse of common transformation sequences
+  within a project.</p>
+
+<h2 id="some-technical-detail-partially-explaining-how-kiba-itself-creates-jobs">Some technical detail partially explaining how Kiba itself creates jobs</h2>
 
 <p>Running <code>Kiba.parse</code> to define a job generates a
   <a href="https://github.com/thbar/kiba/blob/master/lib/kiba/control.rb" target="_parent" title="  Kiba::Control">  Kiba::Control</a>
@@ -125,38 +237,10 @@
   manipulate variables or configuration that the entire job needs to know
   about.</p>
 
-<p>What Kiba::Extend::Jobs adds is the ability to set up reusable
-  initial_transformers and final_transformers. Basically, job templates
-  where just the meat of the transformations change.</p>
-
-<p><code>files</code> is the configuration of destination, source, and lookup files the
-  job will use. It is a Hash, with the following format:</p>
-
-<p>```
-{ source: [registry_key, registry_key],
-   destination: [registry_key],
-   lookup: [registry_key]
-}
-~~~</p>
-
-<p>OR</p>
-
-<pre class="code ruby"><code class="ruby"> <span class='lbrace'>{</span> <span class='label'>source:</span> <span class='lbracket'>[</span><span class='id identifier rubyid_registry_key'>registry_key</span><span class='comma'>,</span> <span class='id identifier rubyid_registry_key'>registry_key</span><span class='rbracket'>]</span><span class='comma'>,</span>
-   <span class='label'>destination:</span> <span class='lbracket'>[</span><span class='id identifier rubyid_registry_key'>registry_key</span><span class='rbracket'>]</span>
- <span class='rbrace'>}</span>
-</code></pre>
-
-<p><code>source</code> and <code>destination</code> must each have at least one registry key.
-  <code>lookup</code> may be omitted, or it may be included with one or more registry
-  keys</p>
-
-<p><code>transformer</code> is a sequence of data transformations that could
-  theoretically be called with interchangable input/output settings
-  (i.e. <code>materials</code>).</p>
-
-<p>In project code, instead of defining an entire job in a <code>Kiba.parse</code>
-  block, you will define a <code>Kiba.job_segment</code> block containing just the
-  transforms unique to that job.</p>
+<p>Kiba::Extend::Jobs adds the ability to set up reusable
+  initial_transformers and final_transformers that go into the
+  Kiba::Control object. Basically, job templates where just the
+  meat of the transformations change.</p>
 
 
   </div>
@@ -214,7 +298,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Oct  2 16:01:09 2025 by
+  Generated on Thu Oct  2 21:21:59 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>

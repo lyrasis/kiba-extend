@@ -279,12 +279,14 @@
         <span class='name'>key</span>
       
       
-        <span class='type'>(<tt>Symbol</tt>)</span>
+        <span class='type'>(<tt>Symbol</tt>, <tt>Hash</tt>)</span>
       
       
       
         &mdash;
-        <div class='inline'><p>file key from <span class='object_link'><a href="FileRegistry.html" title="Kiba::Extend::Registry::FileRegistry (class)">FileRegistry</a></span> data hash</p>
+        <div class='inline'><p>file key from <span class='object_link'><a href="FileRegistry.html" title="Kiba::Extend::Registry::FileRegistry (class)">FileRegistry</a></span> data
+hash. Alternately, a Hash containing jobkey: jobkey
+symbol, and additional key-value pairs may be passed.</p>
 </div>
       
     </li>
@@ -344,8 +346,6 @@ this registered file is being prepared</p>
       <pre class="lines">
 
 
-21
-22
 23
 24
 25
@@ -357,13 +357,27 @@ this registered file is being prepared</p>
 31
 32
 33
-34</pre>
+34
+35
+36
+37
+38
+39
+40
+41
+42</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/registered_lookup.rb', line 21</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/registered_lookup.rb', line 23</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>key:</span><span class='comma'>,</span> <span class='label'>data:</span><span class='comma'>,</span> <span class='label'>for_job:</span><span class='rparen'>)</span>
   <span class='kw'>super</span>
+  <span class='kw'>if</span> <span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Hash</span><span class='rparen'>)</span>
+    <span class='ivar'>@key</span> <span class='op'>=</span> <span class='id identifier rubyid_key'>key</span><span class='lbracket'>[</span><span class='symbol'>:jobkey</span><span class='rbracket'>]</span>
+    <span class='ivar'>@lookup_on</span> <span class='op'>=</span> <span class='id identifier rubyid_key'>key</span><span class='lbracket'>[</span><span class='symbol'>:lookup_on</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='symbol'>:lookup_on</span><span class='rparen'>)</span>
+    <span class='ivar'>@instance_variable_name</span> <span class='op'>=</span> <span class='id identifier rubyid_key'>key</span><span class='lbracket'>[</span><span class='symbol'>:name</span><span class='rbracket'>]</span> <span class='kw'>if</span> <span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='symbol'>:name</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+
   <span class='kw'>unless</span> <span class='id identifier rubyid_src_class'>src_class</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span><span class='lparen'>(</span><span class='symbol'>:is_lookupable?</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_fail'>fail</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../JobCannotBeUsedAsLookupError.html" title="Kiba::Extend::JobCannotBeUsedAsLookupError (class)">JobCannotBeUsedAsLookupError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../JobCannotBeUsedAsLookupError.html#initialize-instance_method" title="Kiba::Extend::JobCannotBeUsedAsLookupError#initialize (method)">new</a></span></span><span class='lparen'>(</span>
       <span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_src_class'>src_class</span><span class='comma'>,</span> <span class='id identifier rubyid_for_job'>for_job</span>
@@ -441,12 +455,12 @@ this registered file is being prepared</p>
       <pre class="lines">
 
 
-38
-39
-40</pre>
+46
+47
+48</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/registered_lookup.rb', line 38</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/registered_lookup.rb', line 46</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_args'>args</span>
   <span class='lbrace'>{</span><span class='label'>file:</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='label'>keycolumn:</span> <span class='id identifier rubyid_lookup_on'>lookup_on</span><span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -496,12 +510,12 @@ this registered file is being prepared</p>
       <pre class="lines">
 
 
-42
-43
-44</pre>
+50
+51
+52</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/registered_lookup.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/registered_lookup.rb', line 50</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_klass'>klass</span>
   <span class='id identifier rubyid_src_class'>src_class</span>
@@ -516,7 +530,7 @@ this registered file is being prepared</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Oct  2 16:01:11 2025 by
+  Generated on Thu Oct  2 21:22:01 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>

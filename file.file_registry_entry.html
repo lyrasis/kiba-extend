@@ -368,9 +368,12 @@ reghash = {
 <p>[Symbol] column to use as keys in lookup table created from file data</p>
 
 <ul>
-  <li>required if file is used as a lookup source</li>
-  <li>You can register the same file multiple times under different file keys with different <code>:lookup_on</code> values if you need to use the data for different lookup purposes</li>
+  <li>required if file is used as a lookup source in any job AND that job defines this lookup file for use in the job only by its file key</li>
 </ul>
+
+<p>If the output of a given entry is expected to be used as a lookup on only one field, set a <code>:lookup_on</code> value in the registry.</p>
+
+<p>If you need to lookup in the output data on different columns, either within one job or in different jobs, this can be achieved by providing more information in the job definition’s <code>files[:lookup]</code> value. See <span class='object_link'><a href="Kiba/Extend/Jobs.html" title="Kiba::Extend::Jobs (module)">Kiba::Extend::Jobs</a></span> for details. (Or you can register the same file multiple times under different file keys with different <code>:lookup_on</code> values, but yuck to that)</p>
 
 <p>Currently only the following types of registry entries can be used as lookups:</p>
 
@@ -406,7 +409,7 @@ reghash = {
 </div></div>
 
       <div id="footer">
-  Generated on Thu Oct  2 16:01:09 2025 by
+  Generated on Thu Oct  2 21:21:58 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>

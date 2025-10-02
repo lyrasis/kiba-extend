@@ -543,7 +543,7 @@ by the job. :run does all of the above and runs the job. Since 4.0.0</p>
   <span class='kw'>end</span>
   <span class='id identifier rubyid_extend'>extend</span> <span class='const'><span class='object_link'><a href="DependencyJob.html" title="Kiba::Extend::Jobs::DependencyJob (module)">DependencyJob</a></span></span> <span class='kw'>if</span> <span class='ivar'>@dependency</span>
 
-  <span class='ivar'>@files</span> <span class='op'>=</span> <span class='id identifier rubyid_setup_files'>setup_files</span><span class='lparen'>(</span><span class='id identifier rubyid_files'>files</span><span class='rparen'>)</span>
+  <span class='ivar'>@files</span> <span class='op'>=</span> <span class='id identifier rubyid_setup_files'>setup_files</span><span class='lparen'>(</span><span class='id identifier rubyid_files'>files</span><span class='period'>.</span><span class='id identifier rubyid_transform_values'>transform_values</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='lbracket'>[</span><span class='id identifier rubyid_v'>v</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span> <span class='rbrace'>}</span><span class='rparen'>)</span>
 
   <span class='kw'>unless</span> <span class='id identifier rubyid_mode'>mode</span> <span class='op'>==</span> <span class='symbol'>:info</span>
     <span class='id identifier rubyid_report_run_start'>report_run_start</span> <span class='comment'># defined in Reporter
@@ -994,7 +994,7 @@ by the job. :run does all of the above and runs the job. Since 4.0.0</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Oct  2 16:01:10 2025 by
+  Generated on Thu Oct  2 21:22:00 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.1.7).
 </div>
