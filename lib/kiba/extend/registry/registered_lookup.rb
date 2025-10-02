@@ -25,6 +25,7 @@ module Kiba
           if key.is_a?(Hash)
             @key = key[:jobkey]
             @lookup_on = key[:lookup_on] if key.key?(:lookup_on)
+            @instance_variable_name = key[:name] if key.key?(:name)
           end
 
           unless src_class.respond_to?(:is_lookupable?)

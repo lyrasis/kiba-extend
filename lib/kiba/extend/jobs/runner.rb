@@ -29,14 +29,20 @@ module Kiba
         # Add lookup tables to the context as methods memoized to instance
         #   variables
         def add_lookup(config)
-          key_as_iv = :"@#{config.key}"
+          cust = :@instance_variable_name
+          name = if config.instance_variable_defined?(cust)
+            config.instance_variable_get(cust)
+          else
+            config.key
+          end
+          ivname = :"@#{name}"
 
-          context.define_singleton_method(config.key) do
-            if instance_variable_defined?(key_as_iv)
-              instance_variable_get(key_as_iv)
+          context.define_singleton_method(name.to_sym) do
+            if instance_variable_defined?(ivname)
+              instance_variable_get(ivname)
             else
               instance_variable_set(
-                key_as_iv,
+                ivname,
                 Lookup.csv_to_hash(**config.args.compact)
               )
             end
