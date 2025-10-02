@@ -56,16 +56,19 @@ module Kiba
           raise KeyNotRegisteredError.new(err.key, :destination)
         end
 
-        # @param filekey [String, Symbol] file registry key for file to be used
-        #   as a lookup source
+        # @param filekey [String, Symbol, Hash] file registry key for file to
+        #   be used as a lookup source. Alternately, a Hash containing
+        #   jobkey: {full jobkey symbol}, and additional key-value pairs may
+        #   be passed.
         # @return [Kiba::Extend::Registry::RegisteredLookup]
         def as_lookup(filekey, for_job)
+          jobkey = filekey.is_a?(Hash) ? filekey[:jobkey] : filekey
           if Kiba::Extend.job_verbosity == :debug
-            puts "Registering #{filekey} as lookup for #{for_job}"
+            puts "Registering #{jobkey} as lookup for #{for_job}"
           end
           RegisteredLookup.new(
             key: filekey,
-            data: lookup(filekey),
+            data: lookup(jobkey),
             for_job: for_job
           )
         rescue KeyNotRegisteredError => err

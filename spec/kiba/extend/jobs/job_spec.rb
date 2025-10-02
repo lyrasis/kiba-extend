@@ -62,54 +62,85 @@ RSpec.describe "Kiba::Extend::Jobs::Job" do
     end
   end
 
-  context "with defaults" do
-    let(:job) { base_job }
-    context "when dependency files exist" do
-      it "runs and produces expected result" do
-        job
-        result = CSV.read(@dest_file)
-        expected = [
-          ["number", "alpha", "from_lkup"],
-          ["1", "a", "aardvark"],
-          ["2", "b", "bird"]
-        ]
-        expect(result).to eq(expected)
-      end
-    end
-
-    context "when dependency files do not exist" do
-      let(:base_job_config) do
-        {
-          source: [:missing_src],
-          destination: [:base_dest],
-          lookup: [:base_lookup]
-        }
-      end
-
-      it "calls dependency creators",
-        skip: "cannot figure out how to test this in a timely manner. Will "\
-        "test manually for now." do
-          missing_file = File.join(fixtures_dir, "base_job_missing.csv")
-          creator = double
-          Kiba::Extend.config.registry =
-            Kiba::Extend::Registry::FileRegistry.new
-          entries = {base_lookup: {
-            path: File.join(fixtures_dir, "base_job_lookup.csv"),
-            supplied: true, lookup_on: :letter
-          },
-                     base_dest: {path: @dest_file,
-                                 creator: Helpers.method(:fake_creator_method)},
-                     missing_src: {path: missing_file,
-                                   creator: Helpers::BaseJob.method(:creator)}}
-          entries.each { |key, data| Kiba::Extend.registry.register(key, data) }
-          transform_registry
-          testjob = Helpers::BaseJob.new(files: base_job_config)
-          testjob.creator = creator
-          expect(creator).to receive(:call)
-          testjob.handle_requirements
-        end
-    end
-    # raise_error(Kiba::Extend::Jobs::Runner::MissingDependencyError)
+  let(:expected_lookup_result) do
+    [
+      ["number", "alpha", "from_lkup"],
+      ["one", "a", "aardvark"],
+      ["two", "b", "bird"]
+    ]
   end
+
+  let(:job) { base_job }
+
+  it "runs and produces expected result" do
+    job
+    result = CSV.read(@dest_file)
+    expect(result).to eq(expected_lookup_result)
+  end
+
+  context "when overriding lookup_on for a lookup" do
+    let(:base_job_config) do
+      {
+        source: [:base_src],
+        destination: ["base_dest"],
+        lookup: {jobkey: :base_lookup, lookup_on: :number}
+      }
+    end
+
+    let(:base_job_transforms) do
+      Kiba.job_segment do
+        transform Kiba::Extend::Transforms::Rename::Field,
+          from: :letter,
+          to: :alpha
+        transform Merge::MultiRowLookup,
+          lookup: base_lookup,
+          keycolumn: :number,
+          fieldmap: {
+            from_lkup: :word
+          },
+          delim: Kiba::Extend.delim
+      end
+    end
+
+    it "runs and produces expected result" do
+      job
+      result = CSV.read(@dest_file)
+      expect(result).to eq(expected_lookup_result)
+    end
+  end
+
+  context "when dependency files do not exist" do
+    let(:base_job_config) do
+      {
+        source: [:missing_src],
+        destination: [:base_dest],
+        lookup: [:base_lookup]
+      }
+    end
+
+    it "calls dependency creators",
+      skip: "cannot figure out how to test this in a timely manner. Will "\
+      "test manually for now." do
+        missing_file = File.join(fixtures_dir, "base_job_missing.csv")
+        creator = double
+        Kiba::Extend.config.registry =
+          Kiba::Extend::Registry::FileRegistry.new
+        entries = {base_lookup: {
+                     path: File.join(fixtures_dir, "base_job_lookup.csv"),
+                     supplied: true, lookup_on: :letter
+                   },
+                   base_dest: {path: @dest_file,
+                               creator: Helpers.method(:fake_creator_method)},
+                   missing_src: {path: missing_file,
+                                 creator: Helpers::BaseJob.method(:creator)}}
+        entries.each { |key, data| Kiba::Extend.registry.register(key, data) }
+        transform_registry
+        testjob = Helpers::BaseJob.new(files: base_job_config)
+        testjob.creator = creator
+        expect(creator).to receive(:call)
+        testjob.handle_requirements
+      end
+  end
+  # raise_error(Kiba::Extend::Jobs::Runner::MissingDependencyError)
 end
 # rubocop:enable Metrics/BlockLength

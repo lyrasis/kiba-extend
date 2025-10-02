@@ -14,12 +14,19 @@ module Kiba
       class RegisteredLookup < RegisteredFile
         include RequirableFile
 
-        # @param key [Symbol] file key from {FileRegistry} data hash
+        # @param key [Symbol, Hash] file key from {FileRegistry} data
+        #   hash. Alternately, a Hash containing jobkey: {full jobkey
+        #   symbol}, and additional key-value pairs may be passed.
         # @param data [Hash] file data from {FileRegistry}
         # @param for_job [Symbol] registry entry job key of the job for which
         #   this registered file is being prepared
         def initialize(key:, data:, for_job:)
           super
+          if key.is_a?(Hash)
+            @key = key[:jobkey]
+            @lookup_on = key[:lookup_on] if key.key?(:lookup_on)
+          end
+
           unless src_class.respond_to?(:is_lookupable?)
             fail Kiba::Extend::JobCannotBeUsedAsLookupError.new(
               key, src_class, for_job
