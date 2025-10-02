@@ -109,6 +109,47 @@ RSpec.describe "Kiba::Extend::Jobs::Job" do
     end
   end
 
+  context "when using same lookup file with different lookup_ons" do
+    let(:base_job_config) do
+      {
+        source: [:base_src],
+        destination: ["base_dest"],
+        lookup: [
+          :base_lookup,
+          {jobkey: :base_lookup, lookup_on: :number, name: :numlkup}
+        ]
+      }
+    end
+
+    let(:base_job_transforms) do
+      Kiba.job_segment do
+        transform Kiba::Extend::Transforms::Rename::Field,
+          from: :letter,
+          to: :alpha
+        transform Merge::MultiRowLookup,
+          lookup: base_lookup,
+          keycolumn: :alpha,
+          fieldmap: {from_lkup: :word}
+        transform Merge::MultiRowLookup,
+          lookup: numlkup,
+          keycolumn: :number,
+          fieldmap: {punctuation: :punct}
+      end
+    end
+
+    it "runs and produces expected result" do
+      expected = [
+        ["number", "alpha", "from_lkup", "punctuation"],
+        ["one", "a", "aardvark", "comma"],
+        ["two", "b", "bird", "bang"]
+      ]
+
+      job
+      result = CSV.read(@dest_file)
+      expect(result).to eq(expected)
+    end
+  end
+
   context "when dependency files do not exist" do
     let(:base_job_config) do
       {
