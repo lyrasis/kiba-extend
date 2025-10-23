@@ -23,7 +23,7 @@ PATH
       marc
       measured
       thor
-      xxhash
+      xxhash (= 0.7.0)
       zeitwerk
 
 GEM
@@ -202,4 +202,4 @@ DEPENDENCIES
   yardspec (~> 0.2.0)
 
 BUNDLED WITH
-   2.3.9
+   2.7.1
