@@ -207,7 +207,7 @@ properly in all cases. Handles only the most common English language name patter
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(source:, targets: %i[firstname middlename lastname               suffix], fallback: :all_nil)  &#x21d2; SplitInverted </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(source:, targets: %i[firstname middlename lastname               suffix],, fallback: :all_nil)  &#x21d2; SplitInverted </a>
     
 
     
@@ -262,7 +262,7 @@ properly in all cases. Handles only the most common English language name patter
   <h3 class="signature first" id="initialize-instance_method">
   
     #<strong>initialize</strong>(source:, targets: %i[firstname middlename lastname
-              suffix], fallback: :all_nil)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Name::SplitInverted (class)">SplitInverted</a></span></tt> 
+              suffix],, fallback: :all_nil)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::Name::SplitInverted (class)">SplitInverted</a></span></tt> 
   
 
   
@@ -303,7 +303,7 @@ properly in all cases. Handles only the most common English language name patter
       
       
         <em class="default">(defaults to: <tt>%i[firstname middlename lastname
-              suffix]</tt>)</em>
+              suffix],</tt>)</em>
       
       
         &mdash;
@@ -377,7 +377,7 @@ will copy the source value into that field</p>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>source:</span><span class='comma'>,</span>
   <span class='label'>targets:</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>firstname</span><span class='words_sep'> </span><span class='tstring_content'>middlename</span><span class='words_sep'> </span><span class='tstring_content'>lastname</span><span class='words_sep'>
-    </span><span class='tstring_content'>suffix</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>fallback:</span> <span class='symbol'>:all_nil</span><span class='rparen'>)</span>
+</span><span class='words_sep'>    </span><span class='tstring_content'>suffix</span><span class='tstring_end'>]</span></span><span class='comma'>,</span> <span class='label'>fallback:</span> <span class='symbol'>:all_nil</span><span class='rparen'>)</span>
   <span class='ivar'>@source</span> <span class='op'>=</span> <span class='id identifier rubyid_source'>source</span>
   <span class='ivar'>@targets</span> <span class='op'>=</span> <span class='id identifier rubyid_targets'>targets</span>
   <span class='ivar'>@firstname</span> <span class='op'>=</span> <span class='id identifier rubyid_targets'>targets</span><span class='lbracket'>[</span><span class='int'>0</span><span class='rbracket'>]</span>
@@ -489,9 +489,9 @@ will copy the source value into that field</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Oct  2 21:32:14 2025 by
+  Generated on Thu Oct 23 23:01:41 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.37 (ruby-3.1.7).
+  0.9.37 (ruby-3.4.7).
 </div>
 
     </div>
