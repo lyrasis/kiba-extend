@@ -45,6 +45,8 @@ In https://github.com/lyrasis/kiba-extend/pull/229[PR#229]
 In https://github.com/lyrasis/kiba-extend/pull/230[PR#230]
 * Ability to flexibly define `:lookup_on` keys (and method names for accessing the lookups) from with jobs.
 In https://github.com/lyrasis/kiba-extend/pull/234[PR#234]
+* `Deduplicate::FieldGroup` transform.
+In https://github.com/lyrasis/kiba-extend/pull/237[PR#237]
 
 === Bugfixes
 
