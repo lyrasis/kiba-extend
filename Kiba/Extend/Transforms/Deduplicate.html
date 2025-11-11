@@ -79,7 +79,7 @@
   <dl>
     <dt>Defined in:</dt>
     <dd>lib/kiba/extend/transforms/deduplicate.rb<span class="defines">,<br />
-  lib/kiba/extend/transforms/deduplicate/flag.rb,<br /> lib/kiba/extend/transforms/deduplicate/table.rb,<br /> lib/kiba/extend/transforms/deduplicate/fields.rb,<br /> lib/kiba/extend/transforms/deduplicate/flag_all.rb,<br /> lib/kiba/extend/transforms/deduplicate/field_values.rb,<br /> lib/kiba/extend/transforms/deduplicate/grouped_field_values.rb</span>
+  lib/kiba/extend/transforms/deduplicate/flag.rb,<br /> lib/kiba/extend/transforms/deduplicate/table.rb,<br /> lib/kiba/extend/transforms/deduplicate/fields.rb,<br /> lib/kiba/extend/transforms/deduplicate/flag_all.rb,<br /> lib/kiba/extend/transforms/deduplicate/field_group.rb,<br /> lib/kiba/extend/transforms/deduplicate/field_values.rb,<br /> lib/kiba/extend/transforms/deduplicate/grouped_field_values.rb</span>
 </dd>
   </dl>
   
@@ -89,23 +89,60 @@
   <div class="discussion">
     <p>Tranformations that do some sort of data deduplication</p>
 
-<h2 id="choosing-between-similar-transforms">Choosing between similar transforms</h2>
+<h2 id="scope-entire-table">Scope: Entire table</h2>
 
 <ul>
-  <li><span class='object_link'><a href="Deduplicate/Flag.html" title="Kiba::Extend::Transforms::Deduplicate::Flag (class)">Flag</a></span> - Keeps all rows. The first row with a duplicate value is <strong>not</strong> marked as
-a duplicate. Subsequent rows with the same value are marked as duplicates. Use to non-destructively
-identify what will be kept/lost in a deduplication process, so you set up subsequent jobs to
-(a) report dropped non-unique rows; and (b) process the unique (non-duplicate) rows. Works one row
-at a time, so there is no performance implication due to source size.</li>
-  <li><span class='object_link'><a href="Deduplicate/FlagAll.html" title="Kiba::Extend::Transforms::Deduplicate::FlagAll (class)">FlagAll</a></span> - Keeps all rows. All rows with a duplicate value are marked as duplicates.
-This is most helpful if you are wanting to review all duplicate values in a result together, or if
-you need to, in a subsequent step, filter out all values that are not unique. Holds all rows in
-memory while processing, so may be slow or even fail with very large source data.</li>
-  <li><span class='object_link'><a href="Deduplicate/Table.html" title="Kiba::Extend::Transforms::Deduplicate::Table (class)">Table</a></span> - Destructive! Removes rows. Keeps only the first row of any rows with the same
-value in the specified field. Holds all rows in memory while processing, so may be slow or even fail
-with very large source data. Equivalent to running <span class='object_link'><a href="Deduplicate/Flag.html" title="Kiba::Extend::Transforms::Deduplicate::Flag (class)">Flag</a></span> followed by
-<span class='object_link'><a href="FilterRows/FieldEqualTo.html" title="Kiba::Extend::Transforms::FilterRows::FieldEqualTo (class)">FilterRows::FieldEqualTo</a></span> (to reject duplicate rows), which should be used if size of source data
-is a problem.</li>
+  <li><span class='object_link'><a href="Deduplicate/Flag.html" title="Kiba::Extend::Transforms::Deduplicate::Flag (class)">Flag</a></span> - Keeps all rows. The first row with a
+duplicate value is <strong>not</strong> marked as a duplicate. Subsequent
+rows with the same value are marked as duplicates. Use to
+non-destructively identify what will be kept/lost in a
+deduplication process, so you set up subsequent jobs to (a)
+report dropped non-unique rows; and (b) process the unique
+(non-duplicate) rows. Works one row at a time, so there is
+no performance implication due to source size.</li>
+  <li><span class='object_link'><a href="Deduplicate/FlagAll.html" title="Kiba::Extend::Transforms::Deduplicate::FlagAll (class)">FlagAll</a></span> - Keeps all rows. All rows with a
+duplicate value are marked as duplicates. This is most
+helpful if you are wanting to review all duplicate values in
+a result together, or if you need to, in a subsequent step,
+filter out all values that are not unique. Holds all rows in
+memory while processing, so may be slow or even fail with
+very large source data.</li>
+  <li><span class='object_link'><a href="Deduplicate/Table.html" title="Kiba::Extend::Transforms::Deduplicate::Table (class)">Table</a></span> - Destructive! Removes rows. Keeps only
+the first row of any rows with the same value in the
+specified field. Holds all rows in memory while processing,
+so may be slow or even fail with very large source data.
+Equivalent to running <span class='object_link'><a href="Deduplicate/Flag.html" title="Kiba::Extend::Transforms::Deduplicate::Flag (class)">Flag</a></span> followed by
+<span class='object_link'><a href="FilterRows/FieldEqualTo.html" title="Kiba::Extend::Transforms::FilterRows::FieldEqualTo (class)">FilterRows::FieldEqualTo</a></span> (to reject duplicate rows), which
+should be used if size of source data is a problem.</li>
+</ul>
+
+<h2 id="scope-row---values-in-multiple-fields-in-a-field-group">Scope: Row - values in multiple fields in a field group</h2>
+
+<ul>
+  <li><span class='object_link'><a href="Deduplicate/GroupedFieldValues.html" title="Kiba::Extend::Transforms::Deduplicate::GroupedFieldValues (class)">GroupedFieldValues</a></span> - Keeps all rows. Deduplicates
+values in <strong>one field</strong> in a field group. That is, the values of
+that single field are compared and deduplicated. The positions of
+removed duplicate values are used to remove the corresponding values
+in grouped fields. The actual values of the other fields in the group
+are not considered.</li>
+  <li><span class='object_link'><a href="Deduplicate/FieldGroup.html" title="Kiba::Extend::Transforms::Deduplicate::FieldGroup (class)">FieldGroup</a></span> - Keeps all rows. Compares and deduplicates
+entire field group. If there are 4 fields in the group, and the values
+in the first and third positions of all 4 fields are the same, the
+values in the third position are dropped from all 4 fields.</li>
+</ul>
+
+<h2 id="scope-row---two-or-more-non-grouped-fields">Scope: Row - two or more non-grouped fields</h2>
+
+<ul>
+  <li><span class='object_link'><a href="Deduplicate/Fields.html" title="Kiba::Extend::Transforms::Deduplicate::Fields (class)">Fields</a></span> - Keeps all rows. Deletes value(s) from target
+fields if value(s) exist in source field.</li>
+</ul>
+
+<h2 id="scope-row---multiple-values-in-a-single-field">Scope: Row - multiple values in a single field</h2>
+
+<ul>
+  <li><span class='object_link'><a href="Deduplicate/FieldValues.html" title="Kiba::Extend::Transforms::Deduplicate::FieldValues (class)">FieldValues</a></span> - Keeps all rows. Deletes value(s) from a
+single multi-value field</li>
 </ul>
 
 
@@ -120,7 +157,7 @@ is a problem.</li>
     
   
     
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Deduplicate/FieldValues.html" title="Kiba::Extend::Transforms::Deduplicate::FieldValues (class)">FieldValues</a></span>, <span class='object_link'><a href="Deduplicate/Fields.html" title="Kiba::Extend::Transforms::Deduplicate::Fields (class)">Fields</a></span>, <span class='object_link'><a href="Deduplicate/Flag.html" title="Kiba::Extend::Transforms::Deduplicate::Flag (class)">Flag</a></span>, <span class='object_link'><a href="Deduplicate/FlagAll.html" title="Kiba::Extend::Transforms::Deduplicate::FlagAll (class)">FlagAll</a></span>, <span class='object_link'><a href="Deduplicate/GroupedFieldValues.html" title="Kiba::Extend::Transforms::Deduplicate::GroupedFieldValues (class)">GroupedFieldValues</a></span>, <span class='object_link'><a href="Deduplicate/Table.html" title="Kiba::Extend::Transforms::Deduplicate::Table (class)">Table</a></span>
+      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Deduplicate/FieldGroup.html" title="Kiba::Extend::Transforms::Deduplicate::FieldGroup (class)">FieldGroup</a></span>, <span class='object_link'><a href="Deduplicate/FieldValues.html" title="Kiba::Extend::Transforms::Deduplicate::FieldValues (class)">FieldValues</a></span>, <span class='object_link'><a href="Deduplicate/Fields.html" title="Kiba::Extend::Transforms::Deduplicate::Fields (class)">Fields</a></span>, <span class='object_link'><a href="Deduplicate/Flag.html" title="Kiba::Extend::Transforms::Deduplicate::Flag (class)">Flag</a></span>, <span class='object_link'><a href="Deduplicate/FlagAll.html" title="Kiba::Extend::Transforms::Deduplicate::FlagAll (class)">FlagAll</a></span>, <span class='object_link'><a href="Deduplicate/GroupedFieldValues.html" title="Kiba::Extend::Transforms::Deduplicate::GroupedFieldValues (class)">GroupedFieldValues</a></span>, <span class='object_link'><a href="Deduplicate/Table.html" title="Kiba::Extend::Transforms::Deduplicate::Table (class)">Table</a></span>
     
   
 </p>
@@ -136,7 +173,7 @@ is a problem.</li>
 </div>
 
       <div id="footer">
-  Generated on Thu Oct 23 23:01:38 2025 by
+  Generated on Tue Nov 11 00:39:06 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.7).
 </div>
