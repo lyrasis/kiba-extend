@@ -38,7 +38,7 @@ module Kiba
         def initialize(filename:, csv_options: nil, headers: nil,
           initial_headers: [])
           @filename = filename
-          @csv_options = csv_options || {}
+          @csv_options = csv_options || self.class.default_file_options
           @headers = headers
           @initial_headers = initial_headers
           ensure_dir
