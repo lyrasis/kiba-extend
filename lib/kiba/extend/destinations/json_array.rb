@@ -32,23 +32,31 @@ module Kiba
           @filename = filename
           ensure_dir
           @json = []
-          @file = File.open(filename, "w")
+        end
+
+        # @return [Array<Symbol>]
+        def fields
+          return [] unless File.exist?(filename)
+
+          JSON.parse(File.read(filename))
+            .map(&:keys)
+            .flatten
+            .uniq
         end
 
         # @private
         def write(row)
-          @json << row
+          json << row
         end
 
         # @private
         def close
-          @file << @json.to_json
-          @file.close
+          File.open(filename, "w") { |f| f << json.to_json }
         end
 
         private
 
-        attr_reader :filename
+        attr_reader :filename, :json
       end
     end
   end
