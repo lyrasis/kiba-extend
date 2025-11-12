@@ -50,5 +50,18 @@ RSpec.describe Kiba::Extend::Job do
         end
       end
     end
+
+    context "when job has JSON destination" do
+      before(:context) do
+        Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry
+        prepare_registry
+      end
+      after(:context) { Kiba::Extend.reset_config }
+      let(:key) { :json_arr }
+
+      it "returns true" do
+        expect(result).to be true
+      end
+    end
   end
 end
