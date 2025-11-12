@@ -180,7 +180,7 @@ module Helpers
           briefdescription]}
       },
       json_arr: {
-        path: fkeypath,
+        path: File.join(fixtures_dir, "output.json"),
         dest_class: Kiba::Extend::Destinations::JsonArray,
         creator: Helpers.method(:fake_creator_method)
       },
