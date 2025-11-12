@@ -3,6 +3,63 @@
 require "spec_helper"
 
 RSpec.describe Kiba::Extend::Job do
+  describe ".output_fields" do
+    let(:result) { Kiba::Extend::Job.output_fields(key) }
+
+    context "when key not registered" do
+      let(:key) { :foo__bar }
+
+      it "returns nil" do
+        expect(result).to be_nil
+      end
+    end
+
+    context "when job has output" do
+      before(:context) do
+        Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry
+        prepare_registry
+      end
+      after(:context) { Kiba::Extend.reset_config }
+      let(:key) { :foo }
+
+      it "returns headers" do
+        expect(result).to eq(
+          [:objectnumber, :numberofobjects, :briefdescription,
+            :distinguishingfeatures, :comment]
+        )
+      end
+    end
+
+    context "when job has no output" do
+      before(:context) do
+        Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry
+        prepare_registry
+      end
+      after(:context) { Kiba::Extend.reset_config }
+      let(:key) { :noresultfile }
+
+      it "returns nil" do
+        expect(result).to be_nil
+      end
+    end
+
+    context "when job has JSON destination" do
+      before(:context) do
+        Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry
+        prepare_registry
+      end
+      after(:context) { Kiba::Extend.reset_config }
+      let(:key) { :json_arr }
+
+      it "returns top-level fields/keys" do
+        expect(result).to eq(
+          ["Archival_Object__title", "Archival_Object__dates",
+            "Archival_Object__subjects"]
+        )
+      end
+    end
+  end
+
   describe ".output?" do
     let(:result) { Kiba::Extend::Job.output?(key) }
 

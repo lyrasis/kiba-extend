@@ -7,6 +7,24 @@ module Kiba
       module_function
 
       # @param jobkey [Symbol] registry entry for job with namespace
+      # @return [nil, Array<Symbol>] headers/fields for given job output
+      # @note Only works for CSV and JsonArray destinations. For JsonArray, only
+      #   returns the top-level fields of the objects/rows in the output.
+      def output_fields(jobkey)
+        return unless output?(jobkey)
+
+        entry = Kiba::Extend.registry.resolve(jobkey)
+        path = Pathname.new(entry.path)
+        dest = entry.dest_class.new(filename: path)
+        unless dest.respond_to?(:fields)
+          raise "No output field extraction logic exists for "\
+            "#{entry.dest_class}"
+        end
+
+        dest.fields
+      end
+
+      # @param jobkey [Symbol] registry entry for job with namespace
       # @return [true] if output file already exists when run, or when running
       #   job results in 1 or more rows being written
       # @return [false] if jobkey is not defined, or if job results in 0 rows
