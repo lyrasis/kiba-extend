@@ -620,7 +620,7 @@ in, to the right of the ones named here. <strong>Set in registry entry’s
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>filename:</span><span class='comma'>,</span> <span class='label'>csv_options:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>headers:</span> <span class='kw'>nil</span><span class='comma'>,</span>
   <span class='label'>initial_headers:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='ivar'>@filename</span> <span class='op'>=</span> <span class='id identifier rubyid_filename'>filename</span>
-  <span class='ivar'>@csv_options</span> <span class='op'>=</span> <span class='id identifier rubyid_csv_options'>csv_options</span> <span class='op'>||</span> <span class='lbrace'>{</span><span class='rbrace'>}</span>
+  <span class='ivar'>@csv_options</span> <span class='op'>=</span> <span class='id identifier rubyid_csv_options'>csv_options</span> <span class='op'>||</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_default_file_options'>default_file_options</span>
   <span class='ivar'>@headers</span> <span class='op'>=</span> <span class='id identifier rubyid_headers'>headers</span>
   <span class='ivar'>@initial_headers</span> <span class='op'>=</span> <span class='id identifier rubyid_initial_headers'>initial_headers</span>
   <span class='id identifier rubyid_ensure_dir'>ensure_dir</span>
@@ -1139,7 +1139,7 @@ in, to the right of the ones named here. <strong>Set in registry entry’s
 </div>
 
       <div id="footer">
-  Generated on Tue Nov 11 00:39:07 2025 by
+  Generated on Fri Nov 14 22:45:48 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.7).
 </div>
