@@ -47,6 +47,8 @@ In https://github.com/lyrasis/kiba-extend/pull/230[PR#230]
 In https://github.com/lyrasis/kiba-extend/pull/234[PR#234]
 * `Deduplicate::FieldGroup` transform.
 In https://github.com/lyrasis/kiba-extend/pull/237[PR#237]
+* `Kiba::Extend::Job.output_fields` method.
+In https://github.com/lyrasis/kiba-extend/pull/238[PR#238]
 
 === Bugfixes
 
