@@ -82,16 +82,23 @@
 
 <p>For example: <code>thor --help reg:list</code> or <code>thor --help jobs:tagged</code></p>
 
+<p>Note that the colon between command/subcommand segments is optional:</p>
+
+<p><code>thor run:job my__jobkey</code></p>
+
+<p>is functionally equivalent to:</p>
+
+<p><code>thor run job my__jobkey</code></p>
+
 <h3 id="conventions-in-the-help">Conventions in the help</h3>
 
 <h4 id="plain-parameters">Plain parameters</h4>
 
 <p>When you see:</p>
 
-<p><code>
-Usage:
+<pre class="code ruby"><code class="ruby">Usage:
   thor jobs:tagged TAG
-</code></p>
+</code></pre>
 
 <p>The all caps word is a placeholder for a parameter that gets passed in without an option flag. For example, the following returns a list of jobs tagged with “report”:</p>
 
@@ -101,47 +108,44 @@ Usage:
 
 <p>Boolean options are presented a bit oddly in the help. For example:</p>
 
-<p><code>
-Options:
+<pre class="code ruby"><code class="ruby">Options:
   r, [--run], [--no-run]      # Whether to run the matching jobs
-</code></p>
+</code></pre>
 
 <p>Any of the following will work, according to your preference:</p>
 
 <p>To find the jobs, list, and run them:</p>
 
-<p><code>
+<pre class="code ruby"><code class="ruby">thor jobs:tagged report -r
 thor jobs:tagged report -r true
 thor jobs:tagged cspace --run
 thor jobs:tagged -r true cspace
 thor jobs:tagged --run true cspace
 thor jobs:tagged --run cspace
-</code></p>
+</code></pre>
 
 <p>The find and list the jobs without running them:</p>
 
-<p><code>
+<pre class="code ruby"><code class="ruby">thor jobs:tagged report
 thor jobs:tagged report -r false
 thor jobs:tagged cspace --no-run
 thor jobs:tagged -r false cspace
 thor jobs:tagged --run false cspace
 thor jobs:tagged --no-run cspace
-</code></p>
+</code></pre>
 
 <p>However the following <strong>does</strong> run the jobs, so use one of the more straightforward options above:</p>
 
-<p><code>
-thor jobs:tagged cspace --no-run true
-</code></p>
+<pre class="code ruby"><code class="ruby">thor jobs:tagged cspace --no-run true
+</code></pre>
 
 <h4 id="other-options">Other options</h4>
 
-<p><code>
-Usage:
+<pre class="code ruby"><code class="ruby">Usage:
   v, [--verbosity=VERBOSITY]  # Only relevant if run=true. How much info to print to screen
                               # Default: normal
                               # Possible values: minimal, normal, verbose
-</code></p>
+</code></pre>
 
 <p>In this case, replace the all-caps word with one of the possible values (if listed), or your uncontrolled string.</p>
 
@@ -163,7 +167,7 @@ Usage:
 </div></div>
 
       <div id="footer">
-  Generated on Fri Nov 14 22:48:31 2025 by
+  Generated on Thu Nov 20 16:47:09 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.7).
 </div>
