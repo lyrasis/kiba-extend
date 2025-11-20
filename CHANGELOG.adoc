@@ -39,6 +39,22 @@ For example, if the release version/tag is `3.2.1`, and PR# 107 is merged withou
 
 === Added
 
+=== Bugfixes
+
+=== Changed
+
+=== Deleted
+
+=== Deprecated/Will break in a future version
+
+=== Dev
+
+== Releases
+
+=== 5.1.0 - 2025-11-20
+
+==== Added
+
 * `Count::UniqueVals` transform.
 In https://github.com/lyrasis/kiba-extend/pull/229[PR#229]
 * `Delete::FieldValueConditional` transform.
@@ -50,7 +66,7 @@ In https://github.com/lyrasis/kiba-extend/pull/237[PR#237]
 * `Kiba::Extend::Job.output_fields` method.
 In https://github.com/lyrasis/kiba-extend/pull/238[PR#238]
 
-=== Bugfixes
+==== Bugfixes
 
 * Do not warn about missing `delim` parameter in `Prepend::ToFieldValue` transform when `multival` param is not given.
 In https://github.com/lyrasis/kiba-extend/pull/229[PR#229]
@@ -58,16 +74,6 @@ In https://github.com/lyrasis/kiba-extend/pull/229[PR#229]
 In https://github.com/lyrasis/kiba-extend/pull/229[PR#229]
 * Fix interaction of occs, examples and compiling in `Deduplicate::Table` transform.
 In https://github.com/lyrasis/kiba-extend/pull/229[PR#229]
-
-=== Changed
-
-=== Deleted
-
-=== Deprecated/Will break in a future version
-
-=== Dev
-
-== Releases
 
 === 5.0.0 - 2025-09-10
 

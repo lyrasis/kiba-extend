@@ -6,6 +6,7 @@ module Kiba
       module Delete
         # Delete a field value if the arbitrary Lambda passed in evaluates to
         #   true
+        # @since 5.1.0
         #
         # @example Without delim
         #   xform = Delete::FieldValueConditional.new(

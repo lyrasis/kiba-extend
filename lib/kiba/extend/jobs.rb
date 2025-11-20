@@ -70,7 +70,7 @@ module Kiba
     #   Kiba::Extend::Transforms::Clean::EnsureConsistentFields transform
     #   can be added to the end of multi-source jobs to prevent this error.
     #
-    # #### More flexible lookup file definition
+    # #### More flexible lookup file definition - since 5.1.0
     #
     # Lookups defined as shown above depend upon a `:lookup_on` field being
     #   configured for the job in the registry.

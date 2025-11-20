@@ -8,6 +8,7 @@ module Kiba
         #   grouped fields that expect the same number of values for each field
         #   in the grouping
         #
+        # @since 5.1.0
         # @note Tread with caution, as this has not been used much and is not
         #   extensively tested.
         #
