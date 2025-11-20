@@ -6,6 +6,7 @@ module Kiba
       module Count
         # Write count of unique values in field to the given target field.
         #   Optionally, group the values under another field for counting
+        # @since 5.1.0
         # @note This transform runs in memory, so for very large
         #   sources, it may take a long time or fail.
         # @example Ungrouped, case sensitive, do not count blanks

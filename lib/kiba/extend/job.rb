@@ -10,6 +10,7 @@ module Kiba
       # @return [nil, Array<Symbol>] headers/fields for given job output
       # @note Only works for CSV and JsonArray destinations. For JsonArray, only
       #   returns the top-level fields of the objects/rows in the output.
+      # @since 5.1.0
       def output_fields(jobkey)
         return unless output?(jobkey)
 
