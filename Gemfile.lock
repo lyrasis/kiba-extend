@@ -22,6 +22,7 @@ PATH
       kiba-common
       marc
       measured
+      openssl (~> 3.3.1)
       thor
       xxhash (= 0.7.0)
       zeitwerk
@@ -95,6 +96,7 @@ GEM
     nokogiri (1.18.9)
       mini_portile2 (~> 2.8.2)
       racc (~> 1.4)
+    openssl (3.3.2)
     parallel (1.27.0)
     parser (3.3.9.0)
       ast (~> 2.4.1)
