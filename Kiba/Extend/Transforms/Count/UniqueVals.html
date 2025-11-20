@@ -272,6 +272,21 @@ sources, it may take a long time or fail.</p>
     
   </div>
 
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>5.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div>
 
@@ -471,6 +486,21 @@ duplicates vs. unique values</p>
   
 </ul>
 
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>5.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -478,7 +508,6 @@ duplicates vs. unique values</p>
       <pre class="lines">
 
 
-154
 155
 156
 157
@@ -487,10 +516,11 @@ duplicates vs. unique values</p>
 160
 161
 162
-163</pre>
+163
+164</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/count/unique_vals.rb', line 154</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/count/unique_vals.rb', line 155</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>value_field:</span><span class='comma'>,</span> <span class='label'>target:</span><span class='comma'>,</span> <span class='label'>group_field:</span> <span class='kw'>nil</span><span class='comma'>,</span>
   <span class='label'>casesensitive:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>count_blank:</span> <span class='kw'>false</span><span class='rparen'>)</span>
@@ -523,19 +553,44 @@ duplicates vs. unique values</p>
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>5.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-172
 173
 174
-175</pre>
+175
+176</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/count/unique_vals.rb', line 172</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/count/unique_vals.rb', line 173</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_close'>close</span>
   <span class='ivar'>@ct</span> <span class='op'>=</span> <span class='id identifier rubyid_grouper'>grouper</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span> <span class='kw'>unless</span> <span class='id identifier rubyid_group_field'>group_field</span>
@@ -579,6 +634,21 @@ duplicates vs. unique values</p>
   
 </ul>
 
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>5.1.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -586,14 +656,14 @@ duplicates vs. unique values</p>
       <pre class="lines">
 
 
-166
 167
 168
 169
-170</pre>
+170
+171</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/count/unique_vals.rb', line 166</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/count/unique_vals.rb', line 167</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_extract_for_count'>extract_for_count</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
@@ -610,7 +680,7 @@ duplicates vs. unique values</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Nov 20 16:47:11 2025 by
+  Generated on Thu Nov 20 23:01:35 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.37 (ruby-3.4.7).
 </div>
