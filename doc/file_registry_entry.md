@@ -40,16 +40,16 @@ The allowable Hash keys, expected Hash value formats, and expectations about the
 **NOTE:** (Since 3.0.0) For all keys besides `:dest_special_opts`, you may pass a Proc that returns the expected value format when called. For `:dest_special_opts`, you may pass Procs as individual values within the option Hash. This can be useful if you need to pass in a value that depends on other project config that may not be loaded/set up when registry is initially populated. A publicly available example is in `kiba-tms` which [sets destination initial headers](https://github.com/lyrasis/kiba-tms/blob/eb8f222f0dc753921e58d136cd15e5eab7472c60/lib/kiba/tms/table/prep/destination_options.rb#L32-L34) [based on the preferred name field for a given TMS client project, and whether they want to include "flipped" form as variant terms](https://github.com/lyrasis/kiba-tms/blob/eb8f222f0dc753921e58d136cd15e5eab7472c60/lib/kiba/tms/constituents.rb#L140-L148).
 
 ### `:path`
-[String] full or expandable relative path to the expected location of the file
+[String] full path or expandable relative path to the expected location of the file associated with the registry entry. If it is a supplied entry, the file must be present at this location. If it is a job entry, this is the location where the output of the job is written.
 
 * default: `nil`
-* required if either `:src_class` or `:dest_class` requires a path
+* A path String value is required if either `:src_class` or `:dest_class` requires a path
 
 ### `:src_class`
-[Class] the Ruby class used to read in data. This class must be defined in the `Sources` namespace or equivalent. Example: you should never use {Kiba::Extend::Destinations::CSV} as a `src_class`value.
+[Class] the Ruby class used to read in data. This class must be defined in the `Sources` namespace or equivalent. That is, {Kiba::Extend::Destinations::CSV} will not work as a `src_class` value.
 
 * required, but default supplied if not given
-* default: value of {Kiba::Extend.source} (`Kiba::Extend::Sources::CSV` unless overridden by your ETL app)
+* default: value of {Kiba::Extend.source} (This will be `Kiba::Extend::Sources::CSV` unless overridden by your ETL app)
 
 ### `:src_opt`
 [Hash] file options used when reading in source
@@ -62,10 +62,10 @@ The allowable Hash keys, expected Hash value formats, and expectations about the
   * A hash of keyword parameters defined for [MARC::Reader](https://github.com/ruby-marc/ruby-marc/blob/main/lib/marc/reader.rb) can be entered, for example: `{external_encoding: "MARC-8", internal_encoding: "UTF-16LE"}`
 
 ### `:dest_class`
-[Class] the Ruby class used to write out the data. This class must be defined in the `Destinations` namespace or equivalent. Example: you should never use `Kiba::Extend::Sources::CSV` as a `:dest_class` value.
+[Class] the Ruby class used to write out the data. This class must be defined in the `Destinations` namespace or equivalent. That is, `Kiba::Extend::Sources::CSV` will not work as a `:dest_class` value.
 
 * required, but default supplied if not given
-* default: value of {Kiba::Extend.destination} ({Kiba::Extend::Destinations::CSV} unless overridden by your ETL app)
+* default: value of {Kiba::Extend.destination} (This will be {Kiba::Extend::Destinations::CSV} unless overridden by your ETL app)
 
 ### `:dest_opt`
 [Hash] file options used when writing data
@@ -82,7 +82,7 @@ The allowable Hash keys, expected Hash value formats, and expectations about the
 * optional
 * Only the following destination classes support extra options. If you provide unsupported extra options, they will not be sent through to the destination class, and you will receive a warning in STDOUT.
   * {Kiba::Extend::Destinations::CSV} (`initial_headers`)
-  * {Kiba::Extend::Destinations::Marc} (`allow_oversized`)
+  * {Kiba::Extend::Destinations::Marc} (`allow_oversized`) - Sets the `MARC::Writer` created by the destination to allow oversized records. See [`MARC::Writer` code](https://github.com/ruby-marc/ruby-marc/blob/main/lib/marc/writer.rb) for explanation.
 
 Examples:
 
@@ -103,19 +103,19 @@ reghash = {
 ~~~
 
 ### `:creator`
-[Method, Module, Hash] Ruby method that generates this file
+[Method, Module, Hash] to run the job and create the expected output
 
 * Used to run ETL jobs to create necessary files, if said files do not exist
-* Not required at all if file is supplied
-* If the method that runs the job is a module instance method named `job`, creator value can just be the `Module` containing the `:job` method
-* Otherwise, the creator value must be a `Method` (Pattern: `Class::Or::Module::ConstantName.method(:name_of_method)`)
-* Sometimes you may need to call a job with arguments. This may be particularly useful if the same job logic can be reused many times with slightly different parameters. In this case creator may be a Hash with `callee` and `args` keys
+* Not required if file is supplied
+* When to give a `Method`, `Module`, or `Hash` as `:creator` is described below.
 
-NOTE: The default value for {Kiba::Extend.default_job_method_name} is `:job`. You can override this in your project's base file as follows (since 2.7.2):
+#### `Module` creator example  (since 2.7.2)
+
+The default value for {Kiba::Extend.default_job_method_name} is `:job`. You can override this in your project's base file as follows (since 2.7.2):
 
     Kiba::Extend.config.default_job_method_name = :whatever
 
-#### `Module` creator example  (since 2.7.2)
+* If the method that runs the job is a module instance method with the default job method name, the `:creator` can be the `Module` containing that method
 
 This is valid because the default `:job` method is present in the module:
 
@@ -142,7 +142,7 @@ reghash = {
 
 #### `Method` creator example
 
-Default `:job` method not present (or is not the method you need to call for this job).
+If the method that runs the job is not the default job method name, you must set a `Method` as `:creator`:
 
 ~~~ ruby
 # in job definitions
@@ -150,7 +150,7 @@ module Project
   module Table
     module_function
 
-    def prep
+    def prepjob
 	  Kiba::Extend::Jobs::Job.new(
 	   ...
 	  )
@@ -161,19 +161,22 @@ end
 # in file registry
 reghash = {
   path: '/project/working/objects_prep.csv',
-  creator: Project::Table.method(:prep)
+  creator: Project::Table.method(:prepjob)
 }
 ~~~
 
 #### `Hash` creator example (since 2.7.2)
+
+You may wish to call a job with arguments if the same job logic can be reused many times with slightly different parameters. In this case, `:creator` may be a Hash with `callee` and `args` keys
 
 Hash keys:
 
 * `callee`: `Method` or `Module` (as described above)
 * `args`: `Hash` of keyword arguments to pass to the callee
 
+In your project's `registry_data.rb`:
+
 ~~~ ruby
-# in your project's registry_data.rb
 module Project
   module RegistryData
     module_function
@@ -193,20 +196,23 @@ module Project
 
     def register_lookups
       types = [
-        'Accession Review Decision', 'Accession Type', 'Account Codes', 'ArchSite', 'Box', 'Budget Code',
-        'Building', 'CityState', 'Cleaning', 'Condition Picks', 'Contact Type', 'Count Unit', 'Creator Type',
-        'Cultural Affiliation', 'Department Code', 'Digitize Parameters', 'Digitizing Hardware',
-        'Digitizing Software', 'Disposal Type', 'Exhibit Type', 'Format/Type', 'Genre', 'Image Resolution',
-        'In Exhibit', 'Insured By', 'Loan Purpose', 'Material', 'Mount', 'NAGPRA Type', 'Owner Type',
-        'Region', 'Room', 'Server Path', 'Technique', 'Treatment', 'Value'
+        'Accession Review Decision', 'Accession Type', 'Account Codes', 'ArchSite'
       ]
 
-      # This section dynamically registers a job for each of the above `types` values
+      # This section dynamically registers a job for each of the above `types` values within the
+	  #   `lkup` namespace
       Project.registry.namespace('lkup') do
         types.each do |type|
           register Project::RegistryData.normalized_lookup_type(type).to_sym, {
-            path: File.join(Project.datadir, 'working', "#{Project::RegistryData.normalized_lookup_type(type)}.csv"),
-            creator: {callee: Project::Main::Lookups::Extract, args: {type: type}},
+            path: File.join(
+			  Project.datadir,
+			  'working',
+			  "#{Project::RegistryData.normalized_lookup_type(type)}.csv"
+		    ),
+            creator: {
+			  callee: Project::Main::Lookups::Extract,
+			  args: {type: type}
+		    },
             tags: %i[lkup],
             lookup_on: :lookupvalueid
           }
@@ -215,12 +221,16 @@ module Project
     end
 
     def register files
-	  ...
+	  # ...snip...
 	end
   end
 end
+~~~
 
-# in job definitions
+
+In your job definition Module:
+
+~~~ ruby
 module Project
   module Main
     module Lookups
@@ -231,7 +241,7 @@ module Project
           Kiba::Extend::Jobs::Job.new(
             files: {
               source: :lkup__prep,
-              destination: "lkup__#{Project::RegistryData.normalized_lookup_type(type).to_sym}".to_sym
+              destination: :"lkup__#{Project::RegistryData.normalized_lookup_type(type)}"
             },
             transformer: xforms(type)
           )
@@ -239,7 +249,10 @@ module Project
 
         def xforms(type)
           Kiba.job_segment do
-            transform FilterRows::FieldEqualTo, action: :keep, field: :lookup_type, value: type
+            transform FilterRows::FieldEqualTo,
+			action: :keep,
+			field: :lookup_type,
+			value: type
           end
         end
       end
@@ -249,14 +262,13 @@ end
 ~~~
 
 ### `:supplied`
-[true, false] whether the file/data is supplied from outside the ETL
+[true, false] whether the file/data is supplied from outside the kiba-extend project
 
 - default: false
 - Manually set to true for:
   - original data files from client
   - mappings/reconciliations to be merged into the ETL/migration
   - any other files created external to the ETL, which only need to be read from and never generated by the ETL process
-  - entries where `:src_class` is {Kiba::Extend::Sources::Marc}
 
 Both of the following are valid:
 
@@ -279,12 +291,12 @@ reghash = {
 
 If the output of a given entry is expected to be used as a lookup on only one field, set a `:lookup_on` value in the registry.
 
-If you need to lookup in the output data on different columns, either within one job or in different jobs, this can be achieved by providing more information in the job definition's `files[:lookup]` value. See {Kiba::Extend::Jobs} for details. (Or you can register the same file multiple times under different file keys with different `:lookup_on` values, but yuck to that)
+If you need to lookup in the output data on different columns, either within one job or in different jobs, this can be achieved by providing more information in the job definition's `files[:lookup]` value, starting with v5.1.0. See {Kiba::Extend::Jobs} for details. (Or you can register the same file multiple times under different file keys with different `:lookup_on` values, but yuck to that)
 
 Currently only the following types of registry entries can be used as lookups:
 
-* `:supplied` = `true` and `:src_class` returns row/record Hashes
-* `:dest_class` writes/returns row/record Hashes
+* Supplied registry entries where the `:src_class` returns each row/record as a Ruby `Hash`
+* Job registry entries where the `as_source_class` class attribute of the `:dest_class` returns each row/record as a Ruby `Hash`
 
 Other types of registry entries should not define a `:lookup_on` value.
 
@@ -297,9 +309,11 @@ Other types of registry entries should not define a `:lookup_on` value.
 [Array (of Symbols)] list of arbitrary tags useful for categorizing data/jobs in your ETL
 
 * optional
-* If set, you can filter to run only jobs tagged with a given tag (or tags)1
+* If set, you can filter to run only jobs tagged with a given tag (or tags)
 * Tags I commonly use:
   * :report_problems - reports that indicate something unexpected or that I need to do more work
   * :report_fyi - informational reports
   * :postmigcleanup - for reports I will need to generate for client after production migration is complete
   * :cspace or :ingest- final files ready to import
+
+You can do `thor reg:tags` to see a list of all tags already defined in your registry.
