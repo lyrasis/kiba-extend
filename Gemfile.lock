@@ -11,7 +11,7 @@ GIT
 PATH
   remote: .
   specs:
-    kiba-extend (5.0.0)
+    kiba-extend (5.1.0)
       activesupport
       amazing_print
       bigdecimal
