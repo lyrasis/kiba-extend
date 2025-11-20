@@ -27,16 +27,24 @@ To get more details on a given task:
 
 For example: `thor --help reg:list` or `thor --help jobs:tagged`
 
+Note that the colon between command/subcommand segments is optional:
+
+`thor run:job my__jobkey`
+
+is functionally equivalent to:
+
+`thor run job my__jobkey`
+
 ### Conventions in the help
 
 #### Plain parameters
 
 When you see:
 
-```
+~~~
 Usage:
   thor jobs:tagged TAG
-```
+~~~
 
 The all caps word is a placeholder for a parameter that gets passed in without an option flag. For example, the following returns a list of jobs tagged with "report":
 
@@ -46,47 +54,49 @@ The all caps word is a placeholder for a parameter that gets passed in without a
 
 Boolean options are presented a bit oddly in the help. For example:
 
-```
+~~~
 Options:
   r, [--run], [--no-run]      # Whether to run the matching jobs
-```
+~~~
 
 Any of the following will work, according to your preference:
 
 To find the jobs, list, and run them:
 
-```
+~~~
+thor jobs:tagged report -r
 thor jobs:tagged report -r true
 thor jobs:tagged cspace --run
 thor jobs:tagged -r true cspace
 thor jobs:tagged --run true cspace
 thor jobs:tagged --run cspace
-```
+~~~
 
 The find and list the jobs without running them:
 
-```
+~~~
+thor jobs:tagged report
 thor jobs:tagged report -r false
 thor jobs:tagged cspace --no-run
 thor jobs:tagged -r false cspace
 thor jobs:tagged --run false cspace
 thor jobs:tagged --no-run cspace
-```
+~~~
 
 However the following **does** run the jobs, so use one of the more straightforward options above:
 
-```
+~~~
 thor jobs:tagged cspace --no-run true
-```
+~~~
 
 #### Other options
 
-```
+~~~
 Usage:
   v, [--verbosity=VERBOSITY]  # Only relevant if run=true. How much info to print to screen
                               # Default: normal
                               # Possible values: minimal, normal, verbose
-```
+~~~
 
 In this case, replace the all-caps word with one of the possible values (if listed), or your uncontrolled string.
 
