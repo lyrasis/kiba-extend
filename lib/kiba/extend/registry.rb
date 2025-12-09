@@ -14,6 +14,18 @@ module Kiba
     #
     # @since 2.2.0
     module Registry
+      module_function
+
+      # @param jobkey [Symbol] registry entry key for job with namespace
+      # @return [Kiba::Extend::Registry::FileRegistryEntry]
+      def entry_for(jobkey)
+        entry = Kiba::Extend.registry.resolve(jobkey)
+        return entry if entry.respond_to?(:creator)
+
+        Kiba::Extend::Registry::FileRegistryEntry.new(jobkey, entry)
+      rescue(Dry::Container::KeyError) => err
+        raise Kiba::Extend::JobNotRegisteredError.new(err, "Registry.entry_for")
+      end
     end
   end
 end
