@@ -37,13 +37,28 @@ For example, if the release version/tag is `3.2.1`, and PR# 107 is merged withou
 
 === Breaking
 
+* Deletion of `Kiba::Extend::Utils::Lookup.csv_to_hash_deprecated` method - This method has been deprecated since v2.2.0.
+In https://github.com/lyrasis/kiba-extend/pull/242[PR#242]
+* Deletion of alias of `Kiba::Extend::Utils::Lookup.csv_to_multihash` to `.csv_to_hash`, introduced in v2.2.0.
+In https://github.com/lyrasis/kiba-extend/pull/242[PR#242]
+
 === Added
+
+* `Kiba::Extend::Registry.entry_for` method.
+In https://github.com/lyrasis/kiba-extend/pull/242[PR#242]
+* `Kiba::Extend::Utils::Lookup.from_job` method.
+In https://github.com/lyrasis/kiba-extend/pull/242[PR#242]
 
 === Bugfixes
 
 === Changed
 
 === Deleted
+
+* `Kiba::Extend::Utils::Lookup.csv_to_hash_deprecated` method - This method has been deprecated since v2.2.0.
+In https://github.com/lyrasis/kiba-extend/pull/242[PR#242]
+* Alias of `Kiba::Extend::Utils::Lookup.csv_to_multihash` to `.csv_to_hash`, introduced in v2.2.0.
+In https://github.com/lyrasis/kiba-extend/pull/242[PR#242]
 
 === Deprecated/Will break in a future version
 
