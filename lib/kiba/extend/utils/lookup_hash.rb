@@ -1,14 +1,13 @@
 # frozen_string_literal: true
 
-# rubocop:todo Layout/LineLength
-
 module Kiba
   module Extend
     module Utils
       class LookupHash
         attr_reader :hash
 
-        # @param keycolumn [Symbol] field name on which rows are grouped/looked up
+        # @param keycolumn [Symbol] field name on which rows are grouped/looked
+        #   up
         def initialize(keycolumn:)
           @keycolumn = keycolumn
           @hash = {}
@@ -27,4 +26,3 @@ module Kiba
     end
   end
 end
-# rubocop:enable Layout/LineLength
