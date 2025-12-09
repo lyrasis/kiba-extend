@@ -31,8 +31,6 @@ module Kiba
           end
           lookup.hash
         end
-
-        alias_method :csv_to_multi_hash, :csv_to_hash
       end
     end
   end
