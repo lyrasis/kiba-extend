@@ -7,17 +7,6 @@ module Kiba
         ::Lookup = Kiba::Extend::Utils::Lookup
         extend self
 
-        # Turns any Enumerable where each item is a record/row hash
-        #  into an expected lookup hash via Utils::LookupHash
-        # @param enum [#each<Hash>] rows/records to turn into the lookup source
-        # @param keycolumn [Symbol] field name on which rows are grouped/looked
-        #   up
-        def enum_to_hash(enum:, keycolumn:)
-          lookup = Kiba::Extend::Utils::LookupHash.new(keycolumn: keycolumn)
-          enum.each { |row| lookup.add_record(row.to_h) }
-          lookup.hash
-        end
-
         # Creates hash with keycolumn value as key and array of
         # csv-rows-as-hashes as the value
         # @param file [String] path to CSV file
@@ -29,6 +18,17 @@ module Kiba
           CSV.foreach(File.expand_path(file), **csvopt) do |row|
             lookup.add_record(row.to_h)
           end
+          lookup.hash
+        end
+
+        # Turns any Enumerable where each item is a record/row hash
+        #  into an expected lookup hash via Utils::LookupHash
+        # @param enum [#each<Hash>] rows/records to turn into the lookup source
+        # @param keycolumn [Symbol] field name on which rows are grouped/looked
+        #   up
+        def enum_to_hash(enum:, keycolumn:)
+          lookup = Kiba::Extend::Utils::LookupHash.new(keycolumn: keycolumn)
+          enum.each { |row| lookup.add_record(row.to_h) }
           lookup.hash
         end
       end
