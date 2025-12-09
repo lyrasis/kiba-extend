@@ -14,7 +14,7 @@ module Kiba
       def output_fields(jobkey)
         return unless output?(jobkey)
 
-        entry = Kiba::Extend.registry.resolve(jobkey)
+        entry = Kiba::Extend::Registry.entry_for(jobkey)
         path = Pathname.new(entry.path)
         dest = entry.dest_class.new(filename: path)
         unless dest.respond_to?(:fields)
@@ -34,8 +34,9 @@ module Kiba
       # @since 4.0.0
       def output?(jobkey)
         begin
-          reg = Kiba::Extend.registry.resolve(jobkey)
-        rescue Dry::Container::KeyError
+          reg = Kiba::Extend::Registry.entry_for(jobkey)
+        rescue Kiba::Extend::JobNotRegisteredError => err
+          puts "#{Kiba::Extend.warning_label}: #{err.message}"
           return false
         end
         return true if File.exist?(reg.path)
