@@ -7,9 +7,9 @@ module Kiba
         module_function
 
         def resolve_job(key)
-          Kiba::Extend.registry.resolve(key)
-        rescue Dry::Container::KeyError
-          puts "No job with key: #{key}"
+          Kiba::Extend::Registry.entry_for(key)
+        rescue Kiba::Extend::JobNotRegisteredError => err
+          puts err.message
           :failure
         end
 
