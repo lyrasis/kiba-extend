@@ -74,6 +74,39 @@ module Kiba
       attr_reader :key, :klass, :for_job, :type, :msg
     end
 
+    class JobNotRegisteredError < NameError
+      include Kiba::Extend::ErrMod
+
+      # @param err [Dry::Container::KeyError]
+      # @param for_job [Constant, String]
+      def initialize(err, for_job)
+        @err = err
+        @for_job = for_job
+        @key = err.key
+        @msg = build_msg
+        super(msg)
+      end
+
+      def formatted
+        <<~STR
+          JOB FAILED: LOOKUP FILE SETUP ERROR FOR: #{for_job}
+            #{msg}
+        STR
+      end
+
+      private
+
+      attr_reader :err, :key, :for_job, :msg
+
+      def build_msg
+        base = ":#{key} is not a registered job key"
+        return base if err.corrections.empty?
+
+        [base,
+          "Did you mean? :#{err.corrections.first.tr('"', "")}"].join("\n")
+      end
+    end
+
     # Exception raised if {Kiba::Extend::FileRegistry} contains no lookup
     #   key for file
     class NoLookupOnError < NameError
