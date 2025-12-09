@@ -23,10 +23,62 @@ RSpec.describe Kiba::Extend::Utils::Lookup do
 
     it "returns hash with key = keycolumn value and "\
       "value = array of all rows w/that key " do
-      result = Lookup.csv_to_hash(file: test_csv,
-        csvopt: Kiba::Extend.csvopts,
-        keycolumn: :id)
-      expect(result).to eq(lookup_hash)
+        result = Lookup.csv_to_hash(file: test_csv,
+          csvopt: Kiba::Extend.csvopts,
+          keycolumn: :id)
+        expect(result).to eq(lookup_hash)
+      end
+  end
+
+  describe "#from_job" do
+    before(:all) { populate_registry }
+    after(:all) { Kiba::Extend.reset_config }
+    let(:result) { Lookup.from_job(jobkey: jobkey, lookup_on: lookup_on) }
+    let(:lookup_on) { nil }
+
+    context "with unregistered job" do
+      let(:jobkey) { :unr__unr }
+
+      it "raises error" do
+        expect { result }.to raise_error(Kiba::Extend::JobNotRegisteredError)
+      end
+    end
+
+    context "with registered job with established lookup_on" do
+      let(:jobkey) { :fkey }
+
+      it "returns as expected" do
+        expect(result).to be_a(Hash)
+        expect(result[nil].length).to eq(2)
+      end
+    end
+
+    context "with registered job with lookup_on override" do
+      let(:jobkey) { :fkey }
+      let(:lookup_on) { :objectnumber }
+
+      it "returns as expected" do
+        expect(result).to be_a(Hash)
+        expect(result["OBJ1"].length).to eq(1)
+      end
+    end
+
+    context "with registered job with dynamically provided lookup_on" do
+      let(:jobkey) { :foo }
+      let(:lookup_on) { :objectnumber }
+
+      it "returns as expected" do
+        expect(result).to be_a(Hash)
+        expect(result["OBJ1"].length).to eq(1)
+      end
+    end
+
+    context "with registered job without lookup_on" do
+      let(:jobkey) { :foo }
+
+      it "returns as expected" do
+        expect { result }.to raise_error(Kiba::Extend::NoLookupOnError)
+      end
     end
   end
 end
