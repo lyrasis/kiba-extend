@@ -55,7 +55,7 @@ RSpec.describe "Kiba::Extend::Registry::RegisteredLookup" do
         Kiba::Extend::JobCannotBeUsedAsLookupError,
         ":fkey cannot be used as a lookup in :bar because its src_class "\
           "(Kiba::Extend::Sources::Marc) does not include "\
-          "Kiba::Extend::Soures::Lookupable"
+          "Kiba::Extend::Sources::Lookupable"
       )
     end
   end
@@ -75,7 +75,7 @@ RSpec.describe "Kiba::Extend::Registry::RegisteredLookup" do
         Kiba::Extend::JobCannotBeUsedAsLookupError,
         ":fkey cannot be used as a lookup in :bar because its src_class "\
           "(Kiba::Extend::Sources::Marc) does not include "\
-          "Kiba::Extend::Soures::Lookupable"
+          "Kiba::Extend::Sources::Lookupable"
       )
     end
   end

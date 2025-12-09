@@ -58,7 +58,7 @@ module Kiba
         @for_job = for_job
         @msg = ":#{key} cannot be used as a lookup in :#{for_job} because "\
           "its src_class (#{klass}) does not include "\
-          "Kiba::Extend::Soures::Lookupable"
+          "Kiba::Extend::Sources::Lookupable"
         super(msg)
       end
 
