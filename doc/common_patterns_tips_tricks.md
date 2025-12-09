@@ -5,7 +5,59 @@
 
 # Common patterns, tips, and tricks
 
-## Joining the rows of multiple sources that may have different fields
+
+<!-- toc -->
+
+- [Debugging with `pry`](#debugging-with-pry)
+- [Multi-source jobs with CSV destination and sources don't have all the same fields](#multi-source-jobs-with-csv-destination-and-sources-dont-have-all-the-same-fields)
+- [Using transform(s) within another transform](#using-transforms-within-another-transform)
+- [Using transforms in job definitions](#using-transforms-in-job-definitions)
+- [Calling a job with parameters](#calling-a-job-with-parameters)
+- [Automating repetitive file registry](#automating-repetitive-file-registry)
+- [Running jobs, and checking `srcrows` and `outrows` counts from client project code](#running-jobs-and-checking-srcrows-and-outrows-counts-from-client-project-code)
+
+<!-- tocstop -->
+
+## Debugging with `pry`
+
+In most parts of a kiba-extend project, you can just put a `binding.pry` breakpoint anywhere in the code and it will work.
+
+There are two exceptions to this: inside `Kiba.job_segment` blocks, and in any code where the breakpoint context interacts with the `dry-rb` gems that are used to build kiba-extend's registry and config functionality.
+
+### In `Kiba.job_segment` blocks
+
+Wrap your breakpoint in an inline transform:
+
+~~~ ruby
+transform do |row|
+  binding.pry
+  row
+end
+~~~
+
+Note that you can set the breakpoint conditionally, if you want to see what's going on at this point in the job for rows with certain characteristics:
+
+~~~ ruby
+transform do |row|
+  binding.pry if row[:id]&.start_with?("A")
+  row
+end
+~~~
+
+### Where `binding.pry` conflicts with `dry-rb` gem code or other code
+
+It can be hard to predict when/where this is going to happen, but sometimes entering a `binding.pry` breakpoint in your code can result in the following kind of error:
+
+~~~
+RuntimeError:
+        Cannot create Binding object for non-Ruby caller
+~~~
+
+Basically, any error message about [Binding objects](https://ruby-doc.org/3.4.1/Binding.html) means the breakpoint is getting misinterpreted based on other code around it.
+
+The fix is easy: change your breakpoint to `Kernel.binding.pry`. This ensures `binding` is interpreted as the default method available on all Ruby objects via [Kernel](https://ruby-doc.org/3.4.1/Kernel.html).
+
+## Multi-source jobs with CSV destination and sources don't have all the same fields
 
 **Works for `Kiba::Extend::Destinations::CSV` destinations only**
 
@@ -13,11 +65,9 @@ If you have multiple sources for a job, writing to a CSV destination will fail i
 
 Especially when joining data from many tables, manually ensuring columns stay in sync across all sources is very tedious, especially as you are developing a set of jobs.
 
-As of v2.7.0, {Kiba::Extend::Utils::MultiSourceNormalizer} and {Kiba::Extend::Jobs::MultiSourcePrepJob} are added to support handling this automagically.
+**Recommended solution:** As of 4.0.0, you can fix this by adding `transform Clean::EnsureConsistentFields` to the end of tranform logic for multi-source jobs that output to CSV.
 
-See {Kiba::Extend::Utils::MultiSourceNormalizer} for full usage docs.
-
-See [name compilation jobs in Kiba::TMS](https://github.com/lyrasis/kiba-tms/blob/main/lib/kiba/tms/jobs/in_between/name_compilation.rb) for working example of use.
+**Legacy solution (not recommended):** `Kiba::Extend::Utils::MultiSourceNormalizer` and `Kiba::Extend::Jobs::MultiSourcePrepJob` were introduced in v2.7.0 to address this issue, but will eventually be deprecated, as the `EnsureConsistentFields` transform is much easier to set up and use.
 
 ## Using transform(s) within another transform
 
@@ -25,13 +75,12 @@ See [name compilation jobs in Kiba::TMS](https://github.com/lyrasis/kiba-tms/blo
 
 This pattern is used with argument forwarding to deprecate/rename some transforms in kiba-extend, as shown below:
 
-~~~
+~~~ ruby
 class Transformer
   def initialize(...)
     @xform = MyOtherTransformer.new(...)
   end
 
-  # @private
   def process(row)
     xform.process(row)
 	row
@@ -47,7 +96,7 @@ end
 
 It can also be used in order to compose additional behavior in another transform as shown below:
 
-~~~
+~~~ ruby
 class NewTransformer
   def initialize(param1:, param2:)
     @param1 = param1
@@ -55,11 +104,10 @@ class NewTransformer
 	@xform = ExistingTransformer.new(opt1: :something)
   end
 
-  # @private
   def process(row)
-    # do stuff to row
-    xform.process(row)
-    # do more stuff to row
+    row[:field1] = param1
+    xform.process(row) # calls the other transformer on the row
+    row[:field2] = param2
 	row
   end
 
@@ -69,15 +117,17 @@ class NewTransformer
 end
 ~~~
 
-See the code for {Kiba::Extend::Transforms::Rename::Fields} for a simple example of embedding another transform to compose transformation logic.
+See the code for `Kiba::Extend::Transforms::Rename::Fields` for a simple example of embedding another transform to compose transformation logic.
 
-See {Kiba::Extend::Transforms::Collapse::FieldsToRepeatableFieldGroup} for a complex example, involving many other transforms.
+See `Kiba::Extend::Transforms::Collapse::FieldsToRepeatableFieldGroup` for a complex example, involving many other transforms.
 
 ### Chaining multiple transforms in another transform
 
+I often use this if I need to define a single, client-specific data cleanup transform class to be run from within kiba-tms, kiba-pastperfect_we, etc.
+
 You can do:
 
-~~~
+~~~ ruby
 class NewTransformer
   def initialize(...)
     @xforms = [
@@ -105,10 +155,11 @@ All of the above patterns should work with normal transforms---those that proces
 
 Be careful including the following types of transforms in any of the above patterns:
 
-* **Transforms that sometimes return the row and sometimes return nil.** Example: all the {Kiba::Extend::Transforms::FilterRows} transforms.
-* **Transforms that can output more than one row from a given input row.** The `:process` method of such transforms will `yield` rows and return `nil`. Example: {Kiba::Extend::Transforms::Explode::RowsFromMultivalField}
-* **Transforms that work on multiple rows (or the whole table) at a time** Such transforms will have a `:close` method that returns or yields rows. The `:process` method of such transforms will generally push rows to an accumulator Array or Hash defined as a class instance variable, and return `nil`. The `:close` method typically operates on the contents of the accumulator once all rows have been pushed into it. Example: {Kiba::Extend::Transforms::Deduplicate::Table}
+* **Transforms that sometimes return the row and sometimes return nil.** Example: all the `Kiba::Extend::Transforms::FilterRows` transforms.
+* **Transforms that can output more than one row from a given input row.** The `:process` method of such transforms will `yield` rows and return `nil`. Example: `Kiba::Extend::Transforms::Explode::RowsFromMultivalField`
+* **Transforms that work on multiple rows (or the whole table) at a time** Such transforms will have a `:close` method that returns or yields rows. The `:process` method of such transforms will generally push rows to an accumulator Array or Hash defined as a class instance variable, and return `nil`. The `:close` method typically operates on the contents of the accumulator once all rows have been pushed into it. Example: `Kiba::Extend::Transforms::Deduplicate::Table`
 
+These might work ok, but I haven't done enough testing to verify they are actually safe. Try it and see. If they work, make a PR to update this documentation!
 
 ## Using transforms in job definitions
 
@@ -116,22 +167,50 @@ The following code snippets are equivalent.
 
 This one relies on the domain specific language (DSL) "magic" defined in kiba:
 
-~~~
+~~~ ruby
 Kiba.job_segment do
   transform Merge::ConstantValue, target: :data_source, value: 'source system'
 end
 ~~~
 
-This one uses plain Ruby to set up the transform class and calls its `:process` method on each row:
+This one uses plain Ruby to set up two differently configured `Merge::ConstantValue` transform classes in the context of the job's transform logic. It then uses kiba's inline block transform functionality to call the appropriate transform's `:process` method on each row, depending on whether the :id field in the row starts with the given string:
 
-~~~
+~~~ ruby
 Kiba.job_segment do
-  xform = Merge::ConstantValue.new(target: :data_source, value: 'source system')
-  transform{ |row| xform.process(row) }
+  exsrc = Merge::ConstantValue.new(target: :data_source, value: "spreadsheets")
+  dbsrc = Merge::ConstantValue.new(target: :data_source, value: "database")
+  transform do |row|
+    idval = row[:id]
+	if idval.start_with?("ACC")
+	  dbsrc.process(row)
+	else
+	  exsrc.process(row)
+	end
+	# You don't need to return "row" here because calling `:process` on a
+	#   `Merge::ConstantValue` transform returns a row
+  end
 end
 ~~~
 
-The second one might be useful in situations when you are trying to set things up more flexibly.
+This is a silly, contrived, example that offers no benefits over just doing the whole thing in the block transform:
+
+~~~ ruby
+Kiba.job_segment do
+  transform do |row|
+    idval = row[:id]
+	target = :data_source
+	row[target] = if idval.start_with?("ACC")
+	  "database"
+	else
+	  "spreadsheets"
+	end
+
+	row # A block transform must return `nil` or a row.
+  end
+end
+~~~
+
+However, you might run into ways where you need to use transforms more flexibly, and this basic idea might help.
 
 ## Calling a job with parameters
 
@@ -160,3 +239,5 @@ puts "Some records omitted" if job.outrows < job.srcrows
 This assumes `:prep__objects` is registered as a job.
 
 This is being used in the publicly available `kiba-tms` project, in the auto-config generation and to-do check processes. [Examples](https://github.com/lyrasis/kiba-tms/search?q=Kiba%3A%3AExtend%3A%3ACommand%3A%3ARun.job)
+
+Since 4.0.0, you can use [the `Kiba::Extend::Job.output?` method](https://lyrasis.github.io/kiba-extend/Kiba/Extend/Job.html#output%3F-class_method) to check that a job writes a file with actual data rows in it. This is helpful if you start writing dynamic/reusable code for projects that might not all have the exact same data. You can conditionally run some parts of a pipeline, only if the data is present.
