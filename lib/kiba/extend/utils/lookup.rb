@@ -37,6 +37,7 @@ module Kiba
           unless lkup
             fail Kiba::Extend::NoLookupOnError.new(jobkey, "Lookup.from_job")
           end
+          return {} unless Kiba::Extend::Job.output?(jobkey)
 
           csv_to_hash(file: path, keycolumn: lkup, csvopt: csvopt)
         end
