@@ -60,7 +60,57 @@
       <div id="content"><div id='filecontents'>
 <h1 id="common-patterns-tips-and-tricks">Common patterns, tips, and tricks</h1>
 
-<h2 id="joining-the-rows-of-multiple-sources-that-may-have-different-fields">Joining the rows of multiple sources that may have different fields</h2>
+<!-- toc -->
+
+<ul>
+  <li><a href="#debugging-with-pry">Debugging with <code>pry</code></a></li>
+  <li><a href="#multi-source-jobs-with-csv-destination-and-sources-dont-have-all-the-same-fields">Multi-source jobs with CSV destination and sources don’t have all the same fields</a></li>
+  <li><a href="#using-transforms-within-another-transform">Using transform(s) within another transform</a></li>
+  <li><a href="#using-transforms-in-job-definitions">Using transforms in job definitions</a></li>
+  <li><a href="#calling-a-job-with-parameters">Calling a job with parameters</a></li>
+  <li><a href="#automating-repetitive-file-registry">Automating repetitive file registry</a></li>
+  <li><a href="#running-jobs-and-checking-srcrows-and-outrows-counts-from-client-project-code">Running jobs, and checking <code>srcrows</code> and <code>outrows</code> counts from client project code</a></li>
+</ul>
+
+<!-- tocstop -->
+
+<h2 id="debugging-with-pry">Debugging with <code>pry</code></h2>
+
+<p>In most parts of a kiba-extend project, you can just put a <code>binding.pry</code> breakpoint anywhere in the code and it will work.</p>
+
+<p>There are two exceptions to this: inside <code>Kiba.job_segment</code> blocks, and in any code where the breakpoint context interacts with the <code>dry-rb</code> gems that are used to build kiba-extend’s registry and config functionality.</p>
+
+<h3 id="in-kibajobsegment-blocks">In <code>Kiba.job_segment</code> blocks</h3>
+
+<p>Wrap your breakpoint in an inline transform:</p>
+
+<pre class="code language-ruby"><code class="language-ruby">transform do |row|
+  binding.pry
+  row
+end
+</code></pre>
+
+<p>Note that you can set the breakpoint conditionally, if you want to see what’s going on at this point in the job for rows with certain characteristics:</p>
+
+<pre class="code language-ruby"><code class="language-ruby">transform do |row|
+  binding.pry if row[:id]&amp;.start_with?(&quot;A&quot;)
+  row
+end
+</code></pre>
+
+<h3 id="where-bindingpry-conflicts-with-dry-rb-gem-code-or-other-code">Where <code>binding.pry</code> conflicts with <code>dry-rb</code> gem code or other code</h3>
+
+<p>It can be hard to predict when/where this is going to happen, but sometimes entering a <code>binding.pry</code> breakpoint in your code can result in the following kind of error:</p>
+
+<pre class="code ruby"><code class="ruby">RuntimeError:
+        Cannot create Binding object for non-Ruby caller
+</code></pre>
+
+<p>Basically, any error message about <a href="https://ruby-doc.org/3.4.1/Binding.html">Binding objects</a> means the breakpoint is getting misinterpreted based on other code around it.</p>
+
+<p>The fix is easy: change your breakpoint to <code>Kernel.binding.pry</code>. This ensures <code>binding</code> is interpreted as the default method available on all Ruby objects via <a href="https://ruby-doc.org/3.4.1/Kernel.html">Kernel</a>.</p>
+
+<h2 id="multi-source-jobs-with-csv-destination-and-sources-dont-have-all-the-same-fields">Multi-source jobs with CSV destination and sources don’t have all the same fields</h2>
 
 <p><strong>Works for <code>Kiba::Extend::Destinations::CSV</code> destinations only</strong></p>
 
@@ -68,11 +118,9 @@
 
 <p>Especially when joining data from many tables, manually ensuring columns stay in sync across all sources is very tedious, especially as you are developing a set of jobs.</p>
 
-<p>As of v2.7.0, <span class='object_link'><a href="Kiba/Extend/Utils/MultiSourceNormalizer.html" title="Kiba::Extend::Utils::MultiSourceNormalizer (class)">Kiba::Extend::Utils::MultiSourceNormalizer</a></span> and <span class='object_link'><a href="Kiba/Extend/Jobs/MultiSourcePrepJob.html" title="Kiba::Extend::Jobs::MultiSourcePrepJob (class)">Kiba::Extend::Jobs::MultiSourcePrepJob</a></span> are added to support handling this automagically.</p>
+<p><strong>Recommended solution:</strong> As of 4.0.0, you can fix this by adding <code>transform Clean::EnsureConsistentFields</code> to the end of tranform logic for multi-source jobs that output to CSV.</p>
 
-<p>See <span class='object_link'><a href="Kiba/Extend/Utils/MultiSourceNormalizer.html" title="Kiba::Extend::Utils::MultiSourceNormalizer (class)">Kiba::Extend::Utils::MultiSourceNormalizer</a></span> for full usage docs.</p>
-
-<p>See <a href="https://github.com/lyrasis/kiba-tms/blob/main/lib/kiba/tms/jobs/in_between/name_compilation.rb">name compilation jobs in Kiba::TMS</a> for working example of use.</p>
+<p><strong>Legacy solution (not recommended):</strong> <code>Kiba::Extend::Utils::MultiSourceNormalizer</code> and <code>Kiba::Extend::Jobs::MultiSourcePrepJob</code> were introduced in v2.7.0 to address this issue, but will eventually be deprecated, as the <code>EnsureConsistentFields</code> transform is much easier to set up and use.</p>
 
 <h2 id="using-transforms-within-another-transform">Using transform(s) within another transform</h2>
 
@@ -80,75 +128,75 @@
 
 <p>This pattern is used with argument forwarding to deprecate/rename some transforms in kiba-extend, as shown below:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='kw'>class</span> <span class='const'>Transformer</span>
-  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='op'>...</span><span class='rparen'>)</span>
-    <span class='ivar'>@xform</span> <span class='op'>=</span> <span class='const'>MyOtherTransformer</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='op'>...</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
+<pre class="code language-ruby"><code class="language-ruby">class Transformer
+  def initialize(...)
+    @xform = MyOtherTransformer.new(...)
+  end
 
-  <span class='comment'># @private
-</span>  <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
-	<span class='id identifier rubyid_row'>row</span>
-  <span class='kw'>end</span>
+  def process(row)
+    xform.process(row)
+	row
+  end
 
-  <span class='id identifier rubyid_private'>private</span>
+  private
 
-  <span class='id identifier rubyid_attr_reader'>attr_reader</span> <span class='symbol'>:xform</span>
-<span class='kw'>end</span>
+  attr_reader :xform
+end
 </code></pre>
 
 <h3 id="adding-some-extra-behavior-to-an-existing-transform-in-a-new-transform">Adding some extra behavior to an existing transform in a new transform</h3>
 
 <p>It can also be used in order to compose additional behavior in another transform as shown below:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='kw'>class</span> <span class='const'>NewTransformer</span>
-  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>param1:</span><span class='comma'>,</span> <span class='label'>param2:</span><span class='rparen'>)</span>
-    <span class='ivar'>@param1</span> <span class='op'>=</span> <span class='id identifier rubyid_param1'>param1</span>
-	<span class='ivar'>@param2</span> <span class='op'>=</span> <span class='id identifier rubyid_param2'>param2</span>
-	<span class='ivar'>@xform</span> <span class='op'>=</span> <span class='const'>ExistingTransformer</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>opt1:</span> <span class='symbol'>:something</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
+<pre class="code language-ruby"><code class="language-ruby">class NewTransformer
+  def initialize(param1:, param2:)
+    @param1 = param1
+	@param2 = param2
+	@xform = ExistingTransformer.new(opt1: :something)
+  end
 
-  <span class='comment'># @private
-</span>  <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
-    <span class='comment'># do stuff to row
-</span>    <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
-    <span class='comment'># do more stuff to row
-</span>	<span class='id identifier rubyid_row'>row</span>
-  <span class='kw'>end</span>
+  def process(row)
+    row[:field1] = param1
+    xform.process(row) # calls the other transformer on the row
+    row[:field2] = param2
+	row
+  end
 
-  <span class='id identifier rubyid_private'>private</span>
+  private
 
-  <span class='id identifier rubyid_attr_reader'>attr_reader</span> <span class='symbol'>:param1</span><span class='comma'>,</span> <span class='symbol'>:param2</span><span class='comma'>,</span> <span class='symbol'>:xform</span>
-<span class='kw'>end</span>
+  attr_reader :param1, :param2, :xform
+end
 </code></pre>
 
-<p>See the code for <span class='object_link'><a href="Kiba/Extend/Transforms/Rename/Fields.html" title="Kiba::Extend::Transforms::Rename::Fields (class)">Kiba::Extend::Transforms::Rename::Fields</a></span> for a simple example of embedding another transform to compose transformation logic.</p>
+<p>See the code for <code>Kiba::Extend::Transforms::Rename::Fields</code> for a simple example of embedding another transform to compose transformation logic.</p>
 
-<p>See <span class='object_link'><a href="Kiba/Extend/Transforms/Collapse/FieldsToRepeatableFieldGroup.html" title="Kiba::Extend::Transforms::Collapse::FieldsToRepeatableFieldGroup (class)">Kiba::Extend::Transforms::Collapse::FieldsToRepeatableFieldGroup</a></span> for a complex example, involving many other transforms.</p>
+<p>See <code>Kiba::Extend::Transforms::Collapse::FieldsToRepeatableFieldGroup</code> for a complex example, involving many other transforms.</p>
 
 <h3 id="chaining-multiple-transforms-in-another-transform">Chaining multiple transforms in another transform</h3>
 
+<p>I often use this if I need to define a single, client-specific data cleanup transform class to be run from within kiba-tms, kiba-pastperfect_we, etc.</p>
+
 <p>You can do:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='kw'>class</span> <span class='const'>NewTransformer</span>
-  <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='op'>...</span><span class='rparen'>)</span>
-    <span class='ivar'>@xforms</span> <span class='op'>=</span> <span class='lbracket'>[</span>
-	  <span class='const'>ExitingTransformer</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='op'>...</span><span class='rparen'>)</span><span class='comma'>,</span>
-	  <span class='const'>AnotherTransformer</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='op'>...</span><span class='rparen'>)</span><span class='comma'>,</span>
-	  <span class='const'>ThirdTransformer</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='op'>...</span><span class='rparen'>)</span>
-	<span class='rbracket'>]</span>
-  <span class='kw'>end</span>
+<pre class="code language-ruby"><code class="language-ruby">class NewTransformer
+  def initialize(...)
+    @xforms = [
+	  ExitingTransformer.new(...),
+	  AnotherTransformer.new(...),
+	  ThirdTransformer.new(...)
+	]
+  end
 
-  <span class='comment'># @private
-</span>  <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_xforms'>xforms</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_xform'>xform</span><span class='op'>|</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
-	<span class='id identifier rubyid_row'>row</span>
-  <span class='kw'>end</span>
+  # @private
+  def process(row)
+    xforms.each{ |xform| xform.process(row) }
+	row
+  end
 
-  <span class='id identifier rubyid_private'>private</span>
+  private
 
-  <span class='id identifier rubyid_attr_reader'>attr_reader</span> <span class='symbol'>:xforms</span>
-<span class='kw'>end</span>
+  attr_reader :xforms
+end
 </code></pre>
 
 <h3 id="limitations-on-the-above">LIMITATIONS ON THE ABOVE</h3>
@@ -158,10 +206,12 @@
 <p>Be careful including the following types of transforms in any of the above patterns:</p>
 
 <ul>
-  <li><strong>Transforms that sometimes return the row and sometimes return nil.</strong> Example: all the <span class='object_link'><a href="Kiba/Extend/Transforms/FilterRows.html" title="Kiba::Extend::Transforms::FilterRows (module)">Kiba::Extend::Transforms::FilterRows</a></span> transforms.</li>
-  <li><strong>Transforms that can output more than one row from a given input row.</strong> The <code>:process</code> method of such transforms will <code>yield</code> rows and return <code>nil</code>. Example: <span class='object_link'><a href="Kiba/Extend/Transforms/Explode/RowsFromMultivalField.html" title="Kiba::Extend::Transforms::Explode::RowsFromMultivalField (class)">Kiba::Extend::Transforms::Explode::RowsFromMultivalField</a></span></li>
-  <li><strong>Transforms that work on multiple rows (or the whole table) at a time</strong> Such transforms will have a <code>:close</code> method that returns or yields rows. The <code>:process</code> method of such transforms will generally push rows to an accumulator Array or Hash defined as a class instance variable, and return <code>nil</code>. The <code>:close</code> method typically operates on the contents of the accumulator once all rows have been pushed into it. Example: <span class='object_link'><a href="Kiba/Extend/Transforms/Deduplicate/Table.html" title="Kiba::Extend::Transforms::Deduplicate::Table (class)">Kiba::Extend::Transforms::Deduplicate::Table</a></span></li>
+  <li><strong>Transforms that sometimes return the row and sometimes return nil.</strong> Example: all the <code>Kiba::Extend::Transforms::FilterRows</code> transforms.</li>
+  <li><strong>Transforms that can output more than one row from a given input row.</strong> The <code>:process</code> method of such transforms will <code>yield</code> rows and return <code>nil</code>. Example: <code>Kiba::Extend::Transforms::Explode::RowsFromMultivalField</code></li>
+  <li><strong>Transforms that work on multiple rows (or the whole table) at a time</strong> Such transforms will have a <code>:close</code> method that returns or yields rows. The <code>:process</code> method of such transforms will generally push rows to an accumulator Array or Hash defined as a class instance variable, and return <code>nil</code>. The <code>:close</code> method typically operates on the contents of the accumulator once all rows have been pushed into it. Example: <code>Kiba::Extend::Transforms::Deduplicate::Table</code></li>
 </ul>
+
+<p>These might work ok, but I haven’t done enough testing to verify they are actually safe. Try it and see. If they work, make a PR to update this documentation!</p>
 
 <h2 id="using-transforms-in-job-definitions">Using transforms in job definitions</h2>
 
@@ -169,20 +219,47 @@
 
 <p>This one relies on the domain specific language (DSL) “magic” defined in kiba:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='period'>.</span><span class='id identifier rubyid_job_segment'><span class='object_link'><a href="Kiba/Extend/Jobs/JobSegmenter.html#job_segment-instance_method" title="Kiba::Extend::Jobs::JobSegmenter#job_segment (method)">job_segment</a></span></span> <span class='kw'>do</span>
-  <span class='id identifier rubyid_transform'>transform</span> <span class='const'>Merge</span><span class='op'>::</span><span class='const'>ConstantValue</span><span class='comma'>,</span> <span class='label'>target:</span> <span class='symbol'>:data_source</span><span class='comma'>,</span> <span class='label'>value:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>source system</span><span class='tstring_end'>&#39;</span></span>
-<span class='kw'>end</span>
+<pre class="code language-ruby"><code class="language-ruby">Kiba.job_segment do
+  transform Merge::ConstantValue, target: :data_source, value: &#39;source system&#39;
+end
 </code></pre>
 
-<p>This one uses plain Ruby to set up the transform class and calls its <code>:process</code> method on each row:</p>
+<p>This one uses plain Ruby to set up two differently configured <code>Merge::ConstantValue</code> transform classes in the context of the job’s transform logic. It then uses kiba’s inline block transform functionality to call the appropriate transform’s <code>:process</code> method on each row, depending on whether the :id field in the row starts with the given string:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='const'><span class='object_link'><a href="Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='period'>.</span><span class='id identifier rubyid_job_segment'><span class='object_link'><a href="Kiba/Extend/Jobs/JobSegmenter.html#job_segment-instance_method" title="Kiba::Extend::Jobs::JobSegmenter#job_segment (method)">job_segment</a></span></span> <span class='kw'>do</span>
-  <span class='id identifier rubyid_xform'>xform</span> <span class='op'>=</span> <span class='const'>Merge</span><span class='op'>::</span><span class='const'>ConstantValue</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>target:</span> <span class='symbol'>:data_source</span><span class='comma'>,</span> <span class='label'>value:</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>source system</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_transform'>transform</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='id identifier rubyid_xform'>xform</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
-<span class='kw'>end</span>
+<pre class="code language-ruby"><code class="language-ruby">Kiba.job_segment do
+  exsrc = Merge::ConstantValue.new(target: :data_source, value: &quot;spreadsheets&quot;)
+  dbsrc = Merge::ConstantValue.new(target: :data_source, value: &quot;database&quot;)
+  transform do |row|
+    idval = row[:id]
+	if idval.start_with?(&quot;ACC&quot;)
+	  dbsrc.process(row)
+	else
+	  exsrc.process(row)
+	end
+	# You don&#39;t need to return &quot;row&quot; here because calling `:process` on a
+	#   `Merge::ConstantValue` transform returns a row
+  end
+end
 </code></pre>
 
-<p>The second one might be useful in situations when you are trying to set things up more flexibly.</p>
+<p>This is a silly, contrived, example that offers no benefits over just doing the whole thing in the block transform:</p>
+
+<pre class="code language-ruby"><code class="language-ruby">Kiba.job_segment do
+  transform do |row|
+    idval = row[:id]
+	target = :data_source
+	row[target] = if idval.start_with?(&quot;ACC&quot;)
+	  &quot;database&quot;
+	else
+	  &quot;spreadsheets&quot;
+	end
+
+	row # A block transform must return `nil` or a row.
+  end
+end
+</code></pre>
+
+<p>However, you might run into ways where you need to use transforms more flexibly, and this basic idea might help.</p>
 
 <h2 id="calling-a-job-with-parameters">Calling a job with parameters</h2>
 
@@ -212,10 +289,12 @@
 <p>This assumes <code>:prep__objects</code> is registered as a job.</p>
 
 <p>This is being used in the publicly available <code>kiba-tms</code> project, in the auto-config generation and to-do check processes. <a href="https://github.com/lyrasis/kiba-tms/search?q=Kiba%3A%3AExtend%3A%3ACommand%3A%3ARun.job">Examples</a></p>
+
+<p>Since 4.0.0, you can use <a href="https://lyrasis.github.io/kiba-extend/Kiba/Extend/Job.html#output%3F-class_method">the <code>Kiba::Extend::Job.output?</code> method</a> to check that a job writes a file with actual data rows in it. This is helpful if you start writing dynamic/reusable code for projects that might not all have the exact same data. You can conditionally run some parts of a pipeline, only if the data is present.</p>
 </div></div>
 
       <div id="footer">
-  Generated on Wed Dec 10 16:15:45 2025 by
+  Generated on Wed Dec 10 17:09:49 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.38 (ruby-3.4.7).
 </div>
