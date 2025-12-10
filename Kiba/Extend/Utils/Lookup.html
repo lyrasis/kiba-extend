@@ -386,14 +386,14 @@ up</p>
       <pre class="lines">
 
 
-50
 51
 52
 53
-54</pre>
+54
+55</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/lookup.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/lookup.rb', line 51</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_enum_to_hash'>enum_to_hash</span><span class='lparen'>(</span><span class='label'>enum:</span><span class='comma'>,</span> <span class='label'>keycolumn:</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_lookup'>lookup</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Utils.html" title="Kiba::Extend::Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="LookupHash.html" title="Kiba::Extend::Utils::LookupHash (class)">LookupHash</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="LookupHash.html#initialize-instance_method" title="Kiba::Extend::Utils::LookupHash#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>keycolumn:</span> <span class='id identifier rubyid_keycolumn'>keycolumn</span><span class='rparen'>)</span>
@@ -508,7 +508,8 @@ provided</p>
 39
 40
 41
-42</pre>
+42
+43</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/lookup.rb', line 33</span>
@@ -520,6 +521,7 @@ provided</p>
   <span class='kw'>unless</span> <span class='id identifier rubyid_lkup'>lkup</span>
     <span class='id identifier rubyid_fail'>fail</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../NoLookupOnError.html" title="Kiba::Extend::NoLookupOnError (class)">NoLookupOnError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../NoLookupOnError.html#initialize-instance_method" title="Kiba::Extend::NoLookupOnError#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_jobkey'>jobkey</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Lookup.from_job</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='kw'>end</span>
+  <span class='kw'>return</span> <span class='lbrace'>{</span><span class='rbrace'>}</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Job.html" title="Kiba::Extend::Job (module)">Job</a></span></span><span class='period'>.</span><span class='id identifier rubyid_output?'><span class='object_link'><a href="../Job.html#output%3F-class_method" title="Kiba::Extend::Job.output? (method)">output?</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_jobkey'>jobkey</span><span class='rparen'>)</span>
 
   <span class='id identifier rubyid_csv_to_hash'>csv_to_hash</span><span class='lparen'>(</span><span class='label'>file:</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='label'>keycolumn:</span> <span class='id identifier rubyid_lkup'>lkup</span><span class='comma'>,</span> <span class='label'>csvopt:</span> <span class='id identifier rubyid_csvopt'>csvopt</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
@@ -533,7 +535,7 @@ provided</p>
 </div>
 
       <div id="footer">
-  Generated on Wed Dec 10 15:54:42 2025 by
+  Generated on Wed Dec 10 16:12:49 2025 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.38 (ruby-3.4.7).
 </div>
