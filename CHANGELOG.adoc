@@ -47,7 +47,7 @@ In https://github.com/lyrasis/kiba-extend/pull/242[PR#242]
 * `Kiba::Extend::Registry.entry_for` method.
 In https://github.com/lyrasis/kiba-extend/pull/242[PR#242]
 * `Kiba::Extend::Utils::Lookup.from_job` method.
-In https://github.com/lyrasis/kiba-extend/pull/242[PR#242]
+In https://github.com/lyrasis/kiba-extend/pull/242[PR#242] with minor fix added in https://github.com/lyrasis/kiba-extend/pull/243[PR#243]
 
 === Bugfixes
 
