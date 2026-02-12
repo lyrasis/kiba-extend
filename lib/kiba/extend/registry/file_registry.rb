@@ -170,7 +170,7 @@ module Kiba
           _container.map do |_k, entry|
             entry.item.dir if entry.item.valid?
           end.compact.uniq.each do |dir|
-            dir.mkdir unless dir.exist?
+            FileUtils.mkdir_p(dir) unless dir.exist?
           end
         end
 
