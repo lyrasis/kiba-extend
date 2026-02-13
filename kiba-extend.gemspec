@@ -49,9 +49,11 @@ Gem::Specification.new do |spec|
   spec.add_dependency "kiba-common"
   spec.add_dependency "marc"
   spec.add_dependency "measured"
-  spec.add_dependency "openssl", "~> 3.3.1"
   spec.add_dependency "thor"
   # @todo can replace with stdlib?
   spec.add_dependency "xxhash", "0.7.0"
   spec.add_dependency "zeitwerk"
+
+  spec.add_development_dependency "irb" # required by yard
+  spec.add_development_dependency "pry"
 end
