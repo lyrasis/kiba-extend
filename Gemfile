@@ -14,7 +14,6 @@ group :documentation, :test do
 end
 
 group :development do
-  gem "debug"
   gem "pry", "~> 0.14"
   gem "almost_standard", github: "kspurgin/almost_standard"
 end
