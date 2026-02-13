@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
 require "fileutils"
-require "pathname"
 require "spec_helper"
 
 RSpec.describe Kiba::Extend::Destinations::CSV do
