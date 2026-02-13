@@ -5,6 +5,8 @@ source "https://rubygems.org"
 git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
 group :documentation do
+  gem "irb" # needed until https://github.com/lsegal/yard/issues/1636
+            #   is resolved
   gem "kramdown" # markdown parser for generating documentation
   gem "yard"
 end
