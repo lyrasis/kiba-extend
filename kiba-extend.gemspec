@@ -53,7 +53,4 @@ Gem::Specification.new do |spec|
   # @todo can replace with stdlib?
   spec.add_dependency "xxhash", "0.7.0"
   spec.add_dependency "zeitwerk"
-
-  spec.add_development_dependency "irb" # required by yard
-  spec.add_development_dependency "pry"
 end
