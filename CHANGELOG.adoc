@@ -29,7 +29,6 @@ toc::[]
 * Removal of `multival` param from `Prepend::ToFieldValue` (deprecated in 5.0.0)
 * Removal of `sep` & `multival` params from `Explode::FieldValuesToNewRows` (deprecated in 5.0.0)
 
-
 == Unreleased
 These changes are merged into the `main` branch, but have not been released.
 After merging pull requests (PRs) that are not immediately released into `main`, a tag is added appending the PR# to the current release.
@@ -37,17 +36,7 @@ For example, if the release version/tag is `3.2.1`, and PR# 107 is merged withou
 
 === Breaking
 
-* Deletion of `Kiba::Extend::Utils::Lookup.csv_to_hash_deprecated` method - This method has been deprecated since v2.2.0.
-In https://github.com/lyrasis/kiba-extend/pull/242[PR#242]
-* Deletion of alias of `Kiba::Extend::Utils::Lookup.csv_to_multihash` to `.csv_to_hash`, introduced in v2.2.0.
-In https://github.com/lyrasis/kiba-extend/pull/242[PR#242]
-
 === Added
-
-* `Kiba::Extend::Registry.entry_for` method.
-In https://github.com/lyrasis/kiba-extend/pull/242[PR#242]
-* `Kiba::Extend::Utils::Lookup.from_job` method.
-In https://github.com/lyrasis/kiba-extend/pull/242[PR#242] with minor fix added in https://github.com/lyrasis/kiba-extend/pull/243[PR#243]
 
 === Bugfixes
 
@@ -55,16 +44,42 @@ In https://github.com/lyrasis/kiba-extend/pull/242[PR#242] with minor fix added 
 
 === Deleted
 
-* `Kiba::Extend::Utils::Lookup.csv_to_hash_deprecated` method - This method has been deprecated since v2.2.0.
-In https://github.com/lyrasis/kiba-extend/pull/242[PR#242]
-* Alias of `Kiba::Extend::Utils::Lookup.csv_to_multihash` to `.csv_to_hash`, introduced in v2.2.0.
-In https://github.com/lyrasis/kiba-extend/pull/242[PR#242]
-
 === Deprecated/Will break in a future version
 
 === Dev
 
 == Releases
+
+=== 6.0.0 - 2026-02-12
+
+==== Breaking
+
+* Deletion of `Kiba::Extend::Utils::Lookup.csv_to_hash_deprecated` method - This method has been deprecated since v2.2.0.
+In https://github.com/lyrasis/kiba-extend/pull/242[PR#242]
+* Deletion of alias of `Kiba::Extend::Utils::Lookup.csv_to_multihash` to `.csv_to_hash`, introduced in v2.2.0.
+In https://github.com/lyrasis/kiba-extend/pull/242[PR#242]
+
+==== Added
+
+* `Kiba::Extend::Registry.entry_for` method.
+In https://github.com/lyrasis/kiba-extend/pull/242[PR#242]
+* `Kiba::Extend::Utils::Lookup.from_job` method.
+In https://github.com/lyrasis/kiba-extend/pull/242[PR#242] with minor fix added in https://github.com/lyrasis/kiba-extend/pull/243[PR#243]
+
+==== Bugfixes
+
+* When creating missing directories for Destination classes that write files, write the whole path to the target directory if it does not exist.
+
+==== Deleted
+
+* `Kiba::Extend::Utils::Lookup.csv_to_hash_deprecated` method - This method has been deprecated since v2.2.0.
+In https://github.com/lyrasis/kiba-extend/pull/242[PR#242]
+* Alias of `Kiba::Extend::Utils::Lookup.csv_to_multihash` to `.csv_to_hash`, introduced in v2.2.0.
+In https://github.com/lyrasis/kiba-extend/pull/242[PR#242]
+
+==== Dev
+
+* Use Ruby 4.0.1 and Bundler 4.0.6
 
 === 5.1.0 - 2025-11-20
 
