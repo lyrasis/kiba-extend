@@ -230,9 +230,9 @@ module Kiba
           def prep_for_empty_index_identification(vals)
             vals.dup
               .transform_values do |vals|
-              vals.map do |val|
-                empty_val?(val) ? :empty : :notempty
-              end
+                vals.map do |val|
+                  empty_val?(val) ? :empty : :notempty
+                end
             end
           end
 

@@ -3,7 +3,6 @@
 # rubocop:todo Layout/LineLength
 
 require "json"
-require "pathname"
 
 module Kiba
   module Extend
