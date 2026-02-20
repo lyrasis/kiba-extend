@@ -49,7 +49,7 @@ RSpec.describe Kiba::Extend::Utils::Lookup do
 
       it "returns as expected" do
         expect(result).to be_a(Hash)
-        expect(result[nil].length).to eq(2)
+        expect(result[nil].length).to eq(3)
       end
     end
 
