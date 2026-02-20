@@ -5,6 +5,8 @@ require "kiba/extend"
 module Helpers
   module_function
 
+  def fixtures_dir = File.join(Bundler.root, "spec", "support", "fixtures")
+
   class TestJob
     include Kiba::Extend::Jobs::Parser
 
@@ -33,11 +35,6 @@ module Helpers
     recs = []
     MARC::Reader.new(path).each { |rec| recs << rec }
     recs[index]
-  end
-
-  def fixtures_dir
-    app_dir = File.realpath(File.join(File.dirname(__FILE__), ".."))
-    File.join(app_dir, "spec", "fixtures")
   end
 
   def populate_registry(more_entries: {})
