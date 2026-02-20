@@ -7,6 +7,8 @@ module Helpers
 
   def fixtures_dir = File.join(Bundler.root, "spec", "support", "fixtures")
 
+  def tmp_dir = File.join(Bundler.root, "spec", "tmp")
+
   class TestJob
     include Kiba::Extend::Jobs::Parser
 
@@ -136,11 +138,11 @@ module Helpers
   # end
 
   def test_csv
-    File.join(File.expand_path(__dir__), "tmp", "test.csv")
+    File.join(tmp_dir, "test.csv")
   end
 
   def lookup_csv
-    File.join(File.expand_path(__dir__), "tmp", "lkup.csv")
+    File.join(tmp_dir, "lkup.csv")
   end
 
   def generate_csv(rows)
