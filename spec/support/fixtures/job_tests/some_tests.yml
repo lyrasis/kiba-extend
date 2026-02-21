@@ -1,0 +1,22 @@
+job: fkey
+testdefs:
+  - testclass: CsvJob::Equal
+    tests:
+      - select_field: objectnumber
+        select_value: OBJ2
+        test_field: numberofobjects
+        expected: 2
+      - select_field: objectnumber
+        select_value: OBJ3
+        test_field: briefdescription
+        expected: Some description
+  - testclass: CsvJob::Fake
+    tests:
+      - select_field: obj
+        select_value: 2
+        test_field: num
+        expected: 2
+      - select_field: obj
+        select_value: 3
+        test_field: desc
+        expected: blah
