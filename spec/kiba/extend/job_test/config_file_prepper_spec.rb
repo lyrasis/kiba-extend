@@ -13,8 +13,7 @@ RSpec.describe Kiba::Extend::JobTest::ConfigFilePrepper do
     it "returns Array of Hash test configs" do
       expect(result).to be_a(Array)
       first = result.first
-      expect(first[:srcfile]).to eq(path)
-      expect(first[:srcline]).to eq(5)
+      expect(first[:loc]).to eq("#{path}:5")
       expect(first[:test]).to eq("CsvJob::Equal")
       expect(first[:job]).to eq(:fkey)
     end

@@ -9,8 +9,6 @@ module Kiba
         module Testable
           include JobTestable
 
-          private
-
           # @return [CSV::Table]
           def get_job_data
             CSV.parse(File.read(path), **Kiba::Extend.csvopts)
