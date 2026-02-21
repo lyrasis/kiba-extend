@@ -5,18 +5,15 @@ module Kiba
     module JobTest
       class Runner
         # @param config [Hash]
-        def initialize(config, srcfile = nil, srcline = nil)
+        def initialize(config, job_data = nil)
           @config = config
-          @srcfile = srcfile
-          @srcline = srcline
-          @job = config[:job]
+          @job_data = job_data
+          @loc = config[:loc]
           @error_msg = nil
         end
 
         def call
           set_testclass
-          set_path unless error_msg
-          generate_output unless error_msg
           test = generate_test unless error_msg
           return unrunnable_result if error_msg
 
@@ -25,17 +22,11 @@ module Kiba
 
         private
 
-        attr_reader :config, :srcfile, :srcline, :testclass, :job, :error_msg
-
-        def location
-          return nil if !srcfile && !srcline
-
-          [srcfile, srcline].join(":")
-        end
+        attr_reader :config, :job_data, :loc, :error_msg, :testclass
 
         def unrunnable_result
           config[:status] = :failure
-          config[:got] = [location, error_msg].compact.join(":")
+          config[:got] = [loc, error_msg].compact.join(":")
           config
         end
 
@@ -44,25 +35,11 @@ module Kiba
           @testclass = Kiba::Extend::JobTest.const_get(klass)
         rescue
           @error_msg = "No Kiba::Extend::JobTest::#{klass} job test "\
-          "class is defined"
-        end
-
-        def set_path
-          entry = Kiba::Extend.registry.resolve(job)
-          config[:path] = entry[:path]
-        rescue
-          @error_msg = "#{job} job does not exist in registry"
-        end
-
-        def generate_output
-          res = Kiba::Extend::Job.output?(job)
-          return if res
-
-          @error_msg = "There is no output for the #{job} job"
+            "class is defined"
         end
 
         def generate_test
-          testclass.new(config)
+          testclass.new(config, job_data)
         rescue => err
           @error_msg = err.message
         end

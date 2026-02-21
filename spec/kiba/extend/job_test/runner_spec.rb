@@ -15,7 +15,8 @@ RSpec.describe Kiba::Extend::JobTest::Runner do
       let(:config) do
         {
           job: :fkey,
-          test: "CsvJob::Equals"
+          test: "CsvJob::Equals",
+          path: "foo"
         }
       end
 
@@ -26,40 +27,12 @@ RSpec.describe Kiba::Extend::JobTest::Runner do
       end
     end
 
-    context "with nonexistent job" do
-      let(:config) do
-        {
-          job: :fkeys,
-          test: "CsvJob::Equal"
-        }
-      end
-
-      it "returns as expected" do
-        expect(result[:status]).to eq(:failure)
-        expect(result[:got]).to eq("fkeys job does not exist in registry")
-      end
-    end
-
-    context "with job without output" do
-      let(:config) do
-        {
-          job: :noresultfile,
-          test: "CsvJob::Equal"
-        }
-      end
-
-      it "returns as expected" do
-        expect(result[:status]).to eq(:failure)
-        expect(result[:got]).to eq("There is no output for the noresultfile "\
-                                   "job")
-      end
-    end
-
     context "with bad test config" do
       let(:config) do
         {
           job: :fkey,
           test: "CsvJob::Equal",
+          path: "foo",
           select_field: :objectnumber,
           select_value: "OBJ2",
           test_field: :numberofobjects
@@ -77,6 +50,7 @@ RSpec.describe Kiba::Extend::JobTest::Runner do
         {
           job: :fkey,
           test: "CsvJob::Equal",
+          path: File.join(fixtures_dir, "existing.csv"),
           select_field: :objectnumber,
           select_value: "OBJ2",
           test_field: :numberofobjects,
@@ -95,6 +69,7 @@ RSpec.describe Kiba::Extend::JobTest::Runner do
         {
           job: :fkey,
           test: "CsvJob::Equal",
+          path: File.join(fixtures_dir, "existing.csv"),
           select_field: :objectnumber,
           select_value: "OBJ2",
           test_field: :numberofobjects,

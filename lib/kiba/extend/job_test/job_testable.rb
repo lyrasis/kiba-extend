@@ -23,8 +23,9 @@ module Kiba
 
         private
 
-        def initialization_logic(config)
+        def initialization_logic(config, data = nil)
           instance_variable_set(:@config, config)
+          instance_variable_set(:@job_data, data)
           validate_config(config)
           config.each { |key, val| generate_instance_variable(key, val) }
         end
@@ -38,7 +39,7 @@ module Kiba
             fail("#{self.class.name} requires a :path key in its config")
           end
 
-          validate_other_keys(config) if respond_to?(:required_keys, true)
+          validate_config_keys(config) if respond_to?(:required_keys, true)
 
           invalid_keys = config.keys
             .map(&:to_s)
@@ -49,7 +50,7 @@ module Kiba
                "#{self.class.name} tests: #{invalid_keys.join(", ")}")
         end
 
-        def validate_other_keys(config)
+        def validate_config_keys(config)
           missing = required_keys.reject { |k| config.key?(k) }
           return if missing.empty?
 

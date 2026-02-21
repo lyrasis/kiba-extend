@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require "psych"
+
 module Kiba
   module Extend
     module JobTest
@@ -44,8 +46,10 @@ module Kiba
             .children
             .map { |nodes| TestclassPrepper.new(nodes).call }
             .flatten
-            .map { |config| config.merge({srcfile: path, job: job}) }
+            .map { |cfg| cfg.merge({loc: loc(cfg[:srcline]), job: job}) }
         end
+
+        def loc(srcline) = [path, srcline].compact.join(":")
       end
     end
   end

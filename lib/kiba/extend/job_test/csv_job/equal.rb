@@ -20,7 +20,7 @@ module Kiba
           #   whose value will be tested
           # @option config [String] :expected Value expected in :test_field of
           #   first row of test rows
-          def initialize(config)
+          def initialize(config, job_data = nil)
             initialization_logic(config)
           end
 
