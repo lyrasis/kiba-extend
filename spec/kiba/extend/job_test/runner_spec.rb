@@ -79,7 +79,7 @@ RSpec.describe Kiba::Extend::JobTest::Runner do
 
       it "returns as expected" do
         expect(result[:status]).to eq(:failure)
-        expect(result[:got]).to eq("2")
+        expect(result[:got]).to end_with(" 2")
       end
     end
   end

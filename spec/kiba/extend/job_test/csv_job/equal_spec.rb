@@ -54,7 +54,7 @@ RSpec.describe Kiba::Extend::JobTest::CsvJob::Equal do
 
       it "returns actual data value" do
         expect(result[:status]).to eq(:failure)
-        expect(result[:got]).to eq("2")
+        expect(result[:got]).to end_with(" 2")
         expect(result[:desc]).to eq("When objectnumber is OBJ2, "\
                                     "numberofobjects == 127")
       end
@@ -73,7 +73,7 @@ RSpec.describe Kiba::Extend::JobTest::CsvJob::Equal do
 
       it "returns no rows message" do
         expect(result[:status]).to eq(:failure)
-        expect(result[:got]).to eq("no rows matching select criteria")
+        expect(result[:got]).to end_with("no rows matching select criteria")
       end
     end
   end

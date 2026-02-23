@@ -17,9 +17,11 @@ module Kiba
           if run == :success
             config.merge({status: run})
           else
-            config.merge({status: :failure, got: run})
+            config.merge({status: :failure, got: err_msg(run)})
           end
         end
+
+        def job_data = @job_data ||= get_job_data
 
         private
 
@@ -31,8 +33,6 @@ module Kiba
         end
 
         def config = @config
-
-        def job_data = @job_data ||= get_job_data
 
         def validate_config(config)
           unless config.key?(:path)
@@ -58,9 +58,31 @@ module Kiba
                 "#{missing.join(", ")}")
         end
 
+        def err_msg_prefix
+          parts = []
+          parts << loc if respond_to?(:loc)
+          parts << desc if respond_to?(:desc)
+          return if parts.empty?
+
+          parts << "Got"
+          parts.join("\n")
+        end
+
+        def err_msg(val) = [err_msg_prefix, val].compact.join(": ")
+
         def generate_instance_variable(key, val)
           iv = :"@#{key}"
-          instance_variable_set(iv, val)
+          conv = if respond_to?(:key_conversions)
+            if key_conversions.key?(key)
+              val.send(key_conversions[key])
+            else
+              val
+            end
+          else
+            val
+          end
+
+          instance_variable_set(iv, conv)
           self.class.define_method(key) { instance_variable_get(iv) }
         end
       end

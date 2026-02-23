@@ -48,6 +48,13 @@ module Kiba
           end
 
           def required_keys = %i[select_field select_value test_field expected]
+
+          def key_conversions = {
+            select_field: :to_sym,
+            select_value: :to_s,
+            test_field: :to_sym,
+            expected: :to_s
+          }
         end
       end
     end
