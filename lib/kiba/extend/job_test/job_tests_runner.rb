@@ -7,7 +7,7 @@ module Kiba
         # @param job [Symbol]
         # @param tests [Array<Hash>]
         def initialize(job, tests)
-          @job = job
+          @job = job.to_sym
           @tests = tests
           @status = :ok
         end
@@ -30,7 +30,7 @@ module Kiba
 
         def set_path
           entry = Kiba::Extend.registry.resolve(job)
-          tests.each { |t| t[:path] = entry[:path] }
+          tests.each { |t| t[:path] = entry.path }
         rescue
           @status = :error
           msg = "#{job} job does not exist in registry"

@@ -5,7 +5,10 @@ require "spec_helper"
 RSpec.describe Kiba::Extend::JobTest::JobTestsRunner do
   subject(:runner) { described_class.new(job, tests) }
 
-  before(:all) { populate_registry }
+  before(:all) do
+    populate_registry
+    Kiba::Extend.registry.finalize
+  end
   after(:all) { Kiba::Extend.reset_config }
 
   describe "call" do

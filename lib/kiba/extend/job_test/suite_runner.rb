@@ -5,7 +5,7 @@ module Kiba
     module JobTest
       class SuiteRunner
         # @param dir [String]
-        def initialize(dir = JobTest.job_test_dir_path)
+        def initialize(dir = JobTest.job_tests_dir_path)
           unless Dir.exist?(dir)
             fail("Cannot run job tests: #{dir} does not exist")
           end
@@ -14,16 +14,17 @@ module Kiba
         end
 
         def call
-          tests_by_job.map { |job, tests| JobTestsRunner.new(job, tests).call }
-            .flatten
-            .each do |test|
-              next unless test[:status] == :failure
-
-              puts "\n#{test[:loc]}"
-              puts test[:desc]
-              puts "Got: #{test[:got]}"
-            end
+          results = run_tests
+          if results.key?(:failure)
+            results[:failure].each { |test| puts "Got: #{test[:got]}" }
+            puts "\n\nFailures: #{results[:failure].length}"
+          end
+          if results.key?(:success)
+            puts "Successes: #{results[:success].length}"
+          end
         end
+
+        def results = @results ||= run_tests
 
         private
 
@@ -33,6 +34,13 @@ module Kiba
           .map { |f| ConfigFilePrepper.new(File.join(dir, f)).call }
           .flatten
           .group_by { |config| config[:job] }
+
+        def run_tests
+          tests_by_job.map do |job, tests|
+            JobTestsRunner.new(job, tests).call
+          end.flatten
+            .group_by { |test| test[:status] }
+        end
       end
     end
   end
