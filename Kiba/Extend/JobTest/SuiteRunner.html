@@ -287,7 +287,10 @@
 22
 23
 24
-25</pre>
+25
+26
+27
+28</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/job_test/suite_runner.rb', line 16</span>
@@ -295,7 +298,10 @@
 <span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span>
   <span class='id identifier rubyid_results'>results</span> <span class='op'>=</span> <span class='id identifier rubyid_run_tests'>run_tests</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_results'>results</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='symbol'>:failure</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_results'>results</span><span class='lbracket'>[</span><span class='symbol'>:failure</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_test'>test</span><span class='op'>|</span> <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Got: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_test'>test</span><span class='lbracket'>[</span><span class='symbol'>:got</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+    <span class='id identifier rubyid_results'>results</span><span class='lbracket'>[</span><span class='symbol'>:failure</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_test'>test</span><span class='op'>|</span>
+      <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span>
+      <span class='id identifier rubyid_puts'>puts</span> <span class='id identifier rubyid_test'>test</span><span class='lbracket'>[</span><span class='symbol'>:got</span><span class='rbracket'>]</span>
+    <span class='kw'>end</span>
     <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n\nFailures: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_results'>results</span><span class='lbracket'>[</span><span class='symbol'>:failure</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_length'>length</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
   <span class='kw'>if</span> <span class='id identifier rubyid_results'>results</span><span class='period'>.</span><span class='id identifier rubyid_key?'>key?</span><span class='lparen'>(</span><span class='symbol'>:success</span><span class='rparen'>)</span>
@@ -322,10 +328,10 @@
       <pre class="lines">
 
 
-27</pre>
+30</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/job_test/suite_runner.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/job_test/suite_runner.rb', line 30</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_results'>results</span> <span class='op'>=</span> <span class='ivar'>@results</span> <span class='op'>||=</span> <span class='id identifier rubyid_run_tests'>run_tests</span></pre>
     </td>
@@ -338,7 +344,7 @@
 </div>
 
       <div id="footer">
-  Generated on Mon Feb 23 18:05:41 2026 by
+  Generated on Thu Feb 26 22:36:53 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.38 (ruby-3.4.8).
 </div>
