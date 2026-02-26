@@ -38,7 +38,8 @@ For example, if the release version/tag is `3.2.1`, and PR# 107 is merged withou
 
 === Added
 
-* Initial job tests functionality, including `thor job_tests suite` command https://github.com/lyrasis/kiba-extend/pull/246[PR#246]
+* Initial job tests functionality, including `thor job_tests suite` command and `JobTest::CsvJob::Equal` test type https://github.com/lyrasis/kiba-extend/pull/246[PR#246]
+* `JobTest::CsvJob::Equal` job test type https://github.com/lyrasis/kiba-extend/pull/247[PR#247]
 
 === Bugfixes
 
