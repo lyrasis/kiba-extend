@@ -16,7 +16,10 @@ module Kiba
         def call
           results = run_tests
           if results.key?(:failure)
-            results[:failure].each { |test| puts "Got: #{test[:got]}" }
+            results[:failure].each do |test|
+              puts "\n"
+              puts test[:got]
+            end
             puts "\n\nFailures: #{results[:failure].length}"
           end
           if results.key?(:success)
