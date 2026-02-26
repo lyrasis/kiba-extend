@@ -72,7 +72,7 @@ module Kiba
 
         def generate_instance_variable(key, val)
           iv = :"@#{key}"
-          conv = if respond_to?(:key_conversions)
+          conv = if respond_to?(:key_conversions, true)
             if key_conversions.key?(key)
               val.send(key_conversions[key])
             else
