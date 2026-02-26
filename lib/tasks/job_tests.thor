@@ -7,6 +7,8 @@ class JobTests < Thor
   desc "suite", "Run all job tests"
   option :dir, type: :string, aliases: "-d"
   def suite
+    Kiba::Extend::Utils::PreJobTask.call
+
     if options[:dir]
       Kiba::Extend::JobTest::SuiteRunner.new(options[:dir]).call
     else
