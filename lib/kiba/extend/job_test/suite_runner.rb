@@ -34,6 +34,7 @@ module Kiba
         attr_reader :dir
 
         def tests_by_job = Dir.children(dir)
+          .select { |f| f.end_with?(".yml") }
           .map { |f| ConfigFilePrepper.new(File.join(dir, f)).call }
           .flatten
           .group_by { |config| config[:job] }
