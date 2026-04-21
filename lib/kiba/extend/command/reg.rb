@@ -7,7 +7,7 @@ module Kiba
         module_function
 
         def list
-          puts Kiba::Extend::Registry::RegistryList.new
+          Kiba::Extend::Registry::RegistryList.new.pretty
         end
 
         def tags
