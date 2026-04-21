@@ -10,9 +10,9 @@
   
 </title>
 
-  <link rel="stylesheet" href="../../../css/style.css" type="text/css" />
+  <link rel="stylesheet" href="../../../css/style.css" type="text/css">
 
-  <link rel="stylesheet" href="../../../css/common.css" type="text/css" />
+  <link rel="stylesheet" href="../../../css/common.css" type="text/css">
 
 <script type="text/javascript">
   pathId = "Kiba::Extend::Command::Reg";
@@ -27,6 +27,8 @@
 
   </head>
   <body>
+    <div id="main_progress" aria-hidden="true"></div>
+
     <div class="nav_wrap">
       <iframe id="nav" src="../../../class_list.html?1"></iframe>
       <div id="resizer"></div>
@@ -78,8 +80,9 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/kiba/extend/command/reg.rb<span class="defines">,<br />
+    <dd>lib/kiba/extend/command/reg.rb<span class="defines">,<br>
   lib/kiba/extend/command/reg/list.rb</span>
+
 </dd>
   </dl>
   
@@ -180,6 +183,7 @@
 
       
     </ul>
+    
   
 
 
@@ -211,7 +215,7 @@
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/command/reg.rb', line 9</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_list'>list</span>
-  <span class='id identifier rubyid_puts'>puts</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Registry.html" title="Kiba::Extend::Registry (module)">Registry</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Registry/RegistryList.html" title="Kiba::Extend::Registry::RegistryList (class)">RegistryList</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Registry/RegistryList.html#initialize-instance_method" title="Kiba::Extend::Registry::RegistryList#initialize (method)">new</a></span></span>
+  <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Registry.html" title="Kiba::Extend::Registry (module)">Registry</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Registry/RegistryList.html" title="Kiba::Extend::Registry::RegistryList (class)">RegistryList</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../Registry/RegistryList.html#initialize-instance_method" title="Kiba::Extend::Registry::RegistryList#initialize (method)">new</a></span></span><span class='period'>.</span><span class='id identifier rubyid_pretty'><span class='object_link'><a href="../Registry/RegistryList.html#pretty-instance_method" title="Kiba::Extend::Registry::RegistryList#pretty (method)">pretty</a></span></span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -299,9 +303,9 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Mar 13 00:36:09 2026 by
+  Generated on Tue Apr 21 21:08:38 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.38 (ruby-3.4.9).
+  0.9.43 (ruby-3.4.9).
 </div>
 
     </div>
