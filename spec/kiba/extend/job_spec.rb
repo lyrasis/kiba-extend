@@ -121,4 +121,32 @@ RSpec.describe Kiba::Extend::Job do
       end
     end
   end
+
+  describe ".registered?" do
+    let(:result) { Kiba::Extend::Job.registered?(key) }
+
+    context "when key not registered" do
+      let(:key) { :foo__bar }
+
+      it "returns false" do
+        expect(result).to be false
+      end
+    end
+
+    context "when job file does not exist" do
+      before(:each) do
+        Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry
+        prepare_registry
+      end
+      after(:each) { Kiba::Extend.reset_config }
+
+      context "when job output is 0 rows" do
+        let(:key) { :noresultfile }
+
+        it "returns true" do
+          expect(result).to be true
+        end
+      end
+    end
+  end
 end
