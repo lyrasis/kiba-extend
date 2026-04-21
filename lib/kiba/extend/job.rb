@@ -26,16 +26,18 @@ module Kiba
       end
 
       # @param jobkey [Symbol] registry entry for job with namespace
+      # @param mode [:warn, :agnostic] use :agnostic in dynamic code where not
+      #   all jobs tried are expected to actually exist
       # @return [true] if output file already exists when run, or when running
       #   job results in 1 or more rows being written
       # @return [false] if jobkey is not defined, or if job results in 0 rows
       #   when run
       # @since 4.0.0
-      def output?(jobkey)
+      def output?(jobkey, mode: :warn_if_unregistered)
         begin
           reg = Kiba::Extend::Registry.entry_for(jobkey)
         rescue Kiba::Extend::JobNotRegisteredError => err
-          puts "#{Kiba::Extend.warning_label}: #{err.message}"
+          puts "#{Kiba::Extend.warning_label}: #{err.message}" if mode == :warn
           return false
         end
         return true if File.exist?(reg.path)
