@@ -47,6 +47,14 @@ module Kiba
 
         !(res.outrows == 0)
       end
+
+      # @param jobkey [Symbol] registry entry for job with namespace
+      # @return [Boolean] without drama about registry errors.
+      # @note Use this if you only care about whether a job has been registered,
+      #   not whether it has output
+      def registered?(jobkey) = Kiba::Extend.registry.entry_objs
+        .map { |eo| eo.key.to_sym }
+        .include?(jobkey)
     end
   end
 end
