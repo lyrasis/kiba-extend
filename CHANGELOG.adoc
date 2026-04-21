@@ -40,6 +40,11 @@ For example, if the release version/tag is `3.2.1`, and PR# 107 is merged withou
 
 * Initial job tests functionality, including `thor job_tests suite` command and `JobTest::CsvJob::Equal` test type https://github.com/lyrasis/kiba-extend/pull/246[PR#246]
 * `JobTest::CsvJob::Equal` job test type https://github.com/lyrasis/kiba-extend/pull/247[PR#247]
+* Add `mode` parameter to `Kiba::Extend::Job.output?` method.
+The purpose of this is to turn off warnings if a job is not necessarily expected to exist, such as may be defined in dynamic code.
+https://github.com/lyrasis/kiba-extend/pull/249[PR#249]
+* Add `Kiba::Extend::Job.registered?` method, to check for whether a job exists, without verifying it has output, or reporting errors/warnings if it does not.
+https://github.com/lyrasis/kiba-extend/pull/249[PR#249]
 
 === Bugfixes
 
