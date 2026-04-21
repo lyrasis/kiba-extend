@@ -4,18 +4,14 @@ module Kiba
   module Extend
     module Registry
       # Utility class used by project applications to display
-      #   information about a set of registered files/jobs. Puts to
-      #   STDOUT
+      #   information about a set of registered files/jobs.
       class RegistryList
         # @param args [nil, Array<FileRegistryEntry>]
         def initialize(*args)
-          puts ""
-          list(args).each { |entry| puts entry.summary }
+          @args = args
         end
 
-        private
-
-        def list(args)
+        def list
           return args.flatten unless args.empty?
 
           Kiba::Extend.registry
@@ -23,6 +19,15 @@ module Kiba
             .values
             .map(&:item)
         end
+
+        def pretty
+          puts ""
+          list.each { |entry| puts entry.summary }
+        end
+
+        private
+
+        attr_reader :args
       end
     end
   end
