@@ -46,6 +46,7 @@ https://github.com/lyrasis/kiba-extend/pull/249[PR#249]
 * Add `Kiba::Extend::Job.registered?` method, to check for whether a job exists, without verifying it has output, or reporting errors/warnings if it does not.
 https://github.com/lyrasis/kiba-extend/pull/249[PR#249]
 * Add `report` parameter to `Delete::EmptyFields` transform, which causes deleted field names to be written to STDOUT.
+This is useful if you want to mark deleted fields as omitted from a project, or otherwise keep track of what fields were empty at a given point in time
 https://github.com/lyrasis/kiba-extend/pull/250[PR#250]
 
 === Bugfixes
