@@ -45,7 +45,8 @@ The purpose of this is to turn off warnings if a job is not necessarily expected
 https://github.com/lyrasis/kiba-extend/pull/249[PR#249]
 * Add `Kiba::Extend::Job.registered?` method, to check for whether a job exists, without verifying it has output, or reporting errors/warnings if it does not.
 https://github.com/lyrasis/kiba-extend/pull/249[PR#249]
-
+* Add `report` parameter to `Delete::EmptyFields` transform, which causes deleted field names to be written to STDOUT.
+https://github.com/lyrasis/kiba-extend/pull/250[PR#250]
 === Bugfixes
 
 === Changed
