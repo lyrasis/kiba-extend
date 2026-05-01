@@ -14,7 +14,7 @@ class Jobs < Runnable
     result = getter.tagged_any(tag)
     return if result.empty?
 
-    Kiba::Extend::Registry::RegistryList.new(result)
+    Kiba::Extend::Registry::RegistryList.new(result).pretty
 
     return unless options[:run]
 
