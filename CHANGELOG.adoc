@@ -47,6 +47,7 @@ https://github.com/lyrasis/kiba-extend/pull/249[PR#249]
 https://github.com/lyrasis/kiba-extend/pull/249[PR#249]
 * Add `report` parameter to `Delete::EmptyFields` transform, which causes deleted field names to be written to STDOUT.
 https://github.com/lyrasis/kiba-extend/pull/250[PR#250]
+
 === Bugfixes
 
 === Changed
