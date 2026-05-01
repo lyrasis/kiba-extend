@@ -111,15 +111,21 @@ module Kiba
         # Field `c` is retained because `usenull: true` is not used. If that argument were given, only Field `a` would be returned.
         #
         class EmptyFields
-          # @param usenull [Boolean] whether to treat `Kiba::Extend.nullvalue` as empty/blank value
-          # @param consider_blank [Hash{Symbol=>Array<String>}] specifies field-specific value(s) that should be treated
-          #   as blank/empty. **If multiple values should be considered blank for one field, join them using
-          #   `Kiba::Extend.delimiter`**
-          def initialize(usenull: false, consider_blank: nil)
+          # @param usenull [Boolean] whether to treat `Kiba::Extend.nullvalue`
+          #   as empty/blank value
+          # @param consider_blank [Hash{Symbol=>Array<String>}] specifies
+          #   field-specific value(s) that should be treated as blank/empty.
+          #   **If multiple values should be considered blank for one field,
+          #   join them using `Kiba::Extend.delimiter`**
+          # @param report [Boolean] whether to print the names of empty fields
+          #   to STDOUT when job runs; Useful if you need to indicate
+          #   non-migrating-because-blank fields
+          def initialize(usenull: false, consider_blank: nil, report: false)
             @usenull = usenull
             @consider_blank = consider_blank&.transform_values do |val|
               val.split(Kiba::Extend.delim)
             end
+            @report = report
             @pop_fields = {}
             @rows = []
           end
@@ -134,6 +140,8 @@ module Kiba
             return if rows.empty?
 
             to_delete = rows.first.keys - pop_fields.keys
+            to_delete.each { |f| puts "DELETED EMPTY FIELD: #{f}" } if report
+
             rows.each do |row|
               to_delete.each { |field| row.delete(field) }
               yield row
@@ -142,7 +150,7 @@ module Kiba
 
           private
 
-          attr_reader :pop_fields, :rows, :usenull, :consider_blank
+          attr_reader :usenull, :consider_blank, :report, :pop_fields, :rows
 
           def populate_tracker(row)
             prepare(row).each do |field, val|
