@@ -1,12 +1,10 @@
 # frozen_string_literal: true
 
-# rubocop:todo Layout/LineLength
-
-require "kiba/extend"
 module Kiba
   module Extend
     module Jobs
-      # Mixin to activate having computer say (out loud!) that the job is complete
+      # Mixin to activate having computer say (out loud!) that the job is
+      #   complete
       #
       # Useful for long-running jobs
       module TellMeJob
@@ -27,4 +25,3 @@ module Kiba
     end
   end
 end
-# rubocop:enable Layout/LineLength
