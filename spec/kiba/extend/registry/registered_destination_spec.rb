@@ -15,7 +15,8 @@ RSpec.describe "Kiba::Extend::Registry::RegisteredDestination" do
       for_job: :foo
     )
   end
-  let(:optres) { {csv_options: Kiba::Extend.csvopts} }
+  let(:csvopt) { Kiba::Extend.csvopts.merge({force_quotes: true}) }
+  let(:optres) { {csv_options: csvopt} }
 
   describe "#new" do
     context "with supplied entry" do
@@ -60,7 +61,7 @@ RSpec.describe "Kiba::Extend::Registry::RegisteredDestination" do
            dest_special_opts: extra}
         end
         let(:expected) do
-          {filename: path, csv_options: Kiba::Extend.csvopts,
+          {filename: path, csv_options: csvopt,
            initial_headers: %i[a b]}
         end
         it "returns with extra options" do
@@ -75,15 +76,15 @@ RSpec.describe "Kiba::Extend::Registry::RegisteredDestination" do
            dest_special_opts: extra}
         end
         let(:expected) do
-          {filename: path, csv_options: Kiba::Extend.csvopts}
+          {filename: path, csv_options: csvopt}
         end
         it "returns without extra options" do
           expect(result).to eq(expected)
         end
         it "warns about unsupported options" do
-          # rubocop:todo Layout/LineLength
-          msg = "WARNING: Destination file :#{filekey} is called with special option :blah, which is unsupported by Kiba::Extend::Destinations::CSV\n"
-          # rubocop:enable Layout/LineLength
+          msg = "WARNING: Destination file :#{filekey} is called with "\
+            "special option :blah, which is unsupported by "\
+            "Kiba::Extend::Destinations::CSV\n"
           expect { dest.args }.to output(msg).to_stdout
         end
       end
