@@ -37,7 +37,11 @@ RSpec.describe Kiba::Extend::Destinations::CSV do
         ]
       end
       let(:expected) do
-        "y,z,a\nyak,zebra,and\nyarrow,zizia,apple\n"
+        <<~STR
+          "y","z","a"
+          "yak","zebra","and"
+          "yarrow","zizia","apple"
+        STR
       end
       it "produces CSV as expected" do
         expect(run_job(input, testfile)).to eq(expected)
@@ -53,7 +57,11 @@ RSpec.describe Kiba::Extend::Destinations::CSV do
       end
 
       let(:expected) do
-        "z,a\nzebra,and\nzizia,apple\n"
+        <<~STR
+          "z","a"
+          "zebra","and"
+          "zizia","apple"
+        STR
       end
 
       it "produces CSV as expected" do

@@ -14,6 +14,7 @@ module Kiba
           def as_source_class = Kiba::Extend::Sources::CSV
 
           def default_file_options = Kiba::Extend.csvopts
+            .merge({force_quotes: true})
 
           def options_key = :csv_options
 
