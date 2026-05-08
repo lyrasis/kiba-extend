@@ -36,6 +36,13 @@ For example, if the release version/tag is `3.2.1`, and PR# 107 is merged withou
 
 === Breaking
 
+* CSV Destination now forces quotes around all output values.
+https://github.com/lyrasis/kiba-extend/pull/252[PR#252]
+* Improvements to `Kiba::Extend::Utils::StringNormalizer` changed this class' API
+https://github.com/lyrasis/kiba-extend/pull/252[PR#252]
+* Minor changes to API of `Deduplicate::FieldGroup` and `Deduplicate::GroupedFieldValues` transforms: `normalized` parameter was changed to `normalize`.
+https://github.com/lyrasis/kiba-extend/pull/252[PR#252]
+
 === Added
 
 * Initial job tests functionality, including `thor job_tests suite` command and `JobTest::CsvJob::Equal` test type https://github.com/lyrasis/kiba-extend/pull/246[PR#246]
@@ -48,6 +55,8 @@ https://github.com/lyrasis/kiba-extend/pull/249[PR#249]
 * Add `report` parameter to `Delete::EmptyFields` transform, which causes deleted field names to be written to STDOUT.
 This is useful if you want to mark deleted fields as omitted from a project, or otherwise keep track of what fields were empty at a given point in time
 https://github.com/lyrasis/kiba-extend/pull/250[PR#250]
+* `Normalize::FieldValues` transform - This is a wrapper around the improved `Utils::StringNormalizer`
+https://github.com/lyrasis/kiba-extend/pull/252[PR#252]
 
 === Bugfixes
 
