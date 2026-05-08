@@ -611,17 +611,17 @@ in, to the right of the ones named here. <strong>Set in registry entry’s
       <pre class="lines">
 
 
-38
 39
 40
 41
 42
 43
 44
-45</pre>
+45
+46</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 38</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 39</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>filename:</span><span class='comma'>,</span> <span class='label'>csv_options:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>headers:</span> <span class='kw'>nil</span><span class='comma'>,</span>
   <span class='label'>initial_headers:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -668,12 +668,12 @@ in, to the right of the ones named here. <strong>Set in registry entry’s
       <pre class="lines">
 
 
-27
 28
-29</pre>
+29
+30</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 28</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_csv'>csv</span>
   <span class='ivar'>@csv</span>
@@ -710,12 +710,12 @@ in, to the right of the ones named here. <strong>Set in registry entry’s
       <pre class="lines">
 
 
-27
 28
-29</pre>
+29
+30</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 28</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_csv_options'>csv_options</span>
   <span class='ivar'>@csv_options</span>
@@ -752,12 +752,12 @@ in, to the right of the ones named here. <strong>Set in registry entry’s
       <pre class="lines">
 
 
-27
 28
-29</pre>
+29
+30</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 28</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_filename'>filename</span>
   <span class='ivar'>@filename</span>
@@ -794,12 +794,12 @@ in, to the right of the ones named here. <strong>Set in registry entry’s
       <pre class="lines">
 
 
-27
 28
-29</pre>
+29
+30</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 28</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_headers'>headers</span>
   <span class='ivar'>@headers</span>
@@ -857,12 +857,14 @@ in, to the right of the ones named here. <strong>Set in registry entry’s
       <pre class="lines">
 
 
-16</pre>
+16
+17</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 16</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_default_file_options'>default_file_options</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_csvopts'><span class='object_link'><a href="../../Extend.html#csvopts-class_method" title="Kiba::Extend.csvopts (method)">csvopts</a></span></span></pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_default_file_options'>default_file_options</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_csvopts'><span class='object_link'><a href="../../Extend.html#csvopts-class_method" title="Kiba::Extend.csvopts (method)">csvopts</a></span></span>
+<span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='lbrace'>{</span><span class='label'>force_quotes:</span> <span class='kw'>true</span><span class='rbrace'>}</span><span class='rparen'>)</span></pre>
     </td>
   </tr>
 </table>
@@ -883,10 +885,10 @@ in, to the right of the ones named here. <strong>Set in registry entry’s
       <pre class="lines">
 
 
-18</pre>
+19</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 18</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 19</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_options_key'>options_key</span> <span class='op'>=</span> <span class='symbol'>:csv_options</span></pre>
     </td>
@@ -909,10 +911,10 @@ in, to the right of the ones named here. <strong>Set in registry entry’s
       <pre class="lines">
 
 
-20</pre>
+21</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 20</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 21</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_path_key'>path_key</span> <span class='op'>=</span> <span class='symbol'>:filename</span></pre>
     </td>
@@ -958,10 +960,10 @@ in, to the right of the ones named here. <strong>Set in registry entry’s
       <pre class="lines">
 
 
-22</pre>
+23</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 22</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 23</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_requires_path?'>requires_path?</span> <span class='op'>=</span> <span class='kw'>true</span></pre>
     </td>
@@ -984,10 +986,10 @@ in, to the right of the ones named here. <strong>Set in registry entry’s
       <pre class="lines">
 
 
-24</pre>
+25</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 25</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_special_options'>special_options</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='symbol'>:initial_headers</span><span class='rbracket'>]</span></pre>
     </td>
@@ -1016,12 +1018,12 @@ in, to the right of the ones named here. <strong>Set in registry entry’s
       <pre class="lines">
 
 
-71
 72
-73</pre>
+73
+74</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 71</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 72</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_close'>close</span>
   <span class='id identifier rubyid_csv'>csv</span><span class='op'>&amp;.</span><span class='id identifier rubyid_close'>close</span>
@@ -1069,17 +1071,17 @@ in, to the right of the ones named here. <strong>Set in registry entry’s
       <pre class="lines">
 
 
-48
 49
 50
 51
 52
 53
 54
-55</pre>
+55
+56</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 48</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 49</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_fields'>fields</span>
   <span class='kw'>return</span> <span class='lbracket'>[</span><span class='rbracket'>]</span> <span class='kw'>unless</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='rparen'>)</span>
@@ -1109,7 +1111,6 @@ in, to the right of the ones named here. <strong>Set in registry entry’s
       <pre class="lines">
 
 
-58
 59
 60
 61
@@ -1119,10 +1120,11 @@ in, to the right of the ones named here. <strong>Set in registry entry’s
 65
 66
 67
-68</pre>
+68
+69</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 58</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/destinations/csv.rb', line 59</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_write'>write</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='ivar'>@csv</span> <span class='op'>||=</span> <span class='op'>::</span><span class='const'>CSV</span><span class='period'>.</span><span class='id identifier rubyid_open'>open</span><span class='lparen'>(</span><span class='id identifier rubyid_filename'>filename</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>wb</span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span> <span class='op'>**</span><span class='id identifier rubyid_csv_options'>csv_options</span><span class='rparen'>)</span>
@@ -1145,7 +1147,7 @@ in, to the right of the ones named here. <strong>Set in registry entry’s
 </div>
 
       <div id="footer">
-  Generated on Fri May  1 19:40:37 2026 by
+  Generated on Fri May  8 23:25:25 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.43 (ruby-3.4.9).
 </div>

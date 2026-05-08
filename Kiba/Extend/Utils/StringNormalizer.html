@@ -110,19 +110,23 @@
   other context when the same normalization settings will be used to
   normalize many strings:</p>
 
-<pre class="code ruby"><code class="ruby">  <span class='comment'># first initialize an instance of the class as an instance variable in
+<pre class="code ruby"><code class="ruby">  <span class='comment'># First initialize an instance of the class as an instance variable in
 </span>  <span class='comment'>#   your context
-</span>  <span class='ivar'>@normalizer</span> <span class='op'>=</span> <span class='const'>StringNormalizer</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Utils::StringNormalizer#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>downcased:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+</span>  <span class='ivar'>@normalizer</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Utils.html" title="Kiba::Extend::Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'>StringNormalizer</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Utils::StringNormalizer#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+    <span class='label'>xforms:</span> <span class='lbracket'>[</span><span class='symbol'>:blank</span><span class='rbracket'>]</span>
+  <span class='rparen'>)</span>
 
   <span class='comment'># for the repetitive part:
 </span>  <span class='id identifier rubyid_vals'>vals</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_val'>val</span><span class='op'>|</span> <span class='ivar'>@normalizer</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_val'>val</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
 </code></pre>
 
-<p>For one-off usage, or where the normalization settings vary per
-  normalized value, you can do:</p>
+<p>For one-off usage, testing normalization logic, or where the
+  normalization settings vary per normalized value, you can do:</p>
 
-<pre class="code ruby"><code class="ruby">StringNormalizer.call(downcased: false, str: &#39;Table, café&#39;)
-  =&gt; &#39;Tablecafe&#39;
+<pre class="code ruby"><code class="ruby">Kiba::Extend::Utils::StringNormalizer.call(
+  xforms: [:blank], str: &#39;Card table&#39;
+)
+  =&gt; &#39;Cardtable&#39;
 </code></pre>
 
 <p>The second way is much less performant, as it initializes a new instance
@@ -137,10 +141,10 @@
     <h4 class="tag_title">Examples:</h4>
     
       
-        <h5 class="example_title"><div class='inline'><p>Default settings</p>
+        <h5 class="example_title"><div class='inline'><p>Downcase only</p>
 </div></h5>
       
-      <pre class="example code"><code><span class='id identifier rubyid_util'>util</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Utils.html" title="Kiba::Extend::Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'>StringNormalizer</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Utils::StringNormalizer#initialize (method)">new</a></span></span>
+      <pre class="example code"><code><span class='id identifier rubyid_util'>util</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Utils.html" title="Kiba::Extend::Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'>StringNormalizer</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Utils::StringNormalizer#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>xforms:</span> <span class='lbracket'>[</span><span class='symbol'>:lower</span><span class='rbracket'>]</span><span class='rparen'>)</span>
 <span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='lbracket'>[</span>
   <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Oświęcim (Poland)</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
   <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Oswiecim, Poland</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
@@ -151,22 +155,24 @@
   <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>foo\n\nbar</span><span class='tstring_end'>&quot;</span></span>
 <span class='rbracket'>]</span>
 <span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='lbracket'>[</span>
- <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>oswiecimpoland</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
- <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>oswiecimpoland</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
- <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>iairomania</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
- <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>iasiromania</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
- <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>tablecafe</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
- <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1001arabiannights</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
- <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>foobar</span><span class='tstring_end'>&#39;</span></span>
+  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>oświęcim (poland)</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>oswiecim, poland</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>iași, romania</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>iasi, romania</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>table, café</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1,001 arabian nights</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+  <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>foo\n\nbar</span><span class='tstring_end'>&quot;</span></span>
 <span class='rbracket'>]</span>
 <span class='id identifier rubyid_results'>results</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_str'>str</span><span class='op'>|</span> <span class='id identifier rubyid_util'>util</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_str'>str</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
 <span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_results'>results</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
     
       
-        <h5 class="example_title"><div class='inline'><p>downcased = false</p>
+        <h5 class="example_title"><div class='inline'><p>to_ascii, nonword</p>
 </div></h5>
       
-      <pre class="example code"><code><span class='id identifier rubyid_util'>util</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Utils.html" title="Kiba::Extend::Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'>StringNormalizer</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Utils::StringNormalizer#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='label'>downcased:</span> <span class='kw'>false</span><span class='rparen'>)</span>
+      <pre class="example code"><code><span class='id identifier rubyid_util'>util</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Utils.html" title="Kiba::Extend::Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'>StringNormalizer</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Utils::StringNormalizer#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+  <span class='label'>xforms:</span> <span class='lbracket'>[</span><span class='symbol'>:to_ascii</span><span class='comma'>,</span> <span class='symbol'>:nonword</span><span class='rbracket'>]</span>
+<span class='rparen'>)</span>
 <span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='lbracket'>[</span>
   <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Oświęcim (Poland)</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
   <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Oswiecim, Poland</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
@@ -208,6 +214,18 @@
 <span class='id identifier rubyid_results'>results</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_str'>str</span><span class='op'>|</span> <span class='id identifier rubyid_util'>util</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_str'>str</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
 <span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_results'>results</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
     
+      
+        <h5 class="example_title"><div class='inline'><p>Punctuation, custom proc</p>
+</div></h5>
+      
+      <pre class="example code"><code><span class='id identifier rubyid_util'>util</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Utils.html" title="Kiba::Extend::Utils (module)">Utils</a></span></span><span class='op'>::</span><span class='const'>StringNormalizer</span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="#initialize-instance_method" title="Kiba::Extend::Utils::StringNormalizer#initialize (method)">new</a></span></span><span class='lparen'>(</span>
+  <span class='label'>xforms:</span> <span class='lbracket'>[</span><span class='symbol'>:punct</span><span class='comma'>,</span> <span class='tlambda'>-&gt;</span><span class='lparen'>(</span><span class='id identifier rubyid_val'>val</span><span class='rparen'>)</span> <span class='tlambeg'>{</span> <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_upcase'>upcase</span> <span class='rbrace'>}</span><span class='rbracket'>]</span>
+<span class='rparen'>)</span>
+<span class='id identifier rubyid_input'>input</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Release the bats!!</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+<span class='id identifier rubyid_expected'>expected</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>RELEASE THE BATS</span><span class='tstring_end'>&quot;</span></span><span class='rbracket'>]</span>
+<span class='id identifier rubyid_results'>results</span> <span class='op'>=</span> <span class='id identifier rubyid_input'>input</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_str'>str</span><span class='op'>|</span> <span class='id identifier rubyid_util'>util</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_str'>str</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+<span class='id identifier rubyid_expect'>expect</span><span class='lparen'>(</span><span class='id identifier rubyid_results'>results</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_to'>to</span> <span class='id identifier rubyid_eq'>eq</span><span class='lparen'>(</span><span class='id identifier rubyid_expected'>expected</span><span class='rparen'>)</span></code></pre>
+    
   </div>
 
 <p class="tag_title">Since:</p>
@@ -244,7 +262,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#call-class_method" title="call (class method)">.<strong>call</strong>(str:, mode: :plain, downcased: true)  &#x21d2; Object </a>
+      <a href="#call-class_method" title="call (class method)">.<strong>call</strong>(str:, mode: nil, replacements: {}, xforms: [])  &#x21d2; Object </a>
     
 
     
@@ -258,7 +276,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'>
+    <span class="summary_desc"><div class='inline'><h2 id="defined-xforms">Defined xforms.</h2>
 </div></span>
   
 </li>
@@ -300,7 +318,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(mode: :plain, downcased: true)  &#x21d2; StringNormalizer </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(mode: nil, replacements: {}, xforms: [])  &#x21d2; StringNormalizer </a>
     
 
     
@@ -316,7 +334,7 @@
   
 
   
-    <span class="summary_desc"><div class='inline'><p>A new instance of StringNormalizer.</p>
+    <span class="summary_desc"><div class='inline'><h2 id="defined-xforms">Defined xforms.</h2>
 </div></span>
   
 </li>
@@ -332,7 +350,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(mode: :plain, downcased: true)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Utils::StringNormalizer (class)">StringNormalizer</a></span></tt> 
+    #<strong>initialize</strong>(mode: nil, replacements: {}, xforms: [])  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Utils::StringNormalizer (class)">StringNormalizer</a></span></tt> 
   
 
   
@@ -340,7 +358,30 @@
   
 </h3><div class="docstring">
   <div class="discussion">
-    <p>Returns a new instance of StringNormalizer.</p>
+    <h2 id="defined-xforms">Defined xforms</h2>
+
+<ul>
+  <li>:nfkc - ON BY DEFAULT: Applies Unicode compatibility decomposition,
+followed by canonical composition; See
+https://unicode.org/reports/tr15/ for more details than you want.</li>
+  <li>:replace - ON BY DEFAULT: performs find-and-replace operations
+specified in <code>replacements</code> parameter</li>
+  <li>:blank - deletes all spaces and tabs, using Ruby /\pBlank/ regexp</li>
+  <li>:lower - downcase the string</li>
+  <li>:nonword - removes ALL characters that are not letters, numbers, or
+underscores</li>
+  <li>:punct - removes all characters matching Ruby /\pPunct/ regexp</li>
+  <li>:to_ascii - replaces non-ASCII characters with an ASCII
+approximation, or if none exists, a replacement character which
+defaults to “?”.</li>
+</ul>
+
+<h2 id="defined-modes">Defined modes</h2>
+
+<ul>
+  <li>:cspaceid - replaces weird characters that don’t convert to
+ASCII properly, :to_ascii, :nonword, :lower</li>
+</ul>
 
 
   </div>
@@ -354,33 +395,54 @@
         <span class='name'>mode</span>
       
       
-        <span class='type'>(<tt>:plain</tt>, <tt>:cspaceid</tt>)</span>
+        <span class='type'>(<tt>:cspaceid</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>:plain</tt>)</em>
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
       
       
         &mdash;
-        <div class='inline'><p>:plain does no find/replace before
-transliterating. :cspaceid does, due to characters it is known to
-handle weirdly internally</p>
+        <div class='inline'><p>Use an established set of xforms and
+replacement settings</p>
 </div>
       
     </li>
   
     <li>
       
-        <span class='name'>downcased</span>
+        <span class='name'>replacements</span>
       
       
-        <span class='type'>(<tt>Boolean</tt>)</span>
+        <span class='type'>(<tt>Hash{Regexp =&gt; String}</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>true</tt>)</em>
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
       
       
         &mdash;
-        <div class='inline'><p>whether to downcase result</p>
+        <div class='inline'><p>simple <code>gsub</code>
+find/replaces to be applied, in order, to the string being
+normalized; key is the find/match value; value is the replacement
+string</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>xforms</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;Symbol, Proc&gt;</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>[]</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Symbol must match one of the
+defined transforms; A Proc that takes one String arg and returns
+a String may also be passed to apply uncommon normalization logic</p>
 </div>
       
     </li>
@@ -409,19 +471,21 @@ handle weirdly internally</p>
       <pre class="lines">
 
 
-110
-111
-112
-113
-114</pre>
+150
+151
+152
+153
+154
+155</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/string_normalizer.rb', line 110</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/string_normalizer.rb', line 150</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>mode:</span> <span class='symbol'>:plain</span><span class='comma'>,</span> <span class='label'>downcased:</span> <span class='kw'>true</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>mode:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>replacements:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>xforms:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='ivar'>@mode</span> <span class='op'>=</span> <span class='id identifier rubyid_mode'>mode</span>
-  <span class='ivar'>@downcased</span> <span class='op'>=</span> <span class='id identifier rubyid_downcased'>downcased</span>
-  <span class='ivar'>@subs</span> <span class='op'>=</span> <span class='id identifier rubyid_set_subs'>set_subs</span>
+  <span class='ivar'>@replacements</span> <span class='op'>=</span> <span class='id identifier rubyid_replacements'>replacements</span>
+  <span class='ivar'>@xforms</span> <span class='op'>=</span> <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>nfkc</span><span class='words_sep'> </span><span class='tstring_content'>replace</span><span class='tstring_end'>]</span></span> <span class='op'>+</span> <span class='id identifier rubyid_xforms'>xforms</span>
+  <span class='id identifier rubyid_apply_mode_settings'>apply_mode_settings</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -438,7 +502,7 @@ handle weirdly internally</p>
       <div class="method_details first">
   <h3 class="signature first" id="call-class_method">
   
-    .<strong>call</strong>(str:, mode: :plain, downcased: true)  &#x21d2; <tt>Object</tt> 
+    .<strong>call</strong>(str:, mode: nil, replacements: {}, xforms: [])  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -446,7 +510,30 @@ handle weirdly internally</p>
   
 </h3><div class="docstring">
   <div class="discussion">
-    
+    <h2 id="defined-xforms">Defined xforms</h2>
+
+<ul>
+  <li>:nfkc - ON BY DEFAULT: Applies Unicode compatibility decomposition,
+followed by canonical composition; See
+https://unicode.org/reports/tr15/ for more details than you want.</li>
+  <li>:replace - ON BY DEFAULT: performs find-and-replace operations
+specified in <code>replacements</code> parameter</li>
+  <li>:blank - deletes all spaces and tabs, using Ruby /\pBlank/ regexp</li>
+  <li>:lower - downcase the string</li>
+  <li>:nonword - removes ALL characters that are not letters, numbers, or
+underscores</li>
+  <li>:punct - removes all characters matching Ruby /\pPunct/ regexp</li>
+  <li>:to_ascii - replaces non-ASCII characters with an ASCII
+approximation, or if none exists, a replacement character which
+defaults to “?”.</li>
+</ul>
+
+<h2 id="defined-modes">Defined modes</h2>
+
+<ul>
+  <li>:cspaceid - replaces weird characters that don’t convert to
+ASCII properly, :to_ascii, :nonword, :lower</li>
+</ul>
 
 
   </div>
@@ -460,33 +547,54 @@ handle weirdly internally</p>
         <span class='name'>mode</span>
       
       
-        <span class='type'>(<tt>:plain</tt>, <tt>:cspaceid</tt>)</span>
+        <span class='type'>(<tt>:cspaceid</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>:plain</tt>)</em>
+        <em class="default">(defaults to: <tt>nil</tt>)</em>
       
       
         &mdash;
-        <div class='inline'><p>:plain does no find/replace before
-transliterating. :cspaceid does, due to characters it is known to
-handle weirdly internally</p>
+        <div class='inline'><p>Use an established set of xforms and
+replacement settings</p>
 </div>
       
     </li>
   
     <li>
       
-        <span class='name'>downcased</span>
+        <span class='name'>replacements</span>
       
       
-        <span class='type'>(<tt>Boolean</tt>)</span>
+        <span class='type'>(<tt>Hash{Regexp =&gt; String}</tt>)</span>
       
       
-        <em class="default">(defaults to: <tt>true</tt>)</em>
+        <em class="default">(defaults to: <tt>{}</tt>)</em>
       
       
         &mdash;
-        <div class='inline'><p>whether to downcase result</p>
+        <div class='inline'><p>simple <code>gsub</code>
+find/replaces to be applied, in order, to the string being
+normalized; key is the find/match value; value is the replacement
+string</p>
+</div>
+      
+    </li>
+  
+    <li>
+      
+        <span class='name'>xforms</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;Symbol, Proc&gt;</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>[]</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>Symbol must match one of the
+defined transforms; A Proc that takes one String arg and returns
+a String may also be passed to apply uncommon normalization logic</p>
 </div>
       
     </li>
@@ -508,21 +616,6 @@ handle weirdly internally</p>
   
 </ul>
 
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>3.3.0</p>
-</div>
-      
-    </li>
-  
-</ul>
 
 </div><table class="source_code">
   <tr>
@@ -530,15 +623,23 @@ handle weirdly internally</p>
       <pre class="lines">
 
 
-101
-102
-103</pre>
+112
+113
+114
+115
+116
+117
+118</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/string_normalizer.rb', line 101</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/string_normalizer.rb', line 112</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='label'>str:</span><span class='comma'>,</span> <span class='label'>mode:</span> <span class='symbol'>:plain</span><span class='comma'>,</span> <span class='label'>downcased:</span> <span class='kw'>true</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>mode:</span> <span class='id identifier rubyid_mode'>mode</span><span class='comma'>,</span> <span class='label'>downcased:</span> <span class='id identifier rubyid_downcased'>downcased</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_str'>str</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='label'>str:</span><span class='comma'>,</span> <span class='label'>mode:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>replacements:</span> <span class='lbrace'>{</span><span class='rbrace'>}</span><span class='comma'>,</span> <span class='label'>xforms:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span>
+    <span class='label'>mode:</span> <span class='id identifier rubyid_mode'>mode</span><span class='comma'>,</span>
+    <span class='label'>replacements:</span> <span class='id identifier rubyid_replacements'>replacements</span><span class='comma'>,</span>
+    <span class='label'>xforms:</span> <span class='id identifier rubyid_xforms'>xforms</span>
+  <span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_str'>str</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -591,29 +692,19 @@ handle weirdly internally</p>
       <pre class="lines">
 
 
-116
-117
-118
-119
-120
-121
-122
-123
-124
-125</pre>
+157
+158
+159
+160
+161</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/string_normalizer.rb', line 116</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/utils/string_normalizer.rb', line 157</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_call'>call</span><span class='lparen'>(</span><span class='id identifier rubyid_val'>val</span><span class='rparen'>)</span>
-  <span class='kw'>unless</span> <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_unicode_normalized?'>unicode_normalized?</span><span class='lparen'>(</span><span class='symbol'>:nfkc</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_val'>val</span> <span class='op'>=</span> <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_unicode_normalize'>unicode_normalize</span><span class='lparen'>(</span><span class='symbol'>:nfkc</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-  <span class='id identifier rubyid_subs'>subs</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_old'>old</span><span class='comma'>,</span> <span class='id identifier rubyid_new'>new</span><span class='op'>|</span> <span class='id identifier rubyid_val'>val</span> <span class='op'>=</span> <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='id identifier rubyid_old'>old</span><span class='comma'>,</span> <span class='id identifier rubyid_new'>new</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_val'>val</span> <span class='kw'>if</span> <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
 
-  <span class='id identifier rubyid_val'>val</span> <span class='op'>=</span> <span class='const'>ActiveSupport</span><span class='op'>::</span><span class='const'>Inflector</span><span class='period'>.</span><span class='id identifier rubyid_transliterate'>transliterate</span><span class='lparen'>(</span><span class='id identifier rubyid_val'>val</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_gsub'>gsub</span><span class='lparen'>(</span><span class='tstring'><span class='regexp_beg'>/</span><span class='tstring_content'>\W</span><span class='regexp_end'>/</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-
-  <span class='id identifier rubyid_downcased'>downcased</span> <span class='op'>?</span> <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span> <span class='op'>:</span> <span class='id identifier rubyid_val'>val</span>
+  <span class='id identifier rubyid_xforms'>xforms</span><span class='period'>.</span><span class='id identifier rubyid_inject'>inject</span><span class='lparen'>(</span><span class='id identifier rubyid_val'>val</span><span class='rparen'>)</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_res'>res</span><span class='comma'>,</span> <span class='id identifier rubyid_nv'>nv</span><span class='op'>|</span> <span class='id identifier rubyid_do_xform'>do_xform</span><span class='lparen'>(</span><span class='id identifier rubyid_res'>res</span><span class='comma'>,</span> <span class='id identifier rubyid_nv'>nv</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -625,7 +716,7 @@ handle weirdly internally</p>
 </div>
 
       <div id="footer">
-  Generated on Fri May  1 19:40:38 2026 by
+  Generated on Fri May  8 23:25:26 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.43 (ruby-3.4.9).
 </div>
