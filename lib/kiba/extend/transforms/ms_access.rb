@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
-# rubocop:todo Layout/LineLength
-
 require "bigdecimal"
 
 module Kiba
   module Extend
     module Transforms
-      # Transformations that handle data formats/issues seen when exporting from Microsoft Access
+      # Transformations that handle data formats/issues seen when exporting
+      #   from Microsoft Access
       module MsAccess
         ::MsAccess = Kiba::Extend::Transforms::MsAccess
         class ScientificNotationToNumberString
@@ -36,4 +35,3 @@ module Kiba
     end
   end
 end
-# rubocop:enable Layout/LineLength
