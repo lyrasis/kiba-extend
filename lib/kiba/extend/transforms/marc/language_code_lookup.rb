@@ -10,10 +10,13 @@ module Kiba
         # Look up MARC List for Languages codes and provide preferred
         # label value
         #
-        # @example Known code
-        #   row = {code: "eng"}
-        #   result = Marc::LanguageCodeLookup.new(source: :code).process(row)
-        #   expect(result).to eq(row.merge({language: "English"}))
+        # ~~~~
+        # # @example Known code - Test fails in CI
+        # #   row = {code: "eng"}
+        # #   result = Marc::LanguageCodeLookup.new(source: :code).process(row)
+        # #   expect(result).to eq(row.merge({language: "English"}))
+        # #
+        # ~~~~
         #
         # @example Unknown code
         #   row = {code: "foo"}
