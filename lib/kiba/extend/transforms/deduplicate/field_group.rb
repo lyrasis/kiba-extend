@@ -95,7 +95,7 @@ module Kiba
         #   xform = Deduplicate::FieldGroup.new(
         #     grouped_fields: %i[name role],
         #     delim: ';',
-        #     normalized: true
+        #     normalize: {xforms: %i[to_ascii nonword]}
         #   )
         #   input = [
         #     {name: 'Jan;Jan.;Sam;Sam?;Hops',
@@ -108,25 +108,24 @@ module Kiba
         #   ]
         #   expect(result).to eq(expected)
         class FieldGroup
+          include Normalizable
+
           # @param grouped_fields [Array<Symbol>] fields in the
           #   multi-field grouping to be deduplicated.
           # @param delim [nil, String] used to split/join multivalued field
           #   values
           # @param ignore_case [Boolean]
-          # @param normalized [Boolean] if true, will apply
-          #   {Kiba::Extend::Utils::StringNormalizer} with arguments:
-          #   `mode: :plain, downcased: false` to values for comparison
+          # @param normalize [nilValue, Hash] pass the desired
+          #  Utils::StringNormalizer keyword arguments in as a Hash to
+          #  normalize values before deduplication
           def initialize(grouped_fields: [], delim: Kiba::Extend.delim,
-            ignore_case: false, normalized: false)
+            ignore_case: false, normalize: nil)
             @fields = grouped_fields
             @delim = delim
             @getter = Kiba::Extend::Transforms::Helpers::FieldValueGetter.new(
               fields: grouped_fields
             )
-            @ignore_case = ignore_case
-            if normalized
-              @normalizer = Utils::StringNormalizer.new(downcased: false)
-            end
+            @normalizer = prepare_normalizer(ignore_case, normalize)
           end
 
           # @param row [Hash{ Symbol => String, nil }]
@@ -149,7 +148,7 @@ module Kiba
 
           private
 
-          attr_reader :fields, :delim, :getter, :ignore_case, :normalizer
+          attr_reader :fields, :delim, :getter, :normalizer
 
           def indexes_to_keep(vals)
             build_comparable(vals).to_a
@@ -166,14 +165,9 @@ module Kiba
 
           def build_comparable(vals)
             cvals = vals.dup.transform_values! { |v| v.dup }
-            if ignore_case
-              cvals.transform_values! { |vs| vs.map { |v| v.downcase } }
-            end
-            if normalizer
-              cvals.transform_values! do |vs|
-                vs.map { |v| normalizer.call(v) }
+              .transform_values! do |vs|
+                vs.map { |v| normalizer ? normalizer.call(v) : v }
               end
-            end
 
             acc = {}
             ct = 0
