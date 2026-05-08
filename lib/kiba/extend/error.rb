@@ -174,6 +174,14 @@ module Kiba
       end
     end
 
+    class UnbalancedFieldsTargetsError < ArgumentError
+      include Kiba::Extend::ErrMod
+
+      def initialize(msg = "Number of targets must equal number of fields")
+        super
+      end
+    end
+
     class UnsafeParameterComboError < ArgumentError
       include Kiba::Extend::ErrMod
     end
