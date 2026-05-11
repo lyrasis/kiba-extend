@@ -1,0 +1,668 @@
+// Enable keyboard shortcuts
+:experimental:
+
+:toc:
+:toc-placement!:
+:toclevels: 4
+:imagesdir: URL TO RAW.GITHUBUSERCONTENT.COM IMAGES FOLDER
+
+ifdef::env-github[]
+:tip-caption: :bulb:
+:note-caption: :information_source:
+:important-caption: :heavy_exclamation_mark:
+:caution-caption: :fire:
+:warning-caption: :warning:
+endif::[]
+
+= Field value split worksheet instructions
+
+These are general instructions for using Lyrasis' worksheet that allows clients to review and correct automated splitting of values in their data.
+
+The examples are all made up.
+The worksheet works the same way if the field values being split are names, places, storage locations, subjects, etc.
+For this reason, we use different types of values in the introductory information and the structured examples to illustrate that the mechanics of the worksheet are the same.
+
+toc::[]
+
+== Purpose of this worksheet
+
+Your data may include field values like:
+
+....
+Charlotte, NC, Austin, TX
+Raleigh, NC; Houston, TX, Baltimore, MD
+....
+
+If your migration includes treating places as controlled terms, we need to make sure we are creating the proper terms in the target system.
+
+Your Migration Specialist has already applied our best attempt at splitting values in your data.{empty}footnote:[See <<preprocessingdetails>> for details for more info on this and other preprocessing.]
+However, because the type of data we migrate is _usually_ at least a bit messy, the results of this programmatic splitting need human review and, in some cases, corrections.
+You are the experts on your data and what the values should be, so you are responsible for this review and correction.
+
+Your task here is two-fold:
+
+Correct unsplit values that should have been split:: For instance, if we split the above value on `;`, the above value starting with "Charlotte" will not be split at all.
+You would need to manually split these in this worksheet to migrate them as two separate place values.
+
+Review and correct any mis-split values:: If we ill-advisedly split on `,` the second value above is split into `Raleigh`, `NC; Houston`, `TX`, `Baltimore`, and `MD`.
+You would likely at the very least want to ensure that `NC; Houston` isn't migrated as a place.
+This worksheet lets you fix that.
+It would also let you re-join the city/state pairs into single place term values.
+
+We feel it is worth spending time to do this work in the migration process becasue it can be very difficult and tedious to fix mis-split values in the target system, after lots of records have used or been related to those terms.
+
+[#notpurpose]
+=== NOT the purpose of this worksheet
+
+* Anything time-consuming that involves looking at more than the data in the worksheet.
+This is supposed to be quick and relatively simple.
+If you are doing research, you are doing too much here.
+* Categorizing the values into types of authorities (person vs. organization, state vs. country, topical vs. chronological, onsite vs. offsite storage, etc.).
+There is a separate process for that later if it is relevant.
+* Dealing with variant forms of the values in the worksheet.
+There is a separate process for that later if it is relevant.
+* Figuring out what to do with non-term data that may be in the field (qualifiers, notes, etc).
+
+== Instructions
+
+* **Make needed corrections in the `split_val` column.**
+** Refer to the core and less-common examples in this document for how to correct common issues.
+If you are unsure how to do this, or think you have a situation not covered by the examples, ask your Migration Specialist!
+* **Do not delete any rows.**
+To remove a `split_val` value from being treated as a separate name, delete the contents of the `split_val` cell, but leave the rest of the cells in the row as-is.
+* **Changes made to `split_val` values are merged back into the migration.** This means, even if splitting was done correctly, you can quickly fix typos in names in the `split_val` column if you notice them. <<notpurpose,But don't spend too much time on this!>>
+* **Do not make changes in the hidden columns.**
+Doing so will block us from merging your work back into the migration.
+* **Edits made to any columns besides `split_val` will be ignored when your work is merged back into the migration.**
+* You can sort the rows or reorder the columns as you like.
+* You can add additional columns to support your work as needed, but anything in those columns will be ignored in the migration processing.
+* **In the completed worksheet, each `split_val` value should either be:**
+** a single, entire term/name/location (possibly with other information directly related to the term that was recorded in your original data);
+** multiple terms/names/locations, correctly split using the pipe (`|`) character. (Type kbd:[Shift+\ ] to get the pipe character.); OR
+** blank/empty, indicating that what had been present was not a valid split value and should not be treated as a separate term.
+
+=== Recommended strategy
+
+Do the "fix missing splits" and "review/correct autosplits" phases separately.
+
+It doesn't matter which order you do them in, but fixing missing splits is usually a bit more straightforward.
+
+
+.Fix missing splits
+* Use the `autosplit` column to filter to `n` or empty values (depending on how your Migration Specialist configured your auto-splitting).
+* Review these rows for splits that did not get made automatically and fix (see <<ex3>>)
+
+.Review/correct autosplits
+* Use the `autosplit` column to filter to `y` or non-empty values (depending on how your Migration Specialist configured your auto-splitting).
+* Review these rows to verify the splits were applied correctly, and correct any that were not.
+
+== Standard worksheet columns
+
+Depending on your data your Migration Specialist may include additional columns in your worksheet.
+If so, they'll describe those in instructions to you or in an additional `meta` tab in the worksheet.
+
+These are the columns generated by our standard split-and-review process:
+
+split_val:: The result of applying our automatic splits.
+This is where any corrections should be made.
+orig:: Contains the original, normalized but unsplit value.
+Provided for context in case you need to make corrections.
+autosplit:: Indicates whether what's in the `split_val` column was affected by automated splitting processes.
+Depending on how we set up your splitting, you may see `y` (result of split) or `n` values here; OR you may see the names of characters/strings on which splitting will be done, e.g. `semicolon`, `comma`, etc.
+Usually, we'll opt for `y`/`n` values if we use one character or pattern for splitting, and we'll tell you what we used.
+If we identify multiple patterns to split on, we might use the second option, to clarify the split results.a
+
+If `autosplit` is `n` or empty, you’ll want to make sure there are not missed splits.
+
+If `autosplit` is `y` or contains split pattern(s), you’ll be checking that splitting was done correctly.
+
+sort:: This column gives you a value to sort on to get the worksheet back in its original order, if you want to resort it while working on it.
+Note that the order of the rows in the worksheet doesn't matter in terms of worksheet functionality.
+
+[#coreexamples]
+== Core examples
+
+These examples cover the most common types of issues you will need to fix.
+We recommend you look at these carefully before starting, and largely ignore <<additionalexamples>> unless you run into a situation not covered by the core examples.
+
+[NOTE]
+====
+For these examples, assume we are working with name data and splitting on `,` (comma) and `{sp}and{sp}`.
+====
+
+[#ex1]
+=== Ex. 1: No correction needed
+
+.In provided worksheet
+[%autowidth]
+|===
+|split_val |orig |autosplit
+
+|John
+|John, Mary, Bastien
+|y
+
+|Mary
+|John, Mary, Bastien
+|y
+
+|Bastien
+|John, Mary, Bastien
+|y
+|===
+
+Data value merged back in to replace `orig` value:: `John|Mary|Bastien`
+
+[#ex2]
+=== Ex. 2: Bad split
+
+.In provided worksheet
+[%autowidth]
+|===
+|split_val |orig |autosplit
+
+|John
+|John, Mary, PhD., Bastien
+|y
+
+|Mary
+|John, Mary, PhD., Bastien
+|y
+
+|PhD.
+|John, Mary, PhD., Bastien
+|y
+
+|Bastien
+|John, Mary, PhD., Bastien
+|y
+|===
+
+The problem:: `PhD.` is not a separate name, and belongs with `Mary`.
+
+[#ex2c1]
+==== Ex. 2, correction option 1: Keep "PhD." with "Mary"
+
+.In returned worksheet
+[%autowidth]
+|===
+|split_val |orig |autosplit
+
+|John
+|John, Mary, PhD., Bastien
+|y
+
+|Mary, PhD.
+|John, Mary, PhD., Bastien
+|y
+
+|{empty}
+|John, Mary, PhD., Bastien
+|y
+
+|Bastien
+|John, Mary, PhD., Bastien
+|y
+|===
+
+Data value merged back in to replace `orig` value:: `John|Mary, PhD.|Bastien`
+
+[IMPORTANT]
+====
+In this option, it is critical to delete the `split_val` containing `PhD.`.
+
+`PhD.` does not exactly match any other `split_val` values for this `orig` value, so it would be treated like a 4th name value if left in place:
+
+`John|Mary, PhD.|PhD.|Bastien`
+
+As hinted at above, if you changed `split_val` in both affected rows to `Mary, PhD.`, you will end up with the desired result, because exact `split_val` matches are deduplicated when merging back into the migration.
+However, it's easier in this case to just delete `PhD.`
+====
+
+[#ex2c2]
+==== Ex. 2, correction option 2: Drop the PhD
+
+This option may be desirable if you know or can see in the worksheet that Mary is often named without her academic degree.
+Dropping "PhD." here makes the name form more consistent.
+
+There is usually another worksheet later that allows you to more easily correct inconsistent forms name, but you can do it here as well.
+If you are needing to deal with the PhD here anyway, it may make sense to drop it.
+
+.In returned worksheet
+[%autowidth]
+|===
+|split_val |orig |autosplit
+
+|John
+|John, Mary, PhD., Bastien
+|y
+
+|Mary
+|John, Mary, PhD., Bastien
+|y
+
+|{empty}
+|John, Mary, PhD., Bastien
+|y
+
+|Bastien
+|John, Mary, PhD., Bastien
+|y
+|===
+
+Data value merged back in to replace `orig` value:: `John|Mary|Bastien`
+
+[#ex3]
+=== Ex. 3: Manual split of non-split value
+
+.In provided worksheet
+[%autowidth]
+|===
+|split_val |orig |autosplit
+
+|John; Bastien
+|John; Bastien
+|n
+|===
+
+The problem:: `John` and `Bastien` are two separate names, but they were not split because they are separated here with `;` instead of `,`.
+
+[#ex3c]
+==== Ex. 3, correction
+
+Indicate proper place to split by inserting a `|` (pipe character, typed as  kbd:[Shift+\ ]).
+
+If it helps you visually, you can put spaces before and after the `|`.
+This will not affect later processing of split values, as leading and trailing spaces will be stripped from them.
+
+.In returned worksheet
+[%autowidth]
+|===
+|split_val |orig |autosplit
+
+|John{vbar}Bastien
+|John; Bastien
+|n
+|===
+
+Data value merged back in to replace `orig` value:: `John|Bastien`
+
+[#ex4]
+=== Ex. 4: Important context lost due to split
+
+.In provided worksheet
+[%autowidth]
+|===
+|split_val |orig |autosplit
+
+|George Glee
+|George Glee; Holly and Henry Holt
+|y
+
+|Holly
+|George Glee; Holly and Henry Holt
+|y
+
+|Henry Holt
+|George Glee; Holly and Henry Holt
+|y
+|===
+
+The problem:: Split correctly into separate names, but Holly's surname is lost
+
+[#ex4c]
+==== Ex. 4, correction
+
+Add the needed contextual information to the `split_val` missing it.
+You can quickly and easily fix the surname, because you have the full context of the original "Holly and Henry Holt" value to refer to.
+
+.In returned worksheet
+[%autowidth]
+|===
+|split_val |orig |autosplit
+
+|George Glee
+|George Glee; Holly and Henry Holt
+|y
+
+|Holly Holt
+|George Glee; Holly and Henry Holt
+|y
+
+|Henry Holt
+|George Glee; Holly and Henry Holt
+|y
+|===
+
+Data value merged back in to replace `orig` value:: `George Glee|Holly Holt|Henry Holt`
+
+[TIP]
+====
+This correction most often needs to be made when splitting is done on `{sp}and{sp}` or `&`.
+
+It frequently affects:
+
+* Married couples recorded as in the example
+* Storage locations like `Room 2 Cabinet 1 Shelves 1 & 3`
+
+In the storage location example, you'd want to correct:
+
+* `Room 2 Cabinet 1 Shelves 1` to `Room 2 Cabinet 1 Shelf 1`
+* `3` to `Room 2 Cabinet 1 Shelf 3`
+====
+
+[#additionalexamples]
+== Additional examples
+
+
+[#nonterminfo]
+=== Non-term information: general guidance
+
+Several of the examples below deal with "non-term information".
+
+This is information that has been recorded with a name, storage location, subject, or place, but that shouldn't be treated as part of the controlled term referring to that name, storage location, subject, or place.
+For example:
+
+* (in a donor field) `Edgar Hops (contacted 2024-07-21)` - The contacted date is not part of the name
+* (in a production place field) `Omaha, Nebraska?` - The question mark indicating uncertainty about assignment of this value is not part of the place term
+* (in a storage location field) `Annex 2 Cabinet 3, draped over` - If you want a separate storage location value for items draped over this cabinet, then "draped over" is considered part of the term.
+If items draped over this cabinet should be assigned the location `Annex 2 Cabinet 3`, then "draped over" is location-modifying non-term information
+
+This worksheet is not intended to deal with non-term information.
+There is another worksheet and process that will allow you to separate term from non-term information, and categorize/label the how the non-term information should be handled, if necessary.
+
+The most important thing to think about at this point is:
+
+* Do I care about migrating this non-term information and its association with this term?
+* Or, is is sufficient to my needs to drop the non-term info and just migrate the term itself?
+
+If this worksheet is for person/organization names, it may not be critical to retain non-name information like an affiliation or that someone is the son of another name.
+
+However, if this worksheet is for storage locations, and you have a value like `Room 121 (hidden behind the secret wall panel)`, and you wish for everything in Room 121 to be assigned that location, it is also probably important to retain the fact that certain items are hidden behind the secret wall panel.
+
+[#ex5]
+=== Ex. 5: Non-term information in value is caught up in split
+
+.In provided worksheet
+[%autowidth]
+|===
+|split_val |orig |autosplit
+
+|Mary Marx at University of State
+|Mary Marx at University of State, City
+|y
+
+|City
+|Mary Marx at University of State, City
+|y
+|===
+
+The problem:: `City` goes with `University of State, City`.
+We are splitting NAMES here, and ``University of State, City` is modifying `Mary Marx` as her affiliation, not standing alone as a name.
+If this value came from a `donor` field in your data, it is likely inaccurate that both Mary and the university should be recorded as separate donors.
+Most likely, Mary is the donor, and you may or may not care to record in an agent (ArchivesSpace) or authority (CollectionSpace) record that Mary is affiliated with the university.
+
+[#ex5c1]
+==== Ex. 5, correction option 1: Retain non-term info and undo the bad split
+
+.In returned worksheet
+[%autowidth]
+|===
+|split_val |orig |autosplit
+
+|Mary Marx at University of State, City
+|Mary Marx at University of State, City
+|y
+
+|{empty}
+|Mary Marx at University of State, City
+|y
+|===
+
+OR, the following will have the exact same effect:
+
+[%autowidth]
+|===
+|split_val |orig |autosplit
+
+|Mary Marx at University of State, City
+|Mary Marx at University of State, City
+|y
+
+|Mary Marx at University of State, City
+|Mary Marx at University of State, City
+|y
+|===
+
+Data value merged back in to replace `orig` value:: `Mary Marx at University of State, City`
+
+[#ex5c2]
+==== Ex. 5, correction option 2: Drop non-term info
+
+.In returned worksheet
+[%autowidth]
+|===
+|split_val |orig |autosplit
+
+|Mary Marx
+|Mary Marx at University of State, City
+|y
+
+|{empty}
+|Mary Marx at University of State, City
+|y
+|===
+
+OR, the following will have the exact same effect:
+
+[%autowidth]
+|===
+|split_val |orig |autosplit
+
+|Mary Marx
+|Mary Marx at University of State, City
+|y
+
+|Mary Marx
+|Mary Marx at University of State, City
+|y
+|===
+
+Data value merged back in to replace `orig` value:: `Mary Marx`
+
+[#ex5ae]
+==== Ex. 5, anti-example: Don't treat the non-term info like a term
+
+Assuming "Mary Marx at University of State, City" was recorded in a creator field, was the intent to indicate that the university is the second-listed creator of the item being described?
+
+If Mary is the only one that should be considered the creator, do not convert the university into its own term to be assigned here.
+
+.In returned worksheet
+[%autowidth]
+|===
+|split_val |orig |autosplit
+
+|Mary Marx
+|Mary Marx at University of State, City
+|y
+
+|University of State, City
+|Mary Marx at University of State, City
+|y
+|===
+
+Data value merged back in to replace `orig` value:: `Mary Marx|University of State, City`
+
+[#ex6]
+=== Ex. 6: Multiple terms with non-term information appended
+
+.In provided worksheet
+[%autowidth]
+|===
+|split_val |orig |autosplit
+
+|George Garrison
+|George Garrison, Holly Holt, Acme Archaeology, Inc.
+|y
+
+|Holly Holt
+|George Garrison, Holly Holt, Acme Archaeology, Inc.
+|y
+
+|Acme Archaeology
+|George Garrison, Holly Holt, Acme Archaeology, Inc.
+|y
+
+|Inc.
+|George Garrison, Holly Holt, Acme Archaeology, Inc.
+|y
+|===
+
+The problem::
+* Bad split of "Inc." to separate name
+* Is "Acme Archaeology, Inc." a separate ArchaeologistName agent or is it the affiliation of Holly? Or the affiliation of George AND Holly?
+
+[#ex6c1]
+==== Ex. 6, correction option 1: Treat Acme as a 3rd term value
+
+Fix the bad split of `Inc.` into a separate term:
+
+.In returned worksheet
+[%autowidth]
+|===
+|split_val |orig |autosplit
+
+|George Garrison
+|George Garrison, Holly Holt, Acme Archaeology, Inc.
+|y
+
+|Holly Holt
+|George Garrison, Holly Holt, Acme Archaeology, Inc.
+|y
+
+|Acme Archaeology, Inc.
+|George Garrison, Holly Holt, Acme Archaeology, Inc.
+|y
+
+|{empty}
+|George Garrison, Holly Holt, Acme Archaeology, Inc.
+|y
+|===
+
+Data value merged back in to replace `orig` value:: `George Garrison|Holly Holt|Acme Archaeology, Inc.`
+
+[#ex6c2]
+==== Ex. 6, correction option 2: Treat Acme as affiliation for Holly only
+
+.In returned worksheet
+[%autowidth]
+|===
+|split_val |orig |autosplit
+
+|George Garrison
+|George Garrison, Holly Holt, Acme Archaeology, Inc.
+|y
+
+|Holly Holt (Acme Archaeology, Inc.)
+|George Garrison, Holly Holt, Acme Archaeology, Inc.
+|y
+
+|{empty}
+|George Garrison, Holly Holt, Acme Archaeology, Inc.
+|y
+
+|{empty}
+|George Garrison, Holly Holt, Acme Archaeology, Inc.
+|y
+|===
+
+Data value merged back in to replace `orig` value:: `George Garrison|Holly Holt (Acme Archaeology, Inc.)`
+
+[#ex6c3]
+==== Ex. 6, correction option 3: Treat Acme as affiliation for both George and Holly
+
+.In returned worksheet
+[%autowidth]
+|===
+|split_val |orig |autosplit
+
+|George Garrison (Acme Archaeology, Inc.)
+|George Garrison, Holly Holt, Acme Archaeology, Inc.
+|y
+
+|Holly Holt (Acme Archaeology, Inc.)
+|George Garrison, Holly Holt, Acme Archaeology, Inc.
+|y
+
+|{empty}
+|George Garrison, Holly Holt, Acme Archaeology, Inc.
+|y
+
+|{empty}
+|George Garrison, Holly Holt, Acme Archaeology, Inc.
+|y
+|===
+
+Data value merged back in to replace `orig` value:: `George Garrison (Acme Archaeology, Inc.)|Holly Holt (Acme Archaeology, Inc.)`
+
+[#ex6c4]
+==== Ex. 6, correction option 4: Drop Acme info
+
+If you aren't concerned about retaining affiliation at all, or don't know who it should apply to, you can drop it.
+
+If desired, you can make a note to research this and assign proper affiliation to George and Holly after the migraion is complete.
+
+.In returned worksheet
+[%autowidth]
+|===
+|split_val |orig |autosplit
+
+|George Garrison
+|George Garrison, Holly Holt, Acme Archaeology, Inc.
+|y
+
+|Holly Holt
+|George Garrison, Holly Holt, Acme Archaeology, Inc.
+|y
+
+|{empty}
+|George Garrison, Holly Holt, Acme Archaeology, Inc.
+|y
+
+|{empty}
+|George Garrison, Holly Holt, Acme Archaeology, Inc.
+|y
+|===
+
+Data value merged back in to replace `orig` value:: `George Garrison|Holly Holt`
+
+[#preprocessingdetails]
+== Details on data preprocessing done prior to preparing this worksheet
+
+[NOTE]
+====
+The operations described in this section are custom to your project, based on your Migration Specialist's analysis of your data.
+====
+
+In general, before you get the worksheet, we will have:
+
+* Identified the field containing multiple values needing to be split;
+* Applied some normalization to the original values in the field to reduce the number of near-duplicate values you will need to review. This normalization typically includes things like:
+** Downcasing, so values like "ANNEX", "Annex", and "annex" are treated the same
+** Removed leading and trailing spaces, and collapsed multiple spaces to one space
+
+[IMPORTANT]
+====
+If the number of spaces, or the case of letters in your data has important meaning, let your Migration Specialist know before you start making changes in the worksheet.
+
+For example, if "ANNEX" is a different storage location than "Annex", we shouldn't be applying case normalization to your locations.
+We will need to adjust that and generate a new worksheet for you.
+Any corrections made in the initial worksheet will be lost
+====
+
+* Converted normalized forms to the most frequently used form.
+That is, if you have 10 occurrences of "CATS" and 8 occurrences of "cats", all those will be changed to "CATS".
+If you have 5 occurrences of "CATS" and 5 occurrences of "cats", they'll all be changed to the form we encountered first.
+* If possible, identified one or more strings that can be used to split the values automatically.
+We try to choose splitters that have been used frequently in your data, but that do not cause large numbers of bad splits.
+* Applied automatic splitting based on the identified splittable string(s).
