@@ -57,6 +57,8 @@ This is useful if you want to mark deleted fields as omitted from a project, or 
 https://github.com/lyrasis/kiba-extend/pull/250[PR#250]
 * `Normalize::FieldValues` transform - This is a wrapper around the improved `Utils::StringNormalizer`
 https://github.com/lyrasis/kiba-extend/pull/252[PR#252]
+* Documentation and reusable code for a general value splitting/review/correction FCAR process
+https://github.com/lyrasis/kiba-extend/pull/255[PR#255]
 
 === Bugfixes
 
