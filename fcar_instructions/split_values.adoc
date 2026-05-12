@@ -118,6 +118,8 @@ If `autosplit` is `y` or contains split pattern(s), you’ll be checking that sp
 
 sort:: This column gives you a value to sort on to get the worksheet back in its original order, if you want to resort it while working on it.
 Note that the order of the rows in the worksheet doesn't matter in terms of worksheet functionality.
+occurrences:: How many times the value is used.
+For some types of cleanup, this can help you prioritize what to spend time on.
 
 [#coreexamples]
 == Core examples
