@@ -29,6 +29,18 @@ module Kiba
       end
     end
 
+    class BlankFcarOrigFieldError < StandardError
+      include Kiba::Extend::ErrMod
+
+      def initialize(msg = "The value of the field(s) on which an FCAR process"\
+                     "is based is nil or empty. FCAR can't meaningfully do "\
+                     "anything with blank values, so you need to make sure "\
+                     "you've already filtered out any rows with blank values "\
+                     "before applying FCAR split transforms.")
+        super
+      end
+    end
+
     class BooleanReturningLambdaError < TypeError
       include Kiba::Extend::ErrMod
 
