@@ -610,7 +610,7 @@ fingerprint will be written</p>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_val'>val</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_orig'>orig</span><span class='rbracket'>]</span>
-  <span class='id identifier rubyid_fail'>fail</span><span class='lparen'>(</span><span class='const'>BlankFcarOrigFieldError</span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
+  <span class='id identifier rubyid_fail'>fail</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="../../BlankFcarOrigFieldError.html" title="Kiba::Extend::BlankFcarOrigFieldError (class)">BlankFcarOrigFieldError</a></span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_val'>val</span><span class='period'>.</span><span class='id identifier rubyid_blank?'>blank?</span>
 
   <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='symbol'>:orig</span><span class='rbracket'>]</span> <span class='op'>=</span> <span class='id identifier rubyid_val'>val</span>
   <span class='id identifier rubyid_row'>row</span><span class='period'>.</span><span class='id identifier rubyid_delete'>delete</span><span class='lparen'>(</span><span class='id identifier rubyid_orig'>orig</span><span class='rparen'>)</span>
@@ -629,7 +629,7 @@ fingerprint will be written</p>
 </div>
 
       <div id="footer">
-  Generated on Tue May 12 15:26:28 2026 by
+  Generated on Tue May 12 15:55:36 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.43 (ruby-3.4.9).
 </div>
