@@ -15,25 +15,25 @@ Each recipe has three components:
 
 **Table of contents**
 
-- [Review and correction of programmatic value splitting](#review-and-correction-of-programmatic-value-splitting)
-   * [Prep/setup job](#prepsetup-job)
-      + [Normalization job example](#normalization-job-example)
-      + [Prep example](#prep-example)
-   * [FCAR configuration](#fcar-configuration)
-   * [Merge job](#merge-job)
+- [Review and correction of programmatic value splitting](#split)
+   * [Prep/setup job](#splitprep)
+      + [Normalization job example](#splitprepnorm)
+      + [Prep example](#splitprepprep)
+   * [FCAR configuration](#splitconfig)
+   * [Merge job](#splitmerge)
 
-## Review and correction of programmatic value splitting
+## Review and correction of programmatic value splitting {#split}
 
 The prep and merge sections below use `:init__prep` as the job output from which we are peeling off this FCAR proccess, and thus to which we are merging its results back in.
 
-### Prep/setup job
+### Prep/setup job {#splitprep}
 
 To ease the merge process, it's recommended you break this into two jobs:
 
 - normalize: normalizes the values to be included in the worksheet
 - prep: deduplicates on normalized values and finalizes prep for the split FCAR
 
-#### Normalization job example
+#### Normalization job example {#splitprepnorm}
 
 In this example, we are pulling just the location field values out of a single migrating table and applying [the normalization described in the worksheet instructions](https://github.com/lyrasis/kiba-extend/blob/main/fcar_instructions/split_values.adoc#details-on-data-preprocessing-done-prior-to-preparing-this-worksheet) to them.
 
@@ -92,7 +92,7 @@ module Project
 end
 ~~~
 
-#### Prep example
+#### Prep example {#splitprepprep}
 
 ~~~ ruby
 # frozen_string_literal: true
@@ -142,7 +142,7 @@ module Project
 end
 ~~~
 
-### FCAR configuration
+### FCAR configuration {#splitconfig}
 
 ~~~ ruby
 # frozen_string_literal: true
@@ -245,7 +245,7 @@ module Project
 end
 ~~~
 
-### Merge job
+### Merge job {#splitmerge}
 
 This job replaces the `location` values in the original `:init__prep` output with the correctly and unambiguously delimited values from the FCAR worksheet.
 
