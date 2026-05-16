@@ -14,8 +14,13 @@ module Kiba
           return unless runnable?
 
           dirs.each do |dir|
-            puts "Deleting files from #{dir}..."
-            Dir.each_child(dir) { |f| FileUtils.rm("#{dir}/#{f}") }
+            if Kiba::Extend.pre_job_task_action == :recursive_nuke
+              puts "Deleting files and directories from #{dir}..."
+              Dir.each_child(dir) { |f| FileUtils.rm_rf("#{dir}/#{f}") }
+            elsif Kiba::Extend.pre_job_task_action == :nuke
+              puts "Deleting files from #{dir}..."
+              Dir.each_child(dir) { |f| FileUtils.rm("#{dir}/#{f}") }
+            end
           end
         end
 

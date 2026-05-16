@@ -206,8 +206,13 @@ module Kiba
     # - :nuke - Deletes all existing files in specified directories
     #    when a job is run. **Make sure you only specify directories
     #    that contain derived/generated files!**
+    # - :recursive_nuke - Deletes all existing files and subdirectories (and
+    #   their files), RECURSIVELY when a job is run. **The warning for the
+    #   `:nuke` options holds 27x more strongly here. If you were creative
+    #   with this one, you could delete most of your system. TREAD WITH
+    #   CAUTION.**
     #
-    # @return [:backup, :nuke]
+    # @return [:backup, :nuke, :recursive_nuke]
     setting :pre_job_task_action, default: :backup, reader: true
 
     # Controls whether pre-job task is run
