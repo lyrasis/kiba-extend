@@ -5,20 +5,10 @@
 
 # Common patterns, tips, and tricks
 
+- TOC
+{:toc}
 
-<!-- toc -->
-
-- [Debugging with `pry`](#debugging-with-pry)
-- [Multi-source jobs with CSV destination and sources don't have all the same fields](#multi-source-jobs-with-csv-destination-and-sources-dont-have-all-the-same-fields)
-- [Using transform(s) within another transform](#using-transforms-within-another-transform)
-- [Using transforms in job definitions](#using-transforms-in-job-definitions)
-- [Calling a job with parameters](#calling-a-job-with-parameters)
-- [Automating repetitive file registry](#automating-repetitive-file-registry)
-- [Running jobs, and checking `srcrows` and `outrows` counts from client project code](#running-jobs-and-checking-srcrows-and-outrows-counts-from-client-project-code)
-
-<!-- tocstop -->
-
-## Debugging with `pry`
+## Debugging with `pry` {#pry}
 
 In most parts of a kiba-extend project, you can just put a `binding.pry` breakpoint anywhere in the code and it will work.
 
@@ -57,7 +47,7 @@ Basically, any error message about [Binding objects](https://ruby-doc.org/3.4.1/
 
 The fix is easy: change your breakpoint to `Kernel.binding.pry`. This ensures `binding` is interpreted as the default method available on all Ruby objects via [Kernel](https://ruby-doc.org/3.4.1/Kernel.html).
 
-## Multi-source jobs with CSV destination and sources don't have all the same fields
+## Multi-source jobs with CSV destination and sources don't have all the same fields {#csv-inconsistent-fields}
 
 **Works for `Kiba::Extend::Destinations::CSV` destinations only**
 
@@ -65,13 +55,11 @@ If you have multiple sources for a job, writing to a CSV destination will fail i
 
 Especially when joining data from many tables, manually ensuring columns stay in sync across all sources is very tedious, especially as you are developing a set of jobs.
 
-**Recommended solution:** As of 4.0.0, you can fix this by adding `transform Clean::EnsureConsistentFields` to the end of tranform logic for multi-source jobs that output to CSV.
+As of 4.0.0, you can fix this by adding `transform Clean::EnsureConsistentFields` to the end of tranform logic for multi-source jobs that output to CSV.
 
-**Legacy solution (not recommended):** `Kiba::Extend::Utils::MultiSourceNormalizer` and `Kiba::Extend::Jobs::MultiSourcePrepJob` were introduced in v2.7.0 to address this issue, but will eventually be deprecated, as the `EnsureConsistentFields` transform is much easier to set up and use.
+## Using transform(s) within another transform {#xform-in-xform}
 
-## Using transform(s) within another transform
-
-### Aliasing/renaming a transform
+### Aliasing/renaming a transform {#alias-rename-xform}
 
 This pattern is used with argument forwarding to deprecate/rename some transforms in kiba-extend, as shown below:
 
@@ -121,7 +109,7 @@ See the code for `Kiba::Extend::Transforms::Rename::Fields` for a simple example
 
 See `Kiba::Extend::Transforms::Collapse::FieldsToRepeatableFieldGroup` for a complex example, involving many other transforms.
 
-### Chaining multiple transforms in another transform
+### Chaining multiple transforms in another transform {#chaining-xforms}
 
 I often use this if I need to define a single, client-specific data cleanup transform class to be run from within kiba-tms, kiba-pastperfect_we, etc.
 
@@ -149,7 +137,7 @@ class NewTransformer
 end
 ~~~
 
-### LIMITATIONS ON THE ABOVE
+#### LIMITATIONS ON THE ABOVE {#chaining-limitations}
 
 All of the above patterns should work with normal transforms---those that process one row at a time and always return that row.
 
@@ -161,7 +149,7 @@ Be careful including the following types of transforms in any of the above patte
 
 These might work ok, but I haven't done enough testing to verify they are actually safe. Try it and see. If they work, make a PR to update this documentation!
 
-## Using transforms in job definitions
+## Using transforms in job definitions {#xforms-in-jobs}
 
 The following code snippets are equivalent.
 
@@ -212,11 +200,11 @@ end
 
 However, you might run into ways where you need to use transforms more flexibly, and this basic idea might help.
 
-## Calling a job with parameters
+## Calling a job with parameters {#jobs-with-params}
 
 No need to write repetitive jobs with the exact same logic to handle variable values that differ according to a pattern. See [File registry documentation on Hash creator](https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html#hash-creator-example-since-2-7-2) for a full example of how to do this.
 
-## Automating repetitive file registry
+## Automating repetitive file registry {#auto-register}
 
 The basic idea of this is:
 
@@ -227,11 +215,13 @@ One pattern for doing this is publicly viewable [in the `kiba-tms` project](http
 
 Another example (in LYRASIS private repo) is [here](https://github.com/lyrasis/csws-update/blob/main/lib/csws/registry_data.rb#L7-L15).
 
-## Running jobs, and checking `srcrows` and `outrows` counts from client project code
+## Checking job output dynamically from client project code {#output-check}
+
+### `srcrows` and `outrows` {#srcrows-outrows}
 
 Since 3.1.0, you can do this from any project using `kiba-extend`:
 
-~~~
+~~~ ruby
 job = Kiba::Extend::Command::Run.job(:prep__objects)
 puts "Some records omitted" if job.outrows < job.srcrows
 ~~~
@@ -240,4 +230,62 @@ This assumes `:prep__objects` is registered as a job.
 
 This is being used in the publicly available `kiba-tms` project, in the auto-config generation and to-do check processes. [Examples](https://github.com/lyrasis/kiba-tms/search?q=Kiba%3A%3AExtend%3A%3ACommand%3A%3ARun.job)
 
+### `Kiba::Extend::Job.output?` {#output-method}
+
 Since 4.0.0, you can use [the `Kiba::Extend::Job.output?` method](https://lyrasis.github.io/kiba-extend/Kiba/Extend/Job.html#output%3F-class_method) to check that a job writes a file with actual data rows in it. This is helpful if you start writing dynamic/reusable code for projects that might not all have the exact same data. You can conditionally run some parts of a pipeline, only if the data is present.
+
+Basic usage of this method assumes the job you are checking for _is_ registered, but may or may not produce output. It prints a warning to STDOUT if the job is not registered.
+
+In even wilder dynamic projects, you may not care if the job is registered or not. In this case, the following usage will be your friend:
+
+~~~ ruby
+Kiba::Extend::Job.output?(:prep__objects, mode: :agnostic)
+~~~
+
+## `Kiba::Extend::Job.registered?` {#job-registered}
+
+[This method](https://lyrasis.github.io/kiba-extend/Kiba/Extend/Job.html#registered%3F-class_method) just returns a Boolean indicating whether the given job is registered or not.
+
+## Manipulating the registry on the fly {#manipulate-registry}
+
+Ok, so this isn't really a common pattern.
+
+I have come up with this while working on a project with nearly 200 input data tables, where the project needs to be built up in very distinct phases, and there are 9 different categories of tables that need to be dealt with separately.
+
+I want to be able to get `main` and `added_fields` categories of tables through the `preprocess`, `fix`, `fcar` phases to the `skeleton` (e.g. initial stub record ingest) phase before I deal with getting the other 7 categories of tables handled by the `fix` phase.
+
+To do this, I am auto-registering:
+
+* `preprocess` phase jobs based on the files in the `orig` directory
+* `fix` phase jobs based on the files in the `preprocess` directory
+* ...and so on as the phases continue
+
+But this breaks the dependency-handling assumptions of kiba-extend. If I want to dynamically call a `fix` phase job from the `fcar` phase, but haven't run the corresponding `preprocess` job (or the results are cleared out by pre-job task deletion), the `fix` job I need will not be registered.
+
+I can't just register all the eventual jobs based on the `orig` files, because referenced paths are validated when your registry data entries are initially registered at startup.
+
+Here's the code I've got working to handle this situation:
+
+~~~ ruby
+# In the transform class that needs to dynamically make lookups from
+#   fix tables available
+
+fix_jobkey = :"fix_main__#{table}"
+unless Kiba::Extend::Job.registered?(fix_jobkey)
+  Kiba::Extend::Command::Run.job(:"preprocess_main__#{table}")
+  MyProject.reset_registry
+end
+~~~
+
+~~~ ruby
+# In the /lib/my_project.rb file, inside the MyProject module definition
+
+def reset_registry
+  Kiba::Extend.config.registry =
+    Kiba::Extend::Registry::FileRegistry.new
+  MyProject.config.registry = Kiba::Extend.registry
+  MyProject::RegistryData.register
+end
+~~~
+
+By design, the job registry is frozen and immutable, so this feels sort of evil. But it gets the job done for this strange project.
