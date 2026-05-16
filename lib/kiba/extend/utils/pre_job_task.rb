@@ -16,16 +16,17 @@ module Kiba
             case action
             when :backup then Kiba::Extend::Utils::PreJobBackupTask.call
             when :nuke then Kiba::Extend::Utils::PreJobNukeTask.call
+            when :recursive_nuke then Kiba::Extend::Utils::PreJobNukeTask.call
             end
           end
 
           private
 
           def valid_action?(action_setting)
-            return true if %i[backup nuke].any?(action_setting)
+            return true if %i[backup nuke recursive_nuke].any?(action_setting)
 
             msg = "PreJobTask cannot be run because :pre_job_task_action is "\
-              "not :backup or :nuke"
+              "not :backup, :nuke, or :recursive_nuke"
             warn(msg)
             false
           end
