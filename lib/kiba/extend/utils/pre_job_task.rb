@@ -7,9 +7,8 @@ module Kiba
         class << self
           def call
             use_setting = :pre_job_task_run
-            # rubocop:todo Layout/LineLength
-            return unless Kiba::Extend.respond_to?(use_setting) && Kiba::Extend.send(use_setting)
-            # rubocop:enable Layout/LineLength
+            return unless Kiba::Extend.respond_to?(use_setting) &&
+              Kiba::Extend.send(use_setting)
 
             action = Kiba::Extend.pre_job_task_action
             return unless action && valid_action?(action)
@@ -25,9 +24,8 @@ module Kiba
           def valid_action?(action_setting)
             return true if %i[backup nuke].any?(action_setting)
 
-            # rubocop:todo Layout/LineLength
-            msg = "PreJobTask cannot be run because :pre_job_task_action is not :backup or :nuke"
-            # rubocop:enable Layout/LineLength
+            msg = "PreJobTask cannot be run because :pre_job_task_action is "\
+              "not :backup or :nuke"
             warn(msg)
             false
           end
@@ -57,9 +55,8 @@ module Kiba
             return true if Kiba::Extend.respond_to?(meth)
           end
 
-          # rubocop:todo Layout/LineLength
-          msg = "PreJobTask cannot be run because no #{meth} setting is configured"
-          # rubocop:enable Layout/LineLength
+          msg = "PreJobTask cannot be run because no #{meth} setting is "\
+            "configured"
           warn(msg)
           false
         end
@@ -71,16 +68,14 @@ module Kiba
           return true if nonexist.empty?
 
           if nonexist == dirs_setting
-            # rubocop:todo Layout/LineLength
-            msg = ["PreJobTask cannot be run because no :pre_job_task_directories exist:"]
-            # rubocop:enable Layout/LineLength
+            msg = ["PreJobTask cannot be run because no "\
+                   ":pre_job_task_directories exist:"]
             nonexist.each { |dir| msg << dir }
             warn(msg.join("\n"))
             false
           else
-            # rubocop:todo Layout/LineLength
-            msg = ["Some PreJobTask directories will be skipped they do not exist:"]
-            # rubocop:enable Layout/LineLength
+            msg = ["Some PreJobTask directories will be skipped they do not "\
+                   "exist:"]
             nonexist.each { |dir| msg << dir }
             warn(msg.join("\n"))
             true
