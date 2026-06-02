@@ -15,12 +15,10 @@ class Jobs < Runnable
     desc: "The tags for which to return entries"
 
   def tagged_or
-    getter = Kiba::Extend::Registry::RegistryEntrySelector.new
-    result = getter.tagged_any(options[:tags])
+    result = Kiba::Extend::Command::Jobs::TaggedOr.call(options[:tags])
     return if result.empty?
 
     Kiba::Extend::Registry::RegistryList.new(result).pretty
-
     return unless options[:run]
 
     run_jobs(result.map(&:key))
