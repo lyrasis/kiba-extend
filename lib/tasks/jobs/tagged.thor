@@ -11,8 +11,7 @@ class Jobs < Runnable
   LONG
 
   def tagged(tag)
-    getter = Kiba::Extend::Registry::RegistryEntrySelector.new
-    result = getter.tagged_any(tag)
+    result = Kiba::Extend::Command::Jobs::TaggedOr.call(tag)
     return if result.empty?
 
     Kiba::Extend::Registry::RegistryList.new(result).pretty

@@ -15,8 +15,7 @@ class Jobs < Runnable
     desc: "The tags for which to return entries"
 
   def tagged_and
-    getter = Kiba::Extend::Registry::RegistryEntrySelector.new
-    result = getter.tagged_all(options[:tags])
+    result = Kiba::Extend::Command::Jobs::TaggedAnd.call(options[:tags])
     return if result.empty?
 
     Kiba::Extend::Registry::RegistryList.new(result).pretty
