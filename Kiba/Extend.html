@@ -455,7 +455,7 @@ multiple spaces, removes terminal commas, strips again, removes
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#pre_job_task_action-class_method" title="pre_job_task_action (class method)">.<strong>pre_job_task_action</strong>  &#x21d2; :backup, :nuke </a>
+      <a href="#pre_job_task_action-class_method" title="pre_job_task_action (class method)">.<strong>pre_job_task_action</strong>  &#x21d2; :backup, ... </a>
     
 
     
@@ -1062,10 +1062,10 @@ wiki</a></p>
       <pre class="lines">
 
 
-230</pre>
+235</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 230</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 235</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:job_show_me</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1111,10 +1111,10 @@ wiki</a></p>
       <pre class="lines">
 
 
-235</pre>
+240</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 235</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 240</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:job_tell_me</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1169,10 +1169,10 @@ results</li>
       <pre class="lines">
 
 
-247</pre>
+252</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 247</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 252</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:job_verbosity</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='symbol'>:normal</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1378,7 +1378,7 @@ internally by transforms and utils), and not specific to a project</p>
       <div class="method_details ">
   <h3 class="signature " id="pre_job_task_action-class_method">
   
-    .<strong>pre_job_task_action</strong>  &#x21d2; <tt>:backup</tt>, <tt>:nuke</tt> 
+    .<strong>pre_job_task_action</strong>  &#x21d2; <tt>:backup</tt>, ... 
   
 
   
@@ -1394,6 +1394,11 @@ directory created in your <code>:datadir</code></li>
   <li>:nuke - Deletes all existing files in specified directories
  when a job is run. <strong>Make sure you only specify directories
  that contain derived/generated files!</strong></li>
+  <li>:recursive_nuke - Deletes all existing files and subdirectories (and
+their files), RECURSIVELY when a job is run. <strong>The warning for the
+<code>:nuke</code> options holds 27x more strongly here. If you were creative
+with this one, you could delete most of your system. TREAD WITH
+CAUTION.</strong></li>
 </ul>
 
 
@@ -1407,7 +1412,7 @@ directory created in your <code>:datadir</code></li>
     <li>
       
       
-        <span class='type'>(<tt>:backup</tt>, <tt>:nuke</tt>)</span>
+        <span class='type'>(<tt>:backup</tt>, <tt>:nuke</tt>, <tt>:recursive_nuke</tt>)</span>
       
       
       
@@ -1421,10 +1426,10 @@ directory created in your <code>:datadir</code></li>
       <pre class="lines">
 
 
-211</pre>
+216</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 211</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 216</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:pre_job_task_action</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='symbol'>:backup</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1582,10 +1587,10 @@ stable</li>
       <pre class="lines">
 
 
-225</pre>
+230</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 225</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 230</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:pre_job_task_mode</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='symbol'>:job</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span></pre>
     </td>
@@ -1698,14 +1703,14 @@ stable</li>
       <pre class="lines">
 
 
-254
-255
-256
-257
-258</pre>
+259
+260
+261
+262
+263</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 254</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend.rb', line 259</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_project_configs'>project_configs</span>
   <span class='id identifier rubyid_config_namespaces'>config_namespaces</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_ns'>ns</span><span class='op'>|</span> <span class='id identifier rubyid_get_config_mods'>get_config_mods</span><span class='lparen'>(</span><span class='id identifier rubyid_ns'>ns</span><span class='comma'>,</span> <span class='id identifier rubyid_ns'>ns</span><span class='period'>.</span><span class='id identifier rubyid_constants'>constants</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -2019,9 +2024,9 @@ wiki</a></p>
 </div>
 
       <div id="footer">
-  Generated on Thu May 14 22:06:50 2026 by
+  Generated on Tue Jun  2 16:38:24 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.43 (ruby-3.4.9).
+  0.9.44 (ruby-3.4.9).
 </div>
 
     </div>
