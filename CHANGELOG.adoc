@@ -59,6 +59,8 @@ https://github.com/lyrasis/kiba-extend/pull/250[PR#250]
 https://github.com/lyrasis/kiba-extend/pull/252[PR#252]
 * Documentation and reusable code for a general value splitting/review/correction FCAR process
 https://github.com/lyrasis/kiba-extend/pull/255[PR#255]
+* :recursive_nuke option to `:pre_job_task_action` setting
+https://github.com/lyrasis/kiba-extend/pull/258[PR#258]
 
 === Bugfixes
 
