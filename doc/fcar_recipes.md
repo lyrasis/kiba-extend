@@ -124,7 +124,7 @@ module Project
             }
 
             # Set up the splitters you need here
-            transform Fcar::SplitPrep,
+            transform StandardFcar::SplitPrep,
               orig: :normloc,
               splitters: {
                 / *; */ => :semicolon,
@@ -189,7 +189,7 @@ module Project
         Kiba.job_segment do
           mod = bind.receiver
 
-          transform Kiba::Extend::Transforms::Fcar::Helpers::SumCollatedOccurrences,
+          transform Kiba::Extend::Transforms::StandardFcar::Helpers::SumCollatedOccurrences,
             field: :occurrences,
             delim: mod.collation_delim
         end

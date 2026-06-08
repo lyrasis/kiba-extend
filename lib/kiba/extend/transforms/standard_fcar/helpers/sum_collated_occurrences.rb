@@ -3,7 +3,7 @@
 module Kiba
   module Extend
     module Transforms
-      module Fcar
+      module StandardFcar
         module Helpers
           # Splits on delim, converts to numbers, replaces with sum of numbers
           #
@@ -12,9 +12,9 @@ module Kiba
           #
           # @example With defaults
           #   # Used in pipeline as:
-          #   # transform Fcar::Helpers::SumCollatedOccurrences
+          #   # transform StandardFcar::Helpers::SumCollatedOccurrences
           #
-          #   xform = Fcar::Helpers::SumCollatedOccurrences.new
+          #   xform = StandardFcar::Helpers::SumCollatedOccurrences.new
           #   input = [
           #     {occurrences: "5"},
           #     {occurrences: "5////5"},
