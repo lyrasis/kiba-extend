@@ -3,7 +3,7 @@
 module Kiba
   module Extend
     module Transforms
-      module Fcar
+      module StandardFcar
         # rubocop:disable Layout/LineLength
 
         # Prepares data in the given `:orig` field for input to split
@@ -13,11 +13,11 @@ module Kiba
         #   fields.
         # @example With Array of splitters
         #   # Used in pipeline as:
-        #   # transform Fcar::SplitPrep,
+        #   # transform StandardFcar::SplitPrep,
         #   #   splitters: [",", ";"],
         #   #   orig: :val
         #
-        #   xform = Fcar::SplitPrep.new(
+        #   xform = StandardFcar::SplitPrep.new(
         #      splitters: [",", ";"],
         #      orig: :val
         #   )
@@ -50,11 +50,11 @@ module Kiba
         #   expect(result).to eq(expected)
         # @example With Hash of splitters
         #   # Used in pipeline as:
-        #   # transform Fcar::SplitPrep,
+        #   # transform StandardFcar::SplitPrep,
         #   #   splitters: {"," => "comma", ";" => "semicolon"},
         #   #   orig: :val
         #
-        #   xform = Fcar::SplitPrep.new(
+        #   xform = StandardFcar::SplitPrep.new(
         #      splitters: {"," => "comma", ";" => "semicolon"},
         #      orig: :val
         #   )
