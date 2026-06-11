@@ -102,9 +102,10 @@ module Kiba
           deps.flatten
             .compact
             .each do |registered|
-              next unless registered.required
+              req = registered.required
+              next unless req
 
-              registered.required.call
+              req.call
             end
           check_requirements(type)
         rescue MissingDependencyError => err
