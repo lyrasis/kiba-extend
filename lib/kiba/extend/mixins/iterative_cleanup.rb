@@ -47,10 +47,16 @@ module Kiba
       # #   matchpoint for merging cleaned up data back into the migration,
       # #   and identifying whether a given value in subsequent worksheet
       # #   iterations has been previously included in a worksheet**
-      # # base_job
+      # def base_job = :base_job__key
       # #
       # # @return [Array<Symbol>] fields included in the fingerprint value
-      # # fingerprint_fields
+      # def fingerprint_fields = %i[field1 field2]
+      # #
+      # # @return [Symbol] ONLY REQUIRED IF YOU ARE IMPLEMENTING AN FCAR
+      # #    CHUTE INCLUDING THIS CLEANUP PROCESS. Registry entry job key
+      # #    for the job that fully merges the output of this cleanup
+      # #    process back into your project data
+      # def merge_job = :merge_job__key
       # ~~~
       #
       # ### Then, extend this module
