@@ -3,24 +3,16 @@
 # @title FCAR recipes
 -->
 
-# FCAR (facilitated cleanup and remapping) recipes
-
 This page documents common patterns of client FCAR using kiba-extend's iterative cleanup functionality.
 
 Each recipe has three components:
 
- - Prep/setup job - the structure of the data required as input for the FCAR process, and any transforms that exist to streamline achieving this structure
- - FCAR configuration - A commented version of the configuration Module to include in your project to activate this FCAR
- - Merge job - patterns for merging the FCAR back into the rest of your project
+ 1. Prep/setup job - the structure of the data required as input for the FCAR process, and any transforms that exist to streamline achieving this structure
+ 2. FCAR configuration - A commented version of the configuration Module to include in your project to activate this FCAR
+ 3. Merge job - patterns for merging the FCAR back into the rest of your project
 
-**Table of contents**
-
-- [Review and correction of programmatic value splitting](#split)
-   * [Prep/setup job](#splitprep)
-      + [Normalization job example](#splitprepnorm)
-      + [Prep example](#splitprepprep)
-   * [FCAR configuration](#splitconfig)
-   * [Merge job](#splitmerge)
+* TOC
+{:toc}
 
 ## Review and correction of programmatic value splitting {#split}
 
