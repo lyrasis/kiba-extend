@@ -20,6 +20,10 @@ module Kiba
     module Marc
       enable_test_interface
     end
+
+    module Fcar
+      enable_test_interface
+    end
   end
 end
 

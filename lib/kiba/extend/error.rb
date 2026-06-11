@@ -49,6 +49,15 @@ module Kiba
       end
     end
 
+    class FcarChuteConfigMissingMethodError < NoMethodError
+      include Kiba::Extend::ErrMod
+
+      def initialize(mod)
+        super("You must add a :merge_job setting or method to #{mod} in "\
+              "order to use this module in your FCAR chute")
+      end
+    end
+
     class InvalidActionError < ArgumentError
       include Kiba::Extend::ErrMod
 
@@ -191,6 +200,17 @@ module Kiba
 
       def initialize(msg = "Number of targets must equal number of fields")
         super
+      end
+    end
+
+    class UnknownFcarConfigError < ArgumentError
+      include Kiba::Extend::ErrMod
+
+      def initialize(mod)
+        super("Cannot find #{mod} in configured iterative cleanup chute. "\
+            "If there are not yet any files associated with the cleanup, you "\
+            "need to add it to Kiba::Extend::Fcar.pending_processes in the "\
+            "project config")
       end
     end
 
