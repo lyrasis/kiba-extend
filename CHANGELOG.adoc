@@ -61,6 +61,8 @@ https://github.com/lyrasis/kiba-extend/pull/252[PR#252]
 https://github.com/lyrasis/kiba-extend/pull/255[PR#255]
 * :recursive_nuke option to `:pre_job_task_action` setting
 https://github.com/lyrasis/kiba-extend/pull/258[PR#258]
+* [FCAR chute functionality](https://lyrasis.github.io/kiba-extend/file.fcar_chute.html)
+https://github.com/lyrasis/kiba-extend/pull/259[PR#259]
 
 === Bugfixes
 
