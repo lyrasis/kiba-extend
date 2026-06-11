@@ -63,24 +63,48 @@
 
 <p>Kiba is a <a href="https://github.com/thbar/kiba">Data processing &amp; ETL framework for Ruby</a>.</p>
 
-<p>kiba-extend is a suite of Kiba extensions useful in transforming and reshaping data. It includes the following:</p>
+<p>kiba-extend is a suite of Kiba extensions useful in transforming and reshaping data.
+It has been developed in the context of performing complex custom data migration projects.
+These projects tend to have the following features, which have informed the funtionality included in kiba-extend:</p>
 
 <ul>
-  <li>An extensive library of abstract, reusable transformations</li>
-  <li>Some custom source and destination types</li>
-  <li>File/job registry support for use in migration projects. This handles repetitive aspects of configuring source, lookup, and destination files, as well as ensures dependency jobs are called to create files created for a given job. Files/jobs may be tagged and run from a project application via Rake tasks</li>
+  <li>Even when the source system is the same for 5 clients, data entry practice and use of modules/fields will vary, often wildly.</li>
+  <li>They can take a long time because they frequently involve (a) a significant level of client instruction on the function of the target system, so they can understand the impact of different data mapping decisions; (b) clients who must make migration mapping decisions by committee; and/or (c) a significant amount of work to render the data functional for the target system.</li>
+  <li>The source system often does not allow the client to get a view of the data that would be required to make migration decisions for that data. It also usually does not provide any way for the client to do any data cleanup or categorization needed to prepare for a migration, other than record-by-record editing.</li>
+  <li>Active use of the source system for critical work, which cannot be put on hold for the entire time it takes us to work with the client to develop their migration. This means we are often developing the migration</li>
+  <li>Most of our clients are not data experts or incredibly technically savvy. They tend to be most comfortable reviewing data in a tabular data format (CSV or Excel file).</li>
+</ul>
+
+<p>It includes the following:</p>
+
+<ul>
+  <li>An extensive library of abstract, reusable data transformations that can be used to create custom transformation jobs</li>
+  <li>Some custom <a href="https://lyrasis.github.io/kiba-extend/Kiba/Extend/Sources.html">source</a> and <a href="https://lyrasis.github.io/kiba-extend/Kiba/Extend/Destinations.html">destination</a> types</li>
+  <li>File/job registry support for use in migration projects. This handles repetitive aspects of configuring source, lookup, and destination files, as well as ensures dependency jobs are called to create files created for a given job. Files/jobs may be tagged and run from a project application via Thor tasks</li>
   <li>Job templating and decoration. No need to repeat the same source/destination setup, requirements running, pre-processing, post-processing, and initial/final transforms over and over again in your ETL code.</li>
+  <li>Support for <a href="https://lyrasis.github.io/kiba-extend/file.iterative_cleanup.html">iterative cleanup processes</a></li>
 </ul>
 
 <p>Some current possibilities with job templating/decoration:</p>
 
 <ul>
-  <li>You can turn on “show me!” when you run a job via Rake task, without doing anything in your code.</li>
-  <li>You can similarly turn on “tell me” from the command line, which will have your computer say something when a job is complete—useful for long running jobs.</li>
-  <li>There is a TestingJob that can be used to set up automated tests for sequences of transforms (i.e. job definition xforms/segments)</li>
+  <li>You can turn on “show me!” when you run a job via Thor task, without doing anything in your code. This causes the output to be emitted to STDOUT.</li>
+  <li>You can similarly turn on “tell me” from the command line, which will have your computer say something when a job is complete—useful for long running jobs. <strong>This is currently really annoying for jobs with dependencies, as all dependency job completions will also be announced.</strong></li>
 </ul>
 
 <p><strong>The transformations and source/destination types may be used completely independently of the registry/job templating.</strong> The registry and job templating functionality are highly dependent on one another.</p>
+
+<p>One powerful way of using kiba-extend is to create an “abstract” ETL project.
+An abstract project handles the general logic of transforming data from a specific source system into the format required by a given target system.
+For example, if you frequently need to migrate data from OldSystem to NewSystem, you may create an abstract OldSystem kiba-extend project that can handle the general structure of data out of OldSystem and its transformation:what the source data files are, hardcoded enum values that need to be replaced in the data, what preprocessing needs to be done, how to merge data from lookup tables into the records using the lookups, and remapping the data into the “shape” you need it to be in for NewSystem.</p>
+
+<p>All the specifics that may change per specific instance of such a project are defined as configuration settings in the abstract project.
+For instance one OldSystem user may only want to migrate records with <code>active=true</code> values to NewSystem, while another may wish to also migrate all records regardless of <code>active</code> status.</p>
+
+<p>You would create a new kiba-extend project for each of these clients.
+These client projects would have your abstract project as a dependency.
+This is where you would set the per-project configuration settings you defined in the abstract project.
+You can also define client-specific jobs and transforms here as needed.</p>
 
 <p>On the to-do list:</p>
 
@@ -97,7 +121,7 @@
 <p>I’m working to develop this more fully. If there is no documentation for a given transformation here, please refer to the relevant <code>spec</code> file for that transformation to see exactly what it does.</p>
 
 <h3 id="specs">Specs</h3>
-<p>To get a full overview of available transformations and what they do, run <code>rake spec</code> from the repo base directory. This will give you the names of all the transformations in <code>kiba-extend</code> and brief descriptions of what they do.</p>
+<p>To get a full overview of available transformations and what they do, run <code>bundle exec rspec</code> from the repo base directory. This will give you the names of all the transformations in <code>kiba-extend</code> and brief descriptions of what they do.</p>
 
 <p>For more clarity about exactly what each transformation does, if it is not described in the documentation yet, check the actual test files in <code>/spec/kiba/extend/transforms</code>, which include sample input rows, transformation calls, and the resulting output</p>
 
@@ -105,19 +129,13 @@
 
 <p><a href="https://github.com/lyrasis/kiba-extend-project">kiba-extend-project</a> is a Github template repository for starting a new ETL project using <code>kiba-extend</code>. It is heavily commented in an attempt to explain how things work.</p>
 
-<p><a href="https://github.com/lyrasis/kiba-tms/">kiba-tms</a> is a publicly available project not for a specific client. It uses <code>kiba-extend</code> to handle most of the data transformations required for a TMS-&gt;CollectionSpace migration. It makes heavy use of <code>dry-configurable</code> settings and probably ill-advised metaprogramming to account for the fact that every client uses TMS differently and thus basically everything needs to be configurable. <a href="https://cs.github.com/?scope=org%3Alyrasis&amp;scopeName=lyrasis&amp;q=gem+%27kiba-tms%27">Private, client-specific repos for individual TMS-&gt;CollectionSpace migration clients</a> that require <code>kiba-tms</code> are set up to define client-specific migration configs, transforms, and jobs.</p>
-
-<p><a href="https://github.com/lyrasis/mimsy-to-cspace">mimsy-to-cspace</a> is a publicly available example of <code>kiba-extend</code> usage. It was completed before the registry/job templating functions were added, so it only shows how transformations get used. (And it is a good example of how repetitive the code gets without templating)</p>
-
-<p>LYRASIS staff with permissions to private repos can find a number of other project examples using <code>kiba-extend</code> <a href="https://cs.github.com/?scope=org%3Alyrasis&amp;scopeName=lyrasis&amp;q=gem+%27kiba-extend%27">in our organizationrepo list</a></p>
-
 <h2 id="contributing">Contributing</h2>
 
 <p>Please see <a href="https://lyrasis.github.io/kiba-extend/file.contributing.html">Contributing to <code>kiba-extend</code></a> for contributor guidelines.</p>
 </div></div>
 
       <div id="footer">
-  Generated on Tue Jun  2 16:38:24 2026 by
+  Generated on Thu Jun 11 01:59:06 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.44 (ruby-3.4.9).
 </div>

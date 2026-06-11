@@ -60,31 +60,25 @@
       </div>
 
       <div id="content"><div id='filecontents'>
-<h1 id="fcar-facilitated-cleanup-and-remapping-recipes">FCAR (facilitated cleanup and remapping) recipes</h1>
-
 <p>This page documents common patterns of client FCAR using kiba-extend’s iterative cleanup functionality.</p>
 
 <p>Each recipe has three components:</p>
 
-<ul>
+<ol>
   <li>Prep/setup job - the structure of the data required as input for the FCAR process, and any transforms that exist to streamline achieving this structure</li>
   <li>FCAR configuration - A commented version of the configuration Module to include in your project to activate this FCAR</li>
   <li>Merge job - patterns for merging the FCAR back into the rest of your project</li>
-</ul>
+</ol>
 
-<p><strong>Table of contents</strong></p>
-
-<ul>
-  <li><a href="#split">Review and correction of programmatic value splitting</a>
-    <ul>
-      <li><a href="#splitprep">Prep/setup job</a>
-        <ul>
-          <li><a href="#splitprepnorm">Normalization job example</a></li>
-          <li><a href="#splitprepprep">Prep example</a></li>
+<ul id="markdown-toc">
+  <li><a href="#split" id="markdown-toc-split">Review and correction of programmatic value splitting</a>    <ul>
+      <li><a href="#splitprep" id="markdown-toc-splitprep">Prep/setup job</a>        <ul>
+          <li><a href="#splitprepnorm" id="markdown-toc-splitprepnorm">Normalization job example</a></li>
+          <li><a href="#splitprepprep" id="markdown-toc-splitprepprep">Prep example</a></li>
         </ul>
       </li>
-      <li><a href="#splitconfig">FCAR configuration</a></li>
-      <li><a href="#splitmerge">Merge job</a></li>
+      <li><a href="#splitconfig" id="markdown-toc-splitconfig">FCAR configuration</a></li>
+      <li><a href="#splitmerge" id="markdown-toc-splitmerge">Merge job</a></li>
     </ul>
   </li>
 </ul>
@@ -191,7 +185,7 @@ module Project
             }
 
             # Set up the splitters you need here
-            transform Fcar::SplitPrep,
+            transform StandardFcar::SplitPrep,
               orig: :normloc,
               splitters: {
                 / *; */ =&gt; :semicolon,
@@ -255,7 +249,7 @@ module Project
         Kiba.job_segment do
           mod = bind.receiver
 
-          transform Kiba::Extend::Transforms::Fcar::Helpers::SumCollatedOccurrences,
+          transform Kiba::Extend::Transforms::StandardFcar::Helpers::SumCollatedOccurrences,
             field: :occurrences,
             delim: mod.collation_delim
         end
@@ -371,7 +365,7 @@ end
 </div></div>
 
       <div id="footer">
-  Generated on Tue Jun  2 16:38:24 2026 by
+  Generated on Thu Jun 11 01:59:06 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.44 (ruby-3.4.9).
 </div>
