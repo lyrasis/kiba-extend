@@ -98,18 +98,21 @@
 
 <h2 id="usage">Usage</h2>
 
-<p>Any transform classes mixing in this module must have <code>fields</code> as an
-  attr_reader</p>
+<p>Any transform classes mixing in this module must have <code>@fields</code> as an
+  instance variable and <code>fields</code> as an attr_reader.</p>
 
 <p>Set the <code>fields</code> instance variable from user input as follows:</p>
 
-<pre class="code ruby"><code class="ruby"> <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_fields'>fields</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
+<pre class="code language-ruby"><code class="language-ruby"> @fields = [fields].flatten
 </code></pre>
 
 <p>Add the following line as the first thing in the <code>process</code> method:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='id identifier rubyid_finalize_fields'>finalize_fields</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_fields_set'>fields_set</span>
+<pre class="code language-ruby"><code class="language-ruby">finalize_fields(row) unless fields_set
 </code></pre>
+
+<p>If there is an <code>omit_from_all_fields</code> attr_reader set, these fields will
+  be removed from the finalized list of all fields.</p>
 
 
   </div>
@@ -144,7 +147,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Jun 11 01:59:06 2026 by
+  Generated on Fri Jun 12 17:14:34 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.44 (ruby-3.4.9).
 </div>
