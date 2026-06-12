@@ -247,13 +247,17 @@ module Kiba
           # @param debug [Boolean] if true, will put replacement value in a new
           #   field. New field name is same as old field name, with "_repl"
           #   suffix added
+          # @param omit_from_all_fields [Array<Symbol>] fields to omit from
+          #   inclusion in "all" fields; does nothing if individual field values
+          #   are passed in
           def initialize(fields:, find:, replace:, casesensitive: true,
             multival: omitted = true, sep: nil, delim: nil,
-            debug: false)
+            debug: false, omit_from_all_fields: [])
             @fields = [fields].flatten
             @find = build_pattern(find, casesensitive)
             @replace = replace
             @debug = debug
+            @omit_from_all_fields = omit_from_all_fields
             @mv = if omitted && delim
               true
             else

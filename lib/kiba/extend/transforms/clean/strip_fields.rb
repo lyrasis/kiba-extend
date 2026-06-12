@@ -54,13 +54,17 @@ module Kiba
         class StripFields
           include Allable
 
-          # @param fields [Array<Symbol>,Symbol,:all, nil] in which to
+          # @param fields [Array<Symbol>,Symbol,:all] in which to
           #   strip values
           # @param delim [nil,String] if given, switches to multivalue mode, in
           #   which each value in a multivalued string is stripped
-          def initialize(fields:, delim: nil)
+          # @param omit_from_all_fields [Array<Symbol>] fields to omit from
+          #   inclusion in "all" fields; does nothing if individual field values
+          #   are passed in
+          def initialize(fields:, delim: nil, omit_from_all_fields: [])
             @fields = [fields].flatten
             @delim = delim
+            @omit_from_all_fields = omit_from_all_fields
           end
 
           # @param row [Hash{ Symbol => String, nil }]

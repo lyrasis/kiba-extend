@@ -164,8 +164,8 @@ module Kiba
         class FromFieldsWithDelimiter
           include Allable # since 4.0.0
 
-          # @param sources [Array<Symbol>, :all] Fields whose values are to be
-          #   combined
+          # @param sources [Array<Symbol>, Symbol, :all] Fields whose values are
+          #   to be combined
           # @param target [Symbol] Field into which the combined value will be
           #   written. May be one of the source fields
           # @param delim [String] Value used to separate individual field values
@@ -184,9 +184,12 @@ module Kiba
           #   values for deduplication. Can be omitted if this is the same as
           #   `delim` value, as that will also be applied AFTER this value by
           #   default.
+          # @param omit_from_all_fields [Array<Symbol>] fields to omit from
+          #   inclusion in "all" fields; does nothing if individual field values
+          #   are passed in
           def initialize(sources: :all, target: :index, delim: " ",
             prepend_source_field_name: false, delete_sources: true,
-            deduplicate: false, dedupe_delim: nil)
+            deduplicate: false, dedupe_delim: nil, omit_from_all_fields: [])
             @fields = [sources].flatten
             @target = target
             @delim = delim
@@ -194,6 +197,7 @@ module Kiba
             @prepend = prepend_source_field_name
             @deduplicate = deduplicate
             @dedupe_delim = dedupe_delim
+            @omit_from_all_fields = omit_from_all_fields
 
             if prepend && deduplicate
               raise Kiba::Extend::UnsafeParameterComboError,
