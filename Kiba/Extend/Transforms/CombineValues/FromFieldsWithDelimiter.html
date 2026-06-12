@@ -329,7 +329,7 @@ of options.</p>
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(sources: :all, target: :index, delim: &quot; &quot;, prepend_source_field_name: false, delete_sources: true, deduplicate: false, dedupe_delim: nil)  &#x21d2; FromFieldsWithDelimiter </a>
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(sources: :all, target: :index, delim: &quot; &quot;, prepend_source_field_name: false, delete_sources: true, deduplicate: false, dedupe_delim: nil, omit_from_all_fields: [])  &#x21d2; FromFieldsWithDelimiter </a>
     
 
     
@@ -391,7 +391,7 @@ of options.</p>
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(sources: :all, target: :index, delim: &quot; &quot;, prepend_source_field_name: false, delete_sources: true, deduplicate: false, dedupe_delim: nil)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::CombineValues::FromFieldsWithDelimiter (class)">FromFieldsWithDelimiter</a></span></tt> 
+    #<strong>initialize</strong>(sources: :all, target: :index, delim: &quot; &quot;, prepend_source_field_name: false, delete_sources: true, deduplicate: false, dedupe_delim: nil, omit_from_all_fields: [])  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Transforms::CombineValues::FromFieldsWithDelimiter (class)">FromFieldsWithDelimiter</a></span></tt> 
   
 
   
@@ -413,15 +413,15 @@ of options.</p>
         <span class='name'>sources</span>
       
       
-        <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>, <tt>:all</tt>)</span>
+        <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>, <tt>Symbol</tt>, <tt>:all</tt>)</span>
       
       
         <em class="default">(defaults to: <tt>:all</tt>)</em>
       
       
         &mdash;
-        <div class='inline'><p>Fields whose values are to be
-combined</p>
+        <div class='inline'><p>Fields whose values are
+to be combined</p>
 </div>
       
     </li>
@@ -540,6 +540,25 @@ default.</p>
       
     </li>
   
+    <li>
+      
+        <span class='name'>omit_from_all_fields</span>
+      
+      
+        <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>)</span>
+      
+      
+        <em class="default">(defaults to: <tt>[]</tt>)</em>
+      
+      
+        &mdash;
+        <div class='inline'><p>fields to omit from
+inclusion in “all” fields; does nothing if individual field values
+are passed in</p>
+</div>
+      
+    </li>
+  
 </ul>
 
 
@@ -549,9 +568,6 @@ default.</p>
       <pre class="lines">
 
 
-187
-188
-189
 190
 191
 192
@@ -565,14 +581,18 @@ default.</p>
 200
 201
 202
-203</pre>
+203
+204
+205
+206
+207</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/combine_values/from_fields_with_delimiter.rb', line 187</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/combine_values/from_fields_with_delimiter.rb', line 190</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>sources:</span> <span class='symbol'>:all</span><span class='comma'>,</span> <span class='label'>target:</span> <span class='symbol'>:index</span><span class='comma'>,</span> <span class='label'>delim:</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'> </span><span class='tstring_end'>&quot;</span></span><span class='comma'>,</span>
   <span class='label'>prepend_source_field_name:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>delete_sources:</span> <span class='kw'>true</span><span class='comma'>,</span>
-  <span class='label'>deduplicate:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>dedupe_delim:</span> <span class='kw'>nil</span><span class='rparen'>)</span>
+  <span class='label'>deduplicate:</span> <span class='kw'>false</span><span class='comma'>,</span> <span class='label'>dedupe_delim:</span> <span class='kw'>nil</span><span class='comma'>,</span> <span class='label'>omit_from_all_fields:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span><span class='rparen'>)</span>
   <span class='ivar'>@fields</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_sources'>sources</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
   <span class='ivar'>@target</span> <span class='op'>=</span> <span class='id identifier rubyid_target'>target</span>
   <span class='ivar'>@delim</span> <span class='op'>=</span> <span class='id identifier rubyid_delim'>delim</span>
@@ -580,6 +600,7 @@ default.</p>
   <span class='ivar'>@prepend</span> <span class='op'>=</span> <span class='id identifier rubyid_prepend_source_field_name'>prepend_source_field_name</span>
   <span class='ivar'>@deduplicate</span> <span class='op'>=</span> <span class='id identifier rubyid_deduplicate'>deduplicate</span>
   <span class='ivar'>@dedupe_delim</span> <span class='op'>=</span> <span class='id identifier rubyid_dedupe_delim'>dedupe_delim</span>
+  <span class='ivar'>@omit_from_all_fields</span> <span class='op'>=</span> <span class='id identifier rubyid_omit_from_all_fields'>omit_from_all_fields</span>
 
   <span class='kw'>if</span> <span class='id identifier rubyid_prepend'>prepend</span> <span class='op'>&amp;&amp;</span> <span class='id identifier rubyid_deduplicate'>deduplicate</span>
     <span class='id identifier rubyid_raise'>raise</span> <span class='const'><span class='object_link'><a href="../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../UnsafeParameterComboError.html" title="Kiba::Extend::UnsafeParameterComboError (class)">UnsafeParameterComboError</a></span></span><span class='comma'>,</span>
@@ -639,10 +660,6 @@ default.</p>
       <pre class="lines">
 
 
-206
-207
-208
-209
 210
 211
 212
@@ -660,10 +677,14 @@ default.</p>
 224
 225
 226
-227</pre>
+227
+228
+229
+230
+231</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/combine_values/from_fields_with_delimiter.rb', line 206</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/combine_values/from_fields_with_delimiter.rb', line 210</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_finalize_fields'>finalize_fields</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_fields_set'>fields_set</span>
@@ -697,7 +718,7 @@ default.</p>
 </div>
 
       <div id="footer">
-  Generated on Fri Jun 12 17:14:39 2026 by
+  Generated on Fri Jun 12 20:43:43 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.44 (ruby-3.4.9).
 </div>
