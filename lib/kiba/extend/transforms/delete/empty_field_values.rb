@@ -76,9 +76,14 @@ module Kiba
           #   to `Kiba::Extend.delim` if not provided.
           # @param usenull [Boolean] whether to treat `Kiba::Extend.nullvalue`
           #   string as an empty value
-          def initialize(fields:, sep: nil, delim: nil, usenull: false)
+          # @param omit_from_all_fields [Array<Symbol>] fields to omit from
+          #   inclusion in "all" fields; does nothing if individual field values
+          #   are passed in
+          def initialize(fields:, sep: nil, delim: nil, usenull: false,
+            omit_from_all_fields: [])
             @fields = [fields].flatten
             @usenull = usenull
+            @omit_from_all_fields = omit_from_all_fields
             if sep && delim
               puts "#{Kiba::Extend.warning_label}: Do not use both `sep` "\
                 "and `delim`. Prefer `delim`"

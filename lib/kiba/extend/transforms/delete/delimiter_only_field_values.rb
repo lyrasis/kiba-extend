@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
-# rubocop:todo Layout/LineLength
-
 module Kiba
   module Extend
     module Transforms
       module Delete
+        # rubocop:todo Layout/LineLength
+
         # @since 2.9.0
         #
         # Converts any value in given field(s) to nil if that value is `empty?`, or consists only
@@ -112,20 +112,28 @@ module Kiba
         # ]
         # ~~~
         class DelimiterOnlyFieldValues
+          # rubocop:enable Layout/LineLength
+
           include Allable
 
-          # @param fields [:all, Symbol, Array(Symbol)] in which to delete delimiter-only-values. See
-          #   {Transforms} for more on fields parameter.
+          # @param fields [:all, Symbol, Array(Symbol)] in which to delete
+          #   delimiter-only-values. See {Transforms} for more on fields
+          #   parameter.
           # @param delim [String]
-          # @param treat_as_null [nil, String, Array(String)] values to treat as though they were null in
-          #   determining whether to delete the field value or not
+          # @param treat_as_null [nil, String, Array(String)] values to treat as
+          #   though they were null in determining whether to delete the field
+          #   value or not
+          # @param omit_from_all_fields [Array<Symbol>] fields to omit from
+          #   inclusion in "all" fields; does nothing if individual field values
+          #   are passed in
           def initialize(fields: :all, delim: Kiba::Extend.delim,
-            treat_as_null: nil)
+            treat_as_null: nil, omit_from_all_fields: [])
             @fields = [fields].flatten
             @delim = delim
             @treat_as_null = treat_as_null
             @checker = Helpers::DelimOnlyChecker.new(delim: delim,
               treat_as_null: treat_as_null)
+            @omit_from_all_fields = omit_from_all_fields
           end
 
           # @param row [Hash{ Symbol => String, nil }]
@@ -152,4 +160,3 @@ module Kiba
     end
   end
 end
-# rubocop:enable Layout/LineLength

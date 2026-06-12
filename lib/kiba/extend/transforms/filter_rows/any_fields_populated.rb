@@ -1,15 +1,13 @@
 # frozen_string_literal: true
 
-# rubocop:todo Layout/LineLength
-
 module Kiba
   module Extend
     module Transforms
       module FilterRows
         # @since 2.9.0
         #
-        # Keep or reject rows based on whether any of the given fields is populated. Blank strings and nils count as
-        #   not populated.
+        # Keep or reject rows based on whether any of the given fields is
+        #   populated. Blank strings and nils count as not populated.
         #
         # ## Examples
         #
@@ -26,7 +24,8 @@ module Kiba
         # Used in pipeline as:
         #
         # ~~~
-        # transform FilterRows::AnyFieldsPopulated, action: :keep, fields: %i[a b]
+        # transform FilterRows::AnyFieldsPopulated,
+        #   action: :keep, fields: %i[a b]
         # ~~~
         #
         # Resulting data:
@@ -55,7 +54,8 @@ module Kiba
         # Used in pipeline as:
         #
         # ~~~
-        # transform FilterRows::AnyFieldsPopulated, action: :reject, fields: %i[a b]
+        # transform FilterRows::AnyFieldsPopulated,
+        #   action: :reject, fields: %i[a b]
         # ~~~
         #
         # Resulting data:
@@ -70,10 +70,14 @@ module Kiba
 
           # @param action [:keep, :reject] what to do with row matching criteria
           # @param fields [Array<Symbol>, :all] to check populated status in
-          def initialize(action:, fields:)
+          # @param omit_from_all_fields [Array<Symbol>] fields to omit from
+          #   inclusion in "all" fields; does nothing if individual field values
+          #   are passed in
+          def initialize(action:, fields:, omit_from_all_fields: [])
             validate_action_argument(action)
             @action = action
             @fields = [fields].flatten
+            @omit_from_all_fields = omit_from_all_fields
           end
 
           # @param row [Hash{ Symbol => String, nil }]
@@ -104,4 +108,3 @@ module Kiba
     end
   end
 end
-# rubocop:enable Layout/LineLength

@@ -44,7 +44,10 @@ module Kiba
         #   expect(result).to eq(expected)
         #   Kiba::Extend::ProjectConfig.reset_config
         class GlobalReverse
-          def initialize
+          # @param omit_from_all_fields [Array<Symbol>] fields to omit from
+          #   inclusion in "all" fields
+          def initialize(omit_from_all_fields: [])
+            @omit_from_all_fields = omit_from_all_fields
             @replacers =
               Kiba::Extend::ProjectConfig.global_reversible_replacements
                 .values
@@ -52,6 +55,7 @@ module Kiba
                 .map do |config|
                   Clean::RegexpFindReplaceFieldVals.new(
                     fields: :all,
+                    omit_from_all_fields: omit_from_all_fields,
                     find: Regexp.new(config[:replace]),
                     replace: config[:reversed]
                   )
