@@ -67,6 +67,8 @@ https://github.com/lyrasis/kiba-extend/pull/259[PR#259]
 https://github.com/lyrasis/kiba-extend/pull/260[PR#260]
 * [`Replace::GlobalReverse` transform](https://lyrasis.github.io/kiba-extend/Kiba/Extend/Transforms/Replace/GlobalReverse.html)
 https://github.com/lyrasis/kiba-extend/pull/260[PR#260]
+* Add handling of `omit_from_all_fields` param to [`Allable` transform mixin](https://lyrasis.github.io/kiba-extend/Kiba/Extend/Transforms/Allable.html)
+https://github.com/lyrasis/kiba-extend/pull/260[PR#260]
 
 === Bugfixes
 
