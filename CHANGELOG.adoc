@@ -63,6 +63,10 @@ https://github.com/lyrasis/kiba-extend/pull/255[PR#255]
 https://github.com/lyrasis/kiba-extend/pull/258[PR#258]
 * [FCAR chute functionality](https://lyrasis.github.io/kiba-extend/file.fcar_chute.html)
 https://github.com/lyrasis/kiba-extend/pull/259[PR#259]
+* [`Replace::GlobalReversible` transform](https://lyrasis.github.io/kiba-extend/Kiba/Extend/Transforms/Replace/GlobalReversible.html)
+https://github.com/lyrasis/kiba-extend/pull/260[PR#260]
+* [`Replace::GlobalReverse` transform](https://lyrasis.github.io/kiba-extend/Kiba/Extend/Transforms/Replace/GlobalReverse.html)
+https://github.com/lyrasis/kiba-extend/pull/260[PR#260]
 
 === Bugfixes
 
