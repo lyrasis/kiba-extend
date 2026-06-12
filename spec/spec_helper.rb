@@ -24,6 +24,10 @@ module Kiba
     module Fcar
       enable_test_interface
     end
+
+    module ProjectConfig
+      enable_test_interface
+    end
   end
 end
 
