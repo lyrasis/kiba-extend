@@ -20,11 +20,9 @@ module Kiba
         end
 
         def call
-          if args
-            mod.send(meth, **args)
-          else
-            mod.send(meth)
-          end
+          job = args ? mod.send(meth, **args) : mod.send(meth)
+          job.run
+          job
         end
 
         def to_s
