@@ -39,7 +39,7 @@ module Kiba
           lines << "#{summary_padding}Job definition: #{summary_creator}"
           lines << "#{summary_padding}Lookup on: #{lookup_on}" if lookup_on
           lines << "\n"
-          lines.join("\n")
+          lines.compact.join("\n")
         end
 
         def summary_first_line
