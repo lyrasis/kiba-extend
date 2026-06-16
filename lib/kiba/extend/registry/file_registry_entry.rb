@@ -34,7 +34,7 @@ module Kiba
         # Printable string summarizing the Entry, called by project applications
         def summary
           lines = [summary_first_line]
-          lines << "#{summary_padding}#{desc}" unless desc.blank?
+          lines << "#{summary_padding}#{summary_desc}"
           lines << "#{summary_padding}#{summary_path}"
           lines << "#{summary_padding}Job definition: #{summary_creator}"
           lines << "#{summary_padding}Lookup on: #{lookup_on}" if lookup_on
@@ -46,6 +46,12 @@ module Kiba
           return key.to_s if tags.blank?
 
           "#{key} -- tags: #{tags.join(", ")}"
+        end
+
+        def summary_desc
+          return unless desc
+
+          desc.gsub("\n", "\n#{summary_padding}")
         end
 
         def summary_path
