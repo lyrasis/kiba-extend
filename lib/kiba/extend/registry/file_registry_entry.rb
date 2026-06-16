@@ -35,7 +35,7 @@ module Kiba
         def summary
           lines = [summary_first_line]
           lines << "#{summary_padding}#{desc}" unless desc.blank?
-          lines << "#{summary_padding}File path: #{path}" if path
+          lines << "#{summary_padding}#{summary_path}"
           lines << "#{summary_padding}Job definition: #{summary_creator}"
           lines << "#{summary_padding}Lookup on: #{lookup_on}" if lookup_on
           lines << "\n"
@@ -46,6 +46,13 @@ module Kiba
           return key.to_s if tags.blank?
 
           "#{key} -- tags: #{tags.join(", ")}"
+        end
+
+        def summary_path
+          return unless path
+
+          prefix = supplied ? "Input file path" : "Job output written to"
+          [prefix, path].join(": ")
         end
 
         def summary_creator
