@@ -109,6 +109,8 @@ module Helpers
     def initialize(rowct)
       @outrows = rowct
     end
+
+    def run = nil
   end
 
   def fake_creator_with_no_job_output

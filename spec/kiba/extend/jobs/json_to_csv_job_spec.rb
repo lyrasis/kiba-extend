@@ -48,7 +48,7 @@ RSpec.describe "Kiba::Extend::Jobs::JsonToCsvJob" do
     end
 
     it "runs and produces expected result" do
-      job
+      job.run
       result = CSV.table(@dest_file)
       expect(result.size).to eq(4)
     end
