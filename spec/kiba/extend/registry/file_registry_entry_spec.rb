@@ -13,7 +13,6 @@ module Helpers
       def desc
         <<~DESC
           Here is the job description.
-
           Blah blah blah.
         DESC
       end
@@ -36,7 +35,6 @@ module Helpers
   end
 end
 
-# rubocop:disable Metrics/BlockLength
 RSpec.describe "Kiba::Extend::Registry::FileRegistryEntry" do
   let(:path) { File.join("spec", "fixtures", "fkey.csv") }
   let(:entry) { Kiba::Extend::Registry::FileRegistryEntry.new(:job__key, data) }
@@ -223,22 +221,24 @@ RSpec.describe "Kiba::Extend::Registry::FileRegistryEntry" do
       it "invalid as expected" do
         expect(entry.creator).to be_nil
         expect(entry.valid?).to be false
-        # rubocop:todo Layout/LineLength
-        expect(entry.errors.key?("Kiba::Extend::Registry::Creator::TypeError")).to be true
-        # rubocop:enable Layout/LineLength
+        expect(
+          entry.errors.key?("Kiba::Extend::Registry::Creator::TypeError")
+        ).to be true
       end
     end
 
-    # rubocop:todo Layout/LineLength
-    context "when a Module not containing a `job` method, and no method given" do
+    context "when a Module not containing a `job` method, "\
+      "and no method given" do
       # rubocop:enable Layout/LineLength
       let(:data) { {path: path, creator: Helpers::Project::JoblessSection} }
       it "invalid as expected" do
         expect(entry.creator).to be_nil
         expect(entry.valid?).to be false
-        # rubocop:todo Layout/LineLength
-        expect(entry.errors.key?("Kiba::Extend::Registry::Creator::JoblessModuleCreatorError")).to be true
-        # rubocop:enable Layout/LineLength
+        expect(
+          entry.errors.key?(
+            "Kiba::Extend::Registry::Creator::JoblessModuleCreatorError"
+          )
+        ).to be true
       end
     end
 
@@ -272,4 +272,3 @@ RSpec.describe "Kiba::Extend::Registry::FileRegistryEntry" do
     end
   end
 end
-# rubocop:enable Metrics/BlockLength
