@@ -27,9 +27,11 @@ RSpec.describe "Kiba::Extend::Jobs::Job" do
     transform_registry
   end
   after(:all) { Kiba::Extend.reset_config }
+
   before(:each) do
     FileUtils.rm(@dest_file) if File.exist?(@dest_file)
   end
+
   after(:each) do
     FileUtils.rm(@dest_file) if File.exist?(@dest_file)
   end
@@ -73,7 +75,7 @@ RSpec.describe "Kiba::Extend::Jobs::Job" do
   let(:job) { base_job }
 
   it "runs and produces expected result" do
-    job
+    job.run
     result = CSV.read(@dest_file)
     expect(result).to eq(expected_lookup_result)
   end
@@ -103,7 +105,7 @@ RSpec.describe "Kiba::Extend::Jobs::Job" do
     end
 
     it "runs and produces expected result" do
-      job
+      job.run
       result = CSV.read(@dest_file)
       expect(result).to eq(expected_lookup_result)
     end
@@ -144,7 +146,7 @@ RSpec.describe "Kiba::Extend::Jobs::Job" do
         ["two", "b", "bird", "bang"]
       ]
 
-      job
+      job.run
       result = CSV.read(@dest_file)
       expect(result).to eq(expected)
     end

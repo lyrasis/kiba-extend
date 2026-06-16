@@ -5,38 +5,42 @@ require "spec_helper"
 # used to test creator validation below
 module Helpers
   module Project
+    class FakeJob
+      attr_reader :args
+
+      def initialize(args = {})
+        @args = args
+      end
+
+      def run = nil
+    end
+
     module Jobby
       module_function
 
-      def job
-        "run!"
-      end
+      def job = FakeJob.new
     end
 
     module Unjobby
       module_function
 
-      def prep
-        "prepped"
-      end
+      def prep = FakeJob.new
     end
 
     module JobbyArg
       module_function
 
-      def job(shout: false)
-        val = "run!"
-        shout ? val.upcase : val
-      end
+      def job(args) = FakeJob.new(**args)
+      # def job(shout: false)
+      #   val = "run!"
+      #   shout ? val.upcase : val
+      # end
     end
 
     module UnjobbyArg
       module_function
 
-      def prep(shout: false)
-        val = "prepped"
-        shout ? val.upcase : val
-      end
+      def prep(args) = FakeJob.new(**args)
     end
   end
 end
@@ -145,43 +149,55 @@ RSpec.describe "Kiba::Extend::Registry::Creator" do
   end
 
   describe "#call" do
-    let(:result) { creator.call }
-
     context "with no args" do
       context "with method" do
-        let(:spec) { Helpers::Project::Unjobby.method(:prep) }
-
         it "calls as expected" do
-          expect(result).to eq("prepped")
+          unjobby = class_double(Helpers::Project::Unjobby)
+          expect(unjobby).to receive(:prep)
+            .and_return(Helpers::Project::FakeJob.new)
+          c = Kiba::Extend::Registry::Creator.new(unjobby.method(:prep))
+          result = c.call
+          expect(result).to be_a(Helpers::Project::FakeJob)
         end
       end
 
       context "with jobby module" do
-        let(:spec) { Helpers::Project::Jobby }
-
         it "calls as expected" do
-          expect(result).to eq("run!")
+          expect(Helpers::Project::Jobby).to receive(:job)
+            .and_return(Helpers::Project::FakeJob.new)
+          c = Kiba::Extend::Registry::Creator.new(Helpers::Project::Jobby)
+          result = c.call
+          expect(result).to be_a(Helpers::Project::FakeJob)
         end
       end
     end
 
     context "with args" do
       context "with method" do
-        let(:spec) do
-          {callee: Helpers::Project::UnjobbyArg.method(:prep),
-           args: {shout: true}}
-        end
-
         it "calls as expected" do
-          expect(result).to eq("PREPPED")
+          args = {shout: true}
+          spec = {callee: Helpers::Project::UnjobbyArg.method(:prep),
+                  args: args}
+          expect(Helpers::Project::UnjobbyArg).to receive(:prep)
+            .and_return(Helpers::Project::FakeJob.new(**args))
+          c = Kiba::Extend::Registry::Creator.new(spec)
+          result = c.call
+          expect(result).to be_a(Helpers::Project::FakeJob)
+          expect(result.args[:shout]).to be true
         end
       end
 
       context "with jobby module" do
-        let(:spec) { {callee: Helpers::Project::JobbyArg, args: {shout: true}} }
-
         it "calls as expected" do
-          expect(result).to eq("RUN!")
+          args = {shout: true}
+          spec = {callee: Helpers::Project::JobbyArg,
+                  args: args}
+          expect(Helpers::Project::JobbyArg).to receive(:job)
+            .and_return(Helpers::Project::FakeJob.new(**args))
+          c = Kiba::Extend::Registry::Creator.new(spec)
+          result = c.call
+          expect(result).to be_a(Helpers::Project::FakeJob)
+          expect(result.args[:shout]).to be true
         end
       end
     end

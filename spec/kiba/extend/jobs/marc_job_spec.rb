@@ -48,7 +48,7 @@ RSpec.describe "Kiba::Extend::Jobs::MarcJob" do
     end
 
     it "runs and produces expected result" do
-      marcjob
+      marcjob.run
       result = CSV.table(@dest_file)
       expect(result).to be_a(CSV::Table)
     end
@@ -99,7 +99,7 @@ RSpec.describe "Kiba::Extend::Jobs::MarcJob" do
     end
 
     it "runs and produces expected result" do
-      marcjob
+      marcjob.run
       expect(recs.first).to be_a(MARC::Record)
       expect(recs.length).to eq(10)
     end
