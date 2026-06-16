@@ -29,9 +29,7 @@ module Kiba
           validate
         end
 
-        def dir
-          path.dirname
-        end
+        def dir = path.dirname
 
         # Printable string summarizing the Entry, called by project applications
         def summary
@@ -61,15 +59,11 @@ module Kiba
           lines.map { |line| "#{summary_padding}#{line}" }.join("\n")
         end
 
-        def summary_padding
-          "    "
-        end
+        def summary_padding = "    "
 
         # Whether the Entry is valid
         # @return [Boolean]
-        def valid?
-          valid
-        end
+        def valid? = valid
 
         private
 
