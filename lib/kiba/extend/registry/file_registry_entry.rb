@@ -36,7 +36,7 @@ module Kiba
           lines = [summary_first_line]
           lines << "#{summary_padding}#{desc}" unless desc.blank?
           lines << "#{summary_padding}File path: #{path}" if path
-          lines << summary_creator if creator
+          lines << "#{summary_padding}Job definition: #{summary_creator}"
           lines << "#{summary_padding}Lookup on: #{lookup_on}" if lookup_on
           lines << "\n"
           lines.join("\n")
@@ -49,14 +49,9 @@ module Kiba
         end
 
         def summary_creator
-          lines = []
-          arr = creator.to_s
-            .delete_prefix("#<Method: ")
-            .delete_suffix(">")
-            .split(" ")
-          lines << "Job method: #{arr[0]}"
-          lines << "Job defined at: #{arr[1]}"
-          lines.map { |line| "#{summary_padding}#{line}" }.join("\n")
+          return "n/a - Supplied file" unless creator
+
+          creator.to_s
         end
 
         def summary_padding = "    "
