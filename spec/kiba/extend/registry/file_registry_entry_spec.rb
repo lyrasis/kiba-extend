@@ -83,6 +83,7 @@ RSpec.describe "Kiba::Extend::Registry::FileRegistryEntry" do
         expect(entry.valid?).to be false
         errkey = entry.errors.key?(:cannot_lookup_from_nonCSV_supplied_source)
         expect(errkey).to be true
+        # binding.pry
       end
     end
   end
@@ -121,10 +122,23 @@ RSpec.describe "Kiba::Extend::Registry::FileRegistryEntry" do
   end
 
   context "with valid data" do
-    let(:data) { {path: path, creator: Helpers.method(:test_csv)} }
+    let(:data) do
+      {
+        path: path,
+        creator: Helpers.method(:test_csv),
+        desc: "Here is the job description"
+      }
+    end
+
     it "valid as expected" do
       expect(entry.path).to eq(Pathname.new(path))
       expect(entry.valid?).to be true
+      expect(entry.summary).to eq(
+        "job__key\n    ~~~~ Job description\n    "\
+          "Here is the job description\n    ~~~~\n    "\
+          "Job output written to: spec/fixtures/fkey.csv\n    "\
+          "Job definition: Helpers.test_csv\n\n"
+      )
     end
   end
 
@@ -172,6 +186,11 @@ RSpec.describe "Kiba::Extend::Registry::FileRegistryEntry" do
     it "valid as expected" do
       expect(entry.valid?).to be true
       expect(entry.desc).to eq(Helpers::Project::Section.desc)
+      expect(entry.summary).to match(
+        "job__key\n    ~~~~ Job description\n    "\
+          "Here is the job description.\n    "\
+          "Blah blah blah.\n    ~~~~\n    Job output written"
+      )
     end
   end
 
