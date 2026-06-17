@@ -20,7 +20,7 @@ module Kiba
         end
 
         def call
-          job = args ? mod.send(meth, **args) : mod.send(meth)
+          job = get_job
           job.run
           job
         end
@@ -37,6 +37,8 @@ module Kiba
         private
 
         attr_reader :spec
+
+        def get_job = args ? mod.send(meth, **args) : mod.send(meth)
 
         def args_type_ok?
           spec[:args].is_a?(Hash)
