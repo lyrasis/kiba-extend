@@ -26,7 +26,21 @@ module Kiba
         #   for details
         def initialize(key, reghash)
           @key = key
-          set_defaults
+          @type = :file
+          @creator = nil
+          @desc = ""
+          @dest_class = Kiba::Extend.destination
+          @dest_opt = nil
+          @dest_special_opts = nil
+          @lookup_on = nil
+          @path = nil
+          @src_class = Kiba::Extend.source
+          @src_opt = nil
+          @supplied = false
+          @tags = []
+          @valid = false
+          @errors = {}
+          @warnings = []
           assign_values_from(reghash)
           validate
         end
@@ -83,24 +97,6 @@ module Kiba
           return false if chk.uniq == [false]
 
           true
-        end
-
-        def set_defaults
-          @type = :file
-          @creator = nil
-          @desc = ""
-          @dest_class = Kiba::Extend.destination
-          @dest_opt = nil
-          @dest_special_opts = nil
-          @lookup_on = nil
-          @path = nil
-          @src_class = Kiba::Extend.source
-          @src_opt = nil
-          @supplied = false
-          @tags = []
-          @valid = false
-          @errors = {}
-          @warnings = []
         end
 
         def validate
