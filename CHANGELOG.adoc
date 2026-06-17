@@ -72,6 +72,9 @@ https://github.com/lyrasis/kiba-extend/pull/260[PR#260]
 
 === Bugfixes
 
+* `FileRegistryEntry` summary display issues described in https://github.com/lyrasis/kiba-extend/issues/125[#125]
+https://github.com/lyrasis/kiba-extend/pull/263[PR#263]
+
 === Changed
 
 * Initializing a Job class no longer runs the job, resolving https://github.com/lyrasis/kiba-extend/issues/159[#159]
