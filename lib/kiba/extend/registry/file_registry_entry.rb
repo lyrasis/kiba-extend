@@ -55,6 +55,14 @@ module Kiba
           reghash.each { |key, val| assign_value(key, val) }
         end
 
+        def validate
+          validate_path
+          validate_creator
+          validate_type
+          validate_lookup
+          @valid = true if errors.empty?
+        end
+
         def assign_value(key, val)
           if allowed_setting?(key)
             if key == :dest_special_opts
@@ -84,14 +92,6 @@ module Kiba
           @creator = Kiba::Extend::Registry::Creator.new(creator)
         rescue Kiba::Extend::Error => err
           errors[err.class.name] = err.message
-        end
-
-        def validate
-          validate_path
-          validate_creator
-          validate_type
-          validate_lookup
-          @valid = true if errors.empty?
         end
       end
     end
