@@ -17,7 +17,7 @@ module Kiba
         attr_reader :path, :key,
           :creator, :supplied, :dest_special_opts, :desc, :lookup_on, :tags,
           :message, :dest_class, :dest_opt, :src_class, :src_opt, :type,
-          :valid, :errors, :warnings
+          :errors, :warnings
 
         # @param key [Symbol] Full job key associated with reghash
         # @param reghash [Hash] File data. See {file:doc/file_registry_entry.md}
@@ -47,7 +47,7 @@ module Kiba
 
         # Whether the Entry is valid
         # @return [Boolean]
-        def valid? = valid
+        def valid? = @valid
 
         private
 
