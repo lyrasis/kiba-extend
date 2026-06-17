@@ -19,6 +19,8 @@ module Kiba
           set_vars
         end
 
+        def files = get_job.files
+
         def call
           job = get_job
           job.run
