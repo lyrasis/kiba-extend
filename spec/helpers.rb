@@ -103,6 +103,25 @@ module Helpers
     FileUtils.touch(File.join(fixtures_dir, "base_job_missing.csv"))
   end
 
+  def dependency_graph_registry
+    Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry
+    extra_entries = {
+      b: {path: File.join(fixtures_dir, "b.csv"),
+          creator: B},
+      c: {path: File.join(fixtures_dir, "c.csv"),
+          creator: C},
+      d: {path: File.join(fixtures_dir, "d.csv"),
+          creator: D},
+      e: {path: File.join(fixtures_dir, "e.csv"),
+          creator: E},
+      f: {path: File.join(fixtures_dir, "f.csv"),
+          creator: F}
+
+    }
+    populate_registry(more_entries: extra_entries)
+    transform_registry
+  end
+
   class OutputJob
     attr_reader :outrows
 

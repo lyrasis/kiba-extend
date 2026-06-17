@@ -35,6 +35,77 @@ module Helpers
   end
 end
 
+module B
+  module_function
+
+  def job
+    Kiba::Extend::Jobs::Job.new(
+      files: {
+        source: :fee,
+        destination: :b
+      },
+      transformer: []
+    )
+  end
+end
+
+module C
+  module_function
+
+  def job
+    Kiba::Extend::Jobs::Job.new(
+      files: {
+        source: :b,
+        destination: :c
+      },
+      transformer: []
+    )
+  end
+end
+
+module D
+  module_function
+
+  def job
+    Kiba::Extend::Jobs::Job.new(
+      files: {
+        source: :b,
+        destination: :d
+      },
+      transformer: []
+    )
+  end
+end
+
+module E
+  module_function
+
+  def job
+    Kiba::Extend::Jobs::Job.new(
+      files: {
+        source: %i[c d],
+        destination: :e,
+        lookup: {jobkey: :b, lookup_on: :type}
+      },
+      transformer: []
+    )
+  end
+end
+
+module F
+  module_function
+
+  def job
+    Kiba::Extend::Jobs::Job.new(
+      files: {
+        source: :e,
+        destination: :f,
+        lookup: :fkey
+      },
+      transformer: []
+    )
+  end
+end
 RSpec.describe "Kiba::Extend::Registry::FileRegistryEntry" do
   let(:path) { File.join("spec", "fixtures", "fkey.csv") }
   let(:entry) { Kiba::Extend::Registry::FileRegistryEntry.new(:job__key, data) }
@@ -83,7 +154,6 @@ RSpec.describe "Kiba::Extend::Registry::FileRegistryEntry" do
         expect(entry.valid?).to be false
         errkey = entry.errors.key?(:cannot_lookup_from_nonCSV_supplied_source)
         expect(errkey).to be true
-        # binding.pry
       end
     end
   end
@@ -163,8 +233,8 @@ RSpec.describe "Kiba::Extend::Registry::FileRegistryEntry" do
         path: path,
         creator: Helpers.method(:test_csv),
         dest_special_opts: {initial_headers: proc {
-                                               Helpers::Project.headers.reverse
-                                             }}
+          Helpers::Project.headers.reverse
+        }}
       }
     end
 
@@ -248,18 +318,18 @@ RSpec.describe "Kiba::Extend::Registry::FileRegistryEntry" do
 
     context "when a Module not containing a `job` method, "\
       "and no method given" do
-      # rubocop:enable Layout/LineLength
-      let(:data) { {path: path, creator: Helpers::Project::JoblessSection} }
-      it "invalid as expected" do
-        expect(entry.creator).to be_nil
-        expect(entry.valid?).to be false
-        expect(
-          entry.errors.key?(
-            "Kiba::Extend::Registry::Creator::JoblessModuleCreatorError"
-          )
-        ).to be true
+        # rubocop:enable Layout/LineLength
+        let(:data) { {path: path, creator: Helpers::Project::JoblessSection} }
+        it "invalid as expected" do
+          expect(entry.creator).to be_nil
+          expect(entry.valid?).to be false
+          expect(
+            entry.errors.key?(
+              "Kiba::Extend::Registry::Creator::JoblessModuleCreatorError"
+            )
+          ).to be true
+        end
       end
-    end
 
     context "when a Module containing a `job` method, and no method given" do
       let(:data) { {path: path, creator: Helpers::Project::Section} }
@@ -271,8 +341,8 @@ RSpec.describe "Kiba::Extend::Registry::FileRegistryEntry" do
     context "when a Proc returning valid job" do
       let(:data) do
         {path: path, creator: proc {
-                                Helpers::Project::JoblessSection.send(:procable)
-                              }}
+          Helpers::Project::JoblessSection.send(:procable)
+        }}
       end
       it "valid as expected" do
         expect(entry.valid?).to be true
@@ -282,12 +352,26 @@ RSpec.describe "Kiba::Extend::Registry::FileRegistryEntry" do
     context "when a Proc returning invalid job" do
       let(:data) do
         {path: path, creator: proc {
-                                Helpers::Project::JoblessSection
-                              }}
+          Helpers::Project::JoblessSection
+        }}
       end
       it "valid as expected" do
         expect(entry.valid?).to be false
       end
+    end
+  end
+
+  describe "#ancestors" do
+    before(:each) { dependency_graph_registry }
+    after(:each) { Kiba::Extend.reset_config }
+
+    it "returns as expected" do
+      entry = Kiba::Extend.registry.resolve(:f)
+      anc = entry.ancestors.uniq
+      expect(anc.length).to eq(10)
+      entry = Kiba::Extend.registry.resolve(:fee)
+      result = entry.ancestors
+      expect(result).to eq([])
     end
   end
 end
