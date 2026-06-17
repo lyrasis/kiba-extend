@@ -151,62 +151,6 @@
       <li class="public ">
   <span class="summary_signature">
     
-      <a href="#context-instance_method" title="#context (instance method)">#<strong>context</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-    
-      <span class="note title readonly">readonly</span>
-    
-    
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-</div></span>
-  
-</li>
-
-    
-      <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#control-instance_method" title="#control (instance method)">#<strong>control</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-    
-      <span class="note title readonly">readonly</span>
-    
-    
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-</div></span>
-  
-</li>
-
-    
-      <li class="public ">
-  <span class="summary_signature">
-    
       <a href="#files-instance_method" title="#files (instance method)">#<strong>files</strong>  &#x21d2; Object </a>
     
 
@@ -332,7 +276,53 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(files:, transformer:, mode: :run)  &#x21d2; BaseJob </a>
+      <a href="#context-instance_method" title="#context (instance method)">#<strong>context</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#control-instance_method" title="#control (instance method)">#<strong>control</strong>  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
+      <a href="#initialize-instance_method" title="#initialize (instance method)">#<strong>initialize</strong>(files:, transformer:)  &#x21d2; BaseJob </a>
     
 
     
@@ -423,7 +413,7 @@
     <div class="method_details first">
   <h3 class="signature first" id="initialize-instance_method">
   
-    #<strong>initialize</strong>(files:, transformer:, mode: :run)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Jobs::BaseJob (class)">BaseJob</a></span></tt> 
+    #<strong>initialize</strong>(files:, transformer:)  &#x21d2; <tt><span class='object_link'><a href="" title="Kiba::Extend::Jobs::BaseJob (class)">BaseJob</a></span></tt> 
   
 
   
@@ -462,26 +452,6 @@
       
     </li>
   
-    <li>
-      
-        <span class='name'>mode</span>
-      
-      
-        <span class='type'>(<tt>:run</tt>, <tt>:setup</tt>, <tt>:info</tt>)</span>
-      
-      
-        <em class="default">(defaults to: <tt>:run</tt>)</em>
-      
-      
-        &mdash;
-        <div class='inline'><p>:info mode sets up files only.
-:setup mode sets up files and handles requirements, including
-running any necessary jobs to create sources and/or lookups needed
-by the job. :run does all of the above and runs the job. Since 4.0.0</p>
-</div>
-      
-    </li>
-  
 </ul>
 
 <p class="tag_title">Since:</p>
@@ -506,6 +476,10 @@ by the job. :run does all of the above and runs the job. Since 4.0.0</p>
       <pre class="lines">
 
 
+23
+24
+25
+26
 27
 28
 29
@@ -514,33 +488,12 @@ by the job. :run does all of the above and runs the job. Since 4.0.0</p>
 32
 33
 34
-35
-36
-37
-38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52
-53
-54
-55
-56</pre>
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/base_job.rb', line 27</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/base_job.rb', line 23</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>files:</span><span class='comma'>,</span> <span class='label'>transformer:</span><span class='comma'>,</span> <span class='label'>mode:</span> <span class='symbol'>:run</span><span class='rparen'>)</span>
+<span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>files:</span><span class='comma'>,</span> <span class='label'>transformer:</span><span class='rparen'>)</span>
   <span class='ivar'>@destination_key</span> <span class='op'>=</span> <span class='id identifier rubyid_files'>files</span><span class='lbracket'>[</span><span class='symbol'>:destination</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'>Symbol</span><span class='rparen'>)</span> <span class='op'>?</span>
     <span class='id identifier rubyid_files'>files</span><span class='lbracket'>[</span><span class='symbol'>:destination</span><span class='rbracket'>]</span> <span class='op'>:</span>
     <span class='id identifier rubyid_files'>files</span><span class='lbracket'>[</span><span class='symbol'>:destination</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_first'>first</span>
@@ -551,24 +504,7 @@ by the job. :run does all of the above and runs the job. Since 4.0.0</p>
   <span class='id identifier rubyid_extend'>extend</span> <span class='const'><span class='object_link'><a href="DependencyJob.html" title="Kiba::Extend::Jobs::DependencyJob (module)">DependencyJob</a></span></span> <span class='kw'>if</span> <span class='ivar'>@dependency</span>
 
   <span class='ivar'>@files</span> <span class='op'>=</span> <span class='id identifier rubyid_setup_files'>setup_files</span><span class='lparen'>(</span><span class='id identifier rubyid_files'>files</span><span class='period'>.</span><span class='id identifier rubyid_transform_values'>transform_values</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_v'>v</span><span class='op'>|</span> <span class='lbracket'>[</span><span class='id identifier rubyid_v'>v</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span> <span class='rbrace'>}</span><span class='rparen'>)</span>
-
-  <span class='kw'>unless</span> <span class='id identifier rubyid_mode'>mode</span> <span class='op'>==</span> <span class='symbol'>:info</span>
-    <span class='id identifier rubyid_report_run_start'>report_run_start</span> <span class='comment'># defined in Reporter
-</span>    <span class='comment'># defined in Runner
-</span>    <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>source</span><span class='words_sep'> </span><span class='tstring_content'>lookup</span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_type'>type</span><span class='op'>|</span>
-      <span class='id identifier rubyid_handle_requirements'>handle_requirements</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span>
-    <span class='kw'>end</span>
-    <span class='ivar'>@control</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>Control</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span>
-    <span class='ivar'>@context</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>Context</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_control'>control</span><span class='rparen'>)</span>
-    <span class='ivar'>@transformer</span> <span class='op'>=</span> <span class='id identifier rubyid_transformer'>transformer</span>
-    <span class='id identifier rubyid_assemble_control'>assemble_control</span> <span class='comment'># defined in Runner
-</span>  <span class='kw'>end</span>
-
-  <span class='kw'>if</span> <span class='id identifier rubyid_mode'>mode</span> <span class='op'>==</span> <span class='symbol'>:run</span>
-    <span class='id identifier rubyid_run'>run</span>
-    <span class='id identifier rubyid_set_row_count_instance_variables'>set_row_count_instance_variables</span>
-    <span class='id identifier rubyid_report_run_end'>report_run_end</span> <span class='comment'># defined in Reporter
-</span>  <span class='kw'>end</span>
+  <span class='ivar'>@transformer</span> <span class='op'>=</span> <span class='id identifier rubyid_transformer'>transformer</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -583,121 +519,7 @@ by the job. :run does all of the above and runs the job. Since 4.0.0</p>
       
       <span id=""></span>
       <div class="method_details first">
-  <h3 class="signature first" id="context-instance_method">
-  
-    #<strong>context</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>2.2.0</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-19
-20
-21</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/base_job.rb', line 19</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_context'>context</span>
-  <span class='ivar'>@context</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      
-      <span id=""></span>
-      <div class="method_details ">
-  <h3 class="signature " id="control-instance_method">
-  
-    #<strong>control</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>2.2.0</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-19
-20
-21</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/base_job.rb', line 19</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_control'>control</span>
-  <span class='ivar'>@control</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      
-      <span id=""></span>
-      <div class="method_details ">
-  <h3 class="signature " id="files-instance_method">
+  <h3 class="signature first" id="files-instance_method">
   
     #<strong>files</strong>  &#x21d2; <tt>Object</tt>  <span class="extras">(readonly)</span>
   
@@ -930,7 +752,109 @@ by the job. :run does all of the above and runs the job. Since 4.0.0</p>
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="run-instance_method">
+  <h3 class="signature first" id="context-instance_method">
+  
+    #<strong>context</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>2.2.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+39</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/base_job.rb', line 39</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_context'>context</span> <span class='op'>=</span> <span class='ivar'>@context</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>Context</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_control'>control</span><span class='rparen'>)</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="control-instance_method">
+  
+    #<strong>control</strong>  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>2.2.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+37</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/base_job.rb', line 37</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_control'>control</span> <span class='op'>=</span> <span class='ivar'>@control</span> <span class='op'>||=</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'>Control</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="run-instance_method">
   
     #<strong>run</strong>  &#x21d2; <tt>Object</tt> 
   
@@ -969,22 +893,38 @@ by the job. :run does all of the above and runs the job. Since 4.0.0</p>
       <pre class="lines">
 
 
-58
-59
-60
-61
-62
-63
-64
-65
-66</pre>
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/base_job.rb', line 58</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/base_job.rb', line 41</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_run'>run</span>
-  <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='period'>.</span><span class='id identifier rubyid_run'>run</span><span class='lparen'>(</span><span class='id identifier rubyid_control'>control</span><span class='rparen'>)</span>
-<span class='kw'>rescue</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_err'>err</span>
+  <span class='id identifier rubyid_report_run_start'>report_run_start</span> <span class='comment'># defined in Reporter
+</span>  <span class='comment'># defined in Runner
+</span>  <span class='qsymbols_beg'>%i[</span><span class='tstring_content'>source</span><span class='words_sep'> </span><span class='tstring_content'>lookup</span><span class='tstring_end'>]</span></span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_type'>type</span><span class='op'>|</span>
+    <span class='id identifier rubyid_handle_requirements'>handle_requirements</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span>
+  <span class='kw'>end</span>
+  <span class='id identifier rubyid_assemble_control'>assemble_control</span> <span class='comment'># defined in Runner
+</span>  <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='period'>.</span><span class='id identifier rubyid_run'>run</span><span class='lparen'>(</span><span class='id identifier rubyid_control'>control</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_set_row_count_instance_variables'>set_row_count_instance_variables</span>
+  <span class='id identifier rubyid_report_run_end'>report_run_end</span> <span class='comment'># defined in Reporter
+</span><span class='kw'>rescue</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_err'>err</span>
   <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>JOB FAILED: TRANSFORM ERROR IN: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_job_data'>job_data</span><span class='period'>.</span><span class='id identifier rubyid_creator'>creator</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_err'>err</span><span class='period'>.</span><span class='id identifier rubyid_class'>class</span><span class='period'>.</span><span class='id identifier rubyid_name'>name</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_err'>err</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>AT:</span><span class='tstring_end'>&quot;</span></span>
@@ -1001,7 +941,7 @@ by the job. :run does all of the above and runs the job. Since 4.0.0</p>
 </div>
 
       <div id="footer">
-  Generated on Fri Jun 12 20:43:38 2026 by
+  Generated on Wed Jun 17 01:19:06 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.44 (ruby-3.4.9).
 </div>
