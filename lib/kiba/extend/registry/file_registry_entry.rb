@@ -53,21 +53,8 @@ module Kiba
 
         private
 
-        def set_up_creator(creator)
-          @creator = Kiba::Extend::Registry::Creator.new(creator)
-        rescue Kiba::Extend::Error => err
-          errors[err.class.name] = err.message
-        end
-
-        def allowed_settings
-          instance_variables
-            .map(&:to_s)
-            .map { |str| str.delete_prefix("@") }
-            .map(&:to_sym)
-        end
-
-        def allowed_setting?(key)
-          allowed_settings.any?(key)
+        def assign_values_from(reghash)
+          reghash.each { |key, val| assign_value(key, val) }
         end
 
         def assign_value(key, val)
@@ -86,8 +73,19 @@ module Kiba
           end
         end
 
-        def assign_values_from(reghash)
-          reghash.each { |key, val| assign_value(key, val) }
+        def allowed_setting?(key) = allowed_settings.any?(key)
+
+        def allowed_settings
+          instance_variables
+            .map(&:to_s)
+            .map { |str| str.delete_prefix("@") }
+            .map(&:to_sym)
+        end
+
+        def set_up_creator(creator)
+          @creator = Kiba::Extend::Registry::Creator.new(creator)
+        rescue Kiba::Extend::Error => err
+          errors[err.class.name] = err.message
         end
 
         def path_required?
