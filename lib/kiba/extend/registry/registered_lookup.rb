@@ -12,6 +12,7 @@ module Kiba
       #
       # Assumes this file will be used to build a {Kiba::Extend::Lookup}
       class RegisteredLookup < RegisteredFile
+        include Ancestorable
         include RequirableFile
 
         # @param key [Symbol, Hash] file key from {FileRegistry} data

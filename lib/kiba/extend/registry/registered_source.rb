@@ -19,6 +19,7 @@ module Kiba
       # Value object representing a {Kiba::Extend::Registry::RegistryEntry}
       #   being used as a job source
       class RegisteredSource < RegisteredFile
+        include Ancestorable
         include RequirableFile
 
         # Arguments for calling Kiba Source class

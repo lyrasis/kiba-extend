@@ -1,5 +1,8 @@
 # frozen_string_literal: true
 
+require "diagram"
+require "mermaid"
+
 module Kiba
   module Extend
     module Registry
@@ -21,6 +24,12 @@ module Kiba
           result.flatten.compact
         end
 
+        def diagram
+          Diagrams::FlowchartDiagram.new(nodes: nodes, edges: edges)
+        end
+
+        def mermaid = diagram.to_mermaid
+
         private
 
         def traverse_up(elements)
@@ -31,6 +40,14 @@ module Kiba
           end.flatten
             .compact
         end
+
+        def node = Diagrams::Elements::Node.new(id: key, label: key)
+
+        def nodes = ancestors.uniq { |anc| anc.key }
+          .map { |anc| anc.node } + [node]
+
+        def edges = ancestors.map { |anc| anc.edge }
+          .uniq
       end
     end
   end
