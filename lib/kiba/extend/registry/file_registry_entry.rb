@@ -11,6 +11,8 @@ module Kiba
       # Used instead of just passing around a Hash so that it can validate
       #   itself and carry its own errors/warnings
       class FileRegistryEntry
+        include EntrySummarizable
+
         attr_reader :path, :key,
           :creator, :supplied, :dest_special_opts, :desc, :lookup_on, :tags,
           :message, :dest_class, :dest_opt, :src_class, :src_opt, :type,
@@ -30,44 +32,6 @@ module Kiba
         end
 
         def dir = path.dirname
-
-        # Printable string summarizing the Entry, called by project applications
-        def summary
-          lines = [summary_first_line]
-          lines << "#{summary_padding}#{summary_desc}"
-          lines << "#{summary_padding}#{summary_path}"
-          lines << "#{summary_padding}Job definition: #{summary_creator}"
-          lines << "#{summary_padding}Lookup on: #{lookup_on}" if lookup_on
-          lines << "\n"
-          lines.compact.join("\n")
-        end
-
-        def summary_first_line
-          return key.to_s if tags.blank?
-
-          "#{key} -- tags: #{tags.join(", ")}"
-        end
-
-        def summary_desc
-          return unless desc
-
-          desc.gsub("\n", "\n#{summary_padding}")
-        end
-
-        def summary_path
-          return unless path
-
-          prefix = supplied ? "Input file path" : "Job output written to"
-          [prefix, path].join(": ")
-        end
-
-        def summary_creator
-          return "n/a - Supplied file" unless creator
-
-          creator.to_s
-        end
-
-        def summary_padding = "    "
 
         # Whether the Entry is valid
         # @return [Boolean]
