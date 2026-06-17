@@ -13,6 +13,7 @@ module Kiba
       class FileRegistryEntry
         include EntrySummarizable
         include EntryValidatable
+        include Treeable
 
         attr_reader :path, :key,
           :creator, :supplied, :dest_special_opts, :desc, :lookup_on, :tags,
