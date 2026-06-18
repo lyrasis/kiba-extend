@@ -11,6 +11,11 @@ module Kiba
 
       extend Dry::Configurable
 
+      # Path to directory in which Mermaid .mmd files and generated
+      #   image files will be stored. If not populated,
+      # @return [String, NilClass]
+      setting :graph_dir, reader: true, default: nil
+
       # Configuration for making and reversing global replacements in your
       #   project via the {Transforms::Replace::GlobalReversible} and
       #   {Transforms::Replace::GlobalReverse} transforms.
