@@ -69,8 +69,8 @@ https://github.com/lyrasis/kiba-extend/pull/260[PR#260]
 https://github.com/lyrasis/kiba-extend/pull/260[PR#260]
 * Handling of `omit_from_all_fields` param to https://lyrasis.github.io/kiba-extend/Kiba/Extend/Transforms/Allable.html[`Allable` transform mixin] and all transforms that use it
 https://github.com/lyrasis/kiba-extend/pull/260[PR#260]
-* `thor job graph` command, which will generate and open a .png dependency graph for the specified job key
-https://github.com/lyrasis/kiba-extend/pull/264[PR#264]
+* `thor job graph` command, which will generate and open a .pdf dependency graph for the specified job key
+https://github.com/lyrasis/kiba-extend/pull/265[PR#265]
 
 === Bugfixes
 
