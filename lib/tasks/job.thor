@@ -29,10 +29,10 @@ class Job < Thor
     mmd_path = File.join(mmd_dir, "#{job}.mmd")
     File.open(mmd_path, "w") { |f| f << mermaid }
 
-    png_path = File.join(mmd_dir, "#{job}.png")
-    `mmd-cli -i #{mmd_path} -o #{png_path}`
+    pdf_path = File.join(mmd_dir, "#{job}.pdf")
+    `mmd-cli -i #{mmd_path} -o #{pdf_path} -f`
 
-    `open #{png_path}`
+    `open #{pdf_path}`
     exit(0)
   end
 
