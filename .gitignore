@@ -17,3 +17,5 @@
 **/.DS_Store
 spec/fixtures/*.mrk
 .rubocop-https*
+*.mmd
+*.png
