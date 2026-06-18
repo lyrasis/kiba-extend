@@ -91,7 +91,7 @@
   
   <dl>
       <dt>Includes:</dt>
-      <dd><span class='object_link'><a href="EntrySummarizable.html" title="Kiba::Extend::Registry::EntrySummarizable (module)">EntrySummarizable</a></span>, <span class='object_link'><a href="EntryValidatable.html" title="Kiba::Extend::Registry::EntryValidatable (module)">EntryValidatable</a></span></dd>
+      <dd><span class='object_link'><a href="EntrySummarizable.html" title="Kiba::Extend::Registry::EntrySummarizable (module)">EntrySummarizable</a></span>, <span class='object_link'><a href="EntryValidatable.html" title="Kiba::Extend::Registry::EntryValidatable (module)">EntryValidatable</a></span>, <span class='object_link'><a href="Treeable.html" title="Kiba::Extend::Registry::Treeable (module)">Treeable</a></span></dd>
   </dl>
   
   
@@ -697,6 +697,30 @@
   
   
   
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Treeable.html" title="Kiba::Extend::Registry::Treeable (module)">Treeable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Treeable.html#ancestors-instance_method" title="Kiba::Extend::Registry::Treeable#ancestors (method)">#ancestors</a></span>, <span class='object_link'><a href="Treeable.html#diagram-instance_method" title="Kiba::Extend::Registry::Treeable#diagram (method)">#diagram</a></span>, <span class='object_link'><a href="Treeable.html#mermaid-instance_method" title="Kiba::Extend::Registry::Treeable#mermaid (method)">#mermaid</a></span>, <span class='object_link'><a href="Treeable.html#parents-instance_method" title="Kiba::Extend::Registry::Treeable#parents (method)">#parents</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="NodeLabelable.html" title="Kiba::Extend::Registry::NodeLabelable (module)">NodeLabelable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="NodeLabelable.html#node_label-instance_method" title="Kiba::Extend::Registry::NodeLabelable#node_label (method)">#node_label</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   
@@ -784,7 +808,6 @@ for details</p>
       <pre class="lines">
 
 
-25
 26
 27
 28
@@ -803,10 +826,11 @@ for details</p>
 41
 42
 43
-44</pre>
+44
+45</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 25</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 26</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_reghash'>reghash</span><span class='rparen'>)</span>
   <span class='ivar'>@key</span> <span class='op'>=</span> <span class='id identifier rubyid_key'>key</span>
@@ -880,12 +904,12 @@ for details</p>
       <pre class="lines">
 
 
-17
 18
-19</pre>
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_creator'>creator</span>
   <span class='ivar'>@creator</span>
@@ -937,12 +961,12 @@ for details</p>
       <pre class="lines">
 
 
-17
 18
-19</pre>
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_desc'>desc</span>
   <span class='ivar'>@desc</span>
@@ -994,12 +1018,12 @@ for details</p>
       <pre class="lines">
 
 
-17
 18
-19</pre>
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_dest_class'>dest_class</span>
   <span class='ivar'>@dest_class</span>
@@ -1051,12 +1075,12 @@ for details</p>
       <pre class="lines">
 
 
-17
 18
-19</pre>
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_dest_opt'>dest_opt</span>
   <span class='ivar'>@dest_opt</span>
@@ -1108,12 +1132,12 @@ for details</p>
       <pre class="lines">
 
 
-17
 18
-19</pre>
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_dest_special_opts'>dest_special_opts</span>
   <span class='ivar'>@dest_special_opts</span>
@@ -1165,12 +1189,12 @@ for details</p>
       <pre class="lines">
 
 
-17
 18
-19</pre>
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_errors'>errors</span>
   <span class='ivar'>@errors</span>
@@ -1222,12 +1246,12 @@ for details</p>
       <pre class="lines">
 
 
-17
 18
-19</pre>
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_key'>key</span>
   <span class='ivar'>@key</span>
@@ -1279,12 +1303,12 @@ for details</p>
       <pre class="lines">
 
 
-17
 18
-19</pre>
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_lookup_on'>lookup_on</span>
   <span class='ivar'>@lookup_on</span>
@@ -1336,12 +1360,12 @@ for details</p>
       <pre class="lines">
 
 
-17
 18
-19</pre>
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_message'>message</span>
   <span class='ivar'>@message</span>
@@ -1393,12 +1417,12 @@ for details</p>
       <pre class="lines">
 
 
-17
 18
-19</pre>
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_path'>path</span>
   <span class='ivar'>@path</span>
@@ -1450,12 +1474,12 @@ for details</p>
       <pre class="lines">
 
 
-17
 18
-19</pre>
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_src_class'>src_class</span>
   <span class='ivar'>@src_class</span>
@@ -1507,12 +1531,12 @@ for details</p>
       <pre class="lines">
 
 
-17
 18
-19</pre>
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_src_opt'>src_opt</span>
   <span class='ivar'>@src_opt</span>
@@ -1564,12 +1588,12 @@ for details</p>
       <pre class="lines">
 
 
-17
 18
-19</pre>
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_supplied'>supplied</span>
   <span class='ivar'>@supplied</span>
@@ -1621,12 +1645,12 @@ for details</p>
       <pre class="lines">
 
 
-17
 18
-19</pre>
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_tags'>tags</span>
   <span class='ivar'>@tags</span>
@@ -1678,12 +1702,12 @@ for details</p>
       <pre class="lines">
 
 
-17
 18
-19</pre>
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_type'>type</span>
   <span class='ivar'>@type</span>
@@ -1735,12 +1759,12 @@ for details</p>
       <pre class="lines">
 
 
-17
 18
-19</pre>
+19
+20</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 17</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 18</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_warnings'>warnings</span>
   <span class='ivar'>@warnings</span>
@@ -1797,10 +1821,10 @@ for details</p>
       <pre class="lines">
 
 
-46</pre>
+47</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 47</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_dir'>dir</span> <span class='op'>=</span> <span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_dirname'>dirname</span></pre>
     </td>
@@ -1861,10 +1885,10 @@ for details</p>
       <pre class="lines">
 
 
-50</pre>
+51</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/file_registry_entry.rb', line 51</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_valid?'>valid?</span> <span class='op'>=</span> <span class='ivar'>@valid</span></pre>
     </td>
@@ -1877,7 +1901,7 @@ for details</p>
 </div>
 
       <div id="footer">
-  Generated on Wed Jun 17 01:33:22 2026 by
+  Generated on Thu Jun 18 01:00:23 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.44 (ruby-3.4.9).
 </div>

@@ -93,7 +93,7 @@
   
   <dl>
       <dt>Includes:</dt>
-      <dd><span class='object_link'><a href="RequirableFile.html" title="Kiba::Extend::Registry::RequirableFile (module)">RequirableFile</a></span></dd>
+      <dd><span class='object_link'><a href="Ancestorable.html" title="Kiba::Extend::Registry::Ancestorable (module)">Ancestorable</a></span>, <span class='object_link'><a href="RequirableFile.html" title="Kiba::Extend::Registry::RequirableFile (module)">RequirableFile</a></span></dd>
   </dl>
   
   
@@ -255,6 +255,30 @@
   
   
   
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Ancestorable.html" title="Kiba::Extend::Registry::Ancestorable (module)">Ancestorable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Ancestorable.html#edge-instance_method" title="Kiba::Extend::Registry::Ancestorable#edge (method)">#edge</a></span>, <span class='object_link'><a href="Ancestorable.html#edge_label-instance_method" title="Kiba::Extend::Registry::Ancestorable#edge_label (method)">#edge_label</a></span>, <span class='object_link'><a href="Ancestorable.html#edge_source_id-instance_method" title="Kiba::Extend::Registry::Ancestorable#edge_source_id (method)">#edge_source_id</a></span>, <span class='object_link'><a href="Ancestorable.html#edge_target_id-instance_method" title="Kiba::Extend::Registry::Ancestorable#edge_target_id (method)">#edge_target_id</a></span>, <span class='object_link'><a href="Ancestorable.html#node-instance_method" title="Kiba::Extend::Registry::Ancestorable#node (method)">#node</a></span>, <span class='object_link'><a href="Ancestorable.html#node_id-instance_method" title="Kiba::Extend::Registry::Ancestorable#node_id (method)">#node_id</a></span>, <span class='object_link'><a href="Ancestorable.html#source%3F-instance_method" title="Kiba::Extend::Registry::Ancestorable#source? (method)">#source?</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="NodeLabelable.html" title="Kiba::Extend::Registry::NodeLabelable (module)">NodeLabelable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="NodeLabelable.html#node_label-instance_method" title="Kiba::Extend::Registry::NodeLabelable#node_label (method)">#node_label</a></span></p>
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
   <h3 class="inherited">Methods inherited from <span class='object_link'><a href="RegisteredFile.html" title="Kiba::Extend::Registry::RegisteredFile (class)">RegisteredFile</a></span></h3>
   <p class="inherited"><span class='object_link'><a href="RegisteredFile.html#src_class-instance_method" title="Kiba::Extend::Registry::RegisteredFile#src_class (method)">#src_class</a></span></p>
 <div id="constructor_details" class="method_details_list">
@@ -352,7 +376,6 @@ this registered file is being prepared</p>
       <pre class="lines">
 
 
-23
 24
 25
 26
@@ -371,10 +394,11 @@ this registered file is being prepared</p>
 39
 40
 41
-42</pre>
+42
+43</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/registered_lookup.rb', line 23</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/registered_lookup.rb', line 24</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>key:</span><span class='comma'>,</span> <span class='label'>data:</span><span class='comma'>,</span> <span class='label'>for_job:</span><span class='rparen'>)</span>
   <span class='kw'>super</span>
@@ -461,12 +485,12 @@ this registered file is being prepared</p>
       <pre class="lines">
 
 
-46
 47
-48</pre>
+48
+49</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/registered_lookup.rb', line 46</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/registered_lookup.rb', line 47</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_args'>args</span>
   <span class='lbrace'>{</span><span class='label'>file:</span> <span class='id identifier rubyid_path'>path</span><span class='comma'>,</span> <span class='label'>keycolumn:</span> <span class='id identifier rubyid_lookup_on'>lookup_on</span><span class='rbrace'>}</span><span class='period'>.</span><span class='id identifier rubyid_merge'>merge</span><span class='lparen'>(</span><span class='id identifier rubyid_options'>options</span><span class='rparen'>)</span>
@@ -516,12 +540,12 @@ this registered file is being prepared</p>
       <pre class="lines">
 
 
-50
 51
-52</pre>
+52
+53</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/registered_lookup.rb', line 50</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/registered_lookup.rb', line 51</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_klass'>klass</span>
   <span class='id identifier rubyid_src_class'>src_class</span>
@@ -536,7 +560,7 @@ this registered file is being prepared</p>
 </div>
 
       <div id="footer">
-  Generated on Wed Jun 17 01:33:21 2026 by
+  Generated on Thu Jun 18 01:00:22 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.44 (ruby-3.4.9).
 </div>

@@ -112,6 +112,33 @@ You can also define client-specific jobs and transforms here as needed.</p>
   <li>Wiki documentation for how to use the registry and job templating. In the meantime the best place to get an understanding of this is <a href="https://github.com/lyrasis/kiba-extend-project">kiba-extend-project</a>.</li>
 </ul>
 
+<h2 id="dep">Non-Ruby/non-bundleable dependencies</h2>
+
+<h3 id="mermaidrenderdep">Rendering mermaid job dependency graphs</h3>
+
+<p>If you wish to use the <code>thor job graph</code> command to render mermaid dependency graphs, you need to install the https://github.com/coolamit/mermaid-cli[the Go mmd-cli]. This is a replacement for the official mermaid.js/mermaid-cli, which is embedded deeply in the node/npm ecosystem, and which has some really annoying and problematic dependencies and Mac bugs.</p>
+
+<p>The preferred way to do this in the Lyrasis Data Migrations team environment is via https://mise.jdx.dev[mise] and then go’s install command:</p>
+
+<p>Install go if you do not already have it:</p>
+
+<pre class="code ruby"><code class="ruby">mise use -g go@1.25.11 # or later version
+</code></pre>
+
+<p>Install chromium. This is becoming more problematic, as the brew version doesn’t work, and conflicts with ARM architecture exist. As of June 2026, https://github.com/ungoogled-software/ungoogled-chromium-macos[Ungoogled Chromium for the MacOS] works:</p>
+
+<pre class="code ruby"><code class="ruby">brew install --cask ungoogled-chromium
+</code></pre>
+
+<p>Install mermaid-cli:</p>
+
+<pre class="code ruby"><code class="ruby">go install github.com/coolamit/mermaid-cli/cmd/mmd-cli@latest
+</code></pre>
+
+<p>Alternate installation paths are documented at https://github.com/mermaid-js/mermaid-cli[the mermaid-cli GitHub repository].</p>
+
+<p>If you ever want to uninstall mmd-cli, do <code>which mmd-cli</code> and then delete the directory at that path.</p>
+
 <h2 id="documentation">Documentation</h2>
 
 <p><a href="https://lyrasis.github.io/kiba-extend/">API documentation</a></p>
@@ -135,7 +162,7 @@ You can also define client-specific jobs and transforms here as needed.</p>
 </div></div>
 
       <div id="footer">
-  Generated on Wed Jun 17 01:33:19 2026 by
+  Generated on Thu Jun 18 01:00:20 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.44 (ruby-3.4.9).
 </div>
