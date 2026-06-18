@@ -8,17 +8,13 @@ module Kiba
       # Mixin module for getting Node and Edge properties from RegisteredSource
       #   and RegisteredLookup objects
       module Ancestorable
+        include NodeLabelable
+
         def node
           Diagrams::Elements::Node.new(id: node_id, label: node_label)
         end
 
         def node_id = key.to_s
-
-        def node_label
-          return node_id unless supplied
-
-          "#{node_id} (supplied)"
-        end
 
         def edge
           Diagrams::Elements::Edge.new(

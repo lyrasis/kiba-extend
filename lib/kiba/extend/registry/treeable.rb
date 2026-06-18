@@ -8,6 +8,8 @@ module Kiba
     module Registry
       # Mixin module for generating dependency tree diagram for entry
       module Treeable
+        include NodeLabelable
+
         def parents
           files = creator.files
           [files[:source], files[:lookup]].compact
@@ -41,7 +43,9 @@ module Kiba
             .compact
         end
 
-        def node = Diagrams::Elements::Node.new(id: key, label: key)
+        def node_id = key
+
+        def node = Diagrams::Elements::Node.new(id: node_id, label: node_label)
 
         def nodes = ancestors.uniq { |anc| anc.key }
           .map { |anc| anc.node } + [node]
