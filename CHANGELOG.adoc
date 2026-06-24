@@ -71,6 +71,8 @@ https://github.com/lyrasis/kiba-extend/pull/260[PR#260]
 https://github.com/lyrasis/kiba-extend/pull/260[PR#260]
 * `thor job graph` command, which will generate and open a .pdf dependency graph for the specified job key
 https://github.com/lyrasis/kiba-extend/pull/265[PR#265]
+* `thor project empty_field_report` command to generate a CSV report of all registry entries selected by the given tags
+https://github.com/lyrasis/kiba-extend/pull/266[PR#266]
 
 === Bugfixes
 
