@@ -3,9 +3,19 @@
 # @title kiba-extend Concepts
 -->
 
-# `kiba-extend` Concepts
+* TOC
+{:toc}
 
-## Folder structure, file names, module/class name constants defined in files
+## Glossary {#glossary}
+
+Full job key
+: A Ruby Symbol built from `FileRegistry` namespace (if used) and registry entry name, separated by the value of `Kiba::Extend.registry_namespace_separator` (defaults to `__` (two underscores)). Examples: With namespace: `:namespace__entry_name`; No namespace: `:unnamespaced_entry_name`.
+File registry key
+: Synonym for `Full job key`.
+
+## Assumptions and concepts used in libraries used by `kiba-extend` {#other-libraries}
+
+### Folder structure, file names, module/class name constants defined in files {#zeitwerk}
 
 `kiba-extend` uses [zeitwerk](https://github.com/fxn/zeitwerk) to automatically handle code loading, so you don't have to manually enter `require_relative` every time you refer to code in another file. (The manual way is tedious and horrible if you end up renaming files or moving them around).
 
@@ -19,13 +29,13 @@ Zeitwerk provides ways to override almost all of its default assumptions via inf
 
 **Inflections example:** kiba-tms defines inflectors for dealing with some TMS tables. Generally, kiba-tms defines a config module per TMS table. For clarity, the names of the tables and the config module constants should match. For a table like `ClassificationXRefs`, I would be annoyed to have to name my file `classification_x_refs.rb` (especially since there are other tables named like: `ConXrefs`). So I added an inflector to handle this in `setup_loader` method in `/lib/kiba/tms.rb`.
 
-## dry-configurable
+### Config settings via `dry-configurable` {#dry-configurable}
 
 `kiba-extend` and projects based on it make heavy use of the `dry-configurable` gem to add flexible but safe config settings to control application behavior.
 
-This is particularly heavily used in projects like `kiba-tms` or `migrations-cspace-csu-base` which are used as middle layers between `kiba-extend` and individual client projects.
+This is particularly heavily used in "abstract" `kiba-extend` projects like `kiba-tms` or `migrations-cspace-csu-base` which are used as middle layers between `kiba-extend` and individual client projects.
 
-However, even for one-off projects, it can be convenient to add settings for values used across your project to the main project module definition. See [migration-cspace-wpl](https://github.com/dts-hosting/migration-cspace-wpl/blob/main/lib/wpl.rb)'s `:post_mig_cleanup_label` and `:photos_coll_title` settings as an example.
+However, even for one-off projects, it can be convenient to add settings for values used across your project to the main project module definition.
 
 `dry-configurable` is pretty simple. [Its documentation](https://dry-rb.org/gems/dry-configurable/main/) is only two pages, though it leaves some important things out, such as:
 
