@@ -60,35 +60,36 @@
       </div>
 
       <div id="content"><div id='filecontents'>
-<h1 id="common-patterns-tips-and-tricks">Common patterns, tips, and tricks</h1>
-
 <ul id="markdown-toc">
-  <li><a href="#common-patterns-tips-and-tricks" id="markdown-toc-common-patterns-tips-and-tricks">Common patterns, tips, and tricks</a>    <ul>
-      <li><a href="#pry" id="markdown-toc-pry">Debugging with <code>pry</code></a>        <ul>
-          <li><a href="#in-kibajobsegment-blocks" id="markdown-toc-in-kibajobsegment-blocks">In <code>Kiba.job_segment</code> blocks</a></li>
-          <li><a href="#where-bindingpry-conflicts-with-dry-rb-gem-code-or-other-code" id="markdown-toc-where-bindingpry-conflicts-with-dry-rb-gem-code-or-other-code">Where <code>binding.pry</code> conflicts with <code>dry-rb</code> gem code or other code</a></li>
+  <li><a href="#pry" id="markdown-toc-pry">Debugging with <code>pry</code></a>    <ul>
+      <li><a href="#in-kibajobsegment-blocks" id="markdown-toc-in-kibajobsegment-blocks">In <code>Kiba.job_segment</code> blocks</a></li>
+      <li><a href="#where-bindingpry-conflicts-with-dry-rb-gem-code-or-other-code" id="markdown-toc-where-bindingpry-conflicts-with-dry-rb-gem-code-or-other-code">Where <code>binding.pry</code> conflicts with <code>dry-rb</code> gem code or other code</a></li>
+    </ul>
+  </li>
+  <li><a href="#csv-inconsistent-fields" id="markdown-toc-csv-inconsistent-fields">Multi-source jobs with CSV destination and sources don’t have all the same fields</a></li>
+  <li><a href="#xform-in-xform" id="markdown-toc-xform-in-xform">Using transform(s) within another transform</a>    <ul>
+      <li><a href="#alias-rename-xform" id="markdown-toc-alias-rename-xform">Aliasing/renaming a transform</a></li>
+      <li><a href="#adding-some-extra-behavior-to-an-existing-transform-in-a-new-transform" id="markdown-toc-adding-some-extra-behavior-to-an-existing-transform-in-a-new-transform">Adding some extra behavior to an existing transform in a new transform</a></li>
+      <li><a href="#chaining-xforms" id="markdown-toc-chaining-xforms">Chaining multiple transforms in another transform</a>        <ul>
+          <li><a href="#chaining-limitations" id="markdown-toc-chaining-limitations">LIMITATIONS ON THE ABOVE</a></li>
         </ul>
       </li>
-      <li><a href="#csv-inconsistent-fields" id="markdown-toc-csv-inconsistent-fields">Multi-source jobs with CSV destination and sources don’t have all the same fields</a></li>
-      <li><a href="#xform-in-xform" id="markdown-toc-xform-in-xform">Using transform(s) within another transform</a>        <ul>
-          <li><a href="#alias-rename-xform" id="markdown-toc-alias-rename-xform">Aliasing/renaming a transform</a></li>
-          <li><a href="#adding-some-extra-behavior-to-an-existing-transform-in-a-new-transform" id="markdown-toc-adding-some-extra-behavior-to-an-existing-transform-in-a-new-transform">Adding some extra behavior to an existing transform in a new transform</a></li>
-          <li><a href="#chaining-xforms" id="markdown-toc-chaining-xforms">Chaining multiple transforms in another transform</a>            <ul>
-              <li><a href="#chaining-limitations" id="markdown-toc-chaining-limitations">LIMITATIONS ON THE ABOVE</a></li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-      <li><a href="#xforms-in-jobs" id="markdown-toc-xforms-in-jobs">Using transforms in job definitions</a></li>
-      <li><a href="#jobs-with-params" id="markdown-toc-jobs-with-params">Calling a job with parameters</a></li>
-      <li><a href="#auto-register" id="markdown-toc-auto-register">Automating repetitive file registry</a></li>
-      <li><a href="#output-check" id="markdown-toc-output-check">Checking job output dynamically from client project code</a>        <ul>
-          <li><a href="#srcrows-outrows" id="markdown-toc-srcrows-outrows"><code>srcrows</code> and <code>outrows</code></a></li>
-          <li><a href="#output-method" id="markdown-toc-output-method"><code>Kiba::Extend::Job.output?</code></a></li>
-        </ul>
-      </li>
-      <li><a href="#job-registered" id="markdown-toc-job-registered"><code>Kiba::Extend::Job.registered?</code></a></li>
-      <li><a href="#manipulate-registry" id="markdown-toc-manipulate-registry">Manipulating the registry on the fly</a></li>
+    </ul>
+  </li>
+  <li><a href="#xforms-in-jobs" id="markdown-toc-xforms-in-jobs">Using transforms in job definitions</a></li>
+  <li><a href="#jobs-with-params" id="markdown-toc-jobs-with-params">Calling a job with parameters</a></li>
+  <li><a href="#auto-register" id="markdown-toc-auto-register">Automating repetitive file registry</a></li>
+  <li><a href="#output-check" id="markdown-toc-output-check">Checking job output dynamically from client project code</a>    <ul>
+      <li><a href="#srcrows-outrows" id="markdown-toc-srcrows-outrows"><code>srcrows</code> and <code>outrows</code></a></li>
+      <li><a href="#output-method" id="markdown-toc-output-method"><code>Kiba::Extend::Job.output?</code></a></li>
+    </ul>
+  </li>
+  <li><a href="#job-registered" id="markdown-toc-job-registered"><code>Kiba::Extend::Job.registered?</code></a></li>
+  <li><a href="#manipulate-registry" id="markdown-toc-manipulate-registry">Manipulating the registry on the fly</a>    <ul>
+      <li><a href="#manipulate-registry-iterativecleanup" id="markdown-toc-manipulate-registry-iterativecleanup">Use case: Testing iterative cleanup jobs</a></li>
+      <li><a href="#manipulate-registry-dynamic" id="markdown-toc-manipulate-registry-dynamic">Use case: Highly dynamic projects that (ill-advisedly?) veer away from normal kiba-extend job registration patterns</a></li>
+      <li><a href="#resetregistry" id="markdown-toc-resetregistry"><code>reset_registry</code> method</a></li>
+      <li><a href="#dynamicuse" id="markdown-toc-dynamicuse">Use where needed</a></li>
     </ul>
   </li>
 </ul>
@@ -326,13 +327,21 @@ puts &quot;Some records omitted&quot; if job.outrows &lt; job.srcrows
 
 <h2 id="manipulate-registry">Manipulating the registry on the fly</h2>
 
-<p>Ok, so this isn’t really a common pattern.</p>
+<p>This isn’t a common pattern, but there are a couple of situations where it is useful.</p>
 
-<p>I have come up with this while working on a project with nearly 200 input data tables, where the project needs to be built up in very distinct phases, and there are 9 different categories of tables that need to be dealt with separately.</p>
+<h3 id="manipulate-registry-iterativecleanup">Use case: Testing iterative cleanup jobs</h3>
 
-<p>I want to be able to get <code>main</code> and <code>added_fields</code> categories of tables through the <code>preprocess</code>, <code>fix</code>, <code>fcar</code> phases to the <code>skeleton</code> (e.g. initial stub record ingest) phase before I deal with getting the other 7 categories of tables handled by the <code>fix</code> phase.</p>
+<p>This is useful if you need to set up RSpec tests of iterative cleanup jobs in your project. Without this, you can’t set up tests with the given worksheets and returned files you specify, because the registry will have already been built when RSpec loads your project application when it starts. Setting the relevant <code>provided_worksheets</code> and <code>returned_files</code> settings for your test won’t impact what jobs have been defined for the iterative cleanup process in your registry. You need to regenerate the registry after setting any config settings that impact how jobs get defined.</p>
 
-<p>To do this, I am auto-registering:</p>
+<h3 id="manipulate-registry-dynamic">Use case: Highly dynamic projects that (ill-advisedly?) veer away from normal kiba-extend job registration patterns</h3>
+
+<p><strong>NOTE: I’ve since refactored the project described here to use a more standard job registration pattern. This issue was getting too annoying to deal with.</strong></p>
+
+<p>This pattern was developed to solve a problem with a project with nearly 200 input data tables, where the project needed to be built up in very distinct phases, and there are 9 different categories of tables that need to be dealt with separately in each phase.</p>
+
+<p>I wanted to be able to get <code>main</code> and <code>added_fields</code> categories of tables through the <code>preprocess</code>, <code>fix</code>, <code>fcar</code> phases to the <code>skeleton</code> (e.g. initial stub record ingest) phase before I dealt with getting the other 7 categories of tables handled by the <code>fix</code> phase.</p>
+
+<p>To do this, I set up auto-registration as follows:</p>
 
 <ul>
   <li><code>preprocess</code> phase jobs based on the files in the <code>orig</code> directory</li>
@@ -340,25 +349,13 @@ puts &quot;Some records omitted&quot; if job.outrows &lt; job.srcrows
   <li>…and so on as the phases continue</li>
 </ul>
 
-<p>But this breaks the dependency-handling assumptions of kiba-extend. If I want to dynamically call a <code>fix</code> phase job from the <code>fcar</code> phase, but haven’t run the corresponding <code>preprocess</code> job (or the results are cleared out by pre-job task deletion), the <code>fix</code> job I need will not be registered.</p>
+<p>But this broke the dependency-handling assumptions of kiba-extend. If I wanted to dynamically call a <code>fix</code> phase job from the <code>fcar</code> phase, but hadn’t run the corresponding <code>preprocess</code> job (or the results of it were cleared out by pre-job task deletion), the <code>fix</code> job I needed would not be registered.</p>
 
-<p>I can’t just register all the eventual jobs based on the <code>orig</code> files, because referenced paths are validated when your registry data entries are initially registered at startup.</p>
+<h3 id="resetregistry"><code>reset_registry</code> method</h3>
 
-<p>Here’s the code I’ve got working to handle this situation:</p>
+<p>In the /lib/my_project.rb file, inside the MyProject module definition:</p>
 
-<pre class="code language-ruby"><code class="language-ruby"># In the transform class that needs to dynamically make lookups from
-#   fix tables available
-
-fix_jobkey = :&quot;fix_main__#{table}&quot;
-unless Kiba::Extend::Job.registered?(fix_jobkey)
-  Kiba::Extend::Command::Run.job(:&quot;preprocess_main__#{table}&quot;)
-  MyProject.reset_registry
-end
-</code></pre>
-
-<pre class="code language-ruby"><code class="language-ruby"># In the /lib/my_project.rb file, inside the MyProject module definition
-
-def reset_registry
+<pre class="code language-ruby"><code class="language-ruby">def reset_registry
   Kiba::Extend.config.registry =
     Kiba::Extend::Registry::FileRegistry.new
   MyProject.config.registry = Kiba::Extend.registry
@@ -366,13 +363,74 @@ def reset_registry
 end
 </code></pre>
 
+<h3 id="dynamicuse">Use where needed</h3>
+
+<p>In an iterative cleanup job test:</p>
+
+<pre class="code language-ruby"><code class="language-ruby">require &quot;spec_helper&quot;
+
+# Allows you to reset config settings to standard after tests in each
+#   context are run.
+module MyProject::LocCatPlus
+  enable_test_interface
+end
+
+RSpec.describe MyProject::Jobs::LocCatPlus do
+  context &quot;with round 0&quot; do
+    before(:context) do
+      Dir.children(MyProject.wrkdir).each do |child|
+        next unless child.start_with?(&quot;loc_cat_plus&quot;)
+
+        FileUtils.rm(File.join(MyProject.wrkdir, child))
+      end
+
+      MyProject::LocCatPlus.config.provided_worksheets = [
+        &quot;test/loc_cat_plus_0.csv&quot;
+      ]
+      MyProject::LocCatPlus.config.returned_files = [
+        &quot;test/loc_cat_plus_0.csv&quot;
+      ]
+      MyProject.reset_registry
+    end
+    after(:context) { MyProject::LocCatPlus.reset_config }
+
+    describe &quot;:final&quot; do
+      let(:data) { csv_job_output(:loc_cat_plus__final) }
+
+      it &quot;compiles as expected&quot; do
+        row = data.find do |row|
+          row[:loc_lookup_key] == &quot;ANNEX (MAYBE ON SHELF 89B)&quot;
+        end
+        expect(row[:locationnote]).to eq(&quot;MAYBE ON SHELF 89B&quot;)
+      end
+    end
+  end
+end
+</code></pre>
+
+<p>Notes:</p>
+
+<ul>
+  <li>Enabling test interface for config settings depends on presence of <code>require "dry/configurable/test_interface"</code> in <code>./spec/spec_helper.rb</code> file</li>
+  <li>The <code>csv_job_output</code> method depends on inclusion of <a href="https://lyrasis.github.io/kiba-extend/Kiba/Extend/Utils/TestHelpers.html"><code>Kiba::Extend::Utils::TestHelpers</code></a> in your RSpec config in <code>./spec/spec_helper.rb</code> file.</li>
+</ul>
+
+<p>In the transform (or other) class that needs to dynamically make lookups after registry is regenerated:</p>
+
+<pre class="code language-ruby"><code class="language-ruby">fix_jobkey = :&quot;fix_main__#{table}&quot;
+unless Kiba::Extend::Job.registered?(fix_jobkey)
+  Kiba::Extend::Command::Run.job(:&quot;preprocess_main__#{table}&quot;)
+  MyProject.reset_registry
+end
+</code></pre>
+
 <p>By design, the job registry is frozen and immutable, so this feels sort of evil. But it gets the job done for this strange project.</p>
 </div></div>
 
       <div id="footer">
-  Generated on Wed Jun 24 00:58:07 2026 by
+  Generated on Tue Jun 30 15:54:29 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.44 (ruby-3.4.9).
+  0.9.44 (ruby-3.4.10).
 </div>
 
     </div>
