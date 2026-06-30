@@ -246,23 +246,27 @@ Kiba::Extend::Job.output?(:prep__objects, mode: :agnostic)
 
 ## Manipulating the registry on the fly {#manipulate-registry}
 
-Ok, so this isn't really a common pattern.
+This isn't a common pattern, but there are a couple of situations where it is useful.
 
-I have come up with this while working on a project with nearly 200 input data tables, where the project needs to be built up in very distinct phases, and there are 9 different categories of tables that need to be dealt with separately.
+### Use case: Testing iterative cleanup jobs {#manipulate-registry-iterativecleanup}
 
-I want to be able to get `main` and `added_fields` categories of tables through the `preprocess`, `fix`, `fcar` phases to the `skeleton` (e.g. initial stub record ingest) phase before I deal with getting the other 7 categories of tables handled by the `fix` phase.
+This is useful if you need to set up RSpec tests of iterative cleanup jobs in your project. Without this, you can't set up tests with the given worksheets and returned files you specify, because the registry will have already been built when RSpec loads your project application when it starts. Setting the relevant `provided_worksheets` and `returned_files` settings for your test won't impact what jobs have been defined for the iterative cleanup process in your registry. You need to regenerate the registry after setting any config settings that impact how jobs get defined.
 
-To do this, I am auto-registering:
+### Use case: Highly dynamic projects that (ill-advisedly?) veer away from normal kiba-extend job registration patterns {#manipulate-registry-dynamic}
+
+**NOTE: I've since refactored the project described here to use a more standard job registration pattern. This issue was getting too annoying to deal with.**
+
+This pattern was developed to solve a problem with a project with nearly 200 input data tables, where the project needed to be built up in very distinct phases, and there are 9 different categories of tables that need to be dealt with separately in each phase.
+
+I wanted to be able to get `main` and `added_fields` categories of tables through the `preprocess`, `fix`, `fcar` phases to the `skeleton` (e.g. initial stub record ingest) phase before I dealt with getting the other 7 categories of tables handled by the `fix` phase.
+
+To do this, I set up auto-registration as follows:
 
 * `preprocess` phase jobs based on the files in the `orig` directory
 * `fix` phase jobs based on the files in the `preprocess` directory
 * ...and so on as the phases continue
 
-But this breaks the dependency-handling assumptions of kiba-extend. If I want to dynamically call a `fix` phase job from the `fcar` phase, but haven't run the corresponding `preprocess` job (or the results are cleared out by pre-job task deletion), the `fix` job I need will not be registered.
-
-I can't just register all the eventual jobs based on the `orig` files, because referenced paths are validated when your registry data entries are initially registered at startup.
-
-Here's the code I've got working to handle this situation:
+But this broke the dependency-handling assumptions of kiba-extend. If I wanted to dynamically call a `fix` phase job from the `fcar` phase, but hadn't run the corresponding `preprocess` job (or the results of it were cleared out by pre-job task deletion), the `fix` job I needed would not be registered.
 
 ### `reset_registry` method {#resetregistry}
 
@@ -278,6 +282,56 @@ end
 ~~~
 
 ### Use where needed {#dynamicuse}
+
+In an iterative cleanup job test:
+
+~~~ruby
+require "spec_helper"
+
+# Allows you to reset config settings to standard after tests in each
+#   context are run.
+module MyProject::LocCatPlus
+  enable_test_interface
+end
+
+RSpec.describe MyProject::Jobs::LocCatPlus do
+  context "with round 0" do
+    before(:context) do
+      Dir.children(MyProject.wrkdir).each do |child|
+        next unless child.start_with?("loc_cat_plus")
+
+        FileUtils.rm(File.join(MyProject.wrkdir, child))
+      end
+
+      MyProject::LocCatPlus.config.provided_worksheets = [
+        "test/loc_cat_plus_0.csv"
+      ]
+      MyProject::LocCatPlus.config.returned_files = [
+        "test/loc_cat_plus_0.csv"
+      ]
+      MyProject.reset_registry
+    end
+    after(:context) { MyProject::LocCatPlus.reset_config }
+
+    describe ":final" do
+      let(:data) { csv_job_output(:loc_cat_plus__final) }
+
+      it "compiles as expected" do
+        row = data.find do |row|
+          row[:loc_lookup_key] == "ANNEX (MAYBE ON SHELF 89B)"
+        end
+        expect(row[:locationnote]).to eq("MAYBE ON SHELF 89B")
+      end
+    end
+  end
+end
+~~~
+
+Notes:
+
+* Enabling test interface for config settings depends on presence of `require "dry/configurable/test_interface"` in `./spec/spec_helper.rb` file
+* The `csv_job_output` method depends on inclusion of [`Kiba::Extend::Utils::TestHelpers`](https://lyrasis.github.io/kiba-extend/Kiba/Extend/Utils/TestHelpers.html) in your RSpec config in `./spec/spec_helper.rb` file.
+
 
 In the transform (or other) class that needs to dynamically make lookups after registry is regenerated:
 
