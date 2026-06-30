@@ -3,8 +3,6 @@
 # @title Common patterns, tips, and tricks
 -->
 
-# Common patterns, tips, and tricks
-
 - TOC
 {:toc}
 
@@ -266,20 +264,11 @@ I can't just register all the eventual jobs based on the `orig` files, because r
 
 Here's the code I've got working to handle this situation:
 
-~~~ ruby
-# In the transform class that needs to dynamically make lookups from
-#   fix tables available
+### `reset_registry` method {#resetregistry}
 
-fix_jobkey = :"fix_main__#{table}"
-unless Kiba::Extend::Job.registered?(fix_jobkey)
-  Kiba::Extend::Command::Run.job(:"preprocess_main__#{table}")
-  MyProject.reset_registry
-end
-~~~
+In the /lib/my_project.rb file, inside the MyProject module definition:
 
 ~~~ ruby
-# In the /lib/my_project.rb file, inside the MyProject module definition
-
 def reset_registry
   Kiba::Extend.config.registry =
     Kiba::Extend::Registry::FileRegistry.new
@@ -287,5 +276,18 @@ def reset_registry
   MyProject::RegistryData.register
 end
 ~~~
+
+### Use where needed {#dynamicuse}
+
+In the transform (or other) class that needs to dynamically make lookups after registry is regenerated:
+
+~~~ ruby
+fix_jobkey = :"fix_main__#{table}"
+unless Kiba::Extend::Job.registered?(fix_jobkey)
+  Kiba::Extend::Command::Run.job(:"preprocess_main__#{table}")
+  MyProject.reset_registry
+end
+~~~
+
 
 By design, the job registry is frozen and immutable, so this feels sort of evil. But it gets the job done for this strange project.
