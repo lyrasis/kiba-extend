@@ -44,19 +44,19 @@ On the to-do list:
 
 - Wiki documentation for how to use the registry and job templating. In the meantime the best place to get an understanding of this is [kiba-extend-project](https://github.com/lyrasis/kiba-extend-project).
 
-## Non-Ruby/non-bundleable dependencies {#dep}
+## Non-Ruby/non-bundleable dependencies
 
-### Rendering mermaid job dependency graphs {#mermaidrenderdep}
+### Rendering mermaid job dependency graphs
 
-If you wish to use the `thor job graph` command to render mermaid dependency graphs, you need to install the https://github.com/coolamit/mermaid-cli[the Go mmd-cli]. This is a replacement for the official mermaid.js/mermaid-cli, which is embedded deeply in the node/npm ecosystem, and which has some really annoying and problematic dependencies and Mac bugs.
+If you wish to use the `thor job graph` command to render mermaid dependency graphs, you need to install [the Go-based mmd-cli](https://github.com/coolamit/mermaid-cli). This is a replacement for the official mermaid.js/mermaid-cli, which is embedded deeply in the node/npm ecosystem, and which has some really annoying and problematic dependencies and Mac bugs.
 
-The preferred way to do this in the Lyrasis Data Migrations team environment is via https://mise.jdx.dev[mise] and then go's install command:
+The preferred way to do this in the Lyrasis Data Migrations team environment is via [mise](https://mise.jdx.dev) and then go's install command:
 
 Install go if you do not already have it:
 
     mise use -g go@1.25.11 # or later version
 
-Install chromium. This is becoming more problematic, as the brew version doesn't work, and conflicts with ARM architecture exist. As of June 2026, https://github.com/ungoogled-software/ungoogled-chromium-macos[Ungoogled Chromium for the MacOS] works:
+Install chromium. This is becoming more problematic, as the brew version doesn't work, and conflicts with ARM architecture exist. As of June 2026, [Ungoogled Chromium for the MacOS](https://github.com/ungoogled-software/ungoogled-chromium-macos) works:
 
     brew install --cask ungoogled-chromium
 
@@ -64,7 +64,7 @@ Install mermaid-cli:
 
     go install github.com/coolamit/mermaid-cli/cmd/mmd-cli@latest
 
-Alternate installation paths are documented at https://github.com/mermaid-js/mermaid-cli[the mermaid-cli GitHub repository].
+Alternate installation paths are documented at the mmd-cli GitHub repository.
 
 If you ever want to uninstall mmd-cli, do `which mmd-cli` and then delete the directory at that path.
 
@@ -81,7 +81,7 @@ To get a full overview of available transformations and what they do, run `bundl
 
 For more clarity about exactly what each transformation does, if it is not described in the documentation yet, check the actual test files in `/spec/kiba/extend/transforms`, which include sample input rows, transformation calls, and the resulting output
 
-## Example project applications
+## Example project application
 
 [kiba-extend-project](https://github.com/lyrasis/kiba-extend-project) is a Github template repository for starting a new ETL project using `kiba-extend`. It is heavily commented in an attempt to explain how things work.
 
