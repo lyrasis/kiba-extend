@@ -14,10 +14,6 @@ module Kiba
       # Transforms a file_registry hash into an object that can return
       #   source, lookup, or destination config for that file, for
       #   passing to jobs
-      #
-      # An example of a file registry setup in a project can be found
-      #   at:
-      #   https://github.com/lyrasis/fwm-cspace-migration/blob/main/lib/fwm/registry_data.rb
       class FileRegistry
         include Dry::Container::Mixin
 
@@ -57,9 +53,9 @@ module Kiba
         end
 
         # @param filekey [String, Symbol, Hash] file registry key for file to
-        #   be used as a lookup source. Alternately, a Hash containing
-        #   jobkey: {full jobkey symbol}, and additional key-value pairs may
-        #   be passed.
+        #   be used as a lookup source. Alternately, a Hash can be given as
+        #   described in [the "More flexible lookup file definition" section of
+        #   Jobs](https://lyrasis.github.io/kiba-extend/Kiba/Extend/Jobs.html#flex-lookup).
         # @return [Kiba::Extend::Registry::RegisteredLookup]
         def as_lookup(filekey, for_job)
           jobkey = filekey.is_a?(Hash) ? filekey[:jobkey] : filekey
