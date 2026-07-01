@@ -104,8 +104,8 @@ module Kiba
     # Default settings for Lambda destination
     # @return [Hash]
     setting :lambdaopts, default: {on_write: ->(r) {
-                                               accumulator << r
-                                             }}, reader: true
+      accumulator << r
+    }}, reader: true
 
     # @return [String]
     # Default delimiter for splitting/joining values in multi-valued fields.
@@ -147,8 +147,8 @@ module Kiba
     #
     # @return [Class]
     setting :source, constructor: proc {
-                                    Kiba::Extend::Sources::CSV
-                                  }, reader: true
+      Kiba::Extend::Sources::CSV
+    }, reader: true
 
     # Default destination class for jobs. Must meet implementation
     # criteria in [Kiba
@@ -156,8 +156,8 @@ module Kiba
     #
     # @return [Class]
     setting :destination, constructor: proc {
-                                         Kiba::Extend::Destinations::CSV
-                                       }, reader: true
+      Kiba::Extend::Destinations::CSV
+    }, reader: true
 
     # Prefix for warnings from the ETL
     #
