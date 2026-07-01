@@ -27,18 +27,7 @@ Some current possibilities with job templating/decoration:
 
 **The transformations and source/destination types may be used completely independently of the registry/job templating.** The registry and job templating functionality are highly dependent on one another.
 
-
-One powerful way of using kiba-extend is to create an "abstract" ETL project.
-An abstract project handles the general logic of transforming data from a specific source system into the format required by a given target system.
-For example, if you frequently need to migrate data from OldSystem to NewSystem, you may create an abstract OldSystem kiba-extend project that can handle the general structure of data out of OldSystem and its transformation:what the source data files are, hardcoded enum values that need to be replaced in the data, what preprocessing needs to be done, how to merge data from lookup tables into the records using the lookups, and remapping the data into the "shape" you need it to be in for NewSystem.
-
-All the specifics that may change per specific instance of such a project are defined as configuration settings in the abstract project.
-For instance one OldSystem user may only want to migrate records with `active=true` values to NewSystem, while another may wish to also migrate all records regardless of `active` status.
-
-You would create a new kiba-extend project for each of these clients.
-These client projects would have your abstract project as a dependency.
-This is where you would set the per-project configuration settings you defined in the abstract project.
-You can also define client-specific jobs and transforms here as needed.
+See [the typology of `kiba-extend` projects](https://lyrasis.github.io/kiba-extend/file.kiba_extend_concepts.html#projecttypes) for a description of how you can build configurable parent projects with child projects having specific configurations.
 
 On the to-do list:
 
