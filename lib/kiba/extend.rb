@@ -173,6 +173,17 @@ module Kiba
       constructor: proc { Kiba::Extend::Registry::FileRegistry.new },
       reader: true
 
+    # Rebuilds registry after changes have been made to the project that impact
+    #   dynamic job registration. This is especially useful for automated tests
+    #   of iterative cleanup processes at various stages of file return status.
+    def reset_registry
+      config.registry = Kiba::Extend::Registry::FileRegistry.new
+      config_namespaces.each do |ns|
+        ns.config.registry = registry
+        ns::RegistryData.register
+      end
+    end
+
     # The job definition module method expected to be present if you
     #   [define a registry entry hash creator as a
     #   Module](https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html#module-creator-example-since-2-7-2)
