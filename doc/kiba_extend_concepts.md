@@ -8,10 +8,49 @@
 
 ## Glossary {#glossary}
 
-Full job key
-: A Ruby Symbol built from `FileRegistry` namespace (if used) and registry entry name, separated by the value of `Kiba::Extend.registry_namespace_separator` (defaults to `__` (two underscores)). Examples: With namespace: `:namespace__entry_name`; No namespace: `:unnamespaced_entry_name`.
 File registry key
 : Synonym for `Full job key`.
+
+Full job key
+: A Ruby Symbol built from `FileRegistry` namespace (if used) and registry entry name, separated by the value of `Kiba::Extend.registry_namespace_separator` (defaults to `__` (two underscores)). Examples: With namespace: `:namespace__entry_name`; No namespace: `:unnamespaced_entry_name`.
+
+Job definition module
+: Ruby Module in your project that defines: (1) source, destination, and optional lookups for the job; and (2) the data transformations for the job. See [Kiba::Extend::Jobs](https://lyrasis.github.io/kiba-extend/Kiba/Extend/Jobs.html).
+
+## Typology of kiba-extend projects {#projecttypes}
+
+### Oneoff/direct
+
+This project uses kiba-extend directly and is self-contained. [kiba-extend-project](https://github.com/lyrasis/kiba-extend-project) is an example of a oneoff/direct project.
+
+### Parent
+
+One powerful way of using kiba-extend is to create an "abstract" parent ETL project.
+
+A parent project handles the general logic of transforming data from a specific source system into the format required by a given target system.
+For example, if you frequently need to migrate data from OldSystem to NewSystem, you may create a parent OldSystem kiba-extend project that can handle the general structure of data out of OldSystem and its transformation, such as:
+
+- what the source data files are;
+- hardcoded enum values that need to be replaced in the data;
+- what standard data preprocessing needs to be done;
+- how to merge data from lookup tables; and
+- remapping the data into the "shape" you need it to be in for NewSystem.
+
+All the specifics that may change per specific instance of such a project are defined as configuration settings in the parent project.
+For instance one OldSystem user may only want to migrate records with `active=true` values to NewSystem, while another may wish to also migrate all records regardless of `active` status.
+
+In this case, you might define a `migrate_inactive` setting in the parent project.
+
+### Child
+
+A project for a specific client or data set, based on a Parent project
+
+You set the client-specific values for the configuration settings you defined in the parent project (such as `migrate_inactive`) for each client in the child projects.
+
+Client-specific jobs and transforms can also be defined in child projects as needed.
+
+Theoretically, you can also have grandchild projects and even deeper projects.
+However, those would get pretty difficult to understand and manage.
 
 ## Assumptions and concepts used in libraries used by `kiba-extend` {#other-libraries}
 
