@@ -60,9 +60,73 @@
       </div>
 
       <div id="content"><div id='filecontents'>
-<h1 id="kiba-extend-concepts"><code>kiba-extend</code> Concepts</h1>
+<ul id="markdown-toc">
+  <li><a href="#glossary" id="markdown-toc-glossary">Glossary</a></li>
+  <li><a href="#projecttypes" id="markdown-toc-projecttypes">Typology of kiba-extend projects</a>    <ul>
+      <li><a href="#oneoffdirect" id="markdown-toc-oneoffdirect">Oneoff/direct</a></li>
+      <li><a href="#parent" id="markdown-toc-parent">Parent</a></li>
+      <li><a href="#child" id="markdown-toc-child">Child</a></li>
+    </ul>
+  </li>
+  <li><a href="#other-libraries" id="markdown-toc-other-libraries">Assumptions and concepts used in libraries used by <code>kiba-extend</code></a>    <ul>
+      <li><a href="#zeitwerk" id="markdown-toc-zeitwerk">Folder structure, file names, module/class name constants defined in files</a></li>
+      <li><a href="#dry-configurable" id="markdown-toc-dry-configurable">Config settings via <code>dry-configurable</code></a></li>
+    </ul>
+  </li>
+  <li><a href="#thinking-in-reusable-transformation-steps" id="markdown-toc-thinking-in-reusable-transformation-steps">Thinking in reusable transformation steps</a></li>
+</ul>
 
-<h2 id="folder-structure-file-names-moduleclass-name-constants-defined-in-files">Folder structure, file names, module/class name constants defined in files</h2>
+<h2 id="glossary">Glossary</h2>
+
+<dl>
+  <dt>File registry key</dt>
+  <dd>Synonym for <code>Full job key</code>.</dd>
+  <dt>Full job key</dt>
+  <dd>A Ruby Symbol built from <code>FileRegistry</code> namespace (if used) and registry entry name, separated by the value of <code>Kiba::Extend.registry_namespace_separator</code> (defaults to <code>__</code> (two underscores)). Examples: With namespace: <code>:namespace__entry_name</code>; No namespace: <code>:unnamespaced_entry_name</code>.</dd>
+  <dt>Job definition module</dt>
+  <dd>Ruby Module in your project that defines: (1) source, destination, and optional lookups for the job; and (2) the data transformations for the job. See <a href="https://lyrasis.github.io/kiba-extend/Kiba/Extend/Jobs.html">Kiba::Extend::Jobs</a>.</dd>
+</dl>
+
+<h2 id="projecttypes">Typology of kiba-extend projects</h2>
+
+<h3 id="oneoffdirect">Oneoff/direct</h3>
+
+<p>This project uses kiba-extend directly and is self-contained. <a href="https://github.com/lyrasis/kiba-extend-project">kiba-extend-project</a> is an example of a oneoff/direct project.</p>
+
+<h3 id="parent">Parent</h3>
+
+<p>One powerful way of using kiba-extend is to create an “abstract” parent ETL project.</p>
+
+<p>A parent project handles the general logic of transforming data from a specific source system into the format required by a given target system.
+For example, if you frequently need to migrate data from OldSystem to NewSystem, you may create a parent OldSystem kiba-extend project that can handle the general structure of data out of OldSystem and its transformation, such as:</p>
+
+<ul>
+  <li>what the source data files are;</li>
+  <li>hardcoded enum values that need to be replaced in the data;</li>
+  <li>what standard data preprocessing needs to be done;</li>
+  <li>how to merge data from lookup tables; and</li>
+  <li>remapping the data into the “shape” you need it to be in for NewSystem.</li>
+</ul>
+
+<p>All the specifics that may change per specific instance of such a project are defined as configuration settings in the parent project.
+For instance one OldSystem user may only want to migrate records with <code>active=true</code> values to NewSystem, while another may wish to also migrate all records regardless of <code>active</code> status.</p>
+
+<p>In this case, you might define a <code>migrate_inactive</code> setting in the parent project.</p>
+
+<h3 id="child">Child</h3>
+
+<p>A project for a specific client or data set, based on a Parent project</p>
+
+<p>You set the client-specific values for the configuration settings you defined in the parent project (such as <code>migrate_inactive</code>) for each client in the child projects.</p>
+
+<p>Client-specific jobs and transforms can also be defined in child projects as needed.</p>
+
+<p>Theoretically, you can also have grandchild projects and even deeper projects.
+However, those would get pretty difficult to understand and manage.</p>
+
+<h2 id="other-libraries">Assumptions and concepts used in libraries used by <code>kiba-extend</code></h2>
+
+<h3 id="zeitwerk">Folder structure, file names, module/class name constants defined in files</h3>
 
 <p><code>kiba-extend</code> uses <a href="https://github.com/fxn/zeitwerk">zeitwerk</a> to automatically handle code loading, so you don’t have to manually enter <code>require_relative</code> every time you refer to code in another file. (The manual way is tedious and horrible if you end up renaming files or moving them around).</p>
 
@@ -76,13 +140,13 @@
 
 <p><strong>Inflections example:</strong> kiba-tms defines inflectors for dealing with some TMS tables. Generally, kiba-tms defines a config module per TMS table. For clarity, the names of the tables and the config module constants should match. For a table like <code>ClassificationXRefs</code>, I would be annoyed to have to name my file <code>classification_x_refs.rb</code> (especially since there are other tables named like: <code>ConXrefs</code>). So I added an inflector to handle this in <code>setup_loader</code> method in <code>/lib/kiba/tms.rb</code>.</p>
 
-<h2 id="dry-configurable">dry-configurable</h2>
+<h3 id="dry-configurable">Config settings via <code>dry-configurable</code></h3>
 
 <p><code>kiba-extend</code> and projects based on it make heavy use of the <code>dry-configurable</code> gem to add flexible but safe config settings to control application behavior.</p>
 
-<p>This is particularly heavily used in projects like <code>kiba-tms</code> or <code>migrations-cspace-csu-base</code> which are used as middle layers between <code>kiba-extend</code> and individual client projects.</p>
+<p>This is particularly heavily used in “abstract” <code>kiba-extend</code> projects like <code>kiba-tms</code> or <code>migrations-cspace-csu-base</code> which are used as middle layers between <code>kiba-extend</code> and individual client projects.</p>
 
-<p>However, even for one-off projects, it can be convenient to add settings for values used across your project to the main project module definition. See <a href="https://github.com/dts-hosting/migration-cspace-wpl/blob/main/lib/wpl.rb">migration-cspace-wpl</a>’s <code>:post_mig_cleanup_label</code> and <code>:photos_coll_title</code> settings as an example.</p>
+<p>However, even for one-off projects, it can be convenient to add settings for values used across your project to the main project module definition.</p>
 
 <p><code>dry-configurable</code> is pretty simple. <a href="https://dry-rb.org/gems/dry-configurable/main/">Its documentation</a> is only two pages, though it leaves some important things out, such as:</p>
 
@@ -174,7 +238,7 @@
 </div></div>
 
       <div id="footer">
-  Generated on Tue Jun 30 15:54:29 2026 by
+  Generated on Wed Jul  1 15:57:21 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.44 (ruby-3.4.10).
 </div>
