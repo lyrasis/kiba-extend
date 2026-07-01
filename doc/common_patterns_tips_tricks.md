@@ -268,20 +268,7 @@ To do this, I set up auto-registration as follows:
 
 But this broke the dependency-handling assumptions of kiba-extend. If I wanted to dynamically call a `fix` phase job from the `fcar` phase, but hadn't run the corresponding `preprocess` job (or the results of it were cleared out by pre-job task deletion), the `fix` job I needed would not be registered.
 
-### `reset_registry` method {#resetregistry}
-
-In the /lib/my_project.rb file, inside the MyProject module definition:
-
-~~~ ruby
-def reset_registry
-  Kiba::Extend.config.registry =
-    Kiba::Extend::Registry::FileRegistry.new
-  MyProject.config.registry = Kiba::Extend.registry
-  MyProject::RegistryData.register
-end
-~~~
-
-### Use where needed {#dynamicuse}
+### Use in iterative cleanup job test  {#resetregiterativecleanup}
 
 In an iterative cleanup job test:
 
@@ -309,7 +296,7 @@ RSpec.describe MyProject::Jobs::LocCatPlus do
       MyProject::LocCatPlus.config.returned_files = [
         "test/loc_cat_plus_0.csv"
       ]
-      MyProject.reset_registry
+      Kiba::Extend.reset_registry
     end
     after(:context) { MyProject::LocCatPlus.reset_config }
 
@@ -332,6 +319,7 @@ Notes:
 * Enabling test interface for config settings depends on presence of `require "dry/configurable/test_interface"` in `./spec/spec_helper.rb` file
 * The `csv_job_output` method depends on inclusion of [`Kiba::Extend::Utils::TestHelpers`](https://lyrasis.github.io/kiba-extend/Kiba/Extend/Utils/TestHelpers.html) in your RSpec config in `./spec/spec_helper.rb` file.
 
+### Use in odd dynamic registration project {#resetregdynamicreg}
 
 In the transform (or other) class that needs to dynamically make lookups after registry is regenerated:
 
@@ -339,9 +327,6 @@ In the transform (or other) class that needs to dynamically make lookups after r
 fix_jobkey = :"fix_main__#{table}"
 unless Kiba::Extend::Job.registered?(fix_jobkey)
   Kiba::Extend::Command::Run.job(:"preprocess_main__#{table}")
-  MyProject.reset_registry
+  Kiba::Extend.reset_registry
 end
 ~~~
-
-
-By design, the job registry is frozen and immutable, so this feels sort of evil. But it gets the job done for this strange project.
