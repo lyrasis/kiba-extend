@@ -76,7 +76,7 @@ https://github.com/lyrasis/kiba-extend/pull/266[PR#266]
 * https://lyrasis.github.io/kiba-extend/Kiba/Extend/Utils/TestHelpers.html[`Utils::TestHelpers` module]
 https://github.com/lyrasis/kiba-extend/pull/267[PR#267]
 * `Kiba::Extend.reset_registry` method. For examples of when this is useful, see https://lyrasis.github.io/kiba-extend/file.common_patterns_tips_tricks.html#manipulate-registry[Common patterns, tips, and tricks > Manipulating the registry on the fly]
-https://github.com/lyrasis/kiba-extend/pull/268[PR#268]
+https://github.com/lyrasis/kiba-extend/pull/269[PR#269]
 
 === Bugfixes
 
