@@ -88,8 +88,6 @@
   <li><a href="#manipulate-registry" id="markdown-toc-manipulate-registry">Manipulating the registry on the fly</a>    <ul>
       <li><a href="#manipulate-registry-iterativecleanup" id="markdown-toc-manipulate-registry-iterativecleanup">Use case: Testing iterative cleanup jobs</a></li>
       <li><a href="#manipulate-registry-dynamic" id="markdown-toc-manipulate-registry-dynamic">Use case: Highly dynamic projects that (ill-advisedly?) veer away from normal kiba-extend job registration patterns</a></li>
-      <li><a href="#resetregiterativecleanup" id="markdown-toc-resetregiterativecleanup">Use in iterative cleanup job test</a></li>
-      <li><a href="#resetregdynamicreg" id="markdown-toc-resetregdynamicreg">Use in odd dynamic registration project</a></li>
     </ul>
   </li>
 </ul>
@@ -333,26 +331,6 @@ puts &quot;Some records omitted&quot; if job.outrows &lt; job.srcrows
 
 <p>This is useful if you need to set up RSpec tests of iterative cleanup jobs in your project. Without this, you can’t set up tests with the given worksheets and returned files you specify, because the registry will have already been built when RSpec loads your project application when it starts. Setting the relevant <code>provided_worksheets</code> and <code>returned_files</code> settings for your test won’t impact what jobs have been defined for the iterative cleanup process in your registry. You need to regenerate the registry after setting any config settings that impact how jobs get defined.</p>
 
-<h3 id="manipulate-registry-dynamic">Use case: Highly dynamic projects that (ill-advisedly?) veer away from normal kiba-extend job registration patterns</h3>
-
-<p><strong>NOTE: I’ve since refactored the project described here to use a more standard job registration pattern. This issue was getting too annoying to deal with.</strong></p>
-
-<p>This pattern was developed to solve a problem with a project with nearly 200 input data tables, where the project needed to be built up in very distinct phases, and there are 9 different categories of tables that need to be dealt with separately in each phase.</p>
-
-<p>I wanted to be able to get <code>main</code> and <code>added_fields</code> categories of tables through the <code>preprocess</code>, <code>fix</code>, <code>fcar</code> phases to the <code>skeleton</code> (e.g. initial stub record ingest) phase before I dealt with getting the other 7 categories of tables handled by the <code>fix</code> phase.</p>
-
-<p>To do this, I set up auto-registration as follows:</p>
-
-<ul>
-  <li><code>preprocess</code> phase jobs based on the files in the <code>orig</code> directory</li>
-  <li><code>fix</code> phase jobs based on the files in the <code>preprocess</code> directory</li>
-  <li>…and so on as the phases continue</li>
-</ul>
-
-<p>But this broke the dependency-handling assumptions of kiba-extend. If I wanted to dynamically call a <code>fix</code> phase job from the <code>fcar</code> phase, but hadn’t run the corresponding <code>preprocess</code> job (or the results of it were cleared out by pre-job task deletion), the <code>fix</code> job I needed would not be registered.</p>
-
-<h3 id="resetregiterativecleanup">Use in iterative cleanup job test</h3>
-
 <p>In an iterative cleanup job test:</p>
 
 <pre class="code language-ruby"><code class="language-ruby">require &quot;spec_helper&quot;
@@ -366,6 +344,8 @@ end
 RSpec.describe MyProject::Jobs::LocCatPlus do
   context &quot;with round 0&quot; do
     before(:context) do
+	  # Clear out any pre-existing files that are part of this process,
+	  #   so our &quot;round&quot; setup doesn&#39;t get polluted.
       Dir.children(MyProject.wrkdir).each do |child|
         next unless child.start_with?(&quot;loc_cat_plus&quot;)
 
@@ -373,10 +353,10 @@ RSpec.describe MyProject::Jobs::LocCatPlus do
       end
 
       MyProject::LocCatPlus.config.provided_worksheets = [
-        &quot;test/loc_cat_plus_0.csv&quot;
+        &quot;fixtures/loc_cat_plus_0.csv&quot;
       ]
       MyProject::LocCatPlus.config.returned_files = [
-        &quot;test/loc_cat_plus_0.csv&quot;
+        &quot;fixtures/loc_cat_plus_0.csv&quot;
       ]
       Kiba::Extend.reset_registry
     end
@@ -403,7 +383,25 @@ end
   <li>The <code>csv_job_output</code> method depends on inclusion of <a href="https://lyrasis.github.io/kiba-extend/Kiba/Extend/Utils/TestHelpers.html"><code>Kiba::Extend::Utils::TestHelpers</code></a> in your RSpec config in <code>./spec/spec_helper.rb</code> file.</li>
 </ul>
 
-<h3 id="resetregdynamicreg">Use in odd dynamic registration project</h3>
+<p>The [kiba-extend-project] demo contains a full <code>./spec/spec_helper.rb</code> file that supports this testing approach.</p>
+
+<h3 id="manipulate-registry-dynamic">Use case: Highly dynamic projects that (ill-advisedly?) veer away from normal kiba-extend job registration patterns</h3>
+
+<p><strong>NOTE: I’ve since refactored the project described here to use a more standard job registration pattern. This issue was getting too annoying to deal with.</strong></p>
+
+<p>This pattern was developed to solve a problem with a project with nearly 200 input data tables, where the project needed to be built up in very distinct phases, and there are 9 different categories of tables that need to be dealt with separately in each phase.</p>
+
+<p>I wanted to be able to get <code>main</code> and <code>added_fields</code> categories of tables through the <code>preprocess</code>, <code>fix</code>, <code>fcar</code> phases to the <code>skeleton</code> (e.g. initial stub record ingest) phase before I dealt with getting the other 7 categories of tables handled by the <code>fix</code> phase.</p>
+
+<p>To do this, I set up auto-registration as follows:</p>
+
+<ul>
+  <li><code>preprocess</code> phase jobs based on the files in the <code>orig</code> directory</li>
+  <li><code>fix</code> phase jobs based on the files in the <code>preprocess</code> directory</li>
+  <li>…and so on as the phases continue</li>
+</ul>
+
+<p>But this broke the dependency-handling assumptions of kiba-extend. If I wanted to dynamically call a <code>fix</code> phase job from the <code>fcar</code> phase, but hadn’t run the corresponding <code>preprocess</code> job (or the results of it were cleared out by pre-job task deletion), the <code>fix</code> job I needed would not be registered.</p>
 
 <p>In the transform (or other) class that needs to dynamically make lookups after registry is regenerated:</p>
 
@@ -416,7 +414,7 @@ end
 </div></div>
 
       <div id="footer">
-  Generated on Wed Jul  1 22:58:03 2026 by
+  Generated on Thu Jul  2 01:01:13 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.44 (ruby-3.4.10).
 </div>
