@@ -77,6 +77,8 @@ https://github.com/lyrasis/kiba-extend/pull/266[PR#266]
 https://github.com/lyrasis/kiba-extend/pull/267[PR#267]
 * `Kiba::Extend.reset_registry` method. For examples of when this is useful, see https://lyrasis.github.io/kiba-extend/file.common_patterns_tips_tricks.html#manipulate-registry[Common patterns, tips, and tricks > Manipulating the registry on the fly]
 https://github.com/lyrasis/kiba-extend/pull/269[PR#269]
+* `Kiba::Extend::Jobs::NullJob` for use in dynamically defined projects
+https://github.com/lyrasis/kiba-extend/pull/272[PR#272]
 
 === Bugfixes
 
