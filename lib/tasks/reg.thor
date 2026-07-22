@@ -12,7 +12,10 @@ class Reg < Thor
 
   desc "tags", "List tags used in the registry"
   def tags
-    puts Kiba::Extend::Command::Reg.tags
+    puts Kiba::Extend::Command::Reg.tags.sort
+  rescue ArgumentError
+    puts "It looks like you have at least one non-Symbol tag. "\
+      "Try `thor debug string_tags` to list these so you can fix them."
   end
 
   desc "validate", "List entries in file registry with errors and warnings"

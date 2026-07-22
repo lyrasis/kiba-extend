@@ -19,7 +19,6 @@ module Kiba
             .reject(&:empty?)
             .flatten
             .uniq
-            .sort
         end
 
         def validate
