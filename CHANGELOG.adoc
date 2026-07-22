@@ -42,6 +42,7 @@ https://github.com/lyrasis/kiba-extend/pull/252[PR#252]
 https://github.com/lyrasis/kiba-extend/pull/252[PR#252]
 * Minor changes to API of `Deduplicate::FieldGroup` and `Deduplicate::GroupedFieldValues` transforms: `normalized` parameter was changed to `normalize`.
 https://github.com/lyrasis/kiba-extend/pull/252[PR#252]
+* `multival` parameter removed from `Delete::FieldValueIfEqualsOtherField`
 
 === Added
 

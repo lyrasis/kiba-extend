@@ -21,7 +21,6 @@ RSpec.describe Kiba::Extend::Transforms::Delete::FieldValueIfEqualsOtherField do
       {
         delete: :del,
         if_equal_to: :compare,
-        multival: true,
         delim: ";",
         grouped_fields: %i[grpa grpb],
         casesensitive: false
