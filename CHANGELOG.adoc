@@ -24,7 +24,6 @@ toc::[]
 
 === Breaking
 
-* Removal of `sep` and `multival` params from `Deduplicate::Fields` (deprecated in 5.0.0)
 * Removal of `sep` & `multival` params from `Clean::RegexpFindReplaceFieldVals` (deprecated in 5.0.0)
 * Removal of `multival` param from `Prepend::ToFieldValue` (deprecated in 5.0.0)
 * Removal of `sep` & `multival` params from `Explode::FieldValuesToNewRows` (deprecated in 5.0.0)
@@ -42,7 +41,8 @@ https://github.com/lyrasis/kiba-extend/pull/252[PR#252]
 https://github.com/lyrasis/kiba-extend/pull/252[PR#252]
 * Minor changes to API of `Deduplicate::FieldGroup` and `Deduplicate::GroupedFieldValues` transforms: `normalized` parameter was changed to `normalize`.
 https://github.com/lyrasis/kiba-extend/pull/252[PR#252]
-* `multival` parameter removed from `Delete::FieldValueIfEqualsOtherField`
+* Removal of `multival` parameter from `Delete::FieldValueIfEqualsOtherField`
+* Removal of `sep` and `multival` parameters from `Deduplicate::Fields`
 
 === Added
 
