@@ -45,9 +45,9 @@ module Kiba
         # @example Multival comparisons with positional_compare
         #   # Used in pipeline as:
         #   # transform Delete::FieldValueIfEqualsOtherField,
-        #   #    delete: :del, if_equal_to: :compare, multival: true
+        #   #    delete: :del, if_equal_to: :compare, delim: "|"
         #   xform = Delete::FieldValueIfEqualsOtherField.new(
-        #     delete: :del, if_equal_to: :compare, multival: true
+        #     delete: :del, if_equal_to: :compare, delim: "|"
         #   )
         #   input = [
         #     {del: "a|b", compare: "b"},
@@ -74,10 +74,10 @@ module Kiba
         # @example Multival comparisons with non-positional_compare
         #   # Used in pipeline as:
         #   # transform Delete::FieldValueIfEqualsOtherField,
-        #   #    delete: :del, if_equal_to: :compare, multival: true,
+        #   #    delete: :del, if_equal_to: :compare, delim: "|",
         #   #    positional_compare: false
         #   xform = Delete::FieldValueIfEqualsOtherField.new(
-        #     delete: :del, if_equal_to: :compare, multival: true,
+        #     delete: :del, if_equal_to: :compare, delim: "|",
         #     positional_compare: false
         #   )
         #   input = [
@@ -105,13 +105,12 @@ module Kiba
         # @example Even multival grouped fields, case insensitive
         #   # Used in pipeline as:
         #   # transform Delete::FieldValueIfEqualsOtherField,
-        #   #    delete: :del, if_equal_to: :compare, multival: true,
+        #   #    delete: :del, if_equal_to: :compare,
         #   #    delim: ";", grouped_fields: %i[grpa grpb],
         #   #    casesensitive: false
         #   xform = Delete::FieldValueIfEqualsOtherField.new(
         #     delete: :del,
         #     if_equal_to: :compare,
-        #     multival: true,
         #     delim: ";",
         #     grouped_fields: %i[grpa grpb],
         #     casesensitive: false
@@ -170,13 +169,12 @@ module Kiba
         # @example Even multival grouped, case insensitive, nonpositional
         #   # Used in pipeline as:
         #   # transform Delete::FieldValueIfEqualsOtherField,
-        #   #    delete: :del, if_equal_to: :compare, multival: true,
+        #   #    delete: :del, if_equal_to: :compare,
         #   #    delim: ";", grouped_fields: %i[grpa grpb],
         #   #    casesensitive: false, positional_compare: false
         #   xform = Delete::FieldValueIfEqualsOtherField.new(
         #     delete: :del,
         #     if_equal_to: :compare,
-        #     multival: true,
         #     delim: ";",
         #     grouped_fields: %i[grpa grpb],
         #     casesensitive: false,
@@ -211,13 +209,12 @@ module Kiba
         # @example Ragged multival grouped fields, case insensitive
         #   # Used in pipeline as:
         #   # transform Delete::FieldValueIfEqualsOtherField,
-        #   #    delete: :del, if_equal_to: :compare, multival: true,
+        #   #    delete: :del, if_equal_to: :compare,
         #   #    delim: ";", grouped_fields: %i[grpa grpb],
         #   #    casesensitive: false
         #   xform = Delete::FieldValueIfEqualsOtherField.new(
         #     delete: :del,
         #     if_equal_to: :compare,
-        #     multival: true,
         #     delim: ";",
         #     grouped_fields: %i[grpa grpb],
         #     casesensitive: false
@@ -251,28 +248,24 @@ module Kiba
         #   #   Those elements are also deleted from the grouped fields if
         #   #   present.
         class FieldValueIfEqualsOtherField
-          include MultivalPlusDelimDeprecatable
-
           # @param delete [Symbol] field from which values will be deleted
           # @param if_equal_to [Symbol] field the `delete` values will be
           #   compared to. In other words, the "other field"
-          # @param multival [Boolean] **DEPRECATED - Do not use**
           # @param positional_compare [Boolean] whether to compare multivalues
-          #   positionally. Only relevant if `multival` is true and
+          #   positionally. Only relevant if `delim` is provided and
           #   `if_equal_to` is multivalued
-          # @param delim [String] on which to split if `multival`. Defaults to
-          #   `Kiba::Extend.delim` if not provided.
+          # @param delim [String] on which to split the values; providing a
+          #   value turns on mulivalue treatment
           # @param grouped_fields [Array<Symbol>] field(s) from which
           #   positionally corresponding values should also be removed
           # @param casesensitive [Boolean] matching mode
           def initialize(delete:, if_equal_to:,
-            multival: omitted = true, positional_compare: true, delim: nil,
+            positional_compare: true, delim: nil,
             grouped_fields: [], casesensitive: true)
             @delete = delete
             @compare = if_equal_to
-            @multival = set_multival(multival, omitted, self)
             @positional = positional_compare
-            @delim = delim || Kiba::Extend.delim
+            @delim = delim
             @group = grouped_fields
             @casesensitive = casesensitive
           end
@@ -302,7 +295,7 @@ module Kiba
 
           private
 
-          attr_reader :delete, :compare, :multival, :positional, :delim, :group,
+          attr_reader :delete, :compare, :positional, :delim, :group,
             :casesensitive
 
           def prepare_val(field, row, type = :final)
@@ -310,12 +303,12 @@ module Kiba
             return nil if val.blank?
 
             if type == :final
-              split = multival ? val.split(delim) : [val]
+              split = delim ? val.split(delim) : [val]
               return split
             end
 
             norm_val = casesensitive ? val : val.downcase
-            multival ? norm_val.split(delim) : [norm_val]
+            delim ? norm_val.split(delim) : [norm_val]
           end
 
           def get_compare_method(del_val, compare_val)
