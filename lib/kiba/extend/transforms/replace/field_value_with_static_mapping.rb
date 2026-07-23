@@ -6,177 +6,215 @@ module Kiba
   module Extend
     module Transforms
       module Replace
-        # Looks up value of `source` field in given `mapping` Hash. Replaces orignal value with the result.
+        # Looks up value of `source` field in given `mapping` Hash. Replaces
+        #   orignal value with the result.
         #
-        # Optional: put result in new `target` field; look up multiple values from a multivalue source field,
-        #   provide a fallback value if source value is not found in mapping
+        # Optional: put result in new `target` field; look up multiple values
+        #   from a multivalue source field, provide a fallback value if source
+        #   value is not found in mapping
         #
-        # ## Examples
-        #
-        # The examples all share the following `mapping` Hash:
-        #
-        # ~~~
-        # {
-        #   'cb' => 'coral blue',
-        #   'rp' => 'royal purple',
-        #   'p' => 'pied',
-        #   'pl' => 'pearl gray',
-        #   nil => 'undetermined'
-        # }
-        # ~~~
-        #
-        # Initial examples all use the following rows as input:
-        #
-        # ~~~
-        # [
-        #   {name: 'Lazarus', color: 'cb'},
-        #   {name: 'Inkpot', color: 'rp'},
-        #   {name: 'Zipper', color: 'rp|p'},
-        #   {name: 'Divebomber|Earlybird', color: 'pl|pl'},
-        #   {name: 'Vern', color: 'v'},
-        #   {name: 'Clover|Hops', color: 'rp|c'},
-        #   {name: 'New', color: nil},
-        #   {name: 'Old', color: ''},
-        #   {name: 'New|Hunter', color: '|pl'}
-        # ]
-        # ~~~
-        #
-        # Using:
-        #
-        # ~~~
-        # transform Replace::FieldValueWithStaticMapping, source: :color, mapping: mapping
-        # ~~~
-        #
-        # Results in:
-        #
-        # ~~~
-        # [
-        #   {name: 'Lazarus', color: 'coral blue'},
-        #     {name: 'Inkpot', color: 'royal purple'},
-        #     {name: 'Zipper', color: 'rp|p'},
-        #     {name: 'Divebomber|Earlybird', color: 'pl|pl'},
-        #     {name: 'Vern', color: 'v'},
-        #     {name: 'Clover|Hops', color: 'rp|c'},
-        #     {name: 'New', color: 'undetermined'},
-        #     {name: 'Old', color: ''},
-        #     {name: 'New|Hunter', color: '|pl'}
-        # ]
-        # ~~~
-        #
-        # Using:
-        #
-        # ~~~
-        # transform Replace::FieldValueWithStaticMapping, source: :color, target: :fullcol, mapping: mapping
-        # ~~~
-        #
-        # Results in (showing first row only):
-        #
-        # ~~~
-        # [
-        #   {name: 'Lazarus', fullcol: 'coral blue'},
-        #   ...
-        # ]
-        # ~~~
-        #
-        # Using:
-        #
-        # ~~~
-        # transform Replace::FieldValueWithStaticMapping,
-        #   source: :color,
-        #   target: :fullcol,
-        #   mapping: mapping,
-        #   delete_source: false
-        # ~~~
-        #
-        # Results in (showing first row only):
-        #
-        # ~~~
-        # [
-        #   {name: 'Lazarus', color: 'cb', fullcol: 'coral blue'},
-        #   ...
-        # ]
-        # ~~~
-        #
-        # Using:
-        #
-        # ~~~
-        # transform Replace::FieldValueWithStaticMapping,
-        #   source: :color,
-        #   mapping: mapping,
-        #   delim: '|'
-        # ~~~
-        #
-        # Results in:
-        #
-        # ~~~
-        # [
-        #   {name: 'Lazarus', color: 'coral blue'},
-        #   {name: 'Inkpot', color: 'royal purple'},
-        #   {name: 'Zipper', color: 'royal purple|pied'},
-        #   {name: 'Divebomber|Earlybird', color: 'pearl gray|pearl gray'},
-        #   {name: 'Vern', color: 'v'},
-        #   {name: 'Clover|Hops', color: 'royal purple|c'},
-        #   {name: 'New', color: 'undetermined'},
-        #   {name: 'Old', color: ''},
-        #   {name: 'New|Hunter', color: '|pearl gray'}
-        # ]
-        # ~~~
-        #
-        # The remaining examples use only the following rows as input:
-        #
-        # ~~~
-        # [
-        #   {name: 'Vern', color: 'v'},
-        #   {name: 'Clover|Hops', color: 'rp|c'},
-        #   {name: 'New', color: nil},
-        #   {name: 'Old', color: ''},
-        #   {name: 'New|Hunter', color: '|pl'}
-        # ]
-        # ~~~
-        #
-        # Using:
-        #
-        # ~~~
-        # transform Replace::FieldValueWithStaticMapping,
-        #   source: :color,
-        #   mapping: mapping,
-        #   delim: '|',
-        #   fallback_val: :nil
-        # ~~~
-        #
-        # Results in:
-        #
-        # ~~~
-        # [
-        #   {name: 'Vern', color: nil},
-        #   {name: 'Clover|Hops', color: 'royal purple|'},
-        #   {name: 'New', color: 'undetermined'},
-        #   {name: 'Old', color: nil},
-        #   {name: 'New|Hunter', color: '|pearl gray'}
-        # ]
-        # ~~~
-        #
-        # Using:
-        #
-        # ~~~
-        # transform Replace::FieldValueWithStaticMapping,
-        #   source: :color,
-        #   mapping: mapping,
-        #   delim: '|',
-        #   fallback_val: 'nope'
-        # ~~~
-        #
-        # Results in:
-        #
-        # ~~~
-        # [
-        #   {name: 'Vern', color: 'nope'},
-        #   {name: 'Clover|Hops', color: 'royal purple|nope'},
-        #   {name: 'New', color: 'undetermined'},
-        #   {name: 'Old', color: 'nope'},
-        #   {name: 'New|Hunter', color: 'nope|pearl gray'}
-        # ]
-        # ~~~
+        # @example In place, deleting source, no delim
+        #   # Used in pipeline as:
+        #   # transform Replace::FieldValueWithStaticMapping,
+        #   #   source: :color,
+        #   #   mapping: {
+        #   #     "cb" => "coral blue",
+        #   #     "rp" => "royal purple",
+        #   #     "p" => "pied pearl",
+        #   #     "pl" => "pearl gray",
+        #   #     nil => "undetermined"
+        #   #   }
+        #   xform = Replace::FieldValueWithStaticMapping.new(
+        #     source: :color,
+        #     mapping: {
+        #       "cb" => "coral blue",
+        #       "rp" => "royal purple",
+        #       "p" => "pied",
+        #       "pl" => "pearl gray",
+        #       nil => "undetermined"
+        #     }
+        #   )
+        #   input = [
+        #     {name: "Lazarus", color: "cb"},
+        #     {name: "Inkpot", color: "rp"},
+        #     {name: "Zipper", color: "rp|p"},
+        #     {name: "New", color: nil},
+        #     {name: "Old", color: ""}
+        #   ]
+        #   result = Kiba::StreamingRunner.transform_stream(input, xform)
+        #     .map{ |row| row }
+        #   expected = [
+        #     {name: "Lazarus", color: "coral blue"},
+        #     {name: "Inkpot", color: "royal purple"},
+        #     {name: "Zipper", color: "rp|p"},
+        #     {name: "New", color: "undetermined"},
+        #     {name: "Old", color: ""}
+        #   ]
+        #   expect(result).to eq(expected)
+        # @example In place, deleting source, with delim
+        #   # Used in pipeline as:
+        #   # transform Replace::FieldValueWithStaticMapping,
+        #   #   source: :color,
+        #   #   mapping: {
+        #   #     "cb" => "coral blue",
+        #   #     "rp" => "royal purple",
+        #   #     "p" => "pied pearl",
+        #   #     "pl" => "pearl gray",
+        #   #     nil => "undetermined"
+        #   #   },
+        #   #   delim: "|"
+        #   xform = Replace::FieldValueWithStaticMapping.new(
+        #     source: :color,
+        #     mapping: {
+        #       "cb" => "coral blue",
+        #       "rp" => "royal purple",
+        #       "p" => "pied",
+        #       "pl" => "pearl gray",
+        #       nil => "undetermined"
+        #     },
+        #     delim: "|"
+        #   )
+        #   input = [
+        #     {name: "Zipper", color: "rp|p"},
+        #     {name: "Divebomber|Earlybird", color: "pl|pl"},
+        #     {name: "Clover|Hops", color: "rp|c"},
+        #     {name: "New|Hunter", color: "|pl"}
+        #   ]
+        #   result = Kiba::StreamingRunner.transform_stream(input, xform)
+        #     .map{ |row| row }
+        #   expected = [
+        #     {name: "Zipper", color: "royal purple|pied"},
+        #     {name: "Divebomber|Earlybird", color: "pearl gray|pearl gray"},
+        #     {name: "Clover|Hops", color: "royal purple|c"},
+        #     {name: "New|Hunter", color: "|pearl gray"}
+        #   ]
+        #   expect(result).to eq(expected)
+        # @example No mapping for value, fallback_val = :nil
+        #   # Used in pipeline as:
+        #   # transform Replace::FieldValueWithStaticMapping,
+        #   #   source: :color,
+        #   #   mapping: {
+        #   #     "cb" => "coral blue",
+        #   #     "rp" => "royal purple",
+        #   #     "p" => "pied pearl",
+        #   #     "pl" => "pearl gray",
+        #   #     nil => "undetermined"
+        #   #   },
+        #   #   delim: "|",
+        #   #   fallback_val: :nil
+        #   xform = Replace::FieldValueWithStaticMapping.new(
+        #     source: :color,
+        #     mapping: {
+        #       "cb" => "coral blue",
+        #       "rp" => "royal purple",
+        #       "p" => "pied",
+        #       "pl" => "pearl gray",
+        #       nil => "undetermined"
+        #     },
+        #     delim: "|",
+        #     fallback_val: :nil
+        #   )
+        #   input = [
+        #     {name: "Vern", color: "v"},
+        #     {name: "Clover|Hops", color: "rp|c"},
+        #     {name: "New", color: nil},
+        #     {name: "Old", color: ""},
+        #     {name: "New|Hunter", color: "|pl"}
+        #   ]
+        #   result = Kiba::StreamingRunner.transform_stream(input, xform)
+        #     .map{ |row| row }
+        #   expected = [
+        #     {name: "Vern", color: nil},
+        #     {name: "Clover|Hops", color: "royal purple|"},
+        #     {name: "New", color: "undetermined"},
+        #     {name: "Old", color: nil},
+        #     {name: "New|Hunter", color: "|pearl gray"}
+        #   ]
+        #   expect(result).to eq(expected)
+        # @example No mapping for value, fallback_val = "nope"
+        #   # Used in pipeline as:
+        #   # transform Replace::FieldValueWithStaticMapping,
+        #   #   source: :color,
+        #   #   mapping: {
+        #   #     "cb" => "coral blue",
+        #   #     "rp" => "royal purple",
+        #   #     "p" => "pied pearl",
+        #   #     "pl" => "pearl gray",
+        #   #     nil => "undetermined"
+        #   #   },
+        #   #   delim: "|",
+        #   #   fallback_val: "nope"
+        #   xform = Replace::FieldValueWithStaticMapping.new(
+        #     source: :color,
+        #     mapping: {
+        #       "cb" => "coral blue",
+        #       "rp" => "royal purple",
+        #       "p" => "pied",
+        #       "pl" => "pearl gray",
+        #       nil => "undetermined"
+        #     },
+        #     delim: "|",
+        #     fallback_val: "nope"
+        #   )
+        #   input = [
+        #     {name: "Vern", color: "v"},
+        #     {name: "Clover|Hops", color: "rp|c"},
+        #     {name: "New", color: nil},
+        #     {name: "Old", color: ""},
+        #     {name: "New|Hunter", color: "|pl"}
+        #   ]
+        #   result = Kiba::StreamingRunner.transform_stream(input, xform)
+        #     .map{ |row| row }
+        #   expected = [
+        #     {name: "Vern", color: "nope"},
+        #     {name: "Clover|Hops", color: "royal purple|nope"},
+        #     {name: "New", color: "undetermined"},
+        #     {name: "Old", color: "nope"},
+        #     {name: "New|Hunter", color: "nope|pearl gray"}
+        #   ]
+        #   expect(result).to eq(expected)
+        # @example With target, deleting source
+        #   # Used in pipeline as:
+        #   # transform Replace::FieldValueWithStaticMapping,
+        #   #   source: :color,
+        #   #   target: :fullcol,
+        #   #   mapping: {"cb" => "coral blue"}
+        #   xform = Replace::FieldValueWithStaticMapping.new(
+        #     source: :color,
+        #     target: :fullcol,
+        #     mapping: {"cb" => "coral blue"}
+        #   )
+        #   input = [
+        #     {name: "Lazarus", color: "cb"}
+        #   ]
+        #   result = Kiba::StreamingRunner.transform_stream(input, xform)
+        #     .map{ |row| row }
+        #   expected = [
+        #     {name: "Lazarus", fullcol: "coral blue"}
+        #   ]
+        #   expect(result).to eq(expected)
+        # @example With target, not deleting source
+        #   # Used in pipeline as:
+        #   # transform Replace::FieldValueWithStaticMapping,
+        #   #   source: :color,
+        #   #   target: :fullcol,
+        #   #   mapping: {"cb" => "coral blue"},
+        #   #   delete_source: false
+        #   xform = Replace::FieldValueWithStaticMapping.new(
+        #     source: :color,
+        #     target: :fullcol,
+        #     mapping: {"cb" => "coral blue"},
+        #     delete_source: false
+        #   )
+        #   input = [
+        #     {name: "Lazarus", color: "cb"}
+        #   ]
+        #   result = Kiba::StreamingRunner.transform_stream(input, xform)
+        #     .map{ |row| row }
+        #   expected = [
+        #     {name: "Lazarus", color: "cb", fullcol: "coral blue"}
+        #   ]
+        #   expect(result).to eq(expected)
         class FieldValueWithStaticMapping
           class << self
             def multival_msg
