@@ -197,43 +197,39 @@ kill -9 {pid}
 
 <p>If you are writing yardspec tests, you can do the following:</p>
 
-<pre class="code ruby"><code class="ruby"><span class='comment'># @example With `multival: true` and no :sep
+<pre class="code ruby"><code class="ruby"><span class='comment'># @example With custom delim
 </span><span class='comment'>#   Kiba::Extend.config.delim = &#39;;&#39;
-</span><span class='comment'>#   xform = Clean::RegexpFindReplaceFieldVals.new(
+</span><span class='comment'>#   xform = Count::FieldValues.new(
 </span><span class='comment'>#     fields: :val,
-</span><span class='comment'>#     find: &#39;s$&#39;,
-</span><span class='comment'>#     replace: &#39;&#39;,
-</span><span class='comment'>#     multival: true
+</span><span class='comment'>#     target: :count
 </span><span class='comment'>#   )
 </span><span class='comment'>#   input = [
-</span><span class='comment'>#     {val: &#39;bats;bats&#39;}
+</span><span class='comment'>#     {val: &quot;bats;bats&quot;}
 </span><span class='comment'>#   ]
 </span><span class='comment'>#   result = input.map{ |row| xform.process(row) }
 </span><span class='comment'>#   Kiba::Extend.reset_config
 </span><span class='comment'>#   expected = [
-</span><span class='comment'>#     {val: &#39;bat;bat&#39;}
+</span><span class='comment'>#     {val: &quot;bat;bats&quot;, count: 2}
 </span><span class='comment'>#   ]
 </span><span class='comment'>#   expect(result).to eq(expected)
-</span><span class='comment'># @example With `multival: true` and no :sep
-</span><span class='comment'>#   xform = Clean::RegexpFindReplaceFieldVals.new(
+</span><span class='comment'># @example With default delim
+</span><span class='comment'>#   xform = Count::FieldValues.new(
 </span><span class='comment'>#     fields: :val,
-</span><span class='comment'>#     find: &#39;s$&#39;,
-</span><span class='comment'>#     replace: &#39;&#39;,
-</span><span class='comment'>#     multival: true
+</span><span class='comment'>#     target: :count
 </span><span class='comment'>#   )
 </span><span class='comment'>#   input = [
-</span><span class='comment'>#     {val: &#39;bats|bats&#39;}
+</span><span class='comment'>#     {val: &quot;bats|bats&quot;}
 </span><span class='comment'>#   ]
 </span><span class='comment'>#   result = input.map{ |row| xform.process(row) }
 </span><span class='comment'>#   expected = [
-</span><span class='comment'>#     {val: &#39;bat|bat&#39;}
+</span><span class='comment'>#     {val: &quot;bat|bats&quot;, count: 2}
 </span><span class='comment'>#   ]
 </span><span class='comment'>#   expect(result).to eq(expected)
 </span></code></pre>
 
-<p>At the time of writing, the default value of <code>Kiba::Extend.delim</code> is <code>|</code>. The first test here sets the value of that setting to <code>;</code>. That test passes. Since we call <code>Kiba::Extend.reset_config</code> after getting the result in the first test, the second test passes. If we did not call <code>Kiba::Extend.reset_config</code> in the first test, the second test would fail because the default value is still <code>;</code>.</p>
+<p>At the time of writing, the example transform uses the application’s default <code>delim</code> if no <code>delim</code> parameter is explicitly given, and the default value of <code>Kiba::Extend.delim</code> is <code>|</code>. The first test here sets the value of that setting to <code>;</code>. That test passes. Since we call <code>Kiba::Extend.reset_config</code> after getting the result in the first test, the second test passes. If we did not call <code>Kiba::Extend.reset_config</code> in the first test, the second test would fail because the default value is still <code>;</code>.</p>
 
-<p><strong>Note: Do not write the above unnecessary tests of basically the exact same thing. 🤣 It’s the clearest example of the need for the <code>:reset_command</code> method I can think of at the moment, though</strong></p>
+<p><strong>Note: Do not write the above unnecessary tests of basically the exact same thing. 🤣 It’s the clearest example of the need for the <code>:reset_config</code> method I can think of at the moment, though</strong></p>
 
 <h3 id="testing-transforms-that-yield-or-output-from-close-method">Testing transforms that <code>yield</code> or output from <code>:close</code> method</h3>
 
@@ -293,9 +289,9 @@ kill -9 {pid}
 
 <h3 id="should-a-field-be-treated-as-multivalued-or-not">Should a field be treated as multivalued or not?</h3>
 
-<p>In some earlier-added transforms such as <code>Clean::RegexpFindReplaceFieldVals</code>, there’s a <code>:multival</code> <strong>and</strong> a <code>:delim</code> (or <code>:sep</code>) parameter. These tend to have overly complicated logic where, if <code>:delim</code> is not given and <code>multival: true</code>, the value of <code>Kiba::Extend.delim</code> is used for <code>:delim</code>, but if <code>multival: false</code>, then delim isn’t used at all.</p>
+<p>In some earlier-added transforms such as <code>Clean::RegexpFindReplaceFieldVals</code>, there was originally a <code>:multival</code> <strong>and</strong> a <code>:delim</code> (or <code>:sep</code>) parameter. These tend to have overly complicated logic where, if <code>:delim</code> is not given and <code>multival: true</code>, the value of <code>Kiba::Extend.delim</code> is used for <code>:delim</code>, but if <code>multival: false</code>, then delim isn’t used at all.</p>
 
-<p>(I’m sure I thought this was useful or needed at the time, but I am not sure why… 😅)</p>
+<p>(I’m sure I thought this was useful or needed at the time, but I am not sure why… 😅 All of these have been deprecated, as of v7.0.0)</p>
 
 <p>Preferred practice when multivalued treatment should be turned off/on is to treat as multivalue if <code>:delim</code> is given, otherwise not.</p>
 
@@ -352,9 +348,9 @@ kill -9 {pid}
 </div></div>
 
       <div id="footer">
-  Generated on Thu Jul  2 01:03:45 2026 by
+  Generated on Thu Jul 23 02:21:48 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.44 (ruby-3.4.10).
+  0.9.45 (ruby-3.4.10).
 </div>
 
     </div>

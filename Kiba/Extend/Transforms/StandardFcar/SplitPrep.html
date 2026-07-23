@@ -202,6 +202,21 @@
     
   </div>
 
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>7.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div>
   
@@ -238,6 +253,21 @@
       
         &mdash;
         <div class='inline'><p>U+241F / E2 90 9F / Symbol for Unit Separator</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>7.0.0</p>
 </div>
       
     </li>
@@ -472,6 +502,21 @@ fingerprint will be written</p>
   
 </ul>
 
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>7.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -479,7 +524,6 @@ fingerprint will be written</p>
       <pre class="lines">
 
 
-115
 116
 117
 118
@@ -493,10 +537,11 @@ fingerprint will be written</p>
 126
 127
 128
-129</pre>
+129
+130</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/standard_fcar/split_prep.rb', line 115</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/standard_fcar/split_prep.rb', line 116</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_initialize'>initialize</span><span class='lparen'>(</span><span class='label'>splitters:</span><span class='comma'>,</span> <span class='label'>orig:</span><span class='comma'>,</span> <span class='label'>target:</span> <span class='symbol'>:split_val</span><span class='comma'>,</span>
   <span class='label'>sort:</span> <span class='symbol'>:sort</span><span class='comma'>,</span> <span class='label'>indicator:</span> <span class='symbol'>:autosplit</span><span class='comma'>,</span>
@@ -534,17 +579,42 @@ fingerprint will be written</p>
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>7.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-144
-145</pre>
+145
+146</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/standard_fcar/split_prep.rb', line 144</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/standard_fcar/split_prep.rb', line 145</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_close'>close</span> <span class='op'>=</span> <span class='id identifier rubyid_rows'>rows</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
 <span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_row'>row</span><span class='op'>|</span> <span class='kw'>yield</span> <span class='id identifier rubyid_fingerprint'>fingerprint</span><span class='period'>.</span><span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span> <span class='rbrace'>}</span></pre>
@@ -586,6 +656,21 @@ fingerprint will be written</p>
   
 </ul>
 
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>7.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -593,7 +678,6 @@ fingerprint will be written</p>
       <pre class="lines">
 
 
-132
 133
 134
 135
@@ -603,10 +687,11 @@ fingerprint will be written</p>
 139
 140
 141
-142</pre>
+142
+143</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/standard_fcar/split_prep.rb', line 132</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/standard_fcar/split_prep.rb', line 133</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_process'>process</span><span class='lparen'>(</span><span class='id identifier rubyid_row'>row</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_val'>val</span> <span class='op'>=</span> <span class='id identifier rubyid_row'>row</span><span class='lbracket'>[</span><span class='id identifier rubyid_orig'>orig</span><span class='rbracket'>]</span>
@@ -629,9 +714,9 @@ fingerprint will be written</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Jul  2 01:03:49 2026 by
+  Generated on Thu Jul 23 02:21:52 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.44 (ruby-3.4.10).
+  0.9.45 (ruby-3.4.10).
 </div>
 
     </div>

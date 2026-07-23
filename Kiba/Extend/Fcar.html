@@ -107,6 +107,21 @@
 </div>
 <div class="tags">
   
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>7.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div>
 
@@ -309,6 +324,21 @@ used as input for initial FCAR process</p>
     </li>
   
 </ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>7.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -316,10 +346,10 @@ used as input for initial FCAR process</p>
       <pre class="lines">
 
 
-24</pre>
+25</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/fcar.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/fcar.rb', line 25</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:base_source</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='symbol'>:your__jobkey</span></pre>
     </td>
@@ -387,6 +417,21 @@ form if you wish to provide comments on the processes.</p>
     </li>
   
 </ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>7.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -394,7 +439,6 @@ form if you wish to provide comments on the processes.</p>
       <pre class="lines">
 
 
-51
 52
 53
 54
@@ -402,10 +446,11 @@ form if you wish to provide comments on the processes.</p>
 56
 57
 58
-59</pre>
+59
+60</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/fcar.rb', line 51</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/fcar.rb', line 52</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:chute</span><span class='comma'>,</span>
 <span class='label'>reader:</span> <span class='kw'>true</span><span class='comma'>,</span>
@@ -430,16 +475,41 @@ form if you wish to provide comments on the processes.</p>
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>7.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-77</pre>
+78</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/fcar.rb', line 77</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/fcar.rb', line 78</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_final_merged'>final_merged</span> <span class='op'>=</span> <span class='id identifier rubyid_processes'>processes</span><span class='lbracket'>[</span><span class='op'>-</span><span class='int'>1</span><span class='rbracket'>]</span><span class='op'>&amp;.</span><span class='id identifier rubyid_merge_job'>merge_job</span> <span class='op'>||</span> <span class='id identifier rubyid_base_source'>base_source</span></pre>
     </td>
@@ -484,6 +554,21 @@ your project, for which there are not yet any files</p>
     </li>
   
 </ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>7.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -491,10 +576,10 @@ your project, for which there are not yet any files</p>
       <pre class="lines">
 
 
-20</pre>
+21</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/fcar.rb', line 20</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/fcar.rb', line 21</span>
 
 <span class='id identifier rubyid_setting'>setting</span> <span class='symbol'>:pending_processes</span><span class='comma'>,</span> <span class='label'>reader:</span> <span class='kw'>true</span><span class='comma'>,</span> <span class='label'>default:</span> <span class='lbracket'>[</span><span class='rbracket'>]</span></pre>
     </td>
@@ -511,22 +596,47 @@ your project, for which there are not yet any files</p>
   
 
   
-</h3><table class="source_code">
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>7.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
   <tr>
     <td>
       <pre class="lines">
 
 
-69
 70
 71
 72
 73
 74
-75</pre>
+75
+76</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/fcar.rb', line 69</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/fcar.rb', line 70</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_previous_merged'>previous_merged</span><span class='lparen'>(</span><span class='id identifier rubyid_mod'>mod</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_idx'>idx</span> <span class='op'>=</span> <span class='id identifier rubyid_processes'>processes</span><span class='period'>.</span><span class='id identifier rubyid_find_index'>find_index</span><span class='lparen'>(</span><span class='id identifier rubyid_mod'>mod</span><span class='rparen'>)</span>
@@ -575,6 +685,21 @@ your project, for which there are not yet any files</p>
     </li>
   
 </ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>7.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -582,15 +707,15 @@ your project, for which there are not yet any files</p>
       <pre class="lines">
 
 
-62
 63
 64
 65
 66
-67</pre>
+67
+68</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/fcar.rb', line 62</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/fcar.rb', line 63</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_processes'>processes</span>
   <span class='id identifier rubyid_chute'>chute</span><span class='period'>.</span><span class='id identifier rubyid_keys'>keys</span>
@@ -608,9 +733,9 @@ your project, for which there are not yet any files</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Jul  2 01:03:45 2026 by
+  Generated on Thu Jul 23 02:21:48 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.44 (ruby-3.4.10).
+  0.9.45 (ruby-3.4.10).
 </div>
 
     </div>

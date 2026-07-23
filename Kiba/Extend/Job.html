@@ -238,7 +238,7 @@
       
         &mdash;
         <div class='inline'><p>use :agnostic in dynamic code where not
-all jobs tried are expected to actually exist</p>
+all jobs tried are expected to actually exist (since 7.0.0)</p>
 </div>
       
     </li>
@@ -521,6 +521,21 @@ not whether it has output</p>
     </li>
   
 </ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>7.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
 
 </div><table class="source_code">
   <tr>
@@ -528,12 +543,12 @@ not whether it has output</p>
       <pre class="lines">
 
 
-57
 58
-59</pre>
+59
+60</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/job.rb', line 57</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/job.rb', line 58</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_registered?'>registered?</span><span class='lparen'>(</span><span class='id identifier rubyid_jobkey'>jobkey</span><span class='rparen'>)</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_registry'><span class='object_link'><a href="../Extend.html#registry-class_method" title="Kiba::Extend.registry (method)">registry</a></span></span><span class='period'>.</span><span class='id identifier rubyid_entry_objs'><span class='object_link'><a href="Registry/FileRegistry.html#entry_objs-instance_method" title="Kiba::Extend::Registry::FileRegistry#entry_objs (method)">entry_objs</a></span></span>
 <span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_eo'>eo</span><span class='op'>|</span> <span class='id identifier rubyid_eo'>eo</span><span class='period'>.</span><span class='id identifier rubyid_key'>key</span><span class='period'>.</span><span class='id identifier rubyid_to_sym'>to_sym</span> <span class='rbrace'>}</span>
@@ -548,9 +563,9 @@ not whether it has output</p>
 </div>
 
       <div id="footer">
-  Generated on Thu Jul  2 01:03:45 2026 by
+  Generated on Thu Jul 23 02:21:48 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.44 (ruby-3.4.10).
+  0.9.45 (ruby-3.4.10).
 </div>
 
     </div>

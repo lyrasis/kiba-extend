@@ -114,7 +114,7 @@
       
       
         
-        <div class='inline'><p>2.2.0</p>
+        <div class='inline'><p>7.0.0</p>
 </div>
       
     </li>
@@ -139,7 +139,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#ancestors-instance_method" title="#ancestors (instance method)">#<strong>ancestors</strong>  &#x21d2; Object </a>
+      <a href="#ancestors-instance_method" title="#ancestors (instance method)">#<strong>ancestors</strong>  &#x21d2; Array&lt;Symbol&gt; </a>
     
 
     
@@ -162,7 +162,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#diagram-instance_method" title="#diagram (instance method)">#<strong>diagram</strong>  &#x21d2; Object </a>
+      <a href="#diagram-instance_method" title="#diagram (instance method)">#<strong>diagram</strong>  &#x21d2; Diagrams::FlowchartDiagram </a>
     
 
     
@@ -185,7 +185,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#mermaid-instance_method" title="#mermaid (instance method)">#<strong>mermaid</strong>  &#x21d2; Object </a>
+      <a href="#mermaid-instance_method" title="#mermaid (instance method)">#<strong>mermaid</strong>  &#x21d2; String </a>
     
 
     
@@ -208,7 +208,7 @@
         <li class="public ">
   <span class="summary_signature">
     
-      <a href="#parents-instance_method" title="#parents (instance method)">#<strong>parents</strong>  &#x21d2; Object </a>
+      <a href="#parents-instance_method" title="#parents (instance method)">#<strong>parents</strong>  &#x21d2; Array&lt;Symbol&gt; </a>
     
 
     
@@ -253,7 +253,7 @@
       <div class="method_details first">
   <h3 class="signature first" id="ancestors-instance_method">
   
-    #<strong>ancestors</strong>  &#x21d2; <tt>Object</tt> 
+    #<strong>ancestors</strong>  &#x21d2; <tt>Array&lt;Symbol&gt;</tt> 
   
 
   
@@ -268,6 +268,19 @@
 </div>
 <div class="tags">
   
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
 <p class="tag_title">Since:</p>
 <ul class="since">
   
@@ -277,7 +290,7 @@
       
       
         
-        <div class='inline'><p>2.2.0</p>
+        <div class='inline'><p>7.0.0</p>
 </div>
       
     </li>
@@ -290,16 +303,16 @@
       <pre class="lines">
 
 
-21
-22
-23
 24
 25
 26
-27</pre>
+27
+28
+29
+30</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/treeable.rb', line 21</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/treeable.rb', line 24</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_ancestors'>ancestors</span>
   <span class='id identifier rubyid_result'>result</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='id identifier rubyid_parents'>parents</span><span class='rbracket'>]</span>
@@ -316,7 +329,7 @@
       <div class="method_details ">
   <h3 class="signature " id="diagram-instance_method">
   
-    #<strong>diagram</strong>  &#x21d2; <tt>Object</tt> 
+    #<strong>diagram</strong>  &#x21d2; <tt>Diagrams::FlowchartDiagram</tt> 
   
 
   
@@ -331,6 +344,19 @@
 </div>
 <div class="tags">
   
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Diagrams::FlowchartDiagram</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
 <p class="tag_title">Since:</p>
 <ul class="since">
   
@@ -340,7 +366,7 @@
       
       
         
-        <div class='inline'><p>2.2.0</p>
+        <div class='inline'><p>7.0.0</p>
 </div>
       
     </li>
@@ -353,12 +379,12 @@
       <pre class="lines">
 
 
-29
-30
-31</pre>
+33
+34
+35</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/treeable.rb', line 29</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/treeable.rb', line 33</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_diagram'>diagram</span>
   <span class='const'>Diagrams</span><span class='op'>::</span><span class='const'>FlowchartDiagram</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='label'>nodes:</span> <span class='id identifier rubyid_nodes'>nodes</span><span class='comma'>,</span> <span class='label'>edges:</span> <span class='id identifier rubyid_edges'>edges</span><span class='rparen'>)</span>
@@ -371,7 +397,7 @@
       <div class="method_details ">
   <h3 class="signature " id="mermaid-instance_method">
   
-    #<strong>mermaid</strong>  &#x21d2; <tt>Object</tt> 
+    #<strong>mermaid</strong>  &#x21d2; <tt>String</tt> 
   
 
   
@@ -386,6 +412,19 @@
 </div>
 <div class="tags">
   
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>String</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
 <p class="tag_title">Since:</p>
 <ul class="since">
   
@@ -395,7 +434,7 @@
       
       
         
-        <div class='inline'><p>2.2.0</p>
+        <div class='inline'><p>7.0.0</p>
 </div>
       
     </li>
@@ -408,10 +447,10 @@
       <pre class="lines">
 
 
-33</pre>
+38</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/treeable.rb', line 33</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/treeable.rb', line 38</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_mermaid'>mermaid</span> <span class='op'>=</span> <span class='id identifier rubyid_diagram'>diagram</span><span class='period'>.</span><span class='id identifier rubyid_to_mermaid'>to_mermaid</span></pre>
     </td>
@@ -422,7 +461,7 @@
       <div class="method_details ">
   <h3 class="signature " id="parents-instance_method">
   
-    #<strong>parents</strong>  &#x21d2; <tt>Object</tt> 
+    #<strong>parents</strong>  &#x21d2; <tt>Array&lt;Symbol&gt;</tt> 
   
 
   
@@ -437,6 +476,19 @@
 </div>
 <div class="tags">
   
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>Array&lt;Symbol&gt;</tt>)</span>
+      
+      
+      
+    </li>
+  
+</ul>
 <p class="tag_title">Since:</p>
 <ul class="since">
   
@@ -446,7 +498,7 @@
       
       
         
-        <div class='inline'><p>2.2.0</p>
+        <div class='inline'><p>7.0.0</p>
 </div>
       
     </li>
@@ -459,16 +511,16 @@
       <pre class="lines">
 
 
-13
-14
 15
 16
 17
 18
-19</pre>
+19
+20
+21</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/treeable.rb', line 13</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/treeable.rb', line 15</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parents'>parents</span>
   <span class='id identifier rubyid_files'>files</span> <span class='op'>=</span> <span class='id identifier rubyid_creator'>creator</span><span class='period'>.</span><span class='id identifier rubyid_files'>files</span>
@@ -487,9 +539,9 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Jul  2 01:03:45 2026 by
+  Generated on Thu Jul 23 02:21:49 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.44 (ruby-3.4.10).
+  0.9.45 (ruby-3.4.10).
 </div>
 
     </div>
