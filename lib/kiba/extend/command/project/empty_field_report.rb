@@ -4,6 +4,9 @@ module Kiba
   module Extend
     module Command
       module Project
+        # Writes report of all empty fields in files at the paths specified by
+        #   the registry entries selected by the given tags
+        # @since 7.0.0
         class EmptyFieldReport
           def self.call(...)
             new(...).call

@@ -43,6 +43,7 @@ module Kiba
         # ~~~~
         # @param jobkey [Symbol]
         # @return [CSV::Table]
+        # @since 7.0.0
         def csv_job_output(jobkey)
           path = Kiba::Extend.registry
             .resolve(jobkey)

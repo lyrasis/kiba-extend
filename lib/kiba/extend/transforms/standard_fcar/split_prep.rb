@@ -11,6 +11,7 @@ module Kiba
         #   field, writing the results to `:split_val` field; adds
         #   `:sort`, `:autosplit`, and `:prepped_row_fingerprint`
         #   fields.
+        # @since 7.0.0
         # @example With Array of splitters
         #   # Used in pipeline as:
         #   # transform StandardFcar::SplitPrep,

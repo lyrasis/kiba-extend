@@ -27,7 +27,7 @@ module Kiba
 
       # @param jobkey [Symbol] registry entry for job with namespace
       # @param mode [:warn, :agnostic] use :agnostic in dynamic code where not
-      #   all jobs tried are expected to actually exist
+      #   all jobs tried are expected to actually exist (since 7.0.0)
       # @return [true] if output file already exists when run, or when running
       #   job results in 1 or more rows being written
       # @return [false] if jobkey is not defined, or if job results in 0 rows
@@ -54,6 +54,7 @@ module Kiba
       # @return [Boolean] without drama about registry errors.
       # @note Use this if you only care about whether a job has been registered,
       #   not whether it has output
+      # @since 7.0.0
       def registered?(jobkey) = Kiba::Extend.registry.entry_objs
         .map { |eo| eo.key.to_sym }
         .include?(jobkey)

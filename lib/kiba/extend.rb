@@ -176,6 +176,7 @@ module Kiba
     # Rebuilds registry after changes have been made to the project that impact
     #   dynamic job registration. This is especially useful for automated tests
     #   of iterative cleanup processes at various stages of file return status.
+    # @since 7.0.0
     def reset_registry
       config.registry = Kiba::Extend::Registry::FileRegistry.new
       config_namespaces.each do |ns|

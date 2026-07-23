@@ -13,6 +13,7 @@ module Kiba
         #   {Kiba::Extend::ProjectConfig.global_reversible_replacements}
         #   is not populated
         # @see GlobalReversible
+        # @since 7.0.0
         # @example
         #   # Used in pipeline as:
         #   # transform Replace::GlobalReverse

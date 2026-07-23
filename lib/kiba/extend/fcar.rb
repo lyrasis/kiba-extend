@@ -10,6 +10,7 @@ module Kiba
     #   facilitated cleanup and remapping (FCAR) process or not, and
     #   thus automagically determine the correct source job
     #   for a given FCAR process in a given client project
+    # @since 7.0.0
     module Fcar
       module_function
 

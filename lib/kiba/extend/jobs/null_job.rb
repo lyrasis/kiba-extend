@@ -9,6 +9,7 @@ module Kiba
       # This is useful in projects with dynamically-defined or registered jobs
       #   when some dependency jobs (sources, lookups) may not return any
       #   output yet (or ever).
+      # @since 7.0.0
       class NullJob
         def initialize(name = nil)
           @name = name || "Unrunnable job"
