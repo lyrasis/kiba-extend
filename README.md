@@ -9,7 +9,7 @@ These projects tend to have the following features, which have informed the funt
 - Even when the source system is the same for 5 clients, data entry practice and use of modules/fields will vary, often wildly.
 - They can take a long time because they frequently involve (a) a significant level of client instruction on the function of the target system, so they can understand the impact of different data mapping decisions; (b) clients who must make migration mapping decisions by committee; and/or (c) a significant amount of work to render the data functional for the target system.
 - The source system often does not allow the client to get a view of the data that would be required to make migration decisions for that data. It also usually does not provide any way for the client to do any data cleanup or categorization needed to prepare for a migration, other than record-by-record editing.
-- Active use of the source system for critical work, which cannot be put on hold for the entire time it takes us to work with the client to develop their migration. This means we are often developing the migration
+- Active use of the source system for critical work, which cannot be put on hold for the entire time it takes us to work with the client to develop their migration. This means we are often developing the migration based on an initial snapshot of system data. Once approved, the migration process can be re-run on a final data set.
 - Most of our clients are not data experts or incredibly technically savvy. They tend to be most comfortable reviewing data in a tabular data format (CSV or Excel file).
 
 It includes the following:
