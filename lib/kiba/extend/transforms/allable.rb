@@ -23,8 +23,9 @@ module Kiba
       # finalize_fields(row) unless fields_set
       # ~~~
       #
-      # If there is an `omit_from_all_fields` attr_reader set, these fields will
-      #   be removed from the finalized list of all fields.
+      # As of 7.0.0, if there is an `omit_from_all_fields` attr_reader set,
+      #   these fields will be removed from the finalized list of all fields.
+      #   This allows for expression of "all fields except these".
       # @since 2.8.0
       module Allable
         ::Allable = Kiba::Extend::Transforms::Allable

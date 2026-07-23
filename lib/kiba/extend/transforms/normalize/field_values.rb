@@ -9,7 +9,7 @@ module Kiba
         #
         # @note The basic functionality of Kiba::Extend::Utils::StringNormalizer
         #   is described and tested in that class
-        #
+        # @since 7.0.0
         # @example Single values
         #   # Used in pipeline as:
         #   # transform Normalize::FieldValues,

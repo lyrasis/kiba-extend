@@ -3,6 +3,7 @@
 require "thor"
 
 class Job < Thor
+  # @since 7.0.0
   desc "graph JOB", "Render and save dependency graph for given job"
   def graph(job)
     unless mermaid_cli_installed?

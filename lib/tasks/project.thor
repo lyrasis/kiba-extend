@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Project < Thor
+  # @since 7.0.0
   desc "empty_field_report", "write empty field report"
   method_option :tags,
     type: :array,

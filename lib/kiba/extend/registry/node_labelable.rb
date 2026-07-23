@@ -4,7 +4,9 @@ module Kiba
   module Extend
     module Registry
       # Mixin module for generating Node label for dependency graph
+      # @since 7.0.0
       module NodeLabelable
+        # @return [String]
         def node_label
           return "#{node_id} (supplied)" if supplied
           return node_id if desc.empty?

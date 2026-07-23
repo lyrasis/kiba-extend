@@ -119,7 +119,7 @@ module Kiba
           #   join them using `Kiba::Extend.delimiter`**
           # @param report [Boolean] whether to print the names of empty fields
           #   to STDOUT when job runs; Useful if you need to indicate
-          #   non-migrating-because-blank fields
+          #   non-migrating-because-blank fields (since 7.0.0)
           def initialize(usenull: false, consider_blank: nil, report: false)
             @usenull = usenull
             @consider_blank = consider_blank&.transform_values do |val|

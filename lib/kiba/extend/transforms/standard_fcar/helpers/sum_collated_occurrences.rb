@@ -9,7 +9,7 @@ module Kiba
           #
           # If any value has anything other than digits, returns original value
           #   and puts a warning.
-          #
+          # @since 7.0.0
           # @example With defaults
           #   # Used in pipeline as:
           #   # transform StandardFcar::Helpers::SumCollatedOccurrences

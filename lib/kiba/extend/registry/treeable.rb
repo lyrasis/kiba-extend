@@ -7,9 +7,11 @@ module Kiba
   module Extend
     module Registry
       # Mixin module for generating dependency tree diagram for entry
+      # @since 7.0.0
       module Treeable
         include NodeLabelable
 
+        # @return [Array<Symbol>]
         def parents
           files = creator.files
           [files[:source], files[:lookup]].compact
@@ -18,6 +20,7 @@ module Kiba
           []
         end
 
+        # @return [Array<Symbol>]
         def ancestors
           result = [parents]
           until result.last.empty?
@@ -26,10 +29,12 @@ module Kiba
           result.flatten.compact
         end
 
+        # @return [Diagrams::FlowchartDiagram]
         def diagram
           Diagrams::FlowchartDiagram.new(nodes: nodes, edges: edges)
         end
 
+        # @return [String]
         def mermaid = diagram.to_mermaid
 
         private
