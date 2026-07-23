@@ -181,39 +181,6 @@ module Kiba
         #   ]
         #   expect(result).to eq(expected)
         #
-        # @example With `multival: true` and :sep
-        #   xform = Clean::RegexpFindReplaceFieldVals.new(
-        #     fields: :val,
-        #     find: 's$',
-        #     replace: '',
-        #     multival: true,
-        #     sep: ';'
-        #   )
-        #   input = [
-        #     {val: 'bats;bats'}
-        #   ]
-        #   result = input.map{ |row| xform.process(row) }
-        #   expected = [
-        #     {val: 'bat;bat'}
-        #   ]
-        #   expect(result).to eq(expected)
-        # @example With `multival: true` and no :sep
-        #   Kiba::Extend.config.delim = '|'
-        #   xform = Clean::RegexpFindReplaceFieldVals.new(
-        #     fields: :val,
-        #     find: 's$',
-        #     replace: '',
-        #     multival: true
-        #   )
-        #   input = [
-        #     {val: 'bats|bats'}
-        #   ]
-        #   result = input.map{ |row| xform.process(row) }
-        #   Kiba::Extend.reset_config
-        #   expected = [
-        #     {val: 'bat|bat'}
-        #   ]
-        #   expect(result).to eq(expected)
         # @example With no `multival` param and delim
         #   xform = Clean::RegexpFindReplaceFieldVals.new(
         #     fields: :val,
@@ -231,8 +198,6 @@ module Kiba
         #   expect(result).to eq(expected)
         class RegexpFindReplaceFieldVals
           include Allable
-          include MultivalPlusDelimDeprecatable
-          include SepDeprecatable
 
           # @param fields [Array<Symbol>,Symbol,nil] in which to find/replace
           # @param find [String, Regexp] If passing a string, make
@@ -240,8 +205,6 @@ module Kiba
           #   characters (\n, etc)
           # @param replace [String]
           # @param casesensitive [Boolean]
-          # @param multival [Boolean] **DEPRECATED** - Do not use
-          # @param sep [String,nil] **DEPRECATED** - Do not use
           # @param delim [nil, String] used to split the field value before
           #   performing find/replace if non-nil
           # @param debug [Boolean] if true, will put replacement value in a new
@@ -251,29 +214,13 @@ module Kiba
           #   inclusion in "all" fields; does nothing if individual field values
           #   are passed in
           def initialize(fields:, find:, replace:, casesensitive: true,
-            multival: omitted = true, sep: nil, delim: nil,
-            debug: false, omit_from_all_fields: [])
+            delim: nil, debug: false, omit_from_all_fields: [])
             @fields = [fields].flatten
             @find = build_pattern(find, casesensitive)
             @replace = replace
             @debug = debug
             @omit_from_all_fields = omit_from_all_fields
-            @mv = if omitted && delim
-              true
-            else
-              set_multival(multival, omitted, self)
-            end
-
-            if sep.nil? && delim.nil? && mv && !omitted
-              msg = "If you are expecting Kiba::Extend.delim to be used as "\
-                "default `sep` value, please pass it as explicit `delim` "\
-                "argument. In a future release of kiba-extend, the `delim` "\
-                "value will no longer default to Kiba::Extend.delim."
-              warn("#{Kiba::Extend.warning_label}:\n  #{self.class}: #{msg}")
-              sep = Kiba::Extend.delim
-            end
-            @delim = usedelim(sepval: sep, delimval: delim, calledby: self,
-              default: nil)
+            @delim = delim
           end
 
           # @param row [Hash{ Symbol => String, nil }]
@@ -285,7 +232,7 @@ module Kiba
               next if oldval.nil?
               next unless oldval.is_a?(String)
 
-              newval = mv ? mv_find_replace(oldval) : sv_find_replace(oldval)
+              newval = delim ? mv_find_replace(oldval) : sv_find_replace(oldval)
               target = debug ? :"#{field}_repl" : field
               row[target] = newval.blank? ? nil : newval
             end
@@ -294,7 +241,7 @@ module Kiba
 
           private
 
-          attr_reader :fields, :find, :replace, :debug, :mv, :sep, :delim
+          attr_reader :fields, :find, :replace, :debug, :delim
 
           def build_pattern(find, casesensitive)
             case find
@@ -309,13 +256,11 @@ module Kiba
             end
           end
 
-          def mv_find_replace(val)
-            val.split(delim).map { |v| v.gsub(find, replace) }.join(delim)
-          end
+          def mv_find_replace(val) = val.split(delim)
+            .map { |v| v.gsub(find, replace) }
+            .join(delim)
 
-          def sv_find_replace(val)
-            val.gsub(find, replace)
-          end
+          def sv_find_replace(val) = val.gsub(find, replace)
         end
       end
     end
