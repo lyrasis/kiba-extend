@@ -31,10 +31,10 @@ module Kiba
         # @example Treated as multivalue
         #   # Used in pipeline as:
         #   # transform Prepend::ToFieldValue, field: :name, value: 'aka: ',
-        #   #   multival: true, delim: '|'
+        #   #   delim: '|'
         #
         #   xform = Prepend::ToFieldValue.new(field: :name, value: 'aka: ',
-        #     multival: true, delim: '|')
+        #     delim: '|')
         #   input = [
         #       {name: 'Weddy'},
         #       {name: 'Kernel|Zipper'},
@@ -50,26 +50,13 @@ module Kiba
         #     ]
         #   expect(result).to eq(expected)
         class ToFieldValue
-          include MultivalPlusDelimDeprecatable
-
           # @param field [Symbol] The field to prepend to
           # @param value [String] The value to be prepended
-          # @param multival [Boolean] Whether prepend to multiple values
-          # @param delim [String] for splitting value if `multival`
-          def initialize(field:, value:, multival: omitted = true,
-            delim: nil)
+          # @param delim [NilValue, String] for splitting value if `multival`
+          def initialize(field:, value:, delim: nil)
             @field = field
             @value = value
-            @multival = set_multival(multival, omitted, self)
-            if @multival && delim.nil?
-              msg = "If you are expecting Kiba::Extend.delim to be used as "\
-                "default delimiter, please pass the `delim` explicitly. In "\
-                "a future release of kiba-extend, the `delim` value will "\
-                "no longer default to Kiba::Extend.delim."
-              warn("#{Kiba::Extend.warning_label}:\n"\
-                 "  #{self.class}: #{msg}")
-            end
-            @delim = delim || Kiba::Extend.delim
+            @delim = delim
           end
 
           # @param row [Hash{ Symbol => String, nil }]
@@ -77,7 +64,7 @@ module Kiba
             fieldval = row.fetch(field, nil)
             return row if fieldval.blank?
 
-            fieldvals = multival ? fieldval.split(delim) : [fieldval]
+            fieldvals = delim ? fieldval.split(delim) : [fieldval]
             row[field] = fieldvals.map do |fieldval|
               "#{value}#{fieldval}"
             end.join(delim)
@@ -86,7 +73,7 @@ module Kiba
 
           private
 
-          attr_reader :field, :value, :multival, :delim
+          attr_reader :field, :value, :delim
         end
       end
     end
