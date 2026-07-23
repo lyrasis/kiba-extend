@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:todo Layout/LineLength
-
 module Kiba
   module Extend
     module Transforms
@@ -216,45 +214,18 @@ module Kiba
         #   ]
         #   expect(result).to eq(expected)
         class FieldValueWithStaticMapping
-          class << self
-            def multival_msg
-              <<~MSG
-                #{name} no longer supports the `multival` parameter.
-                If a `delim` value is given, the transform will operate in multival mode
-                TO FIX: remove `multival` parameter, ensuring a `delim` value is given
-              MSG
-            end
-
-            # Overridden to provide more informative/detailed ArgumentError messages for parameters that are
-            #   removed after not having been deprecated very long.
-            def new(source:, mapping:, target: nil, fallback_val: :orig, delete_source: true, delim: nil,
-              multival: nil, sep: nil)
-              instance = allocate
-              fail(ArgumentError, sep_msg) if sep
-              fail(ArgumentError, multival_msg) if multival
-
-              instance.send(:initialize, source: source, target: target, mapping: mapping, fallback_val: fallback_val,
-                delete_source: delete_source, delim: delim)
-              instance
-            end
-
-            def sep_msg
-              <<~MSG
-                #{name} no longer supports the `sep` parameter
-                TO FIX: change `sep` to `delim`"
-              MSG
-            end
-          end
-
-          # @param source [Symbol] the field containing the value to look up for mapping
-          # @param target [nil, Symbol] optional new field in which to put the mapped/looked up result
+          # @param source [Symbol] the field containing the value to look up
+          #   for mapping
+          # @param target [nil, Symbol] optional new field in which to put the
+          #   mapped/looked up result
           # @param mapping [Hash] keys = source field values
-          # @param fallback_val [:orig, :nil, String] value to use if no match for source value is found
-          #   in mapping
-          # @param delete_source [Boolean] whether to remove source field after mapping. Has no effect if
-          #   a different target field is not given
-          # @param delim [nil, String] if a value is given, turns on "multival" mode, splitting the whole field
-          #   value on the string given (since 3.0.0)
+          # @param fallback_val [:orig, :nil, String] value to use if no match
+          #   for source value is found in mapping
+          # @param delete_source [Boolean] whether to remove source field after
+          #   mapping. Has no effect if a different target field is not given
+          # @param delim [nil, String] if a value is given, turns on "multival"
+          #   mode, splitting the whole field value on the string given
+          #   (since 3.0.0)
           def initialize(source:, mapping:, target: nil, fallback_val: :orig,
             delete_source: true, delim: nil)
             @source = source
@@ -263,7 +234,6 @@ module Kiba
             @fallback = fallback_val
             @del = delete_source
             @delim = delim
-            @multival = true if @delim
           end
 
           # @param row [Hash{ Symbol => String, nil }]
@@ -282,7 +252,7 @@ module Kiba
 
           private
 
-          attr_reader :source, :target, :mapping, :fallback, :del, :multival, :sep, :delim,
+          attr_reader :source, :target, :mapping, :fallback, :del, :delim,
             :fallback_val
 
           def get_fallback_val(source_val)
@@ -303,7 +273,7 @@ module Kiba
           def join_result(results)
             return nil if results.length == 1 && results.first.nil?
 
-            multival ? results.join(delim) : results.first
+            delim ? results.join(delim) : results.first
           end
 
           def result(vals)
@@ -314,19 +284,7 @@ module Kiba
             return [nil] if val.nil?
             return [""] if val.empty?
 
-            multival ? val.split(delim, -1) : [val]
-          end
-
-          def set_delim(sep, delim)
-            if delim && sep
-              warn(self.class.delim_and_sep_warning)
-              delim
-            elsif sep
-              warn(self.class.sep_warning)
-              sep
-            else
-              delim
-            end
+            delim ? val.split(delim, -1) : [val]
           end
 
           def set_initial_value(row)
@@ -339,4 +297,3 @@ module Kiba
     end
   end
 end
-# rubocop:enable Layout/LineLength

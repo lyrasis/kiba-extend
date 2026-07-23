@@ -42,6 +42,7 @@ https://github.com/lyrasis/kiba-extend/pull/252[PR#252]
 * Removal of `sep` & `multival` params from `Clean::RegexpFindReplaceFieldVals`
 * Removal of `multival` param from `Prepend::ToFieldValue`
 * Removal of `sep` & `multival` params from `Explode::FieldValuesToNewRows`
+* Removal of `sep` & `multival` parameters from `Replace::FieldValueWithStaticMapping`
 
 === Added
 
