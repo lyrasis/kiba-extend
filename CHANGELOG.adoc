@@ -31,6 +31,24 @@ For example, if the release version/tag is `3.2.1`, and PR# 107 is merged withou
 
 === Breaking
 
+=== Added
+
+=== Bugfixes
+
+=== Changed
+
+=== Deleted
+
+=== Deprecated/Will break in a future version
+
+=== Dev
+
+== Releases
+
+=== 7.0.0 - 2026-07-22
+
+==== Breaking
+
 * CSV Destination now forces quotes around all output values.
 https://github.com/lyrasis/kiba-extend/pull/252[PR#252]
 * Improvements to `Kiba::Extend::Utils::StringNormalizer` changed this class' API
@@ -44,10 +62,8 @@ https://github.com/lyrasis/kiba-extend/pull/252[PR#252]
 * Removal of `sep` & `multival` parameters from `Explode::FieldValuesToNewRows`
 * Removal of `sep` & `multival` parameters from `Replace::FieldValueWithStaticMapping`
 
-=== Added
+==== Added
 
-* Initial job tests functionality, including `thor job_tests suite` command and `JobTest::CsvJob::Equal` test type https://github.com/lyrasis/kiba-extend/pull/246[PR#246]
-* `JobTest::CsvJob::Equal` job test type https://github.com/lyrasis/kiba-extend/pull/247[PR#247]
 * `mode` parameter to `Kiba::Extend::Job.output?` method.
 The purpose of this is to turn off warnings if a job is not necessarily expected to exist, such as may be defined in dynamic code.
 https://github.com/lyrasis/kiba-extend/pull/249[PR#249]
@@ -72,7 +88,7 @@ https://github.com/lyrasis/kiba-extend/pull/260[PR#260]
 https://github.com/lyrasis/kiba-extend/pull/260[PR#260]
 * `thor job graph` command, which will generate and open a .pdf dependency graph for the specified job key
 https://github.com/lyrasis/kiba-extend/pull/265[PR#265]
-* `thor project empty_field_report` command to generate a CSV report of all registry entries selected by the given tags
+* `thor project empty_field_report` command to generate a CSV report of all empty fields in files at the paths specified by the registry entries selected by the given tags
 https://github.com/lyrasis/kiba-extend/pull/266[PR#266]
 * https://lyrasis.github.io/kiba-extend/Kiba/Extend/Utils/TestHelpers.html[`Utils::TestHelpers` module]
 https://github.com/lyrasis/kiba-extend/pull/267[PR#267]
@@ -81,23 +97,15 @@ https://github.com/lyrasis/kiba-extend/pull/269[PR#269]
 * `Kiba::Extend::Jobs::NullJob` for use in dynamically defined projects
 https://github.com/lyrasis/kiba-extend/pull/272[PR#272]
 
-=== Bugfixes
+==== Bugfixes
 
 * `FileRegistryEntry` summary display issues described in https://github.com/lyrasis/kiba-extend/issues/125[#125]
 https://github.com/lyrasis/kiba-extend/pull/263[PR#263]
 
-=== Changed
+==== Changed
 
 * Initializing a Job class no longer runs the job, resolving https://github.com/lyrasis/kiba-extend/issues/159[#159]
 https://github.com/lyrasis/kiba-extend/pull/262[PR#262]
-
-=== Deleted
-
-=== Deprecated/Will break in a future version
-
-=== Dev
-
-== Releases
 
 === 6.0.0 - 2026-02-12
 
