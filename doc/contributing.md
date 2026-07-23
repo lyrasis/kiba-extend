@@ -136,43 +136,39 @@ This test interface is already set up in `kiba-extend`'s [`spec_helper.rb`](http
 If you are writing yardspec tests, you can do the following:
 
 ~~~
-# @example With `multival: true` and no :sep
+# @example With custom delim
 #   Kiba::Extend.config.delim = ';'
-#   xform = Clean::RegexpFindReplaceFieldVals.new(
+#   xform = Count::FieldValues.new(
 #     fields: :val,
-#     find: 's$',
-#     replace: '',
-#     multival: true
+#     target: :count
 #   )
 #   input = [
-#     {val: 'bats;bats'}
+#     {val: "bats;bats"}
 #   ]
 #   result = input.map{ |row| xform.process(row) }
 #   Kiba::Extend.reset_config
 #   expected = [
-#     {val: 'bat;bat'}
+#     {val: "bat;bats", count: 2}
 #   ]
 #   expect(result).to eq(expected)
-# @example With `multival: true` and no :sep
-#   xform = Clean::RegexpFindReplaceFieldVals.new(
+# @example With default delim
+#   xform = Count::FieldValues.new(
 #     fields: :val,
-#     find: 's$',
-#     replace: '',
-#     multival: true
+#     target: :count
 #   )
 #   input = [
-#     {val: 'bats|bats'}
+#     {val: "bats|bats"}
 #   ]
 #   result = input.map{ |row| xform.process(row) }
 #   expected = [
-#     {val: 'bat|bat'}
+#     {val: "bat|bats", count: 2}
 #   ]
 #   expect(result).to eq(expected)
 ~~~
 
-At the time of writing, the default value of `Kiba::Extend.delim` is `|`. The first test here sets the value of that setting to `;`. That test passes. Since we call `Kiba::Extend.reset_config` after getting the result in the first test, the second test passes. If we did not call `Kiba::Extend.reset_config` in the first test, the second test would fail because the default value is still `;`.
+At the time of writing, the example transform uses the application's default `delim` if no `delim` parameter is explicitly given, and the default value of `Kiba::Extend.delim` is `|`. The first test here sets the value of that setting to `;`. That test passes. Since we call `Kiba::Extend.reset_config` after getting the result in the first test, the second test passes. If we did not call `Kiba::Extend.reset_config` in the first test, the second test would fail because the default value is still `;`.
 
-**Note: Do not write the above unnecessary tests of basically the exact same thing. 🤣 It's the clearest example of the need for the `:reset_command` method I can think of at the moment, though**
+**Note: Do not write the above unnecessary tests of basically the exact same thing. 🤣 It's the clearest example of the need for the `:reset_config` method I can think of at the moment, though**
 
 ### Testing transforms that `yield` or output from `:close` method
 
@@ -236,9 +232,9 @@ Over time, `sep` will be deprecated/replaced with `delim` where it still exists.
 
 ### Should a field be treated as multivalued or not?
 
-In some earlier-added transforms such as `Clean::RegexpFindReplaceFieldVals`, there's a `:multival` **and** a `:delim` (or `:sep`) parameter. These tend to have overly complicated logic where, if `:delim` is not given and `multival: true`, the value of `Kiba::Extend.delim` is used for `:delim`, but if `multival: false`, then delim isn't used at all.
+In some earlier-added transforms such as `Clean::RegexpFindReplaceFieldVals`, there was originally a `:multival` **and** a `:delim` (or `:sep`) parameter. These tend to have overly complicated logic where, if `:delim` is not given and `multival: true`, the value of `Kiba::Extend.delim` is used for `:delim`, but if `multival: false`, then delim isn't used at all.
 
-(I'm sure I thought this was useful or needed at the time, but I am not sure why... 😅)
+(I'm sure I thought this was useful or needed at the time, but I am not sure why... 😅 All of these have been deprecated, as of v7.0.0)
 
 Preferred practice when multivalued treatment should be turned off/on is to treat as multivalue if `:delim` is given, otherwise not.
 
