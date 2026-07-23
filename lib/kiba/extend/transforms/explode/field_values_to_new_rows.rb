@@ -9,13 +9,11 @@ module Kiba
         #   # transform Explode::FieldValuesToNewRows,
         #   #   fields: %i[child parent],
         #   #   target: :val,
-        #   #   multival: true,
-        #   #   sep: ";"
+        #   #   delim: ";"
         #   xform = Explode::FieldValuesToNewRows.new(
         #     fields: %i[child parent],
         #     target: :val,
-        #     multival: true,
-        #     sep: ";"
+        #     delim: ";"
         #   )
         #   input = [
         #     {id: 1, child: "a;b", parent: "c;d"},
@@ -49,14 +47,12 @@ module Kiba
         #   # transform Explode::FieldValuesToNewRows,
         #   #   fields: %i[child parent],
         #   #   target: :val,
-        #   #   multival: true,
-        #   #   sep: ";",
+        #   #   delim: ";",
         #   #   keep_nil: true
         #   xform = Explode::FieldValuesToNewRows.new(
         #     fields: %i[child parent],
         #     target: :val,
-        #     multival: true,
-        #     sep: ";",
+        #     delim: ";",
         #     keep_nil: true
         #   )
         #   input = [
@@ -208,73 +204,53 @@ module Kiba
         #   ]
         #   expect(result).to eq(expected)
         class FieldValuesToNewRows
-          include MultivalPlusDelimDeprecatable
-          include SepDeprecatable
-
           # @param target [Symbol] new field into which existing field values
           #   will be mapped
           # @param fields [Symbol, Array<Symbol>] from which values will be
           #   exploded
-          # @param multival [Boolean] **deprecated - do not use**
-          # @param sep [nil, String] **deprecated - do not use**
           # @param delim [nil, String] used to split field values
           # @param keep_nil [Boolean] whether to create an exploded row for a
           #   Nil value
           # @param keep_empty [Boolean] whether to create an exploded row for a
           #   empty value
-          def initialize(target:, fields: [], multival: omitted = true,
-            sep: nil, delim: nil, keep_nil: false,
+          def initialize(target:, fields: [], delim: nil, keep_nil: false,
             keep_empty: false)
-            @fields = [fields].flatten
             @target = target
-            @multival = if omitted && delim
-              true
-            else
-              set_multival(multival, omitted, self)
-            end
-            if sep.nil? && delim.nil? && @multival && !omitted
-              msg = "If you are expecting Kiba::Extend.delim to be used as "\
-                "default `sep` value, please pass it as explicit `delim` "\
-                "argument. In a future release of kiba-extend, the `delim` "\
-                "value will no longer default to Kiba::Extend.delim."
-              warn("#{Kiba::Extend.warning_label}:\n  #{self.class}: #{msg}")
-              sep = Kiba::Extend.delim
-            end
-            @delim = usedelim(sepval: sep, delimval: delim, calledby: self,
-              default: nil)
+            @fields = [fields].flatten
+            @delim = delim
             @keep_nil = keep_nil
             @keep_empty = keep_empty
           end
 
           def process(row, &)
             rows = []
-            other_fields = row.keys - @fields
-            other_data = {}
-            other_fields.each { |f| other_data[f] = row.fetch(f, nil) }
+            other_data = row.clone
+            fields.each { |field| other_data.delete(field) }
 
-            @fields.each do |field|
-              val = row.fetch(field, nil)
-              vals = if val.nil?
-                [nil]
-              elsif val.empty?
-                [""]
-              elsif @multival
-                val.split(@delim, -1)
-              else
-                [val]
-              end
-
-              vals.each do |val|
-                next if !@keep_nil && val.nil?
-                next if !(val.nil? || @keep_empty) && val.empty?
+            fields.map { |field| split_field_val(row, field) }
+              .flatten
+              .each do |val|
+                next if !keep_nil && val.nil?
+                next if !(val.nil? || keep_empty) && val.empty?
 
                 new_row = other_data.clone
-                new_row[@target] = val
+                new_row[target] = val
                 rows << new_row
               end
-            end
+
             rows.each(&)
             nil
+          end
+
+          private
+
+          attr_reader :target, :fields, :delim, :keep_nil, :keep_empty
+
+          def split_field_val(row, field)
+            val = row[field]
+            return val.split(delim, -1) if !val.blank? && delim
+
+            [val]
           end
         end
       end
