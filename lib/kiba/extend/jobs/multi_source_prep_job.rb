@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "job"
-
 module Kiba
   module Extend
     module Jobs

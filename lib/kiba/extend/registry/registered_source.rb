@@ -1,8 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "registered_file"
-require_relative "requirable_file"
-
 module Kiba
   module Extend
     module Registry

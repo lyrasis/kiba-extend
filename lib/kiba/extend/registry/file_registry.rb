@@ -2,12 +2,6 @@
 
 require "dry-container"
 
-require_relative "registered_source"
-require_relative "registered_lookup"
-require_relative "registered_destination"
-require_relative "file_registry_entry"
-require_relative "registry_validator"
-
 module Kiba
   module Extend
     module Registry
