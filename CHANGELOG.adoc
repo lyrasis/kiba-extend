@@ -25,6 +25,8 @@ toc::[]
 === Breaking
 
 * Delete `name` param from `NullJob`
+* Delete https://lyrasis.github.io/kiba-extend/Kiba/Extend/Utils/MultiSourceNormalizer.html[`Utils::MultiSourceNormalizer`]
+* Delete https://lyrasis.github.io/kiba-extend/Kiba/Extend/Jobs/MultiSourcePrepJob.html[`Jobs::MultiSourcePrepJob`]
 
 == Unreleased
 These changes are merged into the `main` branch, but have not been released.
@@ -34,6 +36,8 @@ For example, if the release version/tag is `3.2.1`, and PR# 107 is merged withou
 === Breaking
 
 === Added
+
+* `DynamicSource` registry entry type
 
 === Bugfixes
 
