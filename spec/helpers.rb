@@ -43,6 +43,7 @@ module Helpers
     fkeypath = File.join(fixtures_dir, "existing.csv")
     nofilepath = File.join(fixtures_dir, "not_here.csv")
     entries = {
+      all_orig: {dynamic_source: true, desc: "All orig files"},
       fkey: {path: fkeypath, supplied: true, lookup_on: :id},
       invalid: {},
       fee: {path: fkeypath, lookup_on: :foo, supplied: true},

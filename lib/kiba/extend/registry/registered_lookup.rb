@@ -18,15 +18,22 @@ module Kiba
         # @param key [Symbol, Hash] file key from {FileRegistry} data
         #   hash. Alternately, a Hash containing jobkey: {full jobkey
         #   symbol}, and additional key-value pairs may be passed.
-        # @param data [Hash] file data from {FileRegistry}
         # @param for_job [Symbol] registry entry job key of the job for which
         #   this registered file is being prepared
-        def initialize(key:, data:, for_job:)
+        # @param data [NilValue, FileRegistryEntry] file data from
+        #   {FileRegistry}
+        def initialize(key:, for_job:, data: nil)
           super
           if key.is_a?(Hash)
             @key = key[:jobkey]
             @lookup_on = key[:lookup_on] if key.key?(:lookup_on)
             @instance_variable_name = key[:name] if key.key?(:name)
+          end
+
+          if dynamic_source
+            fail Kiba::Extend::DynamicSourceUseError.new(
+              key, self.class.name, for_job
+            )
           end
 
           unless src_class.respond_to?(:is_lookupable?)

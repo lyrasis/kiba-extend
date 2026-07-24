@@ -34,7 +34,7 @@ module Kiba
           "lookup on :#{lookup_on}"
         end
 
-        def source? = is_a?(RegisteredSource)
+        def source? = is_a?(RegisteredSource) || is_a?(DynamicSource)
       end
     end
   end

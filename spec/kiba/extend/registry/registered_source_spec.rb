@@ -15,6 +15,14 @@ RSpec.describe "Kiba::Extend::Registry::RegisteredSource" do
     )
   end
 
+  describe ".new" do
+    let(:data) { {dynamic_source: true} }
+
+    it "rejects dynamic_source" do
+      expect { source }.to raise_error(Kiba::Extend::DynamicSourceUseError)
+    end
+  end
+
   describe "#args" do
     let(:result) { source.args }
 

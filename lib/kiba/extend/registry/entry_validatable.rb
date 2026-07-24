@@ -11,6 +11,8 @@ module Kiba
         private
 
         def path_required?
+          return false if dynamic_source
+
           chk = [dest_class, src_class].map do |klass|
             klass.requires_path?
           end
@@ -20,7 +22,7 @@ module Kiba
         end
 
         def validate_creator
-          return if supplied
+          return if supplied || dynamic_source
           return if creator.is_a?(Kiba::Extend::Registry::Creator)
 
           @creator = nil
@@ -29,6 +31,11 @@ module Kiba
 
         def validate_lookup
           return unless lookup_on
+
+          if dynamic_source
+            @errors[:dynamic_source_cannot_be_used_as_lookup] = nil
+            return
+          end
 
           supplied ? validate_supplied_lookup : validate_job_lookup
         end
@@ -47,6 +54,8 @@ module Kiba
         end
 
         def validate_path
+          return if dynamic_source
+
           if path_required? && !path
             @errors[:missing_path] = nil
             return

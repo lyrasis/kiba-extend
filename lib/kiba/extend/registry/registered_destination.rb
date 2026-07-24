@@ -20,6 +20,11 @@ module Kiba
         def initialize(key:, for_job:, data: nil)
           super
           fail SuppliedEntryError.new(key) if supplied
+          if dynamic_source
+            fail Kiba::Extend::DynamicSourceUseError.new(
+              key, self.class.name, for_job
+            )
+          end
         end
 
         # Arguments for calling Kiba Destination class

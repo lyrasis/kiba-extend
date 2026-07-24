@@ -16,7 +16,8 @@ module Kiba
         include Treeable
 
         attr_reader :path, :key,
-          :creator, :supplied, :dest_special_opts, :desc, :lookup_on, :tags,
+          :creator, :supplied, :dynamic_source,
+          :dest_special_opts, :desc, :lookup_on, :tags,
           :message, :dest_class, :dest_opt, :src_class, :src_opt, :type,
           :errors, :warnings
 
@@ -37,6 +38,7 @@ module Kiba
           @src_class = Kiba::Extend.source
           @src_opt = nil
           @supplied = false
+          @dynamic_source = false
           @tags = []
           @valid = false
           @errors = {}
@@ -45,7 +47,7 @@ module Kiba
           validate
         end
 
-        def dir = path.dirname
+        def dir = path&.dirname
 
         # Whether the Entry is valid
         # @return [Boolean]
@@ -57,6 +59,11 @@ module Kiba
 
         def assign_values_from(reghash)
           reghash.each { |key, val| assign_value(key, val) }
+
+          if dynamic_source
+            @dest_class = nil
+            @src_class = nil
+          end
         end
 
         def validate

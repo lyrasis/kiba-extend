@@ -49,6 +49,30 @@ module Kiba
       end
     end
 
+    class DynamicSourceUseError < TypeError
+      include Kiba::Extend::ErrMod
+
+      def initialize(key, type, for_job)
+        @key = key
+        @type = type
+        @for_job = for_job
+        @msg = ":#{key} cannot be used as a #{type} in :#{for_job} because "\
+          "dynamic sources are too heterogeneous for this use in kiba-extend"
+        super(msg)
+      end
+
+      def formatted
+        <<~STR
+          JOB FAILED: LOOKUP FILE SETUP ERROR FOR: #{for_job}
+            #{msg}
+        STR
+      end
+
+      private
+
+      attr_reader :key, :klass, :for_job, :type, :msg
+    end
+
     class FcarChuteConfigMissingMethodError < NoMethodError
       include Kiba::Extend::ErrMod
 
