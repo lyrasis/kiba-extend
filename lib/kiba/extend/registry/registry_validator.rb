@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
-# rubocop:todo Layout/LineLength
-
 module Kiba
   module Extend
     module Registry
       # Utility class to report on the validity of the FileRegistry.
       class RegistryValidator
-        # Prints to STDOUT a report of errors and warnings to inform needed development in project applications
+        # Prints to STDOUT a report of errors and warnings to inform needed
+        #   development in project applications
         def report
           puts ""
           report_validity
@@ -77,4 +76,3 @@ module Kiba
     end
   end
 end
-# rubocop:enable Layout/LineLength
