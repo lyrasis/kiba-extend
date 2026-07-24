@@ -7,6 +7,7 @@ module Kiba
       #
       # @abstract
       class BaseJob
+        include DependencyHandleable
         include Runnable
         include Parser
 
@@ -34,10 +35,11 @@ module Kiba
 
         def run
           report_run_start # defined in Reportable
-          # defined in Runnable
+
           %i[source lookup].each do |type|
-            handle_requirements(type)
+            handle_requirements(type) # defined in DependencyHandleable
           end
+
           assemble_control # defined in Runnable
           Kiba.run(control)
           set_row_count_instance_variables
@@ -58,21 +60,6 @@ module Kiba
           @files[:destination].first.data
         end
 
-        # Replace file key names with registered_source/lookup/destination
-        #   objects dynamically
-        def setup_files(files)
-          files.map { |type, arr| [type, setup_files_for(type, arr)] }
-            .to_h
-        end
-
-        def setup_files_for(type, arr)
-          arr.map do |key|
-            prep_file(
-              Kiba::Extend.registry.method(:"as_#{type}"), key, destination_key
-            )
-          end
-        end
-
         def initial_transforms
           Kiba.job_segment do
           end
@@ -86,18 +73,6 @@ module Kiba
         def pre_process
           Kiba.job_segment do
           end
-        end
-
-        def prep_file(meth, key, for_job)
-          meth.call(key, for_job)
-        rescue Kiba::Extend::ErrMod => err
-          if err.respond_to?(:formatted)
-            puts err.formatted
-          else
-            puts "JOB FAILED: TRANSFORM ERROR IN: #{err.calling_job}"
-            err.info
-          end
-          exit
         end
 
         def config

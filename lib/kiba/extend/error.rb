@@ -152,6 +152,20 @@ module Kiba
       end
     end
 
+    # Exception raised if dependency file is still missing after we tried to run
+    #   dependencies
+    class MissingDependencyError < NameError
+      include Kiba::Extend::ErrMod
+
+      # @param filekey [Symbol] key for which a file path was not found in
+      #   {Kiba::Extend::FileRegistry}
+      # @param path [String]
+      def initialize(filekey, path)
+        msg = "Cannot locate dependent file for #{filekey} at #{path}"
+        super(msg)
+      end
+    end
+
     # Exception raised if {Kiba::Extend::FileRegistry} contains no lookup
     #   key for file
     class NoLookupOnError < NameError
