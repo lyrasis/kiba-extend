@@ -25,6 +25,7 @@ module Kiba
         #   for details
         def initialize(key, reghash)
           @key = key
+          @hash = reghash
           @type = :file
           @creator = nil
           @desc = ""
@@ -49,6 +50,8 @@ module Kiba
         # Whether the Entry is valid
         # @return [Boolean]
         def valid? = @valid
+
+        def to_h = @hash
 
         private
 
