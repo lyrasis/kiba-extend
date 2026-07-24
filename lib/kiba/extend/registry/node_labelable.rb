@@ -7,11 +7,18 @@ module Kiba
       # @since 7.0.0
       module NodeLabelable
         # @return [String]
-        def node_label
+        def node_qualification
           return "#{node_id} (supplied)" if supplied
-          return node_id if desc.empty?
+          return "#{node_id} (dynamic)" if dynamic_source
 
-          "#{node_id}\n#{desc}"
+          node_id
+        end
+
+        # @return [String]
+        def node_label
+          return node_qualification if desc.empty?
+
+          "#{node_qualification}\n#{desc}"
         end
       end
     end

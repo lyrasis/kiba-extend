@@ -18,6 +18,21 @@ RSpec.describe "Kiba::Extend::Registry::RegisteredLookup" do
     )
   end
 
+  context "When called with a dynamic_source" do
+    it "raises DynamicSourceUseError" do
+      expect do
+        data = {dynamic_source: true}
+        Kiba::Extend::Registry::RegisteredLookup.new(
+          key: :all_orig,
+          data: Kiba::Extend::Registry::FileRegistryEntry.new(:all_orig, data),
+          for_job: :bar
+        )
+      end.to raise_error(
+        Kiba::Extend::DynamicSourceUseError
+      )
+    end
+  end
+
   context "when called without lookup_on value" do
     let(:data) { {path: path} }
     it "raises NoLookupOnError" do

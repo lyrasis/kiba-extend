@@ -16,6 +16,11 @@ module Kiba
           files = creator.files
           [files[:source], files[:lookup]].compact
             .flatten
+            .map do |file|
+              next file if file.respond_to?(:key)
+
+              Kiba::Extend.registry.resolve(file)
+            end
         rescue NoMethodError
           []
         end

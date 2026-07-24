@@ -110,6 +110,19 @@ RSpec.describe "Kiba::Extend::Registry::FileRegistryEntry" do
   let(:path) { File.join("spec", "fixtures", "fkey.csv") }
   let(:entry) { Kiba::Extend::Registry::FileRegistryEntry.new(:job__key, data) }
 
+  context "when dynamic_source: true" do
+    let(:data) do
+      {
+        dynamic_source: true,
+        desc: "A bunch of files in x directory"
+      }
+    end
+
+    it "is valid" do
+      expect(entry.valid?).to be true
+    end
+  end
+
   context "with MARC source" do
     let(:path) { File.join("spec", "fixtures", "harvard_open_data.mrc") }
 

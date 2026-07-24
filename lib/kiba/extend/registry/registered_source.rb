@@ -22,6 +22,15 @@ module Kiba
         include Ancestorable
         include RequirableFile
 
+        def initialize(key:, for_job:, data: nil)
+          super
+          if dynamic_source
+            fail Kiba::Extend::DynamicSourceUseError.new(
+              key, self.class.name, for_job
+            )
+          end
+        end
+
         # Arguments for calling Kiba Source class
         # @return [Hash]
         def args

@@ -28,6 +28,16 @@ RSpec.describe "Kiba::Extend::Registry::RegisteredDestination" do
         )
       end
     end
+
+    context "with dynamic source entry" do
+      let(:data) { {dynamic_source: true} }
+
+      it "raises error" do
+        expect { dest }.to raise_error(
+          Kiba::Extend::DynamicSourceUseError
+        )
+      end
+    end
   end
 
   describe "#args" do
