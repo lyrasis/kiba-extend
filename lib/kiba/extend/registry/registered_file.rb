@@ -25,17 +25,18 @@ module Kiba
           :desc
 
         # @param key [Symbol] the {Kiba::Extend::FileRegistry} lookup key
-        # @param data [Hash] the hash of data for the file from
-        #   {Kiba::Extend::FileRegistry}
         # @param for_job [Symbol] registry entry job key of the job for which
         #   this registered file is being prepared
-        def initialize(key:, data:, for_job:)
+        # @param data [nilValue, Kiba::Extend::FileRegistryEntry] registry entry
+        #   data about this file
+        def initialize(key:, for_job:, data: nil)
+          @key = key
+          @for_job = for_job
+          @data = data ||= Kiba::Extend.registry.resolve(key)
+
           raise FileNotRegisteredError, key unless data
           raise NoFilePathError, key if data.errors.keys.any?(:missing_path)
 
-          @key = key
-          @data = data
-          @for_job = for_job
           @path = data.path.to_s
           @dest_class = data.dest_class
           @dest_opt = data.dest_opt
