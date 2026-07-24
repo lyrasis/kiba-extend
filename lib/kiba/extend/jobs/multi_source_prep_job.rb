@@ -11,6 +11,8 @@ module Kiba
       #   destination
       # @since 2.7.0
       # @see Kiba::Extend::Utils::MultiSourceNormalizer Usage example
+      # @deprecated Use {Transforms::Clean::EnsureConsistentFields} in
+      #   multi-source jobs instead
       class MultiSourcePrepJob < Job
         class WrongDestinationTypeError < StandardError
           def initialize(

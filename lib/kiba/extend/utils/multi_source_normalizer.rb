@@ -1,21 +1,21 @@
 # frozen_string_literal: true
 
-# rubocop:todo Layout/LineLength
-
 module Kiba
   module Extend
     module Utils
-      # Helper to make it less tedious to ensure the same fields are present in all rows
-      #   included in a multi-source job. This is annoying to deal with when the source tables have
-      #   different fields. It's impossible to deal with without a helper if you are doing any
-      #   of your jobs/transformations dynamically.
+      # Helper to make it less tedious to ensure the same fields are
+      #   present in all rows included in a multi-source job. This is
+      #   annoying to deal with when the source tables have different
+      #   fields. It's impossible to deal with without a helper if you
+      #   are doing any of your jobs/transformations dynamically.
       #
       # The basic idea is:
-      # - an new instance of this class is created somewhere accessible from within jobs. In Kiba::TMS
-      #   this is a config settig per multi-source job: `Kiba::Tms.config.name_compilation.multi_source_normalizer`
+      # - an new instance of this class is created somewhere accessible from
+      #   within jobs. In Kiba::TMS this is a config settig per multi-source
+      #   job: `Kiba::Tms.config.name_compilation.multi_source_normalizer`
       #
-      # - pass this instance in as a helper on the `MultiSourcePrepJob`s that generate files that will be used
-      #   as sources in the multisource job:
+      # - pass this instance in as a helper on the `MultiSourcePrepJob`s that
+      #   generate files that will be used as sources in the multisource job:
       #
       # ~~~
       #  Kiba::Extend::Jobs::MultiSourcePrepJob.new(
@@ -28,17 +28,22 @@ module Kiba
       # )
       # ~~~
       #
-      # Finally, in the multisource job, call the `get_fields` method of your normalizer as the `fields`
-      #   argument of an `Append::NilFields` transform:
+      # Finally, in the multisource job, call the `get_fields` method of your
+      #   normalizer as the `fields` argument of an `Append::NilFields`
+      #   transform:
       #
       # ~~~
-      # transform Append::NilFields, fields: Tms.config.name_compilation.multi_source_normalizer.get_fields
+      # transform Append::NilFields,
+      #   fields: Tms.config.name_compilation.multi_source_normalizer.get_fields
       # ~~~
-      # @note This currently only works when using `Kiba::Extend::Destinations::CSV` destination. It depends on
-      #   the `fields` method added to that class to support. This was not added to the
-      #   `Kiba::Extend::Destinations::JsonArray` class because it does not require an identical field set
-      #   in all records
+      # @note This currently only works when using
+      #   `Kiba::Extend::Destinations::CSV` destination. It depends on
+      #   the `fields` method added to that class to support. This was not
+      #   added to the `Kiba::Extend::Destinations::JsonArray` class because it
+      #   does not require an identical field set in all records
       # @since 2.7.0
+      # @deprecated Use {Transforms::Clean::EnsureConsistentFields} in
+      #   multi-source jobs instead
       class MultiSourceNormalizer
         def initialize
           @fields = []
@@ -61,4 +66,3 @@ module Kiba
     end
   end
 end
-# rubocop:enable Layout/LineLength
