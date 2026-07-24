@@ -22,7 +22,7 @@ module Kiba
   # Handles:
   #
   # - auto-loading of the code
-  # - extending `Kiba` with `Kiba::Extend::Jobs::JobSegmenter` so we
+  # - extending `Kiba` with `Kiba::Extend::Jobs::JobSegmentable` so we
   #   can call `Kiba.job_segment`
   # - defining config settings, all of which can be overridden by
   #   project applications using `kiba-extend`
@@ -339,4 +339,4 @@ end
 
 Kiba::Extend.loader
 # So we can call Kiba.job_segment
-Kiba.extend(Kiba::Extend::Jobs::JobSegmenter)
+Kiba.extend(Kiba::Extend::Jobs::JobSegmentable)

@@ -5,7 +5,7 @@ module Kiba
     module Jobs
       # Mixin for different behavior for dependency jobs
       module DependencyJob
-        extend Kiba::Extend::Jobs::Reporter
+        extend Reportable
 
         # overrides Runner
         def add_decoration

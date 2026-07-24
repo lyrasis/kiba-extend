@@ -3,7 +3,7 @@
 module Kiba
   module Extend
     module Jobs
-      module JobSegmenter
+      module JobSegmentable
         def job_segment(&source_as_block)
           source_as_block
         end

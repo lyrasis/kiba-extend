@@ -7,8 +7,8 @@ module Kiba
       #
       # These methods are intended to be agnostic of the job segment/step logic,
       #   which is why they are separated out into a module
-      module Runner
-        include Reporter
+      module Runnable
+        include Reportable
 
         # Error raised if dependency file is still missing after we tried to run
         #   dependencies

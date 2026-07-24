@@ -4,7 +4,7 @@ module Kiba
   module Extend
     module Jobs
       # Mixin methods for reporting
-      module Reporter
+      module Reportable
         def report_run_start
           @start = Time.now unless @dependency
           case Kiba::Extend.job_verbosity

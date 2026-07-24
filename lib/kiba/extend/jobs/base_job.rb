@@ -1,6 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "runner"
 require_relative "parser"
 require_relative "show_me_job"
 require_relative "tell_me_job"
@@ -13,7 +12,7 @@ module Kiba
       #
       # @abstract
       class BaseJob
-        include Runner
+        include Runnable
         include Parser
 
         attr_reader :files, :transformer, :srcrows, :outrows
@@ -39,15 +38,15 @@ module Kiba
         def context = @context ||= Kiba::Context.new(control)
 
         def run
-          report_run_start # defined in Reporter
-          # defined in Runner
+          report_run_start # defined in Reportable
+          # defined in Runnable
           %i[source lookup].each do |type|
             handle_requirements(type)
           end
-          assemble_control # defined in Runner
+          assemble_control # defined in Runnable
           Kiba.run(control)
           set_row_count_instance_variables
-          report_run_end # defined in Reporter
+          report_run_end # defined in Reportable
         rescue => err
           puts "JOB FAILED: TRANSFORM ERROR IN: #{job_data.creator}"
           puts "#{err.class.name}: #{err.message}"
