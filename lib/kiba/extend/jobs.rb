@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "jobs/parser"
-
 module Kiba
   module Extend
     # Reusable, composable patterns for defining, running, and testing jobs
