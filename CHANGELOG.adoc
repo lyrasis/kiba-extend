@@ -24,6 +24,8 @@ toc::[]
 
 === Breaking
 
+* Delete `name` param from `NullJob`
+
 == Unreleased
 These changes are merged into the `main` branch, but have not been released.
 After merging pull requests (PRs) that are not immediately released into `main`, a tag is added appending the PR# to the current release.

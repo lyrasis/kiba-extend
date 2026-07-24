@@ -10,13 +10,15 @@ module Kiba
       #   when some dependency jobs (sources, lookups) may not return any
       #   output yet (or ever).
       # @since 7.0.0
-      class NullJob
-        def initialize(name = nil)
-          @name = name || "Unrunnable job"
+      class NullJob < BaseJob
+        # @param name [NilValue] - DEPRECATED - do not use
+        # @param files [Hash] as passed to a normal Job.
+        def initialize(name = nil, files:)
+          super(files: files, transformer: nil)
         end
 
         def run
-          puts "#{name} was run as Kiba::Extend::Jobs::NullJob"
+          puts "#{destination_key} was run as Kiba::Extend::Jobs::NullJob"
         end
 
         def outrows = 0
