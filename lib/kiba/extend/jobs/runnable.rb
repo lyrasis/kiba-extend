@@ -10,17 +10,6 @@ module Kiba
       module Runnable
         include Reportable
 
-        # Error raised if dependency file is still missing after we tried to run
-        #   dependencies
-        class MissingDependencyError < Kiba::Extend::Error
-          # @param filekey [Symbol] key for which a file path was not found in
-          #   {Kiba::Extend::FileRegistry}
-          def initialize(filekey, path)
-            msg = "Cannot locate dependent file for #{filekey} at #{path}"
-            super(msg)
-          end
-        end
-
         def add_decoration
           show_me_decoration
           tell_me_decoration
@@ -72,49 +61,6 @@ module Kiba
           add_destinations
           add_decoration
           control
-        end
-
-        # @param type [:source, :lookup]
-        def check_requirements(type)
-          @files[type].flatten.compact.each do |data|
-            next unless data.path
-            next if File.exist?(data.path)
-
-            fail MissingDependencyError.new(data.key, data.path)
-          end
-        end
-
-        def destinations
-          @files[:destination].map { |config| file_config(config) }
-            .map { |src| "destination #{src[:klass]}, **#{src[:args]}" }
-            .join("\n")
-        end
-
-        def file_config(config)
-          {klass: config.klass, args: config.args}
-        end
-
-        # @param type [:source, :lookup]
-        def handle_requirements(type)
-          deps = @files[type]
-          return unless deps
-
-          deps.flatten
-            .compact
-            .each do |registered|
-              req = registered.required
-              next unless req
-
-              req.call
-            end
-          check_requirements(type)
-        rescue MissingDependencyError => err
-          puts "JOB FAILED: DEPENDENCY ERROR IN: #{err.calling_job}"
-          err.info
-          exit
-        rescue => err
-          puts "JOB FAILED: Error handling #{type} file dependency for "\
-            "#{destination_key}: #{err.message}"
         end
 
         def lookups_to_memoized_methods
