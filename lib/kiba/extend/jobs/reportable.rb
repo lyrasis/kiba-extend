@@ -90,14 +90,14 @@ module Kiba
 
         def put_file_details
           puts "SOURCES"
-          @files[:source].each { |src| puts "source #{src.klass} #{src.args}" }
+          files[:source].each { |src| puts "source #{src.klass} #{src.args}" }
           puts "DESTINATIONS"
-          @files[:destination].each do |dest|
+          files[:destination].each do |dest|
             puts "destination #{dest.klass} #{dest.args}"
           end
-          if @files[:lookup]
+          if files[:lookup]
             puts "LOOKUPS"
-            @files[:lookup].each { |lkup| puts "lookup #{lkup.args}" }
+            files[:lookup].each { |lkup| puts "lookup #{lkup.args}" }
           end
           puts ""
         end
