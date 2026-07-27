@@ -38,6 +38,7 @@ For example, if the release version/tag is `3.2.1`, and PR# 107 is merged withou
 === Added
 
 * `DynamicSource` registry entry type
+* `Kiba::Extend::Jobs::DynamicJobable` mixin for project job classes that don't rely on Kiba transforms to manipulate data.
 
 === Bugfixes
 
