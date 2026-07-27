@@ -46,7 +46,7 @@ module Kiba
 
         # @param type [:source, :lookup]
         def handle_requirements(type)
-          deps = @files[type]
+          deps = files[type]
           return unless deps
 
           deps.flatten
@@ -69,7 +69,7 @@ module Kiba
 
         # @param type [:source, :lookup]
         def check_requirements(type)
-          @files[type].flatten.compact.each do |data|
+          files[type].flatten.compact.each do |data|
             next unless data.path
             next if File.exist?(data.path)
 
