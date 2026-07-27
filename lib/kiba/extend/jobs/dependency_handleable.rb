@@ -26,7 +26,12 @@ module Kiba
 
         def setup_source_for(key)
           entry = Kiba::Extend.registry.resolve(key)
-          return entry if entry.dynamic_source
+          if entry.dynamic_source &&
+              self.class.ancestors.include?(Kiba::Extend::Jobs::DynamicJobable)
+            return Kiba::Extend::Registry::DynamicSource.new(
+              key: key, for_job: destination_key
+            )
+          end
 
           meth = Kiba::Extend.registry.method(:as_source)
           prep_file(meth, key, destination_key)
@@ -51,6 +56,7 @@ module Kiba
 
           deps.flatten
             .compact
+            .reject(&:dynamic_source)
             .each do |registered|
               req = registered.required
               next unless req
@@ -70,6 +76,7 @@ module Kiba
         # @param type [:source, :lookup]
         def check_requirements(type)
           files[type].flatten.compact.each do |data|
+            next if data.dynamic_source
             next unless data.path
             next if File.exist?(data.path)
 
