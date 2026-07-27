@@ -16,6 +16,10 @@ module Kiba
       # @return [String, NilClass]
       setting :graph_dir, reader: true, default: nil
 
+      setting :mermaid_config_path,
+        reader: true,
+        default: nil
+
       # Configuration for making and reversing global replacements in your
       #   project via the {Transforms::Replace::GlobalReversible} and
       #   {Transforms::Replace::GlobalReverse} transforms.
