@@ -102,9 +102,7 @@ module Kiba
           puts ""
         end
 
-        def row_report
-          "#{outrows} of #{srcrows}"
-        end
+        def row_report = [outrows, srcrows].compact.join(" of ")
 
         def start_label
           @dependency ? "->Starting dependency job" : "Starting job"
