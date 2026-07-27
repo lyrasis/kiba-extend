@@ -63,7 +63,7 @@ module Kiba
 
       def formatted
         <<~STR
-          JOB FAILED: LOOKUP FILE SETUP ERROR FOR: #{for_job}
+          JOB FAILED: #{type.upcase} FILE SETUP ERROR FOR: #{for_job}
             #{msg}
         STR
       end
