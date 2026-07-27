@@ -20,7 +20,7 @@ module Kiba
       def pre_base_job_initialize
         locs = caller_locations
         at_base_init = false
-        until at_base_init
+        until at_base_init || locs.empty?
           loc = locs.shift
           at_base_init = true if loc.path.end_with?("base_job.rb") &&
             loc.label == "initialize"
