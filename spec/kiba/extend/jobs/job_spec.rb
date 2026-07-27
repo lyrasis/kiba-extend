@@ -2,15 +2,22 @@
 
 require "spec_helper"
 
-# rubocop:disable Metrics/BlockLength
 RSpec.describe "Kiba::Extend::Jobs::Job" do
   before(:all) do
     reg = Kiba::Extend::Registry::FileRegistry.new
     Kiba::Extend.config.registry = reg
     @dest_file = File.join(fixtures_dir, "base_job_dest.csv")
     entries = {
+      dynamic_src: {
+        dynamic_source: true,
+        desc: "None"
+      },
       base_src: {
         path: File.join(fixtures_dir, "base_job_base.csv"),
+        supplied: true
+      },
+      missing_src: {
+        path: File.join(fixtures_dir, "not_here.csv"),
         supplied: true
       },
       base_lookup: {
@@ -42,6 +49,7 @@ RSpec.describe "Kiba::Extend::Jobs::Job" do
       transformer: base_job_transforms
     )
   end
+
   let(:base_job_config) do
     {
       source: [:base_src],
@@ -104,7 +112,7 @@ RSpec.describe "Kiba::Extend::Jobs::Job" do
       end
     end
 
-    it "runs and produces expected result" do
+    it "runs and produces expected overridden lookup result" do
       job.run
       result = CSV.read(@dest_file)
       expect(result).to eq(expected_lookup_result)
@@ -139,7 +147,7 @@ RSpec.describe "Kiba::Extend::Jobs::Job" do
       end
     end
 
-    it "runs and produces expected result" do
+    it "runs and produces expected multi-lookup result" do
       expected = [
         ["number", "alpha", "from_lkup", "punctuation"],
         ["one", "a", "aardvark", "comma"],
@@ -161,29 +169,26 @@ RSpec.describe "Kiba::Extend::Jobs::Job" do
       }
     end
 
-    it "calls dependency creators",
-      skip: "cannot figure out how to test this in a timely manner. Will "\
-      "test manually for now." do
-        missing_file = File.join(fixtures_dir, "base_job_missing.csv")
-        creator = double
-        Kiba::Extend.config.registry =
-          Kiba::Extend::Registry::FileRegistry.new
-        entries = {base_lookup: {
-                     path: File.join(fixtures_dir, "base_job_lookup.csv"),
-                     supplied: true, lookup_on: :letter
-                   },
-                   base_dest: {path: @dest_file,
-                               creator: Helpers.method(:fake_creator_method)},
-                   missing_src: {path: missing_file,
-                                 creator: Helpers::BaseJob.method(:creator)}}
-        entries.each { |key, data| Kiba::Extend.registry.register(key, data) }
-        transform_registry
-        testjob = Helpers::BaseJob.new(files: base_job_config)
-        testjob.creator = creator
-        expect(creator).to receive(:call)
-        testjob.handle_requirements
-      end
+    it "reports error to STDOUT" do
+      expect { job.run }.to raise_error(SystemExit).and output(
+        /.DEPENDENCY ERROR IN*/
+      ).to_stdout_from_any_process
+    end
   end
-  # raise_error(Kiba::Extend::Jobs::Runner::MissingDependencyError)
+
+  context "when dynamic_source is given" do
+    let(:base_job_config) do
+      {
+        source: [:dynamic_src],
+        destination: [:base_dest],
+        lookup: [:base_lookup]
+      }
+    end
+
+    it "reports error to STDOUT" do
+      expect { job.run }.to raise_error(SystemExit).and output(
+        /REGISTEREDSOURCE FILE SETUP ERROR FOR: base_dest/
+      ).to_stdout
+    end
+  end
 end
-# rubocop:enable Metrics/BlockLength
