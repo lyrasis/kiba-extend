@@ -31,7 +31,13 @@ class Job < Thor
     File.open(mmd_path, "w") { |f| f << mermaid }
 
     pdf_path = File.join(mmd_dir, "#{job}.pdf")
-    `mmd-cli -i #{mmd_path} -o #{pdf_path} -f`
+
+    configpath = Kiba::Extend::ProjectConfig.mermaid_config_path
+    if configpath
+      `mmd-cli -i #{mmd_path} -o #{pdf_path} -f -c #{configpath}`
+    else
+      `mmd-cli -i #{mmd_path} -o #{pdf_path} -f`
+    end
 
     `open #{pdf_path}`
     exit(0)
