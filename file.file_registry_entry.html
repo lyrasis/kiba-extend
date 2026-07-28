@@ -83,6 +83,7 @@
 
 <ul>
   <li><strong>supplied entries</strong>: These entries represent files that are not created by jobs in your project application. Indicate that an entry is supplied by including <code>supplied: true</code> in the registry entry hash. Supplied entries can be used as sources and, depending on the type of file, as lookups in jobs. They cannot be used as destinations for jobs, since, by definition, files created by jobs are not supplied.</li>
+  <li><strong>dynamic source entries</strong>: These entries represent documentation/description of data sources for dynamically defined jobs, when the sources cannot be otherwise represented in kiba-extend. An example might be an “extract all name values” job that runs over all files in the <code>orig</code> directory and writes out one destination file. The point of dynamically defining this job is to avoid having to manually list every orig file as a source, and, often, to implment “plain Ruby” manipulation of data (often involving system command calls to utilities like <code>sed</code>) in a much more performant (and low effort) way than would be required within the constraints of a normal kiba-extend job. Dynamic source entries serve a couple of purposes: (1) give you a searchable key that enables you to find all dynamic jobs using the same source; and (2) output something meaningful to STDOUT when such a job is running, AND to any job graphs. Dynamic source entries are indicated by including <code>dynamic_source: true</code> in the registry entry hash. Ideally, also include a description of the sources involved in <code>desc</code>. Since dynamic source entries typically represent multiple files, they cannot be used as lookups or destinations.</li>
   <li><strong>job entries</strong>: These entries represent files that are output as the destination by a job in your project application. A job entry hash must have a <code>creator</code> key, indicating the job that creates the file. The job pointed at by an entry’s <code>creator</code> must have that entry as its destination in the file config of the job.</li>
 </ul>
 
@@ -425,7 +426,7 @@ reghash = {
 </div></div>
 
       <div id="footer">
-  Generated on Thu Jul 23 16:34:11 2026 by
+  Generated on Tue Jul 28 20:57:28 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.45 (ruby-3.4.10).
 </div>

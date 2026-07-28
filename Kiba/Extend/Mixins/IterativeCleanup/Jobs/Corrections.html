@@ -413,7 +413,7 @@
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup/jobs/corrections.rb', line 37</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_xforms'>xforms</span><span class='lparen'>(</span><span class='id identifier rubyid_mod'>mod</span><span class='rparen'>)</span>
-  <span class='const'><span class='object_link'><a href="../../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='period'>.</span><span class='id identifier rubyid_job_segment'><span class='object_link'><a href="../../../Jobs/JobSegmenter.html#job_segment-instance_method" title="Kiba::Extend::Jobs::JobSegmenter#job_segment (method)">job_segment</a></span></span> <span class='kw'>do</span>
+  <span class='const'><span class='object_link'><a href="../../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='period'>.</span><span class='id identifier rubyid_job_segment'><span class='object_link'><a href="../../../Jobs/JobSegmentable.html#job_segment-instance_method" title="Kiba::Extend::Jobs::JobSegmentable#job_segment (method)">job_segment</a></span></span> <span class='kw'>do</span>
     <span class='id identifier rubyid_transform'>transform</span> <span class='const'>FilterRows</span><span class='op'>::</span><span class='const'>FieldPopulated</span><span class='comma'>,</span>
       <span class='label'>action:</span> <span class='symbol'>:keep</span><span class='comma'>,</span>
       <span class='label'>field:</span> <span class='symbol'>:corrected</span>
@@ -439,7 +439,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Jul 23 16:34:12 2026 by
+  Generated on Tue Jul 28 20:57:30 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.45 (ruby-3.4.10).
 </div>

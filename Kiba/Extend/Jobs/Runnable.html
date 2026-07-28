@@ -4,7 +4,7 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>
-  Module: Kiba::Extend::Jobs::Runner
+  Module: Kiba::Extend::Jobs::Runnable
   
     &mdash; Kiba-Extend Documentation
   
@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="../../../css/common.css" type="text/css">
 
 <script type="text/javascript">
-  pathId = "Kiba::Extend::Jobs::Runner";
+  pathId = "Kiba::Extend::Jobs::Runnable";
   relpath = '../../../';
 </script>
 
@@ -41,7 +41,7 @@
     <a href="../../../_index.html">Index (R)</a> &raquo;
     <span class='title'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span> &raquo; <span class='title'><span class='object_link'><a href="../Jobs.html" title="Kiba::Extend::Jobs (module)">Jobs</a></span></span>
      &raquo; 
-    <span class="title">Runner</span>
+    <span class="title">Runnable</span>
   
 </div>
 
@@ -61,7 +61,7 @@
         <div class="clear"></div>
       </div>
 
-      <div id="content"><h1>Module: Kiba::Extend::Jobs::Runner
+      <div id="content"><h1>Module: Kiba::Extend::Jobs::Runnable
   
   
   
@@ -75,7 +75,7 @@
   
   <dl>
       <dt>Includes:</dt>
-      <dd><span class='object_link'><a href="Reporter.html" title="Kiba::Extend::Jobs::Reporter (module)">Reporter</a></span></dd>
+      <dd><span class='object_link'><a href="Reportable.html" title="Kiba::Extend::Jobs::Reportable (module)">Reportable</a></span></dd>
   </dl>
   
   
@@ -90,7 +90,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/kiba/extend/jobs/runner.rb
+    <dd>lib/kiba/extend/jobs/runnable.rb
 </dd>
   </dl>
   
@@ -124,17 +124,7 @@
   
 </ul>
 
-</div><h2>Defined Under Namespace</h2>
-<p class="children">
-  
-    
-  
-    
-      <strong class="classes">Classes:</strong> <span class='object_link'><a href="Runner/MissingDependencyError.html" title="Kiba::Extend::Jobs::Runner::MissingDependencyError (class)">MissingDependencyError</a></span>
-    
-  
-</p>
-
+</div>
 
 
 
@@ -268,98 +258,6 @@
   <span class="summary_signature">
     
       <a href="#assemble_control-instance_method" title="#assemble_control (instance method)">#<strong>assemble_control</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#check_requirements-instance_method" title="#check_requirements (instance method)">#<strong>check_requirements</strong>(type)  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#destinations-instance_method" title="#destinations (instance method)">#<strong>destinations</strong>  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#file_config-instance_method" title="#file_config (instance method)">#<strong>file_config</strong>(config)  &#x21d2; Object </a>
-    
-
-    
-  </span>
-  
-  
-  
-  
-  
-  
-  
-
-  
-    <span class="summary_desc"><div class='inline'>
-</div></span>
-  
-</li>
-
-      
-        <li class="public ">
-  <span class="summary_signature">
-    
-      <a href="#handle_requirements-instance_method" title="#handle_requirements (instance method)">#<strong>handle_requirements</strong>(type)  &#x21d2; Object </a>
     
 
     
@@ -531,8 +429,8 @@
   
   
   
-  <h3 class="inherited">Methods included from <span class='object_link'><a href="Reporter.html" title="Kiba::Extend::Jobs::Reporter (module)">Reporter</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="Reporter.html#desc_and_tags-instance_method" title="Kiba::Extend::Jobs::Reporter#desc_and_tags (method)">#desc_and_tags</a></span>, <span class='object_link'><a href="Reporter.html#get_duration-instance_method" title="Kiba::Extend::Jobs::Reporter#get_duration (method)">#get_duration</a></span>, <span class='object_link'><a href="Reporter.html#minimal_end-instance_method" title="Kiba::Extend::Jobs::Reporter#minimal_end (method)">#minimal_end</a></span>, <span class='object_link'><a href="Reporter.html#minimal_start-instance_method" title="Kiba::Extend::Jobs::Reporter#minimal_start (method)">#minimal_start</a></span>, <span class='object_link'><a href="Reporter.html#normal_end-instance_method" title="Kiba::Extend::Jobs::Reporter#normal_end (method)">#normal_end</a></span>, <span class='object_link'><a href="Reporter.html#normal_start-instance_method" title="Kiba::Extend::Jobs::Reporter#normal_start (method)">#normal_start</a></span>, <span class='object_link'><a href="Reporter.html#put_file_details-instance_method" title="Kiba::Extend::Jobs::Reporter#put_file_details (method)">#put_file_details</a></span>, <span class='object_link'><a href="Reporter.html#report_run_end-instance_method" title="Kiba::Extend::Jobs::Reporter#report_run_end (method)">#report_run_end</a></span>, <span class='object_link'><a href="Reporter.html#report_run_start-instance_method" title="Kiba::Extend::Jobs::Reporter#report_run_start (method)">#report_run_start</a></span>, <span class='object_link'><a href="Reporter.html#row_report-instance_method" title="Kiba::Extend::Jobs::Reporter#row_report (method)">#row_report</a></span>, <span class='object_link'><a href="Reporter.html#start_and_def-instance_method" title="Kiba::Extend::Jobs::Reporter#start_and_def (method)">#start_and_def</a></span>, <span class='object_link'><a href="Reporter.html#start_label-instance_method" title="Kiba::Extend::Jobs::Reporter#start_label (method)">#start_label</a></span>, <span class='object_link'><a href="Reporter.html#tags-instance_method" title="Kiba::Extend::Jobs::Reporter#tags (method)">#tags</a></span>, <span class='object_link'><a href="Reporter.html#verbose_end-instance_method" title="Kiba::Extend::Jobs::Reporter#verbose_end (method)">#verbose_end</a></span>, <span class='object_link'><a href="Reporter.html#verbose_start-instance_method" title="Kiba::Extend::Jobs::Reporter#verbose_start (method)">#verbose_start</a></span></p>
+  <h3 class="inherited">Methods included from <span class='object_link'><a href="Reportable.html" title="Kiba::Extend::Jobs::Reportable (module)">Reportable</a></span></h3>
+  <p class="inherited"><span class='object_link'><a href="Reportable.html#desc_and_tags-instance_method" title="Kiba::Extend::Jobs::Reportable#desc_and_tags (method)">#desc_and_tags</a></span>, <span class='object_link'><a href="Reportable.html#get_duration-instance_method" title="Kiba::Extend::Jobs::Reportable#get_duration (method)">#get_duration</a></span>, <span class='object_link'><a href="Reportable.html#minimal_end-instance_method" title="Kiba::Extend::Jobs::Reportable#minimal_end (method)">#minimal_end</a></span>, <span class='object_link'><a href="Reportable.html#minimal_start-instance_method" title="Kiba::Extend::Jobs::Reportable#minimal_start (method)">#minimal_start</a></span>, <span class='object_link'><a href="Reportable.html#normal_end-instance_method" title="Kiba::Extend::Jobs::Reportable#normal_end (method)">#normal_end</a></span>, <span class='object_link'><a href="Reportable.html#normal_start-instance_method" title="Kiba::Extend::Jobs::Reportable#normal_start (method)">#normal_start</a></span>, <span class='object_link'><a href="Reportable.html#put_file_details-instance_method" title="Kiba::Extend::Jobs::Reportable#put_file_details (method)">#put_file_details</a></span>, <span class='object_link'><a href="Reportable.html#report_run_end-instance_method" title="Kiba::Extend::Jobs::Reportable#report_run_end (method)">#report_run_end</a></span>, <span class='object_link'><a href="Reportable.html#report_run_start-instance_method" title="Kiba::Extend::Jobs::Reportable#report_run_start (method)">#report_run_start</a></span>, <span class='object_link'><a href="Reportable.html#row_report-instance_method" title="Kiba::Extend::Jobs::Reportable#row_report (method)">#row_report</a></span>, <span class='object_link'><a href="Reportable.html#start_and_def-instance_method" title="Kiba::Extend::Jobs::Reportable#start_and_def (method)">#start_and_def</a></span>, <span class='object_link'><a href="Reportable.html#start_label-instance_method" title="Kiba::Extend::Jobs::Reportable#start_label (method)">#start_label</a></span>, <span class='object_link'><a href="Reportable.html#tags-instance_method" title="Kiba::Extend::Jobs::Reportable#tags (method)">#tags</a></span>, <span class='object_link'><a href="Reportable.html#verbose_end-instance_method" title="Kiba::Extend::Jobs::Reportable#verbose_end (method)">#verbose_end</a></span>, <span class='object_link'><a href="Reportable.html#verbose_start-instance_method" title="Kiba::Extend::Jobs::Reportable#verbose_start (method)">#verbose_start</a></span></p>
 
 
   <div id="instance_method_details" class="method_details_list">
@@ -579,14 +477,14 @@
       <pre class="lines">
 
 
-53
-54
-55
-56
-57</pre>
+42
+43
+44
+45
+46</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 53</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runnable.rb', line 42</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_config'>add_config</span>
   <span class='kw'>return</span> <span class='kw'>if</span> <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -638,13 +536,13 @@
       <pre class="lines">
 
 
-24
-25
-26
-27</pre>
+13
+14
+15
+16</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runnable.rb', line 13</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_decoration'>add_decoration</span>
   <span class='id identifier rubyid_show_me_decoration'>show_me_decoration</span>
@@ -695,12 +593,12 @@
       <pre class="lines">
 
 
-59
-60
-61</pre>
+48
+49
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 59</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runnable.rb', line 48</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_destinations'>add_destinations</span>
   <span class='id identifier rubyid_context'>context</span><span class='period'>.</span><span class='id identifier rubyid_instance_eval'>instance_eval</span><span class='lparen'>(</span><span class='id identifier rubyid_destinations'>destinations</span><span class='rparen'>)</span>
@@ -751,6 +649,17 @@
       <pre class="lines">
 
 
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
 31
 32
 33
@@ -759,21 +668,10 @@
 36
 37
 38
-39
-40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50</pre>
+39</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 31</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runnable.rb', line 20</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_lookup'>add_lookup</span><span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_cust'>cust</span> <span class='op'>=</span> <span class='symbol'>:@instance_variable_name</span>
@@ -840,12 +738,12 @@
       <pre class="lines">
 
 
-63
-64
-65</pre>
+52
+53
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 63</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runnable.rb', line 52</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_add_sources'>add_sources</span>
   <span class='id identifier rubyid_context'>context</span><span class='period'>.</span><span class='id identifier rubyid_instance_eval'>instance_eval</span><span class='lparen'>(</span><span class='id identifier rubyid_sources'>sources</span><span class='rparen'>)</span>
@@ -895,18 +793,18 @@
       <pre class="lines">
 
 
-67
-68
-69
-70
-71
-72
-73
-74
-75</pre>
+56
+57
+58
+59
+60
+61
+62
+63
+64</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 67</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runnable.rb', line 56</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_assemble_control'>assemble_control</span>
   <span class='id identifier rubyid_lookups_to_memoized_methods'>lookups_to_memoized_methods</span> <span class='kw'>if</span> <span class='ivar'>@files</span><span class='lbracket'>[</span><span class='symbol'>:lookup</span><span class='rbracket'>]</span>
@@ -916,306 +814,6 @@
   <span class='id identifier rubyid_add_destinations'>add_destinations</span>
   <span class='id identifier rubyid_add_decoration'>add_decoration</span>
   <span class='id identifier rubyid_control'>control</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="check_requirements-instance_method">
-  
-    #<strong>check_requirements</strong>(type)  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-
-
-  </div>
-</div>
-<div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
-  
-    <li>
-      
-        <span class='name'>type</span>
-      
-      
-        <span class='type'>(<tt>:source</tt>, <tt>:lookup</tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
-
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>2.2.0</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-78
-79
-80
-81
-82
-83
-84
-85</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 78</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_check_requirements'>check_requirements</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span>
-  <span class='ivar'>@files</span><span class='lbracket'>[</span><span class='id identifier rubyid_type'>type</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_data'>data</span><span class='op'>|</span>
-    <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span>
-    <span class='kw'>next</span> <span class='kw'>if</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
-
-    <span class='id identifier rubyid_fail'>fail</span> <span class='const'><span class='object_link'><a href="Runner/MissingDependencyError.html" title="Kiba::Extend::Jobs::Runner::MissingDependencyError (class)">MissingDependencyError</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="Runner/MissingDependencyError.html#initialize-instance_method" title="Kiba::Extend::Jobs::Runner::MissingDependencyError#initialize (method)">new</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_key'>key</span><span class='comma'>,</span> <span class='id identifier rubyid_data'>data</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span>
-  <span class='kw'>end</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="destinations-instance_method">
-  
-    #<strong>destinations</strong>  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>2.2.0</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-87
-88
-89
-90
-91</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 87</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_destinations'>destinations</span>
-  <span class='ivar'>@files</span><span class='lbracket'>[</span><span class='symbol'>:destination</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_config'>config</span><span class='op'>|</span> <span class='id identifier rubyid_file_config'>file_config</span><span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
-    <span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_src'>src</span><span class='op'>|</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>destination </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_src'>src</span><span class='lbracket'>[</span><span class='symbol'>:klass</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_content'>, **</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_src'>src</span><span class='lbracket'>[</span><span class='symbol'>:args</span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
-    <span class='period'>.</span><span class='id identifier rubyid_join'>join</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>\n</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="file_config-instance_method">
-  
-    #<strong>file_config</strong>(config)  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-
-
-  </div>
-</div>
-<div class="tags">
-  
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>2.2.0</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-93
-94
-95</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 93</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_file_config'>file_config</span><span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='rparen'>)</span>
-  <span class='lbrace'>{</span><span class='label'>klass:</span> <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_klass'>klass</span><span class='comma'>,</span> <span class='label'>args:</span> <span class='id identifier rubyid_config'>config</span><span class='period'>.</span><span class='id identifier rubyid_args'>args</span><span class='rbrace'>}</span>
-<span class='kw'>end</span></pre>
-    </td>
-  </tr>
-</table>
-</div>
-    
-      <div class="method_details ">
-  <h3 class="signature " id="handle_requirements-instance_method">
-  
-    #<strong>handle_requirements</strong>(type)  &#x21d2; <tt>Object</tt> 
-  
-
-  
-
-  
-</h3><div class="docstring">
-  <div class="discussion">
-    
-
-
-  </div>
-</div>
-<div class="tags">
-  <p class="tag_title">Parameters:</p>
-<ul class="param">
-  
-    <li>
-      
-        <span class='name'>type</span>
-      
-      
-        <span class='type'>(<tt>:source</tt>, <tt>:lookup</tt>)</span>
-      
-      
-      
-    </li>
-  
-</ul>
-
-<p class="tag_title">Since:</p>
-<ul class="since">
-  
-    <li>
-      
-      
-      
-      
-        
-        <div class='inline'><p>2.2.0</p>
-</div>
-      
-    </li>
-  
-</ul>
-
-</div><table class="source_code">
-  <tr>
-    <td>
-      <pre class="lines">
-
-
-98
-99
-100
-101
-102
-103
-104
-105
-106
-107
-108
-109
-110
-111
-112
-113
-114
-115
-116
-117
-118</pre>
-    </td>
-    <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 98</span>
-
-<span class='kw'>def</span> <span class='id identifier rubyid_handle_requirements'>handle_requirements</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_deps'>deps</span> <span class='op'>=</span> <span class='ivar'>@files</span><span class='lbracket'>[</span><span class='id identifier rubyid_type'>type</span><span class='rbracket'>]</span>
-  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_deps'>deps</span>
-
-  <span class='id identifier rubyid_deps'>deps</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
-    <span class='period'>.</span><span class='id identifier rubyid_compact'>compact</span>
-    <span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_registered'>registered</span><span class='op'>|</span>
-      <span class='id identifier rubyid_req'>req</span> <span class='op'>=</span> <span class='id identifier rubyid_registered'>registered</span><span class='period'>.</span><span class='id identifier rubyid_required'>required</span>
-      <span class='kw'>next</span> <span class='kw'>unless</span> <span class='id identifier rubyid_req'>req</span>
-
-      <span class='id identifier rubyid_req'>req</span><span class='period'>.</span><span class='id identifier rubyid_call'>call</span>
-    <span class='kw'>end</span>
-  <span class='id identifier rubyid_check_requirements'>check_requirements</span><span class='lparen'>(</span><span class='id identifier rubyid_type'>type</span><span class='rparen'>)</span>
-<span class='kw'>rescue</span> <span class='const'><span class='object_link'><a href="Runner/MissingDependencyError.html" title="Kiba::Extend::Jobs::Runner::MissingDependencyError (class)">MissingDependencyError</a></span></span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_err'>err</span>
-  <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>JOB FAILED: DEPENDENCY ERROR IN: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_err'>err</span><span class='period'>.</span><span class='id identifier rubyid_calling_job'>calling_job</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
-  <span class='id identifier rubyid_err'>err</span><span class='period'>.</span><span class='id identifier rubyid_info'>info</span>
-  <span class='id identifier rubyid_exit'>exit</span>
-<span class='kw'>rescue</span> <span class='op'>=&gt;</span> <span class='id identifier rubyid_err'>err</span>
-  <span class='id identifier rubyid_puts'>puts</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>JOB FAILED: Error handling </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_type'>type</span><span class='embexpr_end'>}</span><span class='tstring_content'> file dependency for </span><span class='tstring_end'>&quot;</span></span>\
-    <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_destination_key'>destination_key</span><span class='embexpr_end'>}</span><span class='tstring_content'>: </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_err'>err</span><span class='period'>.</span><span class='id identifier rubyid_message'>message</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -1262,14 +860,14 @@
       <pre class="lines">
 
 
-120
-121
-122
-123
-124</pre>
+66
+67
+68
+69
+70</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 120</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runnable.rb', line 66</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_lookups_to_memoized_methods'>lookups_to_memoized_methods</span>
   <span class='ivar'>@files</span><span class='lbracket'>[</span><span class='symbol'>:lookup</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_each'>each</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_config'>config</span><span class='op'>|</span>
@@ -1321,12 +919,12 @@
       <pre class="lines">
 
 
-127
-128
-129</pre>
+73
+74
+75</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 127</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runnable.rb', line 73</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_parse_job_segments'>parse_job_segments</span>
   <span class='id identifier rubyid_parse_job'>parse_job</span><span class='lparen'>(</span><span class='id identifier rubyid_control'>control</span><span class='comma'>,</span> <span class='id identifier rubyid_context'>context</span><span class='comma'>,</span> <span class='lbracket'>[</span><span class='id identifier rubyid_pre_process'>pre_process</span><span class='comma'>,</span> <span class='id identifier rubyid_transform'>transform</span><span class='comma'>,</span> <span class='id identifier rubyid_post_process'>post_process</span><span class='rbracket'>]</span><span class='rparen'>)</span>
@@ -1376,16 +974,16 @@
       <pre class="lines">
 
 
-131
-132
-133
-134
-135
-136
-137</pre>
+77
+78
+79
+80
+81
+82
+83</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 131</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runnable.rb', line 77</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_show_me_decoration'>show_me_decoration</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_job_show_me'><span class='object_link'><a href="../../Extend.html#job_show_me-class_method" title="Kiba::Extend.job_show_me (method)">job_show_me</a></span></span>
@@ -1439,14 +1037,14 @@
       <pre class="lines">
 
 
-139
-140
-141
-142
-143</pre>
+85
+86
+87
+88
+89</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 139</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runnable.rb', line 85</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_sources'>sources</span>
   <span class='ivar'>@files</span><span class='lbracket'>[</span><span class='symbol'>:source</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_config'>config</span><span class='op'>|</span> <span class='id identifier rubyid_file_config'>file_config</span><span class='lparen'>(</span><span class='id identifier rubyid_config'>config</span><span class='rparen'>)</span> <span class='rbrace'>}</span>
@@ -1498,16 +1096,16 @@
       <pre class="lines">
 
 
-145
-146
-147
-148
-149
-150
-151</pre>
+91
+92
+93
+94
+95
+96
+97</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 145</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runnable.rb', line 91</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_tell_me_decoration'>tell_me_decoration</span>
   <span class='kw'>return</span> <span class='kw'>unless</span> <span class='const'><span class='object_link'><a href="../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='period'>.</span><span class='id identifier rubyid_job_tell_me'><span class='object_link'><a href="../../Extend.html#job_tell_me-class_method" title="Kiba::Extend.job_tell_me (method)">job_tell_me</a></span></span>
@@ -1561,12 +1159,12 @@
       <pre class="lines">
 
 
-153
-154
-155</pre>
+99
+100
+101</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runner.rb', line 153</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/jobs/runnable.rb', line 99</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_transform'>transform</span>
   <span class='lbracket'>[</span><span class='id identifier rubyid_initial_transforms'>initial_transforms</span><span class='comma'>,</span> <span class='ivar'>@transformer</span><span class='comma'>,</span> <span class='id identifier rubyid_final_transforms'>final_transforms</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span>
@@ -1581,7 +1179,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Jul 23 16:34:11 2026 by
+  Generated on Tue Jul 28 20:57:29 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.45 (ruby-3.4.10).
 </div>

@@ -83,7 +83,7 @@
   
   <dl>
     <dt>Included in:</dt>
-    <dd><span class='object_link'><a href="RegisteredLookup.html" title="Kiba::Extend::Registry::RegisteredLookup (class)">RegisteredLookup</a></span>, <span class='object_link'><a href="RegisteredSource.html" title="Kiba::Extend::Registry::RegisteredSource (class)">RegisteredSource</a></span></dd>
+    <dd><span class='object_link'><a href="DynamicSource.html" title="Kiba::Extend::Registry::DynamicSource (class)">DynamicSource</a></span>, <span class='object_link'><a href="RegisteredLookup.html" title="Kiba::Extend::Registry::RegisteredLookup (class)">RegisteredLookup</a></span>, <span class='object_link'><a href="RegisteredSource.html" title="Kiba::Extend::Registry::RegisteredSource (class)">RegisteredSource</a></span></dd>
   </dl>
   
 
@@ -313,7 +313,7 @@
   
   
   <h3 class="inherited">Methods included from <span class='object_link'><a href="NodeLabelable.html" title="Kiba::Extend::Registry::NodeLabelable (module)">NodeLabelable</a></span></h3>
-  <p class="inherited"><span class='object_link'><a href="NodeLabelable.html#node_label-instance_method" title="Kiba::Extend::Registry::NodeLabelable#node_label (method)">#node_label</a></span></p>
+  <p class="inherited"><span class='object_link'><a href="NodeLabelable.html#node_label-instance_method" title="Kiba::Extend::Registry::NodeLabelable#node_label (method)">#node_label</a></span>, <span class='object_link'><a href="NodeLabelable.html#node_qualification-instance_method" title="Kiba::Extend::Registry::NodeLabelable#node_qualification (method)">#node_qualification</a></span></p>
 
 
   <div id="instance_method_details" class="method_details_list">
@@ -708,7 +708,7 @@
     <td>
       <pre class="code"><span class="info file"># File 'lib/kiba/extend/registry/ancestorable.rb', line 37</span>
 
-<span class='kw'>def</span> <span class='id identifier rubyid_source?'>source?</span> <span class='op'>=</span> <span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="RegisteredSource.html" title="Kiba::Extend::Registry::RegisteredSource (class)">RegisteredSource</a></span></span><span class='rparen'>)</span></pre>
+<span class='kw'>def</span> <span class='id identifier rubyid_source?'>source?</span> <span class='op'>=</span> <span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="RegisteredSource.html" title="Kiba::Extend::Registry::RegisteredSource (class)">RegisteredSource</a></span></span><span class='rparen'>)</span> <span class='op'>||</span> <span class='id identifier rubyid_is_a?'>is_a?</span><span class='lparen'>(</span><span class='const'><span class='object_link'><a href="DynamicSource.html" title="Kiba::Extend::Registry::DynamicSource (class)">DynamicSource</a></span></span><span class='rparen'>)</span></pre>
     </td>
   </tr>
 </table>
@@ -719,7 +719,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Jul 23 16:34:12 2026 by
+  Generated on Tue Jul 28 20:57:29 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.45 (ruby-3.4.10).
 </div>
