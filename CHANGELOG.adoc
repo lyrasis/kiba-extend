@@ -38,9 +38,13 @@ For example, if the release version/tag is `3.2.1`, and PR# 107 is merged withou
 === Added
 
 * `DynamicSource` registry entry type
+https://github.com/lyrasis/kiba-extend/pull/274[PR#274]
 * `Kiba::Extend::Jobs::DynamicJobable` mixin for project job classes that don't rely on Kiba transforms to manipulate data.
+https://github.com/lyrasis/kiba-extend/pull/274[PR#274]
 * Add `ProjectConfig.mermaid_config_path` setting that, if set, will be passed on calls to create a mermaid graph for a job.
-
+https://github.com/lyrasis/kiba-extend/pull/274[PR#274]
+* https://lyrasis.github.io/kiba-extend/Kiba/Extend/Transforms/DateValue/ForceDayPrecision.html[`DateValue::ForceDayPrecision` transform]
+https://github.com/lyrasis/kiba-extend/pull/274[PR#275]
 === Bugfixes
 
 === Changed
