@@ -86,9 +86,9 @@ module Kiba
           #   values
           # @param warnfield [Symbol] field in which to write error and warning
           #   flags
-          # @month [Integer] Default month to provide
-          # @day [Integer] Default day to provide. **This must be a valid day
-          #   for any month in a year-month source value.** For instance, you
+          # @param month [Integer] Default month to provide
+          # @param day [Integer] Default day to provide. **This must be a valid
+          #   day for any month in a year-month source value.** For instance, you
           #   cannot set this to 31, and succssfully pad 2002-02.
           def initialize(source:, target:, warnfield: :date_warning,
             month: 1, day: 1)
