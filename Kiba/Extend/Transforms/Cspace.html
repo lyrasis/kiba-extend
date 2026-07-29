@@ -126,6 +126,8 @@ reshape, or create source data into a combinable form, and you can do
 that buy creating fields using a consistent naming convention,
 <span class='object_link'><a href="Collapse/FieldsToRepeatableFieldGroup.html" title="Kiba::Extend::Transforms::Collapse::FieldsToRepeatableFieldGroup (class)">Kiba::Extend::Transforms::Collapse::FieldsToRepeatableFieldGroup</a></span> is a simpler transform
 to set up, and applies <span class='object_link'><a href="Clean/EmptyFieldGroups.html" title="Kiba::Extend::Transforms::Clean::EmptyFieldGroups (class)">Kiba::Extend::Transforms::Clean::EmptyFieldGroups</a></span> automatically</li>
+  <li><span class='object_link'><a href="DateValue/ForceDayPrecision.html" title="Kiba::Extend::Transforms::DateValue::ForceDayPrecision (class)">DateValue::ForceDayPrecision</a></span> for ensuring values mapping to
+non-structured date fields will be ingestable</li>
 </ul>
 
 
@@ -219,15 +221,15 @@ to set up, and applies <span class='object_link'><a href="Clean/EmptyFieldGroups
       <pre class="lines">
 
 
-47
-48
 49
 50
 51
-52</pre>
+52
+53
+54</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/cspace.rb', line 47</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/transforms/cspace.rb', line 49</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_shady_characters'>shady_characters</span>
   <span class='lbrace'>{</span>
@@ -245,7 +247,7 @@ to set up, and applies <span class='object_link'><a href="Clean/EmptyFieldGroups
 </div>
 
       <div id="footer">
-  Generated on Tue Jul 28 20:57:29 2026 by
+  Generated on Wed Jul 29 22:45:49 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.45 (ruby-3.4.10).
 </div>
