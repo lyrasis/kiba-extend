@@ -45,6 +45,7 @@ https://github.com/lyrasis/kiba-extend/pull/274[PR#274]
 https://github.com/lyrasis/kiba-extend/pull/274[PR#274]
 * https://lyrasis.github.io/kiba-extend/Kiba/Extend/Transforms/DateValue/ForceDayPrecision.html[`DateValue::ForceDayPrecision` transform]
 https://github.com/lyrasis/kiba-extend/pull/274[PR#275]
+
 === Bugfixes
 
 === Changed
