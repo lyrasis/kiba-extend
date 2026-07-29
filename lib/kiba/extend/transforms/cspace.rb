@@ -39,6 +39,8 @@ module Kiba
       #   that buy creating fields using a consistent naming convention,
       #   {Collapse::FieldsToRepeatableFieldGroup} is a simpler transform
       #   to set up, and applies {Clean::EmptyFieldGroups} automatically
+      # - {DateValue::ForceDayPrecision} for ensuring values mapping to
+      #   non-structured date fields will be ingestable
       module Cspace
         ::Cspace = Kiba::Extend::Transforms::Cspace
         # Characters or character combinations known to be treated strangely by
