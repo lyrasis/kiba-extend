@@ -79,7 +79,6 @@ module Kiba
         #     {in: "", out: nil, rept: nil}
         #   ]
         #   expect(result).to eq(expected)
-        #   Kiba::Extend::ProjectConfig.reset_config
         class ForceDayPrecision
           # @param source [Symbol] field containing non-day-precise date values
           # @param target [Symbol] field in which to write day-precise date
@@ -88,8 +87,8 @@ module Kiba
           #   flags
           # @param month [Integer] Default month to provide
           # @param day [Integer] Default day to provide. **This must be a valid
-          #   day for any month in a year-month source value.** For instance, you
-          #   cannot set this to 31, and succssfully pad 2002-02.
+          #   day for any month in a year-month source value.** For instance,
+          #   you cannot set this to 31, and succssfully pad 2002-02.
           def initialize(source:, target:, warnfield: :date_warning,
             month: 1, day: 1)
             @source = source
