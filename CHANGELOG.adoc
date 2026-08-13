@@ -45,8 +45,12 @@ https://github.com/lyrasis/kiba-extend/pull/274[PR#274]
 https://github.com/lyrasis/kiba-extend/pull/274[PR#274]
 * https://lyrasis.github.io/kiba-extend/Kiba/Extend/Transforms/DateValue/ForceDayPrecision.html[`DateValue::ForceDayPrecision` transform]
 https://github.com/lyrasis/kiba-extend/pull/274[PR#275]
-* https://lyrasis.github.io/kiba-extend/Kiba/Extend/Transforms/Cspace/MovementReferenceNumber.html[`Cspace::MovementReferenceNumber` transform]
-https://github.com/lyrasis/kiba-extend/pull/274[PR#276]
+* https://lyrasis.github.io/kiba-extend/Kiba/Extend/Transforms/Cspace/Movementreferencenumber.html[`Cspace::Movementreferencenumber` transform]
+https://github.com/lyrasis/kiba-extend/pull/274[PR#276], https://github.com/lyrasis/kiba-extend/pull/278[PR#278]
+* https://lyrasis.github.io/kiba-extend/Kiba/Extend/Transforms/IdGenerator/YearBasedIncrementing.html[`IdGenerator::YearBasedIncrementing` transform]
+https://github.com/lyrasis/kiba-extend/pull/278[PR#278]
+* https://lyrasis.github.io/kiba-extend/Kiba/Extend/Transforms/Cspace/Valuationcontrolrefnumber.html[`Cspace::Valuationcontrolrefnumber` transform]
+https://github.com/lyrasis/kiba-extend/pull/278[PR#278]
 
 === Bugfixes
 
