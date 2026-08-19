@@ -54,6 +54,10 @@ However, those would get pretty difficult to understand and manage.
 
 ## Assumptions and concepts used in libraries used by `kiba-extend` {#other-libraries}
 
+### Kiba-compliant transform classes
+
+The implementation details required of a transform class are defined in `kiba`. [See Implementing ETL transforms in the kiba wiki](https://github.com/thbar/kiba/wiki/Implementing-ETL-transforms).
+
 ### Folder structure, file names, module/class name constants defined in files {#zeitwerk}
 
 `kiba-extend` uses [zeitwerk](https://github.com/fxn/zeitwerk) to automatically handle code loading, so you don't have to manually enter `require_relative` every time you refer to code in another file. (The manual way is tedious and horrible if you end up renaming files or moving them around).
@@ -124,7 +128,7 @@ The `->(value)` is creating the constructor as a Lambda and passing in the setti
 
 - The value of a setting defined by a constructor is set the first time the setting is called/used in the application. It is NOT recalculated on additional calls of the setting.
 
-- The value of a setting can be overwritten at any time from anywhere. This is the principle on which kiba-tms and migrations-cspace-csu-base are based. Much of the code in a client project is dedicated to defining the correct setting values for the individual project. See everything below line 41 [here](https://github.com/dts-hosting/migration-cspace-az_ccp/blob/main/lib/az_ccp.rb).
+- The value of a setting can be overwritten at any time from anywhere. This is the principle on which kiba-tms and migrations-cspace-csu-base are based. Much of the code in a client project is dedicated to defining the correct setting values for the individual project. See everything below the "Setup kiba-tms options" comment line [here](https://github.com/dts-hosting/migration-cspace-az_ccp/blob/main/lib/az_ccp.rb).
 
 - Setting values are not actually frozen until they are called. This is what allows us to do the following in a kiba-tms individual client project's main config:
 
@@ -152,6 +156,65 @@ If anything else had called `Kiba::Tms::Exhibitions.delete_fields` before this p
 ~~~
 
 Whatever's after the `=` is evaluated first and the result of that evaluation is set as the settingvalue. The result of the `Kiba.job_segment` block is a `String`, so it can be a setting value.
+
+## The inner life of kiba-extend, or, Why code in a `Kiba.job_segment` acts weird
+
+`Kiba.job_segment` is added by `kiba-extend`, defined [here](https://github.com/lyrasis/kiba-extend/blob/main/lib/kiba/extend/jobs/job_segmentable.rb#L6) and then added to `Kiba` [here](https://github.com/lyrasis/kiba-extend/blob/17a7296ffc537b389f84caeb9c7bdcc5cb7eedf0/lib/kiba/extend.rb#L342)... which hints at where this all started and how it got its name...
+
+The `source_as_block` usage hints at the fact that stuff in a `Kiba.job_segment` block is just source code text (a String) that is never evaluated until it is sent to Kiba in the context of a job run. When a job is prepared for run by `kiba-extend`, a number of things this application handles separately/reusably---source, destination, transforms, etc.--- get combined into what Kiba expects in [a single `Kiba.parse do ... end` block that defines the whole job](https://github.com/thbar/kiba/wiki/How-to-define-ETL-jobs-with-Kiba).
+
+The whole reason that works is all of the pieces are just Strings in a block passed around as Ruby Procs until they hit `Kiba.parse`, which is dealt with by [the Kiba code that understands the Kiba domain specific language (DSL)](https://github.com/thbar/kiba/wiki/How-to-extend-the-Kiba-DSL).
+
+The beauty of this is that multiple job_segments, sources, etc. can be combined/concatenated as we wish.
+
+The weirdness comes in because the code text is never evaluated until it hits `Kiba::Parser.parse`, which occurs outside the context of your project altogether. Then, the resulting evaluated code is run is [in the context of Kiba::StreamingRunner](https://github.com/thbar/kiba/blob/master/lib/kiba/streaming_runner.rb).
+
+This is why you have to wrap `binding.pry` in an inline transform to use it to stop a job to examine rows while running. [See this tip](https://lyrasis.github.io/kiba-extend/file.common_patterns_tips_tricks.html#in-kibajobsegment-blocks).
+
+And why, to use locally defined variables inside a job_segment, you have to either
+
+* use the whole `MyProject::Jobs::Whatever::Job.mymethod`; or
+* use the [Ruby binding method](https://docs.ruby-lang.org/en/4.0/Kernel.html#method-i-binding) to allow the eventually evaluated code to access the code context where the `Kiba.job_segment` was defined:
+
+~~~ruby
+module MyProject
+  module Jobs
+    module Whatever
+      module Job
+        module_function
+
+        def job
+          Kiba::Extend::Jobs::Job.new(
+            files: {
+              source: :orig__data,
+              destination: :init__prep
+            },
+            transformer: xforms
+          )
+        end
+
+        def mymethod = "do a bunch of stuff"
+
+        def xforms
+          # create a variable that points at the binding here outside the
+          #   Kiba.job_segment
+          cord = binding
+
+          Kiba.job_segment do
+            # For somewhat opaque-to-me reasons we _can_ access that `cord` variable
+            #   from inside the job_segment. `cord.receiver` returns
+            #   `MyProject::Jobs::Whatever::Job`
+            mod = cord.receiver
+
+            # So now you can do:
+            string = mod.mymethod
+          end
+        end
+      end
+    end
+  end
+end
+~~~
 
 ## Thinking in reusable transformation steps
 
