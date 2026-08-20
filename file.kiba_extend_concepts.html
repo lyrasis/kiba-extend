@@ -69,10 +69,12 @@
     </ul>
   </li>
   <li><a href="#other-libraries" id="markdown-toc-other-libraries">Assumptions and concepts used in libraries used by <code>kiba-extend</code></a>    <ul>
+      <li><a href="#kiba-compliant-transform-classes" id="markdown-toc-kiba-compliant-transform-classes">Kiba-compliant transform classes</a></li>
       <li><a href="#zeitwerk" id="markdown-toc-zeitwerk">Folder structure, file names, module/class name constants defined in files</a></li>
       <li><a href="#dry-configurable" id="markdown-toc-dry-configurable">Config settings via <code>dry-configurable</code></a></li>
     </ul>
   </li>
+  <li><a href="#the-inner-life-of-kiba-extend-or-why-code-in-a-kibajobsegment-acts-weird" id="markdown-toc-the-inner-life-of-kiba-extend-or-why-code-in-a-kibajobsegment-acts-weird">The inner life of kiba-extend, or, Why code in a <code>Kiba.job_segment</code> acts weird</a></li>
   <li><a href="#thinking-in-reusable-transformation-steps" id="markdown-toc-thinking-in-reusable-transformation-steps">Thinking in reusable transformation steps</a></li>
 </ul>
 
@@ -125,6 +127,10 @@ For instance one OldSystem user may only want to migrate records with <code>acti
 However, those would get pretty difficult to understand and manage.</p>
 
 <h2 id="other-libraries">Assumptions and concepts used in libraries used by <code>kiba-extend</code></h2>
+
+<h3 id="kiba-compliant-transform-classes">Kiba-compliant transform classes</h3>
+
+<p>The implementation details required of a transform class are defined in <code>kiba</code>. <a href="https://github.com/thbar/kiba/wiki/Implementing-ETL-transforms">See Implementing ETL transforms in the kiba wiki</a>.</p>
 
 <h3 id="zeitwerk">Folder structure, file names, module/class name constants defined in files</h3>
 
@@ -200,7 +206,7 @@ However, those would get pretty difficult to understand and manage.</p>
     <p>The value of a setting defined by a constructor is set the first time the setting is called/used in the application. It is NOT recalculated on additional calls of the setting.</p>
   </li>
   <li>
-    <p>The value of a setting can be overwritten at any time from anywhere. This is the principle on which kiba-tms and migrations-cspace-csu-base are based. Much of the code in a client project is dedicated to defining the correct setting values for the individual project. See everything below line 41 <a href="https://github.com/dts-hosting/migration-cspace-az_ccp/blob/main/lib/az_ccp.rb">here</a>.</p>
+    <p>The value of a setting can be overwritten at any time from anywhere. This is the principle on which kiba-tms and migrations-cspace-csu-base are based. Much of the code in a client project is dedicated to defining the correct setting values for the individual project. See everything below the “Setup kiba-tms options” comment line <a href="https://github.com/dts-hosting/migration-cspace-az_ccp/blob/main/lib/az_ccp.rb">here</a>.</p>
   </li>
   <li>
     <p>Setting values are not actually frozen until they are called. This is what allows us to do the following in a kiba-tms individual client project’s main config:</p>
@@ -232,13 +238,73 @@ However, those would get pretty difficult to understand and manage.</p>
 
 <p>Whatever’s after the <code>=</code> is evaluated first and the result of that evaluation is set as the settingvalue. The result of the <code>Kiba.job_segment</code> block is a <code>String</code>, so it can be a setting value.</p>
 
+<h2 id="the-inner-life-of-kiba-extend-or-why-code-in-a-kibajobsegment-acts-weird">The inner life of kiba-extend, or, Why code in a <code>Kiba.job_segment</code> acts weird</h2>
+
+<p><code>Kiba.job_segment</code> is added by <code>kiba-extend</code>, defined <a href="https://github.com/lyrasis/kiba-extend/blob/main/lib/kiba/extend/jobs/job_segmentable.rb#L6">here</a> and then added to <code>Kiba</code> <a href="https://github.com/lyrasis/kiba-extend/blob/17a7296ffc537b389f84caeb9c7bdcc5cb7eedf0/lib/kiba/extend.rb#L342">here</a>… which hints at where this all started and how it got its name…</p>
+
+<p>The <code>source_as_block</code> usage hints at the fact that stuff in a <code>Kiba.job_segment</code> block is just source code text (a String) that is never evaluated until it is sent to Kiba in the context of a job run. When a job is prepared for run by <code>kiba-extend</code>, a number of things this application handles separately/reusably—source, destination, transforms, etc.— get combined into what Kiba expects in <a href="https://github.com/thbar/kiba/wiki/How-to-define-ETL-jobs-with-Kiba">a single <code>Kiba.parse do ... end</code> block that defines the whole job</a>.</p>
+
+<p>The whole reason that works is all of the pieces are just Strings in a block passed around as Ruby Procs until they hit <code>Kiba.parse</code>, which is dealt with by <a href="https://github.com/thbar/kiba/wiki/How-to-extend-the-Kiba-DSL">the Kiba code that understands the Kiba domain specific language (DSL)</a>.</p>
+
+<p>The beauty of this is that multiple job_segments, sources, etc. can be combined/concatenated as we wish.</p>
+
+<p>The weirdness comes in because the code text is never evaluated until it hits <code>Kiba::Parser.parse</code>, which occurs outside the context of your project altogether. Then, the resulting evaluated code is run is <a href="https://github.com/thbar/kiba/blob/master/lib/kiba/streaming_runner.rb">in the context of Kiba::StreamingRunner</a>.</p>
+
+<p>This is why you have to wrap <code>binding.pry</code> in an inline transform to use it to stop a job to examine rows while running. <a href="https://lyrasis.github.io/kiba-extend/file.common_patterns_tips_tricks.html#in-kibajobsegment-blocks">See this tip</a>.</p>
+
+<p>And why, to use locally defined variables inside a job_segment, you have to either</p>
+
+<ul>
+  <li>use the whole <code>MyProject::Jobs::Whatever::Job.mymethod</code>; or</li>
+  <li>use the <a href="https://docs.ruby-lang.org/en/4.0/Kernel.html#method-i-binding">Ruby binding method</a> to allow the eventually evaluated code to access the code context where the <code>Kiba.job_segment</code> was defined:</li>
+</ul>
+
+<pre class="code language-ruby"><code class="language-ruby">module MyProject
+  module Jobs
+    module Whatever
+      module Job
+        module_function
+
+        def job
+          Kiba::Extend::Jobs::Job.new(
+            files: {
+              source: :orig__data,
+              destination: :init__prep
+            },
+            transformer: xforms
+          )
+        end
+
+        def mymethod = &quot;do a bunch of stuff&quot;
+
+        def xforms
+          # create a variable that points at the binding here outside the
+          #   Kiba.job_segment
+          cord = binding
+
+          Kiba.job_segment do
+            # For somewhat opaque-to-me reasons we _can_ access that `cord` variable
+            #   from inside the job_segment. `cord.receiver` returns
+            #   `MyProject::Jobs::Whatever::Job`
+            mod = cord.receiver
+
+            # So now you can do:
+            string = mod.mymethod
+          end
+        end
+      end
+    end
+  end
+end
+</code></pre>
+
 <h2 id="thinking-in-reusable-transformation-steps">Thinking in reusable transformation steps</h2>
 
 <p>(todo)</p>
 </div></div>
 
       <div id="footer">
-  Generated on Thu Aug 13 16:40:14 2026 by
+  Generated on Thu Aug 20 11:06:49 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.45 (ruby-3.4.10).
 </div>
