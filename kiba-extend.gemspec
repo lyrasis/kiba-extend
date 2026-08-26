@@ -51,6 +51,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "marc"
   spec.add_dependency "measured"
   spec.add_dependency "mermaid"
+  spec.add_dependency "nokogiri"
   spec.add_dependency "psych"
   spec.add_dependency "thor"
   # @todo can replace with stdlib?
