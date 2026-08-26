@@ -48,12 +48,11 @@ module Kiba
 
         attr_reader :dirpath
 
-        # We need to override this function because the superclass
-        # function deals with a single file and tries to figure out
-        # whether its parent diretory exists
+        # We need to override this function because it looks like
+        # the superclass function deals with a single file and tries
+        # to figure out whether its parent directory exists first.
         def ensure_dir
           return unless self.class.requires_path?
-
           FileUtils.mkdir_p(dirpath) unless Dir.exist?(dirpath)
         end
       end

@@ -8,16 +8,6 @@ RSpec.describe "Kiba::Extend::Sources::XmlDir" do
   let(:path) { File.join(fixtures_dir, "xml_dir") }
 
   describe "#each" do
-    # placeholder
-    context "with a directory argument" do
-      it "successfully loads XML" do
-        result = []
-        source = src.new(dirpath: path)
-        source.each { |rec| result << rec }
-        expect(result).to eq([])
-      end
-    end
-
     context "with a real EAD fixture" do
       it "yields each selected node as a parsed XML document" do
         source = src.new(

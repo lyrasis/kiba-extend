@@ -31,6 +31,7 @@ module Kiba
         # @param record_selector [Proc] called with each
         #   Nokogiri::XML::Reader element node; nodes for which this
         #   returns true are yielded as records
+        # TODO - tests for record selection logic & nested dirs
         def initialize(
           dirpath:,
           recursive: false,
