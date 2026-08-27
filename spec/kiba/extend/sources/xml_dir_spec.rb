@@ -35,10 +35,31 @@ RSpec.describe "Kiba::Extend::Sources::XmlDir" do
       expect(source.count).to eq expected
     end
 
+    # The logic of these tests is: the first one should succeed
+    # because `<ns2:relations_common>` is what appears in the
+    # document, and that element shouldn’t be reachable without
+    # specifying its namespace explicitly. The second one should
+    # succeed because we’ve removed the ‘ns2’ namespace.
+    it "keeps namespaces by default" do
+      source = src.new(dirpath: path, silent_warnings: true, recursive: false)
+      doc = source.first
+      expect(doc.at_xpath("//relations_common")).to be_nil
+    end
+
+    it "strips namespaces when remove_namespaces: true" do
+      source = src.new(dirpath: path, silent_warnings: true,
+        recursive: false, remove_namespaces: true)
+      doc = source.first
+      expect(doc.at_xpath("//relations_common")).not_to be_nil
+    end
+
     it "warns on stdout and skips yielding a document for invalid XML" do
       source = src.new(dirpath: path, silent_warnings: false)
       docs = []
 
+      # REVIEW: a little smelly; if Nokogiri changes this
+      # error message, this needs to be updated, but the
+      # goal is just to ensure a warning is on stdout.
       expect do
         source.each { |doc| docs << doc }
       end.to output(/is not well-formed XML/).to_stdout
