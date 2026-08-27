@@ -14,20 +14,28 @@ RSpec.describe "Kiba::Extend::Sources::XmlDir" do
       end
     end
 
+    # convenience function to avoid breaking tests due to
+    # invalid fixtures and to cross-check the output of the
+    # 'skip invalid XML' test
+    def valid_xml_count(glob_pattern)
+      Dir.glob(glob_pattern).count do |fpath|
+        Nokogiri::XML(File.open(fpath)).errors.empty?
+      end
+    end
+
     it "yields the correct number of documents (recursive: false)" do
       source = src.new(dirpath: path, recursive: false, silent_warnings: true)
-      expected = Dir.glob(File.join(path, "*.xml")).length
+      expected = valid_xml_count(File.join(path, "*.xml"))
       expect(source.count).to eq expected
     end
 
     it "yields the correct number of documents (recursive: true)" do
       source = src.new(dirpath: path, recursive: true, silent_warnings: true)
-      expected = Dir.glob(File.join(path, "**", "*.xml")).length
+      expected = valid_xml_count(File.join(path, "**", "*.xml"))
       expect(source.count).to eq expected
     end
 
-    it "warns on stdout with silent_warnings = false, still yields"\
-      " a document for invalid XML" do
+    it "warns on stdout and skips yielding a document for invalid XML" do
       source = src.new(dirpath: path, silent_warnings: false)
       docs = []
 
@@ -36,6 +44,7 @@ RSpec.describe "Kiba::Extend::Sources::XmlDir" do
       end.to output(/is not well-formed XML/).to_stdout
 
       expect(docs).to all(be_a(Nokogiri::XML::Document))
+      expect(docs.length).to eq valid_xml_count(File.join(path, "*.xml"))
     end
   end
 end

@@ -33,10 +33,12 @@ module Kiba
         #   of the specified `dirpath`. Defaults to `false`.
         # @param filesuffixes [Array<String>] Load only files with the
         #   specified suffix(es). Defaults to `[".xml"]`.
-        # @param silent_warnings [Boolean] Nokogiri is happy to yield Documents
-        #   from invalid XML. Everything in the source directory *should*
-        #   be validated before kiba-extend sees it, but we can warn
-        #   about errors if needed. Defaults to `false`.
+        # @param silent_warnings [Boolean] Whether to suppress warnings for
+        #   invalid XML. Invalid XML files are skipped (no document yielded)
+        #   so that callers can depend on valid Nokogiri::XML::Documents
+        #   from the XmlDir source. Everything in the source directory
+        #   *should* be validated before kiba-extend sees it, but we can
+        #   warn about errors if needed. Defaults to `false`.
         def initialize(dirpath:, recursive: false, filesuffixes: [".xml"],
           silent_warnings: false)
           @path = File.expand_path(dirpath)
@@ -46,13 +48,16 @@ module Kiba
         end
 
         # Yields one Nokogiri::XML::Document per file. Warns on stdout
-        # for any file that fails to parse as well-formed XML (if
-        # silent_warnings is `true`), but still yields the (invalid)
-        # document and continues
+        # for any file that fails to parse as well-formed XML (unless
+        # silent_warnings is `true`), and skips yielding a document
+        # for that file.
         def each
           file_list.each do |filepath|
             doc = Nokogiri::XML(File.open(filepath))
-            warn_invalid(filepath, doc) if doc.errors.any?
+            if doc.errors.any?
+              warn_invalid(filepath, doc)
+              next
+            end
             yield doc
           end
         end
