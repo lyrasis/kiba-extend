@@ -7,6 +7,7 @@ module Kiba
     module Sources
       class XmlDir
         extend Sourceable
+        include ::Enumerable
 
         class << self
           def default_file_options
@@ -27,43 +28,50 @@ module Kiba
         end
 
         # @param dirpath [String] path to a directory containing XML
-        # files, such as EADs
-        # @param record_selector [Proc] called with each
-        #   Nokogiri::XML::Reader element node; nodes for which this
-        #   returns true are yielded as records
-        # TODO - tests for record selection logic & nested dirs
-        def initialize(
-          dirpath:,
-          recursive: false,
-          filesuffixes: [".xml"],
-          record_selector: ->(node) { node.name == "none" && node.depth == 1 }
-        )
+        #   files (one valid XML document per file). Required.
+        # @param recursive [Boolean] whether to load all subdirectories
+        #   of the specified `dirpath`. Defaults to `false`.
+        # @param filesuffixes [Array<String>] Load only files with the
+        #   specified suffix(es). Defaults to `[".xml"]`.
+        # @param silent_warnings [Boolean] Nokogiri is happy to yield Documents
+        #   from invalid XML. Everything in the source directory *should*
+        #   be validated before kiba-extend sees it, but we can warn
+        #   about errors if needed. Defaults to `false`.
+        def initialize(dirpath:, recursive: false, filesuffixes: [".xml"],
+          silent_warnings: false)
           @path = File.expand_path(dirpath)
           @recursive = recursive
           @filesuffixes = filesuffixes
-          @record_selector = record_selector
+          @silent_warnings = silent_warnings
         end
 
+        # Yields one Nokogiri::XML::Document per file. Warns on stdout
+        # for any file that fails to parse as well-formed XML (if
+        # silent_warnings is `true`), but still yields the (invalid)
+        # document and continues
         def each
-          file_list.each do |path|
-            parse_xml(path) { |node| yield node }
+          file_list.each do |filepath|
+            doc = Nokogiri::XML(File.open(filepath))
+            warn_invalid(filepath, doc) if doc.errors.any?
+            yield doc
           end
         end
 
         private
 
-        attr_reader :path, :recursive, :filesuffixes
+        attr_reader :path, :recursive, :filesuffixes, :silent_warnings
 
-        def parse_xml(path)
-          reader = Nokogiri::XML::Reader(File.open(path))
-          reader.each do |node|
-            # NOTE this rasies on invalid XML, need to rescue and log
-            next unless node.node_type == Nokogiri::XML::Reader::TYPE_ELEMENT
-            next unless @record_selector.call(node)
-            yield Nokogiri::XML(node.outer_xml)
+        # @param fpath [String] file that raised the errors.
+        # @param doc [Nokogiri::XML::Document] the (invalid) Document
+        #   that resulted from loading the file at `fpath`.
+        def warn_invalid(fpath, doc)
+          if silent_warnings == false
+            puts "WARNING: #{fpath} is not well-formed XML "\
+              "(#{doc.errors.length} error(s)): #{doc.errors.join("; ")}"
           end
         end
 
+        # == Convenience functions ==
         def dir_file_list
           Pathname.new(path).children
         end
@@ -73,7 +81,7 @@ module Kiba
         end
 
         def suffix_matches(paths)
-          paths.select { |path| path.file? && filesuffixes.any?(path.extname) }
+          paths.select { |fp| fp.file? && filesuffixes.any?(fp.extname) }
         end
 
         def file_list
