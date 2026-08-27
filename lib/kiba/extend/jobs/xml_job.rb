@@ -3,7 +3,13 @@
 module Kiba
   module Extend
     module Jobs
-      class XmlJob < BaseJob
+      # Job with one XmlDir source, one destination, and zero-to-n lookups.
+      #
+      # @note The source yields Nokogiri::XML::Document objects, so this
+      #   job is treated as a generic template (no conversion of records
+      #   to hashes)
+      # @since 7.0.0
+      class XmlJob < IDoNoInitialDataConversion
       end
     end
   end
