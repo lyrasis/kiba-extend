@@ -21,10 +21,9 @@ module Kiba
       # @note If 2+ XMLDocument objects contain the same base filename
       #   in their .url attribute (e.g. same-named files from different
       #   subdirectories via `recursive: true`), the later outputs will
-      #   always clobber the earlier ones. FIXME for production -- flagging
-      #   for now
-      #
-      # @since 7.0.0
+      #   always clobber the earlier ones.
+      # @todo Add collision logic in case, for example, `dir/1.xml` and
+      #   `dir/sub/1.xml` both exist.
       class XmlDir
         include Destinationable
 

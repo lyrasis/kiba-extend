@@ -67,5 +67,24 @@ RSpec.describe "Kiba::Extend::Sources::XmlDir" do
       expect(docs).to all(be_a(Nokogiri::XML::Document))
       expect(docs.length).to eq valid_xml_count(File.join(path, "*.xml"))
     end
+
+    # See if it's possible to pass a bitmask of custom options to the
+    # source constructor via the `parseopts` argument. All the options are
+    # described at https://nokogiri.org/rdoc/Nokogiri/XML/ParseOptions.html.
+    #
+    # In this case, we use safe/standard options. RECOVER must always be
+    # passed, NOBLANKS removes blank elements, and NONET forbids network
+    # egress to get resources such as DTDs. Warnings are silenced for this
+    # test and most other XML tests to avoid spam about `invalid.xml`;
+    # the test would fail for other reasons than malformed XML.
+    it "accepts custom parsing options" do
+      opts = Nokogiri::XML::ParseOptions::RECOVER |
+        Nokogiri::XML::ParseOptions::NOBLANKS |
+        Nokogiri::XML::ParseOptions::NONET
+      source = src.new(dirpath: path, silent_warnings: true,
+        recursive: false, parseopts: opts)
+      doc = source.first
+      expect(doc.root.children.map(&:name)).to eq(["relations_common"])
+    end
   end
 end

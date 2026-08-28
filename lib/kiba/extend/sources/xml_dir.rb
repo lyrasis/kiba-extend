@@ -5,6 +5,17 @@ require "nokogiri"
 module Kiba
   module Extend
     module Sources
+      # XmlDir is a source yielding one Nokogiri::XML::Document per
+      #   XML file. It will issue warnings (on stdout) for any source
+      #   file that fails to parse as well-formed XML. This behavior
+      #   can be suppressed by passing `silent_warnings: true` to the
+      #   constructor. Regardless of whether the warnings are suppressed,
+      #   XmlDir will not yield an XMLDocument for malformed XML.
+      #
+      # Other things to be aware of: stripping namespaces might make
+      #   your life easier for downstream transformations; you can pass
+      #   `remove_namespaces: true` to the constructor for this purpose
+      #   (@see #initialize for details and other options).
       class XmlDir
         extend Sourceable
         include ::Enumerable
@@ -28,29 +39,28 @@ module Kiba
         end
 
         # @param dirpath [String] path to a directory containing XML
-        #   files (one valid XML document per file). Required.
+        #   files (one valid XML document per file).
         # @param recursive [Boolean] whether to load all subdirectories
-        #   of the specified `dirpath`. Defaults to `false`.
+        #   of the specified `dirpath`.
         # @param filesuffixes [Array<String>] Load only files with the
-        #   specified suffix(es). Defaults to `[".xml"]`.
+        #   specified suffix(es).
         # @param silent_warnings [Boolean] Whether to suppress warnings for
         #   invalid XML. Invalid XML files are skipped (no document yielded)
         #   so that callers can depend on valid Nokogiri::XML::Documents
         #   from the XmlDir source. Everything in the source directory
         #   *should* be validated before kiba-extend sees it, but we can
-        #   warn about errors if needed. Defaults to `false`.
+        #   warn about errors if needed.
         # @param parseopts [Integer, Nokogiri::XML::ParseOptions] passed
         #   to `Nokogiri::XML::Document.parse` as the `options` argument.
-        #   Defaults to `Kiba::Extend.xmlopts`. NOTE that invalid XML
-        #   will break the source unless RECOVER is in xmlopts! (It is
-        #   by default, but it should always be included when callers
-        #   override @parseopts
+        #   Defaults to `Kiba::Extend.xmlopts`. NOTE that invalid source
+        #   XML will halt the whole pipeline when encountered unless
+        #   `RECOVER` is in `xmlopts`! (It is by default, but it should
+        #   always be included when callers override @parseopts.)
         # @param remove_namespaces [Boolean] whether to call
         #   `remove_namespaces!` on each parsed Document before yielding
         #   it. This strips all namespace prefixes/declarations, which
-        #   simplifies XPath/CSS queries in transforms at the cost of
-        #   losing the ability to distinguish elements/attributes that
-        #   differ ONLY by namespace. Defaults to `false`.
+        #   simplifies queries but may remove distinguishing features
+        #   from different elements with identical names.
         def initialize(dirpath:, recursive: false, filesuffixes: [".xml"],
           silent_warnings: false, parseopts: Kiba::Extend.xmlopts,
           remove_namespaces: false)
@@ -62,13 +72,7 @@ module Kiba
           @remove_namespaces = remove_namespaces
         end
 
-        # Yields one Nokogiri::XML::Document per file. Warns on stdout
-        # for any file that fails to parse as well-formed XML (unless
-        # silent_warnings is `true`), and skips yielding a document
-        # for that file.
-        #
-        # Strips namespaces if remove_namespaces is true (but after
-        # error checking)
+        # @yieldreturn [Nokogiri::XML::Document] per successfully parsed file
         def each
           file_list.each do |filepath|
             doc = parse(filepath)
@@ -102,7 +106,7 @@ module Kiba
 
         # @param fpath [String] file that raised the errors.
         # @param errors [Array<Nokogiri::XML::SyntaxError>]
-        # TK: option to tee this to a log file?
+        # @todo Add option to tee warnings to a log file.
         def warn_invalid(fpath, errors)
           return if silent_warnings
 

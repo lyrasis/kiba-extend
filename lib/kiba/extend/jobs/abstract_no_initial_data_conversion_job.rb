@@ -12,8 +12,7 @@ module Kiba
       #
       # @abstract Subclass to get this behavior for a specific source
       #   record type, initially {MarcJob} and {XmlJob}
-      # @since 7.0.0
-      class IDoNoInitialDataConversion < BaseJob
+      class AbstractNoInitialDataConversionJob < BaseJob
         private
 
         def initial_transforms

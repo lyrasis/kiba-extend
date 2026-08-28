@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
-<document>
+<document xmlns:ns2="http://collectionspace.org/services/relation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <ns2:relations_common xmlns:ns2="http://collectionspace.org/services/relation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <subjectCsid>cb74d0de-c0b7-4c32-ad93</subjectCsid>
     <relationshipType>affects</relationshipType>
     <objectCsid>8f672c9f-ea6e-46e0-b958</objectCsid>
+    <blankElement></blankElement>
   </ns2:relations_common>
 </document>

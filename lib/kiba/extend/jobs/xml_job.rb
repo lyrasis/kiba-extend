@@ -8,8 +8,7 @@ module Kiba
       # @note The source yields Nokogiri::XML::Document objects, so this
       #   job is treated as a generic template (no conversion of records
       #   to hashes)
-      # @since 7.0.0
-      class XmlJob < IDoNoInitialDataConversion
+      class XmlJob < AbstractNoInitialDataConversionJob
       end
     end
   end

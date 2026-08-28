@@ -10,7 +10,7 @@ module Kiba
       #   essentially just an empty template (in this case, it helps preserve
       #   compatibility with existing kiba-extend projects' code).
       # @since 3.3.0
-      class MarcJob < IDoNoInitialDataConversion
+      class MarcJob < AbstractNoInitialDataConversionJob
       end
     end
   end
