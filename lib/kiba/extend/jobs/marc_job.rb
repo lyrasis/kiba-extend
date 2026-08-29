@@ -6,49 +6,11 @@ module Kiba
       # Job with one MARC source, one destination, and zero-to-n lookups.
       #
       # @note The first transform called in a `MarcJob` must be one from the
-      #   {Kiba::Extend::Transforms::Marc} namespace.
+      #   {Kiba::Extend::Transforms::Marc} namespace. Like {XmlJob}, this is
+      #   essentially just an empty template (in this case, it helps preserve
+      #   compatibility with existing kiba-extend projects' code).
       # @since 3.3.0
-      class MarcJob < BaseJob
-        private
-
-        def initial_transforms
-          Kiba.job_segment do
-            transform do |r|
-              @srcrows += 1
-              r
-            end
-          end
-        end
-
-        def final_transforms
-          Kiba.job_segment do
-            transform do |r|
-              @outrows += 1
-              r
-            end
-          end
-        end
-
-        def pre_process
-          Kiba.job_segment do
-            pre_process do
-              @srcrows = 0
-              @outrows = 0
-            end
-          end
-        end
-
-        def config
-          Kiba.parse do
-          end.config
-        end
-
-        def post_process
-          Kiba.job_segment do
-            post_process do
-            end
-          end
-        end
+      class MarcJob < AbstractNoInitialDataConversionJob
       end
     end
   end
