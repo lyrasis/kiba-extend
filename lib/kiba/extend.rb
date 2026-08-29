@@ -102,6 +102,22 @@ module Kiba
       default: {headers: true, header_converters: %i[symbol downcase]},
       reader: true
 
+    # Default options used for XML parsing. The options have to be
+    #   an int bitmask to satisfy Nokogiri's expectations. (They're
+    #   handed directly to `Nokogiri::XML::Document.parse`.)  See:
+    #   https://www.rubydoc.info/gems/nokogiri/Nokogiri/XML/ParseOptions
+    #   The default option here is Nokogiri's default:
+    #   RECOVER | NONET | BIG_LINES
+    #
+    # @note The default includes `RECOVER`, which is what allows
+    #   {Kiba::Extend::Sources::XmlDir} to observe and collect errors on
+    #   `doc.errors` without failing. You MUST include RECOVER explicitly
+    #   if you override this setting!
+    # @return [Integer]
+    setting :xmlopts,
+      default: Nokogiri::XML::ParseOptions::DEFAULT_XML,
+      reader: true
+
     # Default settings for Lambda destination
     # @return [Hash]
     setting :lambdaopts, default: {on_write: ->(r) {
