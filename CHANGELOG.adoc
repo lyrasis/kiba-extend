@@ -65,6 +65,7 @@ https://github.com/lyrasis/kiba-extend/pull/288[PR#288]
 
 * Extract no-initial data conversion job logic to https://lyrasis.github.io/kiba-extend/Kiba/Extend/Jobs/AbstractNoInitialDataConversionJob.html[`AbstractNoInitialDataConversionJob`], subclassing https://lyrasis.github.io/kiba-extend/Kiba/Extend/Jobs/MarcJob.html[`MarcJob`] and https://lyrasis.github.io/kiba-extend/Kiba/Extend/Jobs/XmlJob.html[`XmlJob`] to this for clarity when used in projects
 https://github.com/lyrasis/kiba-extend/pull/288[PR#288]
+* Add two `MarcJob` tests demonstrating the limitations of interaction between Job classes and Sources/Transforms/Destinations
 
 == Releases
 
