@@ -24,6 +24,7 @@ PATH
       marc
       measured
       mermaid
+      nokogiri
       psych
       thor
       xxhash (= 0.7.0)
