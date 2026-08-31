@@ -71,12 +71,14 @@
   <dl>
     <dt>Inherits:</dt>
     <dd>
-      <span class="inheritName"><span class='object_link'><a href="BaseJob.html" title="Kiba::Extend::Jobs::BaseJob (class)">BaseJob</a></span></span>
+      <span class="inheritName"><span class='object_link'><a href="AbstractNoInitialDataConversionJob.html" title="Kiba::Extend::Jobs::AbstractNoInitialDataConversionJob (class)">AbstractNoInitialDataConversionJob</a></span></span>
       
         <ul class="fullTree">
           <li>Object</li>
           
             <li class="next"><span class='object_link'><a href="BaseJob.html" title="Kiba::Extend::Jobs::BaseJob (class)">BaseJob</a></span></li>
+          
+            <li class="next"><span class='object_link'><a href="AbstractNoInitialDataConversionJob.html" title="Kiba::Extend::Jobs::AbstractNoInitialDataConversionJob (class)">AbstractNoInitialDataConversionJob</a></span></li>
           
             <li class="next">Kiba::Extend::Jobs::MarcJob</li>
           
@@ -110,7 +112,9 @@
   <div class="note notetag">
     <strong>Note:</strong>
     <div class='inline'><p>The first transform called in a <code>MarcJob</code> must be one from the
-<span class='object_link'><a href="../Transforms/Marc.html" title="Kiba::Extend::Transforms::Marc (module)">Transforms::Marc</a></span> namespace.</p>
+<span class='object_link'><a href="../Transforms/Marc.html" title="Kiba::Extend::Transforms::Marc (module)">Transforms::Marc</a></span> namespace. Like <span class='object_link'><a href="XmlJob.html" title="Kiba::Extend::Jobs::XmlJob (class)">XmlJob</a></span>, this is
+essentially just an empty template (in this case, it helps preserve
+compatibility with existing kiba-extend projects’ code).</p>
 </div>
   </div>
 
@@ -150,6 +154,13 @@
 
 
 
+  
+  
+  
+  
+  
+  
+  
   
   
   
@@ -220,7 +231,7 @@
 </div>
 
       <div id="footer">
-  Generated on Thu Aug 20 11:06:50 2026 by
+  Generated on Mon Aug 31 13:51:23 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.45 (ruby-3.4.10).
 </div>
