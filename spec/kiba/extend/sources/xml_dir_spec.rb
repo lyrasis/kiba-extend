@@ -57,9 +57,9 @@ RSpec.describe "Kiba::Extend::Sources::XmlDir" do
       source = src.new(dirpath: path, silent_warnings: false)
       docs = []
 
-      # REVIEW: a little smelly; if Nokogiri changes this
-      # error message, this needs to be updated, but the
-      # goal is just to ensure a warning is on stdout.
+      # Note that if Nokogiri error messages change, this code will
+      # need to be updated. The goal is just to ensure that the
+      # error message is sent to stdout.
       expect do
         source.each { |doc| docs << doc }
       end.to output(/is not well-formed XML/).to_stdout

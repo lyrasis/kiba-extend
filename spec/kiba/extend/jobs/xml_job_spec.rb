@@ -52,18 +52,12 @@ RSpec.describe "Kiba::Extend::Jobs::XmlJob" do
     end
   end
 
-  # The above test, but with custom parsing options. The bitmask keeps
-  # RECOVER (for the purposes of kiba-extend, this is required) and
-  # instructs Nokogiri to collapse blank nodes to singletons (<z></z> => <z/>),
-  # forbid network egress for DTDs or other resources, and remove redundant
-  # namespaces.
+  # The goal of this test is to check kiba-extend's handling of custom
+  # options--"can we successfully pass a custom option bitmask from
+  # kiba-extend to the Nokogiri parser?"--not to test whether Nokogiri
+  # handles the options correctly.
   #
-  # @note I don't know how granular we want this testing to be. The job
-  #   works as expected and can be confirmed by removing the call to
-  #   FileUtils.rm_r on the destination directory and inspecting 1.xml,
-  #   which illustrates the redundant namespacing and singleton transforms,
-  #   but testing that output veers into testing Nokogiri, not testing
-  #   kiba-extend.
+  # Options: https://nokogiri.org/rdoc/Nokogiri/XML/ParseOptions
   context "with XmlDir source, XmlDir dest, and custom parse options" do
     before(:context) do
       reg = Kiba::Extend::Registry::FileRegistry.new
