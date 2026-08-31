@@ -51,7 +51,8 @@ https://github.com/lyrasis/kiba-extend/pull/274[PR#276], https://github.com/lyra
 https://github.com/lyrasis/kiba-extend/pull/278[PR#278]
 * https://lyrasis.github.io/kiba-extend/Kiba/Extend/Transforms/Cspace/Valuationcontrolrefnumber.html[`Cspace::Valuationcontrolrefnumber` transform]
 https://github.com/lyrasis/kiba-extend/pull/278[PR#278]
-
+* `XmlDir` https://lyrasis.github.io/kiba-extend/Kiba/Extend/Sources/XmlDir.html[Source] and https://lyrasis.github.io/kiba-extend/Kiba/Extend/Destinations/XmlDir.html[Destination], and https://lyrasis.github.io/kiba-extend/Kiba/Extend/Jobs/XmlJob.html[`XmlJob`]
+https://github.com/lyrasis/kiba-extend/pull/288[PR#288]
 === Bugfixes
 
 === Changed
@@ -61,6 +62,9 @@ https://github.com/lyrasis/kiba-extend/pull/278[PR#278]
 === Deprecated/Will break in a future version
 
 === Dev
+
+* Extract no-initial data conversion job logic to https://lyrasis.github.io/kiba-extend/Kiba/Extend/Jobs/AbstractNoInitialDataConversionJob.html[`AbstractNoInitialDataConversionJob`], subclassing https://lyrasis.github.io/kiba-extend/Kiba/Extend/Jobs/MarcJob.html[`MarcJob`] and https://lyrasis.github.io/kiba-extend/Kiba/Extend/Jobs/XmlJob.html[`XmlJob`] to this for clarity when used in projects
+https://github.com/lyrasis/kiba-extend/pull/288[PR#288]
 
 == Releases
 
