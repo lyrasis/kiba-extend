@@ -4,8 +4,6 @@ module Kiba
   module Extend
     module Transforms
       module Rename
-        # rubocop:disable Layout/LineLength
-
         # Renames multiple fields at once, given a fieldmap where key
         #   is `from` field and value is `to` field
         #
@@ -33,15 +31,14 @@ module Kiba
         #   result = Kiba::StreamingRunner.transform_stream(input, xform)
         #     .map{ |row| row }
         #   expected = [
-        #     {appellation: "Weddy", gender: "m", color: "pearl gray, greater, pied"},
+        #     {appellation: "Weddy", gender: "m",
+        #       color: "pearl gray, greater, pied"},
         #     {appellation: "Kernel", gender: "f", color: "buff dundotte"},
         #   ]
         #   expect(result).to eq(expected)
         #
-        #
         # @since 2.8.0
         class Fields
-          # rubocop:enable Layout/LineLength
           # @param fieldmap [Hash(Symbol => Symbol)] Keys are the `from` fields;
           #   values are the `to` fields
           def initialize(fieldmap:)
