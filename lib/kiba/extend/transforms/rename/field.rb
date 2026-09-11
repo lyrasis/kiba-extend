@@ -9,6 +9,7 @@ module Kiba
         # Renames one field
         #
         # ## Example notes
+        #
         # ### 1 - :from field exists
         #
         # :from field renamed to :to field. Not much to see here.
