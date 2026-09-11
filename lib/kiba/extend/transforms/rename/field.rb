@@ -4,8 +4,6 @@ module Kiba
   module Extend
     module Transforms
       module Rename
-        # rubocop:disable Layout/LineLength
-
         # Renames one field
         #
         # ## Example notes
@@ -72,7 +70,8 @@ module Kiba
         #     {name: "Weddy", gender: "m"}
         #   ]
         #   expect(xform.send(:single_warnings)).to include(
-        #     "Renaming `sex` to `gender` overwrites existing `gender` field data"
+        #     "Renaming `sex` to `gender` overwrites existing `gender`"\
+        #     "field data"
         #   )
         #   expect(result).to eq(expected)
         #
@@ -116,7 +115,6 @@ module Kiba
         #     {name: "Weddy", gender: "unknown"}
         #   ]
         #   expect(result).to eq(expected)
-        # rubocop:enable Layout/LineLength
         class Field
           include SingleWarnable
 
