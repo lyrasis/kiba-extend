@@ -10,6 +10,7 @@ module Kiba
 
         # @param key [Symbol, String] registry key for job, i.e.
         #   prep__loan_purposes
+        # @return [Kiba::Extend::Jobs::BaseJob] or child class
         def job(key)
           run_job(key)
         end
