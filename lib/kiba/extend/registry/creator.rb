@@ -85,7 +85,9 @@ module Kiba
 
         def setup_module_spec(using = spec)
           default_job_method = Kiba::Extend.default_job_method_name
-          unless using.private_method_defined?(default_job_method)
+
+          if !using.respond_to?(default_job_method) &&
+              !using.private_method_defined?(default_job_method)
             raise JoblessModuleCreatorError.new(using)
           end
 
