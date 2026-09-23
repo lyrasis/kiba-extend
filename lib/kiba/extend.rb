@@ -60,9 +60,7 @@ module Kiba
         Gem.loaded_specs["kiba-extend"].full_gem_path
       end
 
-    def loader
-      @loader ||= setup_loader
-    end
+    def loader = @loader ||= setup_loader
 
     private def setup_loader
       @loader = Zeitwerk::Loader.new
@@ -82,9 +80,7 @@ module Kiba
       @loader
     end
 
-    def reload!
-      @loader.reload
-    end
+    def reload! = @loader.reload
 
     # Ruby modules that serve as namespaces under which config
     #   modules for a project are nested.
