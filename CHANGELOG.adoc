@@ -53,6 +53,9 @@ https://github.com/lyrasis/kiba-extend/pull/278[PR#278]
 https://github.com/lyrasis/kiba-extend/pull/278[PR#278]
 * `XmlDir` https://lyrasis.github.io/kiba-extend/Kiba/Extend/Sources/XmlDir.html[Source] and https://lyrasis.github.io/kiba-extend/Kiba/Extend/Destinations/XmlDir.html[Destination], and https://lyrasis.github.io/kiba-extend/Kiba/Extend/Jobs/XmlJob.html[`XmlJob`]
 https://github.com/lyrasis/kiba-extend/pull/288[PR#288]
+* Add warning suppression params to `Rename::Field` and `Rename::Fields` transforms
+https://github.com/lyrasis/kiba-extend/pull/290[PR#290]
+
 === Bugfixes
 
 === Changed
