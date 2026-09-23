@@ -96,8 +96,8 @@ module Kiba
     # Default options used for CSV sources/destinations
     # @return [Hash]
     setting :csvopts,
-      default: {headers: true, header_converters: %i[symbol downcase]},
-      reader: true
+      reader: true,
+      default: {headers: true, header_converters: %i[symbol downcase]}
 
     # Default options used for XML parsing. The options have to be
     #   an int bitmask to satisfy Nokogiri's expectations. (They're
@@ -112,13 +112,13 @@ module Kiba
     #   if you override this setting!
     # @return [Integer]
     setting :xmlopts,
-      default: Nokogiri::XML::ParseOptions::DEFAULT_XML,
-      reader: true
+      reader: true,
+      default: Nokogiri::XML::ParseOptions::DEFAULT_XML
 
-    setting :lambdaopts, default: {on_write: ->(r) {
-      accumulator << r
-    }}, reader: true
     # @return [Hash] Default settings for Lambda destination
+    setting :lambdaopts,
+      reader: true,
+      default: {on_write: ->(r) { accumulator << r }}
 
     # @return [String]
     # Default delimiter for splitting/joining values in multi-valued fields.
@@ -137,39 +137,42 @@ module Kiba
     #   delim_split = orig.split(Kiba::Extend.delim)
     #   sgdelim_split = delim_split.map{ |val| val.split(Kiba::Extend.sgdelim) }
     #   sgdelim_split => [["a", "y"], ["b", "z"]]
-    setting :sgdelim, default: "^^", reader: true
+    setting :sgdelim, reader: true, default: "^^"
 
-    setting :nullvalue, default: "%NULLVALUE%", reader: true
     # @return [String] Default string to be treated as though it were a
     #   null/empty value.
+    setting :nullvalue, reader: true, default: "%NULLVALUE%"
 
     # @return [String] Used to join nested namespaces and registered keys in
     #   FileRegistry. With namespace 'ns' and registered key 'foo':
     #   'ns\__foo'. With parent namespace 'ns', child namespace
     #   'child', and registered key 'foo': 'ns\__child\__foo'
-    setting :registry_namespace_separator, default: "__", reader: true
+    setting :registry_namespace_separator, reader: true, default: "__"
 
-    setting :source, constructor: proc {
-      Kiba::Extend::Sources::CSV
-    }, reader: true
     # @return [Class] Default source class for jobs; Must meet implementation
     #   criteria in [Kiba wiki](https://github.com/thbar/kiba/wiki/Implementing-ETL-sources)
+    setting :source,
+      reader: true,
+      default: nil,
+      constructor: ->(_default) { Kiba::Extend::Sources::CSV }
 
-    setting :destination, constructor: proc {
-      Kiba::Extend::Destinations::CSV
-    }, reader: true
     # @return [Class] Default destination class for jobs. Must meet
     # implementation criteria in [Kiba wiki](https://github.com/thbar/kiba/wiki/Implementing-ETL-destinations)
+    setting :destination,
+      reader: true,
+      default: nil,
+      constructor: ->(_default) { Kiba::Extend::Destinations::CSV }
 
-    setting :warning_label, default: "KIBA WARNING", reader: true
     # @return [String] Prefix for warnings from the ETL
+    setting :warning_label, reader: true, default: "KIBA WARNING"
 
     # @return [Kiba::Extend::Registry::FileRegistry] Customized
     #   [dry-container](https://hanakai.org/learn/dry/dry-container)
     #   for registering and resolving jobs
     setting :registry,
-      constructor: proc { Kiba::Extend::Registry::FileRegistry.new },
-      reader: true
+      reader: true,
+      default: nil,
+      constructor: ->(_default) { Kiba::Extend::Registry::FileRegistry.new }
 
     # Rebuilds registry after changes have been made to the project that impact
     #   dynamic job registration. This is especially useful for automated tests
@@ -186,23 +189,23 @@ module Kiba
     # @return [Symbol] job definition module method expected to be present if
     #   you [define a registry entry hash creator as a
     #   Module](https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html#module-creator-example-since-2-7-2)
-    setting :default_job_method_name, default: :job, reader: true
+    setting :default_job_method_name, reader: true, default: :job
 
-    setting :pre_job_task_run, default: false, reader: true
-
-    setting :pre_job_task_backup_dir, default: nil, reader: true
-
-    setting :pre_job_task_directories, default: [], reader: true
     # @return [Boolean] Whether to use Kiba::Extend's pre-job task
     #   functionality. The default is `false` for backward
     #   compatibility, as existing projects may not have the required
     #   settings configured.
+    setting :pre_job_task_run, reader: true, default: false
+
     # @return [String] Full path to directory to which files will be
     #   moved if {pre_job_task_action} is `:backup`. The directory will
     #   be created if it does not exist. Does not need to be set unless
     #   {pre_job_task_action} is `:backup`
+    setting :pre_job_task_backup_dir, reader: true, default: nil
+
     # @return [Array<String>] Full paths to directories that will be
     #   affected by the specified pre-task action
+    setting :pre_job_task_directories, reader: true, default: []
 
     # Controls what happens when pre-job task is run
     #
@@ -217,25 +220,25 @@ module Kiba
     #   with this one, you could delete most of your system. TREAD WITH
     #   CAUTION.**
     # @return [:backup, :nuke, :recursive_nuke]
-    setting :pre_job_task_action, default: :backup, reader: true
-
-    setting :pre_job_task_mode, default: :job, reader: true
-
-    setting :job_show_me, default: false, reader: true
+    setting :pre_job_task_action, reader: true, default: :nuke
 
     # Controls when {pre_job_task_action} is run; Has no effect unless
     #   {pre_job_task_run} is `true`
     #
-    setting :job_tell_me, default: false, reader: true
     # - :job - runs specified {pre_job_task_action} when you invoke
     #   `thor run:job ...` or any other command that runs jobs.
     # - any other value - {pre_job_task_action} will not run. This setting is
     #   set up in this fairly odd way to accommodate future situations in
     #   which {pre_job_task_action} should be run
     # @return [:job, nil, Symbol]
+    setting :pre_job_task_mode, reader: true, default: :job
+
     # @return [Boolean] Whether to output results to STDOUT for debugging
+    setting :job_show_me, reader: true, default: false
+
     # @return [Boolean] Whether to have computer audibly say something when job
     #   is complete
+    setting :job_tell_me, reader: true, default: false
 
     # How much output about jobs to output to STDOUT
     #
@@ -246,7 +249,7 @@ module Kiba
     # - :normal - reports what is running, from where, and the results
     # - :minimal - bare minimum
     # @return [:debug, :verbose, :normal, :minimal]
-    setting :job_verbosity, default: :normal, reader: true
+    setting :job_verbosity, reader: true, default: :normal
 
     # @return [Boolean] whether {job_verbosity} is set to a value that
     #   is considered verbose
