@@ -280,6 +280,10 @@ module Kiba
     # @return [:debug, :verbose, :normal, :minimal]
     setting :job_verbosity, default: :normal, reader: true
 
+    # @return [Boolean] whether {job_verbosity} is set to a value that
+    #   is considered verbose
+    def verbose? = %i[verbose debug].include?(job_verbosity)
+
     # List of config modules in project namespaces set in {config_namespaces}
     #   setting
     #
