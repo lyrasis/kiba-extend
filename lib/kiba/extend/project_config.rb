@@ -11,14 +11,7 @@ module Kiba
 
       extend Dry::Configurable
 
-      # Path to directory in which Mermaid .mmd files and generated
-      #   image files will be stored. If not populated,
-      # @return [String, NilClass]
-      setting :graph_dir, reader: true, default: nil
-
-      setting :mermaid_config_path,
-        reader: true,
-        default: nil
+      # @!group Data modification
 
       # Configuration for making and reversing global replacements in your
       #   project via the {Transforms::Replace::GlobalReversible} and
@@ -48,6 +41,26 @@ module Kiba
       setting :global_reversible_replacements,
         reader: true,
         default: {}
+
+      # @!endgroup
+      # @!group Mermaid job graph generation
+
+      # Path to directory in which Mermaid .mmd files and generated
+      #   image files will be stored. If not populated,
+      # @return [String, NilClass]
+      setting :graph_dir, reader: true, default: nil
+
+      # @return [nil, String] path to project-specific JSON mermaid config, if
+      #   defaults are not working for you
+      # @example Use in project, assuming file is in top level of project repo
+      #   Kiba::Extend::ProjectConfig.config.mermaid_config_path = File.join(
+      #     Bundler.root, "mmd_config.json"
+      #   )
+      setting :mermaid_config_path,
+        reader: true,
+        default: nil
+
+      # @!endgroup
     end
   end
 end
