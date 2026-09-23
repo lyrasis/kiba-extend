@@ -62,7 +62,7 @@ module Kiba
 
     def loader = @loader ||= setup_loader
 
-    private def setup_loader
+    def setup_loader
       @loader = Zeitwerk::Loader.new
       @loader.push_dir(
         File.join(ke_dir, "lib", "kiba", "extend"),
@@ -79,6 +79,7 @@ module Kiba
       @loader.eager_load
       @loader
     end
+    private_class_method :setup_loader
 
     def reload! = @loader.reload
 
