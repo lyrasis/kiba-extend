@@ -41,10 +41,19 @@ module Kiba
         class Fields
           # @param fieldmap [Hash(Symbol => Symbol)] Keys are the `from` fields;
           #   values are the `to` fields
-          def initialize(fieldmap:)
+          # @param suppress_missing_key_warnings [Boolean]
+          # @param suppress_overwrite_warnings [Boolean]
+          def initialize(fieldmap:,
+            suppress_missing_key_warnings: false,
+            suppress_overwrite_warnings: false)
             @fieldmap = fieldmap
             @renamers = fieldmap.map do |from, to|
-              Rename::Field.new(from: from, to: to)
+              Rename::Field.new(
+                from: from,
+                to: to,
+                suppress_missing_key_warnings: suppress_missing_key_warnings,
+                suppress_overwrite_warnings: suppress_overwrite_warnings
+              )
             end
           end
 
