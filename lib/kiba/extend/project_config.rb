@@ -43,6 +43,19 @@ module Kiba
         default: {}
 
       # @!endgroup
+
+      # @!group Job tracking/handling
+
+      # This setting supports protection against errors due to unexpected empty
+      #   job output or missing tables.
+      # @note It is NOT recommended that you set this manually. Generally, it
+      #   should only be populated by project code or Kiba::Extend itself, in
+      #   the course of running jobs or other commands.
+      # @return [Array] jobs run which did not write any output
+      setting :blank_jobs, default: %i[], reader: true
+
+      # @!endgroup
+
       # @!group Mermaid job graph generation
 
       # Path to directory in which Mermaid .mmd files and generated
