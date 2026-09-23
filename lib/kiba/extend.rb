@@ -284,6 +284,9 @@ module Kiba
     #   is considered verbose
     def verbose? = %i[verbose debug].include?(job_verbosity)
 
+    # @return [Boolean] whether {job_verbosity} is set to :debug
+    def debug? = job_verbosity == :debug
+
     # List of config modules in project namespaces set in {config_namespaces}
     #   setting
     #
