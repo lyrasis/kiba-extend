@@ -60,6 +60,7 @@ module Kiba
         Gem.loaded_specs["kiba-extend"].full_gem_path
       end
 
+    # @return [Zeitwerk::Loader]
     def loader = @loader ||= setup_loader
 
     def setup_loader
@@ -93,7 +94,6 @@ module Kiba
     setting :config_namespaces, default: [], reader: true
 
     # Default options used for CSV sources/destinations
-    #
     # @return [Hash]
     setting :csvopts,
       default: {headers: true, header_converters: %i[symbol downcase]},
@@ -115,74 +115,58 @@ module Kiba
       default: Nokogiri::XML::ParseOptions::DEFAULT_XML,
       reader: true
 
-    # Default settings for Lambda destination
-    # @return [Hash]
     setting :lambdaopts, default: {on_write: ->(r) {
       accumulator << r
     }}, reader: true
+    # @return [Hash] Default settings for Lambda destination
 
     # @return [String]
     # Default delimiter for splitting/joining values in multi-valued fields.
     #
-    # ~~~
-    # 'a|b'.split(Kiba::Extend.delim) => ['a', 'b']
-    # ~~~
-    setting :delim, default: "|", reader: true
+    # @example
+    #   Kiba::Extend.config.delim = "|"
+    #   "a|b".split(Kiba::Extend.delim) => ["a", "b"]
+    setting :delim, reader: true, default: "|"
 
-    # Default subgrouping delimiter for splitting/joining values in multi-valued
-    #   fields
-    #
-    # ~~~
-    # orig = 'a^^y|b^^z'
-    # delim_split = orig.split(delim)
-    # sgdelim_split = delim_split.map{ |val| val.split(sgdelim) }
-    # sgdelim_split => [['a', 'y'], ['b', 'z']]
-    # ~~~
-    #
-    # @return [String]
+    # @return [String] Default subgrouping delimiter for splitting/joining
+    #   values in multi-valued fields
+    # @example
+    #   Kiba::Extend.config.delim = "|"
+    #   Kiba::Extend.config.sgdelim = "^^"
+    #   orig = "a^^y|b^^z"
+    #   delim_split = orig.split(Kiba::Extend.delim)
+    #   sgdelim_split = delim_split.map{ |val| val.split(Kiba::Extend.sgdelim) }
+    #   sgdelim_split => [["a", "y"], ["b", "z"]]
     setting :sgdelim, default: "^^", reader: true
 
-    # Default string to be treated as though it were a null/empty value.
-    #
-    # @return [String]
     setting :nullvalue, default: "%NULLVALUE%", reader: true
+    # @return [String] Default string to be treated as though it were a
+    #   null/empty value.
 
-    # Used to join nested namespaces and registered keys in
+    # @return [String] Used to join nested namespaces and registered keys in
     #   FileRegistry. With namespace 'ns' and registered key 'foo':
     #   'ns\__foo'. With parent namespace 'ns', child namespace
     #   'child', and registered key 'foo': 'ns\__child\__foo'
-    #
-    # @return [String]
     setting :registry_namespace_separator, default: "__", reader: true
 
-    # Default source class for jobs. Must meet implementation criteria
-    # in [Kiba
-    # wiki](https://github.com/thbar/kiba/wiki/Implementing-ETL-sources)
-    #
-    # @return [Class]
     setting :source, constructor: proc {
       Kiba::Extend::Sources::CSV
     }, reader: true
+    # @return [Class] Default source class for jobs; Must meet implementation
+    #   criteria in [Kiba wiki](https://github.com/thbar/kiba/wiki/Implementing-ETL-sources)
 
-    # Default destination class for jobs. Must meet implementation
-    # criteria in [Kiba
-    # wiki](https://github.com/thbar/kiba/wiki/Implementing-ETL-destinations)
-    #
-    # @return [Class]
     setting :destination, constructor: proc {
       Kiba::Extend::Destinations::CSV
     }, reader: true
+    # @return [Class] Default destination class for jobs. Must meet
+    # implementation criteria in [Kiba wiki](https://github.com/thbar/kiba/wiki/Implementing-ETL-destinations)
 
-    # Prefix for warnings from the ETL
-    #
-    # @return [String]
     setting :warning_label, default: "KIBA WARNING", reader: true
+    # @return [String] Prefix for warnings from the ETL
 
-    # A customized
-    #   [dry-container](https://dry-rb.org/gems/dry-container/main/)
+    # @return [Kiba::Extend::Registry::FileRegistry] Customized
+    #   [dry-container](https://hanakai.org/learn/dry/dry-container)
     #   for registering and resolving jobs
-    #
-    # @return [Kiba::Extend::Registry::FileRegistry]
     setting :registry,
       constructor: proc { Kiba::Extend::Registry::FileRegistry.new },
       reader: true
@@ -199,71 +183,59 @@ module Kiba
       end
     end
 
-    # The job definition module method expected to be present if you
-    #   [define a registry entry hash creator as a
+    # @return [Symbol] job definition module method expected to be present if
+    #   you [define a registry entry hash creator as a
     #   Module](https://lyrasis.github.io/kiba-extend/file.file_registry_entry.html#module-creator-example-since-2-7-2)
-    #
-    # @return [Symbol]
     setting :default_job_method_name, default: :job, reader: true
 
-    # Whether to use Kiba::Extend's pre-job task functionality. The
-    #   default is `false` for backward compatibility, as existing
-    #   projects may not have the required settings configured.
-    #
-    # @return [Boolean]
     setting :pre_job_task_run, default: false, reader: true
 
-    # Full path to directory to which files will be moved if
-    #   `pre_job_task_action == :backup`. The directory will be
-    #   created if it does not exist.
-    #
-    # @return [String]
     setting :pre_job_task_backup_dir, default: nil, reader: true
 
-    # Full paths to directories that will be affected by the specified pre-task
-    #   action
-    # @return [Array<String>]
     setting :pre_job_task_directories, default: [], reader: true
+    # @return [Boolean] Whether to use Kiba::Extend's pre-job task
+    #   functionality. The default is `false` for backward
+    #   compatibility, as existing projects may not have the required
+    #   settings configured.
+    # @return [String] Full path to directory to which files will be
+    #   moved if {pre_job_task_action} is `:backup`. The directory will
+    #   be created if it does not exist. Does not need to be set unless
+    #   {pre_job_task_action} is `:backup`
+    # @return [Array<String>] Full paths to directories that will be
+    #   affected by the specified pre-task action
 
     # Controls what happens when pre-job task is run
     #
     # - :backup - Moves all existing files in specified directories to backup
-    #   directory created in your `:datadir`
+    #   directory specified in {pre_job_task_backup_dir}
     # - :nuke - Deletes all existing files in specified directories
-    #    when a job is run. **Make sure you only specify directories
-    #    that contain derived/generated files!**
+    #    when a job is run. **Make sure you only specify
+    #    {pre_job_task_directories} that contain derived/generated files!**
     # - :recursive_nuke - Deletes all existing files and subdirectories (and
     #   their files), RECURSIVELY when a job is run. **The warning for the
     #   `:nuke` options holds 27x more strongly here. If you were creative
     #   with this one, you could delete most of your system. TREAD WITH
     #   CAUTION.**
-    #
     # @return [:backup, :nuke, :recursive_nuke]
     setting :pre_job_task_action, default: :backup, reader: true
 
-    # Controls whether pre-job task is run
-    #
-    # - :job - runs pre-job task specified above whenever you invoke
-    #   `thor run:job ...`. All dependency jobs required for the
-    #   invoked job will be run. This mode is recommended during
-    #   development when you want any change in the dependency chain
-    #   to get picked up.
-    # - any other value - only regenerates missing dependency files.
-    #   Useful when your data is really big and/or your jobs are more
-    #   stable
-    #
-    # @return [:job, nil, anyValue]
     setting :pre_job_task_mode, default: :job, reader: true
 
-    # Whether to output results to STDOUT for debugging
-    #
-    # @return [Boolean]
     setting :job_show_me, default: false, reader: true
 
-    # Whether to have computer audibly say something when job is complete
+    # Controls when {pre_job_task_action} is run; Has no effect unless
+    #   {pre_job_task_run} is `true`
     #
-    # @return [Boolean]
     setting :job_tell_me, default: false, reader: true
+    # - :job - runs specified {pre_job_task_action} when you invoke
+    #   `thor run:job ...` or any other command that runs jobs.
+    # - any other value - {pre_job_task_action} will not run. This setting is
+    #   set up in this fairly odd way to accommodate future situations in
+    #   which {pre_job_task_action} should be run
+    # @return [:job, nil, Symbol]
+    # @return [Boolean] Whether to output results to STDOUT for debugging
+    # @return [Boolean] Whether to have computer audibly say something when job
+    #   is complete
 
     # How much output about jobs to output to STDOUT
     #
@@ -273,7 +245,6 @@ module Kiba
     #   results
     # - :normal - reports what is running, from where, and the results
     # - :minimal - bare minimum
-    #
     # @return [:debug, :verbose, :normal, :minimal]
     setting :job_verbosity, default: :normal, reader: true
 
@@ -284,11 +255,9 @@ module Kiba
     # @return [Boolean] whether {job_verbosity} is set to :debug
     def debug? = job_verbosity == :debug
 
-    # List of config modules in project namespaces set in {config_namespaces}
-    #   setting
-    #
     # @since 4.0.0
-    # @return [Array<Module>]
+    # @return [Array<Module>] config modules in project namespaces set in
+    #   {config_namespaces} setting
     def project_configs
       config_namespaces.map { |ns| get_config_mods(ns, ns.constants) }
         .flatten
@@ -358,6 +327,8 @@ module Kiba
   end
 end
 
+# Handle code loading
 Kiba::Extend.loader
-# So we can call Kiba.job_segment
+
+# Add `.job_segment` method to `Kiba`
 Kiba.extend(Kiba::Extend::Jobs::JobSegmentable)
