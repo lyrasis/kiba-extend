@@ -35,6 +35,16 @@ For example, if the release version/tag is `3.2.1`, and PR# 107 is merged withou
 
 === Breaking
 
+*  `Kiba::Extend::Job.output_fields` returns empty Array instead of `nil` when there is no job output.
+The reason for this change is that it good practice to return values with the same method signatures so that code using this method doesn't always have to account for the type of returned value.
+Code that does specific things based on "nil-ness" of this value will no longer work as expected, so, for now, a warning is emitted when an empty array is returned.
+Code should not start throwing exceptions because of this change, since code expecting an array of field values will not crash when receiving an empty array.
+https://github.com/lyrasis/kiba-extend/pull/291[PR#291]
+* `Kiba::Extend.warning_label` now includes colon suffix.
+Does not affect code functionality, but may produce visual annoyance.
+This should be easily remedied with global project find/replace.
+https://github.com/lyrasis/kiba-extend/pull/291[PR#291]
+
 === Added
 
 * `DynamicSource` registry entry type
@@ -55,11 +65,23 @@ https://github.com/lyrasis/kiba-extend/pull/278[PR#278]
 https://github.com/lyrasis/kiba-extend/pull/288[PR#288]
 * Add warning suppression params to `Rename::Field` and `Rename::Fields` transforms
 https://github.com/lyrasis/kiba-extend/pull/290[PR#290]
+* *Support for handling blank jobs (i.e. jobs that emit no output).*
+This includes a new https://lyrasis.github.io/kiba-extend/Kiba/Extend/ProjectConfig#blank_jobs-class_method[`Kiba::Extend::ProjectConfig.blank_jobs`] setting.
+https://lyrasis.github.io/kiba-extend/Kiba/Extend/Job#output%3F-class_method[`Kiba::Extend::Job.output?`] pushes jobs with no output to this setting.
+Client projects can also push jobs to the setting.
+https://lyrasis.github.io/kiba-extend/Kiba/Extend/Job#output%3F-class_method[`Kiba::Extend::Job.output?`] and https://lyrasis.github.io/kiba-extend/Kiba/Extend/Job#output_fields-class_method[`Kiba::Extend::Job.output_fields`] both check the `blank_jobs` value first and return accordingly
+https://github.com/lyrasis/kiba-extend/pull/291[PR#291]
+* https://lyrasis.github.io/kiba-extend/Kiba/Extend/Warnable#warn-instance_method[`Kiba::Extend.warn`] method
+https://github.com/lyrasis/kiba-extend/pull/291[PR#291]
 
 === Bugfixes
 
 === Changed
 
+* `Kiba::Extend.warning_label` now includes colon suffix
+https://github.com/lyrasis/kiba-extend/pull/291[PR#291]
+*  `Kiba::Extend::Job.output_fields` returns empty Array instead of `nil` when there is no job output.
+https://github.com/lyrasis/kiba-extend/pull/291[PR#291]
 === Deleted
 
 === Deprecated/Will break in a future version
@@ -69,6 +91,8 @@ https://github.com/lyrasis/kiba-extend/pull/290[PR#290]
 * Extract no-initial data conversion job logic to https://lyrasis.github.io/kiba-extend/Kiba/Extend/Jobs/AbstractNoInitialDataConversionJob.html[`AbstractNoInitialDataConversionJob`], subclassing https://lyrasis.github.io/kiba-extend/Kiba/Extend/Jobs/MarcJob.html[`MarcJob`] and https://lyrasis.github.io/kiba-extend/Kiba/Extend/Jobs/XmlJob.html[`XmlJob`] to this for clarity when used in projects
 https://github.com/lyrasis/kiba-extend/pull/288[PR#288]
 * Add two `MarcJob` tests demonstrating the limitations of interaction between Job classes and Sources/Transforms/Destinations
+* https://lyrasis.github.io/kiba-extend/Kiba/Extend/Registry/Creator[Kiba::Extend::Registry::Creator]'s private `setup_module_spec` method now recognizes job methods that are mixed into job definition modules
+https://github.com/lyrasis/kiba-extend/pull/291[PR#291]
 
 == Releases
 
