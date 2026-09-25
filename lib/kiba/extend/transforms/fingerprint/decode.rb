@@ -131,11 +131,9 @@ module Kiba
             result_length = fieldvals.length
             return if result_length == num_fields
 
-            warn(
-              "#{Kiba::Extend.warning_label} ROW #{@row_ct}: Expected "\
-                "#{num_fields} fields from decoded fingerprint. Got "\
-                "#{result_length}"
-            )
+            msg = " ROW #{@row_ct}: Expected #{num_fields} fields from "\
+              "decoded fingerprint. Got #{result_length}"
+            warn(Kiba::Extend.warn(msg))
           end
 
           def safe_decoded_value(val)

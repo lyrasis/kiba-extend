@@ -62,10 +62,16 @@ module Kiba
           #   `keepfields` is provided
           def initialize(keepfields: nil, fields: nil)
             if keepfields && fields
-              puts %(#{Kiba::Extend.warning_label} Do not use both `keepfields` and `fields`. Defaulting to process using `fields`)
+              puts Kiba::Extend.warn(
+                "Do not use both `keepfields` and `fields`. Defaulting to "\
+                  "process using `fields`"
+              )
               @fields = [fields].flatten
             elsif keepfields
-              puts %(#{Kiba::Extend.warning_label} The `keepfields` keyword is being deprecated in a future version. Change it to `fields` in your ETL code.)
+              puts Kiba::Extend.warn(
+                "The `keepfields` keyword is being deprecated in a future "\
+                  "version. Change it to `fields` in your ETL code."
+              )
               @fields = [keepfields].flatten
             elsif fields
               @fields = [fields].flatten

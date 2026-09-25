@@ -27,7 +27,7 @@ module Kiba
           return if @single_warnings.key?(warning)
 
           @single_warnings[warning] = nil
-          warn("#{Kiba::Extend.warning_label} #{warning}")
+          warn(Kiba::Extend.warn(warning))
         end
         private_class_method :add_single_warning
 

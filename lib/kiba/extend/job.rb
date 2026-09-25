@@ -47,7 +47,7 @@ module Kiba
           reg = Kiba::Extend::Registry.entry_for(jobkey)
         rescue Kiba::Extend::JobNotRegisteredError => err
           if mode == :warn_if_unregistered
-            puts "#{Kiba::Extend.warning_label} #{err.message}"
+            puts Kiba::Extend.warn(err.message)
           end
           return false
         end

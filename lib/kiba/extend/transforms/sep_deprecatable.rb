@@ -40,18 +40,20 @@ module Kiba
           if delimval && !sepval
             delimval
           elsif !delimval && sepval
-            warn("#{Kiba::Extend.warning_label}\n"\
-                 "  #{calledby.class}: `sep` parameter will be "\
-                 "deprecated in a future release.\n"\
-                 "TO FIX:\n"\
-                 "  Change `sep` to `delim`")
+            msg = "  #{calledby.class}: `sep` parameter will be "\
+            "deprecated in a future release.\n"\
+              "TO FIX:\n"\
+              "  Change `sep` to `delim`"
+            warn(Kiba::Extend.warn(msg, ws: "\n"))
+
             sepval
           elsif delimval && sepval
-            warn("#{Kiba::Extend.warning_label}\n"\
-                 "  #{calledby.class}: `sep` and `delim` parameters "\
-                 "given. `delim` value used. `sep` value ignored. "\
-                 "`sep` will be deprecated in a future release.\n"\
-                 "TO FIX:\n  Remove `sep` param")
+            msg = "  #{calledby.class}: `sep` and `delim` parameters "\
+              "given. `delim` value used. `sep` value ignored. "\
+              "`sep` will be deprecated in a future release.\n"\
+              "TO FIX:\n  Remove `sep` param"
+            warn(Kiba::Extend.warn(msg, ws: "\n"))
+
             delimval
           else
             return default unless default == :none
