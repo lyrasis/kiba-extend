@@ -332,6 +332,7 @@ end
 
 # Handle code loading
 Kiba::Extend.loader
+Kiba::Extend.extend(Kiba::Extend::Warnable)
 
 # Add `.job_segment` method to `Kiba`
 Kiba.extend(Kiba::Extend::Jobs::JobSegmentable)
