@@ -41,6 +41,8 @@ module Kiba
       #   when run
       # @since 4.0.0
       def output?(jobkey, mode: :warn_if_unregistered)
+        return false if Kiba::Extend::ProjectConfig.blank_jobs.include?(jobkey)
+
         begin
           reg = Kiba::Extend::Registry.entry_for(jobkey)
         rescue Kiba::Extend::JobNotRegisteredError => err
@@ -52,9 +54,15 @@ module Kiba
         return true if File.exist?(reg.path)
 
         res = Kiba::Extend::Command::Run.job(jobkey)
-        return false unless res
+        unless res
+          Kiba::Extend::ProjectConfig.blank_jobs << jobkey
+          return false
+        end
 
-        !(res.outrows == 0)
+        return true if res.outrows > 0
+
+        Kiba::Extend::ProjectConfig.blank_jobs << jobkey
+        false
       end
 
       # @param jobkey [Symbol] registry entry for job with namespace

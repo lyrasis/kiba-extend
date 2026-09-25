@@ -73,11 +73,6 @@ RSpec.describe Kiba::Extend::Job do
     end
 
     context "when job file already exists" do
-      before(:context) do
-        Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry
-        prepare_registry
-      end
-      after(:context) { Kiba::Extend.reset_config }
       let(:key) { :foo }
 
       it "returns true" do
@@ -85,36 +80,33 @@ RSpec.describe Kiba::Extend::Job do
       end
     end
 
+    context "when job is recorded as blank_job" do
+      let(:key) { :foo }
+
+      it "returns false" do
+        Kiba::Extend::ProjectConfig.blank_jobs << :foo
+        expect(result).to be false
+        Kiba::Extend::ProjectConfig.config.blank_jobs = []
+      end
+    end
+
     context "when job file does not exist" do
-      before(:each) do
-        Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry
-        prepare_registry
+      let(:key) { :noresultfile }
+
+      it "returns false" do
+        expect(result).to be false
       end
-      after(:each) { Kiba::Extend.reset_config }
+    end
 
-      context "when job output is 0 rows" do
-        let(:key) { :noresultfile }
+    context "when job output has rows" do
+      let(:key) { :resultfile }
 
-        it "returns false" do
-          expect(result).to be false
-        end
-      end
-
-      context "when job output has rows" do
-        let(:key) { :resultfile }
-
-        it "returns true" do
-          expect(result).to be true
-        end
+      it "returns true" do
+        expect(result).to be true
       end
     end
 
     context "when job has JSON destination" do
-      before(:context) do
-        Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry
-        prepare_registry
-      end
-      after(:context) { Kiba::Extend.reset_config }
       let(:key) { :json_arr }
 
       it "returns true" do
@@ -125,28 +117,17 @@ RSpec.describe Kiba::Extend::Job do
 
   describe ".registered?" do
     let(:result) { Kiba::Extend::Job.registered?(key) }
+    let(:key) { :foo__bar }
 
-    context "when key not registered" do
-      let(:key) { :foo__bar }
-
-      it "returns false" do
-        expect(result).to be false
-      end
+    it "returns false when key not registered" do
+      expect(result).to be false
     end
 
     context "when job file does not exist" do
-      before(:each) do
-        Kiba::Extend.config.registry = Kiba::Extend::Registry::FileRegistry
-        prepare_registry
-      end
-      after(:each) { Kiba::Extend.reset_config }
+      let(:key) { :noresultfile }
 
-      context "when job output is 0 rows" do
-        let(:key) { :noresultfile }
-
-        it "returns true" do
-          expect(result).to be true
-        end
+      it "returns true" do
+        expect(result).to be true
       end
     end
   end
