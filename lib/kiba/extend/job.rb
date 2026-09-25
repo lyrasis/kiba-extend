@@ -7,12 +7,19 @@ module Kiba
       module_function
 
       # @param jobkey [Symbol] registry entry for job with namespace
-      # @return [nil, Array<Symbol>] headers/fields for given job output
+      # @return [Array<Symbol>] headers/fields for given job output
       # @note Only works for CSV and JsonArray destinations. For JsonArray, only
       #   returns the top-level fields of the objects/rows in the output.
       # @since 5.1.0
-      def output_fields(jobkey)
-        return unless output?(jobkey)
+      def output_fields(jobkey, suppress_warnings: false)
+        unless output?(jobkey)
+          msg = "Kiba::Extend::Job.output_fields(#{jobkey}) is returning an "\
+            "empty Array instead of nil because #{jobkey} has no output. "\
+            "This is a recent change in this method's behavior, so make "\
+            "sure your code is still behaving as expected"
+          warn(Kiba::Extend.warn(msg)) unless suppress_warnings
+          return []
+        end
 
         entry = Kiba::Extend::Registry.entry_for(jobkey)
         path = Pathname.new(entry.path)
