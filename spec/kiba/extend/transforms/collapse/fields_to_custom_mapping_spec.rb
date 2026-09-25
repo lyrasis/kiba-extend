@@ -106,7 +106,7 @@ RSpec.describe Kiba::Extend::Transforms::Collapse::FieldsWithCustomFieldmap do
 
     it "combines present source fields and warns" do
       # rubocop:todo Layout/LineLength
-      msg = "#{Kiba::Extend.warning_label}: Source field `a` missing; treating as nil value"
+      msg = "#{Kiba::Extend.warning_label} Source field `a` missing; treating as nil value"
       # rubocop:enable Layout/LineLength
       expect(xform).to receive(:warn).with(msg)
       expect(result).to eq(expected)

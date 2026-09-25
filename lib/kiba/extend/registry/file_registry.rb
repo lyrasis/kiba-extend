@@ -106,7 +106,7 @@ module Kiba
         #   the FileRegistry.
         def replace_entry_x_with_entry_y(x:, y:)
           if @frozen
-            return self && warn("#{Kiba::Extend.warning_label}: Cannot modify "\
+            return self && warn("#{Kiba::Extend.warning_label} Cannot modify "\
                                 "frozen registry (replace #{x} with #{y})")
           end
 
@@ -181,7 +181,7 @@ module Kiba
           end.compact.uniq.each do |file|
             next if file.exist?
 
-            puts "#{Kiba::Extend.warning_label}: Missing supplied "\
+            puts "#{Kiba::Extend.warning_label} Missing supplied "\
               "file: #{file}"
           end
         end

@@ -37,7 +37,7 @@ RSpec.describe Kiba::Extend::Transforms::MultivalPlusDelimDeprecatable do
   context "with multival: true" do
     let(:params) { {multival: true} }
     let(:body) { "#{Warner.new.send(:warning_body)}\n" }
-    let(:warning) { "#{Kiba::Extend.warning_label}:\n  Xform: #{body}" }
+    let(:warning) { "#{Kiba::Extend.warning_label}\n  Xform: #{body}" }
 
     it "returns expected" do
       expect(mod.multival).to be true
@@ -51,7 +51,7 @@ RSpec.describe Kiba::Extend::Transforms::MultivalPlusDelimDeprecatable do
   context "with multival: false" do
     let(:params) { {multival: false} }
     let(:body) { "#{Warner.new.send(:warning_body)}\n" }
-    let(:warning) { "#{Kiba::Extend.warning_label}:\n  Xform: #{body}" }
+    let(:warning) { "#{Kiba::Extend.warning_label}\n  Xform: #{body}" }
 
     it "returns expected" do
       expect(mod.multival).to be false

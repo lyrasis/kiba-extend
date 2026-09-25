@@ -63,7 +63,7 @@ module Kiba
             uneven = chk_result.map do |field, val|
               "#{field}: #{val}"
             end.join("; ")
-            msg = "#{Kiba::Extend.warning_label}: Uneven values for "\
+            msg = "#{Kiba::Extend.warning_label} Uneven values for "\
               "#{fields.join("/")} in #{uneven}"
             warn(msg)
             row
