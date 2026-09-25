@@ -47,8 +47,10 @@ module Kiba
           if omitted
             multival_default
           else
-            warn("#{Kiba::Extend.warning_label}\n"\
-                 "  #{calledby.class}: #{warning_body}")
+            warn(Kiba::Extend.warn(
+              "  #{calledby.class}: #{warning_body}",
+              ws: "\n"
+            ))
             multival
           end
         end

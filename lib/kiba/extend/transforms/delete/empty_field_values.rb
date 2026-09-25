@@ -85,12 +85,12 @@ module Kiba
             @usenull = usenull
             @omit_from_all_fields = omit_from_all_fields
             if sep && delim
-              puts "#{Kiba::Extend.warning_label} Do not use both `sep` "\
-                "and `delim`. Prefer `delim`"
+              msg = "Do not use both `sep` and `delim`. Prefer `delim`"
+              puts Kiba::Extend.warn(msg)
             elsif sep
-              puts "#{Kiba::Extend.warning_label} The `sep` keyword is being "\
-                "deprecated in a future version. Change it to `delim` in "\
-                "your ETL code."
+              msg = "The `sep` keyword is being deprecated in a future "\
+                "version. Change it to `delim` in your ETL code."
+              puts Kiba::Extend.warn(msg)
               @delim = sep
             else
               @delim = delim || Kiba::Extend.delim
