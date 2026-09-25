@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-# rubocop:todo Layout/LineLength
-
 module Kiba
   module Extend
     module Transforms
@@ -48,16 +46,20 @@ module Kiba
         #
         class FieldsExcept
           class MissingKeywordArgumentError < ArgumentError
-            MSG = "You must call with `fields` or `keepfields`. `fields` is preferred."
+            MSG = "You must call with `fields` or `keepfields`. `fields` is "\
+              "preferred."
             def initialize(msg = MSG)
               super
             end
           end
 
-          # @param keepfields [Array<Symbol>, Symbol, nil] **DEPRECATED; DO NOT USE**
+          # @param keepfields [Array<Symbol>, Symbol, nil] **DEPRECATED; DO NOT
+          #   USE**
           # @param fields [Array<Symbol>, Symbol, nil] list of fields to keep
-          # @note The `keepfields` parameter will be deprecated in a future version. Use `fields` in new code.
-          # @raise {MissingKeywordArgumentError} if neither `fields` nor `keepfields` is provided
+          # @note The `keepfields` parameter will be deprecated in a future
+          #   version. Use `fields` in new code.
+          # @raise {MissingKeywordArgumentError} if neither `fields` nor
+          #   `keepfields` is provided
           def initialize(keepfields: nil, fields: nil)
             if keepfields && fields
               puts %(#{Kiba::Extend.warning_label} Do not use both `keepfields` and `fields`. Defaulting to process using `fields`)
@@ -87,4 +89,3 @@ module Kiba
     end
   end
 end
-# rubocop:enable Layout/LineLength
