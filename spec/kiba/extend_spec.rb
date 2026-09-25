@@ -46,4 +46,20 @@ RSpec.describe Kiba::Extend do
     end
     after { File.delete(test_csv) if File.exist?(test_csv) }
   end
+
+  describe ".warn" do
+    it "returns expected string with default ws" do
+      Kiba::Extend.config.warning_label = "label:"
+      result = Kiba::Extend.warn("foo")
+      expect(result).to eq("label: foo")
+      Kiba::Extend.reset_config
+    end
+
+    it "returns expected string with custom ws" do
+      Kiba::Extend.config.warning_label = "label:"
+      result = Kiba::Extend.warn("foo", ws: "\n")
+      expect(result).to eq("label:\nfoo")
+      Kiba::Extend.reset_config
+    end
+  end
 end
