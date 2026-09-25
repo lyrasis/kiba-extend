@@ -59,7 +59,7 @@ RSpec.describe "Kiba::Extend::Registry::FileRegistry" do
 
       it "warns of missing file" do
         msg = <<~MSG
-          #{Kiba::Extend.warning_label}: Missing supplied file: #{fixtures_dir}/supplied/not_there.csv
+          #{Kiba::Extend.warning_label} Missing supplied file: #{fixtures_dir}/supplied/not_there.csv
         MSG
         expect { transform_registry }.to output(/#{msg}$/).to_stdout
       end

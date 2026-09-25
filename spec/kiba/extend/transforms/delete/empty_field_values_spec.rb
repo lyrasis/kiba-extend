@@ -120,7 +120,7 @@ RSpec.describe Kiba::Extend::Transforms::Delete::EmptyFieldValues do
 
       it "puts warning to STDOUT" do
         # rubocop:todo Layout/LineLength
-        msg = %(#{Kiba::Extend.warning_label}: The `sep` keyword is being deprecated in a future version. Change it to `delim` in your ETL code.\n)
+        msg = %(#{Kiba::Extend.warning_label} The `sep` keyword is being deprecated in a future version. Change it to `delim` in your ETL code.\n)
         # rubocop:enable Layout/LineLength
         expect { result }.to output(msg).to_stdout
       end

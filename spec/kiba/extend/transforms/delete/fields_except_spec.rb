@@ -69,7 +69,7 @@ RSpec.describe Kiba::Extend::Transforms::Delete::Fields do
     end
 
     it "puts warning to STDOUT" do
-      msg = "#{Kiba::Extend.warning_label}: The `keepfields` keyword is being "\
+      msg = "#{Kiba::Extend.warning_label} The `keepfields` keyword is being "\
         "deprecated in a future version. Change it to `fields` in your ETL "\
         "code.\n"
       expect { result }.to output(msg).to_stdout
@@ -95,7 +95,7 @@ RSpec.describe Kiba::Extend::Transforms::Delete::Fields do
 
     it "puts warning to STDOUT" do
       # rubocop:todo Layout/LineLength
-      msg = "#{Kiba::Extend.warning_label}: Do not use both `keepfields` and "\
+      msg = "#{Kiba::Extend.warning_label} Do not use both `keepfields` and "\
         "`fields`. Defaulting to process using `fields`\n"
       # rubocop:enable Layout/LineLength
       expect { result }.to output(msg).to_stdout

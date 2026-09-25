@@ -26,7 +26,7 @@ RSpec.describe Kiba::Extend::Transforms::Merge::ConstantValue do
 
     it "transforms and warns as expected", :aggregate_failures do
       # rubocop:todo Layout/LineLength
-      msg = "#{Kiba::Extend.warning_label}: Any values in existing `species` field will be overwritten with `guinea fowl`"
+      msg = "#{Kiba::Extend.warning_label} Any values in existing `species` field will be overwritten with `guinea fowl`"
       # rubocop:enable Layout/LineLength
       expect(transform).to receive(:warn).with(msg)
       expect(results).to eq(expected)

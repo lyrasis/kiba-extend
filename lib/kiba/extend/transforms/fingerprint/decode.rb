@@ -132,7 +132,7 @@ module Kiba
             return if result_length == num_fields
 
             warn(
-              "#{Kiba::Extend.warning_label}: ROW #{@row_ct}: Expected "\
+              "#{Kiba::Extend.warning_label} ROW #{@row_ct}: Expected "\
                 "#{num_fields} fields from decoded fingerprint. Got "\
                 "#{result_length}"
             )

@@ -23,7 +23,7 @@ RSpec.describe Kiba::Extend::Transforms::SepDeprecatable do
 
     context "with sep and no delim" do
       let(:warning) do
-        "#{Kiba::Extend.warning_label}:\n  Xform: `sep` parameter will "\
+        "#{Kiba::Extend.warning_label}\n  Xform: `sep` parameter will "\
           "be deprecated in a future release.\nTO FIX:\n  Change `sep` "\
           "to `delim`"
       end
@@ -37,7 +37,7 @@ RSpec.describe Kiba::Extend::Transforms::SepDeprecatable do
 
     context "with sep and delim" do
       let(:warning) do
-        "#{Kiba::Extend.warning_label}:\n  Xform: `sep` and `delim` "\
+        "#{Kiba::Extend.warning_label}\n  Xform: `sep` and `delim` "\
           "parameters given. `delim` value used. `sep` value ignored. "\
           "`sep` will be deprecated in a future release.\n"\
           "TO FIX:\n  Remove `sep` param"

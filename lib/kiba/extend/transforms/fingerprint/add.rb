@@ -106,7 +106,7 @@ module Kiba
           def get_fingerprint(row)
             fingerprinter.call(row)
           rescue Kiba::Extend::Utils::DelimInValueFingerprintError
-            msg = "#{Kiba::Extend.warning_label}: Row #{@row_num}: "\
+            msg = "#{Kiba::Extend.warning_label} Row #{@row_num}: "\
               "A value in the fields used to create a fingerprint contains "\
               "the fingerprint delimiter"
             raise Fingerprint::DelimiterInValueError, msg

@@ -164,7 +164,7 @@ module Kiba
       constructor: ->(_default) { Kiba::Extend::Destinations::CSV }
 
     # @return [String] Prefix for warnings from the ETL
-    setting :warning_label, reader: true, default: "KIBA WARNING"
+    setting :warning_label, reader: true, default: "KIBA WARNING:"
 
     # @return [Kiba::Extend::Registry::FileRegistry] Customized
     #   [dry-container](https://hanakai.org/learn/dry/dry-container)

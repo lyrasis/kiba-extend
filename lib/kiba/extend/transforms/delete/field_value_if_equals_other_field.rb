@@ -368,7 +368,7 @@ module Kiba
               msg = "Grouped fields (#{grpfields}) have different number of "\
                 "values than #{delete} field"
             end
-            puts %(#{Kiba::Extend.warning_label}: #{msg} in #{row})
+            puts %(#{Kiba::Extend.warning_label} #{msg} in #{row})
           end
         end
       end

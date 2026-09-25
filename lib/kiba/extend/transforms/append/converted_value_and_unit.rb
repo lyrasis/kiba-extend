@@ -412,7 +412,7 @@ module Kiba
           end
 
           def not_convertable(unit, row)
-            puts "#{Kiba::Extend.warning_label}: \"#{unit}\" cannot be "\
+            puts "#{Kiba::Extend.warning_label} \"#{unit}\" cannot be "\
               "converted to \"#{@conversions[unit]}\". Check your conversions "\
                  "parameter or configure a custom conversion_amounts parameter"
             row
@@ -457,14 +457,14 @@ module Kiba
           end
 
           def unknown_conversion(unit, row)
-            puts "#{Kiba::Extend.warning_label}: Unknown conversion to "\
+            puts "#{Kiba::Extend.warning_label} Unknown conversion to "\
               "perform for \"#{unit}\" in \"#{@unit}\" field. Configure "\
               "conversions parameter"
             row
           end
 
           def unknown_unit_type(unit, row)
-            puts "#{Kiba::Extend.warning_label}: Unknown unit \"#{unit}\" in "\
+            puts "#{Kiba::Extend.warning_label} Unknown unit \"#{unit}\" in "\
               "\"#{@unit}\" field. You may need to configure a custom unit. "\
                  "See example 3 in transform documentation"
             row
