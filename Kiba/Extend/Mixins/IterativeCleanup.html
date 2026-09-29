@@ -81,7 +81,7 @@
   <dl>
     <dt>Defined in:</dt>
     <dd>lib/kiba/extend/mixins/iterative_cleanup.rb<span class="defines">,<br>
-  lib/kiba/extend/mixins/iterative_cleanup/jobs.rb,<br> lib/kiba/extend/mixins/iterative_cleanup/jobs/final.rb,<br> lib/kiba/extend/mixins/iterative_cleanup/jobs/worksheet.rb,<br> lib/kiba/extend/mixins/iterative_cleanup/jobs/corrections.rb,<br> lib/kiba/extend/mixins/iterative_cleanup/jobs/cleaned_uniq.rb,<br> lib/kiba/extend/mixins/iterative_cleanup/jobs/base_job_cleaned.rb,<br> lib/kiba/extend/mixins/iterative_cleanup/jobs/returned_compiled.rb,<br> lib/kiba/extend/mixins/iterative_cleanup/known_worksheet_values.rb</span>
+  lib/kiba/extend/mixins/iterative_cleanup/jobs.rb,<br> lib/kiba/extend/mixins/iterative_cleanup/jobs/final.rb,<br> lib/kiba/extend/mixins/iterative_cleanup/jobs/worksheet.rb,<br> lib/kiba/extend/mixins/iterative_cleanup/jobs/corrections.rb,<br> lib/kiba/extend/mixins/iterative_cleanup/jobs/cleaned_uniq.rb,<br> lib/kiba/extend/mixins/iterative_cleanup/jobs/base_job_cleaned.rb,<br> lib/kiba/extend/mixins/iterative_cleanup/jobs/returned_compiled.rb,<br> lib/kiba/extend/mixins/iterative_cleanup/known_worksheet_values.rb,<br> lib/kiba/extend/mixins/iterative_cleanup/jobs/process_returned_file.rb</span>
 
 </dd>
   </dl>
@@ -730,6 +730,29 @@ base directory. <strong>Define actual values in client config file.</strong></li
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#returned_file_xforms-instance_method" title="#returned_file_xforms (instance method)">#<strong>returned_file_xforms</strong>  &#x21d2; nil, Proc </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'><p>Kiba.job_segment Proc to be applied to all returned worksheets prior to compilation/processing.</p>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#worksheet_add_fields-instance_method" title="#worksheet_add_fields (instance method)">#<strong>worksheet_add_fields</strong>  &#x21d2; Array&lt;Symbol&gt; </a>
     
 
@@ -882,11 +905,6 @@ base directory. <strong>Define actual values in client config file.</strong></li
       <pre class="lines">
 
 
-393
-394
-395
-396
-397
 398
 399
 400
@@ -894,10 +912,15 @@ base directory. <strong>Define actual values in client config file.</strong></li
 402
 403
 404
-405</pre>
+405
+406
+407
+408
+409
+410</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 393</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 398</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_datadir'>datadir</span><span class='lparen'>(</span><span class='id identifier rubyid_mod'>mod</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_dir'>dir</span> <span class='op'>=</span> <span class='kw'>nil</span>
@@ -1049,12 +1072,12 @@ base directory. <strong>Define actual values in client config file.</strong></li
       <pre class="lines">
 
 
-329
-330
-331</pre>
+334
+335
+336</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 329</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 334</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_all_collate_fields'>all_collate_fields</span>
   <span class='lbracket'>[</span><span class='id identifier rubyid_collate_fields'>collate_fields</span><span class='comma'>,</span> <span class='id identifier rubyid_orig_values_identifier'>orig_values_identifier</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_flatten'>flatten</span><span class='period'>.</span><span class='id identifier rubyid_uniq'>uniq</span>
@@ -1130,12 +1153,12 @@ with cleanup merged in</p>
       <pre class="lines">
 
 
-337
-338
-339</pre>
+342
+343
+344</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 337</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 342</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_base_job_cleaned_job_key'>base_job_cleaned_job_key</span>
   <span class='symbol'>:&quot;#{</span><span class='id identifier rubyid_cleanup_base_name'>cleanup_base_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>__base_job_cleaned</span><span class='tstring_end'>&quot;</span></span>
@@ -1312,12 +1335,12 @@ deduplicates the clean base job data</p>
       <pre class="lines">
 
 
-345
-346
-347</pre>
+350
+351
+352</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 345</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 350</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cleaned_uniq_job_key'>cleaned_uniq_job_key</span>
   <span class='symbol'>:&quot;#{</span><span class='id identifier rubyid_cleanup_base_name'>cleanup_base_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>__cleaned_uniq</span><span class='tstring_end'>&quot;</span></span>
@@ -1474,12 +1497,12 @@ deduplicates the clean base job data</p>
       <pre class="lines">
 
 
-311
-312
-313</pre>
+316
+317
+318</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 311</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 316</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_cleanup_done?'>cleanup_done?</span>
   <span class='kw'>true</span> <span class='kw'>unless</span> <span class='id identifier rubyid_returned_files'>returned_files</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -1639,12 +1662,12 @@ deduplicates the clean base job data</p>
       <pre class="lines">
 
 
-380
-381
-382</pre>
+385
+386
+387</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 380</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 385</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_collated_orig_values_id_field'>collated_orig_values_id_field</span>
   <span class='symbol'>:&quot;#{</span><span class='id identifier rubyid_orig_values_identifier'>orig_values_identifier</span><span class='embexpr_end'>}</span><span class='tstring_content'>s</span><span class='tstring_end'>&quot;</span></span>
@@ -1796,12 +1819,12 @@ deduplicates the clean base job data</p>
       <pre class="lines">
 
 
-368
-369
-370</pre>
+373
+374
+375</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 368</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 373</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_corrections_job_key'>corrections_job_key</span>
   <span class='symbol'>:&quot;#{</span><span class='id identifier rubyid_cleanup_base_name'>cleanup_base_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>__corrections</span><span class='tstring_end'>&quot;</span></span>
@@ -1851,12 +1874,12 @@ deduplicates the clean base job data</p>
       <pre class="lines">
 
 
-372
-373
-374</pre>
+377
+378
+379</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 372</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 377</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_final_job_key'>final_job_key</span>
   <span class='symbol'>:&quot;#{</span><span class='id identifier rubyid_cleanup_base_name'>cleanup_base_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>__final</span><span class='tstring_end'>&quot;</span></span>
@@ -2213,13 +2236,13 @@ lookup tables in the <code>cleanup_base_name__final</code> job</p>
       <pre class="lines">
 
 
-449
-450
-451
-452</pre>
+454
+455
+456
+457</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 449</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 454</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_register_cleanup_jobs'>register_cleanup_jobs</span>
   <span class='id identifier rubyid_ns'>ns</span> <span class='op'>=</span> <span class='id identifier rubyid_build_namespace'>build_namespace</span>
@@ -2294,12 +2317,12 @@ lookup tables in the <code>cleanup_base_name__final</code> job</p>
       <pre class="lines">
 
 
-360
-361
-362</pre>
+365
+366
+367</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 360</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 365</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_returned_compiled_job_key'>returned_compiled_job_key</span>
   <span class='symbol'>:&quot;#{</span><span class='id identifier rubyid_cleanup_base_name'>cleanup_base_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>__returned_compiled</span><span class='tstring_end'>&quot;</span></span>
@@ -2375,20 +2398,97 @@ corresponding to returned cleanup files</p>
       <pre class="lines">
 
 
-302
-303
-304
-305
-306</pre>
+307
+308
+309
+310
+311</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 302</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 307</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_returned_file_jobs'>returned_file_jobs</span>
   <span class='id identifier rubyid_returned_files'>returned_files</span><span class='period'>.</span><span class='id identifier rubyid_map'>map</span><span class='period'>.</span><span class='id identifier rubyid_with_index'>with_index</span> <span class='kw'>do</span> <span class='op'>|</span><span class='id identifier rubyid_filename'>filename</span><span class='comma'>,</span> <span class='id identifier rubyid_idx'>idx</span><span class='op'>|</span>
     <span class='symbol'>:&quot;#{</span><span class='id identifier rubyid_cleanup_base_name'>cleanup_base_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>__file_returned_</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_idx'>idx</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span>
   <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="returned_file_xforms-instance_method">
+  
+    #<strong>returned_file_xforms</strong>  &#x21d2; <tt>nil</tt>, <tt>Proc</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+  <div class="note notetag">
+    <strong>Note:</strong>
+    <div class='inline'><p>Optional: override in extending module after extending</p>
+</div>
+  </div>
+
+<p>Kiba.job_segment Proc to be applied to all
+returned worksheets prior to compilation/processing</p>
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Returns:</p>
+<ul class="return">
+  
+    <li>
+      
+      
+        <span class='type'>(<tt>nil</tt>, <tt>Proc</tt>)</span>
+      
+      
+      
+        &mdash;
+        <div class='inline'><p>Kiba.job_segment Proc to be applied to all
+returned worksheets prior to compilation/processing</p>
+</div>
+      
+    </li>
+  
+</ul>
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>4.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+299</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 299</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_returned_file_xforms'>returned_file_xforms</span> <span class='op'>=</span> <span class='kw'>nil</span></pre>
     </td>
   </tr>
 </table>
@@ -2612,12 +2712,12 @@ corresponding to returned cleanup files</p>
       <pre class="lines">
 
 
-352
-353
-354</pre>
+357
+358
+359</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 352</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 357</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_worksheet_job_key'>worksheet_job_key</span>
   <span class='symbol'>:&quot;#{</span><span class='id identifier rubyid_cleanup_base_name'>cleanup_base_name</span><span class='embexpr_end'>}</span><span class='tstring_content'>__worksheet</span><span class='tstring_end'>&quot;</span></span>
@@ -2687,12 +2787,12 @@ corresponding to returned cleanup files</p>
       <pre class="lines">
 
 
-319
-320
-321</pre>
+324
+325
+326</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 319</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup.rb', line 324</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_worksheet_sent_not_done?'>worksheet_sent_not_done?</span>
   <span class='kw'>true</span> <span class='kw'>if</span> <span class='op'>!</span><span class='id identifier rubyid_cleanup_done?'>cleanup_done?</span> <span class='op'>&amp;&amp;</span> <span class='op'>!</span><span class='id identifier rubyid_provided_worksheets'>provided_worksheets</span><span class='period'>.</span><span class='id identifier rubyid_empty?'>empty?</span>
@@ -2707,7 +2807,7 @@ corresponding to returned cleanup files</p>
 </div>
 
       <div id="footer">
-  Generated on Fri Sep 25 18:53:31 2026 by
+  Generated on Tue Sep 29 13:17:29 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.45 (ruby-3.4.11).
 </div>

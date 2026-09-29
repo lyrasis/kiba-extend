@@ -129,6 +129,29 @@
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#get_sources-class_method" title="get_sources (class method)">.<strong>get_sources</strong>(mod)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'>
+</div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#get_xforms-class_method" title="get_xforms (class method)">.<strong>get_xforms</strong>(mod)  &#x21d2; Object </a>
     
 
@@ -206,9 +229,9 @@
 
     
       <div class="method_details first">
-  <h3 class="signature first" id="get_xforms-class_method">
+  <h3 class="signature first" id="get_sources-class_method">
   
-    .<strong>get_xforms</strong>(mod)  &#x21d2; <tt>Object</tt> 
+    .<strong>get_sources</strong>(mod)  &#x21d2; <tt>Object</tt> 
   
 
   
@@ -250,17 +273,78 @@
 23
 24
 25
-26
-27
+26</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup/jobs/returned_compiled.rb', line 21</span>
+
+<span class='kw'>def</span> <span class='id identifier rubyid_get_sources'>get_sources</span><span class='lparen'>(</span><span class='id identifier rubyid_mod'>mod</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_returned_file_jobs'>returned_file_jobs</span> <span class='kw'>unless</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_returned_file_xforms'>returned_file_xforms</span>
+
+  <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_returned_file_jobs'>returned_file_jobs</span>
+    <span class='period'>.</span><span class='id identifier rubyid_map'>map</span> <span class='lbrace'>{</span> <span class='op'>|</span><span class='id identifier rubyid_key'>key</span><span class='op'>|</span> <span class='symbol'>:&quot;#{</span><span class='id identifier rubyid_key'>key</span><span class='embexpr_end'>}</span><span class='tstring_content'>_processed</span><span class='tstring_end'>&quot;</span></span> <span class='rbrace'>}</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="get_xforms-class_method">
+  
+    .<strong>get_xforms</strong>(mod)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><div class="docstring">
+  <div class="discussion">
+    
+
+
+  </div>
+</div>
+<div class="tags">
+  
+<p class="tag_title">Since:</p>
+<ul class="since">
+  
+    <li>
+      
+      
+      
+      
+        
+        <div class='inline'><p>4.0.0</p>
+</div>
+      
+    </li>
+  
+</ul>
+
+</div><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
 28
 29
 30
 31
 32
-33</pre>
+33
+34
+35
+36
+37
+38
+39
+40</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup/jobs/returned_compiled.rb', line 21</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup/jobs/returned_compiled.rb', line 28</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_get_xforms'>get_xforms</span><span class='lparen'>(</span><span class='id identifier rubyid_mod'>mod</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_base'>base</span> <span class='op'>=</span> <span class='lbracket'>[</span><span class='rbracket'>]</span>
@@ -336,7 +420,7 @@
 <span class='kw'>def</span> <span class='id identifier rubyid_job'>job</span><span class='lparen'>(</span><span class='label'>mod:</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="../../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../../Extend.html" title="Kiba::Extend (module)">Extend</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Jobs.html" title="Kiba::Extend::Jobs (module)">Jobs</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="../../../Jobs/Job.html" title="Kiba::Extend::Jobs::Job (class)">Job</a></span></span><span class='period'>.</span><span class='id identifier rubyid_new'><span class='object_link'><a href="../../../Jobs/BaseJob.html#initialize-instance_method" title="Kiba::Extend::Jobs::BaseJob#initialize (method)">new</a></span></span><span class='lparen'>(</span>
     <span class='label'>files:</span> <span class='lbrace'>{</span>
-      <span class='label'>source:</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_returned_file_jobs'>returned_file_jobs</span><span class='comma'>,</span>
+      <span class='label'>source:</span> <span class='id identifier rubyid_get_sources'>get_sources</span><span class='lparen'>(</span><span class='id identifier rubyid_mod'>mod</span><span class='rparen'>)</span><span class='comma'>,</span>
       <span class='label'>destination:</span> <span class='id identifier rubyid_mod'>mod</span><span class='period'>.</span><span class='id identifier rubyid_returned_compiled_job_key'>returned_compiled_job_key</span>
     <span class='rbrace'>}</span><span class='comma'>,</span>
     <span class='label'>transformer:</span> <span class='id identifier rubyid_get_xforms'>get_xforms</span><span class='lparen'>(</span><span class='id identifier rubyid_mod'>mod</span><span class='rparen'>)</span>
@@ -387,13 +471,6 @@
       <pre class="lines">
 
 
-35
-36
-37
-38
-39
-40
-41
 42
 43
 44
@@ -411,10 +488,17 @@
 56
 57
 58
-59</pre>
+59
+60
+61
+62
+63
+64
+65
+66</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup/jobs/returned_compiled.rb', line 35</span>
+      <pre class="code"><span class="info file"># File 'lib/kiba/extend/mixins/iterative_cleanup/jobs/returned_compiled.rb', line 42</span>
 
 <span class='kw'>def</span> <span class='id identifier rubyid_xforms'>xforms</span><span class='lparen'>(</span><span class='id identifier rubyid_mod'>mod</span><span class='rparen'>)</span>
   <span class='const'><span class='object_link'><a href="../../../../../Kiba.html" title="Kiba (module)">Kiba</a></span></span><span class='period'>.</span><span class='id identifier rubyid_job_segment'><span class='object_link'><a href="../../../Jobs/JobSegmentable.html#job_segment-instance_method" title="Kiba::Extend::Jobs::JobSegmentable#job_segment (method)">job_segment</a></span></span> <span class='kw'>do</span>
@@ -451,7 +535,7 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Sep 25 18:53:31 2026 by
+  Generated on Tue Sep 29 13:17:29 2026 by
   <a href="https://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.45 (ruby-3.4.11).
 </div>
