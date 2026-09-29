@@ -478,6 +478,15 @@ module Kiba
                   tags: mod.send(:job_tags)
                 }
               end
+              xforms = mod.send(:returned_file_xforms)
+              if xforms
+                returned_jobs.each do |filejob|
+                  filejobkey = "#{filejob}_processed"
+                  register filejobkey.to_sym,
+                    mod.send(:processed_returned_file_job_hash,
+                      mod, filejobkey, xforms)
+                end
+              end
               register mod.send(
                 :job_name,
                 mod.send(:returned_compiled_job_key)
@@ -513,6 +522,26 @@ module Kiba
           }
         end
         private :base_job_cleaned_job_hash
+
+        def processed_returned_file_job_hash(mod, filejobkey, xforms)
+          fullkey = :"#{mod.send(:cleanup_base_name)}__#{filejobkey}"
+
+          {
+            path: File.join(Kiba::Extend::Mixins::IterativeCleanup.datadir(mod),
+              "working", "#{fullkey}.csv"),
+            creator: {
+              callee:
+              Kiba::Extend::Mixins::IterativeCleanup::Jobs::ProcessReturnedFile,
+              args: {
+                source: fullkey.to_s.delete_suffix("_processed").to_sym,
+                dest: fullkey.to_sym,
+                xforms: xforms
+              }
+            },
+            tags: mod.job_tags
+          }
+        end
+        private :processed_returned_file_job_hash
 
         def cleaned_uniq_job_hash(mod)
           {
