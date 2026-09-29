@@ -11,11 +11,18 @@ module Kiba
             def job(mod:)
               Kiba::Extend::Jobs::Job.new(
                 files: {
-                  source: mod.returned_file_jobs,
+                  source: get_sources(mod),
                   destination: mod.returned_compiled_job_key
                 },
                 transformer: get_xforms(mod)
               )
+            end
+
+            def get_sources(mod)
+              return mod.returned_file_jobs unless mod.returned_file_xforms
+
+              mod.returned_file_jobs
+                .map { |key| :"#{key}_processed" }
             end
 
             def get_xforms(mod)
