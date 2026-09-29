@@ -293,6 +293,11 @@ module Kiba
         #   lookup tables in the `cleanup_base_name__final` job
         def final_lookup_sources = []
 
+        # @return [nil, Proc] Kiba.job_segment Proc to be applied to all
+        #   returned worksheets prior to compilation/processing
+        # @note Optional: override in extending module after extending
+        def returned_file_xforms = nil
+
         # DO NOT OVERRIDE REMAINING METHODS
 
         # @return [Array<Symbol>] supplied registry entry job keys
