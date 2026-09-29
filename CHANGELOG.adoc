@@ -73,6 +73,9 @@ https://lyrasis.github.io/kiba-extend/Kiba/Extend/Job#output%3F-class_method[`Ki
 https://github.com/lyrasis/kiba-extend/pull/291[PR#291]
 * https://lyrasis.github.io/kiba-extend/Kiba/Extend/Warnable#warn-instance_method[`Kiba::Extend.warn`] method
 https://github.com/lyrasis/kiba-extend/pull/291[PR#291]
+* `:returned_file_xforms` setting in IterativeCleanup modules.
+If overridden in extending module to provide custom transforms, those transforms will be applied to individual returned files pre-compilation.
+https://github.com/lyrasis/kiba-extend/pull/292[PR#292]
 
 === Bugfixes
 
