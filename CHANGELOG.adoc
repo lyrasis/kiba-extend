@@ -79,12 +79,16 @@ https://github.com/lyrasis/kiba-extend/pull/292[PR#292]
 
 === Bugfixes
 
+* Obscure minor bug in https://lyrasis.github.io/kiba-extend/Kiba/Extend/Mixins/IterativeCleanup/Jobs/BaseJobCleaned.html[IterativeCleanup::BaseJobCleaned], likely only triggered by addition of a bunch of pre/post Job xforms in an IterativeCleanup config
+https://github.com/lyrasis/kiba-extend/pull/293[PR#293]
+
 === Changed
 
 * `Kiba::Extend.warning_label` now includes colon suffix
 https://github.com/lyrasis/kiba-extend/pull/291[PR#291]
 *  `Kiba::Extend::Job.output_fields` returns empty Array instead of `nil` when there is no job output.
 https://github.com/lyrasis/kiba-extend/pull/291[PR#291]
+
 === Deleted
 
 === Deprecated/Will break in a future version
