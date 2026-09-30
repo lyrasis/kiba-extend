@@ -54,6 +54,11 @@ module Kiba
                     todofield: :corrected
                 end
 
+                transform do |row|
+                  row.transform_values! { |v| (v == "") ? nil : v }
+                  row
+                end
+
                 transform Fingerprint::Add,
                   target: :clean_fingerprint,
                   fields: mod.fingerprint_fields
