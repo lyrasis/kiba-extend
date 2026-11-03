@@ -81,6 +81,8 @@ https://github.com/lyrasis/kiba-extend/pull/292[PR#292]
 
 * Obscure minor bug in https://lyrasis.github.io/kiba-extend/Kiba/Extend/Mixins/IterativeCleanup/Jobs/BaseJobCleaned.html[IterativeCleanup::BaseJobCleaned], likely only triggered by addition of a bunch of pre/post Job xforms in an IterativeCleanup config
 https://github.com/lyrasis/kiba-extend/pull/293[PR#293]
+* Handle sort of non-string "numeric" values in `Sort::ByFieldValue`.
+https://github.com/lyrasis/kiba-extend/pull/294[PR#294]
 
 === Changed
 
