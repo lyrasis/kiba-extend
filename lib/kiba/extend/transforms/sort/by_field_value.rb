@@ -6,8 +6,6 @@ module Kiba
       module Sort
         # Returns all rows, sorted by the values of the given field.
         #
-        #
-        #
         # **Sort modes**
         #
         # **:smart**: Values consisting only of digits are converted to Integers
@@ -52,6 +50,37 @@ module Kiba
         #     {id: "ex ab"},
         #     {id: ""},
         #     {pid: "40"},
+        #     {id: nil},
+        #   ]
+        #   expect(result).to eq(expected)
+        # @example Single values, all numeric, desc
+        #   # Used in pipeline as:
+        #   # transform Sort::ByFieldValue, field: :id, order: :desc
+        #   xform = Sort::ByFieldValue.new(field: :id, order: :desc)
+        #   input = [
+        #     {id: 56},
+        #     {id: 967},
+        #     {id: 2680},
+        #     {id: 538},
+        #     {id:  ""},
+        #     {id: 160},
+        #     {id: 9},
+        #     {id: 0},
+        #     {id: nil},
+        #     {id: 1},
+        #   ]
+        #   result = Kiba::StreamingRunner.transform_stream(input, xform)
+        #     .map{ |row| row }
+        #   expected = [
+        #     {id: 2680},
+        #     {id: 967},
+        #     {id: 538},
+        #     {id: 160},
+        #     {id: 56},
+        #     {id: 9},
+        #     {id: 1},
+        #     {id: 0},
+        #     {id:  ""},
         #     {id: nil},
         #   ]
         #   expect(result).to eq(expected)
@@ -196,7 +225,9 @@ module Kiba
           end
 
           def convert(val, row)
-            if /^\d+$/.match?(val)
+            if val.is_a?(Numeric)
+              rows[:numeric] << [val, row]
+            elsif /^\d+$/.match?(val)
               rows[:numeric] << [val.to_i, row]
             elsif /^\d+\.\d+$/.match?(val)
               rows[:numeric] << [val.to_f, row]
